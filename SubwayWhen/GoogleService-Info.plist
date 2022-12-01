@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>257319772223-5nqo418hbi5lja1t3htrskfisc0i2vqd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.257319772223-5nqo418hbi5lja1t3htrskfisc0i2vqd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAP00-DKK1zQOFByXO5wjFyA2L1lmzPwTo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>257319772223</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.yslee.subwaywhen</string>
+	<key>PROJECT_ID</key>
+	<string>subwaywhen</string>
+	<key>STORAGE_BUCKET</key>
+	<string>subwaywhen.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:257319772223:ios:a0874516cf9b7b528fd88a</string>
+</dict>
+</plist>
