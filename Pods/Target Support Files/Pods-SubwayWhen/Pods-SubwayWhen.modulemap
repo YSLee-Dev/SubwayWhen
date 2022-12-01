@@ -1,0 +1,6 @@
+framework module Pods_SubwayWhen {
+  umbrella header "Pods-SubwayWhen-umbrella.h"
+
+  export *
+  module * { export * }
+}
