@@ -71,11 +71,15 @@ class MainModel {
       return Observable
             .zip(saveStation, liveStation){ station, data -> RealtimeStationArrival in
                 for x in data!.realtimeArrivalList{
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(x.lastStation.contains(station.exceptionLastStation)){
-                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: x.lastStation, lineNumber: station.line, isFast: x.isFast, useLine: station.useLine, group: station.group.rawValue)
+                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast, useLine: station.useLine, group: station.group.rawValue, id: station.id)
                     }
                 }
-                return .init(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: nil, useLine: station.useLine, group: station.group.rawValue)
+                if station.lineCode != ""{
+                    return .init(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: nil, useLine: station.useLine, group: station.group.rawValue, id: station.id)
+                }else{
+                    return .init(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: nil, useLine: station.useLine, group: station.group.rawValue, id: station.id)
+                }
             }
             .toArray()
             .asObservable()

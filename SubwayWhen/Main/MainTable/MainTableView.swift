@@ -47,7 +47,7 @@ extension MainTableView{
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: IndexPath(row: row, section: 0)) as? MainTableViewCell else {return UITableViewCell()}
                 
                 cell.cellSet()
-                cell.station.text = "\(data.stationName) | \(data.lastStation)행"
+                cell.station.text = "\(data.stationName) | \(data.lastStation)"
                 cell.line.text = data.useLine
                 
                 cell.arrivalTime.text = "\(data.useTime)"

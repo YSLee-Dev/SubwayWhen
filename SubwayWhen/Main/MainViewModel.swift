@@ -42,7 +42,7 @@ class MainViewModel{
         self.mainTableViewModel.cellDelete
             .map{ data in
                 for x in FixInfo.saveStation.enumerated(){
-                    if x.element.stationName == data.stationName && x.element.group.rawValue == data.group {
+                    if x.element.id == data.id ?? "" {
                         FixInfo.saveStation.remove(at: x.offset)
                     }
                 }
