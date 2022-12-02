@@ -8,6 +8,7 @@
 import Foundation
 
 struct SaveStation : Codable{
+    let id : String
     let stationName : String
     let updnLine : String
     let line : String

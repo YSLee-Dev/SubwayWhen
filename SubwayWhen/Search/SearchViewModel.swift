@@ -28,6 +28,7 @@ class SearchViewModel {
         self.resultViewModel.cellClick
             .bind(to: modalViewModel.clickCellData)
             .disposed(by: self.bag)
+            
         
         self.modalViewModel = self.resultViewModel.cellClick
             .map{ _ in
@@ -47,21 +48,19 @@ class SearchViewModel {
         
         let saveStationInfo = Observable
             .combineLatest(self.resultViewModel.cellClick, modalViewModel.groupClick, modalViewModel.exceptionLastStationText){
-                SaveStation(stationName: $0.stationName, updnLine: "", line: $0.lineNumber.rawValue, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
+                return SaveStation(id: UUID().uuidString, stationName: $0.stationName, updnLine: "", line: $0.lineNumber.rawValue, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
             }
-        
         
         modalViewModel.upDownBtnClick
             .withLatestFrom(saveStationInfo){
                 var updown = ""
-                print($1.group)
                 if $1.useLine ==  "2호선" {
                     updown = $0 ? "내선" : "외선"
                 }else{
                     updown = $0 ? "상행" : "하행"
                 }
             
-                FixInfo.saveStation.append(SaveStation(stationName: $1.stationName, updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
+                FixInfo.saveStation.append(SaveStation(id: $1.id, stationName: $1.stationName, updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
                 return Void()
             }
             .bind(to: self.serachBarViewModel.updnLineClick)

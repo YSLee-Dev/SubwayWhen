@@ -57,14 +57,20 @@ class ModalVC : UIViewController{
         $0.setTitle("출근", for: .normal)
     }
     
+    let notServiceBtn = ModalCustomButton().then{
+        $0.backgroundColor = .black
+        $0.setTitle("해당 노선은 서비스를 지원하지 않아요.", for: .normal)
+        $0.isHidden = true
+    }
+    
     let exceptionLastStationTF = UITextField().then{
-        $0.placeholder = "중간 종착역 제거"
+        $0.placeholder = "중간 종착역 제거 (1개이상 콤마 이용)"
         $0.textAlignment = .center
         $0.layer.cornerRadius = 15
         $0.layer.borderColor = UIColor.systemGray.cgColor
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true
-        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.font = UIFont.systemFont(ofSize: 12)
     }
     
     override func viewDidLoad() {
@@ -88,32 +94,32 @@ extension ModalVC{
         self.grayBG.snp.updateConstraints{
             $0.bottom.equalToSuperview().inset(keyboardHeight)
         }
-        UIView.animate(withDuration: 0.2){[weak self] in
+        UIView.animate(withDuration: 0.25){[weak self] in
             self?.view.layoutIfNeeded()
         }
     }
     
     @objc
     private func keyboardWillHide(_ sender: Notification) {
-        
         self.grayBG.snp.updateConstraints{
             $0.bottom.equalToSuperview().inset(0)
         }
-        UIView.animate(withDuration: 0.2){[weak self] in
+        UIView.animate(withDuration: 0.25){[weak self] in
             self?.view.layoutIfNeeded()
         }
     }
     
     private func viewAnimation(){
-        UIView.animate(withDuration: 0.2){[weak self] in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBG.transform = .identity
             self?.grayBG.backgroundColor = .gray.withAlphaComponent(0.5)
         }
+        
     }
     
     private func attibute(){
         self.view.backgroundColor = .clear
-        self.mainBG.transform = CGAffineTransform(translationX: 0, y: 500)
+        self.mainBG.transform = CGAffineTransform(translationX: 0, y: 300)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -131,7 +137,7 @@ extension ModalVC{
             $0.bottom.equalToSuperview().offset(15)
         }
         
-        [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF]
+        [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{
                 self.mainBG.addSubview($0)
             }
@@ -169,6 +175,11 @@ extension ModalVC{
             $0.bottom.equalTo(self.downBtn.snp.top).inset(-15)
             $0.leading.equalTo(self.view.snp.centerX).offset(5)
         }
+        self.notServiceBtn.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(self.grayBG).inset(35)
+        }
         
     }
     
@@ -188,7 +199,11 @@ extension ModalVC{
             .bind(to: viewModel.upDownBtnClick)
             .disposed(by: self.bag)
         
-        self.grayBG.rx.tap
+        Observable<Void>
+            .merge(
+                self.grayBG.rx.tap.asObservable(),
+                self.notServiceBtn.rx.tap.asObservable()
+            )
             .bind(to: viewModel.grayBgClick)
             .disposed(by: self.bag)
         
@@ -201,7 +216,7 @@ extension ModalVC{
                     self?.groupBtn.setTitle("출근", for: .normal)
                     return .one
                 }
-             
+                
             }
             .bind(to: viewModel.groupClick)
             .disposed(by: self.bag)
@@ -223,6 +238,14 @@ extension ModalVC{
         viewModel.modalClose
             .drive(self.rx.dismissView)
             .disposed(by: self.bag)
+        
+        // 그룹 초기화 -> model은 메모리 초기화가 되지 않아서 따로 초기값 작성
+        viewModel.modalClose
+            .map{
+                .one
+            }
+            .drive(viewModel.groupClick)
+            .disposed(by: self.bag)
     }
     
 }
@@ -233,6 +256,15 @@ extension Reactive where Base : ModalVC{
             base.line.text = info.useLine
             base.line.backgroundColor = UIColor(named: info.lineNumber.rawValue)
             base.titleLabel.text = info.stationName
+            
+            if info.lineCode == ""{
+                [base.upBtn, base.downBtn, base.groupBtn]
+                    .forEach{
+                        $0.isHidden = true
+                    }
+                base.exceptionLastStationTF.isHidden = true
+                base.notServiceBtn.isHidden = false
+            }
             
             if info.lineNumber == .two{
                 base.upBtn.setTitle("내선", for: .normal)
@@ -246,8 +278,8 @@ extension Reactive where Base : ModalVC{
     
     var dismissView : Binder<Void>{
         return Binder(base){base, _ in
-            UIView.animate(withDuration: 0.2, delay: 0, animations: {
-                base.mainBG.transform = CGAffineTransform(translationX: 0, y: 500)
+            UIView.animate(withDuration: 0.25, delay: 0, animations: {
+                base.mainBG.transform = CGAffineTransform(translationX: 0, y: 300)
                 base.grayBG.backgroundColor = .clear
             }, completion: {_ in
                 base.dismiss(animated: false)
