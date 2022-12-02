@@ -20,6 +20,7 @@ struct RealtimeStationArrival : Decodable{
     let isFast : String?
     let useLine : String?
     let group : String?
+    let id : String?
     
     enum CodingKeys : String, CodingKey{
         case upDown = "updnLine"
@@ -34,6 +35,7 @@ struct RealtimeStationArrival : Decodable{
         case isFast = "btrainSttus"
         case useLine = "useLine"
         case group = "group"
+        case id = "id"
     }
     
     
