@@ -12,13 +12,17 @@ import RxCocoa
 
 struct MainTableViewModel{
     // OUTPUT
-    let cellData : Driver<[RealtimeStationArrival]>
+    let cellData : Driver<[MainTableViewCellData]>
+    
+    // MODEL
+    let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
     
     // INPUT
     let cellClick = PublishRelay<IndexPath>()
-    let cellDelete = PublishRelay<RealtimeStationArrival>()
+    let cellDelete = PublishRelay<MainTableViewCellData>()
+    let cellTimeChangeBtnClick = PublishRelay<MainTableViewCellData>()
     
-    let resultData = PublishRelay<[RealtimeStationArrival]>()
+    let resultData = PublishRelay<[MainTableViewCellData]>()
     let refreshOn = BehaviorRelay<Void>(value: Void())
     let editBtnClick = PublishRelay<Bool>()
     

@@ -16,6 +16,13 @@
 		341200FC29375A2600C77050 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FB29375A2600C77050 /* MainViewModel.swift */; };
 		341200FE29375A7300C77050 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FD29375A7300C77050 /* MainModel.swift */; };
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
+		34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17461293DBB180086870F /* MainTableViewCellData.swift */; };
+		34A17464293DBE220086870F /* ScheduleStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17463293DBE220086870F /* ScheduleStationModel.swift */; };
+		34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17467293DD18D0086870F /* MainTableViewFooter.swift */; };
+		34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */; };
+		34A1746F293DEE170086870F /* ScheduleStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746E293DEE170086870F /* ScheduleStationArrival.swift */; };
+		34A17473293E00010086870F /* SearchInfoBySubwayNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */; };
+		34A17475293E04340086870F /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17474293E04340086870F /* ScheduleSearch.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
 		34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB562936274400C4ED80 /* SceneDelegate.swift */; };
 		34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */; };
@@ -56,6 +63,13 @@
 		341200FB29375A2600C77050 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		341200FD29375A7300C77050 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		34A17461293DBB180086870F /* MainTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellData.swift; sourceTree = "<group>"; };
+		34A17463293DBE220086870F /* ScheduleStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStationModel.swift; sourceTree = "<group>"; };
+		34A17467293DD18D0086870F /* MainTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooter.swift; sourceTree = "<group>"; };
+		34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooterViewModel.swift; sourceTree = "<group>"; };
+		34A1746E293DEE170086870F /* ScheduleStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStationArrival.swift; sourceTree = "<group>"; };
+		34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoBySubwayNameService.swift; sourceTree = "<group>"; };
+		34A17474293E04340086870F /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34C6DB542936274400C4ED80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34C6DB562936274400C4ED80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,8 +135,9 @@
 		341200F7293754CC00C77050 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				341200F3293754A200C77050 /* LiveStationModel.swift */,
-				341200F5293754B900C77050 /* RealtimeStationArrival.swift */,
+				34A17461293DBB180086870F /* MainTableViewCellData.swift */,
+				34A17465293DBF100086870F /* LiveArrival */,
+				34A17466293DBF240086870F /* ScheduleArrival */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -130,9 +145,39 @@
 		341200FA2937566B00C77050 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				34A17469293DD2E40086870F /* MainTableViewFooter */,
 				341200F82937566800C77050 /* MainTableViewCell.swift */,
 			);
 			path = Sub;
+			sourceTree = "<group>";
+		};
+		34A17465293DBF100086870F /* LiveArrival */ = {
+			isa = PBXGroup;
+			children = (
+				341200F3293754A200C77050 /* LiveStationModel.swift */,
+				341200F5293754B900C77050 /* RealtimeStationArrival.swift */,
+			);
+			path = LiveArrival;
+			sourceTree = "<group>";
+		};
+		34A17466293DBF240086870F /* ScheduleArrival */ = {
+			isa = PBXGroup;
+			children = (
+				34A17463293DBE220086870F /* ScheduleStationModel.swift */,
+				34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */,
+				34A1746E293DEE170086870F /* ScheduleStationArrival.swift */,
+				34A17474293E04340086870F /* ScheduleSearch.swift */,
+			);
+			path = ScheduleArrival;
+			sourceTree = "<group>";
+		};
+		34A17469293DD2E40086870F /* MainTableViewFooter */ = {
+			isa = PBXGroup;
+			children = (
+				34A17467293DD18D0086870F /* MainTableViewFooter.swift */,
+				34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */,
+			);
+			path = MainTableViewFooter;
 			sourceTree = "<group>";
 		};
 		34C6DB482936274400C4ED80 = {
@@ -430,12 +475,16 @@
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
+				34A1746F293DEE170086870F /* ScheduleStationArrival.swift in Sources */,
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
 				341200EF293753DC00C77050 /* MainTableView.swift in Sources */,
 				34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */,
+				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewCell.swift in Sources */,
+				34A17475293E04340086870F /* ScheduleSearch.swift in Sources */,
 				341200FE29375A7300C77050 /* MainModel.swift in Sources */,
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
+				34A17464293DBE220086870F /* ScheduleStationModel.swift in Sources */,
 				341200F6293754B900C77050 /* RealtimeStationArrival.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
@@ -449,8 +498,11 @@
 				34C6DB93293627AF00C4ED80 /* DefaultView.swift in Sources */,
 				34C6DB92293627AF00C4ED80 /* DefaultViewModel.swift in Sources */,
 				34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */,
+				34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */,
+				34A17473293E00010086870F /* SearchInfoBySubwayNameService.swift in Sources */,
 				34CA55962938934C0006F67B /* GroupViewModel.swift in Sources */,
 				341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */,
+				34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */,
 				34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */,
 				34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */,
 			);

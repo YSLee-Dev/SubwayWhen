@@ -10,6 +10,7 @@ import Foundation
 struct SaveStation : Codable{
     let id : String
     let stationName : String
+    let stationCode : String
     let updnLine : String
     let line : String
     let lineCode : String

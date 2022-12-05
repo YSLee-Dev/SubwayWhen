@@ -16,7 +16,7 @@ struct ModalViewModel {
     let modalClose : Driver<Void>
     
     // INPUT
-    let clickCellData = BehaviorRelay<searchStationInfo>(value: searchStationInfo(stationName: "NOT", lineNumber: .not))
+    let clickCellData = BehaviorRelay<searchStationInfo>(value: searchStationInfo(stationName: "NOT", lineNumber: .not, stationCode: ""))
     let upDownBtnClick = PublishRelay<Bool>()
     let grayBgClick = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)

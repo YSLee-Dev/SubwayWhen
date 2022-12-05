@@ -48,7 +48,7 @@ class SearchViewModel {
         
         let saveStationInfo = Observable
             .combineLatest(self.resultViewModel.cellClick, modalViewModel.groupClick, modalViewModel.exceptionLastStationText){
-                return SaveStation(id: UUID().uuidString, stationName: $0.stationName, updnLine: "", line: $0.lineNumber.rawValue, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
+                SaveStation(id: UUID().uuidString, stationName: $0.stationName, stationCode: $0.stationCode, updnLine: "", line: $0.lineNumber.rawValue, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
             }
         
         modalViewModel.upDownBtnClick
@@ -59,8 +59,7 @@ class SearchViewModel {
                 }else{
                     updown = $0 ? "상행" : "하행"
                 }
-            
-                FixInfo.saveStation.append(SaveStation(id: $1.id, stationName: $1.stationName, updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
+                FixInfo.saveStation.append(SaveStation(id: $1.id, stationName: $1.stationName, stationCode: $1.stationCode ,updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
                 return Void()
             }
             .bind(to: self.serachBarViewModel.updnLineClick)
