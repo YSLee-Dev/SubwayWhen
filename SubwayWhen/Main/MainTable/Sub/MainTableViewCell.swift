@@ -14,30 +14,31 @@ class MainTableViewCell : UITableViewCell{
     
     var mainBG = UIView().then{
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 10
-        $0.backgroundColor = .secondarySystemBackground
+        $0.layer.cornerRadius = 15
     }
     
-    var line = UILabel().then{
+    lazy var line = UILabel().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 30
         $0.textColor = .white
         $0.textAlignment = .center
         $0.font = .boldSystemFont(ofSize: 14)
+        $0.backgroundColor = self.grayAlpha
     }
     
     var station = UILabel().then{
-        $0.textColor = .systemGray
+        $0.textColor = .white
         $0.font = .systemFont(ofSize: 14)
     }
     
     var now = UILabel().then{
         $0.font = .boldSystemFont(ofSize: 16)
         $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        $0.textColor = .white
     }
     
     var arrivalTime = UILabel().then{
-        $0.textColor = .systemRed
+        $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: 18)
         $0.textAlignment = .right
         
@@ -49,6 +50,21 @@ class MainTableViewCell : UITableViewCell{
         $0.axis = .vertical
     }
     
+    lazy var changeBtn = UIButton().then{
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = self.grayAlpha
+        $0.setTitle("실시간", for: .normal)
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
+    }
+    
+    lazy var border = UIView().then{
+        $0.layer.borderColor = self.grayAlpha.cgColor
+        $0.layer.borderWidth = 0.5
+    }
+    
+    var grayAlpha = UIColor.black.withAlphaComponent(0.15)
+    
     func cellSet(){
         self.selectionStyle = .none
         
@@ -58,13 +74,12 @@ class MainTableViewCell : UITableViewCell{
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        [self.line, self.nowStackView, self.arrivalTime].forEach{
+        [self.line, self.nowStackView, self.arrivalTime, self.changeBtn, self.border].forEach{
             self.mainBG.addSubview($0)
         }
         self.line.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
-            $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(60)
+            $0.leading.top.equalToSuperview().inset(15)
+            $0.size.equalTo(60)
         }
         
         self.nowStackView.snp.makeConstraints{
@@ -76,14 +91,30 @@ class MainTableViewCell : UITableViewCell{
         self.nowStackView.addArrangedSubview(self.station)
         self.nowStackView.addArrangedSubview(self.now)
         
+        self.changeBtn.snp.makeConstraints{
+            $0.trailing.equalToSuperview().inset(15)
+            $0.width.equalTo(80)
+            $0.height.equalTo(30)
+            $0.top.equalTo(self.nowStackView.snp.bottom).offset(15)
+        }
+        
+        self.border.snp.makeConstraints{
+            $0.leading.equalTo(self.line)
+            $0.trailing.equalTo(self.changeBtn.snp.leading)
+            $0.top.equalTo(self.changeBtn.snp.bottom).inset(15)
+            $0.height.equalTo(0.5)
+        }
+        
         self.arrivalTime.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(15)
             $0.leading.equalTo(self.nowStackView.snp.trailing)
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(self.changeBtn.snp.bottom).offset(15)
+            $0.height.equalTo(30)
+            $0.bottom.equalToSuperview().inset(15)
         }
     }
     
     func lineColor(line : String){
-        self.line.backgroundColor = UIColor(named: line)
+        self.mainBG.backgroundColor = UIColor(named: line)
     }
 }
