@@ -18,10 +18,12 @@ struct SearchInfoBySubwayNameService : Decodable{
 struct searchStationInfo : Decodable{
     let stationName : String
     let lineNumber : line
+    let stationCode : String
     
     enum CodingKeys : String, CodingKey{
         case stationName = "STATION_NM"
         case lineNumber = "LINE_NUM"
+        case stationCode = "STATION_CD"
     }
     
     enum line : String, Decodable{

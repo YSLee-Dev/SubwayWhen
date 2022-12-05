@@ -19,9 +19,15 @@ class MainViewModel{
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let totalData = PublishRelay<[RealtimeStationArrival]>()
+    private let totalData = PublishRelay<[MainTableViewCellData]>()
+    
+    // OUTPUT
+    let stationPlusBtnClick : Driver<Void>
     
     init(){
+        self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
+            .asDriver(onErrorDriveWith: .empty())
+        
         self.mainTableViewModel.refreshOn
             .flatMap{
                 self.model.totalLiveDataLoad()
@@ -32,7 +38,7 @@ class MainViewModel{
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
         Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
             return data.filter{
-                $0.group ?? "" == group.rawValue
+                $0.group == group.rawValue
             }
         }
         .bind(to: self.mainTableViewModel.resultData)
@@ -42,7 +48,7 @@ class MainViewModel{
         self.mainTableViewModel.cellDelete
             .map{ data in
                 for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == data.id ?? "" {
+                    if x.element.id == data.id {
                         FixInfo.saveStation.remove(at: x.offset)
                     }
                 }

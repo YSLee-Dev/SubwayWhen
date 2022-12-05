@@ -26,7 +26,6 @@ extension MainVC{
     private func attibute(){
         self.view.backgroundColor = .systemBackground
         self.navigationItem.title = "홈"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func layout(){
@@ -51,6 +50,7 @@ extension MainVC{
         self.mainTableView.bind(viewModel.mainTableViewModel)
         self.groupView.bind(viewModel.groupViewModel)
         
+        // VIEW
         self.navigationItem.rightBarButtonItem?.rx.tap
             .map{[weak self] _ in
                 if self?.navigationItem.rightBarButtonItem!.title == "편집"{
@@ -63,5 +63,19 @@ extension MainVC{
             }
             .bind(to: viewModel.mainTableViewModel.editBtnClick)
             .disposed(by: self.bag)
+        
+        // VIEWMODEL -> VIEW
+        viewModel.stationPlusBtnClick
+            .drive(self.rx.tapChange)
+            .disposed(by: self.bag)
+        
+    }
+}
+
+extension Reactive where Base : MainVC {
+    var tapChange : Binder<Void>{
+        return Binder(base){base, _ in
+            base.tabBarController?.selectedIndex = 1
+        }
     }
 }

@@ -21,6 +21,8 @@ class MainTableView : UITableView{
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
     
+    let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 75))
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.attribute()
@@ -34,16 +36,20 @@ class MainTableView : UITableView{
 extension MainTableView{
     private func attribute(){
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
+        self.register(MainTableViewFooterView.self, forHeaderFooterViewReuseIdentifier: "MainFooter")
         self.dataSource = nil
-        self.rowHeight = 100
+        self.rowHeight = 185
         self.separatorStyle = .none
         self.refreshControl = self.refresh
+        self.tableFooterView = self.footerView
     }
     
     func bind(_ viewModel : MainTableViewModel){
+        self.footerView.bind(viewModel.mainTableViewFooterViewModel)
+        
         // VIEWMODEl -> VIEW
         viewModel.cellData
-            .drive(self.rx.items){ tv, row, data in
+            .drive(self.rx.items){[weak self] tv, row, data in
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: IndexPath(row: row, section: 0)) as? MainTableViewCell else {return UITableViewCell()}
                 
                 cell.cellSet()
@@ -52,7 +58,14 @@ extension MainTableView{
                 
                 cell.arrivalTime.text = "\(data.useTime)"
                 cell.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
-                cell.lineColor(line: data.lineNumber!)
+                cell.lineColor(line: data.lineNumber)
+                
+                cell.changeBtn.rx.tap
+                    .map{
+                        data
+                    }
+                    .bind(to: viewModel.cellTimeChangeBtnClick)
+                    .disposed(by: self?.bag ?? DisposeBag())
                 
                 return cell
             }
@@ -67,7 +80,7 @@ extension MainTableView{
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
         
-        self.rx.modelDeleted(RealtimeStationArrival.self)
+        self.rx.modelDeleted(MainTableViewCellData.self)
             .bind(to: viewModel.cellDelete)
             .disposed(by: self.bag)
         
