@@ -7,10 +7,15 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import Then
 import SnapKit
 
 class MainTableViewCell : UITableViewCell{
+    
+    var id = ""
+    var bag = DisposeBag()
     
     var mainBG = UIView().then{
         $0.layer.masksToBounds = true
@@ -65,9 +70,33 @@ class MainTableViewCell : UITableViewCell{
     
     var grayAlpha = UIColor.black.withAlphaComponent(0.15)
     
-    func cellSet(){
-        self.selectionStyle = .none
-        
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.layout()
+        self.attibute()
+    }
+    
+    override func prepareForReuse() {
+        self.bag = DisposeBag()
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func cellSet(id : String, cellModel : MainTableViewCellModel){
+        self.id = id
+        self.bind(cellModel)
+    }
+    
+    func lineColor(line : String){
+        self.mainBG.backgroundColor = UIColor(named: line)
+    }
+}
+
+extension MainTableViewCell{
+    private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
             $0.top.bottom.equalToSuperview().inset(7.5)
@@ -114,7 +143,16 @@ class MainTableViewCell : UITableViewCell{
         }
     }
     
-    func lineColor(line : String){
-        self.mainBG.backgroundColor = UIColor(named: line)
+    private func attibute(){
+        self.selectionStyle = .none
+    }
+    
+    func bind(_ viewModel : MainTableViewCellModel){
+        self.changeBtn.rx.tap
+            .map{
+                self.id
+            }
+            .bind(to: viewModel.cellTimeChangeBtnClick)
+            .disposed(by: self.bag)
     }
 }

@@ -58,7 +58,7 @@ class MainModel {
                 guard case .success(let value) = data else {return .never()}
                 return Observable.from(value)
             }
-            
+        
         let liveStation = saveStation
             .concatMap{
                 self.stationArrivalRequest(stationName: $0.stationName)
@@ -68,7 +68,7 @@ class MainModel {
             }
             .filter{$0 != nil}
         
-      return Observable
+        return Observable
             .zip(saveStation, liveStation){ station, data -> MainTableViewCellData in
                 for x in data!.realtimeArrivalList{
                     if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
@@ -91,7 +91,7 @@ class MainModel {
         
         var weekday = 0
         let today = Calendar.current.component(.weekday, from: Date())
-       
+        
         if today == 0{
             weekday = 3
         }else if today == 6{
@@ -101,10 +101,8 @@ class MainModel {
         }
         
         guard let url = URL(string: "http://openapi.seoul.go.kr:8088/4a7242674979736c37346143586d63/json/SearchSTNTimeTableByFRCodeService/1/\(count)/\(scheduleSearch.stationCode)/\(weekday)/\(inOut)") else {return .just(.failure(.init(.badURL)))}
-        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
         return self.session.rx.data(request: request)
             .map{
                 do{
@@ -119,35 +117,34 @@ class MainModel {
     }
     
     // 현재 시각에 맞는 지하철 시간표
-    func nowScheduleStationLoad(scheduleSearch : ScheduleSearch) -> Single<Result<ScheduleStationArrival, URLError>>{
-        var count = 300
-        
+    func nowScheduleStationLoad(scheduleSearch : ScheduleSearch) -> Observable<ScheduleStationArrival>{
+        let count = 300
         let inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
+        guard let now = Int("\(Calendar.current.component(.hour, from: Date()))\(Calendar.current.component(.minute, from: Date()))\(Calendar.current.component(.second, from: Date()))") else {return .empty()}
         
-        let now = "\(Calendar.current.component(.hour, from: Date())):\(Calendar.current.component(.minute, from: Date())):\(Calendar.current.component(.second, from: Date()))"
-        
-        
-       return Observable.just(scheduleSearch)
-            .flatMap{
-                self.scheduleStationLoad(scheduleSearch: $0, count: count)
-            }
+        let schedule = self.scheduleStationLoad(scheduleSearch: scheduleSearch, count: count)
             .map{ data -> [ScheduleStationArrival]? in
                 guard case .success(let value) = data else {return nil}
                 return value.SearchSTNTimeTableByFRCodeService.row
             }
             .filter{$0 != nil}
             .map{$0!}
-            .map{ data in
-                let schedule = data.filter{
-                    if now <= $0.startTime && $0.upDown == inOut && $0.lastStation != scheduleSearch.exceptionLastStation{
-                        return true
-                    }else{
-                        return false
-                    }
+            .asObservable()
+        
+        return schedule.map{ data -> ScheduleStationArrival? in
+            let scheduleData = data.filter{
+                guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
+               
+                if now <= scheduleTime && inOut == $0.upDown && scheduleSearch.exceptionLastStation != $0.lastStation{
+                    return true
+                }else{
+                    return false
                 }
-                guard let returnSchedule = schedule.first else {return .failure(.init(.dataNotAllowed))}
-                return .success(returnSchedule)
             }
-            .asSingle()
+            guard let first = scheduleData.first else {return nil}
+            return first
+        }
+        .filter{$0 != nil}
+        .map{$0!}
     }
 }

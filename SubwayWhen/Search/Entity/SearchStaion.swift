@@ -23,7 +23,7 @@ struct searchStationInfo : Decodable{
     enum CodingKeys : String, CodingKey{
         case stationName = "STATION_NM"
         case lineNumber = "LINE_NUM"
-        case stationCode = "STATION_CD"
+        case stationCode = "FR_CODE"
     }
     
     enum line : String, Decodable{

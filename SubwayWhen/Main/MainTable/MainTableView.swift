@@ -9,7 +9,6 @@ import Foundation
 
 import Then
 import SnapKit
-
 import RxSwift
 import RxCocoa
 
@@ -49,10 +48,11 @@ extension MainTableView{
         
         // VIEWMODEl -> VIEW
         viewModel.cellData
-            .drive(self.rx.items){[weak self] tv, row, data in
+            .drive(self.rx.items){tv, row, data in
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: IndexPath(row: row, section: 0)) as? MainTableViewCell else {return UITableViewCell()}
+           
+                cell.cellSet(id: data.id, cellModel: viewModel.mainTableViewCellModel)
                 
-                cell.cellSet()
                 cell.station.text = "\(data.stationName) | \(data.lastStation)"
                 cell.line.text = data.useLine
                 
@@ -60,19 +60,16 @@ extension MainTableView{
                 cell.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
                 cell.lineColor(line: data.lineNumber)
                 
-                cell.changeBtn.rx.tap
-                    .map{
-                        data
-                    }
-                    .bind(to: viewModel.cellTimeChangeBtnClick)
-                    .disposed(by: self?.bag ?? DisposeBag())
-                
                 return cell
             }
             .disposed(by: self.bag)
         
         viewModel.editBtnClick
             .bind(to: self.rx.isEditing)
+            .disposed(by: self.bag)
+        
+        viewModel.cellScheduleChange
+            .bind(to: self.rx.changeScheduleBtn)
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
@@ -92,5 +89,14 @@ extension MainTableView{
             .asSignal(onErrorJustReturn: ())
             .emit(to: viewModel.refreshOn)
             .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base : MainTableView{
+    var changeScheduleBtn : Binder<IndexPath>{
+        return Binder(base){base, indexpath in
+           let cell =  base.cellForRow(at: indexpath) as? MainTableViewCell
+            cell?.changeBtn.setTitle("시간표", for: .normal)
+        }
     }
 }
