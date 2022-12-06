@@ -23,6 +23,7 @@
 		34A1746F293DEE170086870F /* ScheduleStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746E293DEE170086870F /* ScheduleStationArrival.swift */; };
 		34A17473293E00010086870F /* SearchInfoBySubwayNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */; };
 		34A17475293E04340086870F /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17474293E04340086870F /* ScheduleSearch.swift */; };
+		34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1747A293F3C870086870F /* MainTableViewCellModel.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
 		34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB562936274400C4ED80 /* SceneDelegate.swift */; };
 		34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */; };
@@ -70,6 +71,7 @@
 		34A1746E293DEE170086870F /* ScheduleStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStationArrival.swift; sourceTree = "<group>"; };
 		34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoBySubwayNameService.swift; sourceTree = "<group>"; };
 		34A17474293E04340086870F /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
+		34A1747A293F3C870086870F /* MainTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellModel.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34C6DB542936274400C4ED80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34C6DB562936274400C4ED80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,8 +147,9 @@
 		341200FA2937566B00C77050 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				34A17469293DD2E40086870F /* MainTableViewFooter */,
 				341200F82937566800C77050 /* MainTableViewCell.swift */,
+				34A1747A293F3C870086870F /* MainTableViewCellModel.swift */,
+				34A17469293DD2E40086870F /* MainTableViewFooter */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewCell.swift in Sources */,
 				34A17475293E04340086870F /* ScheduleSearch.swift in Sources */,
+				34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */,
 				341200FE29375A7300C77050 /* MainModel.swift in Sources */,
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
 				34A17464293DBE220086870F /* ScheduleStationModel.swift in Sources */,
