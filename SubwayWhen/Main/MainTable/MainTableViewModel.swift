@@ -16,15 +16,17 @@ struct MainTableViewModel{
     
     // MODEL
     let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
+    let mainTableViewCellModel = MainTableViewCellModel()
     
     // INPUT
     let cellClick = PublishRelay<IndexPath>()
     let cellDelete = PublishRelay<MainTableViewCellData>()
-    let cellTimeChangeBtnClick = PublishRelay<MainTableViewCellData>()
+    let cellTimeChangeBtnClick = PublishRelay<String>()
     
     let resultData = PublishRelay<[MainTableViewCellData]>()
     let refreshOn = BehaviorRelay<Void>(value: Void())
     let editBtnClick = PublishRelay<Bool>()
+    let cellScheduleChange = PublishRelay<IndexPath>()
     
     init(){
         self.cellData = self.resultData

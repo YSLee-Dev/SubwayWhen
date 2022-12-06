@@ -19,15 +19,18 @@ class MainViewModel{
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let totalData = PublishRelay<[MainTableViewCellData]>()
+    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     
     // OUTPUT
     let stationPlusBtnClick : Driver<Void>
     
     init(){
+        // footer 버튼 클릭 시
         self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
+        
+        // 리프레시 할 때 데이터 로드
         self.mainTableViewModel.refreshOn
             .flatMap{
                 self.model.totalLiveDataLoad()
@@ -57,5 +60,42 @@ class MainViewModel{
             }
             .bind(to: self.mainTableViewModel.refreshOn)
             .disposed(by: self.bag)
+        
+        // 시간표 버튼 클릭 시
+        let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
+            .map{ id -> Int? in
+                for x in FixInfo.saveStation.enumerated() {
+                    if x.element.id == id{
+                        return x.offset
+                    }
+                }
+                return nil
+            }
+            .filter{$0 != nil}
+            .map{$0!}
+        
+        let scheduleData = clickCellRow
+                   .map{ id -> ScheduleSearch in
+                       let nowData = FixInfo.saveStation[id]
+                       return ScheduleSearch(stationCode: nowData.stationCode, upDown: nowData.updnLine, exceptionLastStation: nowData.exceptionLastStation)
+                   }
+                   .flatMap{
+                       self.model.nowScheduleStationLoad(scheduleSearch: $0)
+                   }
+               
+               Observable
+                     .combineLatest(clickCellRow, scheduleData){ row, data in
+                         let nowData = self.totalData.value[row]
+                         let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "", subPrevious: data.startTime, code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode)
+                         
+                         var now = self.totalData.value
+                         now[row] = newData
+                         self.totalData.accept(now)
+                         
+                         return IndexPath(row: row, section: 0)
+                     }
+                     .bind(to: self.mainTableViewModel.cellScheduleChange)
+                     .disposed(by: self.bag)
+        
     }
 }
