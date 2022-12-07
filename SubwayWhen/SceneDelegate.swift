@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30),
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 28),
         ]
         UINavigationBar.appearance().prefersLargeTitles = true
         

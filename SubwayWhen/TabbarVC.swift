@@ -19,7 +19,6 @@ class TabbarVC : UITabBarController{
     }
     
     override func viewDidLoad() {
-        self.mainVC.bind(MainViewModel())
         self.searchVC.bind(SearchViewModel())
         
         self.viewControllers = [UINavigationController(rootViewController: self.mainVC), UINavigationController(rootViewController: self.searchVC)]

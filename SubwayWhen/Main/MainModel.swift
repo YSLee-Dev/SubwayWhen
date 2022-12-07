@@ -87,8 +87,22 @@ class MainModel {
     
     // 지하철 시간표 데이터 통신
     private func scheduleStationLoad(scheduleSearch : ScheduleSearch, count: Int) -> Single<Result<ScheduleStationModel, URLError>>{
-        let inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? 1 : 2
+        // 코레일 시간표 지원하지 않음
+        if scheduleSearch.stationCode.contains("K"){
+            return .just(.failure(.init(.badURL)))
+        }
         
+        // 상하행
+        var inOut = 0
+        
+        // 9호선은 상하행이 반대
+        if scheduleSearch.line == "09호선"{
+            inOut = scheduleSearch.upDown.contains("상행") ? 2 : 1
+        }else{
+            inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? 1 : 2
+        }
+        
+        // 평일, 주말, 공휴일 여부
         var weekday = 0
         let today = Calendar.current.component(.weekday, from: Date())
         
@@ -119,8 +133,16 @@ class MainModel {
     // 현재 시각에 맞는 지하철 시간표
     func nowScheduleStationLoad(scheduleSearch : ScheduleSearch) -> Observable<ScheduleStationArrival>{
         let count = 300
-        let inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
-        guard let now = Int("\(Calendar.current.component(.hour, from: Date()))\(Calendar.current.component(.minute, from: Date()))\(Calendar.current.component(.second, from: Date()))") else {return .empty()}
+        var inOut = ""
+        
+        // 9호선은 상하행이 반대
+        if scheduleSearch.line == "09호선"{
+            inOut = scheduleSearch.upDown.contains("상행") ? "2" : "1"
+        }else{
+            inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
+        }
+        
+        guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
         
         let schedule = self.scheduleStationLoad(scheduleSearch: scheduleSearch, count: count)
             .map{ data -> [ScheduleStationArrival]? in
@@ -134,8 +156,7 @@ class MainModel {
         return schedule.map{ data -> ScheduleStationArrival? in
             let scheduleData = data.filter{
                 guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
-               
-                if now <= scheduleTime && inOut == $0.upDown && scheduleSearch.exceptionLastStation != $0.lastStation{
+                if scheduleSearch.stationCode == $0.stationCode && now <= scheduleTime && inOut == $0.upDown && !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
                     return true
                 }else{
                     return false
@@ -146,5 +167,11 @@ class MainModel {
         }
         .filter{$0 != nil}
         .map{$0!}
+    }
+    
+    private func timeFormatter(date : Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HHmmss"
+        return formatter.string(from: date)
     }
 }

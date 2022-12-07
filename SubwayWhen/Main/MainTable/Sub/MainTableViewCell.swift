@@ -20,6 +20,8 @@ class MainTableViewCell : UITableViewCell{
     var mainBG = UIView().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
+        $0.backgroundColor = UIColor(named: "MainColor")
+        $0.layer.borderWidth = 1.0
     }
     
     lazy var line = UILabel().then{
@@ -28,25 +30,23 @@ class MainTableViewCell : UITableViewCell{
         $0.textColor = .white
         $0.textAlignment = .center
         $0.font = .boldSystemFont(ofSize: 14)
-        $0.backgroundColor = self.grayAlpha
     }
     
     var station = UILabel().then{
-        $0.textColor = .white
         $0.font = .systemFont(ofSize: 14)
+        $0.textColor = .label
     }
     
     var now = UILabel().then{
         $0.font = .boldSystemFont(ofSize: 16)
         $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        $0.textColor = .white
+        $0.textColor = .label
     }
     
     var arrivalTime = UILabel().then{
-        $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: 18)
         $0.textAlignment = .right
-        
+        $0.textColor = .label
     }
     
     var nowStackView = UIStackView().then{
@@ -58,17 +58,14 @@ class MainTableViewCell : UITableViewCell{
     lazy var changeBtn = UIButton().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
-        $0.backgroundColor = self.grayAlpha
-        $0.setTitle("실시간", for: .normal)
+        $0.setImage(UIImage(systemName: "timer"), for: .normal)
+        $0.tintColor = .white
         $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
     }
     
     lazy var border = UIView().then{
-        $0.layer.borderColor = self.grayAlpha.cgColor
-        $0.layer.borderWidth = 0.5
+        $0.layer.borderWidth = 1.0
     }
-    
-    var grayAlpha = UIColor.black.withAlphaComponent(0.15)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,8 +73,11 @@ class MainTableViewCell : UITableViewCell{
         self.attibute()
     }
     
+    // 재사용 시 초기화 구문
     override func prepareForReuse() {
         self.bag = DisposeBag()
+        self.changeBtn.setImage(UIImage(systemName: "timer"), for: .normal)
+        
     }
     
     
@@ -85,13 +85,27 @@ class MainTableViewCell : UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSet(id : String, cellModel : MainTableViewCellModel){
-        self.id = id
+    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewCellModel){
+        self.id = data.id
         self.bind(cellModel)
+        
+        self.station.text = "\(data.stationName) | \(data.lastStation)"
+        self.line.text = data.useLine
+        
+        self.arrivalTime.text = "\(data.useTime)"
+        self.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
+        self.lineColor(line: data.lineNumber)
+        
+        if data.stationCode.contains("K"){
+            self.changeBtn.setImage(UIImage(systemName: "xmark"), for: .normal)
+        }
     }
     
     func lineColor(line : String){
-        self.mainBG.backgroundColor = UIColor(named: line)
+        self.mainBG.layer.borderColor = UIColor(named: line)?.cgColor
+        self.border.layer.borderColor = UIColor(named: line)?.cgColor
+        self.line.backgroundColor = UIColor(named: line)
+        self.changeBtn.backgroundColor = UIColor(named: line)
     }
 }
 
@@ -131,7 +145,7 @@ extension MainTableViewCell{
             $0.leading.equalTo(self.line)
             $0.trailing.equalTo(self.changeBtn.snp.leading)
             $0.top.equalTo(self.changeBtn.snp.bottom).inset(15)
-            $0.height.equalTo(0.5)
+            $0.height.equalTo(1)
         }
         
         self.arrivalTime.snp.makeConstraints{

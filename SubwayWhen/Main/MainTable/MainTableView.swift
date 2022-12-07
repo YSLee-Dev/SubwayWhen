@@ -51,14 +51,7 @@ extension MainTableView{
             .drive(self.rx.items){tv, row, data in
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: IndexPath(row: row, section: 0)) as? MainTableViewCell else {return UITableViewCell()}
            
-                cell.cellSet(id: data.id, cellModel: viewModel.mainTableViewCellModel)
-                
-                cell.station.text = "\(data.stationName) | \(data.lastStation)"
-                cell.line.text = data.useLine
-                
-                cell.arrivalTime.text = "\(data.useTime)"
-                cell.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
-                cell.lineColor(line: data.lineNumber)
+                cell.cellSet(data: data, cellModel: viewModel.mainTableViewCellModel)
                 
                 return cell
             }
@@ -67,11 +60,7 @@ extension MainTableView{
         viewModel.editBtnClick
             .bind(to: self.rx.isEditing)
             .disposed(by: self.bag)
-        
-        viewModel.cellScheduleChange
-            .bind(to: self.rx.changeScheduleBtn)
-            .disposed(by: self.bag)
-        
+
         // VIEW -> VIEWMODEL
         self.rx.itemSelected
             .bind(to: viewModel.cellClick)
@@ -89,14 +78,5 @@ extension MainTableView{
             .asSignal(onErrorJustReturn: ())
             .emit(to: viewModel.refreshOn)
             .disposed(by: self.bag)
-    }
-}
-
-extension Reactive where Base : MainTableView{
-    var changeScheduleBtn : Binder<IndexPath>{
-        return Binder(base){base, indexpath in
-           let cell =  base.cellForRow(at: indexpath) as? MainTableViewCell
-            cell?.changeBtn.setTitle("시간표", for: .normal)
-        }
     }
 }
