@@ -18,12 +18,14 @@ class MainTableViewFooterView : UITableViewHeaderFooterView {
     var mainBG = UIView().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
-        $0.backgroundColor = .secondarySystemBackground
+        $0.backgroundColor =  UIColor(named: "MainColor")
+        $0.layer.borderColor = UIColor.gray.cgColor
+        $0.layer.borderWidth = 1.0
     }
     
     var plusBtn = UIButton(type: .custom).then{
-        $0.setBackgroundImage(UIImage(systemName: "plus.app"), for: .normal)
-        $0.tintColor = .label
+        $0.setBackgroundImage(UIImage(systemName: "plus"), for: .normal)
+        $0.tintColor = .gray
     }
     
     override init(reuseIdentifier: String?) {

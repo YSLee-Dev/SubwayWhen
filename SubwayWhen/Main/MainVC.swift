@@ -15,10 +15,18 @@ class MainVC : UIViewController{
     
     let mainTableView = MainTableView()
     let groupView = GroupView()
+    let mainViewModel = MainViewModel()
     
     override func viewDidLoad() {
         self.attibute()
         self.layout()
+        self.bind(self.mainViewModel)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // view 다시 들어올 때 리프레시
+        self.mainViewModel.reloadData
+            .accept(Void())
     }
 }
  
@@ -43,7 +51,7 @@ extension MainVC{
         }
     }
     
-    func bind(_ viewModel : MainViewModel){
+    private func bind(_ viewModel : MainViewModel){
         // Bind 함수가 메모리에 먼저 올라감
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "편집", style: .done, target: self, action: nil)
         
