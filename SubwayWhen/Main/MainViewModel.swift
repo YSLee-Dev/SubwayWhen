@@ -21,14 +21,21 @@ class MainViewModel{
     // 현재 데이터
     private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     
+    // INPUT
+    let reloadData = PublishRelay<Void>()
+    
     // OUTPUT
     let stationPlusBtnClick : Driver<Void>
     
     init(){
+        // view 다시 들어올 때 리프레시
+        self.reloadData
+            .bind(to: self.mainTableViewModel.refreshOn)
+            .disposed(by: self.bag)
+        
         // footer 버튼 클릭 시
         self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
             .asDriver(onErrorDriveWith: .empty())
-        
         
         // 리프레시 할 때 데이터 로드
         self.mainTableViewModel.refreshOn
@@ -39,13 +46,15 @@ class MainViewModel{
             .disposed(by: self.bag)
         
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
-        Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
+        let groupData = Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
             return data.filter{
                 $0.group == group.rawValue
             }
         }
-        .bind(to: self.mainTableViewModel.resultData)
-        .disposed(by: self.bag)
+        
+        groupData
+            .bind(to: self.mainTableViewModel.resultData)
+            .disposed(by: self.bag)
         
         // 데이터 삭제
         self.mainTableViewModel.cellDelete
@@ -75,27 +84,27 @@ class MainViewModel{
             .map{$0!}
         
         let scheduleData = clickCellRow
-                   .map{ id -> ScheduleSearch in
-                       let nowData = FixInfo.saveStation[id]
-                       return ScheduleSearch(stationCode: nowData.stationCode, upDown: nowData.updnLine, exceptionLastStation: nowData.exceptionLastStation)
-                   }
-                   .flatMap{
-                       self.model.nowScheduleStationLoad(scheduleSearch: $0)
-                   }
-               
-               Observable
-                     .combineLatest(clickCellRow, scheduleData){ row, data in
-                         let nowData = self.totalData.value[row]
-                         let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "", subPrevious: data.startTime, code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode)
-                         
-                         var now = self.totalData.value
-                         now[row] = newData
-                         self.totalData.accept(now)
-                         
-                         return IndexPath(row: row, section: 0)
-                     }
-                     .bind(to: self.mainTableViewModel.cellScheduleChange)
-                     .disposed(by: self.bag)
+            .map{ id -> ScheduleSearch in
+                let nowData = FixInfo.saveStation[id]
+                return ScheduleSearch(stationCode: nowData.stationCode, upDown: nowData.updnLine, exceptionLastStation: nowData.exceptionLastStation, line: nowData.line)
+            }
+            .flatMap{
+                self.model.nowScheduleStationLoad(scheduleSearch: $0)
+            }
+        
+        
+        scheduleData
+            .withLatestFrom(clickCellRow){ data, row in
+                let nowData = self.totalData.value[row]
+                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: data.startTime, subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode)
+                
+                var now = self.totalData.value
+                now[row] = newData
+                
+                return now
+            }
+            .bind(to: self.totalData)
+            .disposed(by: self.bag)
         
     }
 }

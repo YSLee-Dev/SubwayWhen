@@ -21,12 +21,10 @@ struct MainTableViewModel{
     // INPUT
     let cellClick = PublishRelay<IndexPath>()
     let cellDelete = PublishRelay<MainTableViewCellData>()
-    let cellTimeChangeBtnClick = PublishRelay<String>()
     
     let resultData = PublishRelay<[MainTableViewCellData]>()
-    let refreshOn = BehaviorRelay<Void>(value: Void())
+    let refreshOn = PublishRelay<Void>()
     let editBtnClick = PublishRelay<Bool>()
-    let cellScheduleChange = PublishRelay<IndexPath>()
     
     init(){
         self.cellData = self.resultData

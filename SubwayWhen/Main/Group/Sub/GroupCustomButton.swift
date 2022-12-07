@@ -23,18 +23,17 @@ extension GroupCustomButton {
         self.layer.cornerRadius = 15
         self.layer.masksToBounds = true
         self.titleLabel?.font = .systemFont(ofSize: 16)
+        self.layer.borderColor = UIColor.gray.cgColor
+        self.backgroundColor = UIColor(named: "MainColor")
     }
     
     func seleted(){
-        self.backgroundColor = .systemGray
-        self.setTitleColor(.white, for: .normal)
+        self.setTitleColor(.label, for: .normal)
+        self.layer.borderWidth = 1.0
     }
     
     func unSeleted(){
-        self.layer.borderColor = UIColor.systemGray.cgColor
-        self.layer.borderWidth = 0.5
-        self.layer.masksToBounds = true
-        self.backgroundColor = .clear
         self.setTitleColor(.systemGray, for: .normal)
+        self.layer.borderWidth = 0.0
     }
 }
