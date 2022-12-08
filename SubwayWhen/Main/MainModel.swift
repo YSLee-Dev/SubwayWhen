@@ -61,7 +61,7 @@ class MainModel {
         
         let liveStation = saveStation
             .concatMap{
-                self.stationArrivalRequest(stationName: $0.stationName)
+                self.stationArrivalRequest(stationName: $0.useStationName)
             }.map{ data -> LiveStationModel? in
                 guard case .success(let value) = data else {return nil}
                 return value
@@ -71,7 +71,7 @@ class MainModel {
         return Observable
             .zip(saveStation, liveStation){ station, data -> MainTableViewCellData in
                 for x in data!.realtimeArrivalList{
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.useStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode)
                     }
                 }

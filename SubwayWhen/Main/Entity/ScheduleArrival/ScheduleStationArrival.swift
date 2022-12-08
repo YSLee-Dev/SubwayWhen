@@ -29,7 +29,9 @@ struct ScheduleStationArrival : Decodable{
         let timeCut = self.startTime.components(separatedBy: ":")
         
         guard let time = Calendar.current.date(from: DateComponents(year: now.component(.year, from: nowDate), month: now.component(.month, from: nowDate), day: now.component(.day, from: nowDate), hour: Int(timeCut[0]), minute: Int(timeCut[1]), second: Int(timeCut[2]))) else {return ""}
-       
-        return "\(Int(time.timeIntervalSinceNow)/60)"
+        
+        let minuteToScound = Int(time.timeIntervalSinceNow)/60
+        
+        return "\(minuteToScound)"
     }
 }
