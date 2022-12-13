@@ -19,7 +19,7 @@ class MainViewModel{
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let groupData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", items: [])])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
@@ -38,21 +38,21 @@ class MainViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         // 리프레시 할 때 데이터 로드
-        self.mainTableViewModel.refreshOn
+        let totalData = self.mainTableViewModel.refreshOn
             .flatMap{
                 self.model.totalLiveDataLoad()
             }
-            .bind(to: self.totalData)
-            .disposed(by: self.bag)
         
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
-        let groupData = Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
+       Observable.combineLatest(totalData, self.groupViewModel.groupSeleted){ data, group in
             return data.filter{
-                $0.group == group.rawValue
+                $0.section == group.rawValue
             }
         }
+       .bind(to: self.groupData)
+       .disposed(by: self.bag)
         
-        groupData
+        self.groupData
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
         
@@ -70,23 +70,15 @@ class MainViewModel{
             .bind(to: self.mainTableViewModel.refreshOn)
             .disposed(by: self.bag)
         
-        // 시간표 버튼 클릭 시
+        
         let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
-            .map{ id -> Int? in
-                for x in FixInfo.saveStation.enumerated() {
-                    if x.element.id == id{
-                        return x.offset
-                    }
-                }
-                return nil
+            .withLatestFrom(self.groupData){ id, data in
+                data[id.section].items[id.row]
             }
-            .filter{$0 != nil}
-            .map{$0!}
         
         let scheduleData = clickCellRow
-            .map{ id -> ScheduleSearch in
-                let nowData = FixInfo.saveStation[id]
-                return ScheduleSearch(stationCode: nowData.stationCode, upDown: nowData.updnLine, exceptionLastStation: nowData.exceptionLastStation, line: nowData.line)
+            .map{ item -> ScheduleSearch in
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber)
             }
             .flatMap{
                 self.model.nowScheduleStationLoad(scheduleSearch: $0)
@@ -94,16 +86,16 @@ class MainViewModel{
         
         
         scheduleData
-            .withLatestFrom(clickCellRow){ data, row in
-                let nowData = self.totalData.value[row]
-                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: data.startTime, subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode)
+            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ data, index in
+                let nowData = self.groupData.value[index.section].items[index.row]
+                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: data.startTime, subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: "")
                 
-                var now = self.totalData.value
-                now[row] = newData
+                var now = self.groupData.value
+                now[index.section].items[index.row] = newData
                 
                 return now
             }
-            .bind(to: self.totalData)
+            .bind(to: self.groupData)
             .disposed(by: self.bag)
         
     }

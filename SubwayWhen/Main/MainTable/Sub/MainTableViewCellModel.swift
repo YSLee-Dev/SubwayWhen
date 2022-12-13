@@ -11,5 +11,5 @@ import RxSwift
 import RxCocoa
 
 struct MainTableViewCellModel{
-    let cellTimeChangeBtnClick = PublishRelay<String>()
+    let cellTimeChangeBtnClick = PublishRelay<IndexPath>()
 }
