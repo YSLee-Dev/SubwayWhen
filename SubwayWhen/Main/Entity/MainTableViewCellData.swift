@@ -22,6 +22,7 @@ struct MainTableViewCellData : Decodable{
     let group : String
     let id : String
     let stationCode : String
+    let exceptionLastStation : String
     
     
     var useCode : String{

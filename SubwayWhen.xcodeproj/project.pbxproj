@@ -24,6 +24,7 @@
 		34A17473293E00010086870F /* SearchInfoBySubwayNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */; };
 		34A17475293E04340086870F /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17474293E04340086870F /* ScheduleSearch.swift */; };
 		34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1747A293F3C870086870F /* MainTableViewCellModel.swift */; };
+		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
 		34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB562936274400C4ED80 /* SceneDelegate.swift */; };
 		34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */; };
@@ -72,6 +73,7 @@
 		34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoBySubwayNameService.swift; sourceTree = "<group>"; };
 		34A17474293E04340086870F /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
 		34A1747A293F3C870086870F /* MainTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellModel.swift; sourceTree = "<group>"; };
+		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34C6DB542936274400C4ED80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34C6DB562936274400C4ED80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 		341200F7293754CC00C77050 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */,
 				34A17461293DBB180086870F /* MainTableViewCellData.swift */,
 				34A17465293DBF100086870F /* LiveArrival */,
 				34A17466293DBF240086870F /* ScheduleArrival */,
@@ -492,6 +495,7 @@
 				341200F6293754B900C77050 /* RealtimeStationArrival.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
+				34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */,
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				341200F4293754A200C77050 /* LiveStationModel.swift in Sources */,
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,

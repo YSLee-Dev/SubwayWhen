@@ -12,7 +12,7 @@ import RxCocoa
 
 struct MainTableViewModel{
     // OUTPUT
-    let cellData : Driver<[MainTableViewCellData]>
+    let cellData : Driver<[MainTableViewSection]>
     
     // MODEL
     let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
@@ -22,7 +22,7 @@ struct MainTableViewModel{
     let cellClick = PublishRelay<IndexPath>()
     let cellDelete = PublishRelay<MainTableViewCellData>()
     
-    let resultData = PublishRelay<[MainTableViewCellData]>()
+    let resultData = PublishRelay<[MainTableViewSection]>()
     let refreshOn = PublishRelay<Void>()
     let editBtnClick = PublishRelay<Bool>()
     

@@ -13,8 +13,7 @@ import Then
 import SnapKit
 
 class MainTableViewCell : UITableViewCell{
-    
-    var id = ""
+    var index = IndexPath(row: 0, section: 0)
     var bag = DisposeBag()
     
     var mainBG = UIView().then{
@@ -85,9 +84,9 @@ class MainTableViewCell : UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewCellModel){
-        self.id = data.id
+    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewCellModel, indexPath : IndexPath){
         self.bind(cellModel)
+        self.index = indexPath
         
         self.station.text = "\(data.stationName) | \(data.lastStation)"
         self.line.text = data.useLine
@@ -164,7 +163,7 @@ extension MainTableViewCell{
     func bind(_ viewModel : MainTableViewCellModel){
         self.changeBtn.rx.tap
             .map{
-                self.id
+                self.index
             }
             .bind(to: viewModel.cellTimeChangeBtnClick)
             .disposed(by: self.bag)

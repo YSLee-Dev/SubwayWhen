@@ -51,7 +51,7 @@ class MainModel {
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
-    func totalLiveDataLoad() -> Observable<[MainTableViewCellData]>{
+    func totalLiveDataLoad() -> Observable<[MainTableViewSection]>{
         let saveStation = self.realTimeStationLoad()
             .asObservable()
             .flatMap{ data -> Observable<SaveStation> in
@@ -69,16 +69,16 @@ class MainModel {
             .filter{$0 != nil}
         
         return Observable
-            .zip(saveStation, liveStation){ station, data -> MainTableViewCellData in
+            .zip(saveStation, liveStation){ station, data -> MainTableViewSection in
                 for x in data!.realtimeArrivalList{
                     if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.useStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
-                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode)
+                        return .init(section: "\(station.group)", items: [MainTableViewCellData(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
                     }
                 }
                 if station.lineCode != ""{
-                    return .init(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode)
+                    return .init(section: "\(station.group)", items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
                 }else{
-                    return .init(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode)
+                    return .init(section: "\(station.group)", items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
                 }
             }
             .toArray()

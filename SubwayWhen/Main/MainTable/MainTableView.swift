@@ -11,6 +11,7 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class MainTableView : UITableView{
     let bag = DisposeBag()
@@ -47,15 +48,17 @@ extension MainTableView{
         self.footerView.bind(viewModel.mainTableViewFooterViewModel)
         
         // VIEWMODEl -> VIEW
+        let dataSources = RxTableViewSectionedReloadDataSource<MainTableViewSection>{dataSource, tv, index, item in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
+       
+            cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
+            
+            return cell
+        }
         viewModel.cellData
-            .drive(self.rx.items){tv, row, data in
-                guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: IndexPath(row: row, section: 0)) as? MainTableViewCell else {return UITableViewCell()}
-           
-                cell.cellSet(data: data, cellModel: viewModel.mainTableViewCellModel)
-                
-                return cell
-            }
+            .drive(self.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
+        
         
         viewModel.editBtnClick
             .bind(to: self.rx.isEditing)
