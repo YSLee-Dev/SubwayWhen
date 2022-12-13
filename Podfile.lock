@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.4)
+  - Differentiator (5.0.0)
   - Firebase/Analytics (10.2.0):
     - Firebase/Core
   - Firebase/Core (10.2.0):
@@ -96,6 +97,10 @@ PODS:
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
@@ -108,6 +113,7 @@ DEPENDENCIES:
   - Firebase/Database
   - RxAlamofire
   - RxCocoa (= 6.5.0)
+  - RxDataSources
   - RxSwift (= 6.5.0)
   - SnapKit (~> 5.6.0)
   - Then
@@ -115,6 +121,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Differentiator
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -128,6 +135,7 @@ SPEC REPOS:
     - PromisesObjC
     - RxAlamofire
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
     - SnapKit
@@ -135,6 +143,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Firebase: a3ea7eba4382afd83808376edb99acdaff078dcf
   FirebaseAnalytics: 24a15e58e505abcedc3017b6f7c206fbfa964580
   FirebaseCore: 813838072b797b64f529f3c2ee35e696e5641dd1
@@ -148,11 +157,12 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 8f211228aca0b402e499f86582a275ce3047888c
+PODFILE CHECKSUM: 6590680aca29ef50258080a4f3b3cf9f4b10bb12
 
 COCOAPODS: 1.11.3

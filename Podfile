@@ -10,6 +10,7 @@ target 'SubwayWhen' do
 pod 'RxAlamofire'
 pod 'RxSwift', '6.5.0' 
 pod 'RxCocoa', '6.5.0'
+pod 'RxDataSources'
 
 pod 'Alamofire'
 pod 'Then'
