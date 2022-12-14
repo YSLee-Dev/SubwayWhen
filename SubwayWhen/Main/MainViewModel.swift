@@ -19,7 +19,7 @@ class MainViewModel{
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let groupData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", items: [])])
+    private let groupData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", stationID: "", items: [])])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
@@ -58,19 +58,25 @@ class MainViewModel{
         
         // 데이터 삭제
         self.mainTableViewModel.cellDelete
-            .map{ data in
+            .withUnretained(self)
+            .map{ ss, index in
+                var nowValue = ss.groupData.value
+                let id = nowValue[index.section].stationID
+                nowValue[index.section].items.remove(at: index.row)
+                
                 for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == data.id {
+                    if x.element.id == id {
                         FixInfo.saveStation.remove(at: x.offset)
                     }
                 }
+                ss.groupData.accept(nowValue)
                 
                 return Void()
             }
             .bind(to: self.mainTableViewModel.refreshOn)
             .disposed(by: self.bag)
         
-        
+        // 시간표 불러오기
         let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
             .withLatestFrom(self.groupData){ id, data in
                 data[id.section].items[id.row]

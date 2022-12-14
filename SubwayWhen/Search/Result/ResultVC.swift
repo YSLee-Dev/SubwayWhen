@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class ResultVC : UITableViewController{
     let bag = DisposeBag()
@@ -28,18 +29,20 @@ extension ResultVC{
     
     func bind(_ viewModel : ResultViewModel){
         // VIEWMODEL -> VIEW
+        var dataSource = RxTableViewSectionedAnimatedDataSource<ResultVCSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right) ,configureCell: { _, tv, index, data in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: "ResultVCCell", for: index) as? ResultVCCell else {return UITableViewCell()}
+            
+            cell.dataSet(line: data)
+            
+            return cell
+        })
+        
         viewModel.cellData
-            .drive(self.tableView.rx.items){tv, row, data in
-                guard let cell = tv.dequeueReusableCell(withIdentifier: "ResultVCCell", for: IndexPath(row: row, section: 0)) as? ResultVCCell else {return UITableViewCell()}
-                
-                cell.dataSet(line: data)
-                
-                return cell
-            }
+            .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
-        self.tableView.rx.modelSelected(searchStationInfo.self)
+        self.tableView.rx.itemSelected
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
     }

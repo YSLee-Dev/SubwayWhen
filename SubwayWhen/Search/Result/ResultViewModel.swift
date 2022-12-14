@@ -12,11 +12,11 @@ import RxCocoa
 
 struct ResultViewModel {
     // OUTPUT
-    let cellData : Driver<[searchStationInfo]>
+    let cellData : Driver<[ResultVCSection]>
     
     // INPUT
-    let cellClick = PublishRelay<searchStationInfo>()
-    let resultData = PublishRelay<[searchStationInfo]>()
+    let cellClick = PublishRelay<IndexPath>()
+    let resultData = PublishRelay<[ResultVCSection]>()
     
     init(){
         // CellData로 가공

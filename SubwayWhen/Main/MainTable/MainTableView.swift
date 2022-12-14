@@ -48,13 +48,18 @@ extension MainTableView{
         self.footerView.bind(viewModel.mainTableViewFooterViewModel)
         
         // VIEWMODEl -> VIEW
-        let dataSources = RxTableViewSectionedReloadDataSource<MainTableViewSection>{dataSource, tv, index, item in
+        let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right), configureCell: {dataSource, tv, index, item in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
        
             cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
             
             return cell
+        })
+        
+        dataSources.canEditRowAtIndexPath = { _, _ in
+            true
         }
+        
         viewModel.cellData
             .drive(self.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
@@ -69,7 +74,7 @@ extension MainTableView{
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
         
-        self.rx.modelDeleted(MainTableViewCellData.self)
+        self.rx.itemDeleted
             .bind(to: viewModel.cellDelete)
             .disposed(by: self.bag)
         
