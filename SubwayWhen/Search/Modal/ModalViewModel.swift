@@ -12,11 +12,11 @@ import RxCocoa
 
 struct ModalViewModel {
     // OUTPUT
-    let modalData : Driver<searchStationInfo>
+    let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
     
     // INPUT
-    let clickCellData = BehaviorRelay<searchStationInfo>(value: searchStationInfo(stationName: "NOT", lineNumber: .not, stationCode: ""))
+    let clickCellData = BehaviorRelay<ResultVCCellData>(value: .init(stationName: "X", lineNumber: "", stationCode: "", useLine: "", lineCode: ""))
     let upDownBtnClick = PublishRelay<Bool>()
     let grayBgClick = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)

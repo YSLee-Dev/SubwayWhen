@@ -43,8 +43,8 @@ class ResultVCCell : UITableViewCell{
 }
 
 extension ResultVCCell{
-    func dataSet(line : searchStationInfo){
-        self.line.backgroundColor = UIColor(named: line.lineNumber.rawValue)
+    func dataSet(line : ResultVCCellData){
+        self.line.backgroundColor = UIColor(named: line.lineNumber)
         self.stationName.text = line.stationName
         self.line.text = line.useLine
     }
