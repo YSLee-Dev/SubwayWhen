@@ -7,6 +7,8 @@
 
 import Foundation
 
+import RxDataSources
+
 struct MainTableViewCellData : Decodable{
     let upDown : String
     let arrivalTime : String
@@ -71,3 +73,11 @@ struct MainTableViewCellData : Decodable{
     }
 }
 
+extension MainTableViewCellData : IdentifiableType, Equatable{
+    var identity: String {
+        return "\(self.id)"
+    }
+    
+    typealias Identity = String
+    
+}

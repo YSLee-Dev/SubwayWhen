@@ -251,10 +251,10 @@ extension ModalVC{
 }
 
 extension Reactive where Base : ModalVC{
-    var modalLabelSet : Binder<searchStationInfo>{
+    var modalLabelSet : Binder<ResultVCCellData>{
         return Binder(base){ base, info in
             base.line.text = info.useLine
-            base.line.backgroundColor = UIColor(named: info.lineNumber.rawValue)
+            base.line.backgroundColor = UIColor(named: info.lineNumber)
             base.titleLabel.text = info.stationName
             
             if info.lineCode == ""{
@@ -266,7 +266,7 @@ extension Reactive where Base : ModalVC{
                 base.notServiceBtn.isHidden = false
             }
             
-            if info.lineNumber == .two{
+            if info.lineNumber == "02호선"{
                 base.upBtn.setTitle("내선", for: .normal)
                 base.downBtn.setTitle("외선", for: .normal)
             }else{
