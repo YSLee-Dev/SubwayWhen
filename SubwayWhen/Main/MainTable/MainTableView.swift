@@ -52,13 +52,14 @@ extension MainTableView{
             guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
        
             cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
-            
             return cell
         })
+        
         
         dataSources.canEditRowAtIndexPath = { _, _ in
             true
         }
+        
         
         viewModel.cellData
             .drive(self.rx.items(dataSource: dataSources))

@@ -29,6 +29,7 @@ class MainModel {
                     let json = try JSONDecoder().decode(LiveStationModel.self, from: $0)
                     return .success(json)
                 }catch{
+                    print("error")
                     return .failure(.init(.cannotDecodeContentData))
                 }
             }
@@ -62,15 +63,14 @@ class MainModel {
         let liveStation = saveStation
             .concatMap{
                 self.stationArrivalRequest(stationName: $0.useStationName)
-            }.map{ data -> LiveStationModel? in
-                guard case .success(let value) = data else {return nil}
+            }.map{ data -> LiveStationModel in
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "")])}
                 return value
             }
-            .filter{$0 != nil}
         
         return Observable
             .zip(saveStation, liveStation){ station, data -> MainTableViewSection in
-                for x in data!.realtimeArrivalList{
+                for x in data.realtimeArrivalList{
                     if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.useStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
                     }
