@@ -28,6 +28,7 @@ class GroupView : UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layout()
+        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -37,21 +38,28 @@ class GroupView : UIView{
 }
 
 extension GroupView{
+    private func attribute(){
+        self.layer.borderColor = UIColor.gray.cgColor
+        self.layer.borderWidth = 1.0
+        self.layer.cornerRadius = 20
+        self.layer.masksToBounds = true
+    }
+    
     private func layout(){
         [self.groupOne, self.groupTwo]
             .forEach{self.addSubview($0)}
         
         self.groupOne.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(35)
-            $0.trailing.equalTo(self.snp.centerX).offset(-5)
+            $0.height.equalTo(40)
+            $0.trailing.equalTo(self.snp.centerX)
         }
         self.groupTwo.snp.makeConstraints{
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(35)
-            $0.leading.equalTo(self.snp.centerX).offset(5)
+            $0.height.equalTo(40)
+            $0.leading.equalTo(self.snp.centerX)
         }
         
     }
