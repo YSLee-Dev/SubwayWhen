@@ -32,16 +32,16 @@ class MainVC : UIViewController{
  
 extension MainVC{
     private func attibute(){
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = UIColor(named: "MainColor")
         self.navigationItem.title = "홈"
     }
     
     private func layout(){
         self.view.addSubview(self.groupView)
         self.groupView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(35)
+            $0.height.equalTo(40)
         }
         
         self.view.addSubview(self.mainTableView)
