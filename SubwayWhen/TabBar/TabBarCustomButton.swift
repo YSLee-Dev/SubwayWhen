@@ -1,13 +1,13 @@
 //
-//  GroupCustomButton.swift
+//  TabBarCustomButton.swift
 //  SubwayWhen
 //
-//  Created by 이윤수 on 2022/12/01.
+//  Created by 이윤수 on 2022/12/16.
 //
 
 import UIKit
 
-class GroupCustomButton : UIButton{
+class TabBarCustomButton : UIButton{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.attribute()
@@ -18,23 +18,23 @@ class GroupCustomButton : UIButton{
     }
 }
 
-extension GroupCustomButton {
+extension TabBarCustomButton{
     private func attribute(){
-        self.layer.cornerRadius = 20
-        self.layer.masksToBounds = true
-        self.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.gray.cgColor
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = self.frame.size.width / 2
+        
     }
     
-    func seleted(){
+    func seleted(title : String){
         self.setTitleColor(.label, for: .normal)
         self.layer.borderWidth = 1.0
-        self.backgroundColor = .systemBackground
+        self.setTitle(title, for: .normal)
     }
     
     func unSeleted(){
         self.setTitleColor(.systemGray, for: .normal)
-        self.layer.borderWidth = 0.0
-        self.backgroundColor = UIColor(named: "MainColor")
+        self.layer.borderWidth = 0
     }
 }

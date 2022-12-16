@@ -25,7 +25,7 @@ class SearchVC : UIViewController{
 
 extension SearchVC{
     private func attribute(){
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = UIColor(named: "MainColor")
         self.navigationItem.title = "검색"
         self.navigationItem.searchController = self.searchBarVC
     }
@@ -34,7 +34,7 @@ extension SearchVC{
         self.view.addSubview(self.defaultView)
         self.defaultView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(10)
+            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     

@@ -46,7 +46,7 @@ extension DefaultView{
         self.addSubview(self.markLabel)
         self.markLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().inset(20)
             $0.height.equalTo(50)
         }
         
@@ -60,6 +60,7 @@ extension DefaultView{
     
     private func attibute(){
         self.listCollectionView.collectionViewLayout = self.collectionViewLayout()
+        self.backgroundColor = .systemBackground
     }
     
     func bind(_ viewModel : DefaultViewModel){
