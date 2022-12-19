@@ -20,11 +20,9 @@ struct MainTableViewModel{
     
     // INPUT
     let cellClick = PublishRelay<IndexPath>()
-    let cellDelete = PublishRelay<IndexPath>()
     
     let resultData = PublishRelay<[MainTableViewSection]>()
     let refreshOn = PublishRelay<Void>()
-    let editBtnClick = PublishRelay<Bool>()
     
     init(){
         self.cellData = self.resultData
