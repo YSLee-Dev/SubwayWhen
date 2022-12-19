@@ -56,6 +56,7 @@ class MainViewModel{
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
         
+        /*
         // 데이터 삭제
         self.mainTableViewModel.cellDelete
             .withUnretained(self)
@@ -75,6 +76,7 @@ class MainViewModel{
             }
             .bind(to: self.mainTableViewModel.refreshOn)
             .disposed(by: self.bag)
+         */
         
         // 시간표 불러오기
         let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
