@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Then
+import SnapKit
 import RxSwift
 import RxCocoa
 
@@ -60,16 +62,7 @@ extension MainVC{
         
         // VIEW
         self.navigationItem.rightBarButtonItem?.rx.tap
-            .map{[weak self] _ in
-                if self?.navigationItem.rightBarButtonItem!.title == "편집"{
-                    self?.navigationItem.rightBarButtonItem!.title = "완료"
-                    return true
-                }else{
-                    self?.navigationItem.rightBarButtonItem!.title = "편집"
-                    return false
-                }
-            }
-            .bind(to: viewModel.mainTableViewModel.editBtnClick)
+            .bind(to: self.rx.editVCPresent)
             .disposed(by: self.bag)
         
         // VIEWMODEL -> VIEW
@@ -84,6 +77,20 @@ extension Reactive where Base : MainVC {
     var tapChange : Binder<Void>{
         return Binder(base){base, _ in
             base.tabBarController?.selectedIndex = 1
+        }
+    }
+    
+    var editVCPresent : Binder<Void>{
+        return Binder(base){base, _ in
+            let editVC = EditVC()
+            editVC.bind(EditViewModel())
+            let navigation = UINavigationController(rootViewController: editVC)
+            navigation.modalPresentationStyle = .pageSheet
+            if let sheet = navigation.sheetPresentationController{
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+            base.present(navigation, animated: true)
         }
     }
 }

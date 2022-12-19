@@ -56,27 +56,14 @@ extension MainTableView{
         })
         
         
-        dataSources.canEditRowAtIndexPath = { _, _ in
-            true
-        }
-        
-        
         viewModel.cellData
             .drive(self.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
         
-        
-        viewModel.editBtnClick
-            .bind(to: self.rx.isEditing)
-            .disposed(by: self.bag)
 
         // VIEW -> VIEWMODEL
         self.rx.itemSelected
             .bind(to: viewModel.cellClick)
-            .disposed(by: self.bag)
-        
-        self.rx.itemDeleted
-            .bind(to: viewModel.cellDelete)
             .disposed(by: self.bag)
         
         self.refreshControl?.rx.controlEvent(.valueChanged)
@@ -87,5 +74,6 @@ extension MainTableView{
             .asSignal(onErrorJustReturn: ())
             .emit(to: viewModel.refreshOn)
             .disposed(by: self.bag)
+        
     }
 }
