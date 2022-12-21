@@ -7,9 +7,19 @@
 
 import Foundation
 
-struct EditViewCellData{
+import RxDataSources
+
+struct EditViewCellData : Equatable, IdentifiableType{
     let id : String
     let stationName : String
     let updnLine : String
     let line : String
+}
+
+extension EditViewCellData{
+    typealias Identity = String
+    
+    var identity: String {
+        self.id
+    }
 }

@@ -14,7 +14,7 @@ struct SaveStation : Codable{
     let updnLine : String
     let line : String
     let lineCode : String
-    let group : SaveStationGroup
+    var group : SaveStationGroup
     let exceptionLastStation : String
     
     var useLine: String{
