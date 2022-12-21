@@ -85,11 +85,7 @@ extension Reactive where Base : MainVC {
             let editVC = EditVC()
             editVC.bind(EditViewModel())
             let navigation = UINavigationController(rootViewController: editVC)
-            navigation.modalPresentationStyle = .pageSheet
-            if let sheet = navigation.sheetPresentationController{
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
-            }
+            navigation.modalPresentationStyle = .fullScreen
             base.present(navigation, animated: true)
         }
     }

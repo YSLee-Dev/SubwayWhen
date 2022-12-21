@@ -56,28 +56,6 @@ class MainViewModel{
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
         
-        /*
-        // 데이터 삭제
-        self.mainTableViewModel.cellDelete
-            .withUnretained(self)
-            .map{ ss, index in
-                var nowValue = ss.groupData.value
-                let id = nowValue[index.section].stationID
-                nowValue[index.section].items.remove(at: index.row)
-                
-                for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == id {
-                        FixInfo.saveStation.remove(at: x.offset)
-                    }
-                }
-                ss.groupData.accept(nowValue)
-                
-                return Void()
-            }
-            .bind(to: self.mainTableViewModel.refreshOn)
-            .disposed(by: self.bag)
-         */
-        
         // 시간표 불러오기
         let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
             .withLatestFrom(self.groupData){ id, data in
