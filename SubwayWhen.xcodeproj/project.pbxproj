@@ -16,6 +16,7 @@
 		341200FC29375A2600C77050 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FB29375A2600C77050 /* MainViewModel.swift */; };
 		341200FE29375A7300C77050 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FD29375A7300C77050 /* MainModel.swift */; };
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
+		347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */; };
 		34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17461293DBB180086870F /* MainTableViewCellData.swift */; };
 		34A17464293DBE220086870F /* ScheduleStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17463293DBE220086870F /* ScheduleStationModel.swift */; };
 		34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17467293DD18D0086870F /* MainTableViewFooter.swift */; };
@@ -74,6 +75,7 @@
 		341200FB29375A2600C77050 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		341200FD29375A7300C77050 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellType.swift; sourceTree = "<group>"; };
 		34A17461293DBB180086870F /* MainTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellData.swift; sourceTree = "<group>"; };
 		34A17463293DBE220086870F /* ScheduleStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStationModel.swift; sourceTree = "<group>"; };
 		34A17467293DD18D0086870F /* MainTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooter.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */,
 				34A17461293DBB180086870F /* MainTableViewCellData.swift */,
+				347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */,
 				34A17465293DBF100086870F /* LiveArrival */,
 				34A17466293DBF240086870F /* ScheduleArrival */,
 			);
@@ -523,6 +526,7 @@
 				341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
+				347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */,
 				34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,

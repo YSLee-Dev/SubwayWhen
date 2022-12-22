@@ -14,6 +14,7 @@ struct EditViewCellData : Equatable, IdentifiableType{
     let stationName : String
     let updnLine : String
     let line : String
+    let useLine : String
 }
 
 extension EditViewCellData{
