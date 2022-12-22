@@ -63,18 +63,23 @@ class MainViewModel{
             }
         
         let scheduleData = clickCellRow
-            .map{ item -> ScheduleSearch in
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber)
+            .map{ item -> ScheduleSearch? in
+                if item.type == .real{
+                    return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber)
+                }else{
+                    return nil
+                }
             }
+            .filter{$0 != nil}
             .flatMap{
-                self.model.nowScheduleStationLoad(scheduleSearch: $0)
+                self.model.nowScheduleStationLoad(scheduleSearch: $0!)
             }
         
         
         scheduleData
             .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ data, index in
                 let nowData = self.groupData.value[index.section].items[index.row]
-                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: "")
+                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: "", type: .schedule)
                 
                 var now = self.groupData.value
                 now[index.section].items[index.row] = newData
