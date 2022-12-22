@@ -52,7 +52,7 @@ class EditViewModel{
                 let now = $0.destinationIndex
                 
                 let oldData = self.nowData.value[old[0]].items[old[1]]
-                var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "")
+                var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "", useLine: "")
                 
                 // 가장 최상/하단으로 변경 시
                 if now[1] != self.nowData.value[now[0]].items.count{

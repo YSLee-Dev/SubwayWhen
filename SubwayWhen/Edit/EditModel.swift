@@ -18,9 +18,9 @@ struct EditModel{
 
         for x in fixData {
             if x.group == .one{
-                groupOne.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line))
+                groupOne.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line, useLine: x.useLine))
             }else{
-                groupTwo.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line))
+                groupTwo.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line, useLine: x.useLine))
             }
         }
         

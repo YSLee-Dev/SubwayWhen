@@ -28,13 +28,13 @@ class EditViewCell : UITableViewCell{
     }
     
     var stationName = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: 16)
         $0.textAlignment = .right
         $0.textColor = .label
     }
     
     var upDown = UILabel().then{
-        $0.font = .systemFont(ofSize: 16)
+        $0.font = .systemFont(ofSize: 14)
         $0.textAlignment = .right
         $0.textColor = .label
     }
@@ -89,6 +89,6 @@ extension EditViewCell{
         self.lineColor(line: data.line)
         self.stationName.text = data.stationName
         self.upDown.text = data.updnLine
-        self.line.text = data.line
+        self.line.text = data.useLine
     }
 }

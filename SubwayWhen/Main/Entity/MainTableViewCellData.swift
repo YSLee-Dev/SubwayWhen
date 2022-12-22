@@ -25,6 +25,7 @@ struct MainTableViewCellData : Decodable{
     let id : String
     let stationCode : String
     let exceptionLastStation : String
+    let type : MainTableViewCellType
     
     
     var useCode : String{

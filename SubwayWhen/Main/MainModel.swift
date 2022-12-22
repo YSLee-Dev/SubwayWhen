@@ -18,7 +18,7 @@ class MainModel {
     
     // live 지하철 통신
     private func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
-        guard let url = URL(string: "http://swopenapi.seoul.go.kr/api/subway/524365677079736c313034597a514e41/json/realtimeStationArrival/0/30/\(stationName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {return .just(.failure(.init(.badURL)))}
+        guard let url = URL(string: "http://swopenapi.seoul.go.kr/api/subway/524365677079736c313034597a514e41/json/realtimeStationArrival/0/50/\(stationName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {return .just(.failure(.init(.badURL)))}
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -29,7 +29,7 @@ class MainModel {
                     let json = try JSONDecoder().decode(LiveStationModel.self, from: $0)
                     return .success(json)
                 }catch{
-                    print("error")
+                    print(error)
                     return .failure(.init(.cannotDecodeContentData))
                 }
             }
@@ -72,13 +72,14 @@ class MainModel {
             .zip(saveStation, liveStation){ station, data -> MainTableViewSection in
                 for x in data.realtimeArrivalList{
                     if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.useStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
-                        return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation, subPrevious: x.subPrevious, code: x.code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
+                        let code = x.previousStation != nil ? x.code : ""
+                        return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real)])
                     }
                 }
                 if station.lineCode != ""{
-                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
+                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real)])
                 }else{
-                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation)])
+                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real)])
                 }
             }
             .toArray()

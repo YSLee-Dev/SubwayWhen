@@ -10,7 +10,7 @@ import Foundation
 struct RealtimeStationArrival : Decodable{
     let upDown : String
     let arrivalTime : String
-    let previousStation : String
+    let previousStation : String?
     let subPrevious : String
     let code : String
     let subWayId : String
