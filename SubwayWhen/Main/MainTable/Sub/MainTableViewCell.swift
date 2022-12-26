@@ -95,7 +95,7 @@ class MainTableViewCell : UITableViewCell{
         self.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
         self.lineColor(line: data.lineNumber)
         
-        if data.stationCode.contains("K"){
+        if data.stationCode.contains("K") || data.stationCode.contains("D"){
             self.changeBtn.setImage(UIImage(systemName: "xmark"), for: .normal)
         }
     }

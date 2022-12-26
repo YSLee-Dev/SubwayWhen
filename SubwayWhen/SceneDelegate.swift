@@ -49,8 +49,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        // 백그라운드에서 돌아올 때 메인 뷰 업데이트
+        // RootVC > NavigationC > MainVC
+        let root = self.window?.rootViewController?.children.first?.children.first
+        root?.viewWillAppear(true)
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
