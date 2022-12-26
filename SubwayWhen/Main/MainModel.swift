@@ -88,8 +88,8 @@ class MainModel {
     
     // 지하철 시간표 데이터 통신
     private func scheduleStationLoad(scheduleSearch : ScheduleSearch, count: Int) -> Single<Result<ScheduleStationModel, URLError>>{
-        // 코레일 시간표 지원하지 않음
-        if scheduleSearch.stationCode.contains("K"){
+        // 코레일/신분당선 시간표 지원하지 않음
+        if scheduleSearch.stationCode.contains("K") || scheduleSearch.stationCode.contains("D"){
             return .just(.failure(.init(.badURL)))
         }
         
