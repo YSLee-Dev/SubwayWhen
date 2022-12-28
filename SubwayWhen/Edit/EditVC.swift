@@ -31,7 +31,7 @@ extension EditVC{
         self.tableView.delegate = nil
         self.setEditing(true, animated: true)
         self.tableView.register(EditViewCell.self, forCellReuseIdentifier: "EditViewCell")
-        self.view.backgroundColor = UIColor(named: "MainColor")
+        self.view.backgroundColor = .systemBackground
         self.refreshControl = UIRefreshControl()
     }
     
