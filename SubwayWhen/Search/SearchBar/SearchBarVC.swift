@@ -27,7 +27,7 @@ extension SearchBarVC{
     private func attribute(){
         self.searchBar.placeholder = "🔍 지하철역을 검색하세요"
         self.searchBar.setValue("취소", forKey: "cancelButtonText")
-        self.searchBar.searchTextField.backgroundColor = .clear
+        self.searchBar.searchTextField.backgroundColor = UIColor(named: "MainColor")
         self.searchBar.setImage(UIImage(), for: UISearchBar.Icon.search, state: .normal)
     }
     

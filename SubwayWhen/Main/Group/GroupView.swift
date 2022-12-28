@@ -39,10 +39,6 @@ class GroupView : UIView{
 
 extension GroupView{
     private func attribute(){
-        self.layer.borderColor = UIColor.gray.cgColor
-        self.layer.borderWidth = 1.0
-        self.layer.cornerRadius = 20
-        self.layer.masksToBounds = true
     }
     
     private func layout(){

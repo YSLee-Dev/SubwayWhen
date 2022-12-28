@@ -25,7 +25,7 @@ class SearchVC : UIViewController{
 
 extension SearchVC{
     private func attribute(){
-        self.view.backgroundColor = UIColor(named: "MainColor")
+        self.view.backgroundColor = .systemBackground
         self.navigationItem.title = "검색"
         self.navigationItem.searchController = self.searchBarVC
     }

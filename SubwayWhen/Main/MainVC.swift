@@ -34,7 +34,7 @@ class MainVC : UIViewController{
  
 extension MainVC{
     private func attibute(){
-        self.view.backgroundColor = UIColor(named: "MainColor")
+        self.view.backgroundColor = .systemBackground
         self.navigationItem.title = "홈"
     }
     
