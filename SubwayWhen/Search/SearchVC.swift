@@ -21,6 +21,10 @@ class SearchVC : UIViewController{
         self.attribute()
         self.layout()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.searchBarVC?.isActive = false
+    }
 }
 
 extension SearchVC{
@@ -45,7 +49,7 @@ extension SearchVC{
         self.searchBarVC!.bind(viewModel.serachBarViewModel)
         self.defaultView.bind(viewModel.defaultViewModel)
         
-        viewModel.modalViewModel
+        viewModel.modalData
             .drive(self.rx.showModal)
             .disposed(by: self.bag)
         
@@ -53,10 +57,12 @@ extension SearchVC{
 }
 
 extension Reactive where Base : SearchVC {
-    var showModal : Binder<ModalViewModel>{
-        return Binder(base){base, model in
+    var showModal : Binder<ResultVCCellData>{
+        return Binder(base){base, data in
             let modal = ModalVC()
-            modal.bind(model)
+            let modalViewModel = ModalViewModel()
+            modalViewModel.clickCellData.accept(data)
+            modal.bind(modalViewModel)
             modal.modalPresentationStyle = .overFullScreen
             base.present(modal, animated: false)
         }

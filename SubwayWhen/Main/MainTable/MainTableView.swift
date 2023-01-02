@@ -62,7 +62,7 @@ extension MainTableView{
         
 
         // VIEW -> VIEWMODEL
-        self.rx.itemSelected
+        self.rx.modelSelected(MainTableViewCellData.self)
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
         

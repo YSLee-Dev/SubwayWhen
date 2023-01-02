@@ -18,24 +18,24 @@ class SearchViewModel {
     let model = SearchModel()
     
     // OUTPUT
-    let modalViewModel : Driver<ModalViewModel>
+    let modalData : Driver<ResultVCCellData>
     
     let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
     
     let bag = DisposeBag()
     
     init(){
-        let modalViewModel = ModalViewModel()
-        
         self.nowData
             .bind(to: self.resultViewModel.resultData)
             .disposed(by: self.bag)
         
+    
+        let cellClickData = self.resultViewModel.cellClick
+            .withLatestFrom(nowData){
+                $1[$0.section].items[$0.row]
+        }
         
-        self.modalViewModel = self.resultViewModel.cellClick
-            .map{ _ in
-                modalViewModel
-            }
+        self.modalData = cellClickData
             .asDriver(onErrorDriveWith: .empty())
         
         self.defaultViewModel.defaultListClick
@@ -86,33 +86,5 @@ class SearchViewModel {
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
-        let cellClickData = self.resultViewModel.cellClick
-            .map{
-                self.nowData.value[$0.section].items[$0.row]
-            }
-        
-        cellClickData
-            .bind(to: modalViewModel.clickCellData)
-            .disposed(by: self.bag)
-        
-        
-        let saveStationInfo = Observable
-            .combineLatest(cellClickData, modalViewModel.groupClick, modalViewModel.exceptionLastStationText){
-                SaveStation(id: UUID().uuidString, stationName: $0.stationName, stationCode: $0.stationCode, updnLine: "", line: $0.lineNumber, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
-            }
-        
-        modalViewModel.upDownBtnClick
-            .withLatestFrom(saveStationInfo){
-                var updown = ""
-                if $1.useLine ==  "2호선" {
-                    updown = $0 ? "내선" : "외선"
-                }else{
-                    updown = $0 ? "상행" : "하행"
-                }
-                FixInfo.saveStation.append(SaveStation(id: $1.id, stationName: $1.stationName, stationCode: $1.stationCode ,updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
-                return Void()
-            }
-            .bind(to: self.serachBarViewModel.updnLineClick)
-            .disposed(by: self.bag)
     }
 }
