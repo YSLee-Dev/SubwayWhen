@@ -49,13 +49,13 @@ extension GroupView{
             $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.height.equalTo(40)
-            $0.trailing.equalTo(self.snp.centerX)
+            $0.trailing.equalTo(self.snp.trailing).inset(100)
         }
         self.groupTwo.snp.makeConstraints{
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.height.equalTo(40)
-            $0.leading.equalTo(self.snp.centerX)
+            $0.leading.equalTo(self.groupOne.snp.trailing)
         }
         
     }
@@ -66,6 +66,7 @@ extension GroupView{
             .map{[weak self] _ -> SaveStationGroup in
                 self?.groupOne.seleted()
                 self?.groupTwo.unSeleted()
+                self?.btnClickSizeChange(group: false)
                 return .one
             }
         
@@ -73,6 +74,7 @@ extension GroupView{
             .map{[weak self] _ -> SaveStationGroup in
                 self?.groupOne.unSeleted()
                 self?.groupTwo.seleted()
+                self?.btnClickSizeChange(group: true)
                 return .two
             }
         
@@ -82,5 +84,27 @@ extension GroupView{
             )
             .bind(to: viewModel.groupSeleted)
             .disposed(by: self.bag)
+    }
+    
+    private func btnClickSizeChange(group : Bool){
+        if group{
+            self.groupOne.snp.remakeConstraints{
+                $0.leading.equalToSuperview()
+                $0.bottom.equalToSuperview()
+                $0.height.equalTo(40)
+                $0.trailing.equalTo(self.snp.leading).inset(100)
+            }
+        }else{
+            self.groupOne.snp.remakeConstraints{
+                $0.leading.equalToSuperview()
+                $0.bottom.equalToSuperview()
+                $0.height.equalTo(40)
+                $0.trailing.equalTo(self.snp.trailing).inset(100)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
+            self.layoutIfNeeded()
+        }
     }
 }

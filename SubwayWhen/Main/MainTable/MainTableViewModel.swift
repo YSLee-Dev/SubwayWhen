@@ -19,8 +19,7 @@ struct MainTableViewModel{
     let mainTableViewCellModel = MainTableViewCellModel()
     
     // INPUT
-    let cellClick = PublishRelay<IndexPath>()
-    
+    let cellClick = PublishRelay<MainTableViewCellData>()
     let resultData = PublishRelay<[MainTableViewSection]>()
     let refreshOn = PublishRelay<Void>()
     

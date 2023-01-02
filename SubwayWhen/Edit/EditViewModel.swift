@@ -77,13 +77,20 @@ class EditViewModel{
                     FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
                 }
                 
-                // 최하단으로 옮길 시
                 if now[1] == self.nowData.value[now[0]].items.count{
                     let fixData = FixInfo.saveStation[oldIndex]
                     FixInfo.saveStation.remove(at: oldIndex)
                     FixInfo.saveStation.append(fixData)
-                }else{
+                }else if now[1] == 0{
+                    let fixData = FixInfo.saveStation[oldIndex]
+                    FixInfo.saveStation.remove(at: oldIndex)
+                    FixInfo.saveStation.insert(fixData, at: 0)
+                }else if old[0] == now[0]{
                     FixInfo.saveStation.swapAt(oldIndex, nowIndex)
+                }else{
+                    let fixData = FixInfo.saveStation[oldIndex]
+                    FixInfo.saveStation.remove(at: oldIndex)
+                    FixInfo.saveStation.insert(fixData, at: nowIndex)
                 }
                 
                 return Void()

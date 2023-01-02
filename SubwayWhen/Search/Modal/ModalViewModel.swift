@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ModalViewModel {
+class ModalViewModel {
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
@@ -20,16 +20,33 @@ struct ModalViewModel {
     let upDownBtnClick = PublishRelay<Bool>()
     let grayBgClick = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)
-    let exceptionLastStationText = PublishRelay<String?>()
+    let exceptionLastStationText = BehaviorRelay<String?>(value: "")
     
     init(){
         self.modalData = self.clickCellData
             .asDriver(onErrorDriveWith: .empty())
         
+        let saveStationInfo = Observable
+            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText){
+                SaveStation(id: UUID().uuidString, stationName: $0.stationName, stationCode: $0.stationCode, updnLine: "", line: $0.lineNumber, lineCode: $0.lineCode, group: $1, exceptionLastStation: $2 ?? "")
+            }
+        
+        let saveStation = self.upDownBtnClick
+            .withLatestFrom(saveStationInfo){
+                var updown = ""
+                if $1.useLine ==  "2호선" {
+                    updown = $0 ? "내선" : "외선"
+                }else{
+                    updown = $0 ? "상행" : "하행"
+                }
+                FixInfo.saveStation.append(SaveStation(id: $1.id, stationName: $1.stationName, stationCode: $1.stationCode ,updnLine: updown, line: $1.line, lineCode: $1.lineCode, group: $1.group, exceptionLastStation: $1.exceptionLastStation))
+                return Void()
+            }
+        
         self.modalClose = Observable
             .merge(
-                self.upDownBtnClick.map{_ in Void()},
-                self.grayBgClick.asObservable()
+                self.grayBgClick.asObservable(),
+                saveStation
             )
             .asDriver(onErrorDriveWith: .empty())
     }

@@ -238,14 +238,6 @@ extension ModalVC{
         viewModel.modalClose
             .drive(self.rx.dismissView)
             .disposed(by: self.bag)
-        
-        // 그룹 초기화 -> model은 메모리 초기화가 되지 않아서 따로 초기값 작성
-        viewModel.modalClose
-            .map{
-                .one
-            }
-            .drive(viewModel.groupClick)
-            .disposed(by: self.bag)
     }
     
 }

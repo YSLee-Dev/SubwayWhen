@@ -18,13 +18,9 @@ struct SearchBarViewModel{
     
     // OUTPUT
     let searchStart : Driver<String>
-    let searchEnd : Driver<Void>
     
     init(){
         self.searchStart = self.defaultViewClick
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.searchEnd = self.updnLineClick
             .asDriver(onErrorDriveWith: .empty())
     }
 }

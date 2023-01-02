@@ -48,17 +48,6 @@ extension SearchBarVC{
             }
             .drive(self.rx.searchPresent)
             .disposed(by: self.bag)
-        
-        viewModel.searchEnd
-            .drive(self.rx.searchDismiss)
-            .disposed(by: self.bag)
-        
-        viewModel.searchEnd
-            .map{ _ in
-                ""
-            }
-            .drive(self.searchBar.rx.text)
-            .disposed(by: self.bag)
     }
 }
 
@@ -66,12 +55,6 @@ extension Reactive where Base : SearchBarVC{
     var searchPresent : Binder<Void>{
         return Binder(base){base, _ in
             base.isActive = true
-        }
-    }
-    
-    var searchDismiss : Binder<Void>{
-        return Binder(base){base, _ in
-            base.dismiss(animated: true)
         }
     }
 }

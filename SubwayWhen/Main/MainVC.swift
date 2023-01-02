@@ -70,6 +70,10 @@ extension MainVC{
             .drive(self.rx.tapChange)
             .disposed(by: self.bag)
         
+        viewModel.clickCellData
+            .drive(self.rx.detailVCPresent)
+            .disposed(by: self.bag)
+        
     }
 }
 
@@ -87,6 +91,18 @@ extension Reactive where Base : MainVC {
             let navigation = UINavigationController(rootViewController: editVC)
             navigation.modalPresentationStyle = .fullScreen
             base.present(navigation, animated: true)
+        }
+    }
+    
+    var detailVCPresent : Binder<MainTableViewCellData>{
+        return Binder(base){base, data in
+            let detail = DetailVC(style: .plain)
+            detail.hidesBottomBarWhenPushed = true
+            let viewModel = DetailViewModel()
+            detail.bind(viewModel)
+            viewModel.detailViewData.accept(data)
+            
+            base.navigationController?.pushViewController(detail, animated: true)
         }
     }
 }
