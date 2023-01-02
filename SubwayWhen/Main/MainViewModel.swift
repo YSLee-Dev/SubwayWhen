@@ -26,6 +26,7 @@ class MainViewModel{
     
     // OUTPUT
     let stationPlusBtnClick : Driver<Void>
+    let clickCellData : Driver<MainTableViewCellData>
     
     init(){
         // view 다시 들어올 때 리프레시
@@ -35,6 +36,9 @@ class MainViewModel{
         
         // footer 버튼 클릭 시
         self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.clickCellData = self.mainTableViewModel.cellClick
             .asDriver(onErrorDriveWith: .empty())
         
         // 리프레시 할 때 데이터 로드
