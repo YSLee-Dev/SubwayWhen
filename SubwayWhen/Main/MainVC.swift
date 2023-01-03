@@ -86,17 +86,15 @@ extension Reactive where Base : MainVC {
     
     var editVCPresent : Binder<Void>{
         return Binder(base){base, _ in
-            let editVC = EditVC()
-            editVC.bind(EditViewModel())
-            let navigation = UINavigationController(rootViewController: editVC)
-            navigation.modalPresentationStyle = .fullScreen
-            base.present(navigation, animated: true)
+            let editVC = EditVC(title: "편집")
+            editVC.modalPresentationStyle = .fullScreen
+            base.present(editVC, animated: true)
         }
     }
     
     var detailVCPresent : Binder<MainTableViewCellData>{
         return Binder(base){base, data in
-            let detail = DetailVC(style: .plain)
+            let detail = DetailVC(title: "\(data.useLine) \(data.stationName)")
             detail.hidesBottomBarWhenPushed = true
             let viewModel = DetailViewModel()
             detail.bind(viewModel)

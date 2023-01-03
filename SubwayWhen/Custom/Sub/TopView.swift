@@ -1,5 +1,5 @@
 //
-//  TitleView.swift
+//  TopView.swift
 //  SubwayWhen
 //
 //  Created by 이윤수 on 2023/01/02.
@@ -12,18 +12,20 @@ import Then
 import RxSwift
 import RxCocoa
 
-class TitleView : UIView{
+class TopView : UIView{
     let bag = DisposeBag()
     
     let backBtn = UIButton().then{
-        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         $0.tintColor = .label
     }
     
-    let titleLabel = UILabel().then{
+    lazy var subTitleLabel = UILabel().then{
         $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 18)
         $0.textAlignment = .left
+        $0.alpha = 0
+        $0.transform = CGAffineTransform(translationX: 0, y: 10)
     }
     
     override init(frame: CGRect) {
@@ -37,13 +39,13 @@ class TitleView : UIView{
     }
 }
 
-extension TitleView{
+extension TopView{
     private func attribute(){
         self.backgroundColor = .systemBackground
     }
     
     private func layout(){
-        [self.backBtn, self.titleLabel]
+        [self.backBtn, self.subTitleLabel]
             .forEach{
                 self.addSubview($0)
             }
@@ -52,10 +54,17 @@ extension TitleView{
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().inset(15)
         }
-        
-        self.titleLabel.snp.makeConstraints{
-            $0.leading.equalTo(self.backBtn.snp.trailing).inset(-20)
-            $0.centerY.equalToSuperview()
+
+        self.subTitleLabel.snp.makeConstraints{
+            $0.leading.equalTo(self.backBtn.snp.trailing).offset(10)
+            $0.centerY.equalTo(self.backBtn)
+        }
+    }
+    
+    func isMainTitleHidden(_ hidden : Bool){
+        UIView.animate(withDuration: 0.15, delay: 0){
+            self.subTitleLabel.alpha = hidden ? 1 : 0
+            self.subTitleLabel.transform = hidden ? .identity : CGAffineTransform(translationX: 0, y: 10)
         }
     }
 }

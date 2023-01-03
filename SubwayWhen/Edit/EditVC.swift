@@ -13,32 +13,42 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class EditVC : UITableViewController{
+class EditVC : TableVCCustom{
     let bag = DisposeBag()
+    
+    let backGestureView = UIView().then{
+        $0.backgroundColor = .clear
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attribute()
+        self.layout()
+        self.bind(EditViewModel())
     }
 }
 
 extension EditVC{
     private func attribute(){
-        self.navigationItem.title = "편집"
         self.tableView.rowHeight = 90
-        self.tableView.separatorStyle = .none
-        self.tableView.dataSource = nil
-        self.tableView.delegate = nil
-        self.setEditing(true, animated: true)
+        self.tableView.setEditing(true, animated: true)
         self.tableView.register(EditViewCell.self, forCellReuseIdentifier: "EditViewCell")
-        self.view.backgroundColor = .systemBackground
-        self.refreshControl = UIRefreshControl()
+        self.tableView.refreshControl = UIRefreshControl()
+        
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(backGesture))
+        gesture.direction = .right
+        self.backGestureView.addGestureRecognizer(gesture)
     }
     
-    func bind(_ viewmModel  : EditViewModel){
-        // Bind 함수가 메모리에 먼저 올라감
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: nil)
-        
+    private func layout(){
+        self.view.addSubview(self.backGestureView)
+        self.backGestureView.snp.makeConstraints{
+            $0.leading.top.bottom.equalToSuperview()
+            $0.width.equalTo(15)
+        }
+    }
+    
+    private func bind(_ viewmModel  : EditViewModel){
         // VIEWMODEL -> VIEW
         let dataSource = RxTableViewSectionedAnimatedDataSource<EditViewCellSection>(animationConfiguration: .init(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right), configureCell: {_, tv, indexpath, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "EditViewCell", for: indexpath) as? EditViewCell else {return UITableViewCell()}
@@ -74,26 +84,18 @@ extension EditVC{
             .bind(to: viewmModel.moveCell)
             .disposed(by: self.bag)
         
-        self.refreshControl?.rx.controlEvent(.valueChanged)
+        self.tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .map{[weak self] _ in
-                self?.refreshControl?.endRefreshing()
+                self?.tableView.refreshControl?.endRefreshing()
                 return Void()
             }
             .startWith(Void())
             .bind(to: viewmModel.refreshOn)
             .disposed(by: self.bag)
-        
-        // VIEW
-        self.navigationItem.rightBarButtonItem?.rx.tap
-            .bind(to: self.rx.dissmissEdit)
-            .disposed(by: self.bag)
     }
-}
-
-extension Reactive where Base : EditVC{
-    var dissmissEdit : Binder<Void>{
-        return Binder(base){ base, _ in
-            base.dismiss(animated: true)
-        }
+    
+    @objc
+    private func backGesture(_ sender:Any){
+        self.dismiss(animated: true)
     }
 }
