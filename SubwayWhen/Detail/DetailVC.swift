@@ -10,32 +10,45 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class DetailVC : TableVCCustom{
     let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.attribute()
     }
 }
 
 extension DetailVC{
+    private func attribute(){
+        self.tableView.tableHeaderView = nil
+        
+        self.tableView.register(DetailTableHeaderView.self, forCellReuseIdentifier: "DetailTableHeaderView")
+        self.tableView.rowHeight = 100
+    }
     
     func bind(_ viewModel : DetailViewModel){
-        // VIEWMODEL -> VIEW
-        viewModel.setTitleText
-            .drive(self.rx.titleViewSet)
-            .disposed(by: self.bag)
-        
-    }
-}
-
-extension Reactive where Base : DetailVC{
-    var titleViewSet : Binder<String>{
-        return Binder(base){ base, text in
-            base.titleView.titleLabel.text = text
+        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade)){ dataSource, tv, index, data in
+            
+            switch index.section{
+            case 0:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableHeaderView", for: index) as? DetailTableHeaderView else {return UITableViewCell()}
+                cell.cellSet(data)
+                
+                return cell
+            default:
+                return UITableViewCell()
+            }
         }
+        
+        dataSource.titleForHeaderInSection = {dataSource, index in
+            dataSource[index].sectionName
+        }
+        
+        viewModel.cellData
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.bag)
     }
 }
