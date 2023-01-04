@@ -62,7 +62,7 @@ extension TopView{
     }
     
     func isMainTitleHidden(_ hidden : Bool){
-        UIView.animate(withDuration: 0.15, delay: 0){
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
             self.subTitleLabel.alpha = hidden ? 1 : 0
             self.subTitleLabel.transform = hidden ? .identity : CGAffineTransform(translationX: 0, y: 10)
         }

@@ -19,6 +19,8 @@ struct DetailTableViewCellData : IdentifiableType, Equatable {
     let lineNumber : String
     let useLine : String
     let stationName : String
+    let backStationName : String
+    let nextStationName : String
 }
 
 extension DetailTableViewCellData{
