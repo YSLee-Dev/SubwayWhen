@@ -13,4 +13,5 @@ import RxCocoa
 struct MainTableViewFooterViewModel{
     // INPUT
     let plusBtnClick = PublishRelay<Void>()
+    let editBtnClick = PublishRelay<Void>()
 }

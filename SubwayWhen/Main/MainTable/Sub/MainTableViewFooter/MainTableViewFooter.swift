@@ -28,6 +28,12 @@ class MainTableViewFooterView : UITableViewHeaderFooterView {
         $0.tintColor = .gray
     }
     
+    var editBtn = UIButton(type: .system).then{
+        $0.setTitle("편집", for: .normal)
+        $0.tintColor = .gray
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
+    }
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.layout()
@@ -42,7 +48,8 @@ extension MainTableViewFooterView{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(7.5)
+            $0.top.equalToSuperview().inset(7.5)
+            $0.height.equalTo(60)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -51,11 +58,23 @@ extension MainTableViewFooterView{
             $0.center.equalToSuperview()
             $0.size.equalTo(30)
         }
+        
+        self.contentView.addSubview(self.editBtn)
+        self.editBtn.snp.makeConstraints{
+            $0.top.equalTo(self.mainBG.snp.bottom).offset(10)
+            $0.centerX.equalTo(self.mainBG)
+            $0.height.equalTo(30)
+            $0.width.equalTo(self.mainBG)
+        }
     }
     
     func bind(_ viewModel : MainTableViewFooterViewModel){
         self.plusBtn.rx.tap
             .bind(to: viewModel.plusBtnClick)
+            .disposed(by: self.bag)
+        
+        self.editBtn.rx.tap
+            .bind(to: viewModel.editBtnClick)
             .disposed(by: self.bag)
     }
 }

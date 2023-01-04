@@ -26,6 +26,7 @@ class MainViewModel{
     
     // OUTPUT
     let stationPlusBtnClick : Driver<Void>
+    let editBtnClick : Driver<Void>
     let clickCellData : Driver<MainTableViewCellData>
     
     init(){
@@ -36,6 +37,10 @@ class MainViewModel{
         
         // footer 버튼 클릭 시
         self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
+            .asDriver(onErrorDriveWith: .empty())
+        
+        // edit 버튼 클릭 시
+        self.editBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.editBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         self.clickCellData = self.mainTableViewModel.cellClick
@@ -83,7 +88,7 @@ class MainViewModel{
         scheduleData
             .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ data, index in
                 let nowData = self.groupData.value[index.section].items[index.row]
-                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: "", type: .schedule)
+                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: "", type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId)
                 
                 var now = self.groupData.value
                 now[index.section].items[index.row] = newData

@@ -35,15 +35,18 @@ class MainVC : UIViewController{
 extension MainVC{
     private func attibute(){
         self.view.backgroundColor = .systemBackground
-        self.navigationItem.title = "홈"
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
+        self.mainTableView.delegate = self
     }
     
     private func layout(){
         self.view.addSubview(self.groupView)
         self.groupView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(40)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(55)
+            $0.height.equalTo(75)
         }
         
         self.view.addSubview(self.mainTableView)
@@ -54,16 +57,8 @@ extension MainVC{
     }
     
     private func bind(_ viewModel : MainViewModel){
-        // Bind 함수가 메모리에 먼저 올라감
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "편집", style: .done, target: self, action: nil)
-        
         self.mainTableView.bind(viewModel.mainTableViewModel)
         self.groupView.bind(viewModel.groupViewModel)
-        
-        // VIEW
-        self.navigationItem.rightBarButtonItem?.rx.tap
-            .bind(to: self.rx.editVCPresent)
-            .disposed(by: self.bag)
         
         // VIEWMODEL -> VIEW
         viewModel.stationPlusBtnClick
@@ -72,6 +67,10 @@ extension MainVC{
         
         viewModel.clickCellData
             .drive(self.rx.detailVCPresent)
+            .disposed(by: self.bag)
+        
+        viewModel.editBtnClick
+            .drive(self.rx.editVCPresent)
             .disposed(by: self.bag)
         
     }
@@ -101,6 +100,28 @@ extension Reactive where Base : MainVC {
             viewModel.detailViewData.accept(data)
             
             base.navigationController?.pushViewController(detail, animated: true)
+        }
+    }
+}
+
+extension MainVC : UITableViewDelegate{
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if velocity.y < 0{
+            self.groupView.tableScrollBtnResizing(false)
+            
+            self.groupView.snp.updateConstraints{
+                $0.height.equalTo(75)
+            }
+        }else{
+            self.groupView.tableScrollBtnResizing(true)
+            
+            self.groupView.snp.updateConstraints{
+                $0.height.equalTo(25)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
+            self.view.layoutIfNeeded()
         }
     }
 }
