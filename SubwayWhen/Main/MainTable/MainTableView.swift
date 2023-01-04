@@ -21,7 +21,7 @@ class MainTableView : UITableView{
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
     
-    let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 75))
+    let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)

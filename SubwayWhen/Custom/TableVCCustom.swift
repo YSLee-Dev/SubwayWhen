@@ -37,22 +37,16 @@ class TableVCCustom : UIViewController{
         self.attribute(title: self.viewTitle)
         self.layout()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
 }
 
 extension TableVCCustom{
     private func attribute(title : String){
         self.view.backgroundColor = .systemBackground
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         self.tableView.tableHeaderView = self.titleView
         
-        
         self.titleView.mainTitleLabel.text = self.viewTitle
+        
         self.topView.subTitleLabel.text = self.viewTitle
         self.topView.backBtn.addTarget(self, action: #selector(backBtnClick(_ :)), for: .touchUpInside)
     }
@@ -61,7 +55,7 @@ extension TableVCCustom{
         self.view.addSubview(self.topView)
         self.topView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(10)
             $0.height.equalTo(45)
         }
         

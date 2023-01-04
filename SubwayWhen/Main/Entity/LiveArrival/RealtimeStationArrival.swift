@@ -18,6 +18,8 @@ struct RealtimeStationArrival : Decodable{
     let lastStation : String
     let lineNumber : String?
     let isFast : String?
+    let backStationId : String
+    let nextStationId : String
     
     enum CodingKeys : String, CodingKey{
         case upDown = "updnLine"
@@ -30,5 +32,7 @@ struct RealtimeStationArrival : Decodable{
         case stationName = "statnNm"
         case lineNumber = "lineNumber"
         case isFast = "btrainSttus"
+        case backStationId = "statnFid"
+        case nextStationId = "statnTid"
     }
 }
