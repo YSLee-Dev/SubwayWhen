@@ -1,5 +1,5 @@
 //
-//  MainModel.swift
+//  LoadModel.swift
 //  SubwayWhen
 //
 //  Created by 이윤수 on 2022/11/30.
@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-class MainModel {
+class LoadModel {
     private var session : URLSession
     
     init(session : URLSession = .shared){
@@ -17,7 +17,7 @@ class MainModel {
     }
     
     // live 지하철 통신
-    private func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
+    func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
         guard let url = URL(string: "http://swopenapi.seoul.go.kr/api/subway/524365677079736c313034597a514e41/json/realtimeStationArrival/0/50/\(stationName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {return .just(.failure(.init(.badURL)))}
         
         var request = URLRequest(url: url)

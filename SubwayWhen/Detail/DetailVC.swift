@@ -26,6 +26,7 @@ extension DetailVC{
         self.tableView.tableHeaderView = nil
         
         self.tableView.register(DetailTableHeaderView.self, forCellReuseIdentifier: "DetailTableHeaderView")
+        self.tableView.register(DetailTableArrivalCell.self, forCellReuseIdentifier: "DetailTableArrivalCell")
         self.tableView.rowHeight = 100
     }
     
@@ -37,6 +38,10 @@ extension DetailVC{
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableHeaderView", for: index) as? DetailTableHeaderView else {return UITableViewCell()}
                 cell.cellSet(data)
                 
+                return cell
+            case 1:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
+                cell.bind(viewModel.arrivalCellModel)
                 return cell
             default:
                 return UITableViewCell()
