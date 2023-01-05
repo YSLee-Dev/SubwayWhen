@@ -12,7 +12,7 @@ import RxCocoa
 
 class MainViewModel{
     // MODEL
-    let model = MainModel()
+    let model = LoadModel()
     let mainTableViewModel = MainTableViewModel()
     let groupViewModel = GroupViewModel()
     
