@@ -27,7 +27,8 @@ extension DetailVC{
         
         self.tableView.register(DetailTableHeaderView.self, forCellReuseIdentifier: "DetailTableHeaderView")
         self.tableView.register(DetailTableArrivalCell.self, forCellReuseIdentifier: "DetailTableArrivalCell")
-        self.tableView.rowHeight = 100
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 150
     }
     
     func bind(_ viewModel : DetailViewModel){
@@ -42,6 +43,7 @@ extension DetailVC{
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
                 cell.bind(viewModel.arrivalCellModel)
+                cell.lineColorSet(UIColor(named: data.lineNumber) ?? .systemBackground)
                 return cell
             default:
                 return UITableViewCell()

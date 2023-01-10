@@ -25,6 +25,7 @@
 		34A17473293E00010086870F /* SearchInfoBySubwayNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */; };
 		34A17475293E04340086870F /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17474293E04340086870F /* ScheduleSearch.swift */; };
 		34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1747A293F3C870086870F /* MainTableViewCellModel.swift */; };
+		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
 		34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */; };
@@ -97,6 +98,7 @@
 		34A17472293E00010086870F /* SearchInfoBySubwayNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoBySubwayNameService.swift; sourceTree = "<group>"; };
 		34A17474293E04340086870F /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
 		34A1747A293F3C870086870F /* MainTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellModel.swift; sourceTree = "<group>"; };
+		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
 		34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCSection.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 			children = (
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
 				34CA5598293897160006F67B /* GroupCustomButton.swift */,
+				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
 				34C6DB84293627AE00C4ED80 /* ModalCustomButton.swift */,
 				34F5F0F02962DCF50010A21D /* Sub */,
 			);
@@ -662,6 +665,7 @@
 				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewCell.swift in Sources */,
 				34A17475293E04340086870F /* ScheduleSearch.swift in Sources */,
+				34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */,
 				34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */,
 				341200FE29375A7300C77050 /* LoadModel.swift in Sources */,
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,

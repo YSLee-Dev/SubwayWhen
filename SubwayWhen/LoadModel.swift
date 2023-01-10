@@ -64,7 +64,7 @@ class LoadModel {
             .concatMap{
                 self.stationArrivalRequest(stationName: $0.useStationName)
             }.map{ data -> LiveStationModel in
-                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "")])}
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
             }
         
@@ -79,12 +79,16 @@ class LoadModel {
                         let code = x.previousStation != nil ? x.code : ""
                         backId = x.backStationId
                         nextId = x.nextStationId
+                        
                         return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId)])
+                    }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.useStationName == x.stationName{
+                        backId = x.backStationId
+                        nextId = x.nextStationId
                     }
                 }
                 
                 if station.lineCode != ""{
-                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId)])
+                    return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: station.updnLine, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId)])
                 }else{
                     return .init(section: "\(station.group)", stationID: station.id, items: [MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "지원하지 않는 호선이에요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "")])
                 }
