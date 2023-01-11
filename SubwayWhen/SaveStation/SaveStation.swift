@@ -16,6 +16,7 @@ struct SaveStation : Codable{
     let lineCode : String
     var group : SaveStationGroup
     let exceptionLastStation : String
+    var totalStationCode : String
     
     var useLine: String{
         let zeroCut = self.line.replacingOccurrences(of: "0", with: "")

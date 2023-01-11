@@ -30,7 +30,7 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
     }
@@ -39,7 +39,7 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
     }
@@ -113,10 +113,11 @@ extension Reactive where Base : DetailTableArrivalCell {
     var dataViewSet : Binder<[RealtimeStationArrival]>{
         return Binder(base){ base, dataArray in
             if let firstData = dataArray.first{
-                base.mainTitle.text = "\(firstData.subPrevious)"
-                base.firstSubway.text = "🚇 \(firstData.trainCode) 열차 \n \(firstData.subPrevious)"
+                base.mainTitle.text = firstData.subPrevious != "" ? "\(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
+                base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차 \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
             }else{
                 base.mainTitle.text = "⚠️ 실시간 정보없음"
+                base.firstSubway.text = "⚠️ 실시간 정보없음"
             }
             
             if let secondData = dataArray.last{

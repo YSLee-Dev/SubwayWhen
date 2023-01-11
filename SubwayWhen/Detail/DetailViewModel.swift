@@ -29,8 +29,6 @@ class DetailViewModel{
     
     init(){
         self.cellData = self.nowData
-        
-        .debug()
             .asDriver(onErrorDriveWith: .empty())
         
         self.detailViewData
