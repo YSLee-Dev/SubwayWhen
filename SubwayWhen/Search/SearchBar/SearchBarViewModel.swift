@@ -14,7 +14,6 @@ struct SearchBarViewModel{
     // INPUT
     let searchText = PublishRelay<String?>()
     let defaultViewClick = PublishRelay<String>()
-    let updnLineClick = PublishRelay<Void>()
     
     // OUTPUT
     let searchStart : Driver<String>

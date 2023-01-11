@@ -88,7 +88,7 @@ class MainViewModel{
         scheduleData
             .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ data, index in
                 let nowData = self.groupData.value[index.section].items[index.row]
-                let newData = MainTableViewCellData(upDown: data.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId)
+                let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.startTime, previousStation: "⏱️\(data.startTime)", subPrevious: "\(data.scheduleTime)분", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId)
                 
                 var now = self.groupData.value
                 now[index.section].items[index.row] = newData
