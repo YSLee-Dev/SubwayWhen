@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScheduleStationArrival : Decodable{
+struct a : Decodable{
     let startTime : String
     let stationCode : String
     let lastStation : String
@@ -22,7 +22,7 @@ struct ScheduleStationArrival : Decodable{
         case line = "LINE_NUM"
     }
     
-    var scheduleTime : String{
+    var a : String{
         let nowDate = Date()
         let now = Calendar.current
         
