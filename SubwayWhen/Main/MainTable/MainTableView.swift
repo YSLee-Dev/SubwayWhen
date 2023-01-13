@@ -20,7 +20,7 @@ class MainTableView : UITableView{
         $0.backgroundColor = .systemBackground
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
-    
+    let headerView = MainTableViewHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -36,15 +36,18 @@ class MainTableView : UITableView{
 extension MainTableView{
     private func attribute(){
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
+        self.register(MainTableViewHeaderView.self, forHeaderFooterViewReuseIdentifier: "MainHeader")
         self.register(MainTableViewFooterView.self, forHeaderFooterViewReuseIdentifier: "MainFooter")
         self.dataSource = nil
         self.rowHeight = 185
         self.separatorStyle = .none
         self.refreshControl = self.refresh
+        self.tableHeaderView = self.headerView
         self.tableFooterView = self.footerView
     }
     
     func bind(_ viewModel : MainTableViewModel){
+        self.headerView.bind(viewModel.mainTableViewHeaderViewModel)
         self.footerView.bind(viewModel.mainTableViewFooterViewModel)
         
         // VIEWMODEl -> VIEW

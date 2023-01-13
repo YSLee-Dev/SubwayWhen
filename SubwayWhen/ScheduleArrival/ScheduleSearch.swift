@@ -12,4 +12,5 @@ struct ScheduleSearch{
     let upDown : String
     let exceptionLastStation : String
     let line : String
+    let type : ScheduleType
 }

@@ -15,12 +15,10 @@ import Then
 class DefaultView : UIView{
     let bag = DisposeBag()
     
-    let markLabel = UILabel().then{
+    let markLabel = UILabelCustom(padding: .init(top: 5, left: 10, bottom: 5, right: 10)).then{
         $0.text = " 💡 많은 사람들이 이용하는 지하철역을 골라봤어요."
         $0.font = .systemFont(ofSize: 14)
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
     }
     
     var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then{

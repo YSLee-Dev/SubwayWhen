@@ -28,6 +28,7 @@ struct MainTableViewCellData : Decodable{
     let type : MainTableViewCellType
     let backStationId : String
     let nextStationId : String
+    let totalStationId : String
     
     
     var useCode : String{
@@ -52,18 +53,23 @@ struct MainTableViewCellData : Decodable{
     }
     
     var useTime : String{
-        let time = Int(self.arrivalTime) ?? 0
-        let min = Int((time/60))
-        
-        if min == 0{
-            if time == 0{
-                return self.cutString(cutString: self.subPrevious)
+        if self.type == .real{
+            let time = Int(self.arrivalTime) ?? 0
+            let min = Int((time/60))
+            
+            if min == 0{
+                if time == 0{
+                    return self.cutString(cutString: self.subPrevious)
+                }else{
+                    return "\(time)초"
+                }
             }else{
-                return "\(time)초"
+                return "\(min)분"
             }
         }else{
-            return "\(min)분"
+            return self.subPrevious
         }
+        
     }
     
     var useFast : String{

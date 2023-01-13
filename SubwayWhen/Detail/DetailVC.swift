@@ -43,7 +43,7 @@ extension DetailVC{
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
                 cell.bind(viewModel.arrivalCellModel)
-                cell.lineColorSet(UIColor(named: data.lineNumber) ?? .systemBackground)
+                cell.cellSet(data)
                 return cell
             default:
                 return UITableViewCell()

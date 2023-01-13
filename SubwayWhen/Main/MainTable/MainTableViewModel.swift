@@ -15,6 +15,7 @@ struct MainTableViewModel{
     let cellData : Driver<[MainTableViewSection]>
     
     // MODEL
+    let mainTableViewHeaderViewModel = MainTableViewHeaderViewModel()
     let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
     let mainTableViewCellModel = MainTableViewCellModel()
     

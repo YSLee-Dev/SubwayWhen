@@ -1,5 +1,5 @@
 //
-//  KorailSchduleStation.swift
+//  TagoSchduleStation.swift
 //  SubwayWhen
 //
 //  Created by 이윤수 on 2023/01/12.
@@ -7,23 +7,23 @@
 
 import Foundation
 
-struct KorailSchduleStation : Decodable{
-    let response : KorailResponse
+struct TagoSchduleStation : Decodable{
+    let response : TagoResponse
 }
 
-struct KorailResponse : Decodable{
-    let body : Korailbody
+struct TagoResponse : Decodable{
+    let body : Tagobody
 }
 
-struct Korailbody : Decodable{
-    let items : KorailItems
+struct Tagobody : Decodable{
+    let items : TagoItems
 }
 
-struct KorailItems : Decodable{
-    let item : [KorailItem]
+struct TagoItems : Decodable{
+    let item : [TagoItem]
 }
 
-struct KorailItem : Decodable{
+struct TagoItem : Decodable{
     let arrTime : String
     let endSubwayStationNm : String?
     let endSubwayStationId : String

@@ -12,6 +12,7 @@ class UILabelCustom : UILabel{
     
     convenience init(padding: UIEdgeInsets) {
         self.init()
+        self.attribute()
         self.padding = padding
     }
     
@@ -29,5 +30,12 @@ class UILabelCustom : UILabel{
         didSet {
             preferredMaxLayoutWidth = bounds.width - (self.padding.left + self.padding.right)
         }
+    }
+}
+
+extension UILabelCustom{
+    private func attribute(){
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 15
     }
 }

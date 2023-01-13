@@ -37,13 +37,13 @@ class MainTableViewCell : UITableViewCell{
     }
     
     var now = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 15)
         $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         $0.textColor = .label
     }
     
     var arrivalTime = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: 17)
         $0.textAlignment = .right
         $0.textColor = .label
     }
@@ -75,8 +75,6 @@ class MainTableViewCell : UITableViewCell{
     // 재사용 시 초기화 구문
     override func prepareForReuse() {
         self.bag = DisposeBag()
-        self.changeBtn.setImage(UIImage(systemName: "timer"), for: .normal)
-        
     }
     
     
@@ -94,10 +92,6 @@ class MainTableViewCell : UITableViewCell{
         self.arrivalTime.text = "\(data.useTime)"
         self.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
         self.lineColor(line: data.lineNumber)
-        
-        if data.stationCode.contains("K") || data.stationCode.contains("D"){
-            self.changeBtn.setImage(UIImage(systemName: "xmark"), for: .normal)
-        }
     }
     
     func lineColor(line : String){
