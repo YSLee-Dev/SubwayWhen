@@ -78,6 +78,7 @@ class ModalViewModel {
                           saveInfo.totalStationCode = x.subwayStationId
                       }
                   }
+                  print(saveInfo.totalStationCode)
                   FixInfo.saveStation.append(saveInfo)
                   return Void()
               }

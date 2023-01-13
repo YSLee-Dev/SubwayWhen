@@ -18,7 +18,7 @@ class ResultVCCell : UITableViewCell{
     }
     
     var stationName = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: 16)
     }
     
     var line = UILabel().then{

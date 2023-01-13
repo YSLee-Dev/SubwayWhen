@@ -27,8 +27,6 @@ class DetailTableArrivalCell : UITableViewCell{
     }
     
     var firstSubway = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
         $0.textAlignment = .left
         $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.numberOfLines = 2
@@ -36,12 +34,20 @@ class DetailTableArrivalCell : UITableViewCell{
     }
     
     var secondSubway = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
         $0.textAlignment = .left
         $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
+    }
+    
+    var infoLabel = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
+        $0.textAlignment = .left
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.numberOfLines = 2
+        $0.textColor = .white
+        $0.backgroundColor = .lightGray
+        $0.isHidden = true
+        $0.text = "⛔️ 제외 행을 설정하면\n두 번째 열차를 볼 수 없어요."
     }
     
     override func prepareForReuse() {
@@ -71,7 +77,7 @@ extension DetailTableArrivalCell {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        [self.mainTitle, self.firstSubway, self.secondSubway]
+        [self.mainTitle, self.firstSubway, self.secondSubway, self.infoLabel]
             .forEach{
                 self.mainBG.addSubview($0)
             }
@@ -94,6 +100,14 @@ extension DetailTableArrivalCell {
             $0.height.equalTo(45)
             $0.bottom.equalToSuperview().inset(15)
         }
+        
+        self.infoLabel.snp.makeConstraints{
+            $0.top.equalTo(self.firstSubway.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.leading.equalTo(self.mainBG.snp.centerX).offset(-35)
+            $0.height.equalTo(45)
+            $0.bottom.equalToSuperview().inset(15)
+        }
     }
     
     func bind(_ viewModel : DetailTableArrivalCellModel){
@@ -103,9 +117,12 @@ extension DetailTableArrivalCell {
             
     }
     
-    func lineColorSet(_ color : UIColor){
-        self.firstSubway.backgroundColor = color
-        self.secondSubway.backgroundColor = color
+    func cellSet(_ data : DetailTableViewCellData){
+        self.firstSubway.backgroundColor = UIColor(named: data.lineNumber)
+        self.secondSubway.backgroundColor = UIColor(named: data.lineNumber)
+        
+        self.secondSubway.isHidden =  data.exceptionLastStation == "" ? false : true
+        self.infoLabel.isHidden =  data.exceptionLastStation == "" ? true : false
     }
 }
 

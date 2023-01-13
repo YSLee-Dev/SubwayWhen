@@ -131,7 +131,7 @@ struct searchStationInfo : Decodable{
         case .gyeongui:
             return "경의중앙"
         case .airport:
-            return "공항철도"
+            return "공항"
         case .gyeongchun:
             return "경춘"
         case .seohae:

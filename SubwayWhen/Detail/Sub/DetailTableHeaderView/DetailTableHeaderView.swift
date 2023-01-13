@@ -13,26 +13,25 @@ import Then
 import SnapKit
 
 class DetailTableHeaderView : UITableViewCell{
-    lazy var stationName = UILabel().then{
-        $0.layer.masksToBounds = true
+    lazy var stationName = UILabelCustom(padding: .init(top: 5, left: 5, bottom: 5, right: 5)).then{
         $0.layer.cornerRadius = 37.5
         $0.textColor = .black
         $0.textAlignment = .center
-        $0.font = .boldSystemFont(ofSize: 17)
+        $0.font = .boldSystemFont(ofSize: 16)
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1
     }
     
     var backStation = UILabel().then{
         $0.textColor = .white
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 15)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
     }
     
     var nextStation = UILabel().then{
         $0.textColor = .white
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 15)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .right
     }
@@ -42,21 +41,17 @@ class DetailTableHeaderView : UITableViewCell{
         $0.layer.masksToBounds = true
     }
     
-    var upDown = UILabel().then{
+    var upDown = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .label
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
         $0.textAlignment = .center
     }
     
-    var exceptionLastStation = UILabel().then{
+    var exceptionLastStation = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .systemRed
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
         $0.textAlignment = .center
         $0.adjustsFontSizeToFitWidth = true
     }

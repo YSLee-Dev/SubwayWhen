@@ -38,7 +38,6 @@ class GroupView : UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layout()
-        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -48,16 +47,12 @@ class GroupView : UIView{
 }
 
 extension GroupView{
-    private func attribute(){
-    }
-    
     private func layout(){
         [self.mainTitleLabel,self.groupOne, self.groupTwo]
             .forEach{self.addSubview($0)}
         
         self.mainTitleLabel.snp.makeConstraints{
             $0.leading.trailing.top.equalToSuperview()
-            $0.width.equalTo(50)
         }
         
         self.groupOne.snp.makeConstraints{
