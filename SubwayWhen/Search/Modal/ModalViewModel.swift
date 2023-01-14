@@ -9,6 +9,7 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class ModalViewModel {
     // MODEL
@@ -19,7 +20,7 @@ class ModalViewModel {
     let modalClose : Driver<Void>
     
     // INPUT
-    let clickCellData = BehaviorRelay<ResultVCCellData>(value: .init(stationName: "X", lineNumber: "", stationCode: "", useLine: "", lineCode: "", totalStation: ""))
+    let clickCellData = PublishRelay<ResultVCCellData>()
     let upDownBtnClick = PublishRelay<Bool>()
     let grayBgClick = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)
@@ -54,8 +55,9 @@ class ModalViewModel {
             )
             .asDriver(onErrorDriveWith: .empty())
         
+        // TAGO Station ID 통신
         let totalStationCodeData = self.clickCellData
-            .flatMapLatest{
+            .flatMap{
                 self.model.totalStationSearchRequest($0.stationName)
             }
             .map{ data -> TotalStationSearch? in
@@ -65,9 +67,9 @@ class ModalViewModel {
                 print(value)
                 return value
             }
-            .filter{$0 != nil}
+            .filterNil()
             .map{
-                $0!.response.body.items.item
+                $0.response.body.items.item
             }
         
         saveStationInfo

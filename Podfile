@@ -11,6 +11,7 @@ pod 'RxAlamofire'
 pod 'RxSwift', '6.5.0' 
 pod 'RxCocoa', '6.5.0'
 pod 'RxDataSources'
+pod 'RxOptional'
 
 pod 'Alamofire'
 pod 'Then'
