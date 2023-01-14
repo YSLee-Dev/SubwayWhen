@@ -61,8 +61,8 @@ extension Reactive where Base : SearchVC {
         return Binder(base){base, data in
             let modal = ModalVC()
             let modalViewModel = ModalViewModel()
-            modalViewModel.clickCellData.accept(data)
             modal.bind(modalViewModel)
+            modalViewModel.clickCellData.accept(data)
             modal.modalPresentationStyle = .overFullScreen
             base.present(modal, animated: false)
         }

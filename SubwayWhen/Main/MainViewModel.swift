@@ -9,6 +9,7 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class MainViewModel{
     // MODEL
@@ -20,6 +21,7 @@ class MainViewModel{
     
     // 현재 데이터
     private let groupData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", stationID: "", items: [])])
+    private let totalData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", stationID: "", items: [])])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
@@ -30,11 +32,6 @@ class MainViewModel{
     let clickCellData : Driver<MainTableViewCellData>
     
     init(){
-        // view 다시 들어올 때 리프레시
-        self.reloadData
-            .bind(to: self.mainTableViewModel.refreshOn)
-            .disposed(by: self.bag)
-        
         // footer 버튼 클릭 시
         self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
             .asDriver(onErrorDriveWith: .empty())
@@ -84,14 +81,39 @@ class MainViewModel{
             .bind(to: self.mainTableViewModel.mainTableViewHeaderViewModel.congestionData)
             .disposed(by: self.bag)
         
-        // 리프레시 할 때 데이터 로드
-        let totalData = self.mainTableViewModel.refreshOn
-            .flatMap{
-                self.model.totalLiveDataLoad()
+        // 데이터 리프레쉬 할 때 데이터 삭제(세션 값이 같으면 오류 발생)
+        self.mainTableViewModel.refreshOn
+            .map{ _ in
+                var value = self.totalData.value
+                value.removeAll()
+                return value
             }
+            .bind(to: self.totalData)
+            .disposed(by: self.bag)
+        
+        // 데이터 리로드 할 때(메인VC 데이터 리로드는 2초에 한번으로 제한)
+        let dataReload = Observable
+            .merge(self.reloadData.asObservable()
+                .throttle(.seconds(2), latest: false ,scheduler: MainScheduler.instance),
+                   self.mainTableViewModel.refreshOn.asObservable()
+            )
+        
+        // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
+        dataReload
+            .flatMap{
+               self.model.totalLiveDataLoad()
+            }
+            .map{
+                var now = self.totalData.value
+                now.append($0)
+                return now
+            }
+            .bind(to: self.totalData)
+            .disposed(by: self.bag)
+        
         
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
-       Observable.combineLatest(totalData, self.groupViewModel.groupSeleted){ data, group in
+        Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
             return data.filter{
                 $0.section == group.rawValue
             }
@@ -121,8 +143,7 @@ class MainViewModel{
                     return nil
                 }
             }
-            .filter{$0 != nil}
-            .map{$0!}
+            .filterNil()
             
         let scheduleTotalData = scheduleData
             .flatMap{

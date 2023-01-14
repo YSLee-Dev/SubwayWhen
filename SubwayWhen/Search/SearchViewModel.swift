@@ -9,6 +9,7 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class SearchViewModel {
     // MODEL
@@ -43,10 +44,8 @@ class SearchViewModel {
             .disposed(by: self.bag)
         
         let searchQuery = self.serachBarViewModel.searchText
-            .filter{$0 != nil}
-            .map{
-                $0!
-            }
+            .filterNil()
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
         
         // 추천 역 가져오기 (API 통신)
         Observable.just(["강남", "광화문", "명동", "광화문", "판교", "수원"])
@@ -71,9 +70,9 @@ class SearchViewModel {
                 }
                 return value
             }
-            .filter{$0 != nil}
+            .filterNil()
             .map{ stationModel -> [ResultVCSection] in
-                let data = stationModel!.SearchInfoBySubwayNameService.row
+                let data = stationModel.SearchInfoBySubwayNameService.row
                 // 기본 값 제거
                 if data.count == 5 && data[0].stationName == "용답"{
                     return []
