@@ -45,7 +45,7 @@ class MainViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         // 혼잡도 set
-        Observable.just(1)
+        let mainHeader = Observable.just(1)
             .map{ _ in
                 let nowHour = Calendar.current.component(.hour, from: Date())
                 let week =  Calendar.current.component(.weekday, from: Date())
@@ -78,17 +78,9 @@ class MainViewModel{
                     }
                 }
             }
+          
+        mainHeader
             .bind(to: self.mainTableViewModel.mainTableViewHeaderViewModel.congestionData)
-            .disposed(by: self.bag)
-        
-        // 데이터 리프레쉬 할 때 데이터 삭제(세션 값이 같으면 오류 발생)
-        self.mainTableViewModel.refreshOn
-            .map{ _ in
-                var value = self.totalData.value
-                value.removeAll()
-                return value
-            }
-            .bind(to: self.totalData)
             .disposed(by: self.bag)
         
         // 데이터 리로드 할 때(메인VC 데이터 리로드는 2초에 한번으로 제한)
@@ -97,6 +89,17 @@ class MainViewModel{
                 .throttle(.seconds(2), latest: false ,scheduler: MainScheduler.instance),
                    self.mainTableViewModel.refreshOn.asObservable()
             )
+            .share()
+        
+        // 데이터 리프레쉬 할 때 데이터 삭제(세션 값이 같으면 오류 발생)
+        dataReload
+            .map{ _ in
+                var value = self.totalData.value
+                value.removeAll()
+                return value
+            }
+            .bind(to: self.totalData)
+            .disposed(by: self.bag)
         
         // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
         dataReload
@@ -109,6 +112,14 @@ class MainViewModel{
                 return now
             }
             .bind(to: self.totalData)
+            .disposed(by: self.bag)
+        
+        // 데이터, 업데이트 시 메인 헤더도 업데이트
+        dataReload
+            .flatMap{
+                mainHeader
+            }
+            .bind(to: self.mainTableViewModel.mainTableViewHeaderViewModel.congestionData)
             .disposed(by: self.bag)
         
         
