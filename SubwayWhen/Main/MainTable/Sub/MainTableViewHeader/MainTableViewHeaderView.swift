@@ -82,10 +82,12 @@ extension MainTableViewHeaderView {
                 for _ in 1...count{
                     result.append("😵")
                 }
-        
-                for _ in result.count...9{
-                    result.append("🫥")
+                if count != 10{
+                    for _ in result.count...9{
+                        result.append("🫥")
+                    }
                 }
+               
                 return result
             }
             .drive(self.congestionLabel.rx.text)
