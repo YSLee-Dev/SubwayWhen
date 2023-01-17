@@ -51,7 +51,7 @@ extension MainTableView{
         self.footerView.bind(viewModel.mainTableViewFooterViewModel)
         
         // VIEWMODEl -> VIEW
-        let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right), configureCell: {dataSource, tv, index, item in
+        let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {dataSource, tv, index, item in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
        
             cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)

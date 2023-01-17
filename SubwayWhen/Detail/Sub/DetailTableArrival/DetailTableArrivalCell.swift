@@ -131,14 +131,14 @@ extension Reactive where Base : DetailTableArrivalCell {
         return Binder(base){ base, dataArray in
             if let firstData = dataArray.first{
                 base.mainTitle.text = firstData.subPrevious != "" ? "\(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
-                base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차 \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
+                base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차(\(firstData.lastStation)행) \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
             }else{
                 base.mainTitle.text = "⚠️ 실시간 정보없음"
                 base.firstSubway.text = "⚠️ 실시간 정보없음"
             }
             
             if let secondData = dataArray.last{
-                base.secondSubway.text = secondData.subPrevious != "" ? "🚇 \(secondData.trainCode) 열차 \n \(secondData.subPrevious)" : "⚠️ 실시간 정보없음"
+                base.secondSubway.text = secondData.subPrevious != "" ? "🚇 \(secondData.trainCode) 열차(\(secondData.lastStation)행) \n \(secondData.subPrevious)" : "⚠️ 실시간 정보없음"
             }else{
                 base.secondSubway.text = "⚠️ 실시간 정보없음"
             }

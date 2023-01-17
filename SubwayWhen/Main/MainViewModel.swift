@@ -159,14 +159,15 @@ class MainViewModel{
         let scheduleTotalData = scheduleData
             .flatMap{
                 if $0.type == .Tago{
-                    return self.model.nowScheduleStationLoad($0, type: .Tago)
+                    return self.model.nowScheduleStationLoad($0, type: .Tago, count: 1, isNow: true)
                 }else{
-                    return self.model.nowScheduleStationLoad($0, type: .Seoul)
+                    return self.model.nowScheduleStationLoad($0, type: .Seoul, count: 1, isNow: true)
                 }
             }
         
         scheduleTotalData
-            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ data, index in
+            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ scheduleData, index -> [MainTableViewSection] in
+                guard let data = scheduleData.first else {return []}
                 let nowData = self.groupData.value[index.section].items[index.row]
                 let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "⏱️\(data.useArrTime)", subPrevious: "\(data.useTime)", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, totalStationId: nowData.totalStationId)
                
@@ -174,6 +175,7 @@ class MainViewModel{
                 now[index.section].items[index.row] = newData
                 return now
             }
+            .filterEmpty()
             .bind(to: self.groupData)
             .disposed(by: self.bag)
         

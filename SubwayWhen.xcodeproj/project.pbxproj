@@ -41,6 +41,8 @@
 		34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD132974D3B300E349A1 /* ResultSchedule.swift */; };
 		34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderView.swift */; };
 		34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */; };
+		34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */; };
+		34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */; };
 		34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C1D8372953036400FB6624 /* EditViewCellSection.swift */; };
 		34C1D83A29530B5A00FB6624 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C1D83929530B5A00FB6624 /* EditModel.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
@@ -121,6 +123,8 @@
 		34B9FD132974D3B300E349A1 /* ResultSchedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultSchedule.swift; sourceTree = "<group>"; };
 		34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderView.swift; sourceTree = "<group>"; };
 		34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderViewModel.swift; sourceTree = "<group>"; };
+		34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCell.swift; sourceTree = "<group>"; };
+		34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellModel.swift; sourceTree = "<group>"; };
 		34C1D8372953036400FB6624 /* EditViewCellSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewCellSection.swift; sourceTree = "<group>"; };
 		34C1D83929530B5A00FB6624 /* EditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModel.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,11 +282,11 @@
 		34B9FD0A2974D3B300E349A1 /* ScheduleArrival */ = {
 			isa = PBXGroup;
 			children = (
+				34B9FD132974D3B300E349A1 /* ResultSchedule.swift */,
 				34B9FD0B2974D3B300E349A1 /* ScheduleType.swift */,
 				34B9FD0C2974D3B300E349A1 /* ScheduleSearch.swift */,
 				34B9FD0D2974D3B300E349A1 /* Seoul */,
 				34B9FD112974D3B300E349A1 /* Tago */,
-				34B9FD132974D3B300E349A1 /* ResultSchedule.swift */,
 			);
 			name = ScheduleArrival;
 			path = DataLoad/ScheduleArrival;
@@ -313,6 +317,15 @@
 				34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */,
 			);
 			path = MainTableViewHeader;
+			sourceTree = "<group>";
+		};
+		34B9FD242976A2F300E349A1 /* DetailTableSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */,
+				34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */,
+			);
+			path = DetailTableSchedule;
 			sourceTree = "<group>";
 		};
 		34C6DB482936274400C4ED80 = {
@@ -473,6 +486,7 @@
 				34F5F0E72962D8B10010A21D /* DetailViewModel.swift */,
 				34F5F10B296561F50010A21D /* DetailModel.swift */,
 				34F5F10529642AE50010A21D /* Sub */,
+				34B9FD242976A2F300E349A1 /* DetailTableSchedule */,
 				34F5F10229642A960010A21D /* Entity */,
 			);
 			path = Detail;
@@ -690,10 +704,12 @@
 				34F5F10E296578A50010A21D /* DetailStationIdList.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */,
+				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
 				34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */,
 				347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */,
+				34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */,
 				34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */,
 				34B9FD182974D3B300E349A1 /* ScheduleStationArrival.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
