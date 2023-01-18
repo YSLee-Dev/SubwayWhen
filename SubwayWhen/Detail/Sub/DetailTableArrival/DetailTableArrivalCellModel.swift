@@ -13,6 +13,7 @@ import RxCocoa
 class DetailTableArrivalCellModel {
     // INPUT
     let realTimeData = BehaviorRelay<[RealtimeStationArrival]>(value: [])
+    let refreshBtnClick = PublishRelay<Void>()
     
     // OUTPUT
     let cellData : Driver<[RealtimeStationArrival]>
