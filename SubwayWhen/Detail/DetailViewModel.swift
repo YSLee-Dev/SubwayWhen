@@ -43,7 +43,10 @@ class DetailViewModel{
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
-        let realTimeData = self.detailViewData
+        let onRefresh = self.arrivalCellModel.refreshBtnClick
+            .withLatestFrom(self.detailViewData)
+        
+        let realTimeData = onRefresh
             .flatMapLatest{
                 self.loadModel.stationArrivalRequest(stationName: $0.stationName)
             }
