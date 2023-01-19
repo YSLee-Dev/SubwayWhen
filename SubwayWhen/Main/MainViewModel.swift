@@ -158,11 +158,7 @@ class MainViewModel{
             
         let scheduleTotalData = scheduleData
             .flatMap{
-                if $0.type == .Tago{
-                    return self.model.nowScheduleStationLoad($0, type: .Tago, count: 1, isNow: true)
-                }else{
-                    return self.model.nowScheduleStationLoad($0, type: .Seoul, count: 1, isNow: true)
-                }
+                self.model.totalScheduleStationLoad($0, isFirst: true, isNow: true)
             }
         
         scheduleTotalData

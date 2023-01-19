@@ -11,11 +11,7 @@ import Then
 import SnapKit
 
 class ResultVCCell : UITableViewCell{
-    var mainBG = UIView().then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
+    var mainBG = MainStyleUIView()
     
     var stationName = UILabel().then{
         $0.font = .boldSystemFont(ofSize: 16)

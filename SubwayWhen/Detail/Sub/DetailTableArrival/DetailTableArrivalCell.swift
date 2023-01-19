@@ -13,11 +13,7 @@ import RxCocoa
 class DetailTableArrivalCell : UITableViewCell{
     var bag = DisposeBag()
     
-    var mainBG = UIView().then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
+    var mainBG = MainStyleUIView()
     
     var mainTitle = UILabel().then{
         $0.textColor = .label
