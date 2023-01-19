@@ -15,6 +15,7 @@ class DetailViewModel{
     let detailModel = DetailModel()
     let loadModel = LoadModel()
     let arrivalCellModel = DetailTableArrivalCellModel()
+    let scheduleCellModel = DetailTableScheduleCellModel()
     
     // INPUT
     let detailViewData = PublishRelay<MainTableViewCellData>()
@@ -31,6 +32,7 @@ class DetailViewModel{
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
+        // 기본 셀 구성
         self.detailViewData
             .map{
                 let backNext = self.detailModel.nextAndBackStationSearch(backId: $0.backStationId, nextId: $0.nextStationId)
@@ -43,9 +45,32 @@ class DetailViewModel{
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
+       self.detailViewData
+            .map{ item -> ScheduleSearch in
+                var searchData = ScheduleSearch(stationCode: "", upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
+                if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
+                    searchData.stationCode = item.totalStationId
+                    searchData.type = .Tago
+                    return searchData
+                }else{
+                    searchData.stationCode = item.stationCode
+                    
+                    return searchData
+                }
+            }
+            .flatMap{
+                self.loadModel.totalScheduleStationLoad($0, isFirst: false, isNow: false)
+            }
+            .bind(to: self.scheduleCellModel.schedultData)
+            .disposed(by: self.bag)
+        
+        
+        
+        // 실시간 새로고침 버튼 클릭 시
         let onRefresh = self.arrivalCellModel.refreshBtnClick
             .withLatestFrom(self.detailViewData)
         
+        // 실시간 데이터 불러오기
         let realTimeData = onRefresh
             .flatMapLatest{
                 self.loadModel.stationArrivalRequest(stationName: $0.stationName)

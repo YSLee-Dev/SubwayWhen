@@ -16,10 +16,7 @@ class MainTableViewCell : UITableViewCell{
     var index = IndexPath(row: 0, section: 0)
     var bag = DisposeBag()
     
-    var mainBG = UIView().then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = UIColor(named: "MainColor")
+    var mainBG = MainStyleUIView().then{
         $0.layer.borderWidth = 1.0
     }
     

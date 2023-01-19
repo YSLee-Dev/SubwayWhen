@@ -12,10 +12,7 @@ import SnapKit
 
 class EditViewCell : UITableViewCell{
     
-    var mainBG = UIView().then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = .systemBackground
+    var mainBG = MainStyleUIView().then{
         $0.layer.borderWidth = 1.0
     }
     

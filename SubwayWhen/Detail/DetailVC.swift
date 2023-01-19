@@ -27,6 +27,7 @@ extension DetailVC{
         
         self.tableView.register(DetailTableHeaderView.self, forCellReuseIdentifier: "DetailTableHeaderView")
         self.tableView.register(DetailTableArrivalCell.self, forCellReuseIdentifier: "DetailTableArrivalCell")
+        self.tableView.register(DetailTableScheduleCell.self, forCellReuseIdentifier: "DetailTableScheduleCell")
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 150
     }
@@ -45,6 +46,12 @@ extension DetailVC{
                 cell.bind(viewModel.arrivalCellModel)
                 cell.cellSet(data)
                 return cell
+                
+            case 2:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableScheduleCell", for: index) as? DetailTableScheduleCell else {return UITableViewCell()}
+                cell.cellSet(data)
+                cell.bind(viewModel.scheduleCellModel)
+                return cell
             default:
                 return UITableViewCell()
             }
@@ -57,5 +64,7 @@ extension DetailVC{
         viewModel.cellData
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
+        
+        
     }
 }

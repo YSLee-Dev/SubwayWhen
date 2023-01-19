@@ -8,9 +8,9 @@
 import Foundation
 
 struct ScheduleSearch{
-    let stationCode : String
+    var stationCode : String
     let upDown : String
     let exceptionLastStation : String
     let line : String
-    let type : ScheduleType
+    var type : ScheduleType
 }

@@ -37,5 +37,6 @@ extension UILabelCustom{
     private func attribute(){
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 15
+        self.adjustsFontSizeToFitWidth = true
     }
 }
