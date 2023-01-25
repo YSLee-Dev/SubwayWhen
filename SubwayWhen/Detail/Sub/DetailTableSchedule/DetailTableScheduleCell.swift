@@ -105,6 +105,10 @@ extension DetailTableScheduleCell{
             .filterNil()
             .drive(self.mainTitle.rx.text)
             .disposed(by: self.bag)
+        
+        self.moreBtn.rx.tap
+            .bind(to: viewModel.moreBtnClick)
+            .disposed(by: self.bag)
     }
     
     func cellSet(_ data : DetailTableViewCellData){

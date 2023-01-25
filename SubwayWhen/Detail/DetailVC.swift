@@ -65,6 +65,22 @@ extension DetailVC{
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
         
-        
+        viewModel.moreBtnClickData
+            .drive(self.rx.detailResultPresent)
+            .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base : DetailVC{
+    var detailResultPresent : Binder<[ResultSchdule]>{
+        return Binder(base){ base, data in
+            let resultVC = DetailResultScheduleVC(title: base.title ?? "")
+            
+            let viewModel = DetailResultScheduleViewModel()
+            viewModel.scheduleData.accept(data)
+            resultVC.bind(viewModel)
+            
+            base.present(resultVC, animated: true)
+        }
     }
 }
