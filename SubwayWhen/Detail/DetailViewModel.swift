@@ -22,14 +22,24 @@ class DetailViewModel{
     
     // OUTPUT
     let cellData : Driver<[DetailTableViewSectionData]>
+    let moreBtnClickData : Driver<[ResultSchdule]>
     
     // DATA
     let nowData = PublishRelay<[DetailTableViewSectionData]>()
+    let scheduleData = PublishRelay<[ResultSchdule]>()
     
     let bag = DisposeBag()
     
     init(){
         self.cellData = self.nowData
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.scheduleData
+            .bind(to: self.scheduleCellModel.schedultData)
+            .disposed(by: self.bag)
+        
+        self.moreBtnClickData = self.scheduleCellModel.moreBtnClick
+            .withLatestFrom(self.scheduleData)
             .asDriver(onErrorDriveWith: .empty())
         
         // 기본 셀 구성
@@ -61,11 +71,8 @@ class DetailViewModel{
             .flatMap{
                 self.loadModel.totalScheduleStationLoad($0, isFirst: false, isNow: false)
             }
-            .bind(to: self.scheduleCellModel.schedultData)
-            .disposed(by: self.bag)
-        
-        
-        
+            .bind(to: self.scheduleData)
+            
         // 실시간 새로고침 버튼 클릭 시
         let onRefresh = self.arrivalCellModel.refreshBtnClick
             .withLatestFrom(self.detailViewData)

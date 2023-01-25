@@ -76,6 +76,8 @@
 		34CA5599293897160006F67B /* GroupCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5598293897160006F67B /* GroupCustomButton.swift */; };
 		34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */; };
 		34F494CF2980D8EC001599B1 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F494CE2980D8EB001599B1 /* RequestToken.swift */; };
+		34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F494D029815200001599B1 /* DetailResultScheduleVC.swift */; };
+		34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F494D32981521D001599B1 /* DetailResultScheduleViewModel.swift */; };
 		34F5F0E62962D8990010A21D /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F0E52962D8990010A21D /* DetailVC.swift */; };
 		34F5F0E82962D8B10010A21D /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F0E72962D8B10010A21D /* DetailViewModel.swift */; };
 		34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F0EC2962DCE80010A21D /* TopView.swift */; };
@@ -165,6 +167,8 @@
 		34CA5598293897160006F67B /* GroupCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCustomButton.swift; sourceTree = "<group>"; };
 		34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		34F494CE2980D8EB001599B1 /* RequestToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestToken.swift; path = DataLoad/RequestToken.swift; sourceTree = "<group>"; };
+		34F494D029815200001599B1 /* DetailResultScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleVC.swift; sourceTree = "<group>"; };
+		34F494D32981521D001599B1 /* DetailResultScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewModel.swift; sourceTree = "<group>"; };
 		34F5F0E52962D8990010A21D /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		34F5F0E72962D8B10010A21D /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		34F5F0EC2962DCE80010A21D /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -510,14 +514,23 @@
 			path = Group;
 			sourceTree = "<group>";
 		};
+		34F494D229815209001599B1 /* DetailResultSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				34F494D029815200001599B1 /* DetailResultScheduleVC.swift */,
+				34F494D32981521D001599B1 /* DetailResultScheduleViewModel.swift */,
+			);
+			path = DetailResultSchedule;
+			sourceTree = "<group>";
+		};
 		34F5F0E92962D8BC0010A21D /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				34F5F0E52962D8990010A21D /* DetailVC.swift */,
 				34F5F0E72962D8B10010A21D /* DetailViewModel.swift */,
 				34F5F10B296561F50010A21D /* DetailModel.swift */,
+				34F494D229815209001599B1 /* DetailResultSchedule */,
 				34F5F10529642AE50010A21D /* Sub */,
-				34B9FD242976A2F300E349A1 /* DetailTableSchedule */,
 				34F5F10229642A960010A21D /* Entity */,
 			);
 			path = Detail;
@@ -559,6 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				34F5F10829642AF10010A21D /* DetailTableHeaderView */,
+				34B9FD242976A2F300E349A1 /* DetailTableSchedule */,
 				34F5F1162966CAEE0010A21D /* DetailTableArrival */,
 			);
 			path = Sub;
@@ -735,6 +749,8 @@
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */,
 				34F5F10E296578A50010A21D /* DetailStationIdList.swift in Sources */,
+				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
+				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */,
 				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
