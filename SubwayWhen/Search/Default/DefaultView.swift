@@ -17,7 +17,7 @@ class DefaultView : UIView{
     
     let markLabel = UILabelCustom(padding: .init(top: 5, left: 10, bottom: 5, right: 10)).then{
         $0.text = " 💡 많은 사람들이 이용하는 지하철역을 골라봤어요."
-        $0.font = .systemFont(ofSize: 14)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.backgroundColor = UIColor(named: "MainColor")
     }
     

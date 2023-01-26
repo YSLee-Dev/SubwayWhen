@@ -17,21 +17,21 @@ class DetailTableHeaderView : UITableViewCell{
         $0.layer.cornerRadius = 37.5
         $0.textColor = .black
         $0.textAlignment = .center
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1
     }
     
     var backStation = UILabel().then{
         $0.textColor = .white
-        $0.font = .boldSystemFont(ofSize: 15)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
     }
     
     var nextStation = UILabel().then{
         $0.textColor = .white
-        $0.font = .boldSystemFont(ofSize: 15)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .right
     }
@@ -43,14 +43,14 @@ class DetailTableHeaderView : UITableViewCell{
     
     var upDown = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .label
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textAlignment = .center
     }
     
     var exceptionLastStation = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .systemRed
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textAlignment = .center
         $0.adjustsFontSizeToFitWidth = true

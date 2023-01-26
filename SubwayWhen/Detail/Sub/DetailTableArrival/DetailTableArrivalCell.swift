@@ -17,14 +17,14 @@ class DetailTableArrivalCell : UITableViewCell{
     
     var mainTitle = UILabel().then{
         $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
     }
     
     lazy var firstSubway = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
         $0.alpha = 0
@@ -32,7 +32,7 @@ class DetailTableArrivalCell : UITableViewCell{
     
     lazy var secondSubway = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
         $0.alpha = 0
@@ -40,7 +40,7 @@ class DetailTableArrivalCell : UITableViewCell{
     
     var infoLabel = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
         $0.backgroundColor = .lightGray

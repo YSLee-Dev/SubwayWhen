@@ -31,7 +31,7 @@ class MainTableViewFooterView : UITableViewHeaderFooterView {
     var editBtn = UIButton(type: .system).then{
         $0.setTitle("편집", for: .normal)
         $0.tintColor = .gray
-        $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
     
     override init(reuseIdentifier: String?) {

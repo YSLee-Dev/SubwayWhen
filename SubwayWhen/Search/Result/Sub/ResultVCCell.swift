@@ -14,7 +14,7 @@ class ResultVCCell : UITableViewCell{
     var mainBG = MainStyleUIView()
     
     var stationName = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
     
     var line = UILabel().then{
@@ -23,7 +23,7 @@ class ResultVCCell : UITableViewCell{
         $0.backgroundColor = UIColor(hue: 0.9333, saturation: 0.89, brightness: 0.9, alpha: 1.0)
         $0.textColor = .white
         $0.textAlignment = .center
-        $0.font = .boldSystemFont(ofSize: 13)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

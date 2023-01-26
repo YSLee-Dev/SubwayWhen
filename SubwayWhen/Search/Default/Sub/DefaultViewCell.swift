@@ -12,7 +12,7 @@ import Then
 
 class DefaultViewCell : UICollectionViewCell{
     var stationName = UILabel().then{
-        $0.font = .systemFont(ofSize: 14)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15

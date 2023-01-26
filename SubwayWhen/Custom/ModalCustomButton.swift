@@ -22,6 +22,6 @@ extension ModalCustomButton {
     private func attribute(){
         self.layer.cornerRadius = 15
         self.layer.masksToBounds = true
-        self.titleLabel?.font = .systemFont(ofSize: 16)
+        self.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
 }

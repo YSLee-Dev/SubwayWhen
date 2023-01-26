@@ -13,7 +13,7 @@ import Then
 class DetailTableScheduleCellSubCell : UICollectionViewCell{
     let scheduleTitle = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.textColor = .white
     }
     

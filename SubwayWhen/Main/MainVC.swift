@@ -30,6 +30,10 @@ class MainVC : UIViewController{
         self.mainViewModel.reloadData
             .accept(Void())
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.groupViewIsHide(false)
+    }
 }
  
 extension MainVC{
@@ -74,6 +78,26 @@ extension MainVC{
             .disposed(by: self.bag)
         
     }
+    
+    private func groupViewIsHide(_ hide: Bool){
+        if hide{
+            self.groupView.tableScrollBtnResizing(hide)
+            
+            self.groupView.snp.updateConstraints{
+                $0.height.equalTo(40)
+            }
+        }else{
+            self.groupView.tableScrollBtnResizing(hide)
+            
+            self.groupView.snp.updateConstraints{
+                $0.height.equalTo(75)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
+            self.view.layoutIfNeeded()
+        }
+    }
 }
 
 extension Reactive where Base : MainVC {
@@ -107,21 +131,9 @@ extension Reactive where Base : MainVC {
 extension MainVC : UITableViewDelegate{
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.y < 0{
-            self.groupView.tableScrollBtnResizing(false)
-            
-            self.groupView.snp.updateConstraints{
-                $0.height.equalTo(75)
-            }
+            self.groupViewIsHide(false)
         }else{
-            self.groupView.tableScrollBtnResizing(true)
-            
-            self.groupView.snp.updateConstraints{
-                $0.height.equalTo(25)
-            }
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
-            self.view.layoutIfNeeded()
+            self.groupViewIsHide(true)
         }
     }
 }
