@@ -18,7 +18,7 @@ class DetailTableScheduleCell : UITableViewCell{
     
     var mainTitle = UILabel().then{
         $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
         $0.text = "시간표 데이터가 없습니다."

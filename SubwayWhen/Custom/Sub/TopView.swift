@@ -22,7 +22,7 @@ class TopView : UIView{
     
     lazy var subTitleLabel = UILabel().then{
         $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
         $0.textAlignment = .left
         $0.alpha = 0
         $0.transform = CGAffineTransform(translationX: 0, y: 10)

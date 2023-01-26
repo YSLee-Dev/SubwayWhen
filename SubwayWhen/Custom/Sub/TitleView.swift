@@ -13,7 +13,7 @@ import Then
 class TitleView : UIView{
     lazy var mainTitleLabel = UILabel().then{
         $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 25)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.textAlignment = .left
     }
 

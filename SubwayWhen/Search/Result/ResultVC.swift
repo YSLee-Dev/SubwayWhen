@@ -29,7 +29,7 @@ extension ResultVC{
     
     func bind(_ viewModel : ResultViewModel){
         // VIEWMODEL -> VIEW
-        var dataSource = RxTableViewSectionedAnimatedDataSource<ResultVCSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right) ,configureCell: { _, tv, index, data in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<ResultVCSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right) ,configureCell: { _, tv, index, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "ResultVCCell", for: index) as? ResultVCCell else {return UITableViewCell()}
             
             cell.dataSet(line: data)

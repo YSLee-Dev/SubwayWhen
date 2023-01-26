@@ -21,17 +21,17 @@ class EditViewCell : UITableViewCell{
         $0.layer.cornerRadius = 30
         $0.textColor = .white
         $0.textAlignment = .center
-        $0.font = .boldSystemFont(ofSize: 14)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
     }
     
     var stationName = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textAlignment = .right
         $0.textColor = .label
     }
     
     var upDown = UILabel().then{
-        $0.font = .systemFont(ofSize: 14)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .right
         $0.textColor = .label
     }

@@ -30,7 +30,7 @@ class ModalVC : UIViewController{
     }
     
     let titleLabel = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
     }
     
     let line = UILabel().then{
@@ -39,7 +39,7 @@ class ModalVC : UIViewController{
         $0.backgroundColor = UIColor(hue: 0.9333, saturation: 0.89, brightness: 0.9, alpha: 1.0)
         $0.textColor = .white
         $0.textAlignment = .center
-        $0.font = .boldSystemFont(ofSize: 15)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
     
     let upBtn = ModalCustomButton().then{
@@ -70,7 +70,7 @@ class ModalVC : UIViewController{
         $0.layer.borderColor = UIColor.systemGray.cgColor
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true
-        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.font = UIFont.systemFont(ofSize: ViewStyle.FontSize.smallSize)
     }
     
     override func viewDidLoad() {

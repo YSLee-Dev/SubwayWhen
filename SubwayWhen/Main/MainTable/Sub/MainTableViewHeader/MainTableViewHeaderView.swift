@@ -25,13 +25,13 @@ class MainTableViewHeaderView : UITableViewHeaderFooterView{
     
     let mainTitle = UILabel().then{
         $0.text = "현재 지하철 예상 혼잡도"
-        $0.font = .boldSystemFont(ofSize: 18)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textAlignment = .left
         $0.textColor = .label
     }
     
     let congestionLabel = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: 25)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.textAlignment = .left
         $0.text = "😵😵😵😵😵😵😵😵🫥🫥"
     }
