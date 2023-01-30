@@ -15,6 +15,18 @@ import RxDataSources
 class DetailVC : TableVCCustom{
     let bag = DisposeBag()
     
+    let detailViewModel : DetailViewModel
+    
+    init(title: String, viewModel : DetailViewModel) {
+        self.detailViewModel = viewModel
+        super.init(title: title)
+        self.bind(viewModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attribute()
@@ -32,14 +44,13 @@ extension DetailVC{
         self.tableView.estimatedRowHeight = 150
     }
     
-    func bind(_ viewModel : DetailViewModel){
-        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade)){ dataSource, tv, index, data in
-            
+    private func bind(_ viewModel : DetailViewModel){
+        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, deleteAnimation: .right)){ dataSource, tv, index, data in
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableHeaderView", for: index) as? DetailTableHeaderView else {return UITableViewCell()}
                 cell.cellSet(data)
-                
+                cell.bind(viewModel.headerViewModel)
                 return cell
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
@@ -68,6 +79,10 @@ extension DetailVC{
         viewModel.moreBtnClickData
             .drive(self.rx.detailResultPresent)
             .disposed(by: self.bag)
+        
+        viewModel.exceptionLastStationRemoveBtnClick
+            .drive(self.rx.exceptionLastStationRemoveAlert)
+            .disposed(by: self.bag)
     }
 }
 
@@ -81,6 +96,20 @@ extension Reactive where Base : DetailVC{
             resultVC.bind(viewModel)
             
             base.present(resultVC, animated: true)
+        }
+    }
+    
+    var exceptionLastStationRemoveAlert : Binder<MainTableViewCellData>{
+        return Binder(base){ base, data in
+            let alert = UIAlertController(title: "\(data.exceptionLastStation)행 을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "재로딩", style: .default){ tap in
+                Observable.just(Void())
+                    .bind(to: base.detailViewModel.exceptionLastStationRemoveReload)
+                    .disposed(by: base.bag)
+            })
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+            
+            base.present(alert, animated: true)
         }
     }
 }

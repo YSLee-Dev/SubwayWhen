@@ -9,23 +9,27 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class DetailViewModel{
     // MODEL
     let detailModel = DetailModel()
     let loadModel = LoadModel()
+    let headerViewModel = DetailTableHeaderViewModel()
     let arrivalCellModel = DetailTableArrivalCellModel()
     let scheduleCellModel = DetailTableScheduleCellModel()
     
     // INPUT
     let detailViewData = PublishRelay<MainTableViewCellData>()
+    let exceptionLastStationRemoveReload = PublishRelay<Void>()
     
     // OUTPUT
     let cellData : Driver<[DetailTableViewSectionData]>
     let moreBtnClickData : Driver<[ResultSchdule]>
+    let exceptionLastStationRemoveBtnClick : Driver<MainTableViewCellData>
     
     // DATA
-    let nowData = PublishRelay<[DetailTableViewSectionData]>()
+    let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
     let scheduleData = PublishRelay<[ResultSchdule]>()
     
     let bag = DisposeBag()
@@ -42,14 +46,38 @@ class DetailViewModel{
             .withLatestFrom(self.scheduleData)
             .asDriver(onErrorDriveWith: .empty())
         
+        // 제외 행 제거 클릭 시
+        self.exceptionLastStationRemoveBtnClick = self.headerViewModel.exceptionLastStationBtnClick
+            .withLatestFrom(self.detailViewData)
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.exceptionLastStationRemoveReload
+            .map{ _ in
+                var now = self.nowData.value
+                now.removeAll()
+                return now
+            }
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
+        
+        self.exceptionLastStationRemoveReload
+            .withLatestFrom(self.detailViewData)
+            .map{
+                var now = $0
+                now.exceptionLastStation = ""
+                return now
+            }
+            .bind(to: self.detailViewData)
+            .disposed(by: self.bag)
+        
         // 기본 셀 구성
         self.detailViewData
             .map{
                 let backNext = self.detailModel.nextAndBackStationSearch(backId: $0.backStationId, nextId: $0.nextStationId)
                 return [
-                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: $0.id, stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id: $0.id, stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id: $0.id, stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])])
+                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])])
                 ]
             }
             .bind(to: self.nowData)
@@ -72,7 +100,9 @@ class DetailViewModel{
                 self.loadModel.totalScheduleStationLoad($0, isFirst: false, isNow: false)
             }
             .bind(to: self.scheduleData)
-            
+            .disposed(by: self.bag)
+        
+        
         // 실시간 새로고침 버튼 클릭 시
         let onRefresh = self.arrivalCellModel.refreshBtnClick
             .withLatestFrom(self.detailViewData)
