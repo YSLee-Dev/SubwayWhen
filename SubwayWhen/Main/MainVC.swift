@@ -117,10 +117,10 @@ extension Reactive where Base : MainVC {
     
     var detailVCPresent : Binder<MainTableViewCellData>{
         return Binder(base){base, data in
-            let detail = DetailVC(title: "\(data.useLine) \(data.stationName)")
-            detail.hidesBottomBarWhenPushed = true
             let viewModel = DetailViewModel()
-            detail.bind(viewModel)
+            
+            let detail = DetailVC(title: "\(data.useLine) \(data.stationName)", viewModel: viewModel)
+            detail.hidesBottomBarWhenPushed = true
             viewModel.detailViewData.accept(data)
             
             base.navigationController?.pushViewController(detail, animated: true)

@@ -9,10 +9,13 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxOptional
 import Then
 import SnapKit
 
 class DetailTableHeaderView : UITableViewCell{
+    let bag = DisposeBag()
+    
     lazy var stationName = UILabelCustom(padding: .init(top: 5, left: 5, bottom: 5, right: 5)).then{
         $0.layer.cornerRadius = 37.5
         $0.textColor = .black
@@ -48,12 +51,18 @@ class DetailTableHeaderView : UITableViewCell{
         $0.textAlignment = .center
     }
     
-    var exceptionLastStation = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
-        $0.textColor = .systemRed
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
+    var exceptionLastStation = UIButton().then{
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.textAlignment = .center
-        $0.adjustsFontSizeToFitWidth = true
+        
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 15
+        
+        $0.setTitle("제외 행 없음", for: .normal)
+        $0.setTitleColor(UIColor.systemRed, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
+        $0.titleLabel?.textAlignment = .center
+        $0.titleLabel?.adjustsFontSizeToFitWidth = true
+        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -127,6 +136,12 @@ extension DetailTableHeaderView {
         }
     }
     
+    func bind(_ viewModel : DetailTableHeaderViewModel){
+        self.exceptionLastStation.rx.tap
+            .bind(to: viewModel.exceptionLastStationBtnClick)
+            .disposed(by: self.bag)
+    }
+    
     func cellSet(_ data : DetailTableViewCellData){
         self.lineColor.backgroundColor = UIColor(named: data.lineNumber)
         self.stationName.layer.borderColor = UIColor(named: data.lineNumber)?.cgColor
@@ -135,6 +150,8 @@ extension DetailTableHeaderView {
         self.backStation.text = data.backStationName == data.stationName ? "" : data.backStationName
         self.nextStation.text = data.nextStationName == data.stationName ? "" : data.nextStationName
         self.upDown.text = data.upDown
-        self.exceptionLastStation.text = data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외"
+        self.exceptionLastStation.setTitle( data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
+        
+        self.exceptionLastStation.isEnabled = data.exceptionLastStation != ""
     }
 }

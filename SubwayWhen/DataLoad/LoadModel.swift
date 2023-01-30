@@ -133,6 +133,7 @@ class LoadModel {
                 }
             }
             .asSingle()
+            .timeout(.seconds(5), other: .just(.failure(.init(.timedOut))), scheduler: MainScheduler.instance)
     }
     
     // 서울 지하철 시간표 데이터 통신
@@ -178,6 +179,7 @@ class LoadModel {
                 
             }
             .asSingle()
+            .timeout(.seconds(5), other: .just(.failure(.init(.timedOut))), scheduler: MainScheduler.instance)
     }
     
     // 현재 시각에 맞는 지하철 시간표
