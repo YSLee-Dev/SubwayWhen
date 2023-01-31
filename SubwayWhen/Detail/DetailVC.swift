@@ -45,7 +45,7 @@ extension DetailVC{
     }
     
     private func bind(_ viewModel : DetailViewModel){
-        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(insertAnimation: .left, deleteAnimation: .right)){ dataSource, tv, index, data in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(reloadAnimation: .top)){ dataSource, tv, index, data in
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableHeaderView", for: index) as? DetailTableHeaderView else {return UITableViewCell()}

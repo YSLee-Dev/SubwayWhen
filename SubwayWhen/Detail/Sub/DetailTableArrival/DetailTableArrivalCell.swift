@@ -14,6 +14,7 @@ class DetailTableArrivalCell : UITableViewCell{
     var bag = DisposeBag()
     
     var mainBG = MainStyleUIView()
+    var liveBG = DetailTableArrivalLiveView()
     
     var mainTitle = UILabel().then{
         $0.textColor = .label
@@ -27,7 +28,6 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
-        $0.alpha = 0
     }
     
     lazy var secondSubway = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
@@ -35,7 +35,6 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.numberOfLines = 2
         $0.textColor = .white
-        $0.alpha = 0
     }
     
     var infoLabel = UILabelCustom(padding: .init(top: 0, left: 5, bottom: 0, right: 5)).then{
@@ -49,7 +48,7 @@ class DetailTableArrivalCell : UITableViewCell{
     }
     
     var refreshBtn = UIButton().then{
-        $0.setImage(UIImage(systemName: "goforward"), for: .normal)
+        $0.setImage(UIImage(systemName: "arrow.triangle.2.circlepath"), for: .normal)
         $0.tintColor = .label
     }
     
@@ -71,20 +70,21 @@ class DetailTableArrivalCell : UITableViewCell{
 extension DetailTableArrivalCell {
     private func attribute(){
         self.selectionStyle = .none
-        
-        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
-            [self.firstSubway, self.secondSubway]
-                .forEach{
-                    $0.alpha = 1
-                    $0.transform = .identity
-                }
-        }
+        self.trainAnimate()
     }
     
     private func layout(){
+        self.contentView.addSubview(self.liveBG)
+        self.liveBG.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(7.5)
+            $0.height.equalTo(73)
+        }
+        
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(7.5)
+            $0.top.equalTo(self.liveBG.snp.bottom).offset(7.5)
+            $0.bottom.equalToSuperview().inset(7.5)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -94,7 +94,7 @@ extension DetailTableArrivalCell {
             }
         
         self.mainTitle.snp.makeConstraints{
-            $0.leading.top.trailing.equalToSuperview().inset(15)
+            $0.leading.top.trailing.equalTo(self.mainBG).inset(15)
         }
         
         self.firstSubway.snp.makeConstraints{
@@ -125,11 +125,6 @@ extension DetailTableArrivalCell {
             $0.trailing.equalToSuperview().inset(15)
             $0.centerY.equalTo(self.mainTitle)
         }
-        
-        [self.firstSubway, self.secondSubway]
-            .forEach{
-                $0.transform = CGAffineTransform(translationX: 50, y: 0)
-            }
     }
     
     func bind(_ viewModel : DetailTableArrivalCellModel){
@@ -147,11 +142,28 @@ extension DetailTableArrivalCell {
                 UIView.animate(withDuration: 0.4, delay: 0){
                     cell.refreshBtn.transform = CGAffineTransform(rotationAngle: .pi * 2)
                 }
+                cell.trainAnimate()
                 return Void()
             }
             .bind(to: viewModel.refreshBtnClick)
             .disposed(by: self.bag)
             
+    }
+    
+    private func trainAnimate(){
+        [self.firstSubway, self.secondSubway]
+            .forEach{
+                $0.transform = CGAffineTransform(translationX: 50, y: 0)
+                $0.alpha = 0
+            }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
+            [self.firstSubway, self.secondSubway]
+                .forEach{
+                    $0.alpha = 1
+                    $0.transform = .identity
+                }
+        }
     }
     
     func cellSet(_ data : DetailTableViewCellData){
@@ -160,6 +172,8 @@ extension DetailTableArrivalCell {
         
         self.secondSubway.isHidden =  data.exceptionLastStation == "" ? false : true
         self.infoLabel.isHidden =  data.exceptionLastStation == "" ? true : false
+        
+        self.liveBG.viewSet(data)
     }
 }
 
@@ -169,6 +183,7 @@ extension Reactive where Base : DetailTableArrivalCell {
             if let firstData = dataArray.first{
                 base.mainTitle.text = firstData.subPrevious != "" ? "\(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
                 base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차(\(firstData.lastStation)행) \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
+                base.liveBG.trainIconSet(firstData.code)
             }else{
                 base.mainTitle.text = "⚠️ 실시간 정보없음"
                 base.firstSubway.text = "⚠️ 실시간 정보없음"

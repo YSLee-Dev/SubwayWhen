@@ -52,15 +52,6 @@ class DetailViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         self.exceptionLastStationRemoveReload
-            .map{ _ in
-                var now = self.nowData.value
-                now.removeAll()
-                return now
-            }
-            .bind(to: self.nowData)
-            .disposed(by: self.bag)
-        
-        self.exceptionLastStationRemoveReload
             .withLatestFrom(self.detailViewData)
             .map{
                 var now = $0
