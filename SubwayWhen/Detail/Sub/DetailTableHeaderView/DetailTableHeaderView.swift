@@ -29,14 +29,14 @@ class DetailTableHeaderView : UITableViewCell{
         $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
-        $0.textAlignment = .left
+        $0.textAlignment = .right
     }
     
     var nextStation = UILabel().then{
         $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
-        $0.textAlignment = .right
+        $0.textAlignment = .left
     }
     
     var lineColor = UIView().then{
@@ -51,7 +51,7 @@ class DetailTableHeaderView : UITableViewCell{
         $0.textAlignment = .center
     }
     
-    var exceptionLastStation = UIButton().then{
+    var exceptionLastStationBtn = UIButton().then{
         $0.backgroundColor = UIColor(named: "MainColor")
         
         $0.layer.masksToBounds = true
@@ -62,7 +62,11 @@ class DetailTableHeaderView : UITableViewCell{
         $0.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.titleLabel?.textAlignment = .center
         $0.titleLabel?.adjustsFontSizeToFitWidth = true
-        
+    }
+    
+    lazy var exceptionLastStationMoreBtn = UIButton().then{
+        $0.setImage(UIImage(systemName: "arrowtriangle.down"), for: .normal)
+        $0.tintColor = .systemRed
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -102,19 +106,19 @@ extension DetailTableHeaderView {
                 self.lineColor.addSubview($0)
             }
         
-        self.nextStation.snp.makeConstraints{
+        self.backStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
             $0.trailing.equalToSuperview().inset(15)
             $0.leading.equalTo(self.stationName.snp.trailing).offset(5)
         }
         
-        self.backStation.snp.makeConstraints{
+        self.nextStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
             $0.leading.equalToSuperview().inset(15)
             $0.trailing.equalTo(self.stationName.snp.leading).offset(-5)
         }
         
-        [self.exceptionLastStation, self.upDown]
+        [self.exceptionLastStationBtn, self.upDown]
             .forEach{
                 self.contentView.addSubview($0)
             }
@@ -127,7 +131,7 @@ extension DetailTableHeaderView {
             $0.height.equalTo(40)
         }
         
-        self.exceptionLastStation.snp.makeConstraints{
+        self.exceptionLastStationBtn.snp.makeConstraints{
             $0.height.equalTo(40)
             $0.leading.equalTo(self.snp.centerX).offset(10)
             $0.bottom.equalToSuperview()
@@ -137,9 +141,23 @@ extension DetailTableHeaderView {
     }
     
     func bind(_ viewModel : DetailTableHeaderViewModel){
-        self.exceptionLastStation.rx.tap
+        self.exceptionLastStationBtn.rx.tap
             .bind(to: viewModel.exceptionLastStationBtnClick)
             .disposed(by: self.bag)
+    }
+    
+    func excpetionLastStationMoreBtnLayout(){
+        self.exceptionLastStationBtn.addSubview(self.exceptionLastStationMoreBtn)
+        self.exceptionLastStationMoreBtn.snp.makeConstraints{
+            $0.width.equalTo(25)
+            $0.height.equalTo(15)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        self.exceptionLastStationBtn.snp.updateConstraints{
+            $0.trailing.equalToSuperview().inset(35)
+        }
     }
     
     func cellSet(_ data : DetailTableViewCellData){
@@ -150,8 +168,12 @@ extension DetailTableHeaderView {
         self.backStation.text = data.backStationName == data.stationName ? "" : data.backStationName
         self.nextStation.text = data.nextStationName == data.stationName ? "" : data.nextStationName
         self.upDown.text = data.upDown
-        self.exceptionLastStation.setTitle( data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
+        self.exceptionLastStationBtn.setTitle( data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
         
-        self.exceptionLastStation.isEnabled = data.exceptionLastStation != ""
+        self.exceptionLastStationBtn.isEnabled = data.exceptionLastStation != ""
+        
+        if data.exceptionLastStation != ""{
+            self.excpetionLastStationMoreBtnLayout()
+        }
     }
 }
