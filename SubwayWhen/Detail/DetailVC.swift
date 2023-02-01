@@ -101,7 +101,7 @@ extension Reactive where Base : DetailVC{
     
     var exceptionLastStationRemoveAlert : Binder<MainTableViewCellData>{
         return Binder(base){ base, data in
-            let alert = UIAlertController(title: "\(data.exceptionLastStation)행 을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "\(data.exceptionLastStation)행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "재로딩", style: .default){ tap in
                 Observable.just(Void())
                     .bind(to: base.detailViewModel.exceptionLastStationRemoveReload)
