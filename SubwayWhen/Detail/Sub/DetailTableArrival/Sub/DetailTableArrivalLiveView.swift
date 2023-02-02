@@ -127,40 +127,63 @@ extension DetailTableArrivalLiveView{
         self.beforeTitle = data.backStationName
     }
     
+    
+    
     func trainIconSet(code : String, now : String){
         guard let intCode = Int(code) else {return}
         
+        [self.moreStationTitle, self.beforeStationTitle, self.trainIcon]
+            .forEach{
+                $0.alpha = 0
+            }
+        
+        self.beforeStationCirecle.alpha = 1
         self.moreStationTitle.text = now
-        self.trainIcon.alpha = 1
         
         if 0...5 ~= intCode{
-            [self.beforeStationTitle, self.beforeStationCirecle]
-                .forEach{
-                    $0.isHidden = true
-                }
-            
-            self.moreStationTitle.text = self.beforeTitle
+            UIView.animate(withDuration: 0.75, delay: 0, options: [.allowUserInteraction], animations: {
+                self.animateCGSet(true)
+                self.moreStationTitle.text = self.beforeTitle
+            }, completion:{ _ in
+                self.animateCGSet(false)
+                self.beforeStationCirecle.alpha = 0
+            })
+            UIView.animate(withDuration: 0.25, delay: 0.75, options: [.allowUserInteraction], animations: {
+                self.moreStationTitle.alpha = 1
+                self.trainIcon.alpha = 1
+            })
             
         }else{
-            [self.beforeStationTitle, self.beforeStationCirecle]
-                .forEach{
-                    $0.isHidden = false
-                }
+            self.animateCGSet(true)
             
             self.beforeStationTitle.text = self.beforeTitle
-            self.moreStationTitle.text = now
+            
+            UIView.animate(withDuration: 0.75, delay: 0, options: [.allowUserInteraction], animations: {
+                self.beforeStationCirecle.alpha = 1
+                self.animateCGSet(false)
+                
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.25, delay: 0){
+                    self.moreStationTitle.alpha = 1
+                    self.trainIcon.alpha = 1
+                    self.beforeStationTitle.alpha = 1
+                }
+            })
+            
         }
         
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: [.allowUserInteraction]){
+        let cellWidth = self.frame.width - 40
+        
+        UIView.animate(withDuration: 0.5, delay: 0.75, options: [.allowUserInteraction], animations: {
             switch intCode{
             case 0:
-                self.trainIcon.transform = CGAffineTransform(translationX:(-(self.border.frame.width) + 10), y: 0)
+                self.trainIcon.transform = CGAffineTransform(translationX:(-(cellWidth) + 15), y: 0)
             case 1:
-                self.trainIcon.transform = CGAffineTransform(translationX: -(self.border.frame.width), y: 0)
+                self.trainIcon.transform = CGAffineTransform(translationX: -(cellWidth), y: 0)
             case 2:
-                self.trainIcon.transform = CGAffineTransform(translationX:(-(self.border.frame.width) - 10), y: 0)
+                self.trainIcon.transform = CGAffineTransform(translationX:(-(cellWidth) - 15), y: 0)
             case 3:
-                self.trainIcon.transform = CGAffineTransform(translationX:(-(self.border.frame.width)/2), y: 0)
+                self.trainIcon.transform = CGAffineTransform(translationX:(-(cellWidth)/2), y: 0)
             case 4:
                 self.trainIcon.transform = CGAffineTransform(translationX: 10, y: 0)
             case 5:
@@ -170,6 +193,22 @@ extension DetailTableArrivalLiveView{
             default:
                 break
             }
+        })
+    }
+    private func animateCGSet(_ isStart : Bool){
+        if isStart{
+            [self.moreStationCircle, self.moreStationTitle]
+                .forEach{
+                    $0.transform = CGAffineTransform(translationX: 30, y: 0)
+                }
+            
+            self.beforeStationCirecle.transform = CGAffineTransform(translationX: ((self.border.frame.width / 4) * 3) + 10, y: 0)
+            self.border.transform = CGAffineTransform(scaleX: 1.2, y: 1.0).concatenating(CGAffineTransform(translationX: 30, y: 0))
+        }else{
+            [self.beforeStationCirecle, self.moreStationCircle, self.moreStationTitle, self.border]
+                .forEach{
+                    $0.transform = .identity
+                }
         }
     }
 }

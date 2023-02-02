@@ -74,7 +74,7 @@ class DetailViewModel{
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
-       self.detailViewData
+        self.detailViewData
             .map{ item -> ScheduleSearch in
                 var searchData = ScheduleSearch(stationCode: "", upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
                 if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
@@ -104,14 +104,24 @@ class DetailViewModel{
                 self.loadModel.stationArrivalRequest(stationName: $0.stationName)
             }
             .map{ data -> [RealtimeStationArrival] in
+                #if DEBUG
+                let debugData = RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "123", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")
+                return [debugData]
+                #else
                 guard case .success(let value) = data else {return []}
                 return value.realtimeArrivalList
+                #endif
+              
             }
             .filter{!$0.isEmpty}
         
         Observable.combineLatest(self.detailViewData, realTimeData){station, realTime -> [RealtimeStationArrival] in
             var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: station.code, subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
             
+            #if DEBUG
+            list.insert(RealtimeStationArrival(upDown: station.upDown, arrivalTime: "1분", previousStation: "station2", subPrevious: "station2", code: "3", subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: ""),at : 0)
+            return list
+            #else
             for x in realTime{
                 if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
                     if list.count == 1{
@@ -123,7 +133,9 @@ class DetailViewModel{
                     }
                 }
             }
+            
             return list
+            #endif
         }
         .bind(to: self.arrivalCellModel.realTimeData)
         .disposed(by: self.bag)
