@@ -121,13 +121,22 @@ extension Reactive where Base : MainVC {
             
             let detail = DetailVC(title: "\(data.useLine) \(data.stationName)", viewModel: viewModel)
             detail.hidesBottomBarWhenPushed = true
-            
+            /*
             #if DEBUG
             viewModel.detailViewData.accept(.init(upDown: data.upDown, arrivalTime: "도착시간", previousStation: "설명", subPrevious: "서브설명", code: "0", subWayId: "123", stationName: "서울역", lastStation: "lastStation", lineNumber: data.lineNumber, isFast: "", useLine: data.useLine, group: data.group, id: data.id, stationCode: data.stationCode, exceptionLastStation: "", type: .real, backStationId: "1001000134", nextStationId: "1001000132", totalStationId: data.totalStationId))
             #else
-                viewModel.detailViewData.accept(data)
+             */
+            var excption = data
             
-            #endif
+            if excption.useLine == "공항철도"{
+                let next = excption.nextStationId
+                excption.nextStationId = excption.backStationId
+                excption.backStationId = next
+            }
+            
+            viewModel.detailViewData.accept(excption)
+            
+            //#endif
             
             
             base.navigationController?.pushViewController(detail, animated: true)
