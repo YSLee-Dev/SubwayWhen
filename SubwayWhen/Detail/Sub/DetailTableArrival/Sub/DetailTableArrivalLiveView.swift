@@ -132,13 +132,15 @@ extension DetailTableArrivalLiveView{
     func trainIconSet(code : String, now : String){
         guard let intCode = Int(code) else {return}
         
-        [self.moreStationTitle, self.beforeStationTitle, self.trainIcon]
-            .forEach{
-                $0.alpha = 0
-            }
-        
-        self.beforeStationCirecle.alpha = 1
-        self.moreStationTitle.text = now
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.allowUserInteraction]){
+            [self.moreStationTitle, self.beforeStationTitle, self.trainIcon]
+                .forEach{
+                    $0.alpha = 0
+                }
+            
+            self.beforeStationCirecle.alpha = 1
+            self.moreStationTitle.text = now
+        }
         
         if 0...5 ~= intCode{
             UIView.animate(withDuration: 0.75, delay: 0, options: [.allowUserInteraction], animations: {
@@ -173,6 +175,7 @@ extension DetailTableArrivalLiveView{
         }
         
         let cellWidth = self.frame.width - 40
+        self.trainIcon.transform = .identity
         
         UIView.animate(withDuration: 0.5, delay: 0.75, options: [.allowUserInteraction], animations: {
             switch intCode{
