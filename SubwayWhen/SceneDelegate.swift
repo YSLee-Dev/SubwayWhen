@@ -23,7 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25),
         ]
-        UINavigationBar.appearance().prefersLargeTitles = true
         
         self.window = UIWindow(windowScene: windowScene)
         self.window?.rootViewController = TabbarVC()

@@ -49,7 +49,7 @@ extension MainVC{
         self.view.addSubview(self.groupView)
         self.groupView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(55)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
             $0.height.equalTo(75)
         }
         
