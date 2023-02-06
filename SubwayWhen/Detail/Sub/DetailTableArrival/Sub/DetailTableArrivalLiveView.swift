@@ -35,6 +35,7 @@ class DetailTableArrivalLiveView : MainStyleUIView{
     var beforeStationTitle = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .right
+        $0.alpha = 0
     }
     
     var moreStationCircle = UIView().then{
@@ -46,6 +47,7 @@ class DetailTableArrivalLiveView : MainStyleUIView{
     var moreStationTitle = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .right
+        $0.alpha = 0
     }
     
     var trainIcon = UILabel().then{

@@ -15,6 +15,8 @@
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
 		347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */; };
 		34995885296FF8B700D2276F /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34995884296FF8B700D2276F /* LoadModel.swift */; };
+		349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */; };
+		349CEFAE2991006000CC69E5 /* DetailResultScheduleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAD2991006000CC69E5 /* DetailResultScheduleHeader.swift */; };
 		349E32B52978C88A00147DEE /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32B32978C88900147DEE /* RealtimeStationArrival.swift */; };
 		349E32B62978C88A00147DEE /* LiveStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32B42978C88900147DEE /* LiveStationModel.swift */; };
 		349E32BF2978C8D000147DEE /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32BD2978C8D000147DEE /* RealtimeStationArrival.swift */; };
@@ -107,6 +109,8 @@
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellType.swift; sourceTree = "<group>"; };
 		34995884296FF8B700D2276F /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadModel.swift; path = DataLoad/LoadModel.swift; sourceTree = "<group>"; };
+		349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCell.swift; sourceTree = "<group>"; };
+		349CEFAD2991006000CC69E5 /* DetailResultScheduleHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleHeader.swift; sourceTree = "<group>"; };
 		349E32B32978C88900147DEE /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
 		349E32B42978C88900147DEE /* LiveStationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStationModel.swift; sourceTree = "<group>"; };
 		349E32BD2978C8D000147DEE /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
@@ -239,6 +243,15 @@
 				34A1747A293F3C870086870F /* MainTableViewCellModel.swift */,
 				34B9FD1B2974D3E500E349A1 /* MainTableViewHeader */,
 				34A17469293DD2E40086870F /* MainTableViewFooter */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		349CEFAC2990FE3100CC69E5 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */,
+				349CEFAD2991006000CC69E5 /* DetailResultScheduleHeader.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -533,6 +546,7 @@
 			children = (
 				34F494D029815200001599B1 /* DetailResultScheduleVC.swift */,
 				34F494D32981521D001599B1 /* DetailResultScheduleViewModel.swift */,
+				349CEFAC2990FE3100CC69E5 /* Sub */,
 			);
 			path = DetailResultSchedule;
 			sourceTree = "<group>";
@@ -810,6 +824,7 @@
 				34F5F10C296561F50010A21D /* DetailModel.swift in Sources */,
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
 				349E32B62978C88A00147DEE /* LiveStationModel.swift in Sources */,
+				349CEFAE2991006000CC69E5 /* DetailResultScheduleHeader.swift in Sources */,
 				34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */,
 				349E32C02978C8D000147DEE /* LiveStationModel.swift in Sources */,
 				34B9FD152974D3B300E349A1 /* ScheduleSearch.swift in Sources */,
@@ -835,6 +850,7 @@
 				34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */,
 				34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */,
 				34F5F10429642AE00010A21D /* DetailTableHeaderView.swift in Sources */,
+				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
 				34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */,
 				34F5F0FF296428FE0010A21D /* DetailTableViewCellData.swift in Sources */,
 				34B9FD142974D3B300E349A1 /* ScheduleType.swift in Sources */,
