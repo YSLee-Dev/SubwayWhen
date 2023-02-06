@@ -25,7 +25,7 @@ class DetailViewModel{
     
     // OUTPUT
     let cellData : Driver<[DetailTableViewSectionData]>
-    let moreBtnClickData : Driver<[ResultSchdule]>
+    let moreBtnClickData : Driver<DetailResultScheduleViewModel>
     let exceptionLastStationRemoveBtnClick : Driver<MainTableViewCellData>
     
     // DATA
@@ -35,6 +35,8 @@ class DetailViewModel{
     let bag = DisposeBag()
     
     init(){
+        lazy var resultViewModel = DetailResultScheduleViewModel()
+        
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
@@ -43,8 +45,20 @@ class DetailViewModel{
             .disposed(by: self.bag)
         
         self.moreBtnClickData = self.scheduleCellModel.moreBtnClick
-            .withLatestFrom(self.scheduleData)
+            .map{
+                resultViewModel
+            }
             .asDriver(onErrorDriveWith: .empty())
+        
+        self.scheduleCellModel.moreBtnClick
+            .withLatestFrom(self.detailViewData)
+            .bind(to: resultViewModel.cellData)
+            .disposed(by: self.bag)
+        
+        self.scheduleCellModel.moreBtnClick
+            .withLatestFrom(self.scheduleData)
+            .bind(to: resultViewModel.scheduleData)
+            .disposed(by: self.bag)
         
         // 제외 행 제거 클릭 시
         self.exceptionLastStationRemoveBtnClick = self.headerViewModel.exceptionLastStationBtnClick
