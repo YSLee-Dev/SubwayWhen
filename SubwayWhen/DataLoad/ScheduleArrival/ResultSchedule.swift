@@ -47,12 +47,14 @@ struct ResultSchdule{
     var useArrTime : String{
         if self.type == .Tago{
             var time = self.startTime
-            
-            let index1 = time.index(time.startIndex, offsetBy: 2)
-            let index2 = time.index(time.startIndex, offsetBy: 5)
-            
-            time.insert(":", at: index1)
-            time.insert(":", at: index2)
+            if time != "0"{
+                let index1 = time.index(time.startIndex, offsetBy: 2)
+                let index2 = time.index(time.startIndex, offsetBy: 5)
+                
+                time.insert(":", at: index1)
+                time.insert(":", at: index2)
+            }
+          
             return time
         }else{
             return self.startTime

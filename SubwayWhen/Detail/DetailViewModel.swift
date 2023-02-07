@@ -41,7 +41,7 @@ class DetailViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         self.scheduleData
-            .bind(to: self.scheduleCellModel.schedultData)
+            .bind(to: self.scheduleCellModel.scheduleData)
             .disposed(by: self.bag)
         
         self.moreBtnClickData = self.scheduleCellModel.moreBtnClick

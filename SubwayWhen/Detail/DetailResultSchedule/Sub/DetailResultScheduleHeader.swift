@@ -10,29 +10,24 @@ import UIKit
 import Then
 import SnapKit
 
-class DetailResultScheduleHeader : TitleView{
-    var updownLabel = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
+class DetailResultScheduleHeader : UIView{
+    var stationLabel = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .label
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textAlignment = .center
     }
     
-    var exceptionLastStationBtn = UIButton().then{
+    var updownLabel = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
+        $0.textColor = .red
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
         $0.backgroundColor = UIColor(named: "MainColor")
-        
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
-        
-        $0.setTitle("제외 행 없음", for: .normal)
-        $0.setTitleColor(UIColor.systemRed, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
-        $0.titleLabel?.textAlignment = .center
-        $0.titleLabel?.adjustsFontSizeToFitWidth = true
+        $0.textAlignment = .center
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.layout()
     }
     
     required init?(coder: NSCoder) {
@@ -42,30 +37,28 @@ class DetailResultScheduleHeader : TitleView{
 
 extension DetailResultScheduleHeader{
     private func layout(){
-        [self.exceptionLastStationBtn, self.updownLabel]
+        [self.updownLabel, self.stationLabel]
             .forEach{
                 self.addSubview($0)
             }
         
-        self.exceptionLastStationBtn.snp.makeConstraints{
+        self.updownLabel.snp.makeConstraints{
             $0.height.equalTo(40)
             $0.leading.equalTo(self.snp.centerX).offset(10)
-            $0.bottom.equalToSuperview()
             $0.trailing.equalToSuperview().inset(15)
-            $0.top.equalTo(self.mainTitleLabel.snp.bottom).offset(10)
+            $0.top.equalToSuperview()
         }
         
-        self.updownLabel.snp.makeConstraints{
+        self.stationLabel.snp.makeConstraints{
             $0.trailing.equalTo(self.snp.centerX).offset(-10)
-            $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(15)
-            $0.top.equalTo(self.mainTitleLabel.snp.bottom).offset(10)
+            $0.top.equalToSuperview()
             $0.height.equalTo(40)
         }
     }
     
-    func viewSet(excptionLastStation : String, updown : String){
-        self.exceptionLastStationBtn.setTitle("\(excptionLastStation)행 제외", for: .normal)
+    func viewSet(station : String, updown : String){
+        self.stationLabel.text = station
         self.updownLabel.text = updown
     }
 }

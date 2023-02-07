@@ -12,7 +12,7 @@ import RxCocoa
 
 class DetailTableScheduleCellModel{
     // INPUT
-    let schedultData = PublishRelay<[ResultSchdule]>()
+    let scheduleData = PublishRelay<[ResultSchdule]>()
     let moreBtnClick = PublishRelay<Void>()
     
     // OUTPUT
@@ -27,7 +27,7 @@ class DetailTableScheduleCellModel{
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
-        self.schedultData
+        self.scheduleData
             .map{ data -> [ResultSchdule] in
                 let formatter = DateFormatter()
                 formatter.dateFormat = "HHmmss"

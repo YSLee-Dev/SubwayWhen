@@ -9,11 +9,11 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class DetailResultScheduleVC : TableVCCustom{
     let bag = DisposeBag()
-    
-    let headerView = DetailResultScheduleHeader()
+    let headerView = DetailResultScheduleHeader(frame: CGRect(x: 0, y: 0, width: 0, height: 45))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,19 +23,37 @@ class DetailResultScheduleVC : TableVCCustom{
 
 extension DetailResultScheduleVC{
     private func attribute(){
-        self.tableView.tableHeaderView = self.headerView
+        //self.tableView.tableHeaderView = self.headerView
+        self.tableView.register(DetailResultScheduleViewCell.self, forCellReuseIdentifier: "DetailResultScheduleViewCell")
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 50
     }
     
     func bind(_ viewModel : DetailResultScheduleViewModel){
-        viewModel.cellData
-            .bind(to: self.rx.headerViewDataSet)
+        viewModel.resultDefaultData
+            .drive(self.rx.headerViewDataSet)
             .disposed(by: self.bag)
         
-        viewModel.cellData
+        viewModel.resultDefaultData
             .map{
-                "\($0.useLine) \($0.upDown) \($0.stationName) 시간표"
+                "\($0.stationName)(\($0.upDown)) 시간표"
             }
-            .bind(to: self.rx.titleSet)
+            .drive(self.rx.titleSet)
+            .disposed(by: self.bag)
+        
+        
+        let dataSources = RxTableViewSectionedAnimatedDataSource<DetailResultScheduleViewSectionData>(animationConfiguration: AnimationConfiguration(reloadAnimation: .automatic)){ dataSource, tv, index, data in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailResultScheduleViewCell", for: index) as? DetailResultScheduleViewCell else {return UITableViewCell()}
+            cell.cellSet(data)
+            return cell
+        }
+        
+        dataSources.titleForHeaderInSection = {data,index in
+            return dataSources[index].sectionName
+        }
+        
+        viewModel.groupScheduleData
+            .drive(self.tableView.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
     }
 }
@@ -43,7 +61,7 @@ extension DetailResultScheduleVC{
 extension Reactive where Base : DetailResultScheduleVC{
     var headerViewDataSet : Binder<MainTableViewCellData>{
         return Binder(base){ base, data in
-            base.headerView.viewSet(excptionLastStation: data.exceptionLastStation, updown: data.upDown)
+            base.headerView.viewSet(station: data.stationName, updown: data.upDown)
         }
     }
     
