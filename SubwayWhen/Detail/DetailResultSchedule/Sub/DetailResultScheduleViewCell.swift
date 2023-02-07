@@ -7,7 +7,24 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 class DetailResultScheduleViewCell : UITableViewCell{
+    let mainCell = MainStyleUIView()
+    
+    let minuteLabel = UILabel().then{
+        $0.textColor = .label
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
+        $0.numberOfLines = .max
+    }
+    
+    let lastStationLabel = UILabel().then{
+        $0.textColor = .label
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
+        $0.numberOfLines = .max
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.attribute()
@@ -21,10 +38,40 @@ class DetailResultScheduleViewCell : UITableViewCell{
 
 extension DetailResultScheduleViewCell{
     private func attribute(){
-        
+        self.selectionStyle = .none
     }
     
     private func layout(){
+        self.contentView.addSubview(self.mainCell)
+        self.mainCell.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(7.5)
+            $0.bottom.equalToSuperview().inset(7.5)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
         
+        self.mainCell.addSubview(self.minuteLabel)
+        self.minuteLabel.snp.makeConstraints{
+            $0.leading.equalToSuperview().inset(5)
+            $0.top.bottom.equalToSuperview().inset(10)
+        }
+        
+        self.mainCell.addSubview(self.lastStationLabel)
+        self.lastStationLabel.snp.makeConstraints{
+            $0.leading.equalTo(self.minuteLabel.snp.trailing).offset(5)
+            $0.trailing.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(10)
+        }
+    }
+    
+    func cellSet(_ data : DetailResultScheduleViewCellData){
+        let minute = data.minute.reduce(""){result, new in
+            result + "\(new)분\n"
+        }
+        
+        let lastStation = data.lastStation.reduce(""){result, new in
+            result + "(\(new)행) \n"
+        }
+        self.minuteLabel.text = minute
+        self.lastStationLabel.text = lastStation
     }
 }
