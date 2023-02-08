@@ -15,9 +15,10 @@ struct MainTableViewModel{
     let cellData : Driver<[MainTableViewSection]>
     
     // MODEL
-    let mainTableViewHeaderViewModel = MainTableViewHeaderViewModel()
+    let mainTableViewHeaderViewModel = MainTableViewHeaderCellModel()
     let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
     let mainTableViewCellModel = MainTableViewCellModel()
+    let mainTableViewGroupModel = MainTableViewGroupCellModel()
     
     // INPUT
     let cellClick = PublishRelay<MainTableViewCellData>()

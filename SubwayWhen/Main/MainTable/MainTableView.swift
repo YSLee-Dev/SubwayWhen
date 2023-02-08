@@ -20,7 +20,6 @@ class MainTableView : UITableView{
         $0.backgroundColor = .systemBackground
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
-    let headerView = MainTableViewHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -36,28 +35,46 @@ class MainTableView : UITableView{
 extension MainTableView{
     private func attribute(){
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
-        self.register(MainTableViewHeaderView.self, forHeaderFooterViewReuseIdentifier: "MainHeader")
+        self.register(MainTableViewGroupCell.self, forCellReuseIdentifier: "MainGroup")
+        self.register(MainTableViewHeaderCell.self, forCellReuseIdentifier: "MainHeader")
         self.register(MainTableViewFooterView.self, forHeaderFooterViewReuseIdentifier: "MainFooter")
         self.dataSource = nil
-        self.rowHeight = 185
+        self.rowHeight = UITableView.automaticDimension
+        self.estimatedRowHeight = 185
         self.separatorStyle = .none
         self.refreshControl = self.refresh
-        self.tableHeaderView = self.headerView
         self.tableFooterView = self.footerView
     }
     
     func bind(_ viewModel : MainTableViewModel){
-        self.headerView.bind(viewModel.mainTableViewHeaderViewModel)
         self.footerView.bind(viewModel.mainTableViewFooterViewModel)
         
         // VIEWMODEl -> VIEW
         let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {dataSource, tv, index, item in
-            guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
-       
-            cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
-            return cell
+            switch index.section{
+            case 0:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "MainHeader", for: index) as? MainTableViewHeaderCell else {return UITableViewCell()}
+          
+                cell.bind(viewModel.mainTableViewHeaderViewModel)
+                return cell
+                
+            case 1:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "MainGroup", for: index) as? MainTableViewGroupCell else {return UITableViewCell()}
+          
+                cell.bind(viewModel.mainTableViewGroupModel)
+                return cell
+            default:
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
+           
+                cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
+                return cell
+            }
+           
         })
         
+        dataSources.titleForHeaderInSection = {dataSource, index in
+            dataSource[index].sectionName
+        }
         
         viewModel.cellData
             .drive(self.rx.items(dataSource: dataSources))
@@ -66,6 +83,9 @@ extension MainTableView{
 
         // VIEW -> VIEWMODEL
         self.rx.modelSelected(MainTableViewCellData.self)
+            .filter{
+                $0.id != "header" || $0.id != "group"
+            }
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
         

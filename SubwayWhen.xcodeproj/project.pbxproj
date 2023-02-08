@@ -10,7 +10,7 @@
 		341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
 		341200EF293753DC00C77050 /* MainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EE293753DC00C77050 /* MainTableView.swift */; };
 		341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200F0293753E500C77050 /* MainTableViewModel.swift */; };
-		341200F92937566800C77050 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200F82937566800C77050 /* MainTableViewCell.swift */; };
+		341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200F82937566800C77050 /* MainTableViewArrivalCell.swift */; };
 		341200FC29375A2600C77050 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FB29375A2600C77050 /* MainViewModel.swift */; };
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
 		347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */; };
@@ -27,10 +27,11 @@
 		349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */; };
 		34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */; };
 		34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A86296EA71A0044CD36 /* ModalModel.swift */; };
+		34A0666D2993813000B414F3 /* MainTableViewArrivalCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */; };
+		34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0666F2993A12E00B414F3 /* MainTableViewHeaderBtn.swift */; };
 		34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17461293DBB180086870F /* MainTableViewCellData.swift */; };
 		34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17467293DD18D0086870F /* MainTableViewFooter.swift */; };
 		34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */; };
-		34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1747A293F3C870086870F /* MainTableViewCellModel.swift */; };
 		34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
@@ -49,7 +50,7 @@
 		34B9FD182974D3B300E349A1 /* ScheduleStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD102974D3B300E349A1 /* ScheduleStationArrival.swift */; };
 		34B9FD192974D3B300E349A1 /* TagoSchduleStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD122974D3B300E349A1 /* TagoSchduleStation.swift */; };
 		34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD132974D3B300E349A1 /* ResultSchedule.swift */; };
-		34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderView.swift */; };
+		34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderCell.swift */; };
 		34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */; };
 		34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */; };
 		34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */; };
@@ -77,8 +78,8 @@
 		34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB89293627AE00C4ED80 /* SaveStation.swift */; };
 		34C6DB9E293627AF00C4ED80 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB8B293627AF00C4ED80 /* MainVC.swift */; };
 		34C6DBA0293627BF00C4ED80 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */; };
-		34CA5594293893450006F67B /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5593293893450006F67B /* GroupView.swift */; };
-		34CA55962938934C0006F67B /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA55952938934C0006F67B /* GroupViewModel.swift */; };
+		34CA5594293893450006F67B /* MainTableViewGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5593293893450006F67B /* MainTableViewGroupCell.swift */; };
+		34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */; };
 		34CA5599293897160006F67B /* GroupCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5598293897160006F67B /* GroupCustomButton.swift */; };
 		34D3E7382988E04A002AAB83 /* DetailTableArrivalLiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D3E7372988E04A002AAB83 /* DetailTableArrivalLiveView.swift */; };
 		34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */; };
@@ -106,7 +107,7 @@
 		341200EC293745AE00C77050 /* SaveStationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStationGroup.swift; sourceTree = "<group>"; };
 		341200EE293753DC00C77050 /* MainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableView.swift; sourceTree = "<group>"; };
 		341200F0293753E500C77050 /* MainTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewModel.swift; sourceTree = "<group>"; };
-		341200F82937566800C77050 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		341200F82937566800C77050 /* MainTableViewArrivalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewArrivalCell.swift; sourceTree = "<group>"; };
 		341200FB29375A2600C77050 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellType.swift; sourceTree = "<group>"; };
@@ -123,10 +124,11 @@
 		349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellSubCell.swift; sourceTree = "<group>"; };
 		34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStationSearch.swift; sourceTree = "<group>"; };
 		34A05A86296EA71A0044CD36 /* ModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModel.swift; sourceTree = "<group>"; };
+		34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewArrivalCellModel.swift; sourceTree = "<group>"; };
+		34A0666F2993A12E00B414F3 /* MainTableViewHeaderBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderBtn.swift; sourceTree = "<group>"; };
 		34A17461293DBB180086870F /* MainTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellData.swift; sourceTree = "<group>"; };
 		34A17467293DD18D0086870F /* MainTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooter.swift; sourceTree = "<group>"; };
 		34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooterViewModel.swift; sourceTree = "<group>"; };
-		34A1747A293F3C870086870F /* MainTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellModel.swift; sourceTree = "<group>"; };
 		34A1FA8F29824B6200537B02 /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
@@ -145,7 +147,7 @@
 		34B9FD102974D3B300E349A1 /* ScheduleStationArrival.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleStationArrival.swift; sourceTree = "<group>"; };
 		34B9FD122974D3B300E349A1 /* TagoSchduleStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagoSchduleStation.swift; sourceTree = "<group>"; };
 		34B9FD132974D3B300E349A1 /* ResultSchedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultSchedule.swift; sourceTree = "<group>"; };
-		34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderView.swift; sourceTree = "<group>"; };
+		34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderCell.swift; sourceTree = "<group>"; };
 		34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderViewModel.swift; sourceTree = "<group>"; };
 		34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCell.swift; sourceTree = "<group>"; };
 		34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellModel.swift; sourceTree = "<group>"; };
@@ -175,8 +177,8 @@
 		34C6DB89293627AE00C4ED80 /* SaveStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveStation.swift; sourceTree = "<group>"; };
 		34C6DB8B293627AF00C4ED80 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
-		34CA5593293893450006F67B /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
-		34CA55952938934C0006F67B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
+		34CA5593293893450006F67B /* MainTableViewGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCell.swift; sourceTree = "<group>"; };
+		34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCellModel.swift; sourceTree = "<group>"; };
 		34CA5598293897160006F67B /* GroupCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCustomButton.swift; sourceTree = "<group>"; };
 		34D3E7372988E04A002AAB83 /* DetailTableArrivalLiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableArrivalLiveView.swift; sourceTree = "<group>"; };
 		34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -243,9 +245,9 @@
 		341200FA2937566B00C77050 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				341200F82937566800C77050 /* MainTableViewCell.swift */,
-				34A1747A293F3C870086870F /* MainTableViewCellModel.swift */,
 				34B9FD1B2974D3E500E349A1 /* MainTableViewHeader */,
+				34CA5597293893500006F67B /* MainTableViewGroup */,
+				34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */,
 				34A17469293DD2E40086870F /* MainTableViewFooter */,
 			);
 			path = Sub;
@@ -310,6 +312,23 @@
 			isa = PBXGroup;
 			children = (
 				349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */ = {
+			isa = PBXGroup;
+			children = (
+				341200F82937566800C77050 /* MainTableViewArrivalCell.swift */,
+				34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */,
+			);
+			path = MainTableViewArrivalCell;
+			sourceTree = "<group>";
+		};
+		34A066712993A13500B414F3 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				34A0666F2993A12E00B414F3 /* MainTableViewHeaderBtn.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -379,8 +398,9 @@
 		34B9FD1B2974D3E500E349A1 /* MainTableViewHeader */ = {
 			isa = PBXGroup;
 			children = (
-				34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderView.swift */,
+				34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderCell.swift */,
 				34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */,
+				34A066712993A13500B414F3 /* Sub */,
 			);
 			path = MainTableViewHeader;
 			sourceTree = "<group>";
@@ -530,20 +550,19 @@
 			children = (
 				34C6DB8B293627AF00C4ED80 /* MainVC.swift */,
 				341200FB29375A2600C77050 /* MainViewModel.swift */,
-				34CA5597293893500006F67B /* Group */,
 				341200F2293753E900C77050 /* MainTable */,
 				341200F7293754CC00C77050 /* Entity */,
 			);
 			path = Main;
 			sourceTree = "<group>";
 		};
-		34CA5597293893500006F67B /* Group */ = {
+		34CA5597293893500006F67B /* MainTableViewGroup */ = {
 			isa = PBXGroup;
 			children = (
-				34CA5593293893450006F67B /* GroupView.swift */,
-				34CA55952938934C0006F67B /* GroupViewModel.swift */,
+				34CA5593293893450006F67B /* MainTableViewGroupCell.swift */,
+				34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */,
 			);
-			path = Group;
+			path = MainTableViewGroup;
 			sourceTree = "<group>";
 		};
 		34D3E7392988E054002AAB83 /* Sub */ = {
@@ -787,11 +806,12 @@
 				34D3E7382988E04A002AAB83 /* DetailTableArrivalLiveView.swift in Sources */,
 				34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */,
 				34C6DB9C293627AF00C4ED80 /* FixInfo.swift in Sources */,
-				34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderView.swift in Sources */,
+				34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderCell.swift in Sources */,
 				34C6DBA0293627BF00C4ED80 /* TabbarVC.swift in Sources */,
 				349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */,
-				34CA5594293893450006F67B /* GroupView.swift in Sources */,
+				34CA5594293893450006F67B /* MainTableViewGroupCell.swift in Sources */,
 				34F5F11D2966DC6D0010A21D /* DetailTableArrivalCell.swift in Sources */,
+				34A0666D2993813000B414F3 /* MainTableViewArrivalCellModel.swift in Sources */,
 				34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */,
 				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
@@ -800,6 +820,7 @@
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
+				34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */,
 				34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */,
 				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
@@ -822,10 +843,9 @@
 				34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */,
 				34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */,
 				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
-				341200F92937566800C77050 /* MainTableViewCell.swift in Sources */,
+				341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */,
 				34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */,
 				34B9FD162974D3B300E349A1 /* ScheduleStationModel.swift in Sources */,
-				34A1747B293F3C870086870F /* MainTableViewCellModel.swift in Sources */,
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
 				34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */,
 				34F5F0E82962D8B10010A21D /* DetailViewModel.swift in Sources */,
@@ -861,7 +881,7 @@
 				34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */,
 				349E32C22978DF1C00147DEE /* MainStyleUIView.swift in Sources */,
 				34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */,
-				34CA55962938934C0006F67B /* GroupViewModel.swift in Sources */,
+				34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */,
 				341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */,
 				34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */,
 				34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */,

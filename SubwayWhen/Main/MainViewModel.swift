@@ -15,13 +15,12 @@ class MainViewModel{
     // MODEL
     let model = LoadModel()
     let mainTableViewModel = MainTableViewModel()
-    let groupViewModel = GroupViewModel()
     
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let groupData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", stationID: "", items: [])])
-    private let totalData = BehaviorRelay<[MainTableViewSection]>(value: [MainTableViewSection(section: "", stationID: "", items: [])])
+    private let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
@@ -32,12 +31,20 @@ class MainViewModel{
     let clickCellData : Driver<MainTableViewCellData>
     
     init(){
-        // footer 버튼 클릭 시
-        self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
+        // 검색,플러스 버튼 클릭 시
+        self.stationPlusBtnClick = Observable.merge(
+            self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick.asObservable(),
+            self.mainTableViewModel.mainTableViewHeaderViewModel.searchBtnClick.asObservable()
+        )
             .asDriver(onErrorDriveWith: .empty())
         
         // edit 버튼 클릭 시
-        self.editBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.editBtnClick
+        let editBtnClick = Observable.merge(
+            self.mainTableViewModel.mainTableViewFooterViewModel.editBtnClick.asObservable(),
+            self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick.asObservable()
+            )
+        
+        self.editBtnClick = editBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         // 셀 클릭 시
@@ -124,22 +131,29 @@ class MainViewModel{
         
         
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
-        Observable.combineLatest(self.totalData, self.groupViewModel.groupSeleted){ data, group in
+        Observable.combineLatest(self.totalData, self.mainTableViewModel.mainTableViewGroupModel.groupSeleted){ data, group in
             return data.filter{
-                $0.section == group.rawValue
+                $0.group == group.rawValue
             }
         }
        .bind(to: self.groupData)
        .disposed(by: self.bag)
         
         self.groupData
+            .map{data -> [MainTableViewSection]in
+                let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: "")])
+                let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: "")])
+                let data = MainTableViewSection(id : "live", sectionName: "", items: data)
+                
+                return [header,group,data]
+            }
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
         
         // 시간표 불러오기
         let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
             .withLatestFrom(self.groupData){ id, data in
-                data[id.section].items[id.row]
+                data[id.row]
             }
         
         let scheduleData = clickCellRow
@@ -162,13 +176,13 @@ class MainViewModel{
             }
         
         scheduleTotalData
-            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ scheduleData, index -> [MainTableViewSection] in
+            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ scheduleData, index -> [MainTableViewCellData] in
                 guard let data = scheduleData.first else {return []}
-                let nowData = self.groupData.value[index.section].items[index.row]
+                let nowData = self.groupData.value[index.row]
                 let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "⏱️\(data.useArrTime)", subPrevious: "\(data.useTime)", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, totalStationId: nowData.totalStationId)
                
                 var now = self.groupData.value
-                now[index.section].items[index.row] = newData
+                now[index.row] = newData
                 return now
             }
             .filterEmpty()

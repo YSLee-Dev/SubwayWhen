@@ -9,8 +9,8 @@ import Foundation
 import RxDataSources
 
 struct MainTableViewSection{
-    var section : String
-    var stationID : String
+    var id : String
+    var sectionName : String
     var items : [Item]
 }
 
@@ -24,7 +24,7 @@ extension MainTableViewSection : AnimatableSectionModelType{
     }
     
     var identity : String{
-        return self.stationID
+        return self.id
     }
     
 }
