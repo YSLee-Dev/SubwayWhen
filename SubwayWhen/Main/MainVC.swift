@@ -16,8 +16,15 @@ class MainVC : UIViewController{
     let bag = DisposeBag()
     
     let mainTableView = MainTableView()
-    let groupView = GroupView()
     let mainViewModel = MainViewModel()
+    
+    lazy var mainTitleLabel = UILabel().then{
+        $0.textColor = .label
+        $0.font = .boldSystemFont(ofSize: 25)
+        $0.textAlignment = .left
+        $0.text = "홈"
+    }
+    
     
     override func viewDidLoad() {
         self.attibute()
@@ -30,10 +37,6 @@ class MainVC : UIViewController{
         self.mainViewModel.reloadData
             .accept(Void())
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.groupViewIsHide(false)
-    }
 }
  
 extension MainVC{
@@ -42,27 +45,24 @@ extension MainVC{
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
-        self.mainTableView.delegate = self
     }
     
     private func layout(){
-        self.view.addSubview(self.groupView)
-        self.groupView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(20)
+        self.view.addSubview(self.mainTitleLabel)
+        self.mainTitleLabel.snp.makeConstraints{
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
-            $0.height.equalTo(75)
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
         
         self.view.addSubview(self.mainTableView)
         self.mainTableView.snp.makeConstraints{
-            $0.top.equalTo(self.groupView.snp.bottom).offset(10)
+            $0.top.equalTo(self.mainTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
     private func bind(_ viewModel : MainViewModel){
         self.mainTableView.bind(viewModel.mainTableViewModel)
-        self.groupView.bind(viewModel.groupViewModel)
         
         // VIEWMODEL -> VIEW
         viewModel.stationPlusBtnClick
@@ -77,26 +77,6 @@ extension MainVC{
             .drive(self.rx.editVCPresent)
             .disposed(by: self.bag)
         
-    }
-    
-    private func groupViewIsHide(_ hide: Bool){
-        if hide{
-            self.groupView.tableScrollBtnResizing(hide)
-            
-            self.groupView.snp.updateConstraints{
-                $0.height.equalTo(40)
-            }
-        }else{
-            self.groupView.tableScrollBtnResizing(hide)
-            
-            self.groupView.snp.updateConstraints{
-                $0.height.equalTo(75)
-            }
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: [.allowUserInteraction]){
-            self.view.layoutIfNeeded()
-        }
     }
 }
 
@@ -140,16 +120,6 @@ extension Reactive where Base : MainVC {
             
             
             base.navigationController?.pushViewController(detail, animated: true)
-        }
-    }
-}
-
-extension MainVC : UITableViewDelegate{
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.y < 0{
-            self.groupViewIsHide(false)
-        }else{
-            self.groupViewIsHide(true)
         }
     }
 }

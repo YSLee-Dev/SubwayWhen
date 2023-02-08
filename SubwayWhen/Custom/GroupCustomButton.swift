@@ -20,7 +20,7 @@ class GroupCustomButton : UIButton{
 
 extension GroupCustomButton {
     private func attribute(){
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 15
         self.layer.masksToBounds = true
         self.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         self.layer.borderColor = UIColor.gray.cgColor
