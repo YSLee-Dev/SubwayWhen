@@ -21,8 +21,7 @@ class MainStyleUIView : UIView{
 
 extension MainStyleUIView{
     private func attribute(){
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 15
         self.backgroundColor = UIColor(named: "MainColor")
+        self.layer.cornerRadius = ViewStyle.Layer.shadowRadius
     }
 }

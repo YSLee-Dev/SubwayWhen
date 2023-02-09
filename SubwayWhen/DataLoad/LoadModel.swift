@@ -182,7 +182,7 @@ class LoadModel {
             .timeout(.seconds(5), other: .just(.failure(.init(.timedOut))), scheduler: MainScheduler.instance)
     }
     
-    // 현재 시각에 맞는 지하철 시간표
+    // total 지하철 시간표
     func totalScheduleStationLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) -> Observable<[ResultSchdule]>{
         guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
         
@@ -228,9 +228,14 @@ class LoadModel {
             }
             .filterEmpty()
             .map{ list in
-                list.map{
-                    ResultSchdule(startTime: $0.arrTime, type: .Tago, lastStation: $0.endSubwayStationNm ?? "")
+                if list.isEmpty{
+                    return [ResultSchdule(startTime: "정보없음", type: .Tago, lastStation:"정보없음")]
+                }else{
+                    return list.map{
+                        ResultSchdule(startTime: $0.arrTime, type: .Tago, lastStation: $0.endSubwayStationNm ?? "")
+                    }
                 }
+                
             }
         }else{
             var inOut = ""
@@ -284,8 +289,12 @@ class LoadModel {
             }
             .filterEmpty()
             .map{ list in
-                list.map{
-                    ResultSchdule(startTime: $0.startTime, type: .Seoul, lastStation: $0.lastStation)
+                if list.isEmpty{
+                    return [ResultSchdule(startTime: "정보없음", type: .Seoul, lastStation: "정보없음")]
+                }else{
+                    return list.map{
+                        ResultSchdule(startTime: $0.startTime, type: .Seoul, lastStation: $0.lastStation)
+                    }
                 }
             }
         }

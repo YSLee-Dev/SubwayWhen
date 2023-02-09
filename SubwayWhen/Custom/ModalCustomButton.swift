@@ -20,7 +20,7 @@ class ModalCustomButton : UIButton{
 
 extension ModalCustomButton {
     private func attribute(){
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = ViewStyle.Layer.shadowRadius
         self.layer.masksToBounds = true
         self.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
