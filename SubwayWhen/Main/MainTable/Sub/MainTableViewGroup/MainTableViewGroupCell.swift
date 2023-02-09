@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 class MainTableViewGroupCell : UITableViewCell{
-    let bag = DisposeBag()
+    var bag = DisposeBag()
     
     var status = true
     var nowClick = "출근"
@@ -38,6 +38,10 @@ class MainTableViewGroupCell : UITableViewCell{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        self.bag = DisposeBag()
     }
 }
 

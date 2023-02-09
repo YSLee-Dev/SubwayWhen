@@ -12,7 +12,7 @@ import Then
 
 class TableVCCustom : UIViewController{
     lazy var topView = TopView()
-    lazy var titleView = TitleView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
+    let titleView : TitleView
     
     lazy var tableView = UITableView().then{
         $0.dataSource = nil
@@ -24,9 +24,14 @@ class TableVCCustom : UIViewController{
     
     var viewTitle : String
    
-    init(title : String){
+    init(title : String, titleViewHeight : CGFloat){
         self.viewTitle = title
+        self.titleView = TitleView(frame: CGRect(x: 0, y: 0, width: 100 , height: titleViewHeight))
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init(title : String){
+        self.init(title: title, titleViewHeight: 30)
     }
     
     required init?(coder: NSCoder) {
