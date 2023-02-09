@@ -16,9 +16,7 @@ class MainTableViewCell : UITableViewCell{
     var index = IndexPath(row: 0, section: 0)
     var bag = DisposeBag()
     
-    var mainBG = MainStyleUIView().then{
-        $0.layer.borderWidth = 1.0
-    }
+    var mainBG = MainStyleUIView()
     
     lazy var line = UILabel().then{
         $0.layer.masksToBounds = true
@@ -53,7 +51,7 @@ class MainTableViewCell : UITableViewCell{
     
     lazy var changeBtn = UIButton().then{
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 15
+        $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
         $0.setImage(UIImage(systemName: "timer"), for: .normal)
         $0.tintColor = .white
         $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
@@ -92,7 +90,6 @@ class MainTableViewCell : UITableViewCell{
     }
     
     func lineColor(line : String){
-        self.mainBG.layer.borderColor = UIColor(named: line)?.cgColor
         self.border.layer.borderColor = UIColor(named: line)?.cgColor
         self.line.backgroundColor = UIColor(named: line)
         self.changeBtn.backgroundColor = UIColor(named: line)

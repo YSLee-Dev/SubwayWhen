@@ -19,10 +19,7 @@ class MainTableViewHeaderCell : UITableViewCell{
         $0.backgroundColor = .systemBackground
     }
     
-    var firstBG = MainStyleUIView().then{
-        $0.layer.borderColor = UIColor.gray.cgColor
-        $0.layer.borderWidth = 1.0
-    }
+    var firstBG = MainStyleUIView()
     
     let mainTitle = UILabel().then{
         $0.text = "현재 지하철 예상 혼잡도"
@@ -76,7 +73,7 @@ extension MainTableViewHeaderCell {
         self.searchBtn.snp.makeConstraints{
             $0.top.equalTo(self.firstBG.snp.bottom).offset(10)
             $0.leading.equalTo(self.mainBG)
-            $0.trailing.equalTo(self.mainBG.snp.centerX).offset(-7.5)
+            $0.trailing.equalTo(self.mainBG.snp.centerX).offset(-5)
             $0.height.equalTo(90)
             $0.bottom.equalToSuperview()
         }
@@ -84,7 +81,7 @@ extension MainTableViewHeaderCell {
         self.editBtn.snp.makeConstraints{
             $0.top.equalTo(self.firstBG.snp.bottom).offset(10)
             $0.trailing.equalTo(self.mainBG)
-            $0.leading.equalTo(self.mainBG.snp.centerX).offset(7.5)
+            $0.leading.equalTo(self.mainBG.snp.centerX).offset(5)
             $0.height.equalTo(90)
             $0.bottom.equalToSuperview()
         }

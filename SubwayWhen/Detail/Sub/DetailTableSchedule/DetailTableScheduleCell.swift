@@ -21,7 +21,7 @@ class DetailTableScheduleCell : UITableViewCell{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
-        $0.text = "시간표 데이터가 없습니다."
+        $0.text = "시간표를 불러오고 있습니다."
     }
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then{

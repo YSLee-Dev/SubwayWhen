@@ -18,6 +18,8 @@ class MainTableViewGroupCell : UITableViewCell{
     var status = true
     var nowClick = "출근"
     
+    let groupView = MainStyleUIView()
+    
     let groupOne = GroupCustomButton().then{
         $0.setTitle("출근", for: .normal)
         $0.seleted()
@@ -41,19 +43,24 @@ class MainTableViewGroupCell : UITableViewCell{
 
 extension MainTableViewGroupCell{
     private func layout(){
+        self.contentView.addSubview(self.groupView)
+        self.groupView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(40)
+            $0.top.bottom.equalToSuperview()
+        }
+        
         [self.groupOne, self.groupTwo]
-            .forEach{self.contentView.addSubview($0)}
+            .forEach{self.groupView.addSubview($0)}
         
         self.groupOne.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview()
             $0.top.bottom.equalToSuperview()
-            $0.height.equalTo(40)
-            $0.trailing.equalTo(self.snp.trailing).inset(100)
+            $0.trailing.equalTo(self.groupView.snp.trailing).inset(100)
         }
         self.groupTwo.snp.makeConstraints{
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview()
             $0.top.bottom.equalToSuperview()
-            $0.height.equalTo(40)
             $0.leading.equalTo(self.groupOne.snp.trailing)
         }
     }
@@ -93,43 +100,20 @@ extension MainTableViewGroupCell{
     private func btnClickSizeChange(group : Bool){
             if group{
                 self.groupOne.snp.remakeConstraints{
-                    $0.leading.equalToSuperview().inset(20)
+                    $0.leading.equalToSuperview()
                     $0.top.bottom.equalToSuperview()
-                    $0.height.equalTo(40)
-                    $0.trailing.equalTo(self.snp.leading).inset(100)
+                    $0.trailing.equalTo(self.groupView.snp.leading).inset(100)
                 }
             }else{
                 self.groupOne.snp.remakeConstraints{
-                    $0.leading.equalToSuperview().inset(20)
+                    $0.leading.equalToSuperview()
                     $0.top.bottom.equalToSuperview()
-                    $0.height.equalTo(40)
-                    $0.trailing.equalTo(self.snp.trailing).inset(100)
+                    $0.trailing.equalTo(self.groupView.snp.trailing).inset(100)
                 }
             }
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
             self.layoutIfNeeded()
         }
-    }
-    
-    func tableScrollBtnResizing(_ scroll : Bool){
-        if scroll{
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
-                [self.groupOne, self.groupTwo]
-                    .forEach{
-                        $0.transform = CGAffineTransform(translationX: 0, y: -30)
-                        $0.alpha = 0
-                    }
-            }
-        }else{
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
-                [self.groupOne, self.groupTwo]
-                    .forEach{
-                        $0.transform = .identity
-                        $0.alpha = 1
-                    }
-            }
-        }
-        
     }
 }

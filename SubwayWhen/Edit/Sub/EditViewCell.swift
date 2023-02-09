@@ -12,9 +12,7 @@ import SnapKit
 
 class EditViewCell : UITableViewCell{
     
-    var mainBG = MainStyleUIView().then{
-        $0.layer.borderWidth = 1.0
-    }
+    var mainBG = MainStyleUIView()
     
     lazy var line = UILabel().then{
         $0.layer.masksToBounds = true
@@ -78,7 +76,6 @@ extension EditViewCell{
     }
     
     func lineColor(line : String){
-        self.mainBG.layer.borderColor = UIColor(named: line)?.cgColor
         self.line.backgroundColor = UIColor(named: line)
     }
     
