@@ -19,7 +19,7 @@ class DetailVC : TableVCCustom{
     
     init(title: String, viewModel : DetailViewModel) {
         self.detailViewModel = viewModel
-        super.init(title: title)
+        super.init(title: title, titleViewHeight: 30)
         self.bind(viewModel)
     }
     
@@ -92,7 +92,7 @@ extension Reactive where Base : DetailVC{
             let resultVC = DetailResultScheduleVC(title: "역 시간표")
             resultVC.bind(viewModel)
           
-            base.present(resultVC, animated: true)
+            base.navigationController?.pushViewController(resultVC, animated: true)
         }
     }
     

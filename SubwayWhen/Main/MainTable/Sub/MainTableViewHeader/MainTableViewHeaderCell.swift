@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 class MainTableViewHeaderCell : UITableViewCell{
-    let bag = DisposeBag()
+    var bag = DisposeBag()
     
     let mainBG = UIView().then{
         $0.backgroundColor = .systemBackground
@@ -36,6 +36,10 @@ class MainTableViewHeaderCell : UITableViewCell{
     
     var searchBtn = MainTableViewHeaderBtn(title: "검색", img: UIImage(systemName: "magnifyingglass")!)
     var editBtn = MainTableViewHeaderBtn(title: "편집", img: UIImage(systemName: "list.bullet.indent")!)
+    
+    override func prepareForReuse() {
+        self.bag = DisposeBag()
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

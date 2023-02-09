@@ -15,6 +15,7 @@ class TitleView : UIView{
         $0.textColor = .label
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.textAlignment = .left
+        $0.numberOfLines = 2
     }
 
     override init(frame: CGRect) {
@@ -38,7 +39,7 @@ extension TitleView {
         
         self.mainTitleLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
 }

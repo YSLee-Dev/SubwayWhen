@@ -12,23 +12,25 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class MainVC : UIViewController{
+class MainVC : TableVCCustom{
     let bag = DisposeBag()
     
     let mainTableView = MainTableView()
     let mainViewModel = MainViewModel()
     
-    lazy var mainTitleLabel = UILabel().then{
-        $0.textColor = .label
-        $0.font = .boldSystemFont(ofSize: 25)
-        $0.textAlignment = .left
-        $0.text = "홈"
+    init(){
+        super.init(title: "홈", titleViewHeight: 55)
+        self.tableView = self.mainTableView
+        self.tableView.delegate = self
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.attibute()
-        self.layout()
         self.bind(self.mainViewModel)
     }
     
@@ -41,23 +43,13 @@ class MainVC : UIViewController{
  
 extension MainVC{
     private func attibute(){
-        self.view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
-    }
-    
-    private func layout(){
-        self.view.addSubview(self.mainTitleLabel)
-        self.mainTitleLabel.snp.makeConstraints{
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        self.view.addSubview(self.mainTableView)
-        self.mainTableView.snp.makeConstraints{
-            $0.top.equalTo(self.mainTitleLabel.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        self.topView.backBtn.isHidden = true
+        self.topView.subTitleLabel.snp.remakeConstraints{
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
         }
     }
     
@@ -77,10 +69,19 @@ extension MainVC{
             .drive(self.rx.editVCPresent)
             .disposed(by: self.bag)
         
+        viewModel.mainTitle
+            .drive(self.rx.mainTitleSet)
+            .disposed(by: self.bag)
     }
 }
 
 extension Reactive where Base : MainVC {
+    var mainTitleSet : Binder<String>{
+        return Binder(base){base, data in
+            base.titleView.mainTitleLabel.text = data
+        }
+    }
+    
     var tapChange : Binder<Void>{
         return Binder(base){base, _ in
             base.tabBarController?.selectedIndex = 1
@@ -108,6 +109,7 @@ extension Reactive where Base : MainVC {
              */
             var excption = data
             
+            // 공항철도는 반대 (ID)
             if excption.useLine == "공항철도"{
                 let next = excption.nextStationId
                 excption.nextStationId = excption.backStationId

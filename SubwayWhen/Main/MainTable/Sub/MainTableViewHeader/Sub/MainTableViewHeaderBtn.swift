@@ -47,7 +47,7 @@ extension MainTableViewHeaderBtn{
     private func attribute(title : String, img : UIImage){
         self.backgroundColor = UIColor(named: "MainColor")
         self.layer.cornerRadius = ViewStyle.Layer.shadowRadius
-        self.tintColor = .label
+        self.tintColor = .gray
         
         self.btnLabel.text = title
         self.btnImg.image = img

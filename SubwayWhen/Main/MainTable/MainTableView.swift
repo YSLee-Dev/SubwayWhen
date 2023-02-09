@@ -84,7 +84,7 @@ extension MainTableView{
         // VIEW -> VIEWMODEL
         self.rx.modelSelected(MainTableViewCellData.self)
             .filter{
-                $0.id != "header" || $0.id != "group"
+                !($0.id == "header" || $0.id == "group")
             }
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)

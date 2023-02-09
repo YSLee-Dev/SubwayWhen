@@ -52,7 +52,7 @@ extension TopView{
         
         self.backBtn.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
         }
 
         self.subTitleLabel.snp.makeConstraints{
