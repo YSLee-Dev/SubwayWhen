@@ -14,7 +14,7 @@ import RxDataSources
 
 class DetailVC : TableVCCustom{
     let bag = DisposeBag()
-    
+
     let detailViewModel : DetailViewModel
     
     init(title: String, viewModel : DetailViewModel) {
