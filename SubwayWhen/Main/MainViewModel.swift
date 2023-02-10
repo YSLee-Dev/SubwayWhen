@@ -37,25 +37,25 @@ class MainViewModel{
             let data = Calendar.current.component(.weekday, from: Date())
             if data == 1 || data == 7{
                 // 주말
-                let weekend = ["행복하고 즐거운 주말이에요.\n좋은 하루 보내세요😊",
-                "이번 주도 수고 많으셨습니다.\n행복한 주말 보내세요!",
+                let weekend = ["행복하고 즐거운 주말\n좋은 하루 보내세요!",
+                "행복한 일만 가득한 주말\n행복한 주말 보내세요!",
                                ]
                 $0.onNext(weekend.randomElement() ?? "행복하고 즐거운 주말이에요!\n좋은 하루 보내세요!")
             }else if data == 2{
                 // 월요일
-                $0.onNext("새로운 시작 월요일이에요!\n시작도 화이팅해봐요!")
+                $0.onNext("월요일\n시작도 화이팅해봐요!")
             }else if data == 3{
                 // 화요일
-                $0.onNext("화요일, 평범하지만\n행복한 날로 만들어봐요!")
+                $0.onNext("화요일,\n평범하지만 행복한 날로 만들어봐요!")
             }else if data == 4{
                 // 수요일
-                $0.onNext("수요일엔 수많은 \n즐거움이 가득할거에요!")
+                $0.onNext("수요일, \n수많은 즐거움이 가득할거에요!")
             }else if data == 5{
                 // 목요일
-                $0.onNext("지치는 목요일이지만,\n주말까지 단 2일 남았어요!")
+                $0.onNext("목요일,\n주말까지 단 2일 남았어요!")
             }else if data == 6{
                 // 금요일
-                $0.onNext("생각만 해도 행복한 금요일이에요!\n행복한 하루 보내세요!")
+                $0.onNext("금요일,\n행복한 하루 보내세요!")
             }
             $0.onCompleted()
             
@@ -75,11 +75,6 @@ class MainViewModel{
             self.mainTableViewModel.mainTableViewFooterViewModel.editBtnClick.asObservable(),
             self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick.asObservable()
             )
-        
-        self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick
-            .subscribe{
-                print($0)
-            }
         
         self.editBtnClick = editBtnClick
             .asDriver(onErrorDriveWith: .empty())

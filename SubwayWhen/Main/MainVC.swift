@@ -19,7 +19,7 @@ class MainVC : TableVCCustom{
     let mainViewModel = MainViewModel()
     
     init(){
-        super.init(title: "홈", titleViewHeight: 55)
+        super.init(title: "홈", titleViewHeight: 61)
         self.tableView = self.mainTableView
         self.tableView.delegate = self
     }
@@ -50,6 +50,12 @@ extension MainVC{
         self.topView.subTitleLabel.snp.remakeConstraints{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
+        }
+        
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
+        
+        self.titleView.mainTitleLabel.snp.updateConstraints{
+            $0.centerY.equalToSuperview().offset(-5)
         }
     }
     

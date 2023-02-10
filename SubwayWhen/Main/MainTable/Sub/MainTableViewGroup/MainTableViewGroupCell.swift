@@ -51,7 +51,7 @@ extension MainTableViewGroupCell{
         self.groupView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(40)
-            $0.top.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(7.5)
         }
         
         [self.groupOne, self.groupTwo]

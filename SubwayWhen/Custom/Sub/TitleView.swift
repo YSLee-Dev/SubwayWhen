@@ -16,6 +16,7 @@ class TitleView : UIView{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.textAlignment = .left
         $0.numberOfLines = 2
+        $0.adjustsFontSizeToFitWidth = true
     }
 
     override init(frame: CGRect) {
