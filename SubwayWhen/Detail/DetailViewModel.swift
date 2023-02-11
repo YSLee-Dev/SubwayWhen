@@ -45,9 +45,15 @@ class DetailViewModel{
             .disposed(by: self.bag)
         
         self.moreBtnClickData = self.scheduleCellModel.moreBtnClick
-            .map{
-                resultViewModel
+            .withLatestFrom(self.scheduleData)
+            .map{ data -> DetailResultScheduleViewModel? in
+                if data.isEmpty{
+                    return nil
+                }else{
+                    return resultViewModel
+                }
             }
+            .filterNil()
             .asDriver(onErrorDriveWith: .empty())
         
         self.scheduleCellModel.moreBtnClick
