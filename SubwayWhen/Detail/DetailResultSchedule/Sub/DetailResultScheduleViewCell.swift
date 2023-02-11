@@ -64,13 +64,17 @@ extension DetailResultScheduleViewCell{
     }
     
     func cellSet(_ data : DetailResultScheduleViewCellData){
-        let minute = data.minute.reduce(""){result, new in
-            result + "\(new)분\n"
+        var minute = data.minute.reduce(""){result, new in
+            result + "\(new)분 \n"
         }
+        minute.removeLast(2)
+       
         
-        let lastStation = data.lastStation.reduce(""){result, new in
+        var lastStation = data.lastStation.reduce(""){result, new in
             result + "(\(new)행) \n"
         }
+        lastStation.removeLast(2)
+        
         self.minuteLabel.text = minute
         self.lastStationLabel.text = lastStation
     }

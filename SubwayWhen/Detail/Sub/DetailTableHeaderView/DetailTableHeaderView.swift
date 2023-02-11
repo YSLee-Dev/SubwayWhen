@@ -89,7 +89,7 @@ extension DetailTableHeaderView {
     private func layout(){
         self.contentView.addSubview(self.lineColor)
         self.lineColor.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalToSuperview().inset(12.5)
             $0.height.equalTo(50)
         }
@@ -108,13 +108,13 @@ extension DetailTableHeaderView {
         
         self.backStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
-            $0.trailing.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(20)
             $0.leading.equalTo(self.stationName.snp.trailing).offset(5)
         }
         
         self.nextStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalTo(self.stationName.snp.leading).offset(-5)
         }
         
@@ -126,7 +126,7 @@ extension DetailTableHeaderView {
         self.upDown.snp.makeConstraints{
             $0.trailing.equalTo(self.snp.centerX).offset(-10)
             $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(self.stationName.snp.bottom).offset(10)
             $0.height.equalTo(40)
         }
@@ -135,7 +135,7 @@ extension DetailTableHeaderView {
             $0.height.equalTo(40)
             $0.leading.equalTo(self.snp.centerX).offset(10)
             $0.bottom.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(self.stationName.snp.bottom).offset(10)
         }
     }

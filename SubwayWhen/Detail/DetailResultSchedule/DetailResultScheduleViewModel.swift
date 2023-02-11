@@ -18,12 +18,33 @@ struct DetailResultScheduleViewModel{
     // OUTPUT
     let resultDefaultData : Driver<MainTableViewCellData>
     let groupScheduleData : Driver<[DetailResultScheduleViewSectionData]>
+    let nowHourSectionSelect : Driver<Int>
+    
+    let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
+    
+    let bag = DisposeBag()
     
     init(){
         self.resultDefaultData = self.cellData
             .asDriver(onErrorDriveWith: .empty())
         
-        self.groupScheduleData = self.scheduleData
+        self.nowHourSectionSelect = self.nowData
+            .map{ data in
+                let nowHour = Calendar.current.component(.hour, from: Date())
+                
+                for x in data.enumerated(){
+                    if x.element.hour == nowHour{
+                        return x.offset
+                    }
+                }
+                return 0
+            }
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.groupScheduleData = self.nowData
+            .asDriver(onErrorDriveWith: .empty())
+        
+       self.scheduleData
             .map{data -> [DetailResultScheduleViewSectionData] in
                 var sortArray : [DetailResultScheduleViewSectionData] = []
                 for x in 0...24{
@@ -46,7 +67,7 @@ struct DetailResultScheduleViewModel{
                         return String($0.useArrTime[startIndex...endIndex])
                     }
                     
-                    sortArray.append(.init(sectionName: "\(x)시", items: [.init(id: "\(x)", hour: "\(x)", minute: minute, lastStation: sortedData.map{$0.lastStation})]))
+                    sortArray.append(.init(sectionName: "\(x)시", hour: x, items: [.init(id: "\(x)", hour: "\(x)", minute: minute, lastStation: sortedData.map{$0.lastStation})]))
                 }
                return sortArray
             }
@@ -55,6 +76,7 @@ struct DetailResultScheduleViewModel{
                     !($0.items.first!.minute.isEmpty)
                 }
             }
-            .asDriver(onErrorDriveWith: .empty())
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
     }
 }

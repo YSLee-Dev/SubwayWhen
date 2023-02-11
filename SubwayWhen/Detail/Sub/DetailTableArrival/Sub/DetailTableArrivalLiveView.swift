@@ -147,6 +147,7 @@ extension DetailTableArrivalLiveView{
         if 0...5 ~= intCode{
             UIView.animate(withDuration: 0.75, delay: 0, options: [.allowUserInteraction], animations: {
                 self.animateCGSet(true)
+                self.beforeStationTitle.alpha = 0
                 self.moreStationTitle.text = self.beforeTitle
             }, completion:{ _ in
                 self.animateCGSet(false)

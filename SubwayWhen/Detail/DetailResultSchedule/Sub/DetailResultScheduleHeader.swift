@@ -45,13 +45,13 @@ extension DetailResultScheduleHeader{
         self.updownLabel.snp.makeConstraints{
             $0.height.equalTo(40)
             $0.leading.equalTo(self.snp.centerX).offset(10)
-            $0.trailing.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(20)
             $0.top.equalToSuperview()
         }
         
         self.stationLabel.snp.makeConstraints{
             $0.trailing.equalTo(self.snp.centerX).offset(-10)
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(20)
             $0.top.equalToSuperview()
             $0.height.equalTo(40)
         }
