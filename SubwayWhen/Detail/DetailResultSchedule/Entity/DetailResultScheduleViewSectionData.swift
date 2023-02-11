@@ -11,6 +11,7 @@ import RxDataSources
 
 struct DetailResultScheduleViewSectionData : AnimatableSectionModelType{
     var sectionName : String
+    var hour : Int
     var items : [DetailResultScheduleItem]
 }
 

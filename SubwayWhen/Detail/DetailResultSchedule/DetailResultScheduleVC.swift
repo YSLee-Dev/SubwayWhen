@@ -55,6 +55,11 @@ extension DetailResultScheduleVC{
         viewModel.groupScheduleData
             .drive(self.tableView.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
+        
+        viewModel.nowHourSectionSelect
+            .delay(.milliseconds(500))
+            .drive(self.rx.sectionSelect)
+            .disposed(by: self.bag)
     }
 }
 
@@ -68,6 +73,12 @@ extension Reactive where Base : DetailResultScheduleVC{
     var titleSet : Binder<String>{
         return Binder(base){base, title in
             base.viewTitle = title
+        }
+    }
+    
+    var sectionSelect : Binder<Int>{
+        return Binder(base){base, hour in
+            base.tableView.scrollToRow(at: IndexPath(row: 0, section: hour), at: .top, animated: true)
         }
     }
 }
