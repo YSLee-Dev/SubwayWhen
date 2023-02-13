@@ -108,13 +108,13 @@ extension DetailTableHeaderView {
         
         self.backStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(10)
             $0.leading.equalTo(self.stationName.snp.trailing).offset(5)
         }
         
         self.nextStation.snp.makeConstraints{
             $0.centerY.equalTo(self.stationName)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(10)
             $0.trailing.equalTo(self.stationName.snp.leading).offset(-5)
         }
         
@@ -156,7 +156,7 @@ extension DetailTableHeaderView {
         }
         
         self.exceptionLastStationBtn.snp.updateConstraints{
-            $0.trailing.equalToSuperview().inset(35)
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
     

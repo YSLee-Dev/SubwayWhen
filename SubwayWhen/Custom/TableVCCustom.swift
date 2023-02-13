@@ -81,9 +81,9 @@ extension TableVCCustom{
 extension TableVCCustom : UITableViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 25{
-            self.topView.isMainTitleHidden(true)
-        }else{
             self.topView.isMainTitleHidden(false)
+        }else{
+            self.topView.isMainTitleHidden(true)
         }
         
     }

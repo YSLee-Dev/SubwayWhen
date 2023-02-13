@@ -20,7 +20,7 @@ struct DetailResultScheduleViewModel{
     let groupScheduleData : Driver<[DetailResultScheduleViewSectionData]>
     let nowHourSectionSelect : Driver<Int>
     
-    let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
+    private let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
     
     let bag = DisposeBag()
     

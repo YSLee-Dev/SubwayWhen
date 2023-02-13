@@ -43,7 +43,7 @@ class MainViewModel{
                 $0.onNext(weekend.randomElement() ?? "행복하고 즐거운 주말이에요!\n좋은 하루 보내세요!")
             }else if data == 2{
                 // 월요일
-                $0.onNext("월요일\n시작도 화이팅해봐요!")
+                $0.onNext("월요일,\n한 주도 화이팅해봐요!")
             }else if data == 3{
                 // 화요일
                 $0.onNext("화요일,\n평범하지만 행복한 날로 만들어봐요!")

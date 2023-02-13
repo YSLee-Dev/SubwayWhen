@@ -188,12 +188,10 @@ class LoadModel {
         
         if scheduleSearch.type == .Tago{
             let schedule = self.TagoStationSchduleLoad(scheduleSearch)
-                .map{ data -> [TagoItem]? in
-                    guard case .success(let value) = data else {return nil}
+                .map{ data -> [TagoItem] in
+                    guard case .success(let value) = data else {return []}
                     return value.response.body.items.item
                 }
-                .filter{$0 != nil}
-                .map{$0!}
                 .asObservable()
             
             print("Tago")
@@ -226,7 +224,6 @@ class LoadModel {
                 }
                 
             }
-            .filterEmpty()
             .map{ list in
                 if list.isEmpty{
                     return [ResultSchdule(startTime: "정보없음", type: .Tago, lastStation:"정보없음")]
@@ -250,12 +247,10 @@ class LoadModel {
             guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
             
             let schedule = self.seoulStationScheduleLoad(scheduleSearch: scheduleSearch)
-                .map{ data -> [ScheduleStationArrival]? in
-                    guard case .success(let value) = data else {return nil}
+                .map{ data -> [ScheduleStationArrival] in
+                    guard case .success(let value) = data else {return []}
                     return value.SearchSTNTimeTableByFRCodeService.row
                 }
-                .filter{$0 != nil}
-                .map{$0!}
                 .asObservable()
             
             print("SEOUL")
@@ -287,7 +282,6 @@ class LoadModel {
                     return scheduleData
                 }
             }
-            .filterEmpty()
             .map{ list in
                 if list.isEmpty{
                     return [ResultSchdule(startTime: "정보없음", type: .Seoul, lastStation: "정보없음")]
