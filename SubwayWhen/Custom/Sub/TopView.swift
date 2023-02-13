@@ -51,7 +51,7 @@ extension TopView{
             }
         
         self.backBtn.snp.makeConstraints{
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(self.snp.top).offset(22.5)
             $0.leading.equalToSuperview().inset(20)
         }
 
@@ -63,8 +63,8 @@ extension TopView{
     
     func isMainTitleHidden(_ hidden : Bool){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
-            self.subTitleLabel.alpha = hidden ? 1 : 0
-            self.subTitleLabel.transform = hidden ? .identity : CGAffineTransform(translationX: 0, y: 10)
+            self.subTitleLabel.alpha = hidden ? 0 : 1
+            self.subTitleLabel.transform = hidden ? CGAffineTransform(translationX: 0, y: 10) : .identity
         }
     }
 }

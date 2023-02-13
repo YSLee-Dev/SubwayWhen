@@ -13,7 +13,16 @@ import RxDataSources
 
 class DetailResultScheduleVC : TableVCCustom{
     let bag = DisposeBag()
-    let headerView = DetailResultScheduleHeader(frame: CGRect(x: 0, y: 0, width: 0, height: 45))
+    let detailTopView = DetailResultScheduleTopView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    
+    override init(title: String, titleViewHeight: CGFloat) {
+        super.init(title: title, titleViewHeight: titleViewHeight)
+        self.topView = self.detailTopView
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +40,6 @@ extension DetailResultScheduleVC{
     
     func bind(_ viewModel : DetailResultScheduleViewModel){
         viewModel.resultDefaultData
-            .drive(self.rx.headerViewDataSet)
-            .disposed(by: self.bag)
-        
-        viewModel.resultDefaultData
-            .map{
-                "\($0.stationName)(\($0.upDown)) 시간표"
-            }
             .drive(self.rx.titleSet)
             .disposed(by: self.bag)
         
@@ -61,18 +63,34 @@ extension DetailResultScheduleVC{
             .drive(self.rx.sectionSelect)
             .disposed(by: self.bag)
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        
+        if scrollView.contentOffset.y > 25{
+            self.detailTopView.scrollMoreInfoIsHidden(false)
+            self.topView.snp.updateConstraints{
+                $0.height.equalTo(89.5)
+            }
+        }else{
+            self.detailTopView.scrollMoreInfoIsHidden(true)
+            self.topView.snp.updateConstraints{
+                $0.height.equalTo(45)
+            }
+            
+        }
+        UIView.animate(withDuration: 0.5, delay: 0){
+            self.view.layoutIfNeeded()
+        }
+    }
 }
 
 extension Reactive where Base : DetailResultScheduleVC{
-    var headerViewDataSet : Binder<MainTableViewCellData>{
-        return Binder(base){ base, data in
-            base.headerView.viewSet(station: data.stationName, updown: data.upDown)
-        }
-    }
-    
-    var titleSet : Binder<String>{
-        return Binder(base){base, title in
-            base.viewTitle = title
+    var titleSet : Binder<MainTableViewCellData>{
+        return Binder(base){base, data in
+            base.viewTitle = "\(data.stationName) 시간표"
+            base.detailTopView.exceptionLastStationBtn.setTitle(data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
+            base.detailTopView.upDown.text = data.upDown
         }
     }
     
