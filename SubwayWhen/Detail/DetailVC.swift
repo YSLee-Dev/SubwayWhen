@@ -89,9 +89,7 @@ extension DetailVC{
 extension Reactive where Base : DetailVC{
     var detailResultPresent : Binder<DetailResultScheduleViewModel>{
         return Binder(base){ base, viewModel in
-            let resultVC = DetailResultScheduleVC(title: "역 시간표")
-            resultVC.bind(viewModel)
-          
+            let resultVC = DetailResultScheduleVC(title: "역 시간표", titleViewHeight: 30, viewModel: viewModel)
             base.navigationController?.pushViewController(resultVC, animated: true)
         }
     }

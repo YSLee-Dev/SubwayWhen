@@ -52,6 +52,11 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.tintColor = .label
     }
     
+    var refreshTimerLabel = UILabel().then{
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.superSmallSize)
+        $0.textColor = .label
+    }
+    
     override func prepareForReuse() {
         self.bag = DisposeBag()
     }
@@ -121,9 +126,14 @@ extension DetailTableArrivalCell {
         }
         
         self.refreshBtn.snp.makeConstraints{
-            $0.size.equalTo(25)
+            $0.size.equalTo(30)
             $0.trailing.equalToSuperview().inset(15)
             $0.centerY.equalTo(self.mainTitle)
+        }
+        
+        self.refreshBtn.addSubview(self.refreshTimerLabel)
+        self.refreshTimerLabel.snp.makeConstraints{
+            $0.center.equalTo(self.refreshBtn)
         }
     }
     
@@ -132,8 +142,29 @@ extension DetailTableArrivalCell {
             .bind(to: self.rx.dataViewSet)
             .disposed(by: self.bag)
         
-        self.refreshBtn.rx.tap
+        // 15초마다 재로딩
+        let timer = Observable<Int>.timer(.seconds(1), period: .seconds(1), scheduler: MainScheduler.asyncInstance)
+            .share()
+        
+        let secondReload = timer
+            .filter{$0 % 15 == 0}
+            .map{_ in Void()}
+        
+        timer
+            .map{
+                String(15 - ($0 % 15))
+            }
+            .bind(to: self.refreshTimerLabel.rx.text)
+            .disposed(by: self.bag)
+        
+        let reloadAction = Observable<Void>
+            .merge(self.refreshBtn.rx.tap.asObservable(),
+                   secondReload
+            )
+        
+        reloadAction
             .startWith(Void())
+            .throttle(.seconds(2), latest: false, scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
             .map{ cell, _ in
                 UIView.animate(withDuration: 0.4, delay: 0){

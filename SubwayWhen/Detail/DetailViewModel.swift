@@ -67,7 +67,11 @@ class DetailViewModel{
             .disposed(by: self.bag)
         
         // 제외 행 제거 클릭 시
-        self.exceptionLastStationRemoveBtnClick = self.headerViewModel.exceptionLastStationBtnClick
+        let exception = Observable<Void>.merge(
+            self.headerViewModel.exceptionLastStationBtnClick.asObservable(),
+            resultViewModel.scheduleVCExceptionStationRemove.asObservable()
+        )
+        self.exceptionLastStationRemoveBtnClick = exception
             .withLatestFrom(self.detailViewData)
             .asDriver(onErrorDriveWith: .empty())
         
@@ -114,7 +118,7 @@ class DetailViewModel{
             .disposed(by: self.bag)
         
         
-        // 실시간 새로고침 버튼 클릭 시
+        // 실시간 새로고침 버튼 클릭 시 / 15초마다 한번
         let onRefresh = self.arrivalCellModel.refreshBtnClick
             .withLatestFrom(self.detailViewData)
         

@@ -12,12 +12,20 @@ import RxCocoa
 import RxDataSources
 
 class DetailResultScheduleVC : TableVCCustom{
-    let bag = DisposeBag()
+    deinit{
+        print("DetailResultScheduleVC DEINIT")
+    }
+    
+    var bag = DisposeBag()
     let detailTopView = DetailResultScheduleTopView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     
-    override init(title: String, titleViewHeight: CGFloat) {
+    let detailResultScheduleViewModel : DetailResultScheduleViewModel
+    
+    init(title: String, titleViewHeight: CGFloat, viewModel : DetailResultScheduleViewModel) {
+        self.detailResultScheduleViewModel = viewModel
         super.init(title: title, titleViewHeight: titleViewHeight)
         self.topView = self.detailTopView
+        self.bind(self.detailResultScheduleViewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -32,13 +40,14 @@ class DetailResultScheduleVC : TableVCCustom{
 
 extension DetailResultScheduleVC{
     private func attribute(){
-        //self.tableView.tableHeaderView = self.headerView
         self.tableView.register(DetailResultScheduleViewCell.self, forCellReuseIdentifier: "DetailResultScheduleViewCell")
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 50
     }
     
-    func bind(_ viewModel : DetailResultScheduleViewModel){
+    private func bind(_ viewModel : DetailResultScheduleViewModel){
+        self.detailTopView.bind(viewModel.detailResultScheduleTopViewModel)
+        
         viewModel.resultDefaultData
             .drive(self.rx.titleSet)
             .disposed(by: self.bag)
@@ -61,6 +70,10 @@ extension DetailResultScheduleVC{
         viewModel.nowHourSectionSelect
             .delay(.milliseconds(500))
             .drive(self.rx.sectionSelect)
+            .disposed(by: self.bag)
+        
+        viewModel.scheduleVCExceptionLastStationBtnClick
+            .drive(self.rx.scheduleVCExceptionLastStationRemoveAlert)
             .disposed(by: self.bag)
     }
     
@@ -91,12 +104,24 @@ extension Reactive where Base : DetailResultScheduleVC{
             base.viewTitle = "\(data.stationName) 시간표"
             base.detailTopView.exceptionLastStationBtn.setTitle(data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
             base.detailTopView.upDown.text = data.upDown
+            
+            base.detailTopView.exceptionLastStationBtn.isEnabled = data.exceptionLastStation != ""
         }
     }
     
     var sectionSelect : Binder<Int>{
         return Binder(base){base, hour in
             base.tableView.scrollToRow(at: IndexPath(row: 0, section: hour), at: .top, animated: true)
+        }
+    }
+    
+    var scheduleVCExceptionLastStationRemoveAlert : Binder<Void>{
+        return Binder(base){ base, _ in
+            base.navigationController?.popViewController(animated: true)
+            Observable.just(Void())
+                .bind(to: base.detailResultScheduleViewModel.scheduleVCExceptionStationRemove)
+                .disposed(by: base.bag)
+            base.bag = DisposeBag()
         }
     }
 }

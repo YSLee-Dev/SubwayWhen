@@ -51,7 +51,7 @@ extension DetailResultScheduleViewCell{
         
         self.mainCell.addSubview(self.minuteLabel)
         self.minuteLabel.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().offset(10)
             $0.top.bottom.equalToSuperview().inset(10)
         }
         

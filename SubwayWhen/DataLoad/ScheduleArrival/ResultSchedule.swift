@@ -47,7 +47,7 @@ struct ResultSchdule{
     var useArrTime : String{
         if self.type == .Tago{
             var time = self.startTime
-            if time != "0"{
+            if time != "0" || time != ""{
                 let index1 = time.index(time.startIndex, offsetBy: 2)
                 let index2 = time.index(time.startIndex, offsetBy: 5)
                 
