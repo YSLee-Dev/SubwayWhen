@@ -14,11 +14,16 @@ struct DetailResultScheduleViewModel{
     // INPUT
     let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
     let cellData = BehaviorRelay<MainTableViewCellData>(value: MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: ""))
+    let scheduleVCExceptionStationRemove = PublishRelay<Void>()
     
     // OUTPUT
     let resultDefaultData : Driver<MainTableViewCellData>
     let groupScheduleData : Driver<[DetailResultScheduleViewSectionData]>
     let nowHourSectionSelect : Driver<Int>
+    let scheduleVCExceptionLastStationBtnClick : Driver<Void>
+    
+    // MODEL
+    let detailResultScheduleTopViewModel = DetailResultScheduleTopViewModel()
     
     private let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
     
@@ -26,6 +31,9 @@ struct DetailResultScheduleViewModel{
     
     init(){
         self.resultDefaultData = self.cellData
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.scheduleVCExceptionLastStationBtnClick = self.detailResultScheduleTopViewModel.exceptionLastStationBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         self.nowHourSectionSelect = self.nowData

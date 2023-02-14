@@ -7,10 +7,14 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import Then
 import SnapKit
 
 class DetailResultScheduleTopView : TopView{
+    let topBag = DisposeBag()
+    
     var upDown = UILabelCustom(padding: .init(top: 0, left: 0, bottom: 0, right: 0)).then{
         $0.textColor = .label
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
@@ -61,6 +65,12 @@ extension DetailResultScheduleTopView {
             $0.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(10)
         }
+    }
+    
+    func bind(_ viewModel : DetailResultScheduleTopViewModel){
+        self.exceptionLastStationBtn.rx.tap
+            .bind(to: viewModel.exceptionLastStationBtnClick)
+            .disposed(by: self.topBag)
     }
     
     func scrollMoreInfoIsHidden(_ hidden : Bool){
