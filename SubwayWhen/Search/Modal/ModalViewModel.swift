@@ -57,8 +57,9 @@ class ModalViewModel {
         
         // TAGO Station ID 통신
         let totalStationCodeData = self.clickCellData
-            .flatMap{
-                self.model.totalStationSearchRequest($0.stationName)
+            .withUnretained(self)
+            .flatMap{ viewModel, data in
+                viewModel.model.totalStationSearchRequest(data.stationName)
             }
             .map{ data -> TotalStationSearch? in
                 guard case let .success(value) = data else {

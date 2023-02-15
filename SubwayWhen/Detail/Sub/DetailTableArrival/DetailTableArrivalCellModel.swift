@@ -17,9 +17,16 @@ class DetailTableArrivalCellModel {
     
     // OUTPUT
     let cellData : Driver<[RealtimeStationArrival]>
+    let timer : Observable<Int>
+    
+    deinit{
+        print("DetailTableArrivalCellModel DEINIT")
+    }
     
     init(){
         self.cellData = self.realTimeData
             .asDriver(onErrorDriveWith: .empty())
+        
+        self.timer = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
     }
 }

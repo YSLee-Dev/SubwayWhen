@@ -57,14 +57,14 @@ class DetailTableArrivalCell : UITableViewCell{
         $0.textColor = .label
     }
     
-    override func prepareForReuse() {
-        self.bag = DisposeBag()
-    }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
         self.attribute()
+    }
+    
+    override func prepareForReuse() {
+        self.bag = DisposeBag()
     }
     
     required init?(coder: NSCoder) {
@@ -142,15 +142,16 @@ extension DetailTableArrivalCell {
             .bind(to: self.rx.dataViewSet)
             .disposed(by: self.bag)
         
-        // 15초마다 재로딩
-        let timer = Observable<Int>.timer(.seconds(1), period: .seconds(1), scheduler: MainScheduler.asyncInstance)
-            .share()
+        viewModel.timer.subscribe{
+            print($0)
+        }
+        .disposed(by: self.bag)
         
-        let secondReload = timer
+        let secondReload = viewModel.timer
             .filter{$0 % 15 == 0}
             .map{_ in Void()}
         
-        timer
+        viewModel.timer
             .map{
                 String(15 - ($0 % 15))
             }

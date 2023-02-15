@@ -78,10 +78,20 @@ extension MainVC{
         viewModel.mainTitle
             .drive(self.rx.mainTitleSet)
             .disposed(by: self.bag)
+        
+        viewModel.mainTitleHidden
+            .drive(self.rx.mainTitleHidden)
+            .disposed(by: self.bag)
     }
 }
 
 extension Reactive where Base : MainVC {
+    var mainTitleHidden : Binder<Void>{
+        return Binder(base){base, _ in
+            base.topView.isMainTitleHidden(true)
+        }
+    }
+    
     var mainTitleSet : Binder<String>{
         return Binder(base){base, data in
             base.titleView.mainTitleLabel.text = data
@@ -104,9 +114,7 @@ extension Reactive where Base : MainVC {
     
     var detailVCPresent : Binder<MainTableViewCellData>{
         return Binder(base){base, data in
-            let viewModel = DetailViewModel()
-            
-            let detail = DetailVC(title: "\(data.useLine) \(data.stationName)", viewModel: viewModel)
+            let detail = DetailVC(title: "\(data.useLine) \(data.stationName)")
             detail.hidesBottomBarWhenPushed = true
             /*
             #if DEBUG
@@ -122,7 +130,7 @@ extension Reactive where Base : MainVC {
                 excption.backStationId = next
             }
             
-            viewModel.detailViewData.accept(excption)
+            detail.detailViewModel.detailViewData.accept(excption)
             
             //#endif
             

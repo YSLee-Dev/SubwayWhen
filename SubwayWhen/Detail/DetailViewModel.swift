@@ -32,7 +32,11 @@ class DetailViewModel{
     let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
     let scheduleData = PublishRelay<[ResultSchdule]>()
     
-    let bag = DisposeBag()
+    var bag = DisposeBag()
+    
+    deinit{
+        print("DetailViewModel DEINIT")
+    }
     
     init(){
         lazy var resultViewModel = DetailResultScheduleViewModel()
@@ -87,12 +91,13 @@ class DetailViewModel{
         
         // 기본 셀 구성
         self.detailViewData
+            .withUnretained(self)
             .map{
-                let backNext = self.detailModel.nextAndBackStationSearch(backId: $0.backStationId, nextId: $0.nextStationId)
+                let backNext = $0.detailModel.nextAndBackStationSearch(backId: $1.backStationId, nextId: $1.nextStationId)
                 return [
-                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $0.stationCode, exceptionLastStation: $0.exceptionLastStation, subWayId: $0.subWayId, upDown: $0.upDown, lineNumber: $0.lineNumber, useLine: $0.useLine, stationName: $0.stationName, backStationName: backNext[0], nextStationName: backNext[1])])
+                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])])
                 ]
             }
             .bind(to: self.nowData)
@@ -111,8 +116,9 @@ class DetailViewModel{
                     return searchData
                 }
             }
+            .withUnretained(self)
             .flatMap{
-                self.loadModel.totalScheduleStationLoad($0, isFirst: false, isNow: false)
+                $0.loadModel.totalScheduleStationLoad($1, isFirst: false, isNow: false)
             }
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
@@ -124,8 +130,9 @@ class DetailViewModel{
         
         // 실시간 데이터 불러오기
         let realTimeData = onRefresh
+            .withUnretained(self)
             .flatMapLatest{
-                self.loadModel.stationArrivalRequest(stationName: $0.stationName)
+                $0.loadModel.stationArrivalRequest(stationName: $1.stationName)
             }
             .map{ data -> [RealtimeStationArrival] in
                 /*

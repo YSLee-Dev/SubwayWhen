@@ -30,6 +30,7 @@ class MainViewModel{
     let editBtnClick : Driver<Void>
     let clickCellData : Driver<MainTableViewCellData>
     let mainTitle : Driver<String>
+    let mainTitleHidden : Driver<Void>
     
     init(){
         // 메인 타이틀(요일마다 변경)
@@ -77,6 +78,11 @@ class MainViewModel{
             )
         
         self.editBtnClick = editBtnClick
+            .asDriver(onErrorDriveWith: .empty())
+        
+        // 그룹 변경 시 타이틀 제거
+        self.mainTitleHidden = self.mainTableViewModel.mainTableViewGroupModel.groupSeleted
+            .map{_ in Void()}
             .asDriver(onErrorDriveWith: .empty())
         
         // 셀 클릭 시
@@ -134,8 +140,9 @@ class MainViewModel{
         
         // 데이터 리프레쉬 할 때 데이터 삭제(세션 값이 같으면 오류 발생)
         dataReload
-            .map{ _ in
-                var value = self.totalData.value
+            .withUnretained(self)
+            .map{ viewModel, _ in
+                var value = viewModel.totalData.value
                 value.removeAll()
                 return value
             }
@@ -144,12 +151,14 @@ class MainViewModel{
         
         // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
         dataReload
-            .flatMap{
-               self.model.totalLiveDataLoad()
+            .withUnretained(self)
+            .flatMap{ viewModel, _ in
+                viewModel.model.totalLiveDataLoad()
             }
-            .map{
-                var now = self.totalData.value
-                now.append($0)
+            .withUnretained(self)
+            .map{viewModel, data in
+                var now = viewModel.totalData.value
+                now.append(data)
                 return now
             }
             .bind(to: self.totalData)
@@ -205,17 +214,18 @@ class MainViewModel{
             .filterNil()
             
         let scheduleTotalData = scheduleData
-            .flatMap{
-                self.model.totalScheduleStationLoad($0, isFirst: true, isNow: true)
+            .withUnretained(self)
+            .flatMap{viewModel, data in
+                viewModel.model.totalScheduleStationLoad(data, isFirst: true, isNow: true)
             }
         
         scheduleTotalData
-            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){ scheduleData, index -> [MainTableViewCellData] in
+            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){[weak self] scheduleData, index -> [MainTableViewCellData] in
                 guard let data = scheduleData.first else {return []}
-                let nowData = self.groupData.value[index.row]
+                guard let nowData = self?.groupData.value[index.row] else {return []}
                 let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "⏱️\(data.useArrTime)", subPrevious: "\(data.useTime)", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, totalStationId: nowData.totalStationId)
                
-                var now = self.groupData.value
+                guard var now = self?.groupData.value else {return []}
                 now[index.row] = newData
                 return now
             }

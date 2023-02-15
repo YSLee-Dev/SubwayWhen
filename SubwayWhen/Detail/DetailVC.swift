@@ -17,10 +17,14 @@ class DetailVC : TableVCCustom{
 
     let detailViewModel : DetailViewModel
     
-    init(title: String, viewModel : DetailViewModel) {
-        self.detailViewModel = viewModel
+    init(title: String) {
+        self.detailViewModel = DetailViewModel()
         super.init(title: title, titleViewHeight: 30)
-        self.bind(viewModel)
+        self.bind(self.detailViewModel)
+    }
+    
+    deinit{
+        print("DetailVC DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -54,8 +58,8 @@ extension DetailVC{
                 return cell
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
-                cell.bind(viewModel.arrivalCellModel)
                 cell.cellSet(data)
+                cell.bind(viewModel.arrivalCellModel)
                 return cell
                 
             case 2:
