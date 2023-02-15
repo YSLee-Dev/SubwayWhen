@@ -15,7 +15,7 @@ class TabbarVC : UITabBarController{
             $0.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), tag: 0)
         }
         
-        let searchVC = SearchVC().then{
+        let searchVC = SearchVC(nibName: nil, bundle: nil).then{
             $0.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)
         }
     /*
@@ -45,7 +45,6 @@ class TabbarVC : UITabBarController{
         // self.attribute()
         // self.layout()
         self.tabBar.backgroundColor = .systemBackground
-        self.searchVC.bind(SearchViewModel())
        
         self.viewControllers = [UINavigationController(rootViewController: self.mainVC), UINavigationController(rootViewController: self.searchVC)]
     }

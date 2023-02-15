@@ -13,9 +13,7 @@ import SnapKit
 import Then
 
 class ModalVC : UIViewController{
-    deinit{
-        print("DEINIT MODAL")
-    }
+    let modalViewModel : ModalViewModel
     
     let bag = DisposeBag()
     
@@ -71,6 +69,21 @@ class ModalVC : UIViewController{
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true
         $0.font = UIFont.systemFont(ofSize: ViewStyle.FontSize.smallSize)
+    }
+    
+    deinit{
+        print("DEINIT MODAL")
+    }
+    
+    init(_ viewModel : ModalViewModel){
+        self.modalViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.bind(self.modalViewModel)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
