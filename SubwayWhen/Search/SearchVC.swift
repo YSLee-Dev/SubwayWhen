@@ -12,12 +12,23 @@ import RxCocoa
 
 class SearchVC : UIViewController{
     let bag = DisposeBag()
+    let searchViewModel : SearchViewModel
     
     var searchBarVC : SearchBarVC?
     let resultVC = ResultVC()
     let defaultView = DefaultView()
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.searchViewModel = SearchViewModel()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
+        self.bind(self.searchViewModel)
         self.attribute()
         self.layout()
     }
@@ -41,7 +52,7 @@ extension SearchVC{
         }
     }
     
-    func bind(_ viewModel : SearchViewModel){
+    private func bind(_ viewModel : SearchViewModel){
         self.searchBarVC = SearchBarVC(searchResultsController: self.resultVC)
         
         self.resultVC.bind(viewModel.resultViewModel)
@@ -58,9 +69,9 @@ extension SearchVC{
 extension Reactive where Base : SearchVC {
     var showModal : Binder<ResultVCCellData>{
         return Binder(base){base, data in
-            let modal = ModalVC()
             let modalViewModel = ModalViewModel()
-            modal.bind(modalViewModel)
+            let modal = ModalVC(modalViewModel)
+            
             modalViewModel.clickCellData.accept(data)
             modal.modalPresentationStyle = .overFullScreen
             base.present(modal, animated: false)

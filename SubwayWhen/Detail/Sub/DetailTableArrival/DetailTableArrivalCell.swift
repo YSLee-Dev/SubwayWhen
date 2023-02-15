@@ -142,11 +142,6 @@ extension DetailTableArrivalCell {
             .bind(to: self.rx.dataViewSet)
             .disposed(by: self.bag)
         
-        viewModel.timer.subscribe{
-            print($0)
-        }
-        .disposed(by: self.bag)
-        
         let secondReload = viewModel.timer
             .filter{$0 % 15 == 0}
             .map{_ in Void()}
@@ -155,12 +150,12 @@ extension DetailTableArrivalCell {
             .map{
                 String(15 - ($0 % 15))
             }
-            .bind(to: self.refreshTimerLabel.rx.text)
+            .drive(self.refreshTimerLabel.rx.text)
             .disposed(by: self.bag)
         
         let reloadAction = Observable<Void>
             .merge(self.refreshBtn.rx.tap.asObservable(),
-                   secondReload
+                   secondReload.asObservable()
             )
         
         reloadAction

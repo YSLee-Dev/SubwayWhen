@@ -33,6 +33,7 @@ class DetailViewModel{
     let scheduleData = PublishRelay<[ResultSchdule]>()
     
     var bag = DisposeBag()
+    var timerBag = DisposeBag()
     
     deinit{
         print("DetailViewModel DEINIT")
@@ -75,10 +76,12 @@ class DetailViewModel{
             self.headerViewModel.exceptionLastStationBtnClick.asObservable(),
             resultViewModel.scheduleVCExceptionStationRemove.asObservable()
         )
+        
         self.exceptionLastStationRemoveBtnClick = exception
             .withLatestFrom(self.detailViewData)
             .asDriver(onErrorDriveWith: .empty())
         
+        // 재로딩 버튼 클릭 시 exception Station 제거
         self.exceptionLastStationRemoveReload
             .withLatestFrom(self.detailViewData)
             .map{
@@ -88,6 +91,20 @@ class DetailViewModel{
             }
             .bind(to: self.detailViewData)
             .disposed(by: self.bag)
+        
+        // 15초 타이머 초기화
+        self.exceptionLastStationRemoveReload
+            .withUnretained(self)
+            .subscribe(onNext:{ viewModel, _ in
+                viewModel.timerBag = DisposeBag()
+            })
+            .disposed(by: self.bag)
+        
+        // 15초 타이머 / 처음에만
+        Observable<Int>.timer(.seconds(1),period: .seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: self.arrivalCellModel.superTimer)
+            .disposed(by: self.timerBag)
+        
         
         // 기본 셀 구성
         self.detailViewData
@@ -123,8 +140,7 @@ class DetailViewModel{
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
         
-        
-        // 실시간 새로고침 버튼 클릭 시 / 15초마다 한번
+        // 실시간 새로고침 버튼 클릭 시
         let onRefresh = self.arrivalCellModel.refreshBtnClick
             .withLatestFrom(self.detailViewData)
         

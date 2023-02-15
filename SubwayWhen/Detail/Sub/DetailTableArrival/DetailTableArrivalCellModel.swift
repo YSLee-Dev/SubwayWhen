@@ -14,10 +14,11 @@ class DetailTableArrivalCellModel {
     // INPUT
     let realTimeData = BehaviorRelay<[RealtimeStationArrival]>(value: [])
     let refreshBtnClick = PublishRelay<Void>()
+    let superTimer = PublishSubject<Int>()
     
     // OUTPUT
     let cellData : Driver<[RealtimeStationArrival]>
-    let timer : Observable<Int>
+    let timer : Driver<Int>
     
     deinit{
         print("DetailTableArrivalCellModel DEINIT")
@@ -27,6 +28,8 @@ class DetailTableArrivalCellModel {
         self.cellData = self.realTimeData
             .asDriver(onErrorDriveWith: .empty())
         
-        self.timer = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+        self.timer = self.superTimer
+            .asDriver(onErrorDriveWith: .empty())
+        
     }
 }
