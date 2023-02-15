@@ -39,12 +39,16 @@ class DetailTableScheduleCell : UITableViewCell{
     
     var cellData : DetailTableViewCellData?
     
-    let bag = DisposeBag()
+    var bag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.attribute()
         self.layout()
+    }
+    
+    override func prepareForReuse() {
+        self.bag = DisposeBag()
     }
     
     required init?(coder: NSCoder) {
@@ -86,10 +90,10 @@ extension DetailTableScheduleCell{
     
     func bind(_ viewModel : DetailTableScheduleCellModel){
         viewModel.cellData
-            .drive(self.collectionView.rx.items){cv, row, data in
+            .drive(self.collectionView.rx.items){[weak self] cv, row, data in
                 guard let cell = cv.dequeueReusableCell(withReuseIdentifier: "DetailTableScheduleCellSubCell", for: IndexPath(row: row, section: 0)) as? DetailTableScheduleCellSubCell else {return UICollectionViewCell()}
                 
-                guard let cellData = self.cellData else {return UICollectionViewCell()}
+                guard let cellData = self?.cellData else {return UICollectionViewCell()}
                 
                 cell.cellSet(data, color: UIColor(named: cellData.lineNumber) ?? .systemBackground)
                 

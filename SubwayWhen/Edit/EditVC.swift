@@ -15,6 +15,7 @@ import RxDataSources
 
 class EditVC : TableVCCustom{
     let bag = DisposeBag()
+    let editViewModel = EditViewModel()
     
     let backGestureView = UIView().then{
         $0.backgroundColor = .clear
@@ -24,8 +25,9 @@ class EditVC : TableVCCustom{
         super.viewDidLoad()
         self.attribute()
         self.layout()
-        self.bind(EditViewModel())
+        self.bind(self.editViewModel)
     }
+    
 }
 
 extension EditVC{

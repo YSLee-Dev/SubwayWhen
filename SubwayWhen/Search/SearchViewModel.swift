@@ -49,8 +49,9 @@ class SearchViewModel {
         
         // 추천 역 가져오기 (API 통신)
         Observable.just(["강남", "광화문", "명동", "광화문", "판교", "수원"])
-            .flatMap{_ in
-                self.model.defaultViewListRequest()
+            .withUnretained(self)
+            .flatMap{viewModel, _ in
+                viewModel.model.defaultViewListRequest()
             }
             .bind(to: self.defaultViewModel.defaultListData)
             .disposed(by: self.bag)
@@ -61,8 +62,9 @@ class SearchViewModel {
                 searchQuery,
                 self.defaultViewModel.defaultListClick.asObservable()
             )
-            .flatMap{
-                self.model.stationSearch(station: $0)
+            .withUnretained(self)
+            .flatMap{ viewModel, data in
+                viewModel.model.stationSearch(station: data)
             }
             .map{ data -> SearchStaion? in
                 guard case .success(let value) = data else{

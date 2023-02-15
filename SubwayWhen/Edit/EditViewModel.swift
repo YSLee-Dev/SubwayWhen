@@ -23,7 +23,7 @@ class EditViewModel{
     let cellData : Driver<[EditViewCellSection]>
     
     // VALUE
-    let nowData = BehaviorRelay<[EditViewCellSection]>(value: [])
+    let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     
@@ -47,53 +47,60 @@ class EditViewModel{
         
         // 셀 move
         self.moveCell
+            .withUnretained(self)
             .map{
-                let old = $0.sourceIndex
-                let now = $0.destinationIndex
-                
-                let oldData = self.nowData.value[old[0]].items[old[1]]
-                var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "", useLine: "")
-                
-                // 가장 최상/하단으로 변경 시
-                if now[1] != self.nowData.value[now[0]].items.count{
-                    nowData = self.nowData.value[now[0]].items[now[1]]
-                }
-                
-                var oldIndex = 0
-                var nowIndex = 0
-                
-                for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == oldData.id{
-                        oldIndex = x.offset
+                do {
+                    let nowVaue = try $0.nowData.value()
+                    
+                    let old = $1.sourceIndex
+                    let now = $1.destinationIndex
+                    
+                    let oldData = nowVaue[old[0]].items[old[1]]
+                    var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "", useLine: "")
+                    
+                    // 가장 최상/하단으로 변경 시
+                    if now[1] != nowVaue[now[0]].items.count{
+                        nowData = nowVaue[now[0]].items[now[1]]
                     }
                     
-                    if x.element.id == nowData.id{
-                        nowIndex = x.offset
+                    var oldIndex = 0
+                    var nowIndex = 0
+                    
+                    for x in FixInfo.saveStation.enumerated(){
+                        if x.element.id == oldData.id{
+                            oldIndex = x.offset
+                        }
+                        
+                        if x.element.id == nowData.id{
+                            nowIndex = x.offset
+                        }
                     }
+                    
+                    // 세션 이동 감지
+                    if old[0] != now[0]{
+                        FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
+                    }
+                    
+                    if now[1] == nowVaue[now[0]].items.count{
+                        let fixData = FixInfo.saveStation[oldIndex]
+                        FixInfo.saveStation.remove(at: oldIndex)
+                        FixInfo.saveStation.append(fixData)
+                    }else if now[1] == 0{
+                        let fixData = FixInfo.saveStation[oldIndex]
+                        FixInfo.saveStation.remove(at: oldIndex)
+                        FixInfo.saveStation.insert(fixData, at: 0)
+                    }else if old[0] == now[0]{
+                        FixInfo.saveStation.swapAt(oldIndex, nowIndex)
+                    }else{
+                        let fixData = FixInfo.saveStation[oldIndex]
+                        FixInfo.saveStation.remove(at: oldIndex)
+                        FixInfo.saveStation.insert(fixData, at: nowIndex)
+                    }
+                    
+                    return Void()
+                }catch{
+                    return Void()
                 }
-                
-                // 세션 이동 감지
-                if old[0] != now[0]{
-                    FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
-                }
-                
-                if now[1] == self.nowData.value[now[0]].items.count{
-                    let fixData = FixInfo.saveStation[oldIndex]
-                    FixInfo.saveStation.remove(at: oldIndex)
-                    FixInfo.saveStation.append(fixData)
-                }else if now[1] == 0{
-                    let fixData = FixInfo.saveStation[oldIndex]
-                    FixInfo.saveStation.remove(at: oldIndex)
-                    FixInfo.saveStation.insert(fixData, at: 0)
-                }else if old[0] == now[0]{
-                    FixInfo.saveStation.swapAt(oldIndex, nowIndex)
-                }else{
-                    let fixData = FixInfo.saveStation[oldIndex]
-                    FixInfo.saveStation.remove(at: oldIndex)
-                    FixInfo.saveStation.insert(fixData, at: nowIndex)
-                }
-                
-                return Void()
             }
             .bind(to: self.refreshOn)
             .disposed(by: self.bag)
@@ -102,8 +109,9 @@ class EditViewModel{
         
         // 셀 데이터 불러오기
         self.refreshOn
-            .flatMap{
-                self.editModel.fixDataToGroupData()
+            .withUnretained(self)
+            .flatMap{viewmodel, _ in
+                viewmodel.editModel.fixDataToGroupData()
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
