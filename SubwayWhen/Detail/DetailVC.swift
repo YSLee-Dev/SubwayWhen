@@ -60,6 +60,7 @@ extension DetailVC{
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableArrivalCell", for: index) as? DetailTableArrivalCell else {return UITableViewCell()}
                 cell.cellSet(data)
                 cell.bind(viewModel.arrivalCellModel)
+                cell.cellReset()
                 return cell
                 
             case 2:

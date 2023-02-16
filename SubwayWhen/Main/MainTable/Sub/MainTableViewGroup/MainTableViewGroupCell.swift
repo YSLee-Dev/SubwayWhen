@@ -49,9 +49,9 @@ extension MainTableViewGroupCell{
     private func layout(){
         self.contentView.addSubview(self.groupView)
         self.groupView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(40)
-            $0.top.bottom.equalToSuperview().inset(7.5)
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
         }
         
         [self.groupOne, self.groupTwo]

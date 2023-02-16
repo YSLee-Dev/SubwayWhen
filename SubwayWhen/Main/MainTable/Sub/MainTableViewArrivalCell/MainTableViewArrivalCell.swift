@@ -100,8 +100,8 @@ extension MainTableViewCell{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(7.5)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
         }
         
         [self.line, self.nowStackView, self.arrivalTime, self.changeBtn, self.border].forEach{

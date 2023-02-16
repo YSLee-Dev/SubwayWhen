@@ -46,6 +46,9 @@ class TableVCCustom : UIViewController{
 
 extension TableVCCustom{
     private func attribute(title : String){
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
         self.view.backgroundColor = .systemBackground
         
         self.tableView.tableHeaderView = self.titleView

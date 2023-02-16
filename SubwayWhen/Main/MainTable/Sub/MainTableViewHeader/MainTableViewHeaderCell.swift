@@ -56,9 +56,9 @@ extension MainTableViewHeaderCell {
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(7.5)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.equalToSuperview().offset(ViewStyle.padding.mainStyleViewLR)
+            $0.trailing.equalToSuperview().offset(-ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(190)
         }
         
@@ -116,7 +116,7 @@ extension MainTableViewHeaderCell {
                 var result = ""
                 
                 for _ in 1...count{
-                    result.append("😵")
+                    result.append("\(FixInfo.saveSetting.mainCongestionLabel)")
                 }
                 if count != 10{
                     for _ in result.count...9{

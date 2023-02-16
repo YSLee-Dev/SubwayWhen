@@ -11,13 +11,19 @@ import Then
 import SnapKit
 
 class TabbarVC : UITabBarController{
+    let loadModel = LoadModel()
+    
     let mainVC = MainVC().then{
-            $0.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), tag: 0)
-        }
-        
-        let searchVC = SearchVC(nibName: nil, bundle: nil).then{
-            $0.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)
-        }
+        $0.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), tag: 0)
+    }
+    
+    let searchVC = SearchVC(nibName: nil, bundle: nil).then{
+        $0.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+    }
+    
+    let settingVC = SettingVC(title: "설정", titleViewHeight: 30).then{
+        $0.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 2)
+    }
     /*
     let mainBG = UIStackView().then{
         $0.backgroundColor = .systemBackground
@@ -42,20 +48,33 @@ class TabbarVC : UITabBarController{
     }
      */
     override func viewDidLoad() {
-        // self.attribute()
+        self.attribute()
         // self.layout()
         self.tabBar.backgroundColor = .systemBackground
        
-        self.viewControllers = [UINavigationController(rootViewController: self.mainVC), UINavigationController(rootViewController: self.searchVC)]
+        self.viewControllers = [UINavigationController(rootViewController: self.mainVC),
+                                UINavigationController(rootViewController: self.searchVC),
+                                UINavigationController(rootViewController: self.settingVC)
+        ]
     }
 }
 
-/*
+
 extension TabbarVC{
     private func attribute(){
-        self.tabBar.isHidden = true
+        let result = self.loadModel.saveSettingLoad()
+        
+        switch result{
+        case .success():
+            print("setting load success")
+        case .failure(let error):
+            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupTime: 0, detailAutoReload: true)
+            print("setting not load", error)
+        }
+        
+        // self.tabBar.isHidden = true
     }
-    
+    /*
     private func layout(){
         self.view.addSubview(self.mainBG)
         self.mainBG.addArrangedSubview(self.homeBtn)
@@ -66,5 +85,6 @@ extension TabbarVC{
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+     */
 }
-*/
+

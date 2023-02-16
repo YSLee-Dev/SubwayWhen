@@ -26,6 +26,15 @@
 		349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */; };
 		349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F15D6299B6FD100007420 /* DetailResultScheduleTopViewModel.swift */; };
 		349F1A58299A1CFA005E07CA /* DetailResultScheduleTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F1A57299A1CFA005E07CA /* DetailResultScheduleTopView.swift */; };
+		349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF286299DBC95007A98F4 /* SettingVC.swift */; };
+		349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF289299DEDE1007A98F4 /* SettingViewModel.swift */; };
+		349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF28B299DEE00007A98F4 /* SaveSetting.swift */; };
+		349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF28D299DFD2B007A98F4 /* SettingTableViewCell.swift */; };
+		349FF290299E04EA007A98F4 /* SettingTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF28F299E04EA007A98F4 /* SettingTableViewCellData.swift */; };
+		349FF292299E0557007A98F4 /* SettingTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF291299E0557007A98F4 /* SettingTableViewCellType.swift */; };
+		349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF293299E089E007A98F4 /* SettingTableViewCellGroupType.swift */; };
+		349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF295299E08C6007A98F4 /* SettingTableViewCellSection.swift */; };
+		349FF29A299E2C5B007A98F4 /* SettingTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */; };
 		34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */; };
 		34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A86296EA71A0044CD36 /* ModalModel.swift */; };
 		34A0666D2993813000B414F3 /* MainTableViewArrivalCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */; };
@@ -124,6 +133,15 @@
 		349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellSubCell.swift; sourceTree = "<group>"; };
 		349F15D6299B6FD100007420 /* DetailResultScheduleTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleTopViewModel.swift; sourceTree = "<group>"; };
 		349F1A57299A1CFA005E07CA /* DetailResultScheduleTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleTopView.swift; sourceTree = "<group>"; };
+		349FF286299DBC95007A98F4 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		349FF289299DEDE1007A98F4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		349FF28B299DEE00007A98F4 /* SaveSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSetting.swift; sourceTree = "<group>"; };
+		349FF28D299DFD2B007A98F4 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		349FF28F299E04EA007A98F4 /* SettingTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellData.swift; sourceTree = "<group>"; };
+		349FF291299E0557007A98F4 /* SettingTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellType.swift; sourceTree = "<group>"; };
+		349FF293299E089E007A98F4 /* SettingTableViewCellGroupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellGroupType.swift; sourceTree = "<group>"; };
+		349FF295299E08C6007A98F4 /* SettingTableViewCellSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellSection.swift; sourceTree = "<group>"; };
+		349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellModel.swift; sourceTree = "<group>"; };
 		34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStationSearch.swift; sourceTree = "<group>"; };
 		34A05A86296EA71A0044CD36 /* ModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModel.swift; sourceTree = "<group>"; };
 		34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewArrivalCellModel.swift; sourceTree = "<group>"; };
@@ -319,6 +337,37 @@
 			path = Sub;
 			sourceTree = "<group>";
 		};
+		349FF288299DBCA0007A98F4 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				349FF286299DBC95007A98F4 /* SettingVC.swift */,
+				349FF289299DEDE1007A98F4 /* SettingViewModel.swift */,
+				349FF298299E0C0C007A98F4 /* Sub */,
+				349FF297299E0C03007A98F4 /* Entity */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		349FF297299E0C03007A98F4 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				349FF28F299E04EA007A98F4 /* SettingTableViewCellData.swift */,
+				349FF295299E08C6007A98F4 /* SettingTableViewCellSection.swift */,
+				349FF293299E089E007A98F4 /* SettingTableViewCellGroupType.swift */,
+				349FF291299E0557007A98F4 /* SettingTableViewCellType.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		349FF298299E0C0C007A98F4 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				349FF28D299DFD2B007A98F4 /* SettingTableViewCell.swift */,
+				349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
 		34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,6 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				34C6DB532936274400C4ED80 /* SubwayWhen */,
+				349FF288299DBCA0007A98F4 /* Setting */,
 				34C6DB522936274400C4ED80 /* Products */,
 				A66F780E21740540C37C8525 /* Pods */,
 				27B8186A1B2F499F01B3B2F3 /* Frameworks */,
@@ -447,7 +497,7 @@
 				34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */,
 				34A36BDC294C580800FB0DDB /* TabBar */,
 				34F5F1172966CCF50010A21D /* DataLoad */,
-				34C6DB87293627AE00C4ED80 /* SaveStation */,
+				34C6DB87293627AE00C4ED80 /* Save */,
 				34F5F0FB2962E66A0010A21D /* Custom */,
 				34C6DB8A293627AF00C4ED80 /* Main */,
 				34F5F0E92962D8BC0010A21D /* Detail */,
@@ -538,14 +588,15 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
-		34C6DB87293627AE00C4ED80 /* SaveStation */ = {
+		34C6DB87293627AE00C4ED80 /* Save */ = {
 			isa = PBXGroup;
 			children = (
 				34C6DB88293627AE00C4ED80 /* FixInfo.swift */,
 				34C6DB89293627AE00C4ED80 /* SaveStation.swift */,
+				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
 				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
 			);
-			path = SaveStation;
+			path = Save;
 			sourceTree = "<group>";
 		};
 		34C6DB8A293627AF00C4ED80 /* Main */ = {
@@ -825,6 +876,7 @@
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */,
 				34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */,
+				349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */,
 				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
@@ -834,7 +886,9 @@
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
 				34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */,
 				34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */,
+				349FF29A299E2C5B007A98F4 /* SettingTableViewCellModel.swift in Sources */,
 				349CEFB02991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift in Sources */,
+				349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */,
 				34B9FD182974D3B300E349A1 /* ScheduleStationArrival.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
@@ -844,6 +898,7 @@
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
 				341200EF293753DC00C77050 /* MainTableView.swift in Sources */,
 				34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */,
+				349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */,
 				34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */,
 				34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */,
 				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
@@ -854,6 +909,7 @@
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
 				34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */,
 				34F5F0E82962D8B10010A21D /* DetailViewModel.swift in Sources */,
+				349FF290299E04EA007A98F4 /* SettingTableViewCellData.swift in Sources */,
 				34F5F101296429E00010A21D /* DetailTableViewSectionData.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34A36BE329502A4000FB0DDB /* EditViewCellData.swift in Sources */,
@@ -863,13 +919,16 @@
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
 				34F5F10C296561F50010A21D /* DetailModel.swift in Sources */,
+				349FF292299E0557007A98F4 /* SettingTableViewCellType.swift in Sources */,
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
 				349E32B62978C88A00147DEE /* LiveStationModel.swift in Sources */,
 				34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */,
 				349E32C02978C8D000147DEE /* LiveStationModel.swift in Sources */,
+				349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */,
 				34B9FD152974D3B300E349A1 /* ScheduleSearch.swift in Sources */,
 				34C1D83A29530B5A00FB6624 /* EditModel.swift in Sources */,
 				34F5F1192966CDD60010A21D /* DetailTableArrivalCellModel.swift in Sources */,
+				349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */,
 				34C6DB9E293627AF00C4ED80 /* MainVC.swift in Sources */,
 				34A36BDB294C580300FB0DDB /* TabBarCustomButton.swift in Sources */,
 				34CA5599293897160006F67B /* GroupCustomButton.swift in Sources */,
@@ -891,6 +950,7 @@
 				34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */,
 				34F5F10429642AE00010A21D /* DetailTableHeaderView.swift in Sources */,
 				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
+				349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */,
 				34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */,
 				34F5F0FF296428FE0010A21D /* DetailTableViewCellData.swift in Sources */,
 				34B9FD142974D3B300E349A1 /* ScheduleType.swift in Sources */,
