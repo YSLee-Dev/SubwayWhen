@@ -294,6 +294,17 @@ class LoadModel {
         }
     }
     
+    // 저장된 설정 불러오기
+    func saveSettingLoad() -> Result<Void, URLError>{
+        guard let data = UserDefaults.standard.data(forKey: "saveSetting") else {return .failure(.init(.dataNotAllowed))}
+        guard let setting = try? PropertyListDecoder().decode(SaveSetting.self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
+        
+        FixInfo.saveSetting = setting
+        print(setting)
+        
+        return .success(Void())
+    }
+    
     private func timeFormatter(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HHmmss"

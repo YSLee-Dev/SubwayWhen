@@ -129,13 +129,16 @@ extension DetailTableArrivalLiveView{
         self.beforeTitle = data.backStationName
     }
     
-    
+    func liveViewReset(){
+        self.animateCGSet(false)
+        self.beforeStationTitle.alpha = 0
+    }
     
     func trainIconSet(code : String, now : String){
         guard let intCode = Int(code) else {return}
         
         UIView.animate(withDuration: 0.25, delay: 0, options: [.allowUserInteraction]){
-            [self.moreStationTitle, self.beforeStationTitle, self.trainIcon]
+            [self.moreStationTitle, self.trainIcon]
                 .forEach{
                     $0.alpha = 0
                 }

@@ -1,0 +1,72 @@
+//
+//  SettingVC.swift
+//  SubwayWhen
+//
+//  Created by 이윤수 on 2023/02/16.
+//
+
+import UIKit
+
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+class SettingVC : TableVCCustom{
+    let bag = DisposeBag()
+    
+    override init(title: String, titleViewHeight: CGFloat) {
+        super.init(title: title, titleViewHeight: titleViewHeight)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.attibute()
+        self.bind(SettingViewModel())
+    }
+}
+
+extension SettingVC{
+    private func attibute(){
+        self.topView.backBtn.isHidden = true
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
+        self.topView.subTitleLabel.snp.remakeConstraints{
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        self.titleView.mainTitleLabel.numberOfLines = 1
+        
+        self.tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
+        self.tableView.rowHeight = 70
+    }
+    
+    private func bind(_ viewModel : SettingViewModel){
+        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingTableViewCellSection>(animationConfiguration: .init(reloadAnimation: .top)){_, tv, index, data in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: index) as? SettingTableViewCell else {return UITableViewCell()}
+            cell.titleSet(title: data.settingTitle)
+            cell.cellStyleSet(data.inputType, defaultValue: data.defaultData)
+            cell.bind(viewModel.settingTableViewCellModel)
+            
+            // 셀에 따른 추가 설정
+            if data.settingTitle == "혼잡도 이모지"{
+                cell.tfMaxText(1)
+            }
+            
+            print(data)
+            
+            return cell
+        }
+        
+        dataSource.titleForHeaderInSection = { data, row in
+            data[row].sectionName
+        }
+        
+        viewModel.cellData
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.bag)
+    }
+}

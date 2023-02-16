@@ -14,4 +14,11 @@ struct FixInfo : Codable{
             UserDefaults.standard.setValue(data, forKey: "saveStation")
         }
     }
+    
+    static var saveSetting : SaveSetting = SaveSetting(mainCongestionLabel: "", mainGroupTime: 0, detailAutoReload: true) {
+        didSet{
+            let data = try? PropertyListEncoder().encode(self.saveSetting)
+            UserDefaults.standard.set(data, forKey: "saveSetting")
+        }
+    }
 }

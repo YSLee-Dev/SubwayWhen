@@ -22,7 +22,7 @@ struct MainTableViewModel{
     
     // INPUT
     let cellClick = PublishRelay<MainTableViewCellData>()
-    let resultData = PublishRelay<[MainTableViewSection]>()
+    let resultData = BehaviorRelay<[MainTableViewSection]>(value: [])
     let refreshOn = PublishRelay<Void>()
     
     init(){

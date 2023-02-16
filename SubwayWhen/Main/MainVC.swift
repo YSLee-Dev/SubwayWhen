@@ -19,7 +19,7 @@ class MainVC : TableVCCustom{
     let mainViewModel = MainViewModel()
     
     init(){
-        super.init(title: "홈", titleViewHeight: 61)
+        super.init(title: "홈", titleViewHeight: 62)
         self.tableView = self.mainTableView
         self.tableView.delegate = self
     }
@@ -30,8 +30,8 @@ class MainVC : TableVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.attibute()
         self.bind(self.mainViewModel)
+        self.attibute()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,16 +43,13 @@ class MainVC : TableVCCustom{
  
 extension MainVC{
     private func attibute(){
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         self.topView.backBtn.isHidden = true
         self.topView.subTitleLabel.snp.remakeConstraints{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
         
-        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
         
         self.titleView.mainTitleLabel.snp.updateConstraints{
             $0.centerY.equalToSuperview().offset(-5)

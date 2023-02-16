@@ -46,7 +46,7 @@ extension MainTableViewFooterView{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(7.5)
+            $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
             $0.height.equalTo(60)
             $0.leading.trailing.equalToSuperview().inset(20)
         }

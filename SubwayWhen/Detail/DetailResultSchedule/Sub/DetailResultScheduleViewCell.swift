@@ -44,9 +44,9 @@ extension DetailResultScheduleViewCell{
     private func layout(){
         self.contentView.addSubview(self.mainCell)
         self.mainCell.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(7.5)
-            $0.bottom.equalToSuperview().inset(7.5)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().offset(ViewStyle.padding.mainStyleViewTB)
+            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
         }
         
         self.mainCell.addSubview(self.minuteLabel)

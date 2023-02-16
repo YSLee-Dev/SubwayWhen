@@ -35,6 +35,7 @@ class ModalViewModel {
         self.modalData = self.clickCellData
             .asDriver(onErrorDriveWith: .empty())
         
+        // 전체 데이터를 합친 후, SaveStation 타입으로 반환
         let saveStationInfo = Observable
             .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> SaveStation in
                 
@@ -73,6 +74,7 @@ class ModalViewModel {
                 $0.response.body.items.item
             }
         
+        // FixInfo에 저장
         saveStationInfo
               .withLatestFrom(totalStationCodeData){info, totalData in
                   var saveInfo = info

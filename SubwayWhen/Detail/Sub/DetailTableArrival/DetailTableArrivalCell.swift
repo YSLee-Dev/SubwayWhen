@@ -81,16 +81,16 @@ extension DetailTableArrivalCell {
     private func layout(){
         self.contentView.addSubview(self.liveBG)
         self.liveBG.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(7.5)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
             $0.height.equalTo(73)
         }
         
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.equalTo(self.liveBG.snp.bottom).offset(7.5)
-            $0.bottom.equalToSuperview().inset(7.5)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(self.liveBG.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
+            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
         }
         
         [self.mainTitle, self.firstSubway, self.secondSubway, self.infoLabel, self.refreshBtn]
@@ -135,6 +135,12 @@ extension DetailTableArrivalCell {
         self.refreshTimerLabel.snp.makeConstraints{
             $0.center.equalTo(self.refreshBtn)
         }
+    }
+    
+    func cellReset(){
+        self.refreshTimerLabel.text = ""
+        self.liveBG.liveViewReset()
+        print("123123123")
     }
     
     func bind(_ viewModel : DetailTableArrivalCellModel){
