@@ -22,10 +22,18 @@ class SettingTableViewCell : UITableViewCell{
     }
     
     lazy var textField = UITextField().then{
+        $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
         $0.textAlignment = .right
-        $0.backgroundColor = UIColor(named: "MainColor")
+        $0.placeholder = "한 글자만 가능해요."
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
+    
+    lazy var tfToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 50)).then{
+        $0.backgroundColor = .systemBackground
+        $0.sizeToFit()
+    }
+    lazy var doneBarBtn = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
     
     lazy var onoffSwitch = UISwitch()
     
@@ -51,8 +59,8 @@ extension SettingTableViewCell{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(ViewStyle.padding.mainStyleViewTB)
-            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.top.equalToSuperview().offset(2.5)
+            $0.bottom.equalToSuperview().inset(2.5)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
         }
         
@@ -66,7 +74,7 @@ extension SettingTableViewCell{
     
     func bind(_ cellModel : SettingTableViewCellModel){
         self.textField.rx.controlEvent(.editingDidEnd)
-            .withLatestFrom(self.textField.rx.text)
+        .withLatestFrom(self.textField.rx.text)
             .map{
                 if $0?.isEmpty ?? true {
                     return "😵"
@@ -79,6 +87,10 @@ extension SettingTableViewCell{
         
         self.onoffSwitch.rx.isOn
             .bind(to: cellModel.switchValue)
+            .disposed(by: self.bag)
+        
+        self.doneBarBtn.rx.tap
+            .bind(to: cellModel.keyboardClose)
             .disposed(by: self.bag)
     }
     
@@ -116,8 +128,10 @@ extension SettingTableViewCell{
             $0.centerY.equalToSuperview()
         }
         
-        self.textField.placeholder = "한 글자만 가능해요."
         self.textField.text = defaultValue
+        
+        self.tfToolBar.setItems([self.doneBarBtn], animated: true)
+        self.textField.inputAccessoryView = self.tfToolBar
     }
     
     private func switchSet(defaultValue : String){

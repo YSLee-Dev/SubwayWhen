@@ -46,6 +46,7 @@ class DetailViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         self.scheduleData
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: self.scheduleCellModel.scheduleData)
             .disposed(by: self.bag)
         
@@ -100,11 +101,12 @@ class DetailViewModel{
             })
             .disposed(by: self.bag)
         
-        // 15초 타이머 / 처음에만
-        Observable<Int>.timer(.seconds(1),period: .seconds(1), scheduler: MainScheduler.instance)
-            .bind(to: self.arrivalCellModel.superTimer)
-            .disposed(by: self.timerBag)
-        
+        // 15초 타이머 / 처음에만 / 설정 값이 켜져있을때만
+        if FixInfo.saveSetting.detailAutoReload{
+            Observable<Int>.timer(.seconds(1),period: .seconds(1), scheduler: MainScheduler.instance)
+                .bind(to: self.arrivalCellModel.superTimer)
+                .disposed(by: self.timerBag)
+        }
         
         // 기본 셀 구성
         self.detailViewData

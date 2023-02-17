@@ -138,6 +138,29 @@ class MainViewModel{
             )
             .share()
         
+        dataReload
+            .map{ _ -> SaveStationGroup? in
+                let hour = Calendar.current.component(.hour, from: Date())
+                if FixInfo.saveSetting.mainGroupOneTime == 0 && FixInfo.saveSetting.mainGroupTwoTime == 0{
+                    return nil
+                }else if FixInfo.saveSetting.mainGroupOneTime <= hour{
+                    let one = FixInfo.saveSetting.mainGroupOneTime - hour
+                    let two = FixInfo.saveSetting.mainGroupTwoTime - hour
+                    
+                    if one > two{
+                        return .one
+                    }else{
+                        return .two
+                    }
+                }else{
+                    return nil
+                }
+            }
+            .filterNil()
+            .delay(.milliseconds(250), scheduler: MainScheduler.instance)
+            .bind(to: self.mainTableViewModel.mainTableViewGroupModel.groupSeleted)
+            .disposed(by: self.bag)
+        
         // 데이터 리프레쉬 할 때 데이터 삭제(세션 값이 같으면 오류 발생)
         dataReload
             .withUnretained(self)
