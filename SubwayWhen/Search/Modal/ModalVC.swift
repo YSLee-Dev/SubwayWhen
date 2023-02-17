@@ -12,20 +12,9 @@ import RxCocoa
 import SnapKit
 import Then
 
-class ModalVC : UIViewController{
+class ModalVC : ModalVCCustom{
     let modalViewModel : ModalViewModel
-    
     let bag = DisposeBag()
-    
-    let mainBG = UIView().then{
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 30
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
-    
-    let grayBG = UIButton().then{
-        $0.backgroundColor = .clear
-    }
     
     let titleLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
@@ -68,18 +57,17 @@ class ModalVC : UIViewController{
         $0.layer.borderColor = UIColor.systemGray.cgColor
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true
-        $0.font = UIFont.systemFont(ofSize: ViewStyle.FontSize.smallSize)
+        $0.font = UIFont.systemFont(ofSize: ViewStyle.FontSize.superSmallSize)
     }
     
     deinit{
         print("DEINIT MODAL")
     }
     
-    init(_ viewModel : ModalViewModel){
+    init(_ viewModel : ModalViewModel, modalHeight : CGFloat){
         self.modalViewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(modalHeight: modalHeight)
         self.bind(self.modalViewModel)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -87,89 +75,43 @@ class ModalVC : UIViewController{
     }
     
     override func viewDidLoad() {
-        self.layout()
+        super.viewDidLoad()
         self.attibute()
+        self.layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.viewAnimation()
+        super.viewWillAppear(true)
     }
 }
 
 extension ModalVC{
-    @objc
-    private func keyboardWillShow(_ sender: Notification) {
-        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height - 15
-        
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(keyboardHeight)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(_ sender: Notification) {
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(0)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    private func viewAnimation(){
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){[weak self] in
-            self?.mainBG.transform = .identity
-            self?.grayBG.backgroundColor = .gray.withAlphaComponent(0.5)
-        }
-        
-    }
-    
     private func attibute(){
-        self.view.backgroundColor = .clear
-        self.mainBG.transform = CGAffineTransform(translationX: 0, y: 300)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func layout(){
-        self.view.addSubview(self.grayBG)
-        self.grayBG.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-        }
-        
-        self.grayBG.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(300)
-            $0.bottom.equalToSuperview().offset(15)
-        }
-        
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{
                 self.mainBG.addSubview($0)
             }
         
         self.upBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.bottom.equalTo(self.grayBG).inset(35)
             $0.height.equalTo(50)
             $0.trailing.equalTo(self.view.snp.centerX).offset(-5)
         }
         self.downBtn.snp.makeConstraints{
-            $0.trailing.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(50)
             $0.bottom.equalTo(self.grayBG).inset(35)
             $0.leading.equalTo(self.view.snp.centerX).offset(5)
         }
         self.line.snp.makeConstraints{
             $0.leading.equalTo(self.upBtn)
-            $0.top.equalToSuperview().inset(35)
+            $0.top.equalToSuperview().inset(30)
             $0.size.equalTo(70)
         }
         self.titleLabel.snp.makeConstraints{
@@ -177,26 +119,26 @@ extension ModalVC{
             $0.centerY.equalTo(self.line)
         }
         self.groupBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
-            $0.bottom.equalTo(self.downBtn.snp.top).inset(-15)
+            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.bottom.equalTo(self.downBtn.snp.top).inset(-10)
             $0.height.equalTo(50)
             $0.trailing.equalTo(self.view.snp.centerX).offset(-5)
         }
         self.exceptionLastStationTF.snp.makeConstraints{
-            $0.trailing.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(self.downBtn.snp.top).inset(-15)
+            $0.bottom.equalTo(self.downBtn.snp.top).inset(-10)
             $0.leading.equalTo(self.view.snp.centerX).offset(5)
         }
         self.notServiceBtn.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(50)
             $0.bottom.equalTo(self.grayBG).inset(35)
         }
         
     }
     
-    func bind(_ viewModel : ModalViewModel){
+    private func bind(_ viewModel : ModalViewModel){
         // VIEW -> VIEWMODEL
         self.upBtn.rx.tap
             .map{
@@ -212,11 +154,7 @@ extension ModalVC{
             .bind(to: viewModel.upDownBtnClick)
             .disposed(by: self.bag)
         
-        Observable<Void>
-            .merge(
-                self.grayBG.rx.tap.asObservable(),
-                self.notServiceBtn.rx.tap.asObservable()
-            )
+        self.notServiceBtn.rx.tap.asObservable()
             .bind(to: viewModel.grayBgClick)
             .disposed(by: self.bag)
         
@@ -249,8 +187,34 @@ extension ModalVC{
             .disposed(by: self.bag)
         
         viewModel.modalClose
-            .drive(self.rx.dismissView)
+            .drive(self.rx.modalClose)
             .disposed(by: self.bag)
+    }
+    
+    
+    @objc
+    private func keyboardWillShow(_ sender: Notification) {
+        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height - 15
+        
+        self.grayBG.snp.updateConstraints{
+            $0.bottom.equalToSuperview().inset(keyboardHeight)
+        }
+        UIView.animate(withDuration: 0.25){[weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(_ sender: Notification) {
+        self.grayBG.snp.updateConstraints{
+            $0.bottom.equalToSuperview().inset(0)
+        }
+        UIView.animate(withDuration: 0.25){[weak self] in
+            self?.view.layoutIfNeeded()
+        }
     }
     
 }
@@ -281,21 +245,15 @@ extension Reactive where Base : ModalVC{
         }
     }
     
-    var dismissView : Binder<Void>{
-        return Binder(base){base, _ in
-            UIView.animate(withDuration: 0.25, delay: 0, animations: {
-                base.mainBG.transform = CGAffineTransform(translationX: 0, y: 300)
-                base.grayBG.backgroundColor = .clear
-            }, completion: {_ in
-                base.dismiss(animated: false)
-            })
-            
-        }
-    }
-    
     var keyboardReturnBtn : Binder<Void>{
         return Binder(base){base, _ in
             base.becomeFirstResponder()
+        }
+    }
+    
+    var modalClose : Binder<Void>{
+        return Binder(base){base, _ in
+            base.modalDismiss()
         }
     }
     

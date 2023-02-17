@@ -9,6 +9,7 @@ import Foundation
 
 struct SaveSetting : Codable{
     var mainCongestionLabel : String
-    var mainGroupTime : Int
+    var mainGroupOneTime : Int
+    var mainGroupTwoTime : Int
     var detailAutoReload : Bool
 }

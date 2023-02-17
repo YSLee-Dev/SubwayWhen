@@ -13,4 +13,12 @@ import RxCocoa
 struct MainTableViewGroupCellModel {
     // INPUT
     let groupSeleted = BehaviorRelay<SaveStationGroup>(value: .one)
+    
+    // OUTPUT
+    let groupDesign : Driver<SaveStationGroup>
+    
+    init(){
+        self.groupDesign = self.groupSeleted
+            .asDriver(onErrorDriveWith: .empty())
+    }
 }

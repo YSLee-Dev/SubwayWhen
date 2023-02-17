@@ -12,9 +12,11 @@ import RxCocoa
 import RxDataSources
 
 class SettingVC : TableVCCustom{
+    let settingVC : SettingViewModel
     let bag = DisposeBag()
     
     override init(title: String, titleViewHeight: CGFloat) {
+        self.settingVC = SettingViewModel()
         super.init(title: title, titleViewHeight: titleViewHeight)
     }
     
@@ -25,7 +27,7 @@ class SettingVC : TableVCCustom{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attibute()
-        self.bind(SettingViewModel())
+        self.bind(self.settingVC)
     }
 }
 
@@ -41,7 +43,7 @@ extension SettingVC{
         self.titleView.mainTitleLabel.numberOfLines = 1
         
         self.tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
-        self.tableView.rowHeight = 70
+        self.tableView.rowHeight = 65
     }
     
     private func bind(_ viewModel : SettingViewModel){
@@ -55,9 +57,6 @@ extension SettingVC{
             if data.settingTitle == "혼잡도 이모지"{
                 cell.tfMaxText(1)
             }
-            
-            print(data)
-            
             return cell
         }
         
@@ -65,8 +64,40 @@ extension SettingVC{
             data[row].sectionName
         }
         
+        self.tableView.rx.modelSelected(SettingTableViewCellData.self)
+            .bind(to: viewModel.cellClick)
+            .disposed(by: self.bag)
+        
         viewModel.cellData
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
+        
+        viewModel.keyboardClose
+            .drive(self.rx.keyboardClose)
+            .disposed(by: self.bag)
+        
+        viewModel.modalPresent
+            .drive(self.rx.modalPresent)
+            .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base : SettingVC{
+    var keyboardClose : Binder<Void>{
+        return Binder(base){ base, _ in
+            base.view.endEditing(true)
+        }
+    }
+    
+    var modalPresent : Binder<SettingTableViewCellData>{
+        return Binder(base){base, data in
+            base.view.endEditing(true)
+            if data.settingTitle == "특정 그룹 시간"{
+                let modal = SettingGroupModalVC(modalHeight: 370)
+                modal.modalPresentationStyle = .overFullScreen
+                
+                base.present(modal, animated: false)
+            }
+        }
     }
 }

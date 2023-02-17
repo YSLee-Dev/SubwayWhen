@@ -16,7 +16,6 @@ class MainTableViewGroupCell : UITableViewCell{
     var bag = DisposeBag()
     
     var status = true
-    var nowClick = "출근"
     
     let groupView = MainStyleUIView()
     
@@ -76,20 +75,12 @@ extension MainTableViewGroupCell{
     func bind(_ viewModel : MainTableViewGroupCellModel){
         // VIEW -> VIEWMODEL
         let oneClick = self.groupOne.rx.tap
-            .map{[weak self] _ -> SaveStationGroup in
-                self?.groupOne.seleted()
-                self?.groupTwo.unSeleted()
-                self?.btnClickSizeChange(group: false)
-                self?.nowClick = "출근"
+            .map{ _ -> SaveStationGroup in
                 return .one
             }
         
        let twoClick = self.groupTwo.rx.tap
-            .map{[weak self] _ -> SaveStationGroup in
-                self?.groupOne.unSeleted()
-                self?.groupTwo.seleted()
-                self?.btnClickSizeChange(group: true)
-                self?.nowClick = "퇴근"
+            .map{_ -> SaveStationGroup in
                 return .two
             }
         
@@ -99,9 +90,14 @@ extension MainTableViewGroupCell{
             )
             .bind(to: viewModel.groupSeleted)
             .disposed(by: self.bag)
+        
+        viewModel.groupDesign
+            .skip(1)
+            .drive(self.rx.groupDesign)
+            .disposed(by: self.bag)
     }
     
-    private func btnClickSizeChange(group : Bool){
+    func btnClickSizeChange(group : Bool){
             if group{
                 self.groupOne.snp.remakeConstraints{
                     $0.leading.equalToSuperview()
@@ -118,6 +114,22 @@ extension MainTableViewGroupCell{
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
             self.layoutIfNeeded()
+        }
+    }
+}
+
+extension Reactive where Base : MainTableViewGroupCell{
+    var groupDesign : Binder<SaveStationGroup>{
+        return Binder(base){base, group in
+            if group == .one{
+                base.groupOne.seleted()
+                base.groupTwo.unSeleted()
+                base.btnClickSizeChange(group: false)
+            }else{
+                base.groupOne.unSeleted()
+                base.groupTwo.seleted()
+                base.btnClickSizeChange(group: true)
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ extension TabbarVC{
         case .success():
             print("setting load success")
         case .failure(let error):
-            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupTime: 0, detailAutoReload: true)
+            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true)
             print("setting not load", error)
         }
         

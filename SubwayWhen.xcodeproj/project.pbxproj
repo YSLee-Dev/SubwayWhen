@@ -35,6 +35,9 @@
 		349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF293299E089E007A98F4 /* SettingTableViewCellGroupType.swift */; };
 		349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF295299E08C6007A98F4 /* SettingTableViewCellSection.swift */; };
 		349FF29A299E2C5B007A98F4 /* SettingTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */; };
+		349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */; };
+		349FF29E299F214F007A98F4 /* SettingGroupModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF29D299F214F007A98F4 /* SettingGroupModalVC.swift */; };
+		349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF2A0299F2161007A98F4 /* SettingGroupModalViewModel.swift */; };
 		34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */; };
 		34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A86296EA71A0044CD36 /* ModalModel.swift */; };
 		34A0666D2993813000B414F3 /* MainTableViewArrivalCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */; };
@@ -142,6 +145,9 @@
 		349FF293299E089E007A98F4 /* SettingTableViewCellGroupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellGroupType.swift; sourceTree = "<group>"; };
 		349FF295299E08C6007A98F4 /* SettingTableViewCellSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellSection.swift; sourceTree = "<group>"; };
 		349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCellModel.swift; sourceTree = "<group>"; };
+		349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalVCCustom.swift; sourceTree = "<group>"; };
+		349FF29D299F214F007A98F4 /* SettingGroupModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroupModalVC.swift; sourceTree = "<group>"; };
+		349FF2A0299F2161007A98F4 /* SettingGroupModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroupModalViewModel.swift; sourceTree = "<group>"; };
 		34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStationSearch.swift; sourceTree = "<group>"; };
 		34A05A86296EA71A0044CD36 /* ModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModel.swift; sourceTree = "<group>"; };
 		34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewArrivalCellModel.swift; sourceTree = "<group>"; };
@@ -342,6 +348,7 @@
 			children = (
 				349FF286299DBC95007A98F4 /* SettingVC.swift */,
 				349FF289299DEDE1007A98F4 /* SettingViewModel.swift */,
+				349FF29F299F2154007A98F4 /* SettingGroupModal */,
 				349FF298299E0C0C007A98F4 /* Sub */,
 				349FF297299E0C03007A98F4 /* Entity */,
 			);
@@ -366,6 +373,15 @@
 				349FF299299E2C5B007A98F4 /* SettingTableViewCellModel.swift */,
 			);
 			path = Sub;
+			sourceTree = "<group>";
+		};
+		349FF29F299F2154007A98F4 /* SettingGroupModal */ = {
+			isa = PBXGroup;
+			children = (
+				349FF29D299F214F007A98F4 /* SettingGroupModalVC.swift */,
+				349FF2A0299F2161007A98F4 /* SettingGroupModalViewModel.swift */,
+			);
+			path = SettingGroupModal;
 			sourceTree = "<group>";
 		};
 		34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */ = {
@@ -471,7 +487,6 @@
 			isa = PBXGroup;
 			children = (
 				34C6DB532936274400C4ED80 /* SubwayWhen */,
-				349FF288299DBCA0007A98F4 /* Setting */,
 				34C6DB522936274400C4ED80 /* Products */,
 				A66F780E21740540C37C8525 /* Pods */,
 				27B8186A1B2F499F01B3B2F3 /* Frameworks */,
@@ -502,6 +517,7 @@
 				34C6DB8A293627AF00C4ED80 /* Main */,
 				34F5F0E92962D8BC0010A21D /* Detail */,
 				34A36BE1295028AC00FB0DDB /* Edit */,
+				349FF288299DBCA0007A98F4 /* Setting */,
 				34C6DB6E293627AE00C4ED80 /* Search */,
 			);
 			path = SubwayWhen;
@@ -663,6 +679,7 @@
 		34F5F0FB2962E66A0010A21D /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */,
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
 				34CA5598293897160006F67B /* GroupCustomButton.swift */,
 				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
@@ -895,7 +912,9 @@
 				34F494CF2980D8EC001599B1 /* RequestToken.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
 				34995885296FF8B700D2276F /* LoadModel.swift in Sources */,
+				349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */,
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
+				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
 				341200EF293753DC00C77050 /* MainTableView.swift in Sources */,
 				34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */,
 				349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */,
@@ -927,6 +946,7 @@
 				349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */,
 				34B9FD152974D3B300E349A1 /* ScheduleSearch.swift in Sources */,
 				34C1D83A29530B5A00FB6624 /* EditModel.swift in Sources */,
+				349FF29E299F214F007A98F4 /* SettingGroupModalVC.swift in Sources */,
 				34F5F1192966CDD60010A21D /* DetailTableArrivalCellModel.swift in Sources */,
 				349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */,
 				34C6DB9E293627AF00C4ED80 /* MainVC.swift in Sources */,

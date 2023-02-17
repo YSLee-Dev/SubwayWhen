@@ -14,4 +14,5 @@ class SettingTableViewCellModel {
     // INPUT
     let tfValue = PublishRelay<String?>()
     let switchValue = PublishRelay<Bool>()
+    let keyboardClose = PublishRelay<Void>()
 }
