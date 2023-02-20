@@ -47,6 +47,7 @@ class SettingGroupModalVC : ModalVCCustom{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textColor = . systemRed
         $0.keyboardType = .numberPad
+        $0.textAlignment = .right
     }
     
     let groupTwoTitle = UILabel().then{
@@ -60,6 +61,7 @@ class SettingGroupModalVC : ModalVCCustom{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textColor = . systemRed
         $0.keyboardType = .numberPad
+        $0.textAlignment = .right
     }
     
     let groupOneStepper = UIStepper().then{
@@ -120,6 +122,7 @@ extension SettingGroupModalVC{
         
         self.groupOneHour.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.equalTo(self.groupOneStepper.snp.leading)
             $0.bottom.equalTo(self.groupOneTitle.snp.centerY).offset(-5)
         }
         
@@ -136,6 +139,7 @@ extension SettingGroupModalVC{
         
         self.groupTwoHour.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.equalTo(self.groupTwoStepper.snp.leading)
             $0.bottom.equalTo(self.groupTwoTitle.snp.centerY).offset(-5)
         }
         
