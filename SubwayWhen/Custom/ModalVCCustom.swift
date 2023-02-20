@@ -141,6 +141,10 @@ extension ModalVCCustom{
                 self.mainBG.snp.updateConstraints{
                     $0.height.equalTo(self.modalHeight)
                 }
+                
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
+                    self.view.layoutIfNeeded()
+                }
             }
         case .changed:
             if self.moveTranslation.y > 0 || self.moveVelocity.y > 0{
@@ -152,16 +156,20 @@ extension ModalVCCustom{
                     $0.height.equalTo(self.modalHeight + -(self.moveTranslation.y))
                 }
             }
+            
+            UIView.animate(withDuration: 0.125){
+                self.view.layoutIfNeeded()
+            }
         case .cancelled:
             self.mainBG.snp.updateConstraints{
                 $0.height.equalTo(self.modalHeight)
             }
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
+                self.view.layoutIfNeeded()
+            }
         default:
             break
-        }
-        
-        UIView.animate(withDuration: 0.125){
-            self.view.layoutIfNeeded()
         }
     }
 }
