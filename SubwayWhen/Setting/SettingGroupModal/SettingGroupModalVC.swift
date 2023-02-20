@@ -11,6 +11,7 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class SettingGroupModalVC : ModalVCCustom{
     let bag = DisposeBag()
@@ -18,7 +19,7 @@ class SettingGroupModalVC : ModalVCCustom{
     
     let mainTitle = UILabel().then{
         $0.text = "특정 그룹 시간"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleSize, weight: .heavy)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize, weight: .heavy)
         $0.textColor = .label
     }
     
@@ -37,26 +38,28 @@ class SettingGroupModalVC : ModalVCCustom{
     
     let groupOneTitle = UILabel().then{
         $0.text = "출근시간"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize, weight: .bold)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .bold)
         $0.textColor = .label
     }
     
-    let groupOneHour = UILabel().then{
-        $0.text = "시"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize)
+    let groupOneHour = UITextField().then{
+        $0.placeholder = "시"
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textColor = . systemRed
+        $0.keyboardType = .numberPad
     }
     
     let groupTwoTitle = UILabel().then{
         $0.text = "퇴근시간"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize, weight: .bold)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .bold)
         $0.textColor = .label
     }
     
-    let groupTwoHour = UILabel().then{
-        $0.text = "시"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize)
+    let groupTwoHour = UITextField().then{
+        $0.placeholder = "시"
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textColor = . systemRed
+        $0.keyboardType = .numberPad
     }
     
     let groupOneStepper = UIStepper().then{
@@ -93,7 +96,8 @@ extension SettingGroupModalVC{
         }
         
         self.mainTitle.snp.makeConstraints{
-            $0.leading.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalToSuperview().inset(30)
             $0.height.equalTo(25)
         }
         
@@ -127,7 +131,7 @@ extension SettingGroupModalVC{
         
         self.groupTwoTitle.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.groupOneStepper.snp.bottom).offset(42.5)
+            $0.top.equalTo(self.groupOneStepper.snp.bottom).offset(62.5)
         }
         
         self.groupTwoHour.snp.makeConstraints{
@@ -145,11 +149,17 @@ extension SettingGroupModalVC{
     private func bind(_ viewModel : SettingGroupModalViewModel){
         // VIEWMODEL -> VIEW
         viewModel.groupOneDefaultValue
-            .drive(self.groupOneStepper.rx.value)
+            .map{
+                String($0)
+            }
+            .drive(self.groupOneHour.rx.text)
             .disposed(by: self.bag)
         
         viewModel.groupTwoDefaultValue
-            .drive(self.groupTwoStepper.rx.value)
+            .map{
+                String($0)
+            }
+            .drive(self.groupTwoHour.rx.text)
             .disposed(by: self.bag)
         
         viewModel.modalClose
@@ -157,11 +167,19 @@ extension SettingGroupModalVC{
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
-        self.groupOneStepper.rx.value
+        self.groupOneHour.rx.text
+            .map{
+                Int($0 ?? "")
+            }
+            .filterNil()
             .bind(to: viewModel.groupOneHourValue)
             .disposed(by: self.bag)
         
-        self.groupTwoStepper.rx.value
+        self.groupTwoHour.rx.text
+            .map{
+                Int($0 ?? "")
+            }
+            .filterNil()
             .bind(to: viewModel.groupTwoHourValue)
             .disposed(by: self.bag)
         
@@ -170,17 +188,77 @@ extension SettingGroupModalVC{
             .disposed(by: self.bag)
         
         // VIEW
-        self.groupOneStepper.rx.value
+        self.groupOneHour.rx.text
             .map{
-                "\(Int($0))시"
+                Double($0 ?? "0.0")
+            }
+            .filterNil()
+            .bind(to: self.groupOneStepper.rx.value)
+            .disposed(by: self.bag)
+        
+        self.groupTwoHour.rx.text
+            .map{
+                Double($0 ?? "0.0")
+            }
+            .filterNil()
+            .bind(to: self.groupTwoStepper.rx.value)
+            .disposed(by: self.bag)
+        
+        self.groupOneHour.rx.text
+            .map{ data -> String? in
+                guard let intValue = Int(data ?? "") else {return ""}
+                
+                if intValue < 24{
+                    return "\(intValue)"
+                }else{
+                   return ""
+                }
             }
             .bind(to: self.groupOneHour.rx.text)
             .disposed(by: self.bag)
         
-        self.groupTwoStepper.rx.value
-            .map{
-                "\(Int($0))시"
+        
+        self.groupTwoHour.rx.text
+            .map{ data -> String? in
+                guard let intValue = Int(data ?? "") else {return ""}
+                
+                if intValue < 24{
+                    return "\(intValue)"
+                }else{
+                   return ""
+                }
             }
+            .bind(to: self.groupTwoHour.rx.text)
+            .disposed(by: self.bag)
+        
+        // VIEWMODEL / VIEW
+        let oneValue = self.groupOneStepper.rx.value
+            .map{
+                Int($0)
+            }
+            .share()
+        
+        oneValue
+            .bind(to: viewModel.groupOneHourValue)
+            .disposed(by: self.bag)
+        
+        oneValue
+            .map{"\($0)"}
+            .bind(to: self.groupOneHour.rx.text)
+            .disposed(by: self.bag)
+        
+        let twoValue = self.groupTwoStepper.rx.value
+            .map{
+                Int($0)
+            }
+            .share()
+        
+        twoValue
+            .bind(to: viewModel.groupTwoHourValue)
+            .disposed(by: self.bag)
+        
+        twoValue
+            .map{"\($0)"}
             .bind(to: self.groupTwoHour.rx.text)
             .disposed(by: self.bag)
     }

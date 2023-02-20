@@ -140,24 +140,35 @@ class MainViewModel{
         
         dataReload
             .map{ _ -> SaveStationGroup? in
-                let hour = Calendar.current.component(.hour, from: Date())
+                let nowHour = Calendar.current.component(.hour, from: Date())
+                
+                let groupOne = Int(FixInfo.saveSetting.mainGroupOneTime)
+                let groupTwo = Int(FixInfo.saveSetting.mainGroupTwoTime)
+                
                 if FixInfo.saveSetting.mainGroupOneTime == 0 && FixInfo.saveSetting.mainGroupTwoTime == 0{
                     return nil
-                }else if FixInfo.saveSetting.mainGroupOneTime <= hour{
-                    let one = FixInfo.saveSetting.mainGroupOneTime - hour
-                    let two = FixInfo.saveSetting.mainGroupTwoTime - hour
-                    
-                    if one > two{
-                        return .one
-                    }else{
+                }else if groupOne < groupTwo{
+                    if groupTwo <= nowHour{
                         return .two
+                    }else if groupOne <= nowHour{
+                        return .one
+                    }else {
+                        return nil
+                    }
+                }else if groupOne > groupTwo{
+                    if groupOne <= nowHour{
+                        return .one
+                    }else if groupTwo <= nowHour{
+                        return .two
+                    }else {
+                        return nil
                     }
                 }else{
                     return nil
                 }
             }
             .filterNil()
-            .delay(.milliseconds(250), scheduler: MainScheduler.instance)
+            .delay(.milliseconds(150), scheduler: MainScheduler.instance)
             .bind(to: self.mainTableViewModel.mainTableViewGroupModel.groupSeleted)
             .disposed(by: self.bag)
         

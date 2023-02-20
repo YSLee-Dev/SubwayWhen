@@ -670,6 +670,7 @@
 		34F5F0F02962DCF50010A21D /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				34C6DB84293627AE00C4ED80 /* ModalCustomButton.swift */,
 				34F5F0EC2962DCE80010A21D /* TopView.swift */,
 				34F5F0FC29641AC10010A21D /* TitleView.swift */,
 			);
@@ -683,7 +684,6 @@
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
 				34CA5598293897160006F67B /* GroupCustomButton.swift */,
 				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
-				34C6DB84293627AE00C4ED80 /* ModalCustomButton.swift */,
 				349E32C12978DF1C00147DEE /* MainStyleUIView.swift */,
 				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
 				34F5F0F02962DCF50010A21D /* Sub */,
