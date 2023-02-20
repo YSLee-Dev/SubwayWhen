@@ -93,7 +93,7 @@ extension Reactive where Base : SettingVC{
         return Binder(base){base, data in
             base.view.endEditing(true)
             if data.settingTitle == "특정 그룹 시간"{
-                let modal = SettingGroupModalVC(modalHeight: 370)
+                let modal = SettingGroupModalVC(modalHeight: 415)
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)

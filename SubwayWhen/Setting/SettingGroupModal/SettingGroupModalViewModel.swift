@@ -12,27 +12,27 @@ import RxCocoa
 
 class SettingGroupModalViewModel{
     // INPUT
-    let groupOneHourValue = BehaviorRelay<Double>(value: 0.0)
-    let groupTwoHourValue = BehaviorRelay<Double>(value: 0.0)
+    let groupOneHourValue = BehaviorRelay<Int>(value: 0)
+    let groupTwoHourValue = BehaviorRelay<Int>(value: 0)
     let saveBtnClick = PublishRelay<Void>()
     
     // OUTPUT
-    let groupOneDefaultValue : Driver<Double>
-    let groupTwoDefaultValue : Driver<Double>
+    let groupOneDefaultValue : Driver<Int>
+    let groupTwoDefaultValue : Driver<Int>
     let modalClose : Driver<Void>
     
     let bag = DisposeBag()
     
     init(){
-        self.groupOneDefaultValue = Observable<Double>.create{
-            $0.onNext(Double(FixInfo.saveSetting.mainGroupOneTime))
+        self.groupOneDefaultValue = Observable<Int>.create{
+            $0.onNext(FixInfo.saveSetting.mainGroupOneTime)
             $0.onCompleted()
             return Disposables.create()
         }
         .asDriver(onErrorDriveWith: .empty())
         
-        self.groupTwoDefaultValue = Observable<Double>.create{
-            $0.onNext(Double(FixInfo.saveSetting.mainGroupTwoTime))
+        self.groupTwoDefaultValue = Observable<Int>.create{
+            $0.onNext(FixInfo.saveSetting.mainGroupTwoTime)
             $0.onCompleted()
             return Disposables.create()
         }
@@ -49,7 +49,7 @@ class SettingGroupModalViewModel{
                 return $1
             }
             .subscribe(onNext: {
-                FixInfo.saveSetting.mainGroupOneTime = Int($0)
+                FixInfo.saveSetting.mainGroupOneTime = $0
             })
             .disposed(by: self.bag)
         
@@ -58,7 +58,7 @@ class SettingGroupModalViewModel{
                 return $1
             }
             .subscribe(onNext: {
-                FixInfo.saveSetting.mainGroupTwoTime = Int($0)
+                FixInfo.saveSetting.mainGroupTwoTime = $0
             })
             .disposed(by: self.bag)
     }

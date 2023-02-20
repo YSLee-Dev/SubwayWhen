@@ -76,7 +76,6 @@ class ModalVC : ModalVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.attibute()
         self.layout()
     }
     
@@ -86,11 +85,6 @@ class ModalVC : ModalVCCustom{
 }
 
 extension ModalVC{
-    private func attibute(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     private func layout(){
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{
@@ -190,33 +184,6 @@ extension ModalVC{
             .drive(self.rx.modalClose)
             .disposed(by: self.bag)
     }
-    
-    
-    @objc
-    private func keyboardWillShow(_ sender: Notification) {
-        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height - 15
-        
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(keyboardHeight)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(_ sender: Notification) {
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(0)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
 }
 
 extension Reactive where Base : ModalVC{
