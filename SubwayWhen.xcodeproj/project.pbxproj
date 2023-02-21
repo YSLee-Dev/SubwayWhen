@@ -15,6 +15,8 @@
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
 		347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */; };
 		34995885296FF8B700D2276F /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34995884296FF8B700D2276F /* LoadModel.swift */; };
+		349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
+		349B516129A4616700A53879 /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
 		349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */; };
 		349CEFB02991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */; };
 		349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */; };
@@ -108,8 +110,6 @@
 		34F5F101296429E00010A21D /* DetailTableViewSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F100296429E00010A21D /* DetailTableViewSectionData.swift */; };
 		34F5F10429642AE00010A21D /* DetailTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F10329642AE00010A21D /* DetailTableHeaderView.swift */; };
 		34F5F10C296561F50010A21D /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F10B296561F50010A21D /* DetailModel.swift */; };
-		34F5F10E296578A50010A21D /* DetailStationIdList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F10D296578A50010A21D /* DetailStationIdList.swift */; };
-		34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F10F296578BB0010A21D /* DetailStationId.swift */; };
 		34F5F1192966CDD60010A21D /* DetailTableArrivalCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F1182966CDD60010A21D /* DetailTableArrivalCellModel.swift */; };
 		34F5F11D2966DC6D0010A21D /* DetailTableArrivalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F11C2966DC6D0010A21D /* DetailTableArrivalCell.swift */; };
 		DF60AA3E9ED3939B85823F12 /* Pods_SubwayWhen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C225C0C1F9D5249DEEB735E /* Pods_SubwayWhen.framework */; };
@@ -125,6 +125,8 @@
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellType.swift; sourceTree = "<group>"; };
 		34995884296FF8B700D2276F /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadModel.swift; path = DataLoad/LoadModel.swift; sourceTree = "<group>"; };
+		349B515E29A452EC00A53879 /* DetailStationIdList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DetailStationIdList.plist; sourceTree = "<group>"; };
+		349B516029A4616700A53879 /* DetailStationId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStationId.swift; sourceTree = "<group>"; };
 		349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCell.swift; sourceTree = "<group>"; };
 		349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewSectionData.swift; sourceTree = "<group>"; };
 		349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCellData.swift; sourceTree = "<group>"; };
@@ -220,8 +222,6 @@
 		34F5F100296429E00010A21D /* DetailTableViewSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewSectionData.swift; sourceTree = "<group>"; };
 		34F5F10329642AE00010A21D /* DetailTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableHeaderView.swift; sourceTree = "<group>"; };
 		34F5F10B296561F50010A21D /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
-		34F5F10D296578A50010A21D /* DetailStationIdList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationIdList.swift; sourceTree = "<group>"; };
-		34F5F10F296578BB0010A21D /* DetailStationId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailStationId.swift; path = /Users/yslee/Desktop/MyProject/SubwayWhen/SubwayWhen/Detail/Entity/DetailStationId.swift; sourceTree = "<absolute>"; };
 		34F5F1182966CDD60010A21D /* DetailTableArrivalCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableArrivalCellModel.swift; sourceTree = "<group>"; };
 		34F5F11C2966DC6D0010A21D /* DetailTableArrivalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableArrivalCell.swift; sourceTree = "<group>"; };
 		87E05004658E5CABAAA4C7AA /* Pods-SubwayWhen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.release.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.release.xcconfig"; sourceTree = "<group>"; };
@@ -723,8 +723,8 @@
 		34F5F11129657B060010A21D /* StationId */ = {
 			isa = PBXGroup;
 			children = (
-				34F5F10F296578BB0010A21D /* DetailStationId.swift */,
-				34F5F10D296578A50010A21D /* DetailStationIdList.swift */,
+				349B516029A4616700A53879 /* DetailStationId.swift */,
+				349B515E29A452EC00A53879 /* DetailStationIdList.plist */,
 			);
 			path = StationId;
 			sourceTree = "<group>";
@@ -820,6 +820,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				347AF806293629F1001FB813 /* Assets.xcassets in Resources */,
+				349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */,
 				34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -887,12 +888,10 @@
 				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */,
-				34F5F10E296578A50010A21D /* DetailStationIdList.swift in Sources */,
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */,
-				34F5F110296578BB0010A21D /* DetailStationId.swift in Sources */,
 				349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */,
 				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
@@ -937,6 +936,7 @@
 				34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */,
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
+				349B516129A4616700A53879 /* DetailStationId.swift in Sources */,
 				34F5F10C296561F50010A21D /* DetailModel.swift in Sources */,
 				349FF292299E0557007A98F4 /* SettingTableViewCellType.swift in Sources */,
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
