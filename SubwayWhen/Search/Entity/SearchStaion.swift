@@ -35,7 +35,7 @@ struct searchStationInfo : Decodable{
         case six = "06호선"
         case seven = "07호선"
         case eight = "08호선"
-        case night = "09호선"
+        case nine = "09호선"
         case gyeonggang = "경강선"
         case gyeongui = "경의선"
         case airport = "공항철도"
@@ -71,7 +71,7 @@ struct searchStationInfo : Decodable{
             return "7호선"
         case .eight:
             return "8호선"
-        case .night:
+        case .nine:
             return "9호선"
         case .gyeonggang:
             return "경강"
@@ -124,7 +124,7 @@ struct searchStationInfo : Decodable{
             return "서울 7호선"
         case .eight:
             return "서울 8호선"
-        case .night:
+        case .nine:
             return "서울 9호선"
         case .gyeonggang:
             return "경강"
@@ -177,7 +177,7 @@ struct searchStationInfo : Decodable{
             return "1007"
         case .eight:
             return "1008"
-        case .night:
+        case .nine:
             return "1009"
         case .gyeongui:
             return "1063"

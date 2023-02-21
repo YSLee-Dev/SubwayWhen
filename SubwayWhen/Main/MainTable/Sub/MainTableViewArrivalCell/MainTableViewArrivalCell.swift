@@ -150,8 +150,8 @@ extension MainTableViewCell{
     
     func bind(_ viewModel : MainTableViewCellModel){
         self.changeBtn.rx.tap
-            .map{
-                self.index
+            .map{[weak self] in
+                self?.index ?? IndexPath(row: 0, section: 0)
             }
             .bind(to: viewModel.cellTimeChangeBtnClick)
             .disposed(by: self.bag)

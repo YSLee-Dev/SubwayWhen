@@ -46,6 +46,10 @@ class ModalVCCustom : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         self.viewAnimation()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension ModalVCCustom{
@@ -88,6 +92,7 @@ extension ModalVCCustom{
         }
     }
     
+    @objc
     func modalDismiss(){
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
             self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)

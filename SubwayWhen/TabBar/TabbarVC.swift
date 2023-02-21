@@ -26,18 +26,25 @@ class TabbarVC : UITabBarController{
     }
     
     override func viewDidLoad() {
-        self.tabBar.backgroundColor = .systemBackground
-        self.viewControllers = [UINavigationController(rootViewController: self.mainVC),
-                                UINavigationController(rootViewController: self.searchVC),
-                                UINavigationController(rootViewController: self.settingVC)
-        ]
         self.attribute()
+        self.settingLoad()
     }
 }
 
 
 extension TabbarVC{
     private func attribute(){
+        self.tabBar.backgroundColor = .systemBackground
+        self.viewControllers = [UINavigationController(rootViewController: self.mainVC),
+                                UINavigationController(rootViewController: self.searchVC),
+                                UINavigationController(rootViewController: self.settingVC)
+        ]
+        
+        self.tabBar.itemWidth = 50.0
+        self.tabBar.itemPositioning = .centered
+    }
+    
+    private func settingLoad(){
         let result = self.loadModel.saveSettingLoad()
         
         switch result{

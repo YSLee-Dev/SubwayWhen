@@ -17,6 +17,21 @@
 		34995885296FF8B700D2276F /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34995884296FF8B700D2276F /* LoadModel.swift */; };
 		349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
 		349B516129A4616700A53879 /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
+		349B516329A4630300A53879 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516229A4630300A53879 /* ReportVC.swift */; };
+		349B516629A4631B00A53879 /* ReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516529A4631B00A53879 /* ReportViewModel.swift */; };
+		349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516729A467FA00A53879 /* ReportTableViewCellData.swift */; };
+		349B516A29A468FA00A53879 /* ReportTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516929A468FA00A53879 /* ReportTableViewCellType.swift */; };
+		349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */; };
+		349B516F29A46B3C00A53879 /* ReportTableViewLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516E29A46B3C00A53879 /* ReportTableViewLineCell.swift */; };
+		349B517229A46C8900A53879 /* ReportTableViewLineCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B517129A46C8900A53879 /* ReportTableViewLineCellModel.swift */; };
+		349B517529A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B517429A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift */; };
+		349B517729A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B517629A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift */; };
+		349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B517929A4A4C600A53879 /* ReportTableViewTextFieldCell.swift */; };
+		349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B517C29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift */; };
+		349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518029A4B73000A53879 /* ReportMSGData.swift */; };
+		349B518329A4BEFD00A53879 /* ReportCheckModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */; };
+		349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */; };
+		349B518829A4D2D600A53879 /* ReportBrandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518729A4D2D600A53879 /* ReportBrandData.swift */; };
 		349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */; };
 		349CEFB02991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */; };
 		349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */; };
@@ -127,6 +142,21 @@
 		34995884296FF8B700D2276F /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadModel.swift; path = DataLoad/LoadModel.swift; sourceTree = "<group>"; };
 		349B515E29A452EC00A53879 /* DetailStationIdList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DetailStationIdList.plist; sourceTree = "<group>"; };
 		349B516029A4616700A53879 /* DetailStationId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStationId.swift; sourceTree = "<group>"; };
+		349B516229A4630300A53879 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
+		349B516529A4631B00A53879 /* ReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModel.swift; sourceTree = "<group>"; };
+		349B516729A467FA00A53879 /* ReportTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCellData.swift; sourceTree = "<group>"; };
+		349B516929A468FA00A53879 /* ReportTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCellType.swift; sourceTree = "<group>"; };
+		349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCellSection.swift; sourceTree = "<group>"; };
+		349B516E29A46B3C00A53879 /* ReportTableViewLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewLineCell.swift; sourceTree = "<group>"; };
+		349B517129A46C8900A53879 /* ReportTableViewLineCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewLineCellModel.swift; sourceTree = "<group>"; };
+		349B517429A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewTwoBtnCell.swift; sourceTree = "<group>"; };
+		349B517629A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewTwoBtnCellModel.swift; sourceTree = "<group>"; };
+		349B517929A4A4C600A53879 /* ReportTableViewTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewTextFieldCell.swift; sourceTree = "<group>"; };
+		349B517C29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewTextFieldCellModel.swift; sourceTree = "<group>"; };
+		349B518029A4B73000A53879 /* ReportMSGData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMSGData.swift; sourceTree = "<group>"; };
+		349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalVC.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalViewModel.swift; sourceTree = "<group>"; };
+		349B518729A4D2D600A53879 /* ReportBrandData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrandData.swift; sourceTree = "<group>"; };
 		349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCell.swift; sourceTree = "<group>"; };
 		349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewSectionData.swift; sourceTree = "<group>"; };
 		349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCellData.swift; sourceTree = "<group>"; };
@@ -277,6 +307,76 @@
 				34A17469293DD2E40086870F /* MainTableViewFooter */,
 			);
 			path = Sub;
+			sourceTree = "<group>";
+		};
+		349B516429A4630D00A53879 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				349B516229A4630300A53879 /* ReportVC.swift */,
+				349B516529A4631B00A53879 /* ReportViewModel.swift */,
+				349B518629A4BF7400A53879 /* ReportCheckModal */,
+				349B517029A46B4A00A53879 /* Sub */,
+				349B516D29A469D600A53879 /* Entity */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		349B516D29A469D600A53879 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				349B516729A467FA00A53879 /* ReportTableViewCellData.swift */,
+				349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */,
+				349B518729A4D2D600A53879 /* ReportBrandData.swift */,
+				349B516929A468FA00A53879 /* ReportTableViewCellType.swift */,
+				349B518029A4B73000A53879 /* ReportMSGData.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		349B517029A46B4A00A53879 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				349B517329A46C8C00A53879 /* ReportTableViewLine */,
+				349B517B29A4A4D600A53879 /* ReportTableViewTextField */,
+				349B517829A4A34200A53879 /* ReportTableViewTwoBtn */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		349B517329A46C8C00A53879 /* ReportTableViewLine */ = {
+			isa = PBXGroup;
+			children = (
+				349B516E29A46B3C00A53879 /* ReportTableViewLineCell.swift */,
+				349B517129A46C8900A53879 /* ReportTableViewLineCellModel.swift */,
+			);
+			path = ReportTableViewLine;
+			sourceTree = "<group>";
+		};
+		349B517829A4A34200A53879 /* ReportTableViewTwoBtn */ = {
+			isa = PBXGroup;
+			children = (
+				349B517429A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift */,
+				349B517629A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift */,
+			);
+			path = ReportTableViewTwoBtn;
+			sourceTree = "<group>";
+		};
+		349B517B29A4A4D600A53879 /* ReportTableViewTextField */ = {
+			isa = PBXGroup;
+			children = (
+				349B517929A4A4C600A53879 /* ReportTableViewTextFieldCell.swift */,
+				349B517C29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift */,
+			);
+			path = ReportTableViewTextField;
+			sourceTree = "<group>";
+		};
+		349B518629A4BF7400A53879 /* ReportCheckModal */ = {
+			isa = PBXGroup;
+			children = (
+				349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */,
+				349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */,
+			);
+			path = ReportCheckModal;
 			sourceTree = "<group>";
 		};
 		349CEFAC2990FE3100CC69E5 /* Sub */ = {
@@ -519,6 +619,7 @@
 				34A36BE1295028AC00FB0DDB /* Edit */,
 				349FF288299DBCA0007A98F4 /* Setting */,
 				34C6DB6E293627AE00C4ED80 /* Search */,
+				349B516429A4630D00A53879 /* Report */,
 			);
 			path = SubwayWhen;
 			sourceTree = "<group>";
@@ -889,14 +990,18 @@
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */,
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
+				349B516F29A46B3C00A53879 /* ReportTableViewLineCell.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
+				349B516629A4631B00A53879 /* ReportViewModel.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */,
 				349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */,
 				34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */,
+				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
 				34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */,
+				349B518829A4D2D600A53879 /* ReportBrandData.swift in Sources */,
 				347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */,
 				349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */,
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
@@ -907,14 +1012,20 @@
 				349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */,
 				34B9FD182974D3B300E349A1 /* ScheduleStationArrival.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
+				349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */,
+				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
+				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				34F494CF2980D8EC001599B1 /* RequestToken.swift in Sources */,
+				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
 				34995885296FF8B700D2276F /* LoadModel.swift in Sources */,
 				349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */,
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
+				349B518329A4BEFD00A53879 /* ReportCheckModalVC.swift in Sources */,
 				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
 				341200EF293753DC00C77050 /* MainTableView.swift in Sources */,
+				349B516A29A468FA00A53879 /* ReportTableViewCellType.swift in Sources */,
 				34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */,
 				349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */,
 				34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */,
@@ -933,6 +1044,7 @@
 				34A36BE329502A4000FB0DDB /* EditViewCellData.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
 				34F5F0FD29641AC10010A21D /* TitleView.swift in Sources */,
+				349B516329A4630300A53879 /* ReportVC.swift in Sources */,
 				34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */,
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
@@ -942,6 +1054,7 @@
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
 				349E32B62978C88A00147DEE /* LiveStationModel.swift in Sources */,
 				34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */,
+				349B517529A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift in Sources */,
 				349E32C02978C8D000147DEE /* LiveStationModel.swift in Sources */,
 				349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */,
 				34B9FD152974D3B300E349A1 /* ScheduleSearch.swift in Sources */,
@@ -957,6 +1070,7 @@
 				34C6DB93293627AF00C4ED80 /* DefaultView.swift in Sources */,
 				34B9FD192974D3B300E349A1 /* TagoSchduleStation.swift in Sources */,
 				349E32BF2978C8D000147DEE /* RealtimeStationArrival.swift in Sources */,
+				349B517729A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift in Sources */,
 				349E32B52978C88A00147DEE /* RealtimeStationArrival.swift in Sources */,
 				34F5F0E62962D8990010A21D /* DetailVC.swift in Sources */,
 				34C6DB92293627AF00C4ED80 /* DefaultViewModel.swift in Sources */,
@@ -966,12 +1080,14 @@
 				34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */,
 				34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */,
 				341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */,
+				349B517229A46C8900A53879 /* ReportTableViewLineCellModel.swift in Sources */,
 				34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */,
 				34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */,
 				34F5F10429642AE00010A21D /* DetailTableHeaderView.swift in Sources */,
 				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
 				349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */,
 				34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */,
+				349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */,
 				34F5F0FF296428FE0010A21D /* DetailTableViewCellData.swift in Sources */,
 				34B9FD142974D3B300E349A1 /* ScheduleType.swift in Sources */,
 				34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */,
