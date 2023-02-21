@@ -34,7 +34,7 @@ class MainTableViewHeaderCell : UITableViewCell{
         $0.text = "😵😵😵😵😵😵😵😵🫥🫥"
     }
     
-    var searchBtn = MainTableViewHeaderBtn(title: "검색", img: UIImage(systemName: "magnifyingglass")!)
+    var reportBtn = MainTableViewHeaderBtn(title: "지하철 민원", img: UIImage(systemName: "person.wave.2")!)
     var editBtn = MainTableViewHeaderBtn(title: "편집", img: UIImage(systemName: "list.bullet.indent")!)
     
     override func prepareForReuse() {
@@ -62,7 +62,7 @@ extension MainTableViewHeaderCell {
             $0.height.equalTo(190)
         }
         
-        [self.firstBG, self.searchBtn, self.editBtn]
+        [self.firstBG, self.editBtn, self.reportBtn]
             .forEach{
                 self.mainBG.addSubview($0)
             }
@@ -74,7 +74,7 @@ extension MainTableViewHeaderCell {
             $0.height.equalTo(90)
         }
         
-        self.searchBtn.snp.makeConstraints{
+        self.reportBtn.snp.makeConstraints{
             $0.top.equalTo(self.firstBG.snp.bottom).offset(10)
             $0.leading.equalTo(self.mainBG)
             $0.trailing.equalTo(self.mainBG.snp.centerX).offset(-5)
@@ -129,8 +129,8 @@ extension MainTableViewHeaderCell {
             .drive(self.congestionLabel.rx.text)
             .disposed(by: self.bag)
         
-        self.searchBtn.rx.tap
-            .bind(to: viewModel.searchBtnClick)
+        self.reportBtn.rx.tap
+            .bind(to: viewModel.reportBtnClick)
             .disposed(by: self.bag)
         
         self.editBtn.rx.tap

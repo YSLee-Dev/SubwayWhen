@@ -65,7 +65,7 @@ extension MainVC{
             .disposed(by: self.bag)
         
         viewModel.clickCellData
-            .drive(self.rx.detailVCPresent)
+            .drive(self.rx.detailVCPush)
             .disposed(by: self.bag)
         
         viewModel.editBtnClick
@@ -78,6 +78,10 @@ extension MainVC{
         
         viewModel.mainTitleHidden
             .drive(self.rx.mainTitleHidden)
+            .disposed(by: self.bag)
+        
+        viewModel.reportBtnClick
+            .drive(self.rx.reportVCPush)
             .disposed(by: self.bag)
     }
 }
@@ -109,7 +113,7 @@ extension Reactive where Base : MainVC {
         }
     }
     
-    var detailVCPresent : Binder<MainTableViewCellData>{
+    var detailVCPush : Binder<MainTableViewCellData>{
         return Binder(base){base, data in
             let detail = DetailVC(title: "\(data.useLine) \(data.stationName)")
             detail.hidesBottomBarWhenPushed = true
@@ -133,6 +137,14 @@ extension Reactive where Base : MainVC {
             
             
             base.navigationController?.pushViewController(detail, animated: true)
+        }
+    }
+    
+    var reportVCPush : Binder<Void>{
+        return Binder(base){base, _ in
+            let reportVC = ReportVC(title: "지하철 민원")
+            reportVC.hidesBottomBarWhenPushed = true
+            base.navigationController?.pushViewController(reportVC, animated: true)
         }
     }
 }

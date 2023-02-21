@@ -26,6 +26,7 @@ class MainViewModel{
     let reloadData = PublishRelay<Void>()
     
     // OUTPUT
+    let reportBtnClick : Driver<Void>
     let stationPlusBtnClick : Driver<Void>
     let editBtnClick : Driver<Void>
     let clickCellData : Driver<MainTableViewCellData>
@@ -64,11 +65,12 @@ class MainViewModel{
         }
         .asDriver(onErrorDriveWith: .empty())
         
+        // 민원 버튼 클릭 시
+        self.reportBtnClick = self.mainTableViewModel.mainTableViewHeaderViewModel.reportBtnClick
+            .asDriver(onErrorDriveWith: .empty())
+        
         // 검색,플러스 버튼 클릭 시
-        self.stationPlusBtnClick = Observable.merge(
-            self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick.asObservable(),
-            self.mainTableViewModel.mainTableViewHeaderViewModel.searchBtnClick.asObservable()
-        )
+        self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         // edit 버튼 클릭 시

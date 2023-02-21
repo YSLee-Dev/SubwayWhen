@@ -16,7 +16,7 @@ struct MainTableViewHeaderCellModel{
     
     // INPUT
     let congestionData = BehaviorRelay<Int>(value: 0)
-    let searchBtnClick = PublishRelay<Void>()
+    let reportBtnClick = PublishRelay<Void>()
     let editBtnClick = PublishRelay<Void>()
     
     init(){
