@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct DetailStationId{
+struct DetailStationId : Decodable{
+    let lineId : String
     let stationId : String
     let stationName : String
 }
