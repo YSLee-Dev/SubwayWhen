@@ -24,6 +24,10 @@ class ReportVC : TableVCCustom{
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    deinit{
+        print("ReportVC DEINIT")
+    }
 }
 
 extension ReportVC{
@@ -39,7 +43,7 @@ extension ReportVC{
     }
     
     private func bind(_ viewModel : ReportViewModel){
-        let dataSources = RxTableViewSectionedAnimatedDataSource<ReportTableViewCellSection>(animationConfiguration: .init(insertAnimation: .top ,reloadAnimation: .top, deleteAnimation: .bottom)){dataSource, tv, index, data in
+        let dataSources = RxTableViewSectionedAnimatedDataSource<ReportTableViewCellSection>(animationConfiguration: .init(insertAnimation: .top ,reloadAnimation: .fade, deleteAnimation: .bottom)){dataSource, tv, index, data in
             
             switch index.section{
             case 0:
@@ -103,6 +107,10 @@ extension ReportVC{
         viewModel.popVC
             .drive(self.rx.popVC)
             .disposed(by: self.bag)
+        
+        viewModel.scrollSction
+            .drive(self.rx.scrollSection)
+            .disposed(by: self.bag)
     }
     
     @objc
@@ -149,6 +157,12 @@ extension Reactive where Base : ReportVC{
             let modal = ReportCheckModalVC(modalHeight: 400, viewModel: model)
             modal.modalPresentationStyle = .overFullScreen
             base.present(modal, animated: false)
+        }
+    }
+    
+    var scrollSection : Binder<Int>{
+        return Binder(base){base, number in
+            base.tableView.scrollToRow(at: IndexPath(row: 0, section: number), at: .top, animated: true)
         }
     }
 }

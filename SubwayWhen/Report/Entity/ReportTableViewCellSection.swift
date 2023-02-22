@@ -10,7 +10,7 @@ import Foundation
 import RxDataSources
 
 struct ReportTableViewCellSection{
-    let sectionName : String
+    var sectionName : String
     var items : [Item]
 }
 

@@ -16,7 +16,7 @@ class ReportTableViewTwoBtnCell : UITableViewCell{
     let mainBG = MainStyleUIView()
     
     let mainTitle = UILabel().then{
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .semibold)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize, weight: .semibold)
         $0.adjustsFontSizeToFitWidth = true
     }
     
@@ -59,7 +59,7 @@ extension ReportTableViewTwoBtnCell{
         self.mainBG.snp.makeConstraints{
             $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(102)
+            $0.height.equalTo(97)
         }
         
         [self.mainTitle, self.upBtn, self.downBtn]
@@ -75,12 +75,12 @@ extension ReportTableViewTwoBtnCell{
         self.upBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalTo(self.mainTitle.snp.bottom).offset(15)
-            $0.height.equalTo(40)
+            $0.height.equalTo(35)
             $0.trailing.equalTo(self.mainBG.snp.centerX).offset(-5)
         }
         self.downBtn.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(15)
-            $0.height.equalTo(40)
+            $0.height.equalTo(35)
             $0.top.equalTo(self.mainTitle.snp.bottom).offset(15)
             $0.leading.equalTo(self.mainBG.snp.centerX).offset(5)
         }
