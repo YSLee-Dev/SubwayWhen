@@ -252,7 +252,7 @@ class ReportViewModel {
                 var now = self?.nowData.value
                 now?[2].items[2].cellData = data
                 
-                return now ?? [
+                return now ?? []
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
