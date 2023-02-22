@@ -11,6 +11,7 @@ import RxDataSources
 
 struct ReportTableViewCellData {
     let cellTitle : String
+    var cellData : String
     let type : ReportTableViewCellType
 }
 

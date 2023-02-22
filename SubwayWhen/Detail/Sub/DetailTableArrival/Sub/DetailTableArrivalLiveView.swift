@@ -152,9 +152,9 @@ extension DetailTableArrivalLiveView{
                 self.animateCGSet(true)
                 self.beforeStationTitle.alpha = 0
                 self.moreStationTitle.text = self.beforeTitle
-            }, completion:{ _ in
-                self.animateCGSet(false)
-                self.beforeStationCirecle.alpha = 0
+            }, completion:{ [weak self]_ in
+                self?.animateCGSet(false)
+                self?.beforeStationCirecle.alpha = 0
             })
             UIView.animate(withDuration: 0.25, delay: 0.75, options: [.allowUserInteraction], animations: {
                 self.moreStationTitle.alpha = 1
@@ -170,11 +170,11 @@ extension DetailTableArrivalLiveView{
                 self.beforeStationCirecle.alpha = 1
                 self.animateCGSet(false)
                 
-            }, completion: { _ in
+            }, completion: { [weak self]_ in
                 UIView.animate(withDuration: 0.25, delay: 0){
-                    self.moreStationTitle.alpha = 1
-                    self.trainIcon.alpha = 1
-                    self.beforeStationTitle.alpha = 1
+                    self?.moreStationTitle.alpha = 1
+                    self?.trainIcon.alpha = 1
+                    self?.beforeStationTitle.alpha = 1
                 }
             })
             

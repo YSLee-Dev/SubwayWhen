@@ -15,6 +15,7 @@ class ReportViewModel {
     // OUTPUT
     let cellData : Driver<[ReportTableViewCellSection]>
     let keyboardClose : Driver<Void>
+    let scrollSction : Driver<Int>
     let checkModalViewModel : Driver<ReportCheckModalViewModel>
     let popVC : Driver<Void>
     
@@ -22,7 +23,8 @@ class ReportViewModel {
     
     // DATA
     let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
-    var msgData = PublishRelay<ReportMSGData>()
+    let nowStep = PublishRelay<Int>()
+    let msgData = PublishRelay<ReportMSGData>()
     
     // MODEL
     let lineCellModel = ReportTableViewLineCellModel()
@@ -48,11 +50,14 @@ class ReportViewModel {
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
+        self.scrollSction = self.nowStep
+            .asDriver(onErrorDriveWith: .empty())
+        
         self.popVC = checkModalViewModel.close
             .asDriver(onErrorDriveWith: .empty())
         
         Observable<[ReportTableViewCellSection]>.create{
-            $0.onNext([ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", type: .Line)])])
+            $0.onNext([ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line)])])
             $0.onCompleted()
             return Disposables.create()
         }
@@ -92,29 +97,39 @@ class ReportViewModel {
         .disposed(by: self.bag)
         
         // 두 번째 행 출력
-        self.lineCellModel.doneBtnClick
+        let twoStep = self.lineCellModel.doneBtnClick
             .withLatestFrom(self.lineCellModel.lineSeleted)
             .withUnretained(self)
             .map{ cell, data in
                 let value = cell.nowData.value
                 let first = value.first!
+                
                 var two = ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                    .init(cellTitle: "상하행 정보를 입력해주세요.", type: .TwoBtn),
-                    .init(cellTitle: "현재 역을 입력해주세요.", type: .TextField)
+                    .init(cellTitle: "상하행 정보를 입력해주세요.", cellData: "", type: .TwoBtn),
+                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField)
                 ])
                 
                 if data == ReportBrandData.one {
-                    two.items.insert((.init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", type: .TwoBtn)), at: 1)
+                    two.items.insert((.init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn)), at: 1)
                 }else if data == ReportBrandData.three{
-                    two.items.insert((.init(cellTitle: "현재 역이 지축 ~ 대화 안에 있나요?", type: .TwoBtn)), at: 1)
+                    two.items.insert((.init(cellTitle: "현재 역이 지축 ~ 대화 안에 있나요?", cellData: "", type: .TwoBtn)), at: 1)
                 }else if data == ReportBrandData.four{
-                    two.items.insert((.init(cellTitle: "현재 역이 오이도 ~ 선바위 안에 있나요?", type: .TwoBtn)), at: 1)
+                    two.items.insert((.init(cellTitle: "현재 역이 오이도 ~ 선바위 안에 있나요?", cellData: "", type: .TwoBtn)), at: 1)
                 }
                 
                 return [first, two]
             }
+            .share()
+        
+        twoStep
             .bind(to: self.nowData)
             .disposed(by: self.bag)
+        
+        twoStep
+            .map{_ in 1}
+            .bind(to: self.nowStep)
+            .disposed(by: self.bag)
+        
         
         let updownClick = self.twoBtnCellModel.identityIndex
             .withLatestFrom(self.twoBtnCellModel.updownClick){index, updown -> String? in
@@ -125,6 +140,7 @@ class ReportViewModel {
                 }
             }
             .filterNil()
+            .share()
         
         let nowStation = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
@@ -135,22 +151,44 @@ class ReportViewModel {
                 }
             }
             .filterNil()
+            .share()
+        
+        let brand = self.twoBtnCellModel.identityIndex
+            .withLatestFrom(self.twoBtnCellModel.updownClick){[weak self] index, brand -> String? in
+                let now = self?.nowData.value
+                if index.section == 1, index.row == 1{
+                    return brand
+                }else if now![1].items.count == 2{
+                    return "N"
+                }else{
+                    return nil
+                }
+            }
+            .filterNil()
+            .share()
         
         // 세 번째 행 출력
-        Observable.zip(updownClick, nowStation)
+        let threeStep = Observable.zip(updownClick, nowStation, brand)
             .withUnretained(self)
             .map{cell, _ in
                 var now = cell.nowData.value
-                
                 now.append(.init(sectionName: "상세 정보", items: [
-                    .init(cellTitle: "편성(고유번호)을 입력해주세요.", type: .TextField),
-                    .init(cellTitle: "칸 위치를 입력해주세요.", type: .TextField),
-                    .init(cellTitle: "민원 내용을 입력해주세요.", type: .TextField)
+                    .init(cellTitle: "편성(고유번호)을 입력해주세요.", cellData: "", type: .TextField),
+                    .init(cellTitle: "칸 위치를 입력해주세요.", cellData: "", type: .TextField),
+                    .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField)
                 ]))
                 
                 return now
             }
+            .share()
+        
+        threeStep
             .bind(to: self.nowData)
+            .disposed(by: self.bag)
+        
+        threeStep
+            .map{_ in 2}
+            .bind(to: self.nowStep)
             .disposed(by: self.bag)
         
         let trianNumber = self.textFieldCellModel.identityIndex
@@ -162,6 +200,18 @@ class ReportViewModel {
                 }
             }
             .filterNil()
+            .share()
+        
+        // 셀 재사용으로 인한 데이터 미리 저장
+        trianNumber
+            .map{[weak self] data in
+                var now = self?.nowData.value
+                now?[2].items[0].cellData = data
+                
+                return now ?? []
+            }
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
         
         let trainCar = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
@@ -172,6 +222,18 @@ class ReportViewModel {
                 }
             }
             .filterNil()
+            .share()
+        
+        // 셀 재사용으로 인한 데이터 미리 저장
+        trainCar
+            .map{[weak self] data in
+                var now = self?.nowData.value
+                now?[2].items[1].cellData = data
+                
+                return now ?? []
+            }
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
         
         let contents = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
@@ -182,23 +244,27 @@ class ReportViewModel {
                 }
             }
             .filterNil()
+            .share()
         
-        let brand = self.twoBtnCellModel.identityIndex
-            .withLatestFrom(self.twoBtnCellModel.updownClick){index, brand -> String? in
-                if index.section == 1, index.row == 1{
-                    return brand
-                }else{
-                    return nil
-                }
+        // 셀 재사용으로 인한 데이터 미리 저장
+        contents
+            .map{[weak self] data in
+                var now = self?.nowData.value
+                now?[2].items[2].cellData = data
+                
+                return now ?? [
             }
-            .filterNil()
-            .startWith("N")
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
         
         Observable.combineLatest(self.lineCellModel.lineSeleted, updownClick, nowStation, trianNumber, trainCar, contents, brand){
             ReportMSGData(line: $0, updown: $1, nowStation: $2, trainNumber: $3, trainCar: $4, contants: $5, brand: $6)
         }
         .bind(to: self.msgData)
         .disposed(by: self.bag)
-        
+    }
+    
+    deinit{
+        print("REPORTVIEWMODEL DEINIT")
     }
 }

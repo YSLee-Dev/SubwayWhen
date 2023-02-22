@@ -39,6 +39,7 @@ class ReportCheckModalVC : ModalVCCustom{
     }
     
     let checkModalViewModel : ReportCheckModalViewModel
+    var msgVC = MFMessageComposeViewController()
     
     let bag = DisposeBag()
     
@@ -58,11 +59,16 @@ class ReportCheckModalVC : ModalVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.attribute()
         self.layout()
     }
 }
 
 extension ReportCheckModalVC {
+    private func attribute(){
+        self.msgVC.messageComposeDelegate = self
+    }
+    
     private func layout(){
         [self.mainTitle, self.subTitle, self.okBtn, self.textView]
             .forEach{
@@ -117,6 +123,30 @@ extension ReportCheckModalVC {
     }
 }
 
+extension ReportCheckModalVC : MFMessageComposeViewControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result{
+        case .sent:
+            dismiss(animated: true){[weak self] in
+                self?.modalDismiss()
+            }
+        case .cancelled:
+            dismiss(animated: true){[weak self] in
+                self?.msgVC = MFMessageComposeViewController()
+                self?.msgVC.messageComposeDelegate = self
+            }
+        case .failed:
+            dismiss(animated: true){[weak self] in
+                self?.msgVC = MFMessageComposeViewController()
+                self?.msgVC.messageComposeDelegate = self
+            }
+        default:
+            print("Error")
+            break
+        }
+    }
+}
+
 extension Reactive where Base : ReportCheckModalVC{
     var contentsSet : Binder<String>{
         return Binder(base){base, text in
@@ -126,11 +156,10 @@ extension Reactive where Base : ReportCheckModalVC{
     
     var msgVCPresent : Binder<String>{
         return Binder(base){base, number in
-            let msgVC = MFMessageComposeViewController()
-            msgVC.recipients = [number]
-            msgVC.body = base.textView.text
+            base.msgVC.recipients = [number]
+            base.msgVC.body = base.textView.text
             
-            base.present(msgVC, animated: true)
+            base.present(base.msgVC, animated: true)
         }
     }
 }

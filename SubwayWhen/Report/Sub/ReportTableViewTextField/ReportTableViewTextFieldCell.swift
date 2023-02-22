@@ -41,7 +41,6 @@ class ReportTableViewTextFieldCell : UITableViewCell{
     
     override func prepareForReuse() {
         self.bag = DisposeBag()
-        self.textField.text = ""
     }
 }
 
@@ -102,5 +101,10 @@ extension ReportTableViewTextFieldCell{
     func viewDataSet(_ data : ReportTableViewCellData, index : IndexPath){
         self.textField.placeholder = data.cellTitle
         self.index = index
+        self.textField.text = data.cellData
+        
+        if !(data.cellData.isEmpty){
+            self.unseleted()
+        }
     }
 }

@@ -141,8 +141,8 @@ extension ReportTableViewLineCell{
             .disposed(by: self.bag)
         
         doneClick
-            .subscribe(onNext: {
-                self.unseleted()
+            .subscribe(onNext: {[weak self] in
+                self?.unseleted()
             })
             .disposed(by: self.bag)
     }
