@@ -30,28 +30,6 @@ struct MainTableViewCellData : Decodable{
     var nextStationId : String
     let totalStationId : String
     
-    
-    var useCode : String{
-        switch code {
-        case "0":
-            return "진입"
-        case "1":
-            return "도착"
-        case "2":
-            return "출발"
-        case "3":
-            return "출발"
-        case "4":
-            return "진입"
-        case "5":
-            return "도착"
-        case "99":
-            return "부근"
-        default:
-            return ""
-        }
-    }
-    
     var useTime : String{
         if self.type == .real{
             let time = Int(self.arrivalTime) ?? 0
@@ -59,7 +37,15 @@ struct MainTableViewCellData : Decodable{
             
             if min == 0{
                 if time == 0{
-                    return self.cutString(cutString: self.subPrevious)
+                    if self.code == "0"{
+                        return "곧 도착"
+                    }else if self.code == "1"{
+                        return "도착"
+                    }else if self.code == "2"{
+                        return "출발"
+                    }else{
+                        return self.cutString(cutString: self.subPrevious)
+                    }
                 }else{
                     return "\(time)초"
                 }
@@ -74,6 +60,27 @@ struct MainTableViewCellData : Decodable{
     
     var useFast : String{
         return self.isFast == "" ? "" : "(\(self.isFast.first ?? " "))"
+    }
+    
+    var state : String{
+        switch self.code{
+        case "0":
+            return "\(self.stationName) 진입"
+        case "1":
+            return "\(self.stationName) 도착"
+        case "2":
+            return "\(self.stationName) 출발"
+        case "3":
+            return "전역 출발"
+        case "4":
+            return "전역 진입"
+        case "5":
+            return "전역 도착"
+        case "99":
+            return "\(self.previousStation) 부근"
+        default:
+            return self.code
+        }
     }
     
     func cutString(cutString : String) -> String{
