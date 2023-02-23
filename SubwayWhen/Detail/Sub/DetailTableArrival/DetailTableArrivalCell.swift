@@ -140,7 +140,6 @@ extension DetailTableArrivalCell {
     func cellReset(){
         self.refreshTimerLabel.text = ""
         self.liveBG.liveViewReset()
-        print("123123123")
     }
     
     func bind(_ viewModel : DetailTableArrivalCellModel){
