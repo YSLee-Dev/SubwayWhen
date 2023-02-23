@@ -10,15 +10,18 @@ import UIKit
 import Then
 import SnapKit
 
+import Lottie
+
 class MainTableViewHeaderBtn : UIButton{
     
     let btnLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
     }
     
-    let btnImg = UIImageView()
+    let btnImg : LottieAnimationView
     
-    init(title : String, img : UIImage){
+    init(title : String, img : String){
+        self.btnImg = LottieAnimationView(name: img)
         super.init(frame: .null)
         self.layout()
         self.attribute(title : title, img: img)
@@ -40,16 +43,16 @@ extension MainTableViewHeaderBtn{
         
         self.btnImg.snp.makeConstraints{
             $0.trailing.bottom.equalToSuperview().inset(15)
-            $0.size.equalTo(35)
+            $0.size.equalTo(50)
         }
     }
     
-    private func attribute(title : String, img : UIImage){
+    private func attribute(title : String, img : String){
         self.backgroundColor = UIColor(named: "MainColor")
         self.layer.cornerRadius = ViewStyle.Layer.shadowRadius
         self.tintColor = .gray
         
         self.btnLabel.text = title
-        self.btnImg.image = img
+        self.btnImg.play()
     }
 }

@@ -16,6 +16,7 @@ pod 'RxOptional'
 pod 'Alamofire'
 pod 'Then'
 pod 'SnapKit', '~> 5.6.0'
+pod 'lottie-ios'
 
 pod 'Firebase/Analytics'
 pod 'Firebase/Database'
