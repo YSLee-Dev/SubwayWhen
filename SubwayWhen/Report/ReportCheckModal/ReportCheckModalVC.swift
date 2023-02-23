@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 import MessageUI
+import Lottie
 
 class ReportCheckModalVC : ModalVCCustom{
     let mainTitle = UILabel().then{
@@ -20,23 +21,28 @@ class ReportCheckModalVC : ModalVCCustom{
     }
     
     let subTitle = UILabel().then{
-        $0.text = "하단 내용으로 지하철 민원을 접수할까요?"
+        $0.text = "하단 내용으로 민원을 접수할까요?"
         $0.numberOfLines = 2
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textColor = .gray
+        $0.adjustsFontSizeToFitWidth = true
     }
     
     let okBtn = ModalCustomButton().then{
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.setTitle("확인", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.label, for: .normal)
     }
     
     let textView = UITextView().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = UIColor(named: "MainColor")
         $0.textColor = .label
         $0.isEditable = false
     }
+    
+    lazy var successIcon =  LottieAnimationView(name: "CheckMark")
     
     let checkModalViewModel : ReportCheckModalViewModel
     var msgVC = MFMessageComposeViewController()
@@ -84,7 +90,7 @@ extension ReportCheckModalVC {
         self.subTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.mainTitle.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
-            $0.height.equalTo(13)
+            $0.height.equalTo(26)
         }
         
         self.okBtn.snp.makeConstraints{
@@ -121,6 +127,27 @@ extension ReportCheckModalVC {
             .accept(Void())
         super.modalDismiss()
     }
+    
+    private func successIconSet(){
+        self.mainBG.addSubview(self.successIcon)
+        self.successIcon.snp.makeConstraints{
+            $0.center.equalToSuperview()
+            $0.size.equalTo(100)
+        }
+        
+        self.successIcon.play()
+    }
+    
+    func msgSendSuccess(){
+        self.textView.removeFromSuperview()
+        self.okBtn.removeFromSuperview()
+        self.mainTitle.text = "민원접수가 완료되었어요."
+        self.subTitle.text = "본앱에서의 민원접수는 문자메세지로의 접수를 도와주는 기능이에요.\n민원결과 및 처리내용은 문자메세지로 확인할 수 있어요."
+        self.subTitle.textColor = .systemRed
+        
+        // success icon
+        self.successIconSet()
+    }
 }
 
 extension ReportCheckModalVC : MFMessageComposeViewControllerDelegate{
@@ -128,7 +155,7 @@ extension ReportCheckModalVC : MFMessageComposeViewControllerDelegate{
         switch result{
         case .sent:
             dismiss(animated: true){[weak self] in
-                self?.modalDismiss()
+                self?.msgSendSuccess()
             }
         case .cancelled:
             dismiss(animated: true){[weak self] in
@@ -159,7 +186,11 @@ extension Reactive where Base : ReportCheckModalVC{
             base.msgVC.recipients = [number]
             base.msgVC.body = base.textView.text
             
+            #if DEBUG
+            base.msgSendSuccess()
+            #else
             base.present(base.msgVC, animated: true)
+            #endif
         }
     }
 }
