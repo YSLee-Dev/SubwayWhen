@@ -29,8 +29,14 @@ class DetailTableScheduleCellSubCell : UICollectionViewCell{
 
 extension DetailTableScheduleCellSubCell{
     func cellSet(_ data : ResultSchdule, color : UIColor){
-        scheduleTitle.text = "⏱️ \(data.lastStation)행 \(data.useArrTime)"
-        scheduleTitle.backgroundColor = color
+        if data.startTime == "정보없음"{
+            scheduleTitle.text = "⚠️ 정보없음"
+            scheduleTitle.backgroundColor = color
+        }else{
+            scheduleTitle.text = "⏱️ \(data.lastStation)행 \(data.useArrTime)"
+            scheduleTitle.backgroundColor = color
+        }
+       
     }
     
     private func layout(){

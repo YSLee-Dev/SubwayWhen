@@ -33,7 +33,7 @@ class SettingGroupModalVC : ModalVCCustom{
     let saveBtn = ModalCustomButton().then{
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.setTitle("저장", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.label, for: .normal)
     }
     
     let groupOneTitle = UILabel().then{
