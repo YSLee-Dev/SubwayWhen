@@ -135,6 +135,8 @@ extension ReportCheckModalVC {
             $0.size.equalTo(100)
         }
         
+        self.successIcon.animationSpeed = 2.5
+        
         self.successIcon.play()
     }
     

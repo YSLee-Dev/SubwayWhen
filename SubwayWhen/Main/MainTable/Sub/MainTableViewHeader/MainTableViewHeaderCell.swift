@@ -34,8 +34,8 @@ class MainTableViewHeaderCell : UITableViewCell{
         $0.text = "😵😵😵😵😵😵😵😵🫥🫥"
     }
     
-    var reportBtn = MainTableViewHeaderBtn(title: "지하철 민원", img: UIImage(systemName: "person.wave.2")!)
-    var editBtn = MainTableViewHeaderBtn(title: "편집", img: UIImage(systemName: "list.bullet.indent")!)
+    var reportBtn = MainTableViewHeaderBtn(title: "지하철 민원", img: "Report")
+    var editBtn = MainTableViewHeaderBtn(title: "편집", img: "List")
     
     override func prepareForReuse() {
         self.bag = DisposeBag()
@@ -127,6 +127,13 @@ extension MainTableViewHeaderCell {
                 return result
             }
             .drive(self.congestionLabel.rx.text)
+            .disposed(by: self.bag)
+        
+        viewModel.peopleCount
+            .drive(onNext: { [weak self] _ in
+                self?.editBtn.btnImg.play()
+                self?.reportBtn.btnImg.play()
+            })
             .disposed(by: self.bag)
         
         self.reportBtn.rx.tap

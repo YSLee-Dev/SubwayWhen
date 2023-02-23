@@ -83,6 +83,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
   - leveldb-library (1.22.1)
+  - lottie-ios (4.1.3)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -114,6 +115,7 @@ DEPENDENCIES:
   - Alamofire
   - Firebase/Analytics
   - Firebase/Database
+  - lottie-ios
   - RxAlamofire
   - RxCocoa (= 6.5.0)
   - RxDataSources
@@ -135,6 +137,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - leveldb-library
+    - lottie-ios
     - nanopb
     - PromisesObjC
     - RxAlamofire
@@ -158,6 +161,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 3bc3a6484b7bb20dd8489242c4dd3c92a3e5107b
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  lottie-ios: d0954d3150061f662ed0adf96ef98d7421864c47
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
@@ -169,6 +173,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 4f24915c159206ba4d6fd3894da994b05490be07
+PODFILE CHECKSUM: dadc06560a1ee7bb2fbeef92509b2caefbb39f73
 
 COCOAPODS: 1.11.3

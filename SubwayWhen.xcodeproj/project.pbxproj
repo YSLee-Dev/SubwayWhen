@@ -14,6 +14,9 @@
 		341200FC29375A2600C77050 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FB29375A2600C77050 /* MainViewModel.swift */; };
 		347AF806293629F1001FB813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347AF805293629F1001FB813 /* Assets.xcassets */; };
 		347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */; };
+		3496557829A73B3F00530EB6 /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496557729A73B3F00530EB6 /* Report.json */; };
+		3496558429A74B4800530EB6 /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496558329A74B4800530EB6 /* List.json */; };
+		3496559229A756F500530EB6 /* CheckMark.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496559129A756F500530EB6 /* CheckMark.json */; };
 		34995885296FF8B700D2276F /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34995884296FF8B700D2276F /* LoadModel.swift */; };
 		349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
 		349B516129A4616700A53879 /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
@@ -141,6 +144,9 @@
 		341200FB29375A2600C77050 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		347AF805293629F1001FB813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		347F8FBE29544E0900E62417 /* MainTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellType.swift; sourceTree = "<group>"; };
+		3496557729A73B3F00530EB6 /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
+		3496558329A74B4800530EB6 /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
+		3496559129A756F500530EB6 /* CheckMark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CheckMark.json; sourceTree = "<group>"; };
 		34995884296FF8B700D2276F /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadModel.swift; path = DataLoad/LoadModel.swift; sourceTree = "<group>"; };
 		349B515E29A452EC00A53879 /* DetailStationIdList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DetailStationIdList.plist; sourceTree = "<group>"; };
 		349B516029A4616700A53879 /* DetailStationId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStationId.swift; sourceTree = "<group>"; };
@@ -392,6 +398,16 @@
 			path = Korail;
 			sourceTree = "<group>";
 		};
+		349C925729A728F500529E60 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				3496557729A73B3F00530EB6 /* Report.json */,
+				3496559129A756F500530EB6 /* CheckMark.json */,
+				3496558329A74B4800530EB6 /* List.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		349CEFAC2990FE3100CC69E5 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,6 +640,7 @@
 				34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */,
+				349C925729A728F500529E60 /* Lottie */,
 				34A36BDC294C580800FB0DDB /* TabBar */,
 				34F5F1172966CCF50010A21D /* DataLoad */,
 				34C6DB87293627AE00C4ED80 /* Save */,
@@ -935,6 +952,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				347AF806293629F1001FB813 /* Assets.xcassets in Resources */,
+				3496559229A756F500530EB6 /* CheckMark.json in Resources */,
+				3496557829A73B3F00530EB6 /* Report.json in Resources */,
+				3496558429A74B4800530EB6 /* List.json in Resources */,
 				349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */,
 				34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
