@@ -130,9 +130,10 @@ extension MainTableViewHeaderCell {
             .disposed(by: self.bag)
         
         viewModel.peopleCount
+            .throttle(.seconds(2), latest: false)
             .drive(onNext: { [weak self] _ in
-                self?.editBtn.btnImg.play()
-                self?.reportBtn.btnImg.play()
+                self?.editBtn.iconAnimationPlay()
+                self?.reportBtn.iconAnimationPlay()
             })
             .disposed(by: self.bag)
         

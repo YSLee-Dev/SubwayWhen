@@ -54,7 +54,6 @@ class MainTableViewCell : UITableViewCell{
         $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
         $0.setImage(UIImage(systemName: "timer"), for: .normal)
         $0.tintColor = .white
-        $0.titleLabel?.font = .boldSystemFont(ofSize: 14)
     }
     
     lazy var border = UIView().then{
@@ -85,7 +84,7 @@ class MainTableViewCell : UITableViewCell{
         self.line.text = data.useLine
         
         self.arrivalTime.text = "\(data.useTime)"
-        self.now.text = "\(data.useFast)\(data.cutString(cutString: data.previousStation)) \(data.useCode)"
+        self.now.text = "\(data.useFast)\(data.state)"
         self.lineColor(line: data.lineNumber)
     }
     
