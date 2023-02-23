@@ -53,6 +53,11 @@ extension MainTableViewHeaderBtn{
         self.tintColor = .gray
         
         self.btnLabel.text = title
+        self.iconAnimationPlay()
+    }
+    
+    func iconAnimationPlay(){
+        self.btnImg.stop()
         self.btnImg.play()
     }
 }

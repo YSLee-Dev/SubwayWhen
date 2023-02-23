@@ -56,6 +56,8 @@ class DetailTableArrivalLiveView : MainStyleUIView{
         $0.alpha = 0
     }
     
+    var detailData : DetailTableViewCellData?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layout()
@@ -127,6 +129,8 @@ extension DetailTableArrivalLiveView{
         
         self.nowStationTitle.text = data.stationName
         self.beforeTitle = data.backStationName
+        
+        self.detailData = data
     }
     
     func liveViewReset(){
@@ -147,7 +151,7 @@ extension DetailTableArrivalLiveView{
             self.moreStationTitle.text = now
         }
         
-        if 0...5 ~= intCode{
+        if 0...5 ~= intCode || (!(0...5 ~= intCode) && self.detailData?.backStationName == now){
             UIView.animate(withDuration: 0.75, delay: 0, options: [.allowUserInteraction], animations: {
                 self.animateCGSet(true)
                 self.beforeStationTitle.alpha = 0
@@ -198,7 +202,12 @@ extension DetailTableArrivalLiveView{
             case 5:
                 self.trainIcon.transform = .identity
             case 99:
-                self.trainIcon.transform = .identity
+                if (!(0...5 ~= intCode) && self.detailData?.backStationName == now){
+                    self.trainIcon.transform = CGAffineTransform(translationX: 10, y: 0)
+                }else{
+                    self.trainIcon.transform = .identity
+                }
+               
             default:
                 break
             }
