@@ -53,7 +53,7 @@ class DetailViewModel{
         self.moreBtnClickData = self.scheduleCellModel.moreBtnClick
             .withLatestFrom(self.scheduleData)
             .map{ data -> DetailResultScheduleViewModel? in
-                if data.isEmpty{
+                if data.first?.startTime == "정보없음" || data.isEmpty{
                     return nil
                 }else{
                     return resultViewModel

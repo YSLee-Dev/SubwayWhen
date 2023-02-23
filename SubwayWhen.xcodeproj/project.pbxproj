@@ -32,6 +32,8 @@
 		349B518329A4BEFD00A53879 /* ReportCheckModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */; };
 		349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */; };
 		349B518829A4D2D600A53879 /* ReportBrandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518729A4D2D600A53879 /* ReportBrandData.swift */; };
+		349B518A29A6146A00A53879 /* KorailBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518929A6146900A53879 /* KorailBody.swift */; };
+		349B518C29A6149700A53879 /* KorailScdule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518B29A6149700A53879 /* KorailScdule.swift */; };
 		349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */; };
 		349CEFB02991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */; };
 		349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */; };
@@ -157,6 +159,8 @@
 		349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalVC.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalViewModel.swift; sourceTree = "<group>"; };
 		349B518729A4D2D600A53879 /* ReportBrandData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrandData.swift; sourceTree = "<group>"; };
+		349B518929A6146900A53879 /* KorailBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KorailBody.swift; sourceTree = "<group>"; };
+		349B518B29A6149700A53879 /* KorailScdule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KorailScdule.swift; sourceTree = "<group>"; };
 		349CEFAA2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCell.swift; sourceTree = "<group>"; };
 		349CEFAF2991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewSectionData.swift; sourceTree = "<group>"; };
 		349CEFB22991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewCellData.swift; sourceTree = "<group>"; };
@@ -379,6 +383,15 @@
 			path = ReportCheckModal;
 			sourceTree = "<group>";
 		};
+		349B518D29A6151700A53879 /* Korail */ = {
+			isa = PBXGroup;
+			children = (
+				349B518929A6146900A53879 /* KorailBody.swift */,
+				349B518B29A6149700A53879 /* KorailScdule.swift */,
+			);
+			path = Korail;
+			sourceTree = "<group>";
+		};
 		349CEFAC2990FE3100CC69E5 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +550,7 @@
 				34B9FD132974D3B300E349A1 /* ResultSchedule.swift */,
 				34B9FD0B2974D3B300E349A1 /* ScheduleType.swift */,
 				34B9FD0C2974D3B300E349A1 /* ScheduleSearch.swift */,
+				349B518D29A6151700A53879 /* Korail */,
 				34B9FD0D2974D3B300E349A1 /* Seoul */,
 				34B9FD112974D3B300E349A1 /* Tago */,
 			);
@@ -1033,6 +1047,7 @@
 				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */,
 				34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */,
+				349B518C29A6149700A53879 /* KorailScdule.swift in Sources */,
 				34B9FD162974D3B300E349A1 /* ScheduleStationModel.swift in Sources */,
 				349F1A58299A1CFA005E07CA /* DetailResultScheduleTopView.swift in Sources */,
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
@@ -1089,6 +1104,7 @@
 				34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */,
 				349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */,
 				34F5F0FF296428FE0010A21D /* DetailTableViewCellData.swift in Sources */,
+				349B518A29A6146A00A53879 /* KorailBody.swift in Sources */,
 				34B9FD142974D3B300E349A1 /* ScheduleType.swift in Sources */,
 				34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */,
 				34F5F0FA2962E6580010A21D /* TableVCCustom.swift in Sources */,

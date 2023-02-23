@@ -95,7 +95,12 @@ extension DetailTableScheduleCell{
                 
                 guard let cellData = self?.cellData else {return UICollectionViewCell()}
                 
-                cell.cellSet(data, color: UIColor(named: cellData.lineNumber) ?? .systemBackground)
+                if data.startTime == "정보없음"{
+                    cell.cellSet(data, color: .gray)
+                }else{
+                    cell.cellSet(data, color: UIColor(named: cellData.lineNumber) ?? .systemBackground)
+                }
+                
                 
                 return cell
             }
@@ -104,7 +109,12 @@ extension DetailTableScheduleCell{
         viewModel.cellData
             .map{ data -> String? in
                 guard let first = data.first else {return nil}
-                return "\(first.lastStation)행 \(first.useArrTime) : \(first.useTime)남음"
+                
+                if first.startTime == "정보없음"{
+                    return "시간표를 불러올 수 없어요."
+                }else{
+                    return "\(first.lastStation)행 \(first.useArrTime) : \(first.useTime)남음"
+                }
             }
             .filterNil()
             .drive(self.mainTitle.rx.text)
