@@ -9,6 +9,7 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class SettingViewModel {
     // OUTPUT
@@ -56,17 +57,34 @@ class SettingViewModel {
         .asDriver(onErrorDriveWith: .empty())
         
         // 자동 새로고침 여부
-        self.settingTableViewCellModel.switchValue
+        self.settingTableViewCellModel.cellIndex
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){ index, value -> Bool? in
+                if index == IndexPath(row: 0, section: 1){
+                    return value
+                }else{
+                    return nil
+                }
+            }
+            .filterNil()
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailAutoReload = $0
             })
             .disposed(by: self.bag)
         
         // 메인 혼잡도 이모지 변경
-        self.settingTableViewCellModel.tfValue
+       self.settingTableViewCellModel.cellIndex
+            .withLatestFrom(self.settingTableViewCellModel.tfValue){ index, tf -> String? in
+                if index == IndexPath(row: 0, section: 0){
+                    return tf
+                }else{
+                    return nil
+                }
+            }
+            .filterNil()
             .subscribe(onNext: {
-                let label = $0 ?? "😵"
+                let label = $0 == "" ? "😵" : $0
                 FixInfo.saveSetting.mainCongestionLabel = label
+                print("바꿈")
             })
             .disposed(by: self.bag)
     }
