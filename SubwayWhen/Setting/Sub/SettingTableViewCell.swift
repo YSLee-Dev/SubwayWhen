@@ -37,6 +37,8 @@ class SettingTableViewCell : UITableViewCell{
     
     lazy var onoffSwitch = UISwitch()
     
+    var index : IndexPath = .init(row: 0, section: 0)
+    
     override func prepareForReuse() {
         self.bag = DisposeBag()
     }
@@ -75,13 +77,6 @@ extension SettingTableViewCell{
     func bind(_ cellModel : SettingTableViewCellModel){
         self.textField.rx.controlEvent(.editingDidEnd)
         .withLatestFrom(self.textField.rx.text)
-            .map{
-                if $0?.isEmpty ?? true {
-                    return "😵"
-                }else{
-                    return $0
-                }
-            }
             .bind(to: cellModel.tfValue)
             .disposed(by: self.bag)
         
@@ -92,10 +87,22 @@ extension SettingTableViewCell{
         self.doneBarBtn.rx.tap
             .bind(to: cellModel.keyboardClose)
             .disposed(by: self.bag)
+        
+        Observable<Void>.merge(
+            self.textField.rx.controlEvent(.editingDidEnd).asObservable(),
+            self.onoffSwitch.rx.isOn.map{_ in Void()}.skip(1)
+        )
+        .map{[weak self] _ in
+            self?.index ?? IndexPath(row: 9, section: 9)
+        }
+        .debug()
+        .bind(to: cellModel.cellIndex)
+        .disposed(by: self.bag)
     }
     
-    func titleSet(title : String){
+    func titleSet(title : String, index : IndexPath){
         self.settingTitle.text = title
+        self.index = index
     }
     
     // 셀 스타일에 맞게 분배
