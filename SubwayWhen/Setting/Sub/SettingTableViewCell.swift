@@ -95,7 +95,6 @@ extension SettingTableViewCell{
         .map{[weak self] _ in
             self?.index ?? IndexPath(row: 9, section: 9)
         }
-        .debug()
         .bind(to: cellModel.cellIndex)
         .disposed(by: self.bag)
     }

@@ -93,7 +93,12 @@ extension Reactive where Base : SettingVC{
         return Binder(base){base, data in
             base.view.endEditing(true)
             if data.settingTitle == "특정 그룹 시간"{
-                let modal = SettingGroupModalVC(modalHeight: 415)
+                let modal = SettingGroupModalVC(modalHeight: 405, btnTitle: "저장", mainTitle: "특정 그룹 시간", subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.")
+                modal.modalPresentationStyle = .overFullScreen
+                
+                base.present(modal, animated: false)
+            }else if data.settingTitle == "기타"{
+                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "", subTitle: "")
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)

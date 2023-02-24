@@ -17,6 +17,8 @@
 		3496557829A73B3F00530EB6 /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496557729A73B3F00530EB6 /* Report.json */; };
 		3496558429A74B4800530EB6 /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496558329A74B4800530EB6 /* List.json */; };
 		3496559229A756F500530EB6 /* CheckMark.json in Resources */ = {isa = PBXBuildFile; fileRef = 3496559129A756F500530EB6 /* CheckMark.json */; };
+		3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559329A777A100530EB6 /* SettingContentsModalVC.swift */; };
+		3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */; };
 		34995885296FF8B700D2276F /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34995884296FF8B700D2276F /* LoadModel.swift */; };
 		349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
 		349B516129A4616700A53879 /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
@@ -147,6 +149,8 @@
 		3496557729A73B3F00530EB6 /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		3496558329A74B4800530EB6 /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
 		3496559129A756F500530EB6 /* CheckMark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CheckMark.json; sourceTree = "<group>"; };
+		3496559329A777A100530EB6 /* SettingContentsModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalVC.swift; sourceTree = "<group>"; };
+		3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalViewModel.swift; sourceTree = "<group>"; };
 		34995884296FF8B700D2276F /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadModel.swift; path = DataLoad/LoadModel.swift; sourceTree = "<group>"; };
 		349B515E29A452EC00A53879 /* DetailStationIdList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DetailStationIdList.plist; sourceTree = "<group>"; };
 		349B516029A4616700A53879 /* DetailStationId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStationId.swift; sourceTree = "<group>"; };
@@ -319,6 +323,15 @@
 			path = Sub;
 			sourceTree = "<group>";
 		};
+		3496559529A777A400530EB6 /* SettingContentsModal */ = {
+			isa = PBXGroup;
+			children = (
+				3496559329A777A100530EB6 /* SettingContentsModalVC.swift */,
+				3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */,
+			);
+			path = SettingContentsModal;
+			sourceTree = "<group>";
+		};
 		349B516429A4630D00A53879 /* Report */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +490,7 @@
 			children = (
 				349FF286299DBC95007A98F4 /* SettingVC.swift */,
 				349FF289299DEDE1007A98F4 /* SettingViewModel.swift */,
+				3496559529A777A400530EB6 /* SettingContentsModal */,
 				349FF29F299F2154007A98F4 /* SettingGroupModal */,
 				349FF298299E0C0C007A98F4 /* Sub */,
 				349FF297299E0C03007A98F4 /* Entity */,
@@ -1051,7 +1065,9 @@
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				34F494CF2980D8EC001599B1 /* RequestToken.swift in Sources */,
+				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
+				3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
 				34995885296FF8B700D2276F /* LoadModel.swift in Sources */,
 				349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */,
