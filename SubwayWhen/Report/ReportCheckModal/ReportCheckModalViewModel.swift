@@ -12,7 +12,7 @@ import RxCocoa
 
 class ReportCheckModalViewModel{
     // INPUT
-    let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, updown: "", nowStation: "", trainNumber: "", trainCar: "", contants: "", brand: ""))
+    let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, nowStation: "", destination: "", trainCar: "", contants: "", brand: ""))
     let close = PublishRelay<Void>()
     let okBtnClick = PublishRelay<Void>()
     
@@ -28,9 +28,8 @@ class ReportCheckModalViewModel{
         
               return  """
             호선: \(data.line.rawValue)
-            상하행: \(data.updown)
-            편성: \(data.trainNumber)
-            열차 칸: \(data.trainCar)
+            행선지: \(data.destination)행
+            열차번호(칸 위치): \(data.trainCar)
             현재위치: (\(nowHour)시 \(nowMin)분) \(data.nowStation)역
             \(data.contants)
             """

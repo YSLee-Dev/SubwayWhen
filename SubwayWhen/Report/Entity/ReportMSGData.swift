@@ -9,9 +9,8 @@ import Foundation
 
 struct ReportMSGData{
     var line : ReportBrandData
-    var updown : String
     var nowStation : String
-    var trainNumber : String
+    var destination : String
     var trainCar : String
     var contants : String
     var brand : String

@@ -86,7 +86,6 @@ extension ReportTableViewTextFieldCell{
         
         doenTap
             .map{[weak self] _  in
-                self?.unseleted()
                 return self?.index ?? IndexPath(row: 0, section: 0)
             }
             .bind(to: cellModel.identityIndex)
