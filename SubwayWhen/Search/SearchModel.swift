@@ -46,11 +46,11 @@ class SearchModel{
         
         self.database.observe(.value){
             guard let value = $0.value as? [String : [String:[String]]] else {return}
-            let subwaySearchDefaultList = value["SubwaySearchDefaultList"]
-            let list = subwaySearchDefaultList?["List"]
+            let subwayWhen = value["SubwayWhen"]
+            let subwaySearchDefaultList = subwayWhen?["SearchDefaultList"]
             
             listData
-                .accept(list ?? [])
+                .accept(subwaySearchDefaultList ?? [])
         }
         return listData
             .asObservable()
