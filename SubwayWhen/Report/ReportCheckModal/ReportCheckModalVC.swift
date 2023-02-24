@@ -146,6 +146,8 @@ extension Reactive where Base : ReportCheckModalVC{
             base.msgVC.recipients = [number]
             base.msgVC.body = base.textView.text
             
+            print(number)
+            
             #if DEBUG
             base.msgSendSuccess()
             #else

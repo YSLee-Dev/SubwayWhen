@@ -11,6 +11,6 @@ import RxSwift
 import RxCocoa
 
 struct ReportTableViewTwoBtnCellModel {
-    let updownClick = PublishRelay<String>()
-    let identityIndex = PublishRelay<IndexPath>()
+    let updownClick = BehaviorRelay<String>(value: "")
+    let identityIndex = BehaviorRelay<IndexPath>(value: IndexPath(row: 9, section: 9))
 }
