@@ -26,12 +26,32 @@ class ModalVCCustom : UIViewController{
         $0.layer.cornerRadius = 2.5
     }
     
+    let mainTitle = UILabel().then{
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize, weight: .heavy)
+        $0.textColor = .label
+    }
+    
+    let subTitle = UILabel().then{
+        $0.numberOfLines = 0
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
+        $0.textColor = .gray
+    }
+    
+    lazy var okBtn = ModalCustomButton().then{
+        $0.backgroundColor = UIColor(named: "MainColor")
+        $0.setTitleColor(.label, for: .normal)
+    }
+    
     private var moveTranslation : CGPoint = CGPoint(x: 0, y: 0)
     private var moveVelocity : CGPoint = CGPoint(x: 0, y: 0)
     
-    init(modalHeight: CGFloat){
+    init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String){
         self.modalHeight = modalHeight
         super.init(nibName: nil, bundle: nil)
+        
+        self.okBtn.setTitle(btnTitle, for: .normal)
+        self.mainTitle.text = mainTitle
+        self.subTitle.text = subTitle
     }
     
     required init?(coder: NSCoder) {
@@ -82,6 +102,27 @@ extension ModalVCCustom{
             $0.centerX.equalToSuperview()
             $0.width.equalTo(50)
             $0.height.equalTo(5)
+        }
+        
+        self.mainBG.addSubview(self.okBtn)
+        self.okBtn.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(self.grayBG).inset(42.5)
+        }
+        
+        self.mainBG.addSubview(self.mainTitle)
+        self.mainTitle.snp.makeConstraints{
+            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalToSuperview().inset(30)
+            $0.height.equalTo(25)
+        }
+        
+        self.mainBG.addSubview(self.subTitle)
+        self.subTitle.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalTo(self.mainTitle.snp.bottom)
+            $0.height.equalTo(26)
         }
     }
     

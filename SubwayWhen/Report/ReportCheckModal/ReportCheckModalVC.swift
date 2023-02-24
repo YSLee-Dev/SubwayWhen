@@ -14,26 +14,6 @@ import MessageUI
 import Lottie
 
 class ReportCheckModalVC : ModalVCCustom{
-    let mainTitle = UILabel().then{
-        $0.text = "지하철 민원"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize, weight: .heavy)
-        $0.textColor = .label
-    }
-    
-    let subTitle = UILabel().then{
-        $0.text = "하단 내용으로 민원을 접수할까요?"
-        $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.textColor = .gray
-        $0.adjustsFontSizeToFitWidth = true
-    }
-    
-    let okBtn = ModalCustomButton().then{
-        $0.backgroundColor = UIColor(named: "MainColor")
-        $0.setTitle("확인", for: .normal)
-        $0.setTitleColor(.label, for: .normal)
-    }
-    
     let textView = UITextView().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.layer.cornerRadius = 15
@@ -51,7 +31,7 @@ class ReportCheckModalVC : ModalVCCustom{
     
     init(modalHeight: CGFloat, viewModel : ReportCheckModalViewModel) {
         self.checkModalViewModel = viewModel
-        super.init(modalHeight: modalHeight)
+        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단 내용으로 민원을 접수할까요?")
         self.bind(self.checkModalViewModel)
     }
     
@@ -76,29 +56,7 @@ extension ReportCheckModalVC {
     }
     
     private func layout(){
-        [self.mainTitle, self.subTitle, self.okBtn, self.textView]
-            .forEach{
-                self.mainBG.addSubview($0)
-            }
-        
-        self.mainTitle.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalToSuperview().inset(30)
-            $0.height.equalTo(25)
-        }
-        
-        self.subTitle.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.mainTitle.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
-            $0.height.equalTo(26)
-        }
-        
-        self.okBtn.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(50)
-            $0.bottom.equalTo(self.grayBG).inset(42.5)
-        }
-        
+        self.mainBG.addSubview(self.textView)
         self.textView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.subTitle.snp.bottom).offset(10)

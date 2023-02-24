@@ -66,7 +66,7 @@ class ModalVC : ModalVCCustom{
     
     init(_ viewModel : ModalViewModel, modalHeight : CGFloat){
         self.modalViewModel = viewModel
-        super.init(modalHeight: modalHeight)
+        super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹 및 제외 행을 선택하신 후 상/하행 버튼을 누르면 저장할 수 있어요.")
         self.bind(self.modalViewModel)
     }
     
@@ -76,6 +76,7 @@ class ModalVC : ModalVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.attribute()
         self.layout()
     }
     
@@ -85,6 +86,9 @@ class ModalVC : ModalVCCustom{
 }
 
 extension ModalVC{
+    private func attribute(){
+        self.okBtn.removeFromSuperview()
+    }
     private func layout(){
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{
@@ -105,7 +109,7 @@ extension ModalVC{
         }
         self.line.snp.makeConstraints{
             $0.leading.equalTo(self.upBtn)
-            $0.top.equalToSuperview().inset(30)
+            $0.top.equalTo(self.subTitle.snp.bottom).offset(30)
             $0.size.equalTo(70)
         }
         self.titleLabel.snp.makeConstraints{

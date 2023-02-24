@@ -47,6 +47,10 @@ class SettingViewModel {
                     ]),
                     SettingTableViewCellSection(sectionName: "상세화면", items: [
                         .init(settingTitle: "자동 새로 고침",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail)
+                    ]),
+                    SettingTableViewCellSection(sectionName: "라이선스 및 저작권", items: [
+                        .init(settingTitle: "오픈라이선스", defaultData: "", inputType: .NewVC, groupType: .Other),
+                        .init(settingTitle: "기타", defaultData: "", inputType: .NewVC, groupType: .Other)
                     ])
                 ]
             )
