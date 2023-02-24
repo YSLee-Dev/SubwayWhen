@@ -98,7 +98,7 @@ extension Reactive where Base : SettingVC{
                 
                 base.present(modal, animated: false)
             }else if data.settingTitle == "기타"{
-                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "", subTitle: "")
+                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "기타", subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.")
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)
