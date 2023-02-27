@@ -16,7 +16,6 @@ struct MainTableViewModel{
     
     // MODEL
     let mainTableViewHeaderViewModel = MainTableViewHeaderCellModel()
-    let mainTableViewFooterViewModel = MainTableViewFooterViewModel()
     let mainTableViewCellModel = MainTableViewCellModel()
     let mainTableViewGroupModel = MainTableViewGroupCellModel()
     
@@ -24,6 +23,7 @@ struct MainTableViewModel{
     let cellClick = PublishRelay<MainTableViewCellData>()
     let resultData = BehaviorRelay<[MainTableViewSection]>(value: [])
     let refreshOn = PublishRelay<Void>()
+    let plusBtnClick = PublishRelay<Void>()
     
     init(){
         self.cellData = self.resultData
