@@ -68,11 +68,11 @@
 		34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0666F2993A12E00B414F3 /* MainTableViewHeaderBtn.swift */; };
 		34A0AA5729A87A0D00A865A4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0AA5629A87A0D00A865A4 /* SettingModel.swift */; };
 		34A17462293DBB180086870F /* MainTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17461293DBB180086870F /* MainTableViewCellData.swift */; };
-		34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17467293DD18D0086870F /* MainTableViewFooter.swift */; };
-		34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */; };
 		34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
 		34A2563629AC5025008CC885 /* TabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563529AC5025008CC885 /* TabbarModel.swift */; };
 		34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563729AC57E9008CC885 /* PopupModal.swift */; };
+		34A2563B29ACAC6F008CC885 /* MainTableViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563A29ACAC6F008CC885 /* MainTableViewDefaultCell.swift */; };
+		34A2563E29ACAF52008CC885 /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = 34A2563D29ACAF52008CC885 /* Plus.json */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
@@ -203,11 +203,11 @@
 		34A0666F2993A12E00B414F3 /* MainTableViewHeaderBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderBtn.swift; sourceTree = "<group>"; };
 		34A0AA5629A87A0D00A865A4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		34A17461293DBB180086870F /* MainTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCellData.swift; sourceTree = "<group>"; };
-		34A17467293DD18D0086870F /* MainTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooter.swift; sourceTree = "<group>"; };
-		34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooterViewModel.swift; sourceTree = "<group>"; };
 		34A1FA8F29824B6200537B02 /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
 		34A2563529AC5025008CC885 /* TabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarModel.swift; sourceTree = "<group>"; };
 		34A2563729AC57E9008CC885 /* PopupModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupModal.swift; sourceTree = "<group>"; };
+		34A2563A29ACAC6F008CC885 /* MainTableViewDefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewDefaultCell.swift; sourceTree = "<group>"; };
+		34A2563D29ACAF52008CC885 /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
@@ -323,8 +323,8 @@
 			children = (
 				34B9FD1B2974D3E500E349A1 /* MainTableViewHeader */,
 				34CA5597293893500006F67B /* MainTableViewGroup */,
-				34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */,
-				34A17469293DD2E40086870F /* MainTableViewFooter */,
+				34A0666E299381AD00B414F3 /* MainTableViewArrival */,
+				34A2563C29ACAD94008CC885 /* MainTableViewDefault */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -421,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				3496557729A73B3F00530EB6 /* Report.json */,
+				34A2563D29ACAF52008CC885 /* Plus.json */,
 				3496559129A756F500530EB6 /* CheckMark.json */,
 				3496558329A74B4800530EB6 /* List.json */,
 			);
@@ -534,13 +535,13 @@
 			path = SettingGroupModal;
 			sourceTree = "<group>";
 		};
-		34A0666E299381AD00B414F3 /* MainTableViewArrivalCell */ = {
+		34A0666E299381AD00B414F3 /* MainTableViewArrival */ = {
 			isa = PBXGroup;
 			children = (
 				341200F82937566800C77050 /* MainTableViewArrivalCell.swift */,
 				34A0666C2993813000B414F3 /* MainTableViewArrivalCellModel.swift */,
 			);
-			path = MainTableViewArrivalCell;
+			path = MainTableViewArrival;
 			sourceTree = "<group>";
 		};
 		34A066712993A13500B414F3 /* Sub */ = {
@@ -551,21 +552,20 @@
 			path = Sub;
 			sourceTree = "<group>";
 		};
-		34A17469293DD2E40086870F /* MainTableViewFooter */ = {
-			isa = PBXGroup;
-			children = (
-				34A17467293DD18D0086870F /* MainTableViewFooter.swift */,
-				34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */,
-			);
-			path = MainTableViewFooter;
-			sourceTree = "<group>";
-		};
 		34A2563929AC5801008CC885 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
 				34A2563729AC57E9008CC885 /* PopupModal.swift */,
 			);
 			path = Popup;
+			sourceTree = "<group>";
+		};
+		34A2563C29ACAD94008CC885 /* MainTableViewDefault */ = {
+			isa = PBXGroup;
+			children = (
+				34A2563A29ACAC6F008CC885 /* MainTableViewDefaultCell.swift */,
+			);
+			path = MainTableViewDefault;
 			sourceTree = "<group>";
 		};
 		34A36BDC294C580800FB0DDB /* TabBar */ = {
@@ -987,6 +987,7 @@
 				3496557829A73B3F00530EB6 /* Report.json in Resources */,
 				3496558429A74B4800530EB6 /* List.json in Resources */,
 				349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */,
+				34A2563E29ACAF52008CC885 /* Plus.json in Resources */,
 				34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -1043,6 +1044,7 @@
 			files = (
 				34D3E7382988E04A002AAB83 /* DetailTableArrivalLiveView.swift in Sources */,
 				34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */,
+				34A2563B29ACAC6F008CC885 /* MainTableViewDefaultCell.swift in Sources */,
 				34C6DB9C293627AF00C4ED80 /* FixInfo.swift in Sources */,
 				34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderCell.swift in Sources */,
 				34C6DBA0293627BF00C4ED80 /* TabbarVC.swift in Sources */,
@@ -1098,7 +1100,6 @@
 				349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */,
 				34B9FD1A2974D3B300E349A1 /* ResultSchedule.swift in Sources */,
 				34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */,
-				34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */,
 				34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */,
 				349B518C29A6149700A53879 /* KorailScdule.swift in Sources */,
@@ -1147,7 +1148,6 @@
 				34B9FD172974D3B300E349A1 /* SearchInfoBySubwayNameService.swift in Sources */,
 				34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */,
 				349E32C22978DF1C00147DEE /* MainStyleUIView.swift in Sources */,
-				34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */,
 				34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */,
 				341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */,
 				349B517229A46C8900A53879 /* ReportTableViewLineCellModel.swift in Sources */,

@@ -11,7 +11,7 @@ import Then
 import SnapKit
 
 class TabbarVC : UITabBarController{
-    let loadModel = LoadModel()
+    let tabbarModel = TabbarModel()
     
     let mainVC = MainVC().then{
         $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
@@ -27,7 +27,7 @@ class TabbarVC : UITabBarController{
     
     override func viewDidLoad() {
         self.attribute()
-        self.settingLoad()
+        self.viewLoad()
     }
 }
 
@@ -44,8 +44,9 @@ extension TabbarVC{
         self.tabBar.itemPositioning = .centered
     }
     
-    private func settingLoad(){
-        let result = self.loadModel.saveSettingLoad()
+    private func viewLoad(){
+        // 설정 로드
+        let result = self.tabbarModel.saveSettingLoad()
         
         switch result{
         case .success():
@@ -54,5 +55,31 @@ extension TabbarVC{
             FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true)
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
+        
+        // 버전 확인
+        self.tabbarModel.versionRequest{[weak self] version in
+            let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+            
+            if nowVersion <= version{
+                self?.updateAlertShow()
+            }
+        }
+        
+        // 팝업 로드
+        self.tabbarModel.popupRequest{[weak self] title, subTitle, contents in
+            if title != "Nil"{
+                let popup = PopupModal(modalHeight: 400, popupTitle: title, subTitle: subTitle, popupValue: contents)
+                popup.modalPresentationStyle = .overFullScreen
+                self?.present(popup, animated: false)
+            }
+        }
+    }
+    
+    private func updateAlertShow(){
+        let alert = UIAlertController(title: "버전 업데이트 안내", message: "새로운 버전으로 업데이트 후 앱을 이용해주세요.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default){_ in
+            print("눌림")
+        })
+        self.present(alert, animated: true)
     }
 }
