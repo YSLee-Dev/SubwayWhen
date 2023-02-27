@@ -20,7 +20,6 @@ class MainTableView : UITableView{
         $0.backgroundColor = .systemBackground
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
-    let footerView = MainTableViewFooterView(frame: CGRect(x: 0, y: 0, width: 300, height: 115))
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -37,18 +36,15 @@ extension MainTableView{
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
         self.register(MainTableViewGroupCell.self, forCellReuseIdentifier: "MainGroup")
         self.register(MainTableViewHeaderCell.self, forCellReuseIdentifier: "MainHeader")
-        self.register(MainTableViewFooterView.self, forHeaderFooterViewReuseIdentifier: "MainFooter")
+        self.register(MainTableViewDefaultCell.self, forCellReuseIdentifier: "MainDefault")
         self.dataSource = nil
         self.rowHeight = UITableView.automaticDimension
         self.estimatedRowHeight = 185
         self.separatorStyle = .none
         self.refreshControl = self.refresh
-        self.tableFooterView = self.footerView
     }
     
     func bind(_ viewModel : MainTableViewModel){
-        self.footerView.bind(viewModel.mainTableViewFooterViewModel)
-        
         // VIEWMODEl -> VIEW
         let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {dataSource, tv, index, item in
             switch index.section{
@@ -64,10 +60,17 @@ extension MainTableView{
                 cell.bind(viewModel.mainTableViewGroupModel)
                 return cell
             default:
-                guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
-           
-                cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
-                return cell
+                if item.id == "NoData"{
+                    guard let cell = tv.dequeueReusableCell(withIdentifier: "MainDefault", for: index) as? MainTableViewDefaultCell else {return UITableViewCell()}
+                    
+                    cell.animationPlay()
+                    return cell
+                }else{
+                    guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
+               
+                    cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
+                    return cell
+                }
             }
            
         })
@@ -84,10 +87,19 @@ extension MainTableView{
         // VIEW -> VIEWMODEL
         self.rx.modelSelected(MainTableViewCellData.self)
             .filter{
-                !($0.id == "header" || $0.id == "group")
+                !($0.id == "header" || $0.id == "group" || $0.id == "NoData")
             }
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
+        
+        self.rx.modelSelected(MainTableViewCellData.self)
+            .filter{
+                $0.id == "NoData"
+            }
+            .map{_ in Void()}
+            .bind(to: viewModel.plusBtnClick)
+            .disposed(by: self.bag)
+        
         
         self.refreshControl?.rx.controlEvent(.valueChanged)
             .map{[weak self] _ in

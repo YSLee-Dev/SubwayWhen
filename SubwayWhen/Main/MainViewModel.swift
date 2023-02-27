@@ -70,16 +70,11 @@ class MainViewModel{
             .asDriver(onErrorDriveWith: .empty())
         
         // 검색,플러스 버튼 클릭 시
-        self.stationPlusBtnClick = self.mainTableViewModel.mainTableViewFooterViewModel.plusBtnClick
+        self.stationPlusBtnClick = self.mainTableViewModel.plusBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         // edit 버튼 클릭 시
-        let editBtnClick = Observable.merge(
-            self.mainTableViewModel.mainTableViewFooterViewModel.editBtnClick.asObservable(),
-            self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick.asObservable()
-            )
-        
-        self.editBtnClick = editBtnClick
+        self.editBtnClick = self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
         // 그룹 변경 시 타이틀 제거
@@ -220,11 +215,18 @@ class MainViewModel{
         
         self.groupData
             .map{data -> [MainTableViewSection]in
-                let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: "")])
-                let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: "")])
-                let data = MainTableViewSection(id : "live", sectionName: "", items: data)
+                let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId:"")])
+                let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId:"")])
                 
-                return [header,group,data]
+                var groupData = MainTableViewSection(id: "live", sectionName: "", items: [])
+                
+                if data.isEmpty{
+                    groupData.items = [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "NoData", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId: "")]
+                }else{
+                    groupData.items = data
+                }
+                
+                return [header,group,groupData]
             }
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
