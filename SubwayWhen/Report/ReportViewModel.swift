@@ -135,7 +135,7 @@ class ReportViewModel {
                 if index.section == 1, index.row == 2{
                     return brand
                 }else if index == IndexPath(row: 9, section: 9){
-                    return "N"
+                    return "N/A"
                 }else{
                     return nil
                 }
@@ -188,17 +188,25 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         // 세 번째 행 출력
-        let threeStep = Observable.zip(destination, nowStation, brand)
+        let threeStep = Observable.combineLatest(destination, nowStation, brand)
             .withUnretained(self)
-            .map{cell, _ in
+            .map{cell, value -> [ReportTableViewCellSection] in
                 var now = cell.nowData.value
-                now.append(.init(sectionName: "상세 정보", items: [
-                    .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField),
-                    .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField)
-                ]))
+     
+                if now[1].items.count == 3 && value.2 == "N/A"{
+                    return []
+                }else{
+                    now.append(.init(sectionName: "상세 정보", items: [
+                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField),
+                        .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField)
+                    ]))
+                    
+                    return now
+                }
                 
-                return now
+              
             }
+            .filterEmpty()
             .share()
         
         threeStep
@@ -255,8 +263,15 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         
-        Observable.combineLatest(self.lineCellModel.lineSeleted, nowStation, destination, trainCar, contents, brand){
-            ReportMSGData(line: $0, nowStation: $1, destination: $2, trainCar: $3, contants: $4, brand: $5)
+        Observable.combineLatest(self.lineCellModel.lineSeleted, nowStation, destination, trainCar, contents, brand){[weak self] line, station, de, train, contents, subwayBrand in
+            let now = self?.nowData.value
+            
+            var brand = subwayBrand
+            if now?[1].items.count == 2 && subwayBrand == "N/A"{
+                brand = "N"
+            }
+            
+            return ReportMSGData(line: line, nowStation: station, destination: de, trainCar: train, contants: contents, brand: brand)
         }
         .bind(to: self.msgData)
         .disposed(by: self.bag)

@@ -71,6 +71,8 @@
 		34A17468293DD18D0086870F /* MainTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A17467293DD18D0086870F /* MainTableViewFooter.swift */; };
 		34A1746B293DD2F60086870F /* MainTableViewFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */; };
 		34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
+		34A2563629AC5025008CC885 /* TabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563529AC5025008CC885 /* TabbarModel.swift */; };
+		34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563729AC57E9008CC885 /* PopupModal.swift */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
@@ -204,6 +206,8 @@
 		34A17467293DD18D0086870F /* MainTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooter.swift; sourceTree = "<group>"; };
 		34A1746A293DD2F60086870F /* MainTableViewFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewFooterViewModel.swift; sourceTree = "<group>"; };
 		34A1FA8F29824B6200537B02 /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
+		34A2563529AC5025008CC885 /* TabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarModel.swift; sourceTree = "<group>"; };
+		34A2563729AC57E9008CC885 /* PopupModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupModal.swift; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
@@ -556,11 +560,21 @@
 			path = MainTableViewFooter;
 			sourceTree = "<group>";
 		};
+		34A2563929AC5801008CC885 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				34A2563729AC57E9008CC885 /* PopupModal.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
 		34A36BDC294C580800FB0DDB /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
 				34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */,
+				34A2563529AC5025008CC885 /* TabbarModel.swift */,
 				34A36BDA294C580300FB0DDB /* TabBarCustomButton.swift */,
+				34A2563929AC5801008CC885 /* Popup */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -1037,6 +1051,7 @@
 				34F5F11D2966DC6D0010A21D /* DetailTableArrivalCell.swift in Sources */,
 				34A0666D2993813000B414F3 /* MainTableViewArrivalCellModel.swift in Sources */,
 				34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */,
+				34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */,
 				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */,
@@ -1092,6 +1107,7 @@
 				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
 				34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */,
 				34F5F0E82962D8B10010A21D /* DetailViewModel.swift in Sources */,
+				34A2563629AC5025008CC885 /* TabbarModel.swift in Sources */,
 				349FF290299E04EA007A98F4 /* SettingTableViewCellData.swift in Sources */,
 				34F5F101296429E00010A21D /* DetailTableViewSectionData.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
