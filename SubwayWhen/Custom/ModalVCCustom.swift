@@ -32,7 +32,8 @@ class ModalVCCustom : UIViewController{
     }
     
     let subTitle = UILabel().then{
-        $0.numberOfLines = 0
+        $0.numberOfLines = 2
+        $0.lineBreakMode = .byWordWrapping
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textColor = .gray
     }
@@ -113,7 +114,7 @@ extension ModalVCCustom{
         
         self.mainBG.addSubview(self.mainTitle)
         self.mainTitle.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalToSuperview().inset(30)
             $0.height.equalTo(25)
         }
@@ -122,7 +123,6 @@ extension ModalVCCustom{
         self.subTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.mainTitle.snp.bottom)
-            $0.height.equalTo(26)
         }
     }
     
