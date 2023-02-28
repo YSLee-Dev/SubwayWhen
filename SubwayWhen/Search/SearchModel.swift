@@ -37,6 +37,11 @@ class SearchModel{
                     return .failure(.init(.cannotDecodeContentData))
                 }
             }
+            .timeout(.seconds(5), scheduler: MainScheduler.asyncInstance)
+            .catch{error in
+                print(error)
+                return .just(.failure(.init(.notConnectedToInternet)))
+            }
             .asSingle()
     }
     
