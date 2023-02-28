@@ -21,6 +21,14 @@ class EditVC : TableVCCustom{
         $0.backgroundColor = .clear
     }
     
+    let noListLabel = UILabel().then{
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
+        $0.textColor = .label
+        $0.text = "현재 저장되어 있는 지하철역이 없어요."
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attribute()
@@ -48,9 +56,14 @@ extension EditVC{
             $0.leading.top.bottom.equalToSuperview()
             $0.width.equalTo(15)
         }
+        
+        self.view.addSubview(self.noListLabel)
+        self.noListLabel.snp.makeConstraints{
+            $0.center.equalToSuperview()
+        }
     }
     
-    private func bind(_ viewmModel  : EditViewModel){
+    private func bind(_ viewModel  : EditViewModel){
         // VIEWMODEL -> VIEW
         let dataSource = RxTableViewSectionedAnimatedDataSource<EditViewCellSection>(animationConfiguration: .init(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right), configureCell: {_, tv, indexpath, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "EditViewCell", for: indexpath) as? EditViewCell else {return UITableViewCell()}
@@ -70,8 +83,20 @@ extension EditVC{
             dataSource[index].sectionName
         }
         
-        viewmModel.cellData
+        viewModel.cellData
             .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.bag)
+        
+        viewModel.cellData
+            .filter{!($0.isEmpty)}
+            .map{
+                if ($0[0].items.isEmpty), ($0[1].items.isEmpty){
+                    return false
+                }else{
+                    return true
+                }
+            }
+            .drive(self.noListLabel.rx.isHidden)
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
@@ -79,11 +104,11 @@ extension EditVC{
             .map{
                 $0.id
             }
-            .bind(to: viewmModel.deleteCell)
+            .bind(to: viewModel.deleteCell)
             .disposed(by: self.bag)
         
         self.tableView.rx.itemMoved
-            .bind(to: viewmModel.moveCell)
+            .bind(to: viewModel.moveCell)
             .disposed(by: self.bag)
         
         self.tableView.refreshControl?.rx.controlEvent(.valueChanged)
@@ -92,7 +117,7 @@ extension EditVC{
                 return Void()
             }
             .startWith(Void())
-            .bind(to: viewmModel.refreshOn)
+            .bind(to: viewModel.refreshOn)
             .disposed(by: self.bag)
     }
     
