@@ -21,6 +21,7 @@ class MainTableViewDefaultCell : UITableViewCell{
         $0.textAlignment = .left
         $0.textColor = .label
         $0.text = "버튼을 눌러서 지하철 역을 추가할 수 있어요!"
+        $0.adjustsFontSizeToFitWidth = true
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,7 +39,7 @@ extension MainTableViewDefaultCell{
     func animationPlay(){
         self.plusIcon.alpha = 0
         self.titleLabel.alpha = 0
-        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.25, animations: {
             self.plusIcon.alpha = 1
             self.titleLabel.alpha = 1
         }){[weak self] _ in
