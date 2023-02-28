@@ -4811,13 +4811,37 @@
             <string>인천</string>
         </dict>
     <dict>
-    <key>lineId</key>
-            <string>1077</string>
-            <key>stationId</key>
-            <string>1077000687</string>
-            <key>stationName</key>
-            <string>강남</string>
-        </dict>
+        <key>lineId</key>
+        <string>1077</string>
+        <key>stationId</key>
+        <string>1077000690</string>
+        <key>stationName</key>
+        <string>신사</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1077</string>
+        <key>stationId</key>
+        <string>1077000689</string>
+        <key>stationName</key>
+        <string>논현</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1077</string>
+        <key>stationId</key>
+        <string>1077000688</string>
+        <key>stationName</key>
+        <string>신논현</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1077</string>
+        <key>stationId</key>
+        <string>1077000687</string>
+        <key>stationName</key>
+        <string>강남</string>
+    </dict>
     <dict>
     <key>lineId</key>
             <string>1077</string>
