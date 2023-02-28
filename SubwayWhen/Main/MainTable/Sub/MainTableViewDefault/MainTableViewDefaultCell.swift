@@ -36,7 +36,14 @@ class MainTableViewDefaultCell : UITableViewCell{
 
 extension MainTableViewDefaultCell{
     func animationPlay(){
-        self.plusIcon.play()
+        self.plusIcon.alpha = 0
+        self.titleLabel.alpha = 0
+        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+            self.plusIcon.alpha = 1
+            self.titleLabel.alpha = 1
+        }){[weak self] _ in
+            self?.plusIcon.play()
+        }
     }
     
     private func attribute(){
