@@ -40,6 +40,7 @@ extension TitleView {
         
         self.mainTitleLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.85)
             $0.leading.equalToSuperview().inset(20)
         }
     }
