@@ -109,7 +109,7 @@ iOSInjectionProject/
 # End of https://www.toptal.com/developers/gitignore/api/swift,cocoapods,xcode
 
 ## Token
-SubwayWhen/DataLoad/RequestToken.swift
+SubwayWhen/SubwayWhen/DataLoad/LoadModel/RequestToken.swift
 
 ## Lottie File
 SubwayWhen/Lottie/
