@@ -15,7 +15,6 @@ struct ResultVCCellData{
     let stationCode : String
     let useLine : String
     let lineCode : String
-    let totalStation : String
 }
 
 extension ResultVCCellData : IdentifiableType, Equatable{

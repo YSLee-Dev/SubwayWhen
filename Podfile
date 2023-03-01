@@ -21,4 +21,11 @@ pod 'lottie-ios'
 pod 'Firebase/Analytics'
 pod 'Firebase/Database'
 
+	target 'SubwayWhenTests' do
+	inherit! :search_paths
+	# Pods for testing
+	pod 'Nimble'
+	pod 'RxBlocking'
+	pod 'RxTest'
+end
 end

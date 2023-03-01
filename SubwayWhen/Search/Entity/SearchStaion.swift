@@ -106,58 +106,6 @@ struct searchStationInfo : Decodable{
         }
     }
     
-    var totalStationLine : String{
-        switch lineNumber{
-        case .one:
-            return "서울 1호선"
-        case .two:
-            return "서울 2호선"
-        case .three:
-            return "서울 3호선"
-        case .four:
-            return "서울 4호선"
-        case .five:
-            return "서울 5호선"
-        case .six:
-            return "서울 6호선"
-        case .seven:
-            return "서울 7호선"
-        case .eight:
-            return "서울 8호선"
-        case .nine:
-            return "서울 9호선"
-        case .gyeonggang:
-            return "경강"
-        case .gyeongui:
-            return "경의중앙"
-        case .airport:
-            return "공항"
-        case .gyeongchun:
-            return "경춘"
-        case .seohae:
-            return "서해선"
-        case .suinbundang:
-            return "수인분당"
-        case .shinbundang:
-            return "신분당"
-        case .gimpo:
-            return "김포"
-        case .sillim:
-            return "신림"
-        case .yongin:
-            return "용인"
-        case .ui:
-            return "우이신설"
-        case .uijeingbu:
-            return "의정부"
-        case .incheon1:
-            return "인천1호선"
-        case .incheon2:
-            return "인천2호선"
-        case .not:
-            return "NOT"
-        }
-    }
     
     var lineCode : String{
         switch lineNumber {

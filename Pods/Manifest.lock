@@ -89,12 +89,15 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - Nimble (11.2.1)
   - PromisesObjC (2.1.1)
   - RxAlamofire (6.1.1):
     - RxAlamofire/Core (= 6.1.1)
   - RxAlamofire/Core (6.1.1):
     - Alamofire (~> 5.4)
     - RxSwift (~> 6.0)
+  - RxBlocking (6.5.0):
+    - RxSwift (= 6.5.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -108,6 +111,8 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
   - SnapKit (5.6.0)
   - Then (3.0.0)
 
@@ -116,11 +121,14 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Database
   - lottie-ios
+  - Nimble
   - RxAlamofire
+  - RxBlocking
   - RxCocoa (= 6.5.0)
   - RxDataSources
   - RxOptional
   - RxSwift (= 6.5.0)
+  - RxTest
   - SnapKit (~> 5.6.0)
   - Then
 
@@ -139,13 +147,16 @@ SPEC REPOS:
     - leveldb-library
     - lottie-ios
     - nanopb
+    - Nimble
     - PromisesObjC
     - RxAlamofire
+    - RxBlocking
     - RxCocoa
     - RxDataSources
     - RxOptional
     - RxRelay
     - RxSwift
+    - RxTest
     - SnapKit
     - Then
 
@@ -163,16 +174,19 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   lottie-ios: d0954d3150061f662ed0adf96ef98d7421864c47
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  Nimble: 516ac503a0fafaa8e41dbb4a70a61be421fa893a
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
+  RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: dadc06560a1ee7bb2fbeef92509b2caefbb39f73
+PODFILE CHECKSUM: 86815ad4748d021c67ab569707f92ab569f3459c
 
 COCOAPODS: 1.11.3

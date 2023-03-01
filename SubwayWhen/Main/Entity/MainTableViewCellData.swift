@@ -28,7 +28,7 @@ struct MainTableViewCellData : Decodable{
     let type : MainTableViewCellType
     var backStationId : String
     var nextStationId : String
-    let totalStationId : String
+    let korailCode : String
     
     var useTime : String{
         if self.type == .real{
