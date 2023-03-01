@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct KorailHeader{
-    let body :
+struct KorailHeader : Decodable{
+    let body : [KorailScdule]
 }
