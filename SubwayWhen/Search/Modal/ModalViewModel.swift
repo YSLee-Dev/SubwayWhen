@@ -35,9 +35,9 @@ class ModalViewModel {
         self.modalData = self.clickCellData
             .asDriver(onErrorDriveWith: .empty())
         
-        // 전체 데이터를 합친 후, SaveStation 타입으로 반환
-        let saveStationInfo = Observable
-            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> SaveStation in
+        // 전체 데이터를 합친 후, 저장
+       Observable
+            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> Void in
                 
                 var updownLine = ""
                 if cellData.useLine ==  "2호선" {
@@ -46,8 +46,29 @@ class ModalViewModel {
                     updownLine = updown ? "상행" : "하행"
                 }
                 
-                return SaveStation(id: UUID().uuidString, stationName: cellData.stationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", totalStationCode: cellData.totalStation)
+                var brand = ""
+                if cellData.useLine == "경의중앙"{
+                    brand = "K4"
+                }else if cellData.useLine == "수인분당"{
+                    brand = "K1"
+                }else if cellData.useLine == "경춘"{
+                    brand = "K2"
+                }else if cellData.useLine == "우이"{
+                    brand = "UI"
+                }else if cellData.useLine == "신분당"{
+                    brand = "D1"
+                }else if cellData.useLine == "공항"{
+                    brand = "A1"
+                }else{
+                    brand = ""
+                }
+                
+                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.stationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
+                
+                return Void()
             }
+            .bind(to: self.totalModalClose)
+            .disposed(by: self.bag)
       
         self.modalClose = Observable
             .merge(
@@ -55,39 +76,5 @@ class ModalViewModel {
                 self.totalModalClose.asObservable()
             )
             .asDriver(onErrorDriveWith: .empty())
-        
-        // TAGO Station ID 통신
-        let totalStationCodeData = self.clickCellData
-            .withUnretained(self)
-            .flatMap{ viewModel, data in
-                viewModel.model.totalStationSearchRequest(data.stationName)
-            }
-            .map{ data -> TotalStationSearch? in
-                guard case let .success(value) = data else {
-                    return nil
-                }
-                print(value)
-                return value
-            }
-            .filterNil()
-            .map{
-                $0.response.body.items.item
-            }
-        
-        // FixInfo에 저장
-        saveStationInfo
-              .withLatestFrom(totalStationCodeData){info, totalData in
-                  var saveInfo = info
-                  for x in totalData{
-                      if x.subwayStationName.contains(info.stationName) && x.subwayRouteName == info.totalStationCode{
-                          saveInfo.totalStationCode = x.subwayStationId
-                      }
-                  }
-                  print(saveInfo.totalStationCode)
-                  FixInfo.saveStation.append(saveInfo)
-                  return Void()
-              }
-              .bind(to: self.totalModalClose)
-              .disposed(by: self.bag)
     }
 }

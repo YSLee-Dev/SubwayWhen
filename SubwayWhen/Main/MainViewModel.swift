@@ -13,7 +13,7 @@ import RxOptional
 
 class MainViewModel{
     // MODEL
-    let model = LoadModel()
+    let model : TotalLoadModel
     let mainTableViewModel = MainTableViewModel()
     
     let bag = DisposeBag()
@@ -33,7 +33,10 @@ class MainViewModel{
     let mainTitle : Driver<String>
     let mainTitleHidden : Driver<Void>
     
-    init(){
+    init(loadModel : LoadModel = .init()){
+        // Model Init
+        self.model = TotalLoadModel(loadModel: loadModel)
+        
         // 메인 타이틀(요일마다 변경)
         self.mainTitle = Observable<String>.create{
             let data = Calendar.current.component(.weekday, from: Date())
@@ -215,13 +218,13 @@ class MainViewModel{
         
         self.groupData
             .map{data -> [MainTableViewSection]in
-                let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId:"")])
-                let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId:"")])
+                let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "",  korailCode: "")])
+                let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: "")])
                 
                 var groupData = MainTableViewSection(id: "live", sectionName: "", items: [])
                 
                 if data.isEmpty{
-                    groupData.items = [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "NoData", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailLineId: "")]
+                    groupData.items = [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "NoData", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: "")]
                 }else{
                     groupData.items = data
                 }
@@ -241,7 +244,7 @@ class MainViewModel{
             .map{ item -> ScheduleSearch? in
                 if item.type == .real{
                     if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
-                        return ScheduleSearch(stationCode: item.totalStationId, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Tago)
+                        return ScheduleSearch(stationCode: item.korailCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Tago)
                     }else{
                         return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
                     }
@@ -261,7 +264,7 @@ class MainViewModel{
             .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){[weak self] scheduleData, index -> [MainTableViewCellData] in
                 guard let data = scheduleData.first else {return []}
                 guard let nowData = self?.groupData.value[index.row] else {return []}
-                let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "⏱️\(data.useArrTime)", subPrevious: "\(data.useTime)", code: "", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, totalStationId: nowData.totalStationId)
+                let newData = MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "", subPrevious: "\(data.useTime)", code: "⏱️\(data.useArrTime)", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, korailCode: nowData.korailCode)
                
                 guard var now = self?.groupData.value else {return []}
                 now[index.row] = newData

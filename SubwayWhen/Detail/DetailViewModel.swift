@@ -13,8 +13,10 @@ import RxOptional
 
 class DetailViewModel{
     // MODEL
+    let loadModel : TotalLoadModel
+    let model : LoadModel
+    
     let detailModel = DetailModel()
-    let loadModel = LoadModel()
     let headerViewModel = DetailTableHeaderViewModel()
     let arrivalCellModel = DetailTableArrivalCellModel()
     let scheduleCellModel = DetailTableScheduleCellModel()
@@ -39,7 +41,11 @@ class DetailViewModel{
         print("DetailViewModel DEINIT")
     }
     
-    init(){
+    init(loadModel : LoadModel = .init()){
+        // Model Init
+        self.loadModel = TotalLoadModel(loadModel: loadModel)
+        self.model = loadModel
+        
         lazy var resultViewModel = DetailResultScheduleViewModel()
         
         self.cellData = self.nowData
@@ -126,7 +132,7 @@ class DetailViewModel{
             .map{ item -> ScheduleSearch in
                 var searchData = ScheduleSearch(stationCode: "", upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
                 if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
-                    searchData.stationCode = item.totalStationId
+                    searchData.stationCode = item.korailCode
                     searchData.type = .Tago
                     return searchData
                 }else{
@@ -150,7 +156,7 @@ class DetailViewModel{
         let realTimeData = onRefresh
             .withUnretained(self)
             .flatMapLatest{
-                $0.loadModel.stationArrivalRequest(stationName: $1.stationName)
+                $0.model.stationArrivalRequest(stationName: $1.stationName)
             }
             .map{ data -> [RealtimeStationArrival] in
                 /*

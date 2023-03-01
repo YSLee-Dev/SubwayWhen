@@ -13,7 +13,7 @@ import RxCocoa
 struct DetailResultScheduleViewModel{
     // INPUT
     let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
-    let cellData = BehaviorRelay<MainTableViewCellData>(value: MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", totalStationId: ""))
+    let cellData = BehaviorRelay<MainTableViewCellData>(value: MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""))
     let scheduleVCExceptionStationRemove = PublishRelay<Void>()
     
     // OUTPUT
