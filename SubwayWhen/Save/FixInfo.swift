@@ -11,7 +11,7 @@ struct FixInfo : Codable{
     static var saveStation : [SaveStation] = [] {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveStation)
-            UserDefaults.standard.setValue(data, forKey: "saveStation")
+            UserDefaults.standard.set(data, forKey: "saveStation")
         }
     }
     
