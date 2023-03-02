@@ -9,11 +9,8 @@ import Foundation
 
 @testable import SubwayWhen
 
-var stationArrivalRequestList : LiveStationModel = Dummy().fileLoad("StationArrivalRequestDummy.json")
-var saveStation = "교대"
-
 class Dummy{
-    func fileLoad<T:Decodable>(_ fileName : String) -> T{
+    func fileLoad(_ fileName : String) -> Data{
         let data : Data
         let bundle = Bundle(for: type(of: self))
         
@@ -27,10 +24,6 @@ class Dummy{
             fatalError("Error File을 불러올 수 없음")
         }
         
-        do{
-            return try JSONDecoder().decode(T.self, from: data)
-        }catch{
-            fatalError("Error File 디코딩 할 수 없음")
-        }
+        return data
     }
 }
