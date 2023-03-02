@@ -19,14 +19,8 @@ class TotalLoadModel{
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
-    func totalLiveDataLoad() -> Observable<MainTableViewCellData>{
-        let saveStation = self.loadModel.saveStationLoad()
-            .asObservable()
-            .flatMap{ data -> Observable<SaveStation> in
-                guard case .success(let value) = data else {return .never()}
-                return Observable.from(value)
-            }
-            .share()
+    func totalLiveDataLoad(stations : [SaveStation]) -> Observable<MainTableViewCellData>{
+        let saveStation = Observable.from(stations)
         
         let liveStation = saveStation
             .concatMap{[weak self] in

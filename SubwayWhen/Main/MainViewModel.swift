@@ -187,7 +187,7 @@ class MainViewModel{
         dataReload
             .withUnretained(self)
             .flatMap{ viewModel, _ in
-                viewModel.model.totalLiveDataLoad()
+                viewModel.model.totalLiveDataLoad(stations: FixInfo.saveStation)
             }
             .withUnretained(self)
             .map{viewModel, data in
