@@ -25,8 +25,15 @@ final class NetworkManger{
         return self.session.response(request: request)
             .map{
                 do{
-                    let data = try JSONDecoder().decode(T.self, from: $1)
-                    return .success(data)
+                    if 200...300 ~= $0.statusCode{
+                        let data = try JSONDecoder().decode(T.self, from: $1)
+                        return .success(data)
+                    }else if 300...400 ~= $0.statusCode{
+                        return .failure(.init(.badServerResponse))
+                    }else{
+                        return .failure(.init(.badURL))
+                    }
+                   
                 }catch{
                     return .failure(.init(.cannotParseResponse))
                 }
