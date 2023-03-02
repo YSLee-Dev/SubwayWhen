@@ -50,4 +50,17 @@ class TabbarModel{
         
         return .success(Void())
     }
+    
+    
+    // 저장된 지하철역 불러오기
+    func saveStationLoad() -> Result<Void, URLError>{
+        guard let data = UserDefaults.standard.data(forKey: "saveStation") else {return .failure(.init(.dataNotAllowed))}
+        guard let list = try? PropertyListDecoder().decode([SaveStation].self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
+        
+        FixInfo.saveStation = list
+        print(list)
+        
+        return .success(Void())
+    }
 }
+

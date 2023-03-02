@@ -46,15 +46,26 @@ extension TabbarVC{
     
     private func viewLoad(){
         // 설정 로드
-        let result = self.tabbarModel.saveSettingLoad()
+        let settingResult = self.tabbarModel.saveSettingLoad()
         
-        switch result{
+        switch settingResult{
         case .success():
             print("setting load success")
         case .failure(let error):
             FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true)
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
+        
+        // 저장된 지하철 로드
+        let stationResult = self.tabbarModel.saveStationLoad()
+        
+        switch stationResult{
+        case .success():
+            print("station load success")
+        case .failure(let error):
+            print("station not load, 초기 값 없음", error)
+        }
+        
         
         // 버전 확인
         self.tabbarModel.versionRequest{[weak self] version in
@@ -83,3 +94,4 @@ extension TabbarVC{
         self.present(alert, animated: true)
     }
 }
+
