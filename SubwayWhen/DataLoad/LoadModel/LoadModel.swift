@@ -21,64 +21,6 @@ class LoadModel : LoadModelProtocol{
         return self.networkManger.requestData(url, dataType: LiveStationModel.self)
     }
     
-    // 저장된 지하철역 로드
-    internal func saveStationLoad() -> Single<Result<[SaveStation], URLError>>{
-        let udValue = UserDefaults.standard.value(forKey: "saveStation")
-        guard let data = udValue as? Data else {return .just(.failure(.init(.badURL)))}
-        
-        do {
-            let list = try PropertyListDecoder().decode([SaveStation].self, from: data)
-            FixInfo.saveStation = list
-            return .just(.success(list))
-        }catch{
-            print(error)
-            return .just(.failure(.init(.cannotDecodeContentData)))
-        }
-    }
-    
-    // Korail 시간표 통신
-    /*
-    func korailScduleLoad(_ scheduleSearch : ScheduleSearch) -> Single<Result<KorailBody, URLError>>{
-        // 평일, 주말, 공휴일 여부
-        var weekday = "0"
-        let today = Calendar.current.component(.weekday, from: Date())
-        
-        if today == 1{
-            weekday = "9"
-        }else if today == 7{
-            weekday = "7"
-        }else{
-            weekday = "8"
-        }
-        
-        let urlString = "https://openapi.kric.go.kr/openapi/trainUseInfo/subwayTimetable?serviceKey=\(self.token.korailToken)&format=JSON&railOprIsttCd=\(scheduleSearch.korailBrandCode)&dayCd=\(weekday)&lnCd=\(scheduleSearch.korailLineCode)&stinCd=\(scheduleSearch.stationCode)"
-        guard let url = URL(string: urlString) else {return .just(.failure(.init(.badURL)))}
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        return self.session.rx.data(request: request)
-            .map{
-                do{
-                    let result = try JSONDecoder().decode(KorailBody.self, from: $0)
-                    
-                    let sortData = result.body.filter{
-                        guard let last = $0.trainCode.last else {return false}
-                        guard let number = Int(String(last)) else {return false}
-                        
-                        if number % 2 == 0{
-                            
-                        }
-                    }
-                }catch{
-                    return .failure(.init(.cannotDecodeContentData))
-                }
-            }
-            .asSingle()
-            .timeout(.seconds(5), other: .just(.failure(.init(.timedOut))), scheduler: MainScheduler.instance)
-    }
-     */
-    
     // 타고 지하철 시간표 통신
     internal func TagoStationSchduleLoad(_ scheduleSearch : ScheduleSearch) -> Single<Result<TagoSchduleStation, URLError>>{
         let line = scheduleSearch.upDown == "상행" ||  scheduleSearch.upDown == "내선" ? "U" : "D"
