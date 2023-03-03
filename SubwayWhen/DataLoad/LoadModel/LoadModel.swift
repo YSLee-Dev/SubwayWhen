@@ -10,15 +10,20 @@ import Foundation
 import RxSwift
 import RxOptional
 
-class LoadModel : LoadModelProtocol{
-    private var networkManger = NetworkManger()
+final class LoadModel : LoadModelProtocol{
+    let networkManager : NetworkManagerProtocol
+    
+    init(networkManager : NetworkManager = .init()){
+        self.networkManager = networkManager
+    }
+    
     private let token = RequestToken()
     
     // live 지하철 통신
     internal func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
         let url = "http://swopenapi.seoul.go.kr/api/subway/\(token.liveArrivalToken)/json/realtimeStationArrival/0/50/\(stationName)"
         
-        return self.networkManger.requestData(url, dataType: LiveStationModel.self)
+        return self.networkManager.requestData(url, dataType: LiveStationModel.self)
     }
     
     // 타고 지하철 시간표 통신
@@ -39,7 +44,7 @@ class LoadModel : LoadModelProtocol{
         
         let url = "https://apis.data.go.kr/1613000/SubwayInfoService/getSubwaySttnAcctoSchdulList?serviceKey=\(token.tagoToken)&pageNo=1&numOfRows=500&_type=json&subwayStationId=\(scheduleSearch.stationCode)&dailyTypeCode=\(weekday)&upDownTypeCode=\(line)"
         
-        return self.networkManger.requestData(url, dataType: TagoSchduleStation.self)
+        return self.networkManager.requestData(url, dataType: TagoSchduleStation.self)
     }
     
     // 서울 지하철 시간표 데이터 통신
@@ -73,7 +78,7 @@ class LoadModel : LoadModelProtocol{
         
         let url =  "http://openapi.seoul.go.kr:8088/\(token.seoulToken)/json/SearchSTNTimeTableByFRCodeService/1/500/\(scheduleSearch.stationCode)/\(weekday)/\(inOut)"
         
-        return self.networkManger.requestData(url, dataType: ScheduleStationModel.self)
+        return self.networkManager.requestData(url, dataType: ScheduleStationModel.self)
     }
     
 }
