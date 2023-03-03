@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class NetworkManger{
+final class NetworkManager : NetworkManagerProtocol{
     let session : URLSessionProtocol
     
     init(session : URLSessionProtocol = URLSession.shared){
