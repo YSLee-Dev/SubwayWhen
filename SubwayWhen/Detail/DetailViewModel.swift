@@ -119,10 +119,18 @@ class DetailViewModel{
             .withUnretained(self)
             .map{
                 let backNext = $0.detailModel.nextAndBackStationSearch(backId: $1.backStationId, nextId: $1.nextStationId)
+                var stationNameCut = ""
+                
+                if $1.stationName.count >= 6{
+                    stationNameCut = "\(String($1.stationName[$1.stationName.startIndex ... $1.stationName.index($1.stationName.startIndex, offsetBy: 5)])).."
+                }else{
+                    stationNameCut = $1.stationName
+                }
+                
                 return [
-                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: $1.stationName, backStationName: backNext[0], nextStationName: backNext[1])])
+                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
                 ]
             }
             .bind(to: self.nowData)
