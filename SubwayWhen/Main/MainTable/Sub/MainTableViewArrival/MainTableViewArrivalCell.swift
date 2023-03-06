@@ -51,7 +51,7 @@ class MainTableViewCell : UITableViewCell{
     
     lazy var changeBtn = UIButton().then{
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
+        $0.layer.cornerRadius = ViewStyle.Layer.radius
         $0.setImage(UIImage(systemName: "timer"), for: .normal)
         $0.tintColor = .white
     }

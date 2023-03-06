@@ -26,7 +26,7 @@ class DetailResultScheduleTopView : TopView{
         $0.backgroundColor = UIColor(named: "MainColor")
         
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
+        $0.layer.cornerRadius = ViewStyle.Layer.radius
         
         $0.setTitle("제외 행 없음", for: .normal)
         $0.setTitleColor(UIColor.systemRed, for: .normal)
