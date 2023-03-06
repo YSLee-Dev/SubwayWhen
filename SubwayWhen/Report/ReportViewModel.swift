@@ -56,8 +56,14 @@ class ReportViewModel {
         self.popVC = checkModalViewModel.close
             .asDriver(onErrorDriveWith: .empty())
         
+        self.keyboardClose = Observable<Void>.merge(
+            self.lineCellModel.lineFix.asObservable(),
+            self.textFieldCellModel.doenBtnClick.map{_ in Void()}.asObservable()
+        )
+        .asDriver(onErrorDriveWith: .empty())
+        
         Observable<[ReportTableViewCellSection]>.create{
-            $0.onNext([ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line)])])
+            $0.onNext([ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)])])
             $0.onCompleted()
             return Disposables.create()
         }
@@ -65,11 +71,16 @@ class ReportViewModel {
         .bind(to: self.nowData)
         .disposed(by: self.bag)
         
-        self.keyboardClose = Observable<Void>.merge(
-            self.lineCellModel.doneBtnClick.asObservable(),
-            self.textFieldCellModel.doenBtnClick.map{_ in Void()}.asObservable()
-        )
-        .asDriver(onErrorDriveWith: .empty())
+        
+        // DefaultLineCell Data / delay 3s
+        Observable<[String]>.create{
+            $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전"}))
+            $0.onCompleted()
+            return Disposables.create()
+        }
+        .delay(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
+        .bind(to: self.lineCellModel.defaultLineViewModel.defaultCellData)
+        .disposed(by: self.bag)
         
         // 호선 리스트
         Observable<[String]>.create{
@@ -96,25 +107,41 @@ class ReportViewModel {
         .bind(to: self.lineCellModel.lineInfo)
         .disposed(by: self.bag)
         
+        let shareDefaultLine =  self.lineCellModel.defaultLineViewModel.cellClick
+            .asObserver()
+            .share()
+        
+        // DefaultLineCell, lineSeleted
+        let lineData = Observable<ReportBrandData>.merge(
+            self.lineCellModel.lineSeleted.asObservable(),
+            shareDefaultLine
+        )
+        
+        // lineSeleted
+        let lineSeleted = Observable<Void>.merge(
+            self.lineCellModel.lineFix.asObservable(),
+            shareDefaultLine.map{_ in Void()}
+        )
+        
         // 두 번째 행 출력
-        let twoStep = self.lineCellModel.doneBtnClick
-            .withLatestFrom(self.lineCellModel.lineSeleted)
+        let twoStep = lineSeleted
+            .withLatestFrom(lineData)
             .withUnretained(self)
             .map{ cell, data in
                 let value = cell.nowData.value
                 let first = value.first!
                 
                 var two = ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                    .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField),
-                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField)
+                    .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
+                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false)
                 ])
                 
                 if data == ReportBrandData.one {
-                    two.items.insert((.init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn)), at: 2)
+                    two.items.insert((.init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
                 }else if data == ReportBrandData.three{
-                    two.items.insert((.init(cellTitle: "현재 역이 지축 ~ 대화 안에 있나요?", cellData: "", type: .TwoBtn)), at: 2)
+                    two.items.insert((.init(cellTitle: "현재 역이 지축 ~ 대화 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
                 }else if data == ReportBrandData.four{
-                    two.items.insert((.init(cellTitle: "현재 역이 오이도 ~ 선바위 안에 있나요?", cellData: "", type: .TwoBtn)), at: 2)
+                    two.items.insert((.init(cellTitle: "현재 역이 오이도 ~ 선바위 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
                 }
                 
                 return [first, two]
@@ -160,6 +187,12 @@ class ReportViewModel {
                 var now = self?.nowData.value
                 now?[1].items[0].cellData = data
                 
+                // 포커스 조정
+                now?[1].items[0].focus = false
+                if now?[1].items[1].cellData == ""{
+                    now?[1].items[1].focus = true
+                }
+                
                 return now ?? []
             }
             .bind(to: self.nowData)
@@ -182,6 +215,9 @@ class ReportViewModel {
                 var now = self?.nowData.value
                 now?[1].items[1].cellData = data
                 
+                // 포커스 조정
+                now?[1].items[1].focus = false
+                
                 return now ?? []
             }
             .bind(to: self.nowData)
@@ -197,14 +233,13 @@ class ReportViewModel {
                     return []
                 }else{
                     now.append(.init(sectionName: "상세 정보", items: [
-                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField),
-                        .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField)
+                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true),
+                        .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField, focus: false)
                     ]))
                     
                     return now
                 }
                 
-              
             }
             .filterEmpty()
             .share()
@@ -235,6 +270,12 @@ class ReportViewModel {
                 var now = self?.nowData.value
                 now?[2].items[0].cellData = data
                 
+                // 포커스 조정
+                now?[2].items[0].focus = false
+                if now?[2].items[1].cellData == ""{
+                    now?[2].items[1].focus = true
+                }
+                
                 return now ?? []
             }
             .bind(to: self.nowData)
@@ -256,6 +297,7 @@ class ReportViewModel {
             .map{[weak self] data in
                 var now = self?.nowData.value
                 now?[2].items[1].cellData = data
+                now?[2].items[1].focus = false
                 
                 return now ?? []
             }
@@ -263,7 +305,7 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         
-        Observable.combineLatest(self.lineCellModel.lineSeleted, nowStation, destination, trainCar, contents, brand){[weak self] line, station, de, train, contents, subwayBrand in
+        Observable.combineLatest(lineData, nowStation, destination, trainCar, contents, brand){[weak self] line, station, de, train, contents, subwayBrand in
             let now = self?.nowData.value
             
             var brand = subwayBrand
