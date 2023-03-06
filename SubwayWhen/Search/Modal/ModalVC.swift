@@ -53,7 +53,7 @@ class ModalVC : ModalVCCustom{
     let exceptionLastStationTF = UITextField().then{
         $0.placeholder = "중간 종착역 제거 (1개이상 콤마 이용)"
         $0.textAlignment = .center
-        $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
+        $0.layer.cornerRadius = ViewStyle.Layer.radius
         $0.layer.borderColor = UIColor.systemGray.cgColor
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true
