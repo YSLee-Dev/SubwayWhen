@@ -36,7 +36,7 @@ class UILabelCustom : UILabel{
 extension UILabelCustom{
     private func attribute(){
         self.layer.masksToBounds = true
-        self.layer.cornerRadius =  ViewStyle.Layer.shadowRadius
+        self.layer.cornerRadius =  ViewStyle.Layer.radius
         self.adjustsFontSizeToFitWidth = true
     }
 }
