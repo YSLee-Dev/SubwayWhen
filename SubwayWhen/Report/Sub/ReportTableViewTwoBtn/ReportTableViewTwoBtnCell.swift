@@ -45,7 +45,6 @@ class ReportTableViewTwoBtnCell : UITableViewCell{
     
     override func prepareForReuse() {
         self.bag = DisposeBag()
-        self.unseleted()
     }
 }
 

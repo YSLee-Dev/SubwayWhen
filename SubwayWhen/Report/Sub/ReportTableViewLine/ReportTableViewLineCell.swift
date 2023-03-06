@@ -13,6 +13,7 @@ import RxOptional
 
 class ReportTableViewLineCell : UITableViewCell{
     let mainBG = MainStyleUIView()
+    let defaultView = ReportTableViewDefaultLineView()
     
     let mainTitle = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .semibold)
@@ -72,7 +73,7 @@ extension ReportTableViewLineCell{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(122)
         }
@@ -96,9 +97,19 @@ extension ReportTableViewLineCell{
             $0.trailing.equalToSuperview().inset(15)
             $0.centerY.equalTo(self.line)
         }
+        
+        self.contentView.addSubview(self.defaultView)
+        self.defaultView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalTo(self.mainBG.snp.bottom).offset(15)
+            $0.height.equalTo(50)
+            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+        }
     }
     
     func bind(_ cellModel : ReportTableViewLineCellModel){
+        self.defaultView.bind(cellModel.defaultLineViewModel)
+        
         // VIEWMODEL -> VIEW
         cellModel.lineList
             .drive(self.picker.rx.itemTitles){ _, data in
@@ -106,50 +117,54 @@ extension ReportTableViewLineCell{
             }
             .disposed(by: self.bag)
         
-        let seleted = self.picker.rx.modelSelected(String.self)
-                .map{$0.first}
-                .filterNil()
-                .share()
-        
-        seleted
-            .bind(to: self.stationField.rx.text)
+        cellModel.lineSet
+            .drive(self.stationField.rx.text)
             .disposed(by: self.bag)
         
-        seleted
-            .bind(to: self.rx.lineColorSet)
+        cellModel.lineSet
+            .drive(self.rx.lineColorSet)
             .disposed(by: self.bag)
         
-        seleted
-            .map{
-                ReportBrandData(rawValue: $0)
-            }
+        cellModel.lineUnSeleted
+            .drive(onNext: {[weak self] in
+                self?.unseleted()
+            })
+            .disposed(by: self.bag)
+        
+        // VIEW -> VIEWMODEL
+        self.picker.rx.modelSelected(String.self)
+            .map{ ReportBrandData(rawValue: $0.first ?? "")}
             .filterNil()
             .bind(to: cellModel.lineSeleted)
             .disposed(by: self.bag)
         
-        // VIEW -> VIEWMODEL
-       let doneClick =  self.doneBarBtn.rx.tap
+        
+        self.doneBarBtn.rx.tap
             .withLatestFrom(cellModel.lineSeleted){
                 !($1 == .not)
             }
             .filter{$0}
             .map{_ in Void()}
-            .share()
-        
-        doneClick
-            .bind(to: cellModel.doneBtnClick)
-            .disposed(by: self.bag)
-        
-        doneClick
-            .subscribe(onNext: {[weak self] in
-                self?.unseleted()
-            })
+            .bind(to: cellModel.lineFix)
             .disposed(by: self.bag)
     }
     
     func unseleted(){
-        self.stationField.isEnabled = false
-        self.mainBG.alpha = 0.5
+        UIView.animate(withDuration: 0.5, delay: 0){
+            self.stationField.isEnabled = false
+            self.mainBG.alpha = 0.5
+            
+            self.defaultView.removeFromSuperview()
+            self.mainBG.snp.remakeConstraints{
+                $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+                $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            }
+            self.line.snp.updateConstraints{
+                $0.top.equalTo(self.mainTitle.snp.bottom).offset(40)
+            }
+        }
+        
+        self.layoutIfNeeded()
     }
     
     func viewDataSet(_ data: ReportTableViewCellData){
