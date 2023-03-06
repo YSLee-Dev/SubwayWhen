@@ -24,7 +24,7 @@ class EditViewCell : UITableViewCell{
     
     var stationName = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textAlignment = .right
+        $0.textAlignment = .left
         $0.textColor = .label
         $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
