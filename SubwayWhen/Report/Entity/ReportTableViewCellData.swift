@@ -13,6 +13,7 @@ struct ReportTableViewCellData {
     let cellTitle : String
     var cellData : String
     let type : ReportTableViewCellType
+    var focus : Bool
 }
 
 extension ReportTableViewCellData : IdentifiableType, Equatable{

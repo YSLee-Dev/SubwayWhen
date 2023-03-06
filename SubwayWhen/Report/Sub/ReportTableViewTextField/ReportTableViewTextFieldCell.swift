@@ -18,13 +18,6 @@ class ReportTableViewTextFieldCell : UITableViewCell{
         $0.textAlignment = .right
     }
     
-    lazy var tfToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 50)).then{
-        $0.backgroundColor = .systemBackground
-        $0.sizeToFit()
-    }
-    
-    lazy var doneBarBtn = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
-    
     var bag = DisposeBag()
     
     var index = IndexPath(row: 0, section: 0)
@@ -47,9 +40,6 @@ class ReportTableViewTextFieldCell : UITableViewCell{
 extension ReportTableViewTextFieldCell{
     private func attribute(){
         self.selectionStyle = .none
-        
-        self.tfToolBar.items = [self.doneBarBtn]
-        self.textField.inputAccessoryView = self.tfToolBar
     }
     
     private func layout(){
@@ -67,7 +57,7 @@ extension ReportTableViewTextFieldCell{
     }
     
     func bind(_ cellModel : ReportTableViewTextFieldCellModel){
-      let doenTap =  self.doneBarBtn.rx.tap
+        let doenTap = self.textField.rx.controlEvent(.editingDidEnd).asObservable()
             .withLatestFrom(self.textField.rx.text)
             .map{ data -> String? in
                 guard let nowString = data else {return nil}
@@ -105,5 +95,14 @@ extension ReportTableViewTextFieldCell{
         if !(data.cellData.isEmpty){
             self.unseleted()
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)){[weak self] in
+            if data.focus{
+                self?.textField.becomeFirstResponder()
+            }else{
+                self?.textField.resignFirstResponder()
+            }
+        }
+       
     }
 }
