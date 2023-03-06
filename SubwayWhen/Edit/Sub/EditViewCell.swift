@@ -26,6 +26,7 @@ class EditViewCell : UITableViewCell{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textAlignment = .right
         $0.textColor = .label
+        $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     var upDown = UILabel().then{
@@ -66,7 +67,8 @@ extension EditViewCell{
             $0.centerY.equalTo(self.line)
         }
         self.upDown.snp.makeConstraints{
-            $0.leading.equalTo(self.stationName.snp.trailing).offset(5)
+            $0.leading.equalTo(self.stationName.snp.trailing).offset(15)
+            $0.trailing.equalToSuperview().offset(-15)
             $0.centerY.equalTo(self.line)
         }
     }
