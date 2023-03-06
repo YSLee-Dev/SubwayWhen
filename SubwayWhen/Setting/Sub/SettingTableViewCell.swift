@@ -23,7 +23,7 @@ class SettingTableViewCell : UITableViewCell{
     
     lazy var textField = UITextField().then{
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.cornerRadius = ViewStyle.Layer.shadowRadius
+        $0.layer.cornerRadius = ViewStyle.Layer.radius
         $0.textAlignment = .right
         $0.placeholder = "한 글자만 가능해요."
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
