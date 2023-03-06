@@ -13,15 +13,38 @@ import RxCocoa
 struct ReportTableViewLineCellModel {
     // OUTPUT
     let lineList : Driver<[String]>
+    let lineSet : Driver<String>
+    let lineUnSeleted : Driver<Void>
     
     // INPUT
     let lineInfo = BehaviorRelay<[String]>(value: [])
     let lineSeleted = PublishRelay<ReportBrandData>()
-    let doneBtnClick = PublishRelay<Void>()
+    let lineFix = PublishRelay<Void>()
+    
+    // MODEL
+    let defaultLineViewModel = ReportTableViewDefaultLineViewModel()
     
     init(){
         self.lineList = self.lineInfo
         .asDriver(onErrorDriveWith: .empty())
         
+        let line = Observable<ReportBrandData>.merge(
+            self.lineSeleted.asObservable(),
+            self.defaultLineViewModel.cellClick
+        )
+        
+        self.lineSet = line
+            .map{
+                $0.rawValue
+            }
+            .asDriver(onErrorDriveWith: .empty())
+        
+        let fix = Observable<Void>.merge(
+            self.lineFix.asObservable(),
+            self.defaultLineViewModel.cellClick.map{_ in Void()}
+        )
+        
+        self.lineUnSeleted = fix
+            .asDriver(onErrorDriveWith: .empty())
     }
 }
