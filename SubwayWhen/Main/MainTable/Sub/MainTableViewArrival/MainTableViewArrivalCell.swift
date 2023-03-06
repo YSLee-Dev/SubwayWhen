@@ -114,7 +114,7 @@ extension MainTableViewCell{
         self.nowStackView.snp.makeConstraints{
             $0.leading.equalTo(self.line.snp.trailing).offset(15)
             $0.centerY.equalTo(self.line.snp.centerY)
-            $0.trailing.equalTo(self.arrivalTime.snp.leading)
+            $0.trailing.equalToSuperview().offset(-15)
         }
         
         self.nowStackView.addArrangedSubview(self.station)
@@ -136,7 +136,7 @@ extension MainTableViewCell{
         
         self.arrivalTime.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(15)
-            $0.leading.equalTo(self.nowStackView.snp.trailing)
+            $0.leading.equalTo(self.snp.centerX)
             $0.top.equalTo(self.changeBtn.snp.bottom).offset(15)
             $0.height.equalTo(30)
             $0.bottom.equalToSuperview().inset(15)
