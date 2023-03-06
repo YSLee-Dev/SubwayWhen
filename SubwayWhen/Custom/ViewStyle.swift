@@ -18,7 +18,7 @@ enum ViewStyle{
     }
     
     enum Layer{
-        static let shadowRadius : CGFloat = 15
+        static let radius : CGFloat = 15
     }
     
     enum padding{
