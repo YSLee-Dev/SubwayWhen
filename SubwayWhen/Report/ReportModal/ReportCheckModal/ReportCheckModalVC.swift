@@ -81,9 +81,7 @@ extension ReportCheckModalVC {
     }
     
     override func modalDismiss() {
-        self.checkModalViewModel.close
-            .accept(Void())
-        super.modalDismiss()
+        self.navigationController?.popViewController(animated: false)
     }
     
     private func successIconSet(){
