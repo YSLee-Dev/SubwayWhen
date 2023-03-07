@@ -99,6 +99,10 @@
 		34A36BE329502A4000FB0DDB /* EditViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BE229502A4000FB0DDB /* EditViewCellData.swift */; };
 		34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BE429502BE100FB0DDB /* EditViewCell.swift */; };
 		34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A486222987C00E007F3D1A /* DetailTableHeaderViewModel.swift */; };
+		34A6BF9229B728800059CF1A /* ReportContentsModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6BF9129B728800059CF1A /* ReportContentsModalVC.swift */; };
+		34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6BF9329B728940059CF1A /* ReportContentsModalViewModel.swift */; };
+		34A6BF9829B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6BF9729B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift */; };
+		34A6BF9B29B72FEE0059CF1A /* ReportContentsModalCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A6BF9A29B72FEE0059CF1A /* ReportContentsModalCellData.swift */; };
 		34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */; };
 		34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */; };
 		34B9FD1E2974D3E500E349A1 /* MainTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderCell.swift */; };
@@ -258,6 +262,10 @@
 		34A36BE229502A4000FB0DDB /* EditViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewCellData.swift; sourceTree = "<group>"; };
 		34A36BE429502BE100FB0DDB /* EditViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewCell.swift; sourceTree = "<group>"; };
 		34A486222987C00E007F3D1A /* DetailTableHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableHeaderViewModel.swift; sourceTree = "<group>"; };
+		34A6BF9129B728800059CF1A /* ReportContentsModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalVC.swift; sourceTree = "<group>"; };
+		34A6BF9329B728940059CF1A /* ReportContentsModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalViewModel.swift; sourceTree = "<group>"; };
+		34A6BF9729B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalColletionViewCell.swift; sourceTree = "<group>"; };
+		34A6BF9A29B72FEE0059CF1A /* ReportContentsModalCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalCellData.swift; sourceTree = "<group>"; };
 		34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		34B9FD1C2974D3E500E349A1 /* MainTableViewHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderCell.swift; sourceTree = "<group>"; };
@@ -387,7 +395,7 @@
 			children = (
 				349B516229A4630300A53879 /* ReportVC.swift */,
 				349B516529A4631B00A53879 /* ReportViewModel.swift */,
-				349B518629A4BF7400A53879 /* ReportCheckModal */,
+				349B518629A4BF7400A53879 /* ReportModal */,
 				349B517029A46B4A00A53879 /* Sub */,
 				349B516D29A469D600A53879 /* Entity */,
 			);
@@ -398,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				349B516729A467FA00A53879 /* ReportTableViewCellData.swift */,
+				34A6BF9A29B72FEE0059CF1A /* ReportContentsModalCellData.swift */,
 				349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */,
 				349B518729A4D2D600A53879 /* ReportBrandData.swift */,
 				349B516929A468FA00A53879 /* ReportTableViewCellType.swift */,
@@ -444,13 +453,13 @@
 			path = ReportTableViewTextField;
 			sourceTree = "<group>";
 		};
-		349B518629A4BF7400A53879 /* ReportCheckModal */ = {
+		349B518629A4BF7400A53879 /* ReportModal */ = {
 			isa = PBXGroup;
 			children = (
-				349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */,
-				349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */,
+				34A6BF9529B72BB40059CF1A /* ReportContentsModal */,
+				34A6BF9629B72BC90059CF1A /* ReportCheckModal */,
 			);
-			path = ReportCheckModal;
+			path = ReportModal;
 			sourceTree = "<group>";
 		};
 		349C925729A728F500529E60 /* Lottie */ = {
@@ -708,6 +717,33 @@
 				349DEA7A2959610800D81EFF /* Entity */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		34A6BF9529B72BB40059CF1A /* ReportContentsModal */ = {
+			isa = PBXGroup;
+			children = (
+				34A6BF9129B728800059CF1A /* ReportContentsModalVC.swift */,
+				34A6BF9329B728940059CF1A /* ReportContentsModalViewModel.swift */,
+				34A6BF9929B72D710059CF1A /* Sub */,
+			);
+			path = ReportContentsModal;
+			sourceTree = "<group>";
+		};
+		34A6BF9629B72BC90059CF1A /* ReportCheckModal */ = {
+			isa = PBXGroup;
+			children = (
+				349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */,
+				349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */,
+			);
+			path = ReportCheckModal;
+			sourceTree = "<group>";
+		};
+		34A6BF9929B72D710059CF1A /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				34A6BF9729B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift */,
+			);
+			path = Sub;
 			sourceTree = "<group>";
 		};
 		34B9FD1B2974D3E500E349A1 /* MainTableViewHeader */ = {
@@ -1238,6 +1274,7 @@
 				34A05A87296EA71A0044CD36 /* ModalModel.swift in Sources */,
 				34A0504A29B58559007F97AD /* ReportTableViewDefaultLineViewModel.swift in Sources */,
 				349B518829A4D2D600A53879 /* ReportBrandData.swift in Sources */,
+				34A6BF9829B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift in Sources */,
 				347F8FBF29544E0900E62417 /* MainTableViewCellType.swift in Sources */,
 				349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */,
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
@@ -1248,6 +1285,7 @@
 				349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
 				349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */,
+				34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
@@ -1281,6 +1319,7 @@
 				34A36BE329502A4000FB0DDB /* EditViewCellData.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
 				34F5F0FD29641AC10010A21D /* TitleView.swift in Sources */,
+				34A6BF9B29B72FEE0059CF1A /* ReportContentsModalCellData.swift in Sources */,
 				349B516329A4630300A53879 /* ReportVC.swift in Sources */,
 				34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */,
 				34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */,
@@ -1292,6 +1331,7 @@
 				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
 				34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */,
 				34A303BE29AF86FD00948EDD /* ResultSchedule.swift in Sources */,
+				34A6BF9229B728800059CF1A /* ReportContentsModalVC.swift in Sources */,
 				349B517529A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift in Sources */,
 				349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */,
 				34A303B229AF86FD00948EDD /* NetworkManager.swift in Sources */,

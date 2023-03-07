@@ -73,9 +73,9 @@ extension ReportTableViewLineCell{
     private func layout(){
         self.contentView.addSubview(self.mainBG)
         self.mainBG.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(122)
+            $0.height.equalTo(172)
         }
         
         [self.mainTitle, self.line, self.stationField].forEach{
@@ -98,12 +98,11 @@ extension ReportTableViewLineCell{
             $0.centerY.equalTo(self.line)
         }
         
-        self.contentView.addSubview(self.defaultView)
+        self.mainBG.addSubview(self.defaultView)
         self.defaultView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.mainBG.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(self.line.snp.bottom).offset(15)
             $0.height.equalTo(50)
-            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
         }
     }
     
@@ -150,21 +149,17 @@ extension ReportTableViewLineCell{
     }
     
     func unseleted(){
-        UIView.animate(withDuration: 0.5, delay: 0){
-            self.stationField.isEnabled = false
-            self.mainBG.alpha = 0.5
-            
-            self.defaultView.removeFromSuperview()
-            self.mainBG.snp.remakeConstraints{
-                $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-                $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            }
-            self.line.snp.updateConstraints{
-                $0.top.equalTo(self.mainTitle.snp.bottom).offset(40)
-            }
+        self.line.snp.updateConstraints{
+            $0.top.equalTo(self.mainTitle.snp.bottom).offset(40)
         }
         
-        self.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, delay: 0.05){
+            self.stationField.isEnabled = false
+            self.mainBG.alpha = 0.5
+                
+            self.defaultView.removeFromSuperview()
+            self.mainBG.layoutIfNeeded()
+        }
     }
     
     func viewDataSet(_ data: ReportTableViewCellData){

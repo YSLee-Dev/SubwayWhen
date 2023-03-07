@@ -13,7 +13,6 @@ import RxCocoa
 class ReportCheckModalViewModel{
     // INPUT
     let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, nowStation: "", destination: "", trainCar: "", contants: "", brand: ""))
-    let close = PublishRelay<Void>()
     let okBtnClick = PublishRelay<Void>()
     
     // OUTPUT
