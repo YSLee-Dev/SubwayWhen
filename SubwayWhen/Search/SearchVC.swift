@@ -70,7 +70,7 @@ extension Reactive where Base : SearchVC {
     var showModal : Binder<ResultVCCellData>{
         return Binder(base){base, data in
             let modalViewModel = ModalViewModel()
-            let modal = ModalVC(modalViewModel, modalHeight: 391)
+            let modal = ModalVC(modalViewModel, modalHeight: 381)
             
             modalViewModel.clickCellData.accept(data)
             modal.modalPresentationStyle = .overFullScreen
