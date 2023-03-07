@@ -16,7 +16,7 @@ class ReportViewModel {
     let cellData : Driver<[ReportTableViewCellSection]>
     let keyboardClose : Driver<Void>
     let scrollSction : Driver<Int>
-    let checkModalViewModel : Driver<ReportCheckModalViewModel>
+    let checkModalViewModel : Driver<ReportContentsModalViewModel>
     let popVC : Driver<Void>
     
     // INPUT
@@ -34,16 +34,16 @@ class ReportViewModel {
     let bag = DisposeBag()
     
     init(){
-        // LAZY CheckModalViewModel
-        lazy var checkModalViewModel = ReportCheckModalViewModel()
+        // LAZY contentsModalViewModel
+        lazy var contentsModalViewModel = ReportContentsModalViewModel()
         
         self.msgData
-            .bind(to: checkModalViewModel.msgData)
+            .bind(to: contentsModalViewModel.msgData)
             .disposed(by: self.bag)
         
         self.checkModalViewModel = self.msgData
             .map{ _ in
-                checkModalViewModel
+                contentsModalViewModel
             }
             .asDriver(onErrorDriveWith: .empty())
         
@@ -53,7 +53,7 @@ class ReportViewModel {
         self.scrollSction = self.nowStep
             .asDriver(onErrorDriveWith: .empty())
         
-        self.popVC = checkModalViewModel.close
+        self.popVC = contentsModalViewModel.close
             .asDriver(onErrorDriveWith: .empty())
         
         self.keyboardClose = Observable<Void>.merge(
@@ -67,14 +67,14 @@ class ReportViewModel {
             $0.onCompleted()
             return Disposables.create()
         }
-        .delay(.milliseconds(250), scheduler: MainScheduler.asyncInstance)
+        .delay(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
         .bind(to: self.nowData)
         .disposed(by: self.bag)
         
         
         // DefaultLineCell Data / delay 3s
         Observable<[String]>.create{
-            $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전"}))
+            $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전철"}))
             $0.onCompleted()
             return Disposables.create()
         }
@@ -146,6 +146,7 @@ class ReportViewModel {
                 
                 return [first, two]
             }
+            .delay(.milliseconds(400), scheduler: MainScheduler.asyncInstance)
             .share()
         
         twoStep
@@ -233,8 +234,7 @@ class ReportViewModel {
                     return []
                 }else{
                     now.append(.init(sectionName: "상세 정보", items: [
-                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-                        .init(cellTitle: "민원 내용을 입력해주세요.", cellData: "", type: .TextField, focus: false)
+                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)
                     ]))
                     
                     return now
@@ -272,32 +272,6 @@ class ReportViewModel {
                 
                 // 포커스 조정
                 now?[2].items[0].focus = false
-                if now?[2].items[1].cellData == ""{
-                    now?[2].items[1].focus = true
-                }
-                
-                return now ?? []
-            }
-            .bind(to: self.nowData)
-            .disposed(by: self.bag)
-        
-        let contents = self.textFieldCellModel.identityIndex
-            .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
-                if index.section == 2, index.row == 1{
-                    return now
-                }else{
-                    return nil
-                }
-            }
-            .filterNil()
-            .share()
-        
-        // 셀 재사용으로 인한 데이터 미리 저장
-        contents
-            .map{[weak self] data in
-                var now = self?.nowData.value
-                now?[2].items[1].cellData = data
-                now?[2].items[1].focus = false
                 
                 return now ?? []
             }
@@ -305,7 +279,7 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         
-        Observable.combineLatest(lineData, nowStation, destination, trainCar, contents, brand){[weak self] line, station, de, train, contents, subwayBrand in
+        Observable.combineLatest(lineData, nowStation, destination, trainCar, brand){[weak self] line, station, de, train, subwayBrand in
             let now = self?.nowData.value
             
             var brand = subwayBrand
@@ -313,7 +287,7 @@ class ReportViewModel {
                 brand = "N"
             }
             
-            return ReportMSGData(line: line, nowStation: station, destination: de, trainCar: train, contants: contents, brand: brand)
+            return ReportMSGData(line: line, nowStation: station, destination: de, trainCar: train, contants: "", brand: brand)
         }
         .bind(to: self.msgData)
         .disposed(by: self.bag)
