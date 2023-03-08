@@ -23,13 +23,7 @@ class SettingGroupModalVC : ModalVCCustom{
         $0.textColor = .label
     }
     
-    let groupOneHour = UITextField().then{
-        $0.placeholder = "시"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textColor = . systemRed
-        $0.keyboardType = .numberPad
-        $0.textAlignment = .right
-    }
+    let groupOneHour = SettingGroupModalTF()
     
     let groupTwoTitle = UILabel().then{
         $0.text = "퇴근시간"
@@ -37,13 +31,7 @@ class SettingGroupModalVC : ModalVCCustom{
         $0.textColor = .label
     }
     
-    let groupTwoHour = UITextField().then{
-        $0.placeholder = "시"
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textColor = . systemRed
-        $0.keyboardType = .numberPad
-        $0.textAlignment = .right
-    }
+    let groupTwoHour = SettingGroupModalTF()
     
     let groupOneStepper = UIStepper().then{
         $0.maximumValue = 23
@@ -66,10 +54,6 @@ class SettingGroupModalVC : ModalVCCustom{
         self.layout()
         self.bind(self.settingGroupViewModel)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
 }
 
 extension SettingGroupModalVC{
@@ -87,6 +71,7 @@ extension SettingGroupModalVC{
             $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.leading.equalTo(self.groupOneStepper.snp.leading)
             $0.bottom.equalTo(self.groupOneTitle.snp.centerY).offset(-5)
+            $0.height.equalTo(20)
         }
         
         self.groupOneStepper.snp.makeConstraints{
@@ -104,6 +89,7 @@ extension SettingGroupModalVC{
             $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.leading.equalTo(self.groupTwoStepper.snp.leading)
             $0.bottom.equalTo(self.groupTwoTitle.snp.centerY).offset(-5)
+            $0.height.equalTo(20)
         }
         
         self.groupTwoStepper.snp.makeConstraints{
@@ -119,14 +105,14 @@ extension SettingGroupModalVC{
             .map{
                 String($0)
             }
-            .drive(self.groupOneHour.rx.text)
+            .drive(self.groupOneHour.tf.rx.text)
             .disposed(by: self.bag)
         
         viewModel.groupTwoDefaultValue
             .map{
                 String($0)
             }
-            .drive(self.groupTwoHour.rx.text)
+            .drive(self.groupTwoHour.tf.rx.text)
             .disposed(by: self.bag)
         
         viewModel.modalClose
@@ -134,7 +120,7 @@ extension SettingGroupModalVC{
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
-        self.groupOneHour.rx.text
+        self.groupOneHour.tf.rx.text
             .map{
                 Int($0 ?? "")
             }
@@ -142,7 +128,7 @@ extension SettingGroupModalVC{
             .bind(to: viewModel.groupOneHourValue)
             .disposed(by: self.bag)
         
-        self.groupTwoHour.rx.text
+        self.groupTwoHour.tf.rx.text
             .map{
                 Int($0 ?? "")
             }
@@ -155,7 +141,7 @@ extension SettingGroupModalVC{
             .disposed(by: self.bag)
         
         // VIEW
-        self.groupOneHour.rx.text
+        self.groupOneHour.tf.rx.text
             .map{
                 Double($0 ?? "0.0")
             }
@@ -163,7 +149,7 @@ extension SettingGroupModalVC{
             .bind(to: self.groupOneStepper.rx.value)
             .disposed(by: self.bag)
         
-        self.groupTwoHour.rx.text
+        self.groupTwoHour.tf.rx.text
             .map{
                 Double($0 ?? "0.0")
             }
@@ -171,7 +157,7 @@ extension SettingGroupModalVC{
             .bind(to: self.groupTwoStepper.rx.value)
             .disposed(by: self.bag)
         
-        self.groupOneHour.rx.text
+        self.groupOneHour.tf.rx.text
             .map{ data -> String? in
                 guard let intValue = Int(data ?? "") else {return ""}
                 
@@ -181,11 +167,11 @@ extension SettingGroupModalVC{
                    return ""
                 }
             }
-            .bind(to: self.groupOneHour.rx.text)
+            .bind(to: self.groupOneHour.tf.rx.text)
             .disposed(by: self.bag)
         
         
-        self.groupTwoHour.rx.text
+        self.groupTwoHour.tf.rx.text
             .map{ data -> String? in
                 guard let intValue = Int(data ?? "") else {return ""}
                 
@@ -195,7 +181,7 @@ extension SettingGroupModalVC{
                    return ""
                 }
             }
-            .bind(to: self.groupTwoHour.rx.text)
+            .bind(to: self.groupTwoHour.tf.rx.text)
             .disposed(by: self.bag)
         
         // VIEWMODEL / VIEW
@@ -211,7 +197,7 @@ extension SettingGroupModalVC{
         
         oneValue
             .map{"\($0)"}
-            .bind(to: self.groupOneHour.rx.text)
+            .bind(to: self.groupOneHour.tf.rx.text)
             .disposed(by: self.bag)
         
         let twoValue = self.groupTwoStepper.rx.value
@@ -226,7 +212,7 @@ extension SettingGroupModalVC{
         
         twoValue
             .map{"\($0)"}
-            .bind(to: self.groupTwoHour.rx.text)
+            .bind(to: self.groupTwoHour.tf.rx.text)
             .disposed(by: self.bag)
     }
 }
