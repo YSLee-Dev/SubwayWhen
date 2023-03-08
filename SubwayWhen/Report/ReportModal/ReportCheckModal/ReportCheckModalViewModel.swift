@@ -14,6 +14,7 @@ class ReportCheckModalViewModel{
     // INPUT
     let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, nowStation: "", destination: "", trainCar: "", contants: "", brand: ""))
     let okBtnClick = PublishRelay<Void>()
+    let msgSeedDismiss = PublishRelay<Void>()
     
     // OUTPUT
     let msg : Driver<String>

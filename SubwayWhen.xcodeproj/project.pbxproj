@@ -89,6 +89,9 @@
 		34A303C029AF86FD00948EDD /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303AF29AF86FD00948EDD /* LoadModel.swift */; };
 		34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */; };
 		34A303C229AF86FD00948EDD /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */; };
+		34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */; };
+		34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */; };
+		34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
@@ -252,6 +255,9 @@
 		34A303AF29AF86FD00948EDD /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModel.swift; sourceTree = "<group>"; };
 		34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModelProtocol.swift; sourceTree = "<group>"; };
 		34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFView.swift; sourceTree = "<group>"; };
+		34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalSection.swift; sourceTree = "<group>"; };
+		34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFViewModel.swift; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
@@ -405,11 +411,9 @@
 		349B516D29A469D600A53879 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				349B516729A467FA00A53879 /* ReportTableViewCellData.swift */,
-				34A6BF9A29B72FEE0059CF1A /* ReportContentsModalCellData.swift */,
-				349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */,
+				34A32E6C29B8283E00AA1C67 /* ReportTableView */,
+				34A32E6D29B8287400AA1C67 /* ReportContentsModal */,
 				349B518729A4D2D600A53879 /* ReportBrandData.swift */,
-				349B516929A468FA00A53879 /* ReportTableViewCellType.swift */,
 				349B518029A4B73000A53879 /* ReportMSGData.swift */,
 			);
 			path = Entity;
@@ -696,6 +700,34 @@
 			path = LoadModel;
 			sourceTree = "<group>";
 		};
+		34A32E6C29B8283E00AA1C67 /* ReportTableView */ = {
+			isa = PBXGroup;
+			children = (
+				349B516929A468FA00A53879 /* ReportTableViewCellType.swift */,
+				349B516B29A4695500A53879 /* ReportTableViewCellSection.swift */,
+				349B516729A467FA00A53879 /* ReportTableViewCellData.swift */,
+			);
+			path = ReportTableView;
+			sourceTree = "<group>";
+		};
+		34A32E6D29B8287400AA1C67 /* ReportContentsModal */ = {
+			isa = PBXGroup;
+			children = (
+				34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */,
+				34A6BF9A29B72FEE0059CF1A /* ReportContentsModalCellData.swift */,
+			);
+			path = ReportContentsModal;
+			sourceTree = "<group>";
+		};
+		34A32E7229B82B6000AA1C67 /* ReportContentsModalTF */ = {
+			isa = PBXGroup;
+			children = (
+				34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */,
+				34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */,
+			);
+			path = ReportContentsModalTF;
+			sourceTree = "<group>";
+		};
 		34A36BDC294C580800FB0DDB /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -741,6 +773,7 @@
 		34A6BF9929B72D710059CF1A /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				34A32E7229B82B6000AA1C67 /* ReportContentsModalTF */,
 				34A6BF9729B72D6B0059CF1A /* ReportContentsModalColletionViewCell.swift */,
 			);
 			path = Sub;
@@ -1263,6 +1296,7 @@
 				34A303B929AF86FD00948EDD /* SearchInfoBySubwayNameService.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
 				349B516629A4631B00A53879 /* ReportViewModel.swift in Sources */,
+				34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */,
 				34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */,
 				34A066702993A12E00B414F3 /* MainTableViewHeaderBtn.swift in Sources */,
 				34A0504729B58546007F97AD /* ReportTableViewDefaultLineView.swift in Sources */,
@@ -1285,6 +1319,7 @@
 				349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
 				349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */,
+				34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */,
 				34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
@@ -1293,6 +1328,7 @@
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
 				3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
+				34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */,
 				349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */,
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
 				349B518329A4BEFD00A53879 /* ReportCheckModalVC.swift in Sources */,

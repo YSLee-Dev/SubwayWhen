@@ -27,6 +27,8 @@ class ReportCheckModalVC : ModalVCCustom{
     let checkModalViewModel : ReportCheckModalViewModel
     var msgVC = MFMessageComposeViewController()
     
+    var status : Bool = false
+    
     let bag = DisposeBag()
     
     init(modalHeight: CGFloat, viewModel : ReportCheckModalViewModel) {
@@ -81,7 +83,10 @@ extension ReportCheckModalVC {
     }
     
     override func modalDismiss() {
-        self.navigationController?.popViewController(animated: false)
+        if self.status {
+            self.checkModalViewModel.msgSeedDismiss.accept(Void())
+        }
+        super.modalDismiss()
     }
     
     private func successIconSet(){
@@ -105,6 +110,9 @@ extension ReportCheckModalVC {
         
         // success icon
         self.successIconSet()
+        
+        // Status
+        self.status = true
     }
 }
 
