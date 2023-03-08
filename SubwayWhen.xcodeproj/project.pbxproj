@@ -92,6 +92,7 @@
 		34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */; };
 		34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */; };
 		34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */; };
+		34A32E7429B88C4F00AA1C67 /* TableViewCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
 		34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */; };
 		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
@@ -258,6 +259,7 @@
 		34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFView.swift; sourceTree = "<group>"; };
 		34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalSection.swift; sourceTree = "<group>"; };
 		34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFViewModel.swift; sourceTree = "<group>"; };
+		34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellCustom.swift; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
 		34A36BD32948789A00FB0DDB /* MainTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewSection.swift; sourceTree = "<group>"; };
 		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
@@ -1001,6 +1003,7 @@
 			isa = PBXGroup;
 			children = (
 				349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */,
+				34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */,
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
 				34CA5598293897160006F67B /* GroupCustomButton.swift */,
 				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
@@ -1359,6 +1362,7 @@
 				349B516329A4630300A53879 /* ReportVC.swift in Sources */,
 				34A36BD42948789A00FB0DDB /* MainTableViewSection.swift in Sources */,
 				34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */,
+				34A32E7429B88C4F00AA1C67 /* TableViewCellCustom.swift in Sources */,
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
 				349B516129A4616700A53879 /* DetailStationId.swift in Sources */,

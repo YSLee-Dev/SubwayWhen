@@ -10,9 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class DetailResultScheduleViewCell : UITableViewCell{
-    let mainCell = MainStyleUIView()
-    
+class DetailResultScheduleViewCell : TableViewCellCustom{
     let minuteLabel = UILabel().then{
         $0.textColor = .label
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize, weight: .medium)
@@ -27,7 +25,6 @@ class DetailResultScheduleViewCell : UITableViewCell{
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.attribute()
         self.layout()
     }
     
@@ -37,25 +34,14 @@ class DetailResultScheduleViewCell : UITableViewCell{
 }
 
 extension DetailResultScheduleViewCell{
-    private func attribute(){
-        self.selectionStyle = .none
-    }
-    
     private func layout(){
-        self.contentView.addSubview(self.mainCell)
-        self.mainCell.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(ViewStyle.padding.mainStyleViewTB)
-            $0.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-        }
-        
-        self.mainCell.addSubview(self.minuteLabel)
+        self.mainBG.addSubview(self.minuteLabel)
         self.minuteLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(10)
             $0.top.bottom.equalToSuperview().inset(10)
         }
         
-        self.mainCell.addSubview(self.lastStationLabel)
+        self.mainBG.addSubview(self.lastStationLabel)
         self.lastStationLabel.snp.makeConstraints{
             $0.leading.equalTo(self.minuteLabel.snp.trailing).offset(5)
             $0.trailing.equalToSuperview()
