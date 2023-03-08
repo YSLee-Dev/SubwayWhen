@@ -564,7 +564,7 @@
 			children = (
 				349FF29D299F214F007A98F4 /* SettingGroupModalVC.swift */,
 				349FF2A0299F2161007A98F4 /* SettingGroupModalViewModel.swift */,
-				34A32E7629B893E100AA1C67 /* SettingGroupModalTF.swift */,
+				34A32E7829B8961100AA1C67 /* Sub */,
 			);
 			path = SettingGroupModal;
 			sourceTree = "<group>";
@@ -737,6 +737,14 @@
 			isa = PBXGroup;
 			children = (
 				34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		34A32E7829B8961100AA1C67 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				34A32E7629B893E100AA1C67 /* SettingGroupModalTF.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
