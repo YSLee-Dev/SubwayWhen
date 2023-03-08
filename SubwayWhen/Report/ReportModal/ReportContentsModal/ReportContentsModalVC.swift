@@ -7,8 +7,12 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class ReportContentsModalVC : ModalVCCustom{
     let bag = DisposeBag()
@@ -17,6 +21,7 @@ class ReportContentsModalVC : ModalVCCustom{
     
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then{
         $0.register(ReportContentsModalColletionViewCell.self, forCellWithReuseIdentifier: "ReportContentsModalColletionViewCell")
+        $0.register(ReportContentsModalTFView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "ReportContentsModalTFView")
         $0.dataSource = nil
         $0.delegate = nil
     }
@@ -28,7 +33,7 @@ class ReportContentsModalVC : ModalVCCustom{
     }
     
     deinit{
-        print("ReportCheckModalVC DEINIT")
+        print("ReportContentsModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -58,12 +63,26 @@ extension ReportContentsModalVC {
     }
     
     func bind(_ viewModel : ReportContentsModalViewModel){
-        viewModel.cellData
-            .drive(self.collectionView.rx.items){ collectionView, row, data in
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportContentsModalColletionViewCell", for: IndexPath(row: row, section: 0)) as? ReportContentsModalColletionViewCell else {return UICollectionViewCell()}
-                cell.cellSet(text: data.title, iconImg: UIImage(systemName: data.iconName) ?? .actions)
-                return cell
+        let dataSources = RxCollectionViewSectionedAnimatedDataSource<ReportContentsModalSection>(animationConfiguration: .init(insertAnimation: .top, reloadAnimation: .top)){_, collectionView, index, data in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportContentsModalColletionViewCell", for: index) as? ReportContentsModalColletionViewCell else {return UICollectionViewCell()}
+            cell.cellSet(text: data.title, iconImg: UIImage(systemName: data.iconName) ?? .actions)
+            return cell
+        }
+        
+        dataSources.configureSupplementaryView = { _, collectionView, kind, index -> UICollectionReusableView in
+            if kind == UICollectionView.elementKindSectionFooter{
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "ReportContentsModalTFView", for: index) as? ReportContentsModalTFView else {return UICollectionReusableView()}
+                
+                footer.bind(viewModel.tfViewModel)
+                return footer
+            }else{
+                return UICollectionReusableView()
             }
+        }
+        
+        viewModel.cellData
+            .drive(self.collectionView.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
         
         self.collectionView.rx.modelSelected(ReportContentsModalCellData.self)
@@ -76,6 +95,10 @@ extension ReportContentsModalVC {
         viewModel.nextStep
             .drive(self.rx.pushCheckModal)
             .disposed(by: self.bag)
+        
+        viewModel.twoStepClose
+            .drive(self.rx.twoStepClose)
+            .disposed(by: self.bag)
     }
     
     
@@ -84,10 +107,13 @@ extension ReportContentsModalVC {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(105))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 3)
         
         let section = NSCollectionLayoutSection(group: group)
+        
+        let tfSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(65))
+        section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(layoutSize: tfSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)]
         
         return UICollectionViewCompositionalLayout(section: section)
     }
@@ -100,14 +126,17 @@ extension ReportContentsModalVC {
 }
 
 extension Reactive where Base : ReportContentsModalVC{
-    var pushCheckModal : Binder<ReportMSGData>{
-        return Binder(base){base, data in
-            let model = ReportCheckModalViewModel()
+    var pushCheckModal : Binder<ReportCheckModalViewModel>{
+        return Binder(base){base, model in
             let check = ReportCheckModalVC(modalHeight: base.mainBG.frame.height, viewModel: model)
-            
-            model.msgData.onNext(data)
-            
-            base.navigationController?.pushViewController(check, animated: false)
+            check.modalPresentationStyle = .overFullScreen
+            base.present(check, animated: false)
+        }
+    }
+    
+    var twoStepClose : Binder<Void>{
+        return Binder(base){base, model in
+            base.modalDismiss()
         }
     }
 }

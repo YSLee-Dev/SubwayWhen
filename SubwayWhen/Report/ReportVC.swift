@@ -154,11 +154,10 @@ extension Reactive where Base : ReportVC{
     
     var modalPresent : Binder<ReportContentsModalViewModel>{
         return Binder(base){base, model in
-            let modal = ReportContentsModalVC(modalHeight: 600, viewModel: model)
-            let navi = UINavigationController(rootViewController: modal)
-            navi.modalPresentationStyle = .overFullScreen
+            let modal = ReportContentsModalVC(modalHeight: 520, viewModel: model)
+            modal.modalPresentationStyle = .overFullScreen
             
-            base.present(navi, animated: false)
+            base.present(modal, animated: false)
         }
     }
     

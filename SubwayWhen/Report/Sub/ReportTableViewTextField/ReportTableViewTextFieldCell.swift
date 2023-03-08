@@ -57,7 +57,7 @@ extension ReportTableViewTextFieldCell{
     }
     
     func bind(_ cellModel : ReportTableViewTextFieldCellModel){
-        let doenTap = self.textField.rx.controlEvent(.editingDidEnd).asObservable()
+        let doenTap = self.textField.rx.controlEvent(.editingDidEnd)
             .withLatestFrom(self.textField.rx.text)
             .map{ data -> String? in
                 guard let nowString = data else {return nil}
