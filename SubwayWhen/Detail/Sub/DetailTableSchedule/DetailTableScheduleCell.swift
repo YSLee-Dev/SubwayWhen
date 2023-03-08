@@ -13,9 +13,7 @@ import RxOptional
 import SnapKit
 import Then
 
-class DetailTableScheduleCell : UITableViewCell{
-    let mainBG = MainStyleUIView()
-    
+class DetailTableScheduleCell : TableViewCellCustom{
     var mainTitle = UILabel().then{
         $0.textColor = .label
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
@@ -43,7 +41,6 @@ class DetailTableScheduleCell : UITableViewCell{
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.attribute()
         self.layout()
     }
     
@@ -57,17 +54,7 @@ class DetailTableScheduleCell : UITableViewCell{
 }
 
 extension DetailTableScheduleCell{
-    private func attribute(){
-        self.selectionStyle = .none
-    }
-    
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-        }
-        
         self.mainBG.addSubview(self.mainTitle)
         self.mainTitle.snp.makeConstraints{
             $0.leading.top.trailing.equalToSuperview().inset(15)

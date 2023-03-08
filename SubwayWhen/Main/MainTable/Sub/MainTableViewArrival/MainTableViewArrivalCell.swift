@@ -12,11 +12,9 @@ import RxCocoa
 import Then
 import SnapKit
 
-class MainTableViewCell : UITableViewCell{
+class MainTableViewCell : TableViewCellCustom{
     var index = IndexPath(row: 0, section: 0)
     var bag = DisposeBag()
-    
-    var mainBG = MainStyleUIView()
     
     lazy var line = UILabel().then{
         $0.layer.masksToBounds = true
@@ -63,14 +61,12 @@ class MainTableViewCell : UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
-        self.attibute()
     }
     
     // 재사용 시 초기화 구문
     override func prepareForReuse() {
         self.bag = DisposeBag()
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -97,12 +93,6 @@ class MainTableViewCell : UITableViewCell{
 
 extension MainTableViewCell{
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-        }
-        
         [self.line, self.nowStackView, self.arrivalTime, self.changeBtn, self.border].forEach{
             self.mainBG.addSubview($0)
         }
@@ -141,10 +131,6 @@ extension MainTableViewCell{
             $0.height.equalTo(30)
             $0.bottom.equalToSuperview().inset(15)
         }
-    }
-    
-    private func attibute(){
-        self.selectionStyle = .none
     }
     
     func bind(_ viewModel : MainTableViewCellModel){
