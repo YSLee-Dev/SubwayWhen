@@ -11,9 +11,7 @@ import Then
 import SnapKit
 import Lottie
 
-class MainTableViewDefaultCell : UITableViewCell{
-    var mainBG = MainStyleUIView()
-    
+class MainTableViewDefaultCell : TableViewCellCustom{
     var plusIcon = LottieAnimationView(name: "Plus")
     
     var titleLabel = UILabel().then{
@@ -27,7 +25,6 @@ class MainTableViewDefaultCell : UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
-        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -47,26 +44,14 @@ extension MainTableViewDefaultCell{
         }
     }
     
-    private func attribute(){
-        self.selectionStyle = .none
-    }
-    
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.equalToSuperview().offset(ViewStyle.padding.mainStyleViewLR)
-            $0.trailing.equalToSuperview().offset(-ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(100)
-        }
-        
         [self.plusIcon, self.titleLabel].forEach{
             self.mainBG.addSubview($0)
         }
         
         self.plusIcon.snp.makeConstraints{
+            $0.top.bottom.equalToSuperview().inset(7.5)
             $0.leading.equalToSuperview().inset(5)
-            $0.centerY.equalToSuperview()
             $0.size.equalTo(85)
         }
         

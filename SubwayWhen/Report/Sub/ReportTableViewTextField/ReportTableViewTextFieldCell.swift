@@ -11,9 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class ReportTableViewTextFieldCell : UITableViewCell{
-    let mainBG = MainStyleUIView()
-    
+class ReportTableViewTextFieldCell : TableViewCellCustom{
     let textField = UITextField().then{
         $0.textAlignment = .right
     }
@@ -24,7 +22,6 @@ class ReportTableViewTextFieldCell : UITableViewCell{
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.attribute()
         self.layout()
     }
     
@@ -38,21 +35,11 @@ class ReportTableViewTextFieldCell : UITableViewCell{
 }
 
 extension ReportTableViewTextFieldCell{
-    private func attribute(){
-        self.selectionStyle = .none
-    }
-    
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(60)
-        }
-        
         self.mainBG.addSubview(self.textField)
         self.textField.snp.makeConstraints{
             $0.edges.equalToSuperview().inset(15)
+            $0.height.equalTo(40)
         }
     }
     
