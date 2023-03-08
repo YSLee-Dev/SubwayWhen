@@ -47,15 +47,14 @@ extension ReportContentsModalColletionViewCell {
             }
         
         self.icon.snp.makeConstraints{
-            $0.size.equalTo(35)
-            $0.top.equalToSuperview().inset(5)
+            $0.size.equalTo(40)
+            $0.top.equalToSuperview().inset(10)
             $0.centerX.equalToSuperview()
         }
         
         self.titleLabel.snp.makeConstraints{
-            $0.top.equalTo(self.icon.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     
