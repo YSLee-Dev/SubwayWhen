@@ -19,12 +19,12 @@ class MainTableViewGroupCell : UITableViewCell{
     
     let groupView = MainStyleUIView()
     
-    let groupOne = GroupCustomButton().then{
+    let groupOne = MainTableViewGroupBtn().then{
         $0.setTitle("출근", for: .normal)
         $0.seleted()
     }
     
-    let groupTwo = GroupCustomButton().then{
+    let groupTwo = MainTableViewGroupBtn().then{
         $0.setTitle("퇴근", for: .normal)
         $0.unSeleted()
     }
