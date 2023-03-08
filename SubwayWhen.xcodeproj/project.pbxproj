@@ -730,6 +730,14 @@
 			path = ReportContentsModalTF;
 			sourceTree = "<group>";
 		};
+		34A32E7529B891AF00AA1C67 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
 		34A36BDC294C580800FB0DDB /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -953,7 +961,7 @@
 			children = (
 				34CA5593293893450006F67B /* MainTableViewGroupCell.swift */,
 				34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */,
-				34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */,
+				34A32E7529B891AF00AA1C67 /* Sub */,
 			);
 			path = MainTableViewGroup;
 			sourceTree = "<group>";
