@@ -10,10 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-class EditViewCell : UITableViewCell{
-    
-    var mainBG = MainStyleUIView()
-    
+class EditViewCell : TableViewCellCustom{
     lazy var line = UILabel().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 30
@@ -38,7 +35,6 @@ class EditViewCell : UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
-        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -48,12 +44,6 @@ class EditViewCell : UITableViewCell{
 
 extension EditViewCell{
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-        }
-        
         [self.line, self.stationName, self.upDown].forEach{
             self.mainBG.addSubview($0)
         }
@@ -71,10 +61,6 @@ extension EditViewCell{
             $0.trailing.equalToSuperview().offset(-15)
             $0.centerY.equalTo(self.line)
         }
-    }
-    
-    private func attribute(){
-        self.selectionStyle = .none
     }
     
     func lineColor(line : String){

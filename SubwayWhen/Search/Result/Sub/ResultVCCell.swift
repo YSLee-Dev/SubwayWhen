@@ -10,9 +10,7 @@ import Foundation
 import Then
 import SnapKit
 
-class ResultVCCell : UITableViewCell{
-    var mainBG = MainStyleUIView()
-    
+class ResultVCCell : TableViewCellCustom{
     var stationName = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
@@ -29,7 +27,6 @@ class ResultVCCell : UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: "ResultVCCell")
         self.layout()
-        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -45,19 +42,9 @@ extension ResultVCCell{
         self.line.text = line.useLine
     }
     
-    private func attribute(){
-        self.selectionStyle = .none
-    }
-    
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
         self.mainBG.addSubview(self.stationName)
         self.mainBG.addSubview(self.line)
-        
-        self.mainBG.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-        }
         
         self.stationName.snp.makeConstraints{
             $0.centerY.equalToSuperview()
