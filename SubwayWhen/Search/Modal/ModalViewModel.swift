@@ -63,7 +63,7 @@ class ModalViewModel {
                 
                 // 중복 지하철은 저장 X
                 for x in FixInfo.saveStation{
-                    if x.stationName == cellData.stationName && x.exceptionLastStation == exception && x.lineCode == cellData.lineCode{
+                    if x.stationName == cellData.stationName && x.updnLine == updownLine && x.lineCode == cellData.lineCode{
                         return false
                     }
                 }
