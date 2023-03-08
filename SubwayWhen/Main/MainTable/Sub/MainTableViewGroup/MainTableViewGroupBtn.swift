@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GroupCustomButton : UIButton{
+class MainTableViewGroupBtn : UIButton{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.attribute()
@@ -18,7 +18,7 @@ class GroupCustomButton : UIButton{
     }
 }
 
-extension GroupCustomButton {
+extension MainTableViewGroupBtn {
     private func attribute(){
         self.layer.cornerRadius = ViewStyle.Layer.radius
         self.layer.masksToBounds = true

@@ -139,7 +139,7 @@
 		34C6DBA0293627BF00C4ED80 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */; };
 		34CA5594293893450006F67B /* MainTableViewGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5593293893450006F67B /* MainTableViewGroupCell.swift */; };
 		34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */; };
-		34CA5599293897160006F67B /* GroupCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5598293897160006F67B /* GroupCustomButton.swift */; };
+		34CA5599293897160006F67B /* MainTableViewGroupBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */; };
 		34D3E7382988E04A002AAB83 /* DetailTableArrivalLiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D3E7372988E04A002AAB83 /* DetailTableArrivalLiveView.swift */; };
 		34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */; };
 		34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F494D029815200001599B1 /* DetailResultScheduleVC.swift */; };
@@ -308,7 +308,7 @@
 		34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
 		34CA5593293893450006F67B /* MainTableViewGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCell.swift; sourceTree = "<group>"; };
 		34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCellModel.swift; sourceTree = "<group>"; };
-		34CA5598293897160006F67B /* GroupCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCustomButton.swift; sourceTree = "<group>"; };
+		34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupBtn.swift; sourceTree = "<group>"; };
 		34D3E7372988E04A002AAB83 /* DetailTableArrivalLiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableArrivalLiveView.swift; sourceTree = "<group>"; };
 		34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		34F494D029815200001599B1 /* DetailResultScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleVC.swift; sourceTree = "<group>"; };
@@ -953,6 +953,7 @@
 			children = (
 				34CA5593293893450006F67B /* MainTableViewGroupCell.swift */,
 				34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */,
+				34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */,
 			);
 			path = MainTableViewGroup;
 			sourceTree = "<group>";
@@ -1005,7 +1006,6 @@
 				349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */,
 				34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */,
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
-				34CA5598293897160006F67B /* GroupCustomButton.swift */,
 				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
 				349E32C12978DF1C00147DEE /* MainStyleUIView.swift */,
 				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
@@ -1383,7 +1383,7 @@
 				349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */,
 				34C6DB9E293627AF00C4ED80 /* MainVC.swift in Sources */,
 				34A36BDB294C580300FB0DDB /* TabBarCustomButton.swift in Sources */,
-				34CA5599293897160006F67B /* GroupCustomButton.swift in Sources */,
+				34CA5599293897160006F67B /* MainTableViewGroupBtn.swift in Sources */,
 				34C6DB91293627AF00C4ED80 /* SearchStaion.swift in Sources */,
 				34C6DB94293627AF00C4ED80 /* DefaultViewCell.swift in Sources */,
 				34C6DB93293627AF00C4ED80 /* DefaultView.swift in Sources */,
