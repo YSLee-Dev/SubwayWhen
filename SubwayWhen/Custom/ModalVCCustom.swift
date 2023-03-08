@@ -9,6 +9,7 @@ import UIKit
 
 class ModalVCCustom : UIViewController{
     let modalHeight : CGFloat
+    let isBtn : Bool
     
     let mainBG = UIView().then{
         $0.layer.masksToBounds = true
@@ -38,21 +39,25 @@ class ModalVCCustom : UIViewController{
         $0.textColor = .gray
     }
     
-    lazy var okBtn = ModalCustomButton().then{
-        $0.backgroundColor = UIColor(named: "MainColor")
-        $0.setTitleColor(.label, for: .normal)
-    }
+    var okBtn : ModalCustomButton?
     
     private var moveTranslation : CGPoint = CGPoint(x: 0, y: 0)
     private var moveVelocity : CGPoint = CGPoint(x: 0, y: 0)
     
     init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String){
         self.modalHeight = modalHeight
+        self.isBtn = btnTitle != ""
         super.init(nibName: nil, bundle: nil)
         
-        self.okBtn.setTitle(btnTitle, for: .normal)
         self.mainTitle.text = mainTitle
         self.subTitle.text = subTitle
+        
+        if self.isBtn{
+            self.okBtn = ModalCustomButton()
+            self.okBtn!.setTitle(btnTitle, for: .normal)
+            self.okBtn!.backgroundColor = UIColor(named: "MainColor")
+            self.okBtn!.setTitleColor(.label, for: .normal)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +65,7 @@ class ModalVCCustom : UIViewController{
     }
     
     override func viewDidLoad() {
-        self.layout(modalHeight: self.modalHeight)
+        self.layout(modalHeight: self.modalHeight, isBtn: self.isBtn)
         self.attribute()
     }
     
@@ -84,7 +89,7 @@ extension ModalVCCustom{
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func layout(modalHeight: CGFloat){
+    private func layout(modalHeight: CGFloat, isBtn : Bool){
         self.view.addSubview(self.grayBG)
         self.grayBG.snp.makeConstraints{
             $0.edges.equalToSuperview()
@@ -105,13 +110,6 @@ extension ModalVCCustom{
             $0.height.equalTo(5)
         }
         
-        self.mainBG.addSubview(self.okBtn)
-        self.okBtn.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.height.equalTo(50)
-            $0.bottom.equalTo(self.grayBG).inset(42.5)
-        }
-        
         self.mainBG.addSubview(self.mainTitle)
         self.mainTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
@@ -123,6 +121,15 @@ extension ModalVCCustom{
         self.subTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.mainTitle.snp.bottom)
+        }
+        
+        if isBtn{
+            self.mainBG.addSubview(self.okBtn!)
+            self.okBtn!.snp.makeConstraints{
+                $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+                $0.height.equalTo(50)
+                $0.bottom.equalTo(self.grayBG).inset(42.5)
+            }
         }
     }
     
