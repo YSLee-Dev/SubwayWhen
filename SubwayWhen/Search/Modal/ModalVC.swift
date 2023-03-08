@@ -76,7 +76,6 @@ class ModalVC : ModalVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.attribute()
         self.layout()
     }
     
@@ -86,9 +85,6 @@ class ModalVC : ModalVCCustom{
 }
 
 extension ModalVC{
-    private func attribute(){
-        self.okBtn.removeFromSuperview()
-    }
     private func layout(){
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{

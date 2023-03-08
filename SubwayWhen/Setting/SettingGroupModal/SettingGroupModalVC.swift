@@ -150,7 +150,7 @@ extension SettingGroupModalVC{
             .bind(to: viewModel.groupTwoHourValue)
             .disposed(by: self.bag)
         
-        self.okBtn.rx.tap
+        self.okBtn!.rx.tap
             .bind(to: viewModel.saveBtnClick)
             .disposed(by: self.bag)
         

@@ -44,7 +44,7 @@ class SettingContentsModalVC : ModalVCCustom{
 
 extension SettingContentsModalVC{
     private func attirbute(){
-        self.okBtn.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
+        self.okBtn!.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
     }
     
     private func layout(){
@@ -52,7 +52,7 @@ extension SettingContentsModalVC{
         self.textView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.subTitle.snp.bottom).offset(10)
-            $0.bottom.equalTo(self.okBtn.snp.top).offset(-10)
+            $0.bottom.equalTo(self.okBtn!.snp.top).offset(-10)
         }
     }
     

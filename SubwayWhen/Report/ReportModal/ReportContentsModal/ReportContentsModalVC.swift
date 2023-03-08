@@ -28,7 +28,7 @@ class ReportContentsModalVC : ModalVCCustom{
     
     init(modalHeight: CGFloat, viewModel : ReportContentsModalViewModel) {
         self.reportContentsModalViewModel = viewModel
-        super.init(modalHeight: modalHeight, btnTitle: "다음", mainTitle: "지하철 민원", subTitle: "민원내용을 선택하거나 입력해주세요.")
+        super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 민원", subTitle: "민원내용을 선택하거나 입력해주세요.")
         self.bind(self.reportContentsModalViewModel)
     }
     
@@ -49,7 +49,6 @@ class ReportContentsModalVC : ModalVCCustom{
 
 extension ReportContentsModalVC {
     private func attribute(){
-        self.okBtn.removeFromSuperview()
         self.collectionView.collectionViewLayout = self.collectionViewLayout()
     }
     

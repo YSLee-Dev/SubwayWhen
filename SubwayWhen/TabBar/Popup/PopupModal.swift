@@ -37,7 +37,7 @@ class PopupModal : ModalVCCustom{
 
 extension PopupModal {
     private func attribute(){
-        self.okBtn.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
+        self.okBtn!.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
     }
     
     private func layout(){
@@ -45,7 +45,7 @@ extension PopupModal {
         self.textView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.subTitle.snp.bottom).offset(10)
-            $0.bottom.equalTo(self.okBtn.snp.top).offset(-10)
+            $0.bottom.equalTo(self.okBtn!.snp.top).offset(-10)
         }
     }
 }
