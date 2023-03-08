@@ -18,16 +18,14 @@ class ModalViewModel {
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
+    let alertShow : Driver<Void>
     
     // INPUT
     let clickCellData = PublishRelay<ResultVCCellData>()
     let upDownBtnClick = PublishRelay<Bool>()
-    let grayBgClick = PublishRelay<Void>()
+    let notService = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)
     let exceptionLastStationText = BehaviorRelay<String?>(value: "")
-    
-    // NOW MODAL CLOSE
-    let totalModalClose = PublishRelay<Void>()
     
     let bag = DisposeBag()
     
@@ -36,8 +34,8 @@ class ModalViewModel {
             .asDriver(onErrorDriveWith: .empty())
         
         // 전체 데이터를 합친 후, 저장
-       Observable
-            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> Void in
+       let save = Observable
+            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> Bool in
                 
                 var updownLine = ""
                 if cellData.useLine ==  "2호선" {
@@ -63,17 +61,27 @@ class ModalViewModel {
                     brand = ""
                 }
                 
+                // 중복 지하철은 저장 X
+                for x in FixInfo.saveStation{
+                    if x.stationName == cellData.stationName && x.exceptionLastStation == exception && x.lineCode == cellData.lineCode{
+                        return false
+                    }
+                }
                 FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 
-                return Void()
+                return true
             }
-            .bind(to: self.totalModalClose)
-            .disposed(by: self.bag)
+            .share()
+        
+        self.alertShow = save
+            .filter{!$0}
+            .map{_ in Void()}
+            .asDriver(onErrorDriveWith: .empty())
       
         self.modalClose = Observable
             .merge(
-                self.grayBgClick.asObservable(),
-                self.totalModalClose.asObservable()
+                self.notService.asObservable(),
+                save.filter{$0}.map{_ in Void()}
             )
             .asDriver(onErrorDriveWith: .empty())
     }
