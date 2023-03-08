@@ -153,7 +153,7 @@ extension ModalVC{
             .disposed(by: self.bag)
         
         self.notServiceBtn.rx.tap.asObservable()
-            .bind(to: viewModel.grayBgClick)
+            .bind(to: viewModel.notService)
             .disposed(by: self.bag)
         
         self.groupBtn.rx.tap
@@ -171,6 +171,7 @@ extension ModalVC{
             .disposed(by: self.bag)
         
         self.exceptionLastStationTF.rx.text
+            .skip(1)
             .bind(to: viewModel.exceptionLastStationText)
             .disposed(by: self.bag)
         
@@ -186,6 +187,10 @@ extension ModalVC{
         
         viewModel.modalClose
             .drive(self.rx.modalClose)
+            .disposed(by: self.bag)
+        
+        viewModel.alertShow
+            .drive(self.rx.noSaveAlert)
             .disposed(by: self.bag)
     }
 }
@@ -225,6 +230,15 @@ extension Reactive where Base : ModalVC{
     var modalClose : Binder<Void>{
         return Binder(base){base, _ in
             base.modalDismiss()
+        }
+    }
+    
+    var noSaveAlert : Binder<Void>{
+        return Binder(base){ base, _ in
+            let alert = UIAlertController(title: "이미 저장된 지하철역이에요.", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
+            
+            base.present(alert, animated: true)
         }
     }
     
