@@ -32,6 +32,7 @@ class MainVC : TableVCCustom{
         super.viewDidLoad()
         self.bind(self.mainViewModel)
         self.attibute()
+        self.layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +45,14 @@ class MainVC : TableVCCustom{
 extension MainVC{
     private func attibute(){
         self.topView.backBtn.isHidden = true
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
+    }
+    
+    private func layout(){
         self.topView.subTitleLabel.snp.remakeConstraints{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
-        
-        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
         
         self.titleView.mainTitleLabel.snp.updateConstraints{
             $0.centerY.equalToSuperview().offset(-5)
