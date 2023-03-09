@@ -23,7 +23,7 @@ class EditVC : TableVCCustom{
     
     let noListLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textColor = .label
+        $0.textColor = .gray
         $0.text = "현재 저장되어 있는 지하철역이 없어요."
         $0.textAlignment = .center
         $0.isHidden = true
