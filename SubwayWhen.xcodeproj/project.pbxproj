@@ -632,8 +632,8 @@
 				34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */,
 				34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */,
 				34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */,
-				34A3039C29AF86FD00948EDD /* Entity */,
 				34A303AD29AF86FD00948EDD /* LoadModel */,
+				34A3039C29AF86FD00948EDD /* Entity */,
 			);
 			name = DataLoad;
 			path = SubwayWhen/DataLoad;
