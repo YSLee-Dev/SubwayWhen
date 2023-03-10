@@ -138,6 +138,7 @@
 		34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB89293627AE00C4ED80 /* SaveStation.swift */; };
 		34C6DB9E293627AF00C4ED80 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB8B293627AF00C4ED80 /* MainVC.swift */; };
 		34C6DBA0293627BF00C4ED80 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */; };
+		34C7113E29BABF6400160694 /* SubwayWhen_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */; };
 		34CA5594293893450006F67B /* MainTableViewGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5593293893450006F67B /* MainTableViewGroupCell.swift */; };
 		34CA55962938934C0006F67B /* MainTableViewGroupCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */; };
 		34CA5599293897160006F67B /* MainTableViewGroupBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */; };
@@ -308,6 +309,7 @@
 		34C6DB89293627AE00C4ED80 /* SaveStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveStation.swift; sourceTree = "<group>"; };
 		34C6DB8B293627AF00C4ED80 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		34C6DB9F293627BF00C4ED80 /* TabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
+		34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SubwayWhen_Icon.png; sourceTree = "<group>"; };
 		34CA5593293893450006F67B /* MainTableViewGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCell.swift; sourceTree = "<group>"; };
 		34CA55952938934C0006F67B /* MainTableViewGroupCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupCellModel.swift; sourceTree = "<group>"; };
 		34CA5598293897160006F67B /* MainTableViewGroupBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewGroupBtn.swift; sourceTree = "<group>"; };
@@ -849,6 +851,7 @@
 				34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */,
+				34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */,
 				349C925729A728F500529E60 /* Lottie */,
 				34A3039929AF86FD00948EDD /* DataLoad */,
 				34A36BDC294C580800FB0DDB /* TabBar */,
@@ -1187,6 +1190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				347AF806293629F1001FB813 /* Assets.xcassets in Resources */,
+				34C7113E29BABF6400160694 /* SubwayWhen_Icon.png in Resources */,
 				3496559229A756F500530EB6 /* CheckMark.json in Resources */,
 				3496557829A73B3F00530EB6 /* Report.json in Resources */,
 				3496558429A74B4800530EB6 /* List.json in Resources */,
