@@ -27,7 +27,7 @@ extension MainTableViewGroupBtn {
     
     func seleted(){
         self.setTitleColor(.label, for: .normal)
-        self.layer.borderWidth = 1.0
+        self.layer.borderWidth = 1.2
         self.backgroundColor = .systemBackground
         self.layer.borderColor = UIColor(named: "AppIconColor")?.cgColor
     }
