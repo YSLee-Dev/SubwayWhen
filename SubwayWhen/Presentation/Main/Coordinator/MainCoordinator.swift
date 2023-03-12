@@ -1,0 +1,78 @@
+//
+//  MainCoordinator.swift
+//  SubwayWhen
+//
+//  Created by 이윤수 on 2023/03/12.
+//
+
+import UIKit
+
+class MainCoordinator : Coordinator{
+    weak var parentCoordinator : Coordinator?
+    var childCoordinator: [Coordinator] = []{
+        didSet{
+            print(self.childCoordinator)
+        }
+    }
+    var navigation : UINavigationController
+    
+    init(){
+        self.navigation = UINavigationController()
+    }
+    
+    func start() {
+        let main = MainVC(viewModel: MainViewModel())
+        main.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
+        main.delegate = self
+        self.navigation.setViewControllers([main], animated: true)
+    }
+}
+
+extension MainCoordinator : MainDelegate{
+    func pushTap(action : MainCoordinatorAction) {
+        switch action{
+        case .Report:
+            let report = ReportCoordinator(navigation: self.navigation)
+            self.childCoordinator.append(report)
+            report.delegate = self
+          
+            report.start()
+        case .Edit:
+            let report = EditCoordinator(navigation: self.navigation)
+            self.childCoordinator.append(report)
+            report.delegate = self
+          
+            report.start()
+        }
+    }
+    
+    func pushDetailTap(data: MainTableViewCellData) {
+        let detail = DetailCoordinator(navigation: self.navigation, data: data)
+        self.childCoordinator.append(detail)
+        detail.delegate = self
+        
+        detail.start()
+    }
+}
+
+extension MainCoordinator : ReportCoordinatorDelegate{
+    func pop() {
+        self.navigation.popViewController(animated: true)
+    }
+    
+    func disappear(reportCoordinator: ReportCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== reportCoordinator}
+    }
+}
+
+extension MainCoordinator : EditCoordinatorDelegate{
+    func disappear(editCoordinatorDelegate: EditCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== editCoordinatorDelegate}
+    }
+}
+
+extension MainCoordinator : DetailCoordinatorDelegate{
+    func disappear(detailCoordinator: DetailCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== detailCoordinator}
+    }
+}
