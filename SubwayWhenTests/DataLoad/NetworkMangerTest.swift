@@ -30,10 +30,9 @@ class NetworkMangerTests : XCTestCase{
                                           headerFields: nil)
         else {return}
         
-        let data = Dummy().fileLoad("StationArrivalRequestDummy.json")
         
-        let mockURL = MockURLSession((response: urlResponse, data: data))
-        let mockNetworkManger = NetworkManger(session: mockURL)
+        let mockURL = MockURLSession((response: urlResponse, data: arrivalData))
+        let mockNetworkManger = NetworkManager(session: mockURL)
         
         // WHEN
         let requestData = mockNetworkManger.requestData(url, dataType: LiveStationModel.self)

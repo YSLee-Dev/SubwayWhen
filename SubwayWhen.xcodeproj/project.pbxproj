@@ -89,7 +89,7 @@
 		34A2563B29ACAC6F008CC885 /* MainTableViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A2563A29ACAC6F008CC885 /* MainTableViewDefaultCell.swift */; };
 		34A2563E29ACAF52008CC885 /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = 34A2563D29ACAF52008CC885 /* Plus.json */; };
 		34A3038429AF361B00948EDD /* StationArrivalRequestDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 34A3038329AF361B00948EDD /* StationArrivalRequestDummy.json */; };
-		34A3038629AF362700948EDD /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3038529AF362600948EDD /* Dummy.swift */; };
+		34A3038629AF362700948EDD /* DummyLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3038529AF362600948EDD /* DummyLoad.swift */; };
 		34A3038A29AF36FA00948EDD /* NetworkMangerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3038929AF36F900948EDD /* NetworkMangerTest.swift */; };
 		34A303B229AF86FD00948EDD /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3039A29AF86FD00948EDD /* NetworkManager.swift */; };
 		34A303B329AF86FD00948EDD /* TotalLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */; };
@@ -132,6 +132,7 @@
 		34B9FD1F2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */; };
 		34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */; };
 		34B9FD232976A2F000E349A1 /* DetailTableScheduleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */; };
+		34BA0B2629BF246E0044E2C2 /* LoadModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0B2529BF246E0044E2C2 /* LoadModelTest.swift */; };
 		34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C1D8372953036400FB6624 /* EditViewCellSection.swift */; };
 		34C1D83A29530B5A00FB6624 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C1D83929530B5A00FB6624 /* EditModel.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
@@ -275,7 +276,7 @@
 		34A2563D29ACAF52008CC885 /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		34A3036E29AF239300948EDD /* SubwayWhenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubwayWhenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34A3038329AF361B00948EDD /* StationArrivalRequestDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StationArrivalRequestDummy.json; sourceTree = "<group>"; };
-		34A3038529AF362600948EDD /* Dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		34A3038529AF362600948EDD /* DummyLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyLoad.swift; sourceTree = "<group>"; };
 		34A3038929AF36F900948EDD /* NetworkMangerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMangerTest.swift; sourceTree = "<group>"; };
 		34A3039A29AF86FD00948EDD /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalLoadModel.swift; sourceTree = "<group>"; };
@@ -318,6 +319,8 @@
 		34B9FD1D2974D3E500E349A1 /* MainTableViewHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewHeaderViewModel.swift; sourceTree = "<group>"; };
 		34B9FD202976A2E400E349A1 /* DetailTableScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCell.swift; sourceTree = "<group>"; };
 		34B9FD222976A2F000E349A1 /* DetailTableScheduleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellModel.swift; sourceTree = "<group>"; };
+		34BA0B2529BF246E0044E2C2 /* LoadModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadModelTest.swift; sourceTree = "<group>"; };
+		34BA0B2829BF2ECD0044E2C2 /* SeoulStationScheduleLoadDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SeoulStationScheduleLoadDummy.json; sourceTree = "<group>"; };
 		34C1D8372953036400FB6624 /* EditViewCellSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewCellSection.swift; sourceTree = "<group>"; };
 		34C1D83929530B5A00FB6624 /* EditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModel.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -715,6 +718,34 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		349E2F7029BF100900C54EE9 /* Dummy */ = {
+			isa = PBXGroup;
+			children = (
+				34A3038529AF362600948EDD /* DummyLoad.swift */,
+				34A3038329AF361B00948EDD /* StationArrivalRequestDummy.json */,
+				34BA0B2829BF2ECD0044E2C2 /* SeoulStationScheduleLoadDummy.json */,
+			);
+			path = Dummy;
+			sourceTree = "<group>";
+		};
+		349E2F7129BF101C00C54EE9 /* DataLoad */ = {
+			isa = PBXGroup;
+			children = (
+				34A3038929AF36F900948EDD /* NetworkMangerTest.swift */,
+				34BA0B2429BF24260044E2C2 /* LoadModel */,
+			);
+			path = DataLoad;
+			sourceTree = "<group>";
+		};
+		349E2F7229BF105900C54EE9 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */,
+				34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		349E32C52978E25400147DEE /* Sub */ = {
 			isa = PBXGroup;
 			children = (
@@ -815,9 +846,8 @@
 			isa = PBXGroup;
 			children = (
 				34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */,
-				34A3038929AF36F900948EDD /* NetworkMangerTest.swift */,
-				34A3038529AF362600948EDD /* Dummy.swift */,
-				34A3038329AF361B00948EDD /* StationArrivalRequestDummy.json */,
+				349E2F7129BF101C00C54EE9 /* DataLoad */,
+				349E2F7029BF100900C54EE9 /* Dummy */,
 			);
 			path = SubwayWhenTests;
 			sourceTree = "<group>";
@@ -826,9 +856,8 @@
 			isa = PBXGroup;
 			children = (
 				34A3039A29AF86FD00948EDD /* NetworkManager.swift */,
-				34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */,
 				34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */,
-				34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */,
+				349E2F7229BF105900C54EE9 /* Protocol */,
 				34A303AD29AF86FD00948EDD /* LoadModel */,
 				34A3039C29AF86FD00948EDD /* Entity */,
 			);
@@ -1007,6 +1036,14 @@
 				349E32C52978E25400147DEE /* Sub */,
 			);
 			path = DetailTableSchedule;
+			sourceTree = "<group>";
+		};
+		34BA0B2429BF24260044E2C2 /* LoadModel */ = {
+			isa = PBXGroup;
+			children = (
+				34BA0B2529BF246E0044E2C2 /* LoadModelTest.swift */,
+			);
+			path = LoadModel;
 			sourceTree = "<group>";
 		};
 		34C6DB482936274400C4ED80 = {
@@ -1469,8 +1506,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
-				34A3038629AF362700948EDD /* Dummy.swift in Sources */,
+				34A3038629AF362700948EDD /* DummyLoad.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTest.swift in Sources */,
+				34BA0B2629BF246E0044E2C2 /* LoadModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
