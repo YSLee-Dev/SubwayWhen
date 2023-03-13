@@ -561,9 +561,9 @@
 				34F5F0FB2962E66A0010A21D /* Custom */,
 				34C6DB8A293627AF00C4ED80 /* Main */,
 				34F5F0E92962D8BC0010A21D /* Detail */,
-				34C6DB6E293627AE00C4ED80 /* Search */,
 				34A36BE1295028AC00FB0DDB /* Edit */,
 				349B516429A4630D00A53879 /* Report */,
+				34C6DB6E293627AE00C4ED80 /* Search */,
 				349FF288299DBCA0007A98F4 /* Setting */,
 			);
 			path = Presentation;
@@ -674,7 +674,6 @@
 				34C6DB562936274400C4ED80 /* SceneDelegate.swift */,
 				34A2563529AC5025008CC885 /* AppDefaultModel.swift */,
 				34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */,
-				34C6DB622936274600C4ED80 /* Info.plist */,
 				34D6F2C52936E453005DAF39 /* GoogleService-Info.plist */,
 				349E2F6A29BDF86B00C54EE9 /* Coordinator */,
 			);
@@ -1033,6 +1032,7 @@
 		34C6DB532936274400C4ED80 /* SubwayWhen */ = {
 			isa = PBXGroup;
 			children = (
+				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
@@ -1141,8 +1141,8 @@
 				34C6DB8B293627AF00C4ED80 /* MainVC.swift */,
 				341200FB29375A2600C77050 /* MainViewModel.swift */,
 				341200F2293753E900C77050 /* MainTable */,
-				349E2F5D29BDF6F500C54EE9 /* Coordinator */,
 				341200F7293754CC00C77050 /* Entity */,
+				349E2F5D29BDF6F500C54EE9 /* Coordinator */,
 			);
 			path = Main;
 			sourceTree = "<group>";
