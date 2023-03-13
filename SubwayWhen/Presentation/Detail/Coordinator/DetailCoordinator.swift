@@ -73,8 +73,8 @@ extension DetailCoordinator : DetailResultScheduleCoorinatorDelegate{
     }
     
     func exceptionBtnTap(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
-        self.vc!.detailViewModel.exceptionLastStationRemoveReload.accept(Void())
         self.navigation.popViewController(animated: true)
+        self.vc!.detailViewModel.headerViewModel.exceptionLastStationBtnClick.accept(Void())
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
     }
 }
