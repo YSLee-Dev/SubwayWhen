@@ -1,5 +1,5 @@
 //
-//  Dummy.swift
+//  DummyLoad.swift
 //  SubwayWhenTests
 //
 //  Created by 이윤수 on 2023/03/01.
@@ -9,7 +9,10 @@ import Foundation
 
 @testable import SubwayWhen
 
-class Dummy{
+let arrivalData = DummyLoad().fileLoad("StationArrivalRequestDummy.json")
+let seoulStationSchdulData = DummyLoad().fileLoad("SeoulStationScheduleLoadDummy.json")
+
+class DummyLoad{
     func fileLoad(_ fileName : String) -> Data{
         let data : Data
         let bundle = Bundle(for: type(of: self))
