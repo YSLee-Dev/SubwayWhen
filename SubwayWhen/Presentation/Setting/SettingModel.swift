@@ -21,12 +21,12 @@ class SettingModel{
         let listData = PublishSubject<[String]>()
         
         self.database.observe(.value){ snaphot, _ in
-            guard let value = snaphot.value as? [String : [String:[String]]] else {return}
-            let subwayWhen = value["SubwayWhen"]
+            guard let data = snaphot.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
             let licenses = subwayWhen?["Licenses"]
+            let result = licenses as? [String]
             
-            listData
-                .onNext(licenses ?? [])
+            listData.onNext(result ?? [])
         }
         
         return listData
