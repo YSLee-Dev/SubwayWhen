@@ -112,4 +112,14 @@ iOSInjectionProject/
 SubwayWhen/DataLoad/LoadModel/RequestToken.swift
 
 ## Lottie File
-SubwayWhen/Lottie/
+SubwayWhen/Resource/Lottie/
+
+## Git
+Subwaywhen.git/
+.git
+
+## Xcode
+SubwayWhen.xcworkspace
+SubwayWhen.xcodeproj
+
+bfg-1.14.0.jar
