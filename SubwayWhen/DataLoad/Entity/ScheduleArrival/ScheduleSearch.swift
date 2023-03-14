@@ -13,4 +13,5 @@ struct ScheduleSearch{
     let exceptionLastStation : String
     let line : String
     var type : ScheduleType
+    let korailCode : String
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 struct ResultSchdule{
-    let startTime : String
-    let type : ScheduleType
-    let lastStation : String
+    var startTime : String
+    var type : ScheduleType
+    var lastStation : String
     
     var useTime : String{
         if self.type == .Seoul{
@@ -49,7 +49,7 @@ struct ResultSchdule{
     }
     
     var useArrTime : String{
-        if self.type == .Tago{
+        if self.type == .Korail{
             var time = self.startTime
             if time != "0", time != "", !(time.contains("없음")){
                 let index1 = time.index(time.startIndex, offsetBy: 2)
