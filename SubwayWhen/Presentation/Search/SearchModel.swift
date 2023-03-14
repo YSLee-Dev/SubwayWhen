@@ -49,13 +49,13 @@ class SearchModel{
     func defaultViewListRequest() -> Observable<[String]>{
         let listData = PublishRelay<[String]>()
         
-        self.database.observe(.value){
-            guard let value = $0.value as? [String : [String:[String]]] else {return}
-            let subwayWhen = value["SubwayWhen"]
-            let subwaySearchDefaultList = subwayWhen?["SearchDefaultList"]
+        self.database.observe(.value){dataBase, _ in
+            guard let data = dataBase.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let search = subwayWhen?["SearchDefaultList"]
+            let list = search as? [String]
             
-            listData
-                .accept(subwaySearchDefaultList ?? [])
+            listData.accept(list ?? [])
         }
         return listData
             .asObservable()

@@ -19,11 +19,12 @@ class AppDefaultModel{
     // 팝업 불러오기
     func popupRequest(result: @escaping (_ title:String, _ subTitle : String, _ contents:String)->()){
         self.database.observe(.value){ snaphot, _ in
-            guard let value = snaphot.value as? [String : [String:[String]]] else {return}
-            let subwayWhen = value["SubwayWhen"]
-            let licenses = subwayWhen?["DefaultPopup"]
+            guard let data = snaphot.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let defaultPopup = subwayWhen?["DefaultPopup"]
+            let value = defaultPopup as? [String]
             
-            result(licenses?[0] ?? "Nil", licenses?[1] ?? "", licenses?[2] ?? "")
+            result(value?[0] ?? "Nil", value?[1] ?? "", value?[2] ?? "")
             
         }
     }
@@ -31,11 +32,12 @@ class AppDefaultModel{
     // 업데이트 버전 확인
     func versionRequest(result: @escaping (_ version:String)->()){
         self.database.observe(.value){ snaphot, _ in
-            guard let value = snaphot.value as? [String : [String:[String]]] else {return}
+            guard let value = snaphot.value as? [String : [String:Any]] else {return}
             let subwayWhen = value["SubwayWhen"]
-            let licenses = subwayWhen?["AppUpdateVersion"]
+            let appUpdateVersion = subwayWhen?["AppUpdateVersion"]
+            let version = appUpdateVersion as? [String]
             
-            result(licenses?.first ?? "1.0.0")
+            result(version?.first ?? "1.0.0")
             
         }
     }
