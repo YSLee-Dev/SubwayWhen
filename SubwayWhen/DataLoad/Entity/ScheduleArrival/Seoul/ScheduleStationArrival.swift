@@ -13,6 +13,7 @@ struct ScheduleStationArrival : Decodable{
     let lastStation : String
     let upDown : String
     let line : String
+    let weekDay : String
     
     enum CodingKeys : String, CodingKey{
         case startTime = "LEFTTIME"
@@ -20,5 +21,6 @@ struct ScheduleStationArrival : Decodable{
         case lastStation = "SUBWAYENAME"
         case upDown = "INOUT_TAG"
         case line = "LINE_NUM"
+        case weekDay = "WEEK_TAG"
     }
 }

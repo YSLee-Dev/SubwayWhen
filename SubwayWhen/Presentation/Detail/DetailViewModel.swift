@@ -127,18 +127,18 @@ class DetailViewModel{
         
         self.detailViewData
             .map{ item -> ScheduleSearch in
-                var searchData = ScheduleSearch(stationCode: "", upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
+                var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
+                
                 if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
-                    searchData.stationCode = item.korailCode
-                    searchData.type = .Tago
+                    searchData.type = .Korail
+                    
                     return searchData
                 }else{
-                    searchData.stationCode = item.stationCode
-                    
                     return searchData
                 }
             }
             .withUnretained(self)
+            .skip(1)
             .flatMap{
                 $0.loadModel.totalScheduleStationLoad($1, isFirst: false, isNow: false)
             }

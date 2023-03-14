@@ -244,9 +244,9 @@ class MainViewModel{
             .map{ item -> ScheduleSearch? in
                 if item.type == .real{
                     if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
-                        return ScheduleSearch(stationCode: item.korailCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Tago)
+                        return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Korail, korailCode: item.korailCode)
                     }else{
-                        return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul)
+                        return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
                     }
                 }else{
                     return nil
