@@ -9,5 +9,5 @@ import Foundation
 
 enum ScheduleType{
     case Seoul
-    case Tago
+    case Korail
 }

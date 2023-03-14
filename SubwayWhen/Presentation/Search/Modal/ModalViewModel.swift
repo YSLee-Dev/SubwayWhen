@@ -12,9 +12,6 @@ import RxCocoa
 import RxOptional
 
 class ModalViewModel {
-    // MODEL
-    let model = ModalModel()
-    
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
