@@ -42,7 +42,7 @@ class TotalLoadModel{
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
-                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: x.subWayId, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode)
+                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode)
                     }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
@@ -50,9 +50,9 @@ class TotalLoadModel{
                 }
                 
                 if station.lineCode != ""{
-                    return .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode)
+                    return .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode)
                 }else{
-                    return .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: "", stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
+                    return .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
                 }
             }
             .asObservable()
@@ -142,8 +142,17 @@ class TotalLoadModel{
             }
             
            return filterData
+                .map{ list in
+                    if list.isEmpty{
+                        return [ResultSchdule(startTime: "정보없음", type: .Korail, isFast: "", startStation: "정보없음", lastStation: "정보없음")]
+                    }else{
+                        return list.map{
+                            ResultSchdule(startTime: $0.startTime, type: .Korail, isFast: $0.isFast, startStation: $0.startStation, lastStation: $0.lastStation)
+                        }
+                    }
+                }
                 
-        }else{
+        }else if scheduleSearch.type == .Seoul{
             var inOut = ""
             
             // 9호선은 상하행이 반대
@@ -198,6 +207,9 @@ class TotalLoadModel{
                     }
                 }
             }
+        }else{
+            return Observable<[ResultSchdule]>
+                .just([ResultSchdule(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "정보없음", lastStation: "정보없음")])
         }
     }
     
