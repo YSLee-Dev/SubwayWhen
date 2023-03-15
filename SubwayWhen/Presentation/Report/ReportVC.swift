@@ -137,7 +137,7 @@ extension ReportVC{
         let keyboardHeight = keyboardRectangle.height
         
         self.tableView.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(keyboardHeight)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(keyboardHeight)
         }
         UIView.animate(withDuration: 0.25){[weak self] in
             self?.view.layoutIfNeeded()
@@ -147,7 +147,7 @@ extension ReportVC{
     @objc
     private func keyboardWillHide(_ sender: Notification) {
         self.tableView.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(0)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(0)
         }
         UIView.animate(withDuration: 0.25){[weak self] in
             self?.view.layoutIfNeeded()
