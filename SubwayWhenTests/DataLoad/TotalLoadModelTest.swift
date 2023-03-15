@@ -7,29 +7,57 @@
 
 import XCTest
 
+import Nimble
+import RxSwift
+import RxOptional
+import RxBlocking
+
+@testable import SubwayWhen
+
 final class TotalLoadModelTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var totalLoadModel : TotalLoadModel!
+    
+    override func setUp(){
+        let session = MockURLSession((response: urlResponse!, data: arrivalData))
+        let networkManager = NetworkManager(session: session)
+        let loadModel = LoadModel(networkManager: networkManager)
+        
+        self.totalLoadModel = TotalLoadModel(loadModel: loadModel)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testTotalLiveDataLoad(){
+        // GIVEN
+        let data = self.totalLoadModel.totalLiveDataLoad(stations: [SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")])
+        
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let dummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
+        
+        let requestStationName = arrayData.first?.stationName
+        let dummyStationName = dummyData.realtimeArrivalList.first?.stationName
+        
+        let requestType = arrayData.first?.type
+        let dummyType = MainTableViewCellType.real
+        
+        let requestLine = arrayData.first?.lineNumber
+        let dummyLine = "03호선"
+        
+        // THEN
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "지하철 역명은 동일해야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "TotalLive함수는 타입이 무조건 Real이여야 함"
+        )
+        
+        expect(requestLine).to(
+            equal(dummyLine),
+            description: "라인 호선은 동일해야함"
+        )
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
