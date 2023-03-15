@@ -143,8 +143,14 @@ class DetailViewModel{
             }
             .withUnretained(self)
             .skip(1)
-            .flatMap{
-                $0.loadModel.totalScheduleStationLoad($1, isFirst: false, isNow: false)
+            .flatMap{ viewModel, data -> Observable<[ResultSchdule]> in
+                if data.type == .Korail{
+                    return viewModel.loadModel.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
+                }else if data.type == .Seoul{
+                    return viewModel.loadModel.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
+                }else {
+                    return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
+                }
             }
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
@@ -181,7 +187,7 @@ class DetailViewModel{
             return list
             #else
              */
-            print(station)
+            
             for x in realTime{
                 if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
                     if list.count == 1{

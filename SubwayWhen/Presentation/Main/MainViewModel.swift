@@ -258,8 +258,14 @@ class MainViewModel{
             
         let scheduleTotalData = scheduleData
             .withUnretained(self)
-            .flatMap{viewModel, data in
-                viewModel.model.totalScheduleStationLoad(data, isFirst: true, isNow: true)
+            .flatMap{viewModel, data -> Observable<[ResultSchdule]> in
+                if data.type == .Korail{
+                    return viewModel.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true)
+                }else if data.type == .Seoul{
+                    return viewModel.model.seoulScheduleLoad(data, isFirst: true, isNow: true)
+                }else {
+                    return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
+                }
             }
         
         scheduleTotalData
