@@ -14,7 +14,7 @@ import RxCocoa
 class TotalLoadModel{
     var loadModel : LoadModelProtocol
     
-    init(loadModel : LoadModelProtocol){
+    init(loadModel : LoadModel = .init()){
         self.loadModel = loadModel
     }
     
