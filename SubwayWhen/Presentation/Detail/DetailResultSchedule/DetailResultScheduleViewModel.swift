@@ -75,7 +75,7 @@ struct DetailResultScheduleViewModel{
                         return String($0.useArrTime[startIndex...endIndex])
                     }
                     
-                    sortArray.append(.init(sectionName: "\(x)시", hour: x, items: [.init(id: "\(x)", hour: "\(x)", minute: minute, lastStation: sortedData.map{$0.lastStation})]))
+                    sortArray.append(.init(sectionName: "\(x)시", hour: x, items: [.init(id: "\(x)", hour: "\(x)", minute: minute, lastStation: sortedData.map{$0.lastStation}, startStation: sortedData.map{$0.startStation}, isFast: sortedData.map{$0.isFast})]))
                 }
                return sortArray
             }
