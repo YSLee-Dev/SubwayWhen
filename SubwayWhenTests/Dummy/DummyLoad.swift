@@ -10,7 +10,13 @@ import Foundation
 @testable import SubwayWhen
 
 let arrivalData = DummyLoad().fileLoad("StationArrivalRequestDummy.json")
-let seoulStationSchdulData = DummyLoad().fileLoad("SeoulStationScheduleLoadDummy.json")
+let seoulStationSchdulData = DummyLoad().fileLoad("SeoulStationScheduleDummy.json")
+let url = "Test.url"
+let urlResponse = HTTPURLResponse(url: URL(string: url)!,
+                                  statusCode: 200,
+                                  httpVersion: nil,
+                                  headerFields: nil)
+
 
 class DummyLoad{
     func fileLoad(_ fileName : String) -> Data{

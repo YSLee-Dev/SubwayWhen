@@ -23,15 +23,7 @@ class NetworkMangerTests : XCTestCase{
     
     func testNetworkManger(){
         // GIVEN
-        let url = "Test.url"
-        guard let urlResponse = HTTPURLResponse(url: URL(string: url)!,
-                                          statusCode: 200,
-                                          httpVersion: nil,
-                                          headerFields: nil)
-        else {return}
-        
-        
-        let mockURL = MockURLSession((response: urlResponse, data: arrivalData))
+        let mockURL = MockURLSession((response: urlResponse!, data: arrivalData))
         let mockNetworkManger = NetworkManager(session: mockURL)
         
         // WHEN
