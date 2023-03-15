@@ -10,6 +10,8 @@ import Foundation
 struct ResultSchdule{
     var startTime : String
     var type : ScheduleType
+    var isFast : String
+    var startStation : String
     var lastStation : String
     
     var useTime : String{
