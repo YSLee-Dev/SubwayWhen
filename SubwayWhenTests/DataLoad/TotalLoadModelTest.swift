@@ -15,19 +15,20 @@ import RxBlocking
 @testable import SubwayWhen
 
 final class TotalLoadModelTest: XCTestCase {
-    var totalLoadModel : TotalLoadModel!
+    var arrivalTotalLoadModel : TotalLoadModel!
+    
     
     override func setUp(){
         let session = MockURLSession((response: urlResponse!, data: arrivalData))
         let networkManager = NetworkManager(session: session)
         let loadModel = LoadModel(networkManager: networkManager)
         
-        self.totalLoadModel = TotalLoadModel(loadModel: loadModel)
+        self.arrivalTotalLoadModel = TotalLoadModel(loadModel: loadModel)
     }
     
     func testTotalLiveDataLoad(){
         // GIVEN
-        let data = self.totalLoadModel.totalLiveDataLoad(stations: [SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")])
+        let data = self.arrivalTotalLoadModel.totalLiveDataLoad(stations: [SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")])
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
