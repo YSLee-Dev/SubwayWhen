@@ -10,7 +10,8 @@ import Foundation
 @testable import SubwayWhen
 
 let arrivalData = DummyLoad().fileLoad("StationArrivalRequestDummy.json")
-let seoulStationSchdulData = DummyLoad().fileLoad("SeoulStationScheduleDummy.json")
+let seoulStationSchduleData = DummyLoad().fileLoad("SeoulStationScheduleDummy.json")
+let korailStationSchduleData = DummyLoad().fileLoad("KorailStationScheduleDummy.json")
 let url = "Test.url"
 let urlResponse = HTTPURLResponse(url: URL(string: url)!,
                                   statusCode: 200,
