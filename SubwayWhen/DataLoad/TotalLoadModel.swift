@@ -104,10 +104,12 @@ class TotalLoadModel{
                 
                 // lastStation 값 주입
                 for r in updownCheck.enumerated(){
-                    result.append(.init(startTime: r.element.time, type: .Korail, lastStation: ""))
+                    result.append(ResultSchdule.init(startTime: r.element.time, type: .Korail, isFast: "", startStation: "", lastStation: ""))
                     for n in number{
                         if r.element.trainCode == n.trainNumber{
                             result[r.offset].lastStation = n.endStation
+                            result[r.offset].startStation = n.startStation
+                            result[r.offset].isFast = n.isFast == "급행" ? "급행" : ""
                             break
                         }
                     }
@@ -189,10 +191,10 @@ class TotalLoadModel{
             }
             .map{ list in
                 if list.isEmpty{
-                    return [ResultSchdule(startTime: "정보없음", type: .Seoul, lastStation: "정보없음")]
+                    return [ResultSchdule(startTime: "정보없음", type: .Seoul, isFast: "", startStation: "정보없음", lastStation: "정보없음")]
                 }else{
                     return list.map{
-                        ResultSchdule(startTime: $0.startTime, type: .Seoul, lastStation: $0.lastStation)
+                        ResultSchdule(startTime: $0.startTime, type: .Seoul, isFast: $0.isFast == "D" ? "급행" : "", startStation: $0.startStation, lastStation: $0.lastStation)
                     }
                 }
             }
