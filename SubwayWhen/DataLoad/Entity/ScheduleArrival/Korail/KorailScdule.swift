@@ -11,10 +11,12 @@ struct KorailScdule : Decodable{
     let time : String
     let trainCode : String
     let lineCode : String
+    let weekDay : String
     
     enum CodingKeys : String, CodingKey {
         case time = "dptTm"
         case trainCode = "trnNo"
         case lineCode = "lnCd"
+        case weekDay = "dayCd"
     }
 }
