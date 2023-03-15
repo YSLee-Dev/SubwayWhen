@@ -147,7 +147,7 @@ class DetailViewModel{
                 if data.type == .Korail{
                     return viewModel.loadModel.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
                 }else if data.type == .Seoul{
-                    return viewModel.loadModel.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
+                    return viewModel.loadModel.seoulScheduleLoad(data, isFirst: false, isNow: false)
                 }else {
                     return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
                 }
