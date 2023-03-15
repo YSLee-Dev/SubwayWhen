@@ -11,8 +11,8 @@ import RxSwift
 import RxOptional
 import RxCocoa
 
-class TotalLoadModel{
-    var loadModel : LoadModelProtocol
+class TotalLoadModel : TotalLoadProtocol{
+    private var loadModel : LoadModelProtocol
     
     init(loadModel : LoadModel = .init()){
         self.loadModel = loadModel
@@ -54,6 +54,16 @@ class TotalLoadModel{
                 }else{
                     return .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
                 }
+            }
+            .asObservable()
+    }
+    
+    // live 정보만 반환
+    func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
+        self.loadModel.stationArrivalRequest(stationName: station)
+            .map{ data -> LiveStationModel in
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
+                return value
             }
             .asObservable()
     }
