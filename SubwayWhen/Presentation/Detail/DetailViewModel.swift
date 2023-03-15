@@ -129,8 +129,12 @@ class DetailViewModel{
             .map{ item -> ScheduleSearch in
                 var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
                 
-                if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
+                if item.stationCode.contains("K"){
                     searchData.type = .Korail
+                    
+                    return searchData
+                }else if item.stationCode.contains("D") || item.stationCode.contains("A"){
+                    searchData.type = .Unowned
                     
                     return searchData
                 }else{
@@ -177,6 +181,7 @@ class DetailViewModel{
             return list
             #else
              */
+            print(station)
             for x in realTime{
                 if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
                     if list.count == 1{
