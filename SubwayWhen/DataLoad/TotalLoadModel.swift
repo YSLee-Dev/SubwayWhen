@@ -63,17 +63,28 @@ class TotalLoadModel{
         guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
 
         if scheduleSearch.type == .Korail{
-            
-            var sechduleSearchInfo = scheduleSearch
+            let requestRry = BehaviorSubject<Void>(value: Void())
+            var searchInfo = scheduleSearch
             
             let number = self.loadModel.korailTrainNumberLoad()
-            let request = self.loadModel.korailSchduleLoad(scheduleSearch: sechduleSearchInfo)
-            let success = request
-                .map{data -> [KorailScdule] in
-                    guard case .success(let value) = data else {return []}
-                    return value.body
+            let request = requestRry
+                .throttle(.seconds(1), scheduler: MainScheduler.asyncInstance)
+                .flatMap{[weak self] _ in
+                    self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo) ?? .never()
                 }
                 .asObservable()
+            
+            let success = request
+                .map{data -> [KorailScdule] in
+                    guard case .success(let value) = data else {
+                        searchInfo.stationCode = searchInfo.stationCode.lowercased()
+                        requestRry.onNext(Void())
+                        requestRry.onCompleted()
+                        return []
+                    }
+                    requestRry.onCompleted()
+                    return value.body
+                }
             
             
             // 상하행 구분 / 짝수일 경우 상행, 홀수일 경우 하행
