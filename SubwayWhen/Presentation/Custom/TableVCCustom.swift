@@ -68,7 +68,7 @@ extension TableVCCustom{
         
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints{
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.top.equalTo(self.topView.snp.bottom)
         }
     }

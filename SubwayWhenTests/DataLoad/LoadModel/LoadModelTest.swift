@@ -20,18 +20,11 @@ class LoadModelTest : XCTestCase{
     
     
     override func setUp() {
-        let url = "Test.url"
-        guard let urlResponse = HTTPURLResponse(url: URL(string: url)!,
-                                          statusCode: 200,
-                                          httpVersion: nil,
-                                          headerFields: nil)
-        else {return}
-        
-        let mockURL = MockURLSession((response: urlResponse, data: arrivalData))
+        let mockURL = MockURLSession((response: urlResponse!, data: arrivalData))
         let networkManager = NetworkManager(session: mockURL)
         self.arrivalLoadModel = LoadModel(networkManager: networkManager)
         
-        let schduleMockURL = MockURLSession((response: urlResponse, data: arrivalData))
+        let schduleMockURL = MockURLSession((response: urlResponse!, data: seoulStationSchdulData))
         self.scheduleLoadModel = LoadModel(networkManager: NetworkManager(session: schduleMockURL))
     }
     
@@ -57,6 +50,7 @@ class LoadModelTest : XCTestCase{
         
         
         // THEN
+        // 지하철 역 동일 테스트
         expect(requestStationName).to(
             equal(dummyStationName),
             description: "불러온 지하철 역이 동일해야함"
@@ -64,6 +58,41 @@ class LoadModelTest : XCTestCase{
     }
     
     func testSeoulStationScheduleLoad(){
-        print(seoulStationSchdulData)
+        // GIVEN
+        let data = self.scheduleLoadModel.seoulStationScheduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", type: .Seoul))
+        
+        let filterData = data
+            .asObservable()
+            .map{ data ->  ScheduleStationModel? in
+            guard case .success(let value) = data else {return nil}
+            return value
+        }
+        .filterNil()
+        
+        // WHEN
+        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchdulData)
+        
+        let bloacking = filterData.toBlocking()
+        let arrayData = try! bloacking.toArray()
+        
+        let requestWeekData = arrayData.first?.SearchSTNTimeTableByFRCodeService.row.first?.weekDay
+        let dummyWeekData = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.weekDay
+        
+        let requestUpdown = arrayData.first?.SearchSTNTimeTableByFRCodeService.row.first?.upDown
+        let dummyUpdown = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.upDown
+        
+        // THEN
+        // 불러온 요일 테스트(더미는 평일)
+        expect(requestWeekData).to(
+            equal(dummyWeekData),
+            description: "평일은 1, 토요일은 2, 일요일은 3이 나와야 함"
+        )
+        
+        // 상하행 테스트(더미는 상행)
+        expect(requestUpdown).to(
+            equal(dummyUpdown),
+            description: "상하행이 같아야 함"
+        )
+        
     }
 }
