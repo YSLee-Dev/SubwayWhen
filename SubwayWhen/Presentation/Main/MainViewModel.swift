@@ -13,7 +13,7 @@ import RxOptional
 
 class MainViewModel{
     // MODEL
-    let model : TotalLoadModel
+    let model : TotalLoadProtocol
     let mainTableViewModel = MainTableViewModel()
     
     let bag = DisposeBag()
@@ -33,9 +33,9 @@ class MainViewModel{
     let mainTitle : Driver<String>
     let mainTitleHidden : Driver<Void>
     
-    init(loadModel : LoadModel = .init()){
+    init(totalLoadModel : TotalLoadModel = .init()){
         // Model Init
-        self.model = TotalLoadModel(loadModel: loadModel)
+        self.model = totalLoadModel
         
         // 메인 타이틀(요일마다 변경)
         self.mainTitle = Observable<String>.create{

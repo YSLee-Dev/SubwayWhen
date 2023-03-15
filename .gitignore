@@ -122,4 +122,7 @@ Subwaywhen.git/
 SubwayWhen.xcworkspace
 SubwayWhen.xcodeproj
 
+## Dummy data
+SubwayWhen/SubwayWhenTests/Dummy/DummyData/
+
 bfg-1.14.0.jar
