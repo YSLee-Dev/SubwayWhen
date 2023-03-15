@@ -243,8 +243,10 @@ class MainViewModel{
         let scheduleData = clickCellRow
             .map{ item -> ScheduleSearch? in
                 if item.type == .real{
-                    if item.stationCode.contains("K") || item.stationCode.contains("D") || item.stationCode.contains("A"){
+                    if item.stationCode.contains("K"){
                         return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Korail, korailCode: item.korailCode)
+                    }else if item.stationCode.contains("D") || item.stationCode.contains("A"){
+                        return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Unowned, korailCode: item.korailCode)
                     }else{
                         return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
                     }

@@ -10,4 +10,5 @@ import Foundation
 enum ScheduleType{
     case Seoul
     case Korail
+    case Unowned
 }

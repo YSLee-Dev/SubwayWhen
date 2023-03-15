@@ -26,7 +26,7 @@ struct ResultSchdule{
             let minuteToScound = Int(time.timeIntervalSinceNow)/60
             
             return "\(minuteToScound)분"
-        }else{
+        }else if self.type == .Korail{
             if startTime != "0", !(startTime.contains("없음")), startTime != ""{
                 let nowDate = Date()
                 let now = Calendar.current
@@ -47,6 +47,8 @@ struct ResultSchdule{
             }else{
                 return "정보없음"
             }
+        }else{
+            return "정보없음"
         }
     }
     
