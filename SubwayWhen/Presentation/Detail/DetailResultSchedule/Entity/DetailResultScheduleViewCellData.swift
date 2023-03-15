@@ -14,6 +14,8 @@ struct DetailResultScheduleViewCellData : IdentifiableType, Equatable{
     let hour : String
     let minute : [String]
     let lastStation : [String]
+    let startStation : [String]
+    let isFast : [String]
 }
 
 extension DetailResultScheduleViewCellData{

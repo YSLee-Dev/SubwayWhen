@@ -103,7 +103,7 @@ extension DetailResultScheduleVC{
             }
             
         }
-        UIView.animate(withDuration: 0.5, delay: 0){
+        UIView.animate(withDuration: 0.25, delay: 0){
             self.view.layoutIfNeeded()
         }
     }

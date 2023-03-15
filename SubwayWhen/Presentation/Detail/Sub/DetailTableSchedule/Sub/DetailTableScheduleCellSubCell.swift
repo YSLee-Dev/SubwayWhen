@@ -33,7 +33,8 @@ extension DetailTableScheduleCellSubCell{
             scheduleTitle.text = "⚠️ 정보없음"
             scheduleTitle.backgroundColor = color
         }else{
-            scheduleTitle.text = "⏱️ \(data.lastStation)행 \(data.useArrTime)"
+            let isFast = data.isFast == "급행" ? "(급)" : ""
+            scheduleTitle.text = "⏱️ \(isFast)\(data.lastStation)행 \(data.useArrTime)"
             scheduleTitle.backgroundColor = color
         }
        
