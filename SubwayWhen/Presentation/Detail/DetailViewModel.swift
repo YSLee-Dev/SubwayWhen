@@ -15,8 +15,7 @@ typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: MainTab
 
 class DetailViewModel{
     // MODEL
-    let loadModel : TotalLoadModel
-    let model : LoadModel
+    let model: TotalLoadProtocol
     
     let detailModel = DetailModel()
     let headerViewModel = DetailTableHeaderViewModel()
@@ -43,10 +42,9 @@ class DetailViewModel{
         print("DetailViewModel DEINIT")
     }
     
-    init(loadModel : LoadModel = .init()){
+    init(totalLoadModel : TotalLoadModel = .init()){
         // Model Init
-        self.loadModel = TotalLoadModel(loadModel: loadModel)
-        self.model = loadModel
+        self.model = totalLoadModel
         
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
@@ -145,9 +143,9 @@ class DetailViewModel{
             .skip(1)
             .flatMap{ viewModel, data -> Observable<[ResultSchdule]> in
                 if data.type == .Korail{
-                    return viewModel.loadModel.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
+                    return viewModel.model.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
                 }else if data.type == .Seoul{
-                    return viewModel.loadModel.seoulScheduleLoad(data, isFirst: false, isNow: false)
+                    return viewModel.model.seoulScheduleLoad(data, isFirst: false, isNow: false)
                 }else {
                     return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
                 }
@@ -162,22 +160,10 @@ class DetailViewModel{
         // 실시간 데이터 불러오기
         let realTimeData = onRefresh
             .withUnretained(self)
-            .flatMapLatest{
-                $0.model.stationArrivalRequest(stationName: $1.stationName)
+            .flatMapLatest{ viewModel, data in
+                viewModel.model.singleLiveDataLoad(station: data.stationName)
             }
-            .map{ data -> [RealtimeStationArrival] in
-                /*
-                #if DEBUG
-                let debugData = RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "123", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")
-                return [debugData]
-                #else
-                 */
-                guard case .success(let value) = data else {return []}
-                return value.realtimeArrivalList
-                //#endif
-              
-            }
-            .filter{!$0.isEmpty}
+            .map{$0.realtimeArrivalList}
         
         Observable.combineLatest(self.detailViewData, realTimeData){station, realTime -> [RealtimeStationArrival] in
             var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: station.code, subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
