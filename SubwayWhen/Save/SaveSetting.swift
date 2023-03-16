@@ -12,4 +12,6 @@ struct SaveSetting : Codable{
     var mainGroupOneTime : Int
     var mainGroupTwoTime : Int
     var detailAutoReload : Bool
+    var detailScheduleAutoTime : Bool
+    var searchOverlapAlert : Bool
 }
