@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .success():
             print("setting load success")
         case .failure(let error):
-            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "😵", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true)
+            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "☹️", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true)
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
         
