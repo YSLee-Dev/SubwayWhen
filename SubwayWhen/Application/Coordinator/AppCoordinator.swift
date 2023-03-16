@@ -24,7 +24,7 @@ class AppCoordinator : Coordinator{
         let tabbarC = UITabBarController()
         tabbarC.tabBar.itemWidth = 50.0
         tabbarC.tabBar.itemPositioning = .centered
-        tabbarC.tabBar.tintColor = .black
+        tabbarC.tabBar.tintColor = UIColor(named: "AppIconColor")
         
         let mainC = MainCoordinator()
         mainC.parentCoordinator = self
