@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ]
         
         self.window = UIWindow(windowScene: windowScene)
+        self.window?.tintColor = UIColor(named: "AppIconColor")
         let appCoordinator = AppCoordinator(window: self.window!)
         appCoordinator.start()
         
