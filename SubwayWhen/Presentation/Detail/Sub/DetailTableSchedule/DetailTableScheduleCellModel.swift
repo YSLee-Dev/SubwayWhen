@@ -29,27 +29,32 @@ class DetailTableScheduleCellModel{
         
         self.scheduleData
             .map{ data -> [ResultSchdule] in
-                let formatter = DateFormatter()
-                formatter.dateFormat = "HHmmss"
-                
-                guard let now = Int(formatter.string(from: Date())) else {return data}
-                let schedule = data.filter{
-                    guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
-                    if scheduleTime >= now{
-                        return true
-                    }else{
-                        return false
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "HHmmss"
+                    
+                    guard let now = Int(formatter.string(from: Date())) else {return data}
+                    let schedule = data.filter{
+                        guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
+                        if scheduleTime >= now{
+                            return true
+                        }else{
+                            return false
+                        }
                     }
-                }
-                
-                if schedule.isEmpty{
+                    
+                    if schedule.isEmpty{
+                        return data
+                    }else if schedule.count == 1{
+                        guard let first = schedule.first else {return []}
+                        return [first]
+                    }else {
+                        return schedule
+                    }
+                }else{
                     return data
-                }else if schedule.count == 1{
-                    guard let first = schedule.first else {return []}
-                    return [first]
-                }else {
-                    return schedule
                 }
+               
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)

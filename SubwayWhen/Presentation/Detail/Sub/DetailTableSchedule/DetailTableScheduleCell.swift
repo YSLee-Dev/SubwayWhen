@@ -100,7 +100,11 @@ extension DetailTableScheduleCell{
                 if first.startTime == "정보없음"{
                     return "시간표를 불러올 수 없어요."
                 }else{
-                    return "\(first.lastStation)행 \(first.useArrTime) : \(first.useTime)남음"
+                    if FixInfo.saveSetting.detailScheduleAutoTime{
+                        return "\(first.lastStation)행 \(first.useArrTime) : \(first.useTime)남음"
+                    }else{
+                        return ""
+                    }
                 }
             }
             .filterNil()
