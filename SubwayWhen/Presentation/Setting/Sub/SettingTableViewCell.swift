@@ -35,7 +35,9 @@ class SettingTableViewCell : UITableViewCell{
     }
     lazy var doneBarBtn = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
     
-    lazy var onoffSwitch = UISwitch()
+    lazy var onoffSwitch = UISwitch().then{
+        $0.onTintColor = UIColor(named: "AppIconColor")
+    }
     
     var index : IndexPath = .init(row: 0, section: 0)
     
