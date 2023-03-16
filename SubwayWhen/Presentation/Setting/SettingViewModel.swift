@@ -120,9 +120,8 @@ class SettingViewModel {
             }
             .filterNil()
             .subscribe(onNext: {
-                let label = $0 == "" ? "😵" : $0
+                let label = $0 == "" ? "☹️" : $0
                 FixInfo.saveSetting.mainCongestionLabel = label
-                print("바꿈")
             })
             .disposed(by: self.bag)
     }
