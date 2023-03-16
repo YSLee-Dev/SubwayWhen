@@ -122,7 +122,7 @@ extension SettingTableViewCell{
             .filterNil()
             .filter{$0.count > max}
             .map{
-                String($0.first ?? "😵")
+                String($0.first ?? "☹️")
             }
             .bind(to: self.textField.rx.text)
             .disposed(by: self.bag)
