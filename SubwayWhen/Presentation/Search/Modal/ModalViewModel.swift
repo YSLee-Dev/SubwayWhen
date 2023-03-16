@@ -58,14 +58,16 @@ class ModalViewModel {
                     brand = ""
                 }
                 
-                // 중복 지하철은 저장 X
-                for x in FixInfo.saveStation{
-                    if x.stationName == cellData.stationName && x.updnLine == updownLine && x.lineCode == cellData.lineCode{
-                        return false
+                if FixInfo.saveSetting.searchOverlapAlert{
+                    // 중복 지하철은 저장 X
+                    for x in FixInfo.saveStation{
+                        if x.stationName == cellData.stationName && x.updnLine == updownLine && x.lineCode == cellData.lineCode{
+                            return false
+                        }
                     }
                 }
-                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 
+                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 return true
             }
             .share()

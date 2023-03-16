@@ -38,11 +38,13 @@ struct DetailResultScheduleViewModel{
         
         self.nowHourSectionSelect = self.nowData
             .map{ data in
-                let nowHour = Calendar.current.component(.hour, from: Date())
-                
-                for x in data.enumerated(){
-                    if x.element.hour == nowHour{
-                        return x.offset
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    let nowHour = Calendar.current.component(.hour, from: Date())
+                    
+                    for x in data.enumerated(){
+                        if x.element.hour == nowHour{
+                            return x.offset
+                        }
                     }
                 }
                 return 0
