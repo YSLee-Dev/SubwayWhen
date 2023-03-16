@@ -27,6 +27,7 @@ class SettingVC : TableVCCustom{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attibute()
+        self.layout()
         self.bind(self.settingVC)
     }
 }
@@ -35,15 +36,21 @@ extension SettingVC{
     private func attibute(){
         self.topView.backBtn.isHidden = true
         self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
+        self.titleView.mainTitleLabel.numberOfLines = 1
+        
+        self.tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
+        self.tableView.rowHeight = 65
+    }
+    
+    private func layout(){
         self.topView.subTitleLabel.snp.remakeConstraints{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
         
-        self.titleView.mainTitleLabel.numberOfLines = 1
-        
-        self.tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
-        self.tableView.rowHeight = 65
+        self.titleView.mainTitleLabel.snp.updateConstraints{
+            $0.centerY.equalToSuperview().offset(-5)
+        }
     }
     
     private func bind(_ viewModel : SettingViewModel){
