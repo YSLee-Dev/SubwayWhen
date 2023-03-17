@@ -232,7 +232,9 @@ extension Reactive where Base : ModalVC{
     var noSaveAlert : Binder<Void>{
         return Binder(base){ base, _ in
             let alert = UIAlertController(title: "이미 저장된 지하철역이에요.", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
+            alert.addAction(UIAlertAction(title: "확인", style: .cancel){_ in
+                base.modalViewModel.overlapOkBtnTap.accept(Void())
+            })
             
             base.present(alert, animated: true)
         }
