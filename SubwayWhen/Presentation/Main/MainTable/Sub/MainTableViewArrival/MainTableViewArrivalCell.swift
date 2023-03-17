@@ -136,7 +136,8 @@ extension MainTableViewCell{
     func bind(_ viewModel : MainTableViewCellModel){
         self.changeBtn.rx.tap
             .map{[weak self] in
-                self?.index ?? IndexPath(row: 0, section: 0)
+                self?.arrivalTime.text = "시간표 로드 중"
+                return self?.index ?? IndexPath(row: 0, section: 0)
             }
             .bind(to: viewModel.cellTimeChangeBtnClick)
             .disposed(by: self.bag)
