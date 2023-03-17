@@ -35,6 +35,8 @@ class DetailTableScheduleCell : TableViewCellCustom{
         $0.tintColor = .label
     }
     
+    let refreshIcon = UIRefreshControl()
+    
     var cellData : DetailTableViewCellData?
     
     var bag = DisposeBag()
@@ -42,6 +44,7 @@ class DetailTableScheduleCell : TableViewCellCustom{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
+        self.attribute()
     }
     
     override func prepareForReuse() {
@@ -73,6 +76,15 @@ extension DetailTableScheduleCell{
             $0.top.equalTo(self.mainTitle.snp.bottom).offset(15)
             $0.height.equalTo(200)
         }
+        
+        self.collectionView.addSubview(self.refreshIcon)
+        self.refreshIcon.snp.makeConstraints{
+            $0.center.equalTo(self.mainBG)
+        }
+    }
+    
+    private func attribute(){
+        self.refreshIcon.beginRefreshing()
     }
     
     func bind(_ viewModel : DetailTableScheduleCellModel){
@@ -88,6 +100,7 @@ extension DetailTableScheduleCell{
                     cell.cellSet(data, color: UIColor(named: cellData.lineNumber) ?? .systemBackground)
                 }
                 
+                self?.refreshIcon.endRefreshing()
                 
                 return cell
             }
