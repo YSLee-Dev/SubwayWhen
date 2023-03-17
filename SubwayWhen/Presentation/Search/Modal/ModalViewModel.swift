@@ -18,6 +18,7 @@ class ModalViewModel {
     let alertShow : Driver<Void>
     
     // INPUT
+    let overlapOkBtnTap = PublishRelay<Void>()
     let clickCellData = PublishRelay<ResultVCCellData>()
     let upDownBtnClick = PublishRelay<Bool>()
     let notService = PublishRelay<Void>()
@@ -80,7 +81,8 @@ class ModalViewModel {
         self.modalClose = Observable
             .merge(
                 self.notService.asObservable(),
-                save.filter{$0}.map{_ in Void()}
+                save.filter{$0}.map{_ in Void()},
+                self.overlapOkBtnTap.asObservable()
             )
             .asDriver(onErrorDriveWith: .empty())
     }
