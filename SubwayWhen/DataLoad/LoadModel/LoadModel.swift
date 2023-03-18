@@ -91,12 +91,8 @@ final class LoadModel : LoadModelProtocol{
         var weekday = 8
         let today = Calendar.current.component(.weekday, from: Date())
         
-        if today == 1{
+        if today == 1 || today == 7{
             weekday = 9
-        }else if today == 7{
-            weekday = 7
-        }else{
-            weekday = 8
         }
         
         let url = "https://openapi.kric.go.kr/openapi/trainUseInfo/subwayTimetable?serviceKey=\(self.token.korailToken)&format=JSON&railOprIsttCd=KR&dayCd=\(weekday)&lnCd=\(scheduleSearch.korailCode)&stinCd=\(scheduleSearch.stationCode)"
