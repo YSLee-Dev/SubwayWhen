@@ -326,4 +326,33 @@ final class TotalLoadModelTest: XCTestCase {
         )
     }
     
+    func testKorailScheduleLoad_isFirst_isNow(){
+        let bag = DisposeBag()
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+            isFirst: true, isNow: true)
+        data
+            .subscribe(onNext: {
+                print($0)
+                arrayData = $0
+            })
+            .disposed(by: bag)
+        
+    
+        wait(for: [XCTestExpectation(description: "옵저버블 대기")], timeout: 2)
+    
+        // WHEN
+        let requestCount = arrayData.count
+        let dummyCount = 1
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+    }
 }

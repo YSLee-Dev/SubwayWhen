@@ -77,7 +77,6 @@ class TotalLoadModel : TotalLoadProtocol{
         
         let number = self.loadModel.korailTrainNumberLoad()
         let request = requestRry
-            .throttle(.seconds(1), scheduler: MainScheduler.asyncInstance)
             .flatMap{[weak self] _ in
                 self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo) ?? .never()
             }
@@ -155,11 +154,14 @@ class TotalLoadModel : TotalLoadProtocol{
                 if list.isEmpty{
                     return [ResultSchdule(startTime: "정보없음", type: .Korail, isFast: "", startStation: "정보없음", lastStation: "정보없음")]
                 }else{
-                    return list.map{
-                        ResultSchdule(startTime: $0.startTime, type: .Korail, isFast: $0.isFast, startStation: $0.startStation, lastStation: $0.lastStation)
+                    if isFirst{
+                        return [list.first!]
+                        }else{
+                            return list
+                        }
                     }
                 }
-            }
+            
     }
     
     // 서울 시간표 계산
