@@ -107,4 +107,63 @@ final class TotalLoadModelTest: XCTestCase {
         )
     }
     
+    func testSingleLiveDataLoad(){
+        // GIVEN
+        let data = self.arrivalTotalLoadModel.singleLiveDataLoad(station: "교대")
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let dummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
+        
+        let requestStationName = arrayData.first?.realtimeArrivalList.first?.stationName
+        let dummyStationName = dummyData.realtimeArrivalList.first?.stationName
+        
+        let requestNextId = arrayData.first?.realtimeArrivalList.first?.nextStationId
+        let dummyNextId = dummyData.realtimeArrivalList.first?.nextStationId
+        
+        let requestCode = arrayData.first?.realtimeArrivalList.first?.code
+        let dummyCode = dummyData.realtimeArrivalList.first?.code
+        
+        // THEN
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "지하철 역명은 동일해야함"
+        )
+        
+        expect(requestNextId).to(
+            equal(dummyNextId),
+            description: "기본 데이터가 같으므로, NextID도 동일해야함"
+        )
+        
+        expect(requestCode).to(
+            equal(dummyCode),
+            description: "기본 데이터가 같으므로, code 또한 동일해야함"
+        )
+    }
+    
+    func testSingleLiveDataLoadError(){
+        // GIVEN
+        let data = self.arrivalErrorTotalLoadModel.singleLiveDataLoad(station: "교대")
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestStationName = arrayData.first?.realtimeArrivalList.first?.stationName
+        let dummyStationName = "교대"
+        
+        let requestCode = arrayData.first?.realtimeArrivalList.first?.code
+        let dummyStationCode = "현재 실시간 열차 데이터가 없어요."
+        
+        // THEN
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "열차 데이터를 받아오지 못해도 역 이름은 동일해야함"
+        )
+        
+        expect(requestCode).to(
+            equal(dummyStationCode),
+            description: "열차 데이터를 받아오지 못할 때는 (현재 실시간 열차 데이터가 없어요.)가 나와야함"
+        )
+    }
 }
