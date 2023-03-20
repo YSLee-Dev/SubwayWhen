@@ -328,6 +328,7 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testKorailScheduleLoad_isFirst_isNow(){
         let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
@@ -337,22 +338,40 @@ final class TotalLoadModelTest: XCTestCase {
             isFirst: true, isNow: true)
         data
             .subscribe(onNext: {
-                print($0)
                 arrayData = $0
+                testException.fulfill()
             })
             .disposed(by: bag)
         
     
-        wait(for: [XCTestExpectation(description: "옵저버블 대기")], timeout: 2)
+        wait(for: [testException], timeout: 3)
     
         // WHEN
+        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+        
         let requestCount = arrayData.count
         let dummyCount = 1
+        
+        let requestStart = arrayData.first?.startTime
+        let dummyStart = dummy.body.first?.time
+        
+        let requestType = arrayData.first?.type
+        let dummyType = ScheduleType.Korail
         
         // THEN
         expect(requestCount).to(
             equal(dummyCount),
             description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestStart).toNot(
+            equal(dummyStart),
+            description: "기본 데이터가 같지만, isNow가 true이기 때문에 데이터가 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "타입은 동일해야함"
         )
     }
 }
