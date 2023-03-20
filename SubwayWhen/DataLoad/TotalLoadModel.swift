@@ -62,7 +62,7 @@ class TotalLoadModel : TotalLoadProtocol{
     func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
         self.loadModel.stationArrivalRequest(stationName: station)
             .map{ data -> LiveStationModel in
-                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
             }
             .asObservable()
