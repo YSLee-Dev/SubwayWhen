@@ -16,6 +16,8 @@ class ModalVC : ModalVCCustom{
     let modalViewModel : ModalViewModel
     let bag = DisposeBag()
     
+    weak var delegate : ModalVCProtocol?
+    
     let titleLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
     }
@@ -177,6 +179,10 @@ extension ModalVC{
             .disposed(by: self.bag)
         
         // VIEWMODEL -> VIEW
+        viewModel.saveComplete
+            .drive(self.rx.toastMagShow)
+            .disposed(by: self.bag)
+        
         viewModel.modalData
             .drive(self.rx.modalLabelSet)
             .disposed(by: self.bag)
@@ -226,6 +232,12 @@ extension Reactive where Base : ModalVC{
     var modalClose : Binder<Void>{
         return Binder(base){base, _ in
             base.modalDismiss()
+        }
+    }
+    
+    var toastMagShow : Binder<Void>{
+        return Binder(base){base, _ in
+            base.delegate?.stationSave()
         }
     }
     

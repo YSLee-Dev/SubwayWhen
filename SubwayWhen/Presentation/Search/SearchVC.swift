@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Toast_Swift
+
 import RxSwift
 import RxCocoa
 
@@ -72,9 +74,16 @@ extension Reactive where Base : SearchVC {
             let modalViewModel = ModalViewModel()
             let modal = ModalVC(modalViewModel, modalHeight: 381)
             
+            modal.delegate = base
             modalViewModel.clickCellData.accept(data)
             modal.modalPresentationStyle = .overFullScreen
             base.present(modal, animated: false)
         }
+    }
+}
+
+extension SearchVC : ModalVCProtocol{
+    func stationSave() {
+        self.searchBarVC?.view.makeToast("지하철 역이 추가되었어요.", duration: 1.5, style: ViewStyle.toastStyle)
     }
 }
