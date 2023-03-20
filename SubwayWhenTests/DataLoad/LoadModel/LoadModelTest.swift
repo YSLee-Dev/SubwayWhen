@@ -125,7 +125,7 @@ class LoadModelTest : XCTestCase{
         // THEN
         expect(requestWeekData).to(
             equal(dummyWeekData),
-            description: "평일은 8, 토요일은 7, 휴일은 9가 나와야함"
+            description: "평일은 8, 토요일, 휴일은 9가 나와야함"
         )
         
         expect(requestLineCode).to(

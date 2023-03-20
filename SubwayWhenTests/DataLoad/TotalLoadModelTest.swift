@@ -45,6 +45,9 @@ final class TotalLoadModelTest: XCTestCase {
         let requestLine = arrayData.first?.lineNumber
         let dummyLine = "03호선"
         
+        let requestCode = arrayData.first?.code
+        let dummyCode = dummyData.realtimeArrivalList.first?.code
+        
         // THEN
         expect(requestStationName).to(
             equal(dummyStationName),
@@ -59,6 +62,11 @@ final class TotalLoadModelTest: XCTestCase {
         expect(requestLine).to(
             equal(dummyLine),
             description: "라인 호선은 동일해야함"
+        )
+        
+        expect(requestCode).to(
+            equal(dummyCode),
+            description: "기본 데이터가 같으므로, code 또한 동일해야함"
         )
     }
 }
