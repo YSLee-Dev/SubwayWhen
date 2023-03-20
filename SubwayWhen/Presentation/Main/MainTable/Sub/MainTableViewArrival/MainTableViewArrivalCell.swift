@@ -14,6 +14,8 @@ import SnapKit
 
 class MainTableViewCell : TableViewCellCustom{
     var index = IndexPath(row: 0, section: 0)
+    var type : MainTableViewCellType = .real
+    
     var bag = DisposeBag()
     
     lazy var line = UILabel().then{
@@ -82,6 +84,8 @@ class MainTableViewCell : TableViewCellCustom{
         self.arrivalTime.text = "\(data.useTime)"
         self.now.text = "\(data.useFast)\(data.state)"
         self.lineColor(line: data.lineNumber)
+        
+        self.type = data.type
     }
     
     func lineColor(line : String){
@@ -140,5 +144,25 @@ extension MainTableViewCell{
             }
             .bind(to: viewModel.cellTimeChangeBtnClick)
             .disposed(by: self.bag)
+        
+        self.changeBtn.rx.tap
+            .map{[weak self] in
+                self?.type ?? .real
+            }
+            .bind(to: self.rx.loadingLabelShow)
+            .disposed(by: self.bag)
+        
+    }
+}
+
+extension Reactive where Base : MainTableViewCell{
+    var loadingLabelShow : Binder<MainTableViewCellType>{
+        return Binder(base){base, type in
+            if type == .real{
+                base.arrivalTime.text = "시간표 로드 중"
+                base.now.text = "⏱️"
+                base.station.text = "시간표 로드 중"
+            }
+        }
     }
 }
