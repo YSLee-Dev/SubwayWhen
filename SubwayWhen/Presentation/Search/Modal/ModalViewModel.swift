@@ -16,6 +16,7 @@ class ModalViewModel {
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
     let alertShow : Driver<Void>
+    let saveComplete : Driver<Void>
     
     // INPUT
     let overlapOkBtnTap = PublishRelay<Void>()
@@ -75,6 +76,11 @@ class ModalViewModel {
         
         self.alertShow = save
             .filter{!$0}
+            .map{_ in Void()}
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.saveComplete = save
+            .filter{$0}
             .map{_ in Void()}
             .asDriver(onErrorDriveWith: .empty())
       
