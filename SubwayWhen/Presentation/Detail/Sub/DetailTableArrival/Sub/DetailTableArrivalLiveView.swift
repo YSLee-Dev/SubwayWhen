@@ -139,6 +139,19 @@ extension DetailTableArrivalLiveView{
     }
     
     func trainIconSet(code : String, now : String){
+        // 정보 없을 때 리턴
+        if code == "현재 실시간 열차 데이터가 없어요."{
+            [self.beforeStationCirecle, self.beforeStationTitle]
+                .forEach{
+                    $0.alpha = 0
+                }
+            
+            self.moreStationTitle.alpha = 1
+            self.moreStationTitle.text = "정보없음"
+            
+            return
+        }
+        
         guard let intCode = Int(code) else {return}
         
         UIView.animate(withDuration: 0.25, delay: 0, options: [.allowUserInteraction]){
@@ -213,6 +226,7 @@ extension DetailTableArrivalLiveView{
             }
         })
     }
+    
     private func animateCGSet(_ isStart : Bool){
         if isStart{
             [self.moreStationCircle, self.moreStationTitle]
