@@ -17,7 +17,8 @@ pod 'Alamofire'
 pod 'Then'
 pod 'SnapKit', '~> 5.6.0'
 pod 'lottie-ios'
-
+pod 'Toast-Swift', '~> 5.0.1'
+ 
 pod 'Firebase/Analytics'
 pod 'Firebase/Database'
 
