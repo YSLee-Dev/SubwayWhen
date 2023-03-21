@@ -13,6 +13,7 @@ class PopupModal : ModalVCCustom{
         $0.layer.cornerRadius = 15
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textColor = .label
+        $0.isEditable = false
     }
     
     init(modalHeight: CGFloat, popupTitle : String, subTitle : String,popupValue : String) {

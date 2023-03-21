@@ -25,6 +25,7 @@ class MainTableViewHeaderBtn : UIButton{
         super.init(frame: .null)
         self.layout()
         self.attribute(title : title, img: img)
+        self.iconAnimationPlay()
     }
     
     required init?(coder: NSCoder) {
@@ -53,7 +54,6 @@ extension MainTableViewHeaderBtn{
         self.tintColor = .gray
         
         self.btnLabel.text = title
-        self.iconAnimationPlay()
     }
     
     func iconAnimationPlay(){
