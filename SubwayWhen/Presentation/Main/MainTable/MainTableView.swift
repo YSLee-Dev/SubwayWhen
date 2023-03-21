@@ -44,7 +44,7 @@ extension MainTableView{
         self.refreshControl = self.refresh
     }
     
-    func bind(_ viewModel : MainTableViewModel){
+    func bind(_ viewModel : MainTableViewModelProtocol){
         // VIEWMODEl -> VIEW
         let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {dataSource, tv, index, item in
             switch index.section{
@@ -106,8 +106,7 @@ extension MainTableView{
                 self?.refreshControl?.endRefreshing()
                 return Void()
             }
-            .asSignal(onErrorJustReturn: ())
-            .emit(to: viewModel.refreshOn)
+            .bind(to: viewModel.refreshOn)
             .disposed(by: self.bag)
         
     }

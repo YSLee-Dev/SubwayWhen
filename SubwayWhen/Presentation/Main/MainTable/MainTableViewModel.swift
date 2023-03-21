@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct MainTableViewModel{
+class MainTableViewModel : MainTableViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[MainTableViewSection]>
     
