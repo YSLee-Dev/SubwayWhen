@@ -417,7 +417,7 @@ final class TotalLoadModelTest: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
             isFirst: true, isNow: false)
         data
             .subscribe(onNext: {
@@ -465,7 +465,7 @@ final class TotalLoadModelTest: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
             isFirst: false, isNow: true)
         data
             .subscribe(onNext: {
@@ -513,7 +513,7 @@ final class TotalLoadModelTest: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
             isFirst: false, isNow: false)
         data
             .subscribe(onNext: {
