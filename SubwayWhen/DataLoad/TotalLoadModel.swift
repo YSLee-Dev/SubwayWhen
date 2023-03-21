@@ -24,7 +24,7 @@ class TotalLoadModel : TotalLoadProtocol{
         
         let liveStation = saveStation
             .concatMap{[weak self] in
-                self!.loadModel.stationArrivalRequest(stationName: $0.stationName)
+                return self!.loadModel.stationArrivalRequest(stationName: $0.stationName)
             }.map{ data -> LiveStationModel in
                 guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
