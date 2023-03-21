@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // LanchScreen 지연
         sleep(1)
         
+        // 네트워크 감지 class
+        NetworkMonitor.shared.monitorStart()
+        
         return true
     }
 
