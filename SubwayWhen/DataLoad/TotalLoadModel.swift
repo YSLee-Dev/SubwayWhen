@@ -111,13 +111,15 @@ class TotalLoadModel : TotalLoadProtocol{
             
             // lastStation 값 주입
             for r in updownCheck.enumerated(){
-                result.append(ResultSchdule.init(startTime: r.element.time, type: .Korail, isFast: "", startStation: "", lastStation: ""))
-                for n in number{
-                    if r.element.trainCode == n.trainNumber{
-                        result[r.offset].lastStation = n.endStation
-                        result[r.offset].startStation = n.startStation
-                        result[r.offset].isFast = n.isFast == "급행" ? "급행" : ""
-                        break
+                if r.element.stationId == searchInfo.stationCode{
+                    result.append(ResultSchdule.init(startTime: r.element.time, type: .Korail, isFast: "", startStation: "", lastStation: ""))
+                    for n in number{
+                        if r.element.trainCode == n.trainNumber{
+                            result[r.offset].lastStation = n.endStation
+                            result[r.offset].startStation = n.startStation
+                            result[r.offset].isFast = n.isFast == "급행" ? "급행" : ""
+                            break
+                        }
                     }
                 }
             }
