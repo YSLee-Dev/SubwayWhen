@@ -298,10 +298,38 @@ final class TotalLoadModelTest: XCTestCase {
         )
     }
     
-    func testSeoulScheduleLoadError(){
+    func testSeoulScheduleLoadServerError(){
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
             .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
+            , isFirst: false, isNow: false)
+        
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.count
+        let dummyCount = 1
+        
+        let requestStart = arrayData.first?.first?.startTime
+        let dummyStart = "정보없음"
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "정보가 없으면 카운트는 1이 되어야 함"
+        )
+        
+        expect(requestStart).to(
+            equal(dummyStart),
+            description: "정보가 없으면 (정보없음)으로 통일 되어야함"
+        )
+    }
+    
+    func testSeoulScheduleLoadInputError(){
+        // GIVEN
+        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
             , isFirst: false, isNow: false)
         
         let blocking = data.toBlocking()
@@ -353,7 +381,13 @@ final class TotalLoadModelTest: XCTestCase {
         let dummyCount = 1
         
         let requestStart = arrayData.first?.startTime
-        let dummyStart = dummy.body.first?.time
+        let dummySort = dummy.body.sorted{
+            Int($0.time) ?? 0 < Int($1.time) ?? 1
+        }
+        let dummyUpdown = dummySort.filter{
+            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
+        }
+        let dummyStart = dummyUpdown.first?.time
         
         let requestType = arrayData.first?.type
         let dummyType = ScheduleType.Korail
@@ -372,6 +406,190 @@ final class TotalLoadModelTest: XCTestCase {
         expect(requestType).to(
             equal(dummyType),
             description: "타입은 동일해야함"
+        )
+    }
+    
+    func testKorailScheduleLoad_isFirst(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+            isFirst: true, isNow: false)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                print($0)
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+    
+        wait(for: [testException], timeout: 3)
+    
+        // WHEN
+        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+        
+        let requestCount = arrayData.count
+        let dummyCount = 1
+        
+        let requestStart = arrayData.first?.startTime
+        let dummySort = dummy.body.sorted{
+            Int($0.time) ?? 0 < Int($1.time) ?? 1
+        }
+        let dummyUpdown = dummySort.filter{
+            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
+        }
+        let dummyStart = dummyUpdown.first?.time
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestStart).to(
+            equal(dummyStart),
+            description: "기본 데이터 및 정렬이 같고, isNow가 false이기 때문에 데이터가 같아야함"
+        )
+    }
+    
+    func testKorailScheduleLoad_isNow(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+            isFirst: false, isNow: true)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                print($0)
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+    
+        wait(for: [testException], timeout: 3)
+    
+        // WHEN
+        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+        
+        let requestCount = arrayData.count
+        let dummySort = dummy.body.sorted{
+            Int($0.time) ?? 0 < Int($1.time) ?? 1
+        }
+        let dummyUpdown = dummySort.filter{
+            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
+        }
+        let dummyCount = dummyUpdown.count
+        
+        let requestStart = arrayData.first?.startTime
+        let dummyStart = dummyUpdown.first?.time
+        
+        // THEN
+        expect(requestCount).toNot(
+            equal(dummyCount),
+            description: "isNow가 true이기 때문에 count는 달라야함"
+        )
+        
+        expect(requestStart).toNot(
+            equal(dummyStart),
+            description: "isNow가 true이기 때문에 시작하는 시간이 달라야함"
+        )
+    }
+    
+    func testKorailScheduleLoad(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+            isFirst: false, isNow: false)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                print($0)
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+    
+        wait(for: [testException], timeout: 3)
+    
+        // WHEN
+        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+        
+        let requestCount = arrayData.count
+        let dummySort = dummy.body.sorted{
+            Int($0.time) ?? 0 < Int($1.time) ?? 1
+        }
+        let dummyUpdown = dummySort.filter{
+            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
+        }
+        let dummyCount = dummyUpdown.count
+        
+        let requestStart = arrayData.first?.startTime
+        let dummyStart = dummyUpdown.first?.time
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "데이터가 동일하기 때문에 count도 동일해야함"
+        )
+        
+        expect(requestStart).to(
+            equal(dummyStart),
+            description: "데이터가 동일하기 때문에 첫 번째 값도 동일해야함"
+        )
+    }
+    
+    func testKorailScheduleLoadInputError(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+            isFirst: false, isNow: false)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                print($0)
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestCount = arrayData.count
+        let dummyCount = 1
+        
+        let requestStart = arrayData.first?.startTime
+        let dummyStart = "정보없음"
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "정보가 없으면 카운트는 1이 되어야 함"
+        )
+        
+        expect(requestStart).to(
+            equal(dummyStart),
+            description: "정보가 없으면 (정보없음)으로 통일되어야 함"
         )
     }
 }
