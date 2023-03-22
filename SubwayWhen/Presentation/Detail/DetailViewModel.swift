@@ -17,10 +17,10 @@ class DetailViewModel{
     // MODEL
     let model: TotalLoadProtocol
     
-    let detailModel = DetailModel()
-    let headerViewModel = DetailTableHeaderViewModel()
-    let arrivalCellModel = DetailTableArrivalCellModel()
-    let scheduleCellModel = DetailTableScheduleCellModel()
+    let detailModel : DetailModelProtocol
+    let headerViewModel : DetailTableHeaderViewModelProtocol
+    let arrivalCellModel : DetailTableArrivalCellModelProtocol
+    let scheduleCellModel : DetailTableScheduleCellModelProtocol
     
     // INPUT
     let detailViewData = BehaviorRelay<MainTableViewCellData>(value: .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "",  korailCode: ""))
@@ -42,9 +42,19 @@ class DetailViewModel{
         print("DetailViewModel DEINIT")
     }
     
-    init(totalLoadModel : TotalLoadModel = .init()){
+    init(
+        totalLoadModel : TotalLoadModel = .init(),
+        headerViewModel : DetailTableHeaderViewModel = .init(),
+        arrivalCellModel : DetailTableArrivalCellModel = .init(),
+        scheduleCellModel : DetailTableScheduleCellModel = .init(),
+        detailModel : DetailModel = .init()
+    ){
         // Model Init
         self.model = totalLoadModel
+        self.detailModel = detailModel
+        self.headerViewModel = headerViewModel
+        self.arrivalCellModel = arrivalCellModel
+        self.scheduleCellModel = scheduleCellModel
         
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())

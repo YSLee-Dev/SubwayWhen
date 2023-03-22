@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class DetailTableArrivalCellModel {
+class DetailTableArrivalCellModel : DetailTableArrivalCellModelProtocol {
     // INPUT
     let realTimeData = BehaviorRelay<[RealtimeStationArrival]>(value: [])
     let refreshBtnClick = PublishRelay<Void>()
