@@ -30,20 +30,19 @@ final class TotalLoadModelTest: XCTestCase {
         self.arrivalErrorTotalLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: arrivalErrorData))))))
         self.seoulScheduleLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: seoulStationSchduleData))))))
         self.korailScheduleLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: korailStationSchduleData))))))
+        
     }
     
     func testTotalLiveDataLoad(){
         // GIVEN
-        let data = self.arrivalTotalLoadModel.totalLiveDataLoad(stations: [SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")])
+        let data = self.arrivalTotalLoadModel.totalLiveDataLoad(stations: [arrivalGyodaeStation3Line])
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
-        
         let requestStationName = arrayData.first?.stationName
-        let dummyStationName = dummyData.realtimeArrivalList.first?.stationName
+        let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
         let requestType = arrayData.first?.type
         let dummyType = MainTableViewCellType.real
@@ -52,7 +51,7 @@ final class TotalLoadModelTest: XCTestCase {
         let dummyLine = "03호선"
         
         let requestCode = arrayData.first?.code
-        let dummyCode = dummyData.realtimeArrivalList.first?.code
+        let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
         
         // THEN
         expect(requestStationName).to(
@@ -78,7 +77,7 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testTotalLiveDataLoadError(){
         //GIVEN
-        let data = self.arrivalErrorTotalLoadModel.totalLiveDataLoad(stations: [SaveStation(id: "-", stationName: "교대", stationCode: "340", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")])
+        let data = self.arrivalErrorTotalLoadModel.totalLiveDataLoad(stations: [arrivalGyodaeStation3Line])
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -117,16 +116,14 @@ final class TotalLoadModelTest: XCTestCase {
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
-        
         let requestStationName = arrayData.first?.realtimeArrivalList.first?.stationName
-        let dummyStationName = dummyData.realtimeArrivalList.first?.stationName
+        let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
         let requestNextId = arrayData.first?.realtimeArrivalList.first?.nextStationId
-        let dummyNextId = dummyData.realtimeArrivalList.first?.nextStationId
+        let dummyNextId = arrivalDummyData.realtimeArrivalList.first?.nextStationId
         
         let requestCode = arrayData.first?.realtimeArrivalList.first?.code
-        let dummyCode = dummyData.realtimeArrivalList.first?.code
+        let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
         
         // THEN
         expect(requestStationName).to(
@@ -172,21 +169,17 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(
-            .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: true, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
-        
         let requestCount = arrayData.first?.count
         let dummyCount = 1
         
         let requestStart = arrayData.first?.first?.startTime
-        let dummyStart = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
+        let dummyStart = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
         
         let requestType = arrayData.first?.first?.type
         let dummyType = ScheduleType.Seoul
@@ -210,21 +203,17 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(
-            .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: true, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
-        
         let requestCount = arrayData.first?.count
         let dummyCount = 1
         
         let requestStart = arrayData.first?.first?.startTime
-        let dummyStart = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
+        let dummyStart = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
         
         // THEN
         expect(requestCount).to(
@@ -240,21 +229,17 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testSeoulScheduleLoad_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(
-            .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: false, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
-        
         let requestCount = arrayData.first?.count
-        let dummyCount = dummyData.SearchSTNTimeTableByFRCodeService.row.count
+        let dummyCount = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.count
         
         let requestStart = arrayData.first?.first?.startTime
-        let dummyStart = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
+        let dummyStart = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
         
         // THEN
         expect(requestCount).toNot(
@@ -270,21 +255,17 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testSeoulScheduleLoad(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(
-            .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: false, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
-        
         let requestCount = arrayData.first?.count
-        let dummyCount = dummyData.SearchSTNTimeTableByFRCodeService.row.count
+        let dummyCount = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.count
         
         let requestStart = arrayData.first?.first?.startTime
-        let dummyStart = dummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
+        let dummyStart = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
         
         // THEN
         expect(requestCount).to(
@@ -300,9 +281,7 @@ final class TotalLoadModelTest: XCTestCase {
     
     func testSeoulScheduleLoadServerError(){
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
-            .init(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: false, isNow: false)
+        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(scheduleK215K1Line, isFirst: false, isNow: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -360,10 +339,7 @@ final class TotalLoadModelTest: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(
-            scheduleSearch: .init(
-                stationCode: "K240", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
-            isFirst: true, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -375,19 +351,11 @@ final class TotalLoadModelTest: XCTestCase {
         wait(for: [testException], timeout: 3)
     
         // WHEN
-        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
-        
         let requestCount = arrayData.count
         let dummyCount = 1
         
         let requestStart = arrayData.first?.startTime
-        let dummySort = dummy.body.sorted{
-            Int($0.time) ?? 0 < Int($1.time) ?? 1
-        }
-        let dummyUpdown = dummySort.filter{
-            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
-        }
-        let dummyStart = dummyUpdown.first?.time
+        let dummyStart = korailScheduleDummyData.first?.time
         
         let requestType = arrayData.first?.type
         let dummyType = ScheduleType.Korail
@@ -415,10 +383,7 @@ final class TotalLoadModelTest: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(
-            scheduleSearch: .init(
-                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
-            isFirst: true, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -431,19 +396,11 @@ final class TotalLoadModelTest: XCTestCase {
         wait(for: [testException], timeout: 3)
     
         // WHEN
-        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
-        
         let requestCount = arrayData.count
         let dummyCount = 1
         
         let requestStart = arrayData.first?.startTime
-        let dummySort = dummy.body.sorted{
-            Int($0.time) ?? 0 < Int($1.time) ?? 1
-        }
-        let dummyUpdown = dummySort.filter{
-            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
-        }
-        let dummyStart = dummyUpdown.first?.time
+        let dummyStart = korailScheduleDummyData.first?.time
         
         // THEN
         expect(requestCount).to(
@@ -463,10 +420,7 @@ final class TotalLoadModelTest: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(
-            scheduleSearch: .init(
-                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
-            isFirst: false, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -479,19 +433,11 @@ final class TotalLoadModelTest: XCTestCase {
         wait(for: [testException], timeout: 3)
     
         // WHEN
-        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
-        
         let requestCount = arrayData.count
-        let dummySort = dummy.body.sorted{
-            Int($0.time) ?? 0 < Int($1.time) ?? 1
-        }
-        let dummyUpdown = dummySort.filter{
-            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
-        }
-        let dummyCount = dummyUpdown.count
+        let dummyCount = korailScheduleDummyData.count
         
         let requestStart = arrayData.first?.startTime
-        let dummyStart = dummyUpdown.first?.time
+        let dummyStart = korailScheduleDummyData.first?.time
         
         // THEN
         expect(requestCount).toNot(
@@ -511,10 +457,7 @@ final class TotalLoadModelTest: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(
-            scheduleSearch: .init(
-                stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
-            isFirst: false, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -527,19 +470,11 @@ final class TotalLoadModelTest: XCTestCase {
         wait(for: [testException], timeout: 3)
     
         // WHEN
-        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
-        
         let requestCount = arrayData.count
-        let dummySort = dummy.body.sorted{
-            Int($0.time) ?? 0 < Int($1.time) ?? 1
-        }
-        let dummyUpdown = dummySort.filter{
-            ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
-        }
-        let dummyCount = dummyUpdown.count
+        let dummyCount = korailScheduleDummyData.count
         
         let requestStart = arrayData.first?.startTime
-        let dummyStart = dummyUpdown.first?.time
+        let dummyStart = korailScheduleDummyData.first?.time
         
         // THEN
         expect(requestCount).to(

@@ -43,7 +43,7 @@ class LoadModelTest : XCTestCase{
         .filterNil()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
+        let dummyData = arrivalDummyData
         
         let bloacking = filterData.toBlocking()
         let requestData = try! bloacking.toArray()
@@ -73,7 +73,7 @@ class LoadModelTest : XCTestCase{
         .filterNil()
         
         // WHEN
-        let dummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
+        let dummyData = seoulScheduleDummyData
         
         let bloacking = filterData.toBlocking()
         let arrayData = try! bloacking.toArray()
@@ -111,16 +111,16 @@ class LoadModelTest : XCTestCase{
             .filterNil()
         
         // WHEN
-        let dummy = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+        let dummy = korailScheduleDummyData
         
         let bloacking = filterData.toBlocking()
         let arrayData = try! bloacking.toArray()
         
         let requestWeekData = arrayData.first?.body.first?.weekDay
-        let dummyWeekData = dummy.body.first?.weekDay
+        let dummyWeekData = dummy.first?.weekDay
         
         let requestLineCode = arrayData.first?.body.first?.lineCode
-        let dummyLineCode = dummy.body.first?.lineCode
+        let dummyLineCode = dummy.first?.lineCode
         
         // THEN
         expect(requestWeekData).to(

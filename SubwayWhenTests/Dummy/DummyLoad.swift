@@ -14,7 +14,24 @@ let arrivalErrorData = DummyLoad().fileLoad("StationArrivalRequestErrorDummy.jso
 let seoulStationSchduleData = DummyLoad().fileLoad("SeoulStationScheduleDummy.json")
 let korailStationSchduleData = DummyLoad().fileLoad("KorailStationScheduleDummy.json")
 
+let arrivalDummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
+let seoulScheduleDummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
+var korailScheduleDummyData : [KorailScdule] = {
+    let json = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
+    
+    let dummySort = json.body.sorted{
+        Int($0.time) ?? 0 < Int($1.time) ?? 1
+    }
+    return dummySort.filter{
+        ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
+    }
+}()
+let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: "")
+
 let url = "Test.url"
+let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
+let scheduleGyodaeStation3Line = ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
+let scheduleK215K1Line = ScheduleSearch(stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1")
 
 let urlResponse = HTTPURLResponse(url: URL(string: url)!,
                                   statusCode: 200,
