@@ -42,34 +42,7 @@ class MainViewModel{
         self.mainTableViewModel = mainTableViewModel
         
         // 메인 타이틀(요일마다 변경)
-        self.mainTitle = Observable<String>.create{
-            let data = Calendar.current.component(.weekday, from: Date())
-            if data == 1 || data == 7{
-                // 주말
-                let weekend = ["행복하고 즐거운 주말\n좋은 하루 보내세요!",
-                               "행복한 일만 가득한 주말\n행복한 주말 보내세요!",
-                ]
-                $0.onNext(weekend.randomElement() ?? "행복하고 즐거운 주말이에요!\n좋은 하루 보내세요!")
-            }else if data == 2{
-                // 월요일
-                $0.onNext("월요일,\n한 주도 화이팅해봐요!")
-            }else if data == 3{
-                // 화요일
-                $0.onNext("화요일,\n평범하지만 행복한 날로 만들어봐요!")
-            }else if data == 4{
-                // 수요일
-                $0.onNext("수요일, \n수많은 즐거움이 가득할거에요!")
-            }else if data == 5{
-                // 목요일
-                $0.onNext("목요일,\n주말까지 단 2일 남았어요!")
-            }else if data == 6{
-                // 금요일
-                $0.onNext("금요일,\n행복한 하루 보내세요!")
-            }
-            $0.onCompleted()
-            
-            return Disposables.create()
-        }
+        self.mainTitle = self.mainModel.mainTitleLoad()
         .asDriver(onErrorDriveWith: .empty())
         
         // 민원 버튼 클릭 시
@@ -137,7 +110,10 @@ class MainViewModel{
         // 시간에 맞는 그룹 set
         reload
             .flatMap{[weak self] in
-                self?.mainModel.timeGroup(oneTime: FixInfo.saveSetting.mainGroupOneTime, twoTime: FixInfo.saveSetting.mainGroupTwoTime) ?? .never()
+                self?.mainModel.timeGroup(oneTime: FixInfo.saveSetting.mainGroupOneTime,
+                                          twoTime: FixInfo.saveSetting.mainGroupTwoTime,
+                                          nowHour: Calendar.current.component(.hour, from: Date())
+                ) ?? .never()
             }
             .bind(to: self.mainTableViewModel.mainTableViewGroupModel.groupSeleted)
             .disposed(by: self.bag)
@@ -153,7 +129,7 @@ class MainViewModel{
         // 데이터 로드
         self.groupData
             .map{[weak self] data -> [MainTableViewSection]in
-                self?.mainModel.mainSectionDataLoad(data) ?? []
+                self?.mainModel.createMainTableViewSection(data) ?? []
             }
             .bind(to: self.mainTableViewModel.resultData)
             .disposed(by: self.bag)
