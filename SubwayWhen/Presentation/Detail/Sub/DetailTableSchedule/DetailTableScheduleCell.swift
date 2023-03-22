@@ -35,7 +35,9 @@ class DetailTableScheduleCell : TableViewCellCustom{
         $0.tintColor = .label
     }
     
-    let refreshIcon = UIRefreshControl()
+    let refreshIcon = UIActivityIndicatorView().then{
+        $0.color = UIColor(named: "AppIconColor")
+    }
     
     var cellData : DetailTableViewCellData?
     
@@ -84,7 +86,7 @@ extension DetailTableScheduleCell{
     }
     
     private func attribute(){
-        self.refreshIcon.beginRefreshing()
+        self.refreshIcon.startAnimating()
     }
     
     func bind(_ viewModel : DetailTableScheduleCellModel){
@@ -100,7 +102,7 @@ extension DetailTableScheduleCell{
                     cell.cellSet(data, color: UIColor(named: cellData.lineNumber) ?? .systemBackground)
                 }
                 
-                self?.refreshIcon.endRefreshing()
+                self?.refreshIcon.stopAnimating()
                 
                 return cell
             }
