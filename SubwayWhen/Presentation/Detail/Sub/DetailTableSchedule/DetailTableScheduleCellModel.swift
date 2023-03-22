@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class DetailTableScheduleCellModel{
+class DetailTableScheduleCellModel : DetailTableScheduleCellModelProtocol{
     // INPUT
     let scheduleData = PublishRelay<[ResultSchdule]>()
     let moreBtnClick = PublishRelay<Void>()

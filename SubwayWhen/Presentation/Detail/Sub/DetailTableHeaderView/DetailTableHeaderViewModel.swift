@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct DetailTableHeaderViewModel{
+struct DetailTableHeaderViewModel : DetailTableHeaderViewModelProtocol{
     let exceptionLastStationBtnClick = PublishRelay<Void>()
 }
