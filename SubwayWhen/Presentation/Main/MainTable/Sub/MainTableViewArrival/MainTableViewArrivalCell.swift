@@ -60,6 +60,10 @@ class MainTableViewCell : TableViewCellCustom{
         $0.layer.borderWidth = 1.0
     }
     
+    let refreshIcon = UIActivityIndicatorView().then{
+        $0.color = UIColor(named: "AppIconColor")
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
@@ -68,6 +72,7 @@ class MainTableViewCell : TableViewCellCustom{
     // 재사용 시 초기화 구문
     override func prepareForReuse() {
         self.bag = DisposeBag()
+        self.refreshIcon.stopAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -135,6 +140,12 @@ extension MainTableViewCell{
             $0.height.equalTo(30)
             $0.bottom.equalToSuperview().inset(15)
         }
+        
+        self.mainBG.addSubview(self.refreshIcon)
+        self.refreshIcon.snp.makeConstraints{
+            $0.centerY.equalTo(self.arrivalTime)
+            $0.trailing.equalTo(self.arrivalTime)
+        }
     }
     
     func bind(_ viewModel : MainTableViewCellModel){
@@ -151,7 +162,11 @@ extension MainTableViewCell{
             }
             .bind(to: self.rx.loadingLabelShow)
             .disposed(by: self.bag)
-        
+    }
+    
+    func refreshShow(){
+        self.refreshIcon.startAnimating()
+        self.arrivalTime.text = ""
     }
 }
 
@@ -159,9 +174,9 @@ extension Reactive where Base : MainTableViewCell{
     var loadingLabelShow : Binder<MainTableViewCellType>{
         return Binder(base){base, type in
             if type == .real{
-                base.arrivalTime.text = "시간표 로드 중"
                 base.now.text = "⏱️"
                 base.station.text = "시간표 로드 중"
+                base.refreshShow()
             }
         }
     }
