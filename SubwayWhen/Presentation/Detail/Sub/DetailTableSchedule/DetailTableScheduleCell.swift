@@ -89,7 +89,7 @@ extension DetailTableScheduleCell{
         self.refreshIcon.startAnimating()
     }
     
-    func bind(_ viewModel : DetailTableScheduleCellModel){
+    func bind(_ viewModel : DetailTableScheduleCellModelProtocol){
         viewModel.cellData
             .drive(self.collectionView.rx.items){[weak self] cv, row, data in
                 guard let cell = cv.dequeueReusableCell(withReuseIdentifier: "DetailTableScheduleCellSubCell", for: IndexPath(row: row, section: 0)) as? DetailTableScheduleCellSubCell else {return UICollectionViewCell()}

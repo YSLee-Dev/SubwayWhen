@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-struct DetailModel{
+struct DetailModel : DetailModelProtocol{
     func nextAndBackStationSearch(backId : String, nextId : String) -> [String]{
         var backStation : String = ""
         var nextStation : String = ""
