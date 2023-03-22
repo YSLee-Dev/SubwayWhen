@@ -140,7 +140,7 @@ extension DetailTableHeaderView {
         }
     }
     
-    func bind(_ viewModel : DetailTableHeaderViewModel){
+    func bind(_ viewModel : DetailTableHeaderViewModelProtocol){
         self.exceptionLastStationBtn.rx.tap
             .bind(to: viewModel.exceptionLastStationBtnClick)
             .disposed(by: self.bag)

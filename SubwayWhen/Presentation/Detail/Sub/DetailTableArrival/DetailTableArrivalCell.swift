@@ -142,7 +142,7 @@ extension DetailTableArrivalCell {
         self.liveBG.liveViewReset()
     }
     
-    func bind(_ viewModel : DetailTableArrivalCellModel){
+    func bind(_ viewModel : DetailTableArrivalCellModelProtocol){
         viewModel.realTimeData
             .bind(to: self.rx.dataViewSet)
             .disposed(by: self.bag)
