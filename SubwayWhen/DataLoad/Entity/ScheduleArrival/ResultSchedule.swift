@@ -21,6 +21,10 @@ struct ResultSchdule{
             
             let timeCut = self.startTime.components(separatedBy: ":")
             
+            if timeCut.isEmpty || timeCut.count < 3{
+                return "정보없음"
+            }
+            
             guard let time = Calendar.current.date(from: DateComponents(year: now.component(.year, from: nowDate), month: now.component(.month, from: nowDate), day: now.component(.day, from: nowDate), hour: Int(timeCut[0]), minute: Int(timeCut[1]), second: Int(timeCut[2]))) else {return ""}
             
             let minuteToScound = Int(time.timeIntervalSinceNow)/60
