@@ -9,11 +9,15 @@ import Foundation
 
 import FirebaseDatabase
 
-class AppDefaultModel{
+class AppDefaultModel : AppDefaultModelProtocol{
     private let database : DatabaseReference
     
     init(){
         self.database = Database.database().reference()
+    }
+    
+    deinit{
+        print("AppDefaultModel DEINIT")
     }
     
     // 팝업 불러오기
@@ -43,26 +47,20 @@ class AppDefaultModel{
     }
     
     // 저장된 설정 불러오기
-    func saveSettingLoad() -> Result<Void, URLError>{
+    func saveSettingLoad() -> Result<SaveSetting, URLError>{
         guard let data = UserDefaults.standard.data(forKey: "saveSetting") else {return .failure(.init(.dataNotAllowed))}
         guard let setting = try? PropertyListDecoder().decode(SaveSetting.self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
         
-        FixInfo.saveSetting = setting
-        print(setting)
-        
-        return .success(Void())
+        return .success(setting)
     }
     
     
     // 저장된 지하철역 불러오기
-    func saveStationLoad() -> Result<Void, URLError>{
+    func saveStationLoad() -> Result<[SaveStation], URLError>{
         guard let data = UserDefaults.standard.data(forKey: "saveStation") else {return .failure(.init(.dataNotAllowed))}
         guard let list = try? PropertyListDecoder().decode([SaveStation].self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
         
-        FixInfo.saveStation = list
-        print(list)
-        
-        return .success(Void())
+        return .success(list)
     }
 }
 
