@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct DetailResultScheduleTopViewModel {
+class DetailResultScheduleTopViewModel : DetailResultScheduleTopViewProtocol {
     let exceptionLastStationBtnClick = PublishRelay<Void>()
 }
