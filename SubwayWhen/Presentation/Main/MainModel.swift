@@ -56,32 +56,38 @@ class MainModel : MainModelProtocol{
                 let week =  Calendar.current.component(.weekday, from: Date())
                 
                 if week == 1 || week == 7{
-                    return 5
-                }else{
-                    if 1...5 ~= nowHour {
-                        return 1
-                    }else if 6 == nowHour{
-                        return 4
-                    }else if 7 == nowHour{
-                        return 6
-                    }else if 8 == nowHour{
-                        return 10
-                    }else if 9 == nowHour{
-                        return 7
-                    }else if 10 == nowHour{
-                        return 6
-                    }else if 11...16 ~= nowHour{
-                        return 4
-                    }else if 17 == nowHour{
+                    if 1...4 ~= nowHour{
+                        return 0
+                    }else{
                         return 5
-                    }else if 18 == nowHour{
+                    }
+                }else{
+                    if 1...4 ~= nowHour {
+                        return 0
+                    }else if 5 == nowHour{
+                        return 3
+                    }else if 6 == nowHour{
+                        return 2
+                    }else if 7 == nowHour{
+                        return 4
+                    }else if 8...9 ~= nowHour{
+                        return 9
+                    }else if 10...11 ~= nowHour{
+                        return 4
+                    }else if 12...14 ~= nowHour{
+                        return 5
+                    }else if 15...16 ~= nowHour{
+                        return 6
+                    }else if 17...18 ~= nowHour{
+                        return 10
+                    }else if 19 == nowHour{
                         return 7
-                    }else if 19...22 ~= nowHour{
+                    }else if 20...22 ~= nowHour{
                         return 5
                     }else if 23 == nowHour{
-                        return 3
+                        return 4
                     }else {
-                        return 1
+                        return 2
                     }
                 }
             }
