@@ -14,11 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        // LanchScreen 지연
-        sleep(1)
-        
         // 네트워크 감지 class
         NetworkMonitor.shared.monitorStart()
+        
+        // LanchScreen 지연
+        sleep(1)
         
         return true
     }
@@ -32,9 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        NetworkMonitor.shared.monitorStop()
     }
 
 
