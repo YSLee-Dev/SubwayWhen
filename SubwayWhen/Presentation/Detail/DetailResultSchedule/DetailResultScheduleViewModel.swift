@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct DetailResultScheduleViewModel{
+class DetailResultScheduleViewModel{
     // INPUT
     let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
     let cellData = BehaviorRelay<MainTableViewCellData>(value: MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""))
@@ -23,63 +23,52 @@ struct DetailResultScheduleViewModel{
     let scheduleVCExceptionLastStationBtnClick : Driver<Void>
     
     // MODEL
-    let detailResultScheduleTopViewModel = DetailResultScheduleTopViewModel()
+    let detailResultScheduleTopViewModel : DetailResultScheduleTopViewProtocol
+    let detailResultScheduleModel : DetailResultScheduleModelProtocol
     
     private let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
+    private let sectionNumber = BehaviorRelay<Int>(value: 0)
     
     let bag = DisposeBag()
     
-    init(){
+    deinit{
+        print("DetailResultScheduleViewModel DEINIT")
+    }
+    
+    init(
+        resultModel : DetailResultScheduleModel = .init(),
+        topViewModel : DetailResultScheduleTopViewModel = .init()
+    ){
+        self.detailResultScheduleTopViewModel = topViewModel
+        self.detailResultScheduleModel = resultModel
+        
         self.resultDefaultData = self.cellData
             .asDriver(onErrorDriveWith: .empty())
         
         self.scheduleVCExceptionLastStationBtnClick = self.detailResultScheduleTopViewModel.exceptionLastStationBtnClick
             .asDriver(onErrorDriveWith: .empty())
         
-        self.nowHourSectionSelect = self.nowData
-            .map{ data in
-                if FixInfo.saveSetting.detailScheduleAutoTime{
-                    let nowHour = Calendar.current.component(.hour, from: Date())
-                    
-                    for x in data.enumerated(){
-                        if x.element.hour == nowHour{
-                            return x.offset
-                        }
-                    }
-                }
-                return 0
-            }
+        self.nowHourSectionSelect = self.sectionNumber
             .asDriver(onErrorDriveWith: .empty())
         
         self.groupScheduleData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
-       self.scheduleData
-            .map{data -> [DetailResultScheduleViewSectionData] in
-                var sortArray : [DetailResultScheduleViewSectionData] = []
-                for x in 0...24{
-                    let sortedData = data.filter{
-                        let index = $0.useArrTime.index($0.useArrTime.startIndex, offsetBy: 1)
-                        let count = 0...9 ~= x ? "0\(x)" : "\(x)"
-                        
-                        if $0.useArrTime != "0"{
-                            return $0.useArrTime[$0.useArrTime.startIndex...index] == count
-                        }else{
-                            return false
-                        }
-                        
-                    }
-                    
-                    let minute = sortedData.map{
-                        let startIndex = $0.useArrTime.index($0.useArrTime.startIndex, offsetBy: 3)
-                        let endIndex = $0.useArrTime.index(startIndex, offsetBy: 1)
-                        
-                        return String($0.useArrTime[startIndex...endIndex])
-                    }
-                    
-                    sortArray.append(.init(sectionName: "\(x)시", hour: x, items: [.init(id: "\(x)", hour: "\(x)", minute: minute, lastStation: sortedData.map{$0.lastStation}, startStation: sortedData.map{$0.startStation}, isFast: sortedData.map{$0.isFast})]))
+        self.nowData
+            .map{[weak self] data in
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    let nowHour = Calendar.current.component(.hour, from: Date())
+                    return self?.detailResultScheduleModel.nowTimeMatcing(data, nowHour: nowHour) ?? 0
                 }
-               return sortArray
+                return 0
+            }
+            .bind(to: self.sectionNumber)
+            .disposed(by: self.bag)
+        
+        
+       self.scheduleData
+            .map{[weak self] data -> [DetailResultScheduleViewSectionData] in
+                self?.detailResultScheduleModel.resultScheduleToDetailResultSection(data) ?? []
             }
             .map{data in
                 data.filter{
