@@ -71,6 +71,8 @@ extension SearchVC{
 extension Reactive where Base : SearchVC {
     var showModal : Binder<ResultVCCellData>{
         return Binder(base){base, data in
+            base.searchBarVC?.searchBar.resignFirstResponder()
+            
             let modalViewModel = ModalViewModel()
             let modal = ModalVC(modalViewModel, modalHeight: 381)
             
