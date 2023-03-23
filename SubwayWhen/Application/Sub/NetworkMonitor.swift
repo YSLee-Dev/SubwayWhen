@@ -13,16 +13,16 @@ final class NetworkMonitor{
     // 싱글톤
     static let shared = NetworkMonitor()
     
-    private let networkMonitor : NWPathMonitor
-    private let queue : DispatchQueue
+    private let networkMonitor = NWPathMonitor()
+    private let queue = DispatchQueue.global()
     
-    private init(networkMonitor : NWPathMonitor = .init(), queue : DispatchQueue = DispatchQueue.global(qos: .background)){
-        self.networkMonitor = networkMonitor
-        self.queue = queue
-    }
+    public private(set) var isConnected: Bool = false
     
     func monitorStart(){
         self.networkMonitor.start(queue: self.queue)
+        self.networkMonitor.pathUpdateHandler = {[weak self] path in
+            self?.isConnected = path.status == .satisfied
+        }
     }
     
     func pathUpdate(result : @escaping (_ status : Bool)->()){
