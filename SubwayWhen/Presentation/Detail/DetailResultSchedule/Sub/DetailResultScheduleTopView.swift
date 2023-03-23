@@ -67,7 +67,7 @@ extension DetailResultScheduleTopView {
         }
     }
     
-    func bind(_ viewModel : DetailResultScheduleTopViewModel){
+    func bind(_ viewModel : DetailResultScheduleTopViewProtocol){
         self.exceptionLastStationBtn.rx.tap
             .bind(to: viewModel.exceptionLastStationBtnClick)
             .disposed(by: self.topBag)
