@@ -26,10 +26,10 @@ var korailScheduleDummyData : [KorailScdule] = {
         ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
     }
 }()
-let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: "")
+let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "340", exceptionLastStation: "", type: .real, backStationId: "1003000339", nextStationId: "1003000341", korailCode: "")
 
 let url = "Test.url"
-let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "330", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
+let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "340", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
 let scheduleGyodaeStation3Line = ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
 let scheduleK215K1Line = ScheduleSearch(stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1")
 
