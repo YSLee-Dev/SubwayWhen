@@ -15,8 +15,6 @@ typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: MainTab
 
 class DetailViewModel{
     // MODEL
-    let model: TotalLoadProtocol
-    
     let detailModel : DetailModelProtocol
     let headerViewModel : DetailTableHeaderViewModelProtocol
     let arrivalCellModel : DetailTableArrivalCellModelProtocol
@@ -43,14 +41,12 @@ class DetailViewModel{
     }
     
     init(
-        totalLoadModel : TotalLoadModel = .init(),
         headerViewModel : DetailTableHeaderViewModel = .init(),
         arrivalCellModel : DetailTableArrivalCellModel = .init(),
         scheduleCellModel : DetailTableScheduleCellModel = .init(),
         detailModel : DetailModel = .init()
     ){
         // Model Init
-        self.model = totalLoadModel
         self.detailModel = detailModel
         self.headerViewModel = headerViewModel
         self.arrivalCellModel = arrivalCellModel
@@ -114,51 +110,22 @@ class DetailViewModel{
         // 기본 셀 구성
         self.detailViewData
             .withUnretained(self)
-            .map{
-                let backNext = $0.detailModel.nextAndBackStationSearch(backId: $1.backStationId, nextId: $1.nextStationId)
-                var stationNameCut = ""
-                
-                if $1.stationName.count >= 6{
-                    stationNameCut = "\(String($1.stationName[$1.stationName.startIndex ... $1.stationName.index($1.stationName.startIndex, offsetBy: 5)])).."
-                }else{
-                    stationNameCut = $1.stationName
-                }
-                
-                return [
-                    DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-                    DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: $1.stationCode, exceptionLastStation: $1.exceptionLastStation, subWayId: $1.subWayId, upDown: $1.upDown, lineNumber: $1.lineNumber, useLine: $1.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
-                ]
+            .map{viewModel, data in
+                viewModel.detailModel.mainCellDataToDetailSection(data)
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
+        // 시간표 데이터 불러오기
         self.detailViewData
-            .map{ item -> ScheduleSearch in
-                var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
-                
-                if item.stationCode.contains("K"){
-                    searchData.type = .Korail
-                    
-                    return searchData
-                }else if item.stationCode.contains("D") || item.stationCode.contains("A"){
-                    searchData.type = .Unowned
-                    
-                    return searchData
-                }else{
-                    return searchData
-                }
+            .withUnretained(self)
+            .map{viewModel ,item -> ScheduleSearch in
+                viewModel.detailModel.mainCellDataToScheduleSearch(item)
             }
             .withUnretained(self)
             .skip(1)
             .flatMap{ viewModel, data -> Observable<[ResultSchdule]> in
-                if data.type == .Korail{
-                    return viewModel.model.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
-                }else if data.type == .Seoul{
-                    return viewModel.model.seoulScheduleLoad(data, isFirst: false, isNow: false)
-                }else {
-                    return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
-                }
+                viewModel.detailModel.scheduleLoad(data)
             }
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
@@ -171,33 +138,11 @@ class DetailViewModel{
         let realTimeData = onRefresh
             .withUnretained(self)
             .flatMapLatest{ viewModel, data in
-                viewModel.model.singleLiveDataLoad(station: data.stationName)
+                viewModel.detailModel.arrvialDataLoad(data.stationName)
             }
-            .map{$0.realtimeArrivalList}
         
-        Observable.combineLatest(self.detailViewData, realTimeData){station, realTime -> [RealtimeStationArrival] in
-            var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: station.code, subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
-            /*
-            #if DEBUG
-            list.insert(RealtimeStationArrival(upDown: station.upDown, arrivalTime: "1분", previousStation: "station2", subPrevious: "station2", code: "3", subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: ""),at : 0)
-            return list
-            #else
-             */
-            
-            for x in realTime{
-                if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
-                    if list.count == 1{
-                        list.insert(x, at: 0)
-                    }else if list.count == 2{
-                        list.insert(x, at: 1)
-                        list.removeLast()
-                        return list
-                    }
-                }
-            }
-            
-            return list
-            // #endif
+        Observable.combineLatest(self.detailViewData, realTimeData){[weak self] station, realTime -> [RealtimeStationArrival] in
+            self?.detailModel.arrivalDataMatching(station: station, arrivalData: realTime) ?? []
         }
         .bind(to: self.arrivalCellModel.realTimeData)
         .disposed(by: self.bag)
