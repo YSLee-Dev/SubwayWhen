@@ -57,10 +57,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         noNetworkView.snp.makeConstraints{
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(0)
-            
         }
+        
+        // 앱 진입 시 바로
+        if !NetworkMonitor.shared.isConnected{
+            noNetworkView.snp.updateConstraints{
+                $0.height.equalTo(100)
+            }
+        }
+            
         NetworkMonitor.shared.pathUpdate{ [weak self] status in
-            print(status)
             if !status{
                 noNetworkView.snp.updateConstraints{
                     $0.height.equalTo(100)

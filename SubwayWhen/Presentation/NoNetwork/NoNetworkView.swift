@@ -13,7 +13,7 @@ import Then
 class NoNetworkView : UIView{
     let titleLable = UILabel().then{
         $0.text = "현재 인터넷에 연결되어 있지 않아요."
-        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textAlignment = .center
         $0.textColor = .white
     }
@@ -30,7 +30,7 @@ class NoNetworkView : UIView{
 
 extension NoNetworkView {
     private func attribute(){
-        self.backgroundColor = UIColor(named: "AppIconColor")
+        self.backgroundColor = UIColor(named: "AppIconColor")?.withAlphaComponent(0.7)
     }
     
     private func layout(){
