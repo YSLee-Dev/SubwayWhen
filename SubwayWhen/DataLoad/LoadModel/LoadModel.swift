@@ -20,11 +20,10 @@ final class LoadModel : LoadModelProtocol{
         self.database = Database.database().reference()
     }
     
-    private let token = RequestToken()
     
     // live 지하철 통신
     internal func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
-        let url = "http://swopenapi.seoul.go.kr/api/subway/\(token.liveArrivalToken)/json/realtimeStationArrival/0/50/\(stationName)"
+        let url = "http://swopenapi.seoul.go.kr/api/subway/\(Bundle.main.tokenLoad("LIVE_TOKEN"))/json/realtimeStationArrival/0/50/\(stationName)"
         
         return self.networkManager.requestData(url, dataType: LiveStationModel.self)
     }
@@ -58,7 +57,7 @@ final class LoadModel : LoadModelProtocol{
             weekday = 1
         }
         
-        let url =  "http://openapi.seoul.go.kr:8088/\(token.seoulToken)/json/SearchSTNTimeTableByFRCodeService/1/500/\(scheduleSearch.stationCode)/\(weekday)/\(inOut)"
+        let url =  "http://openapi.seoul.go.kr:8088/\(Bundle.main.tokenLoad("SEOUL_TOKEN"))/json/SearchSTNTimeTableByFRCodeService/1/500/\(scheduleSearch.stationCode)/\(weekday)/\(inOut)"
         
         return self.networkManager.requestData(url, dataType: ScheduleStationModel.self)
     }
@@ -95,7 +94,7 @@ final class LoadModel : LoadModelProtocol{
             weekday = 9
         }
         
-        let url = "https://openapi.kric.go.kr/openapi/trainUseInfo/subwayTimetable?serviceKey=\(self.token.korailToken)&format=JSON&railOprIsttCd=KR&dayCd=\(weekday)&lnCd=\(scheduleSearch.korailCode)&stinCd=\(scheduleSearch.stationCode)"
+        let url = "https://openapi.kric.go.kr/openapi/trainUseInfo/subwayTimetable?serviceKey=\(Bundle.main.tokenLoad("KORAIL_TOKEN"))&format=JSON&railOprIsttCd=KR&dayCd=\(weekday)&lnCd=\(scheduleSearch.korailCode)&stinCd=\(scheduleSearch.stationCode)"
         
         return self.networkManager.requestData(url, dataType: KorailHeader.self)
     }
