@@ -14,7 +14,6 @@ import FirebaseDatabase
 class SearchModel{
     private let session : URLSession
     private var database : DatabaseReference
-    private let token = RequestToken()
     
     init(session : URLSession = .shared){
         self.session = session
@@ -23,7 +22,7 @@ class SearchModel{
     
     // 지하철 역명 통신
     func stationSearch(station: String) -> Single<Result<SearchStaion,URLError>>{
-        guard let url = URL(string: ("http://openapi.seoul.go.kr:8088/\(token.seoulToken)/json/SearchInfoBySubwayNameService/1/5/\(station)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")) else { return .just(.failure(.init(.badURL))) }
+        guard let url = URL(string: ("http://openapi.seoul.go.kr:8088/\(Bundle.main.tokenLoad("SEOUL_TOKEN"))/json/SearchInfoBySubwayNameService/1/5/\(station)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")) else { return .just(.failure(.init(.badURL))) }
         let urlString = url.absoluteString.replacingOccurrences(of: "=", with: "")
         
         var request = URLRequest(url: URL(string: urlString) ?? url)
