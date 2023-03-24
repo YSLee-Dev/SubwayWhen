@@ -58,7 +58,7 @@ class DetailResultScheduleViewModel{
             .map{[weak self] data in
                 if FixInfo.saveSetting.detailScheduleAutoTime{
                     let nowHour = Calendar.current.component(.hour, from: Date())
-                    return self?.detailResultScheduleModel.nowTimeMatcing(data, nowHour: nowHour) ?? 0
+                    return self?.detailResultScheduleModel.nowTimeMatching(data, nowHour: nowHour) ?? 0
                 }
                 return 0
             }

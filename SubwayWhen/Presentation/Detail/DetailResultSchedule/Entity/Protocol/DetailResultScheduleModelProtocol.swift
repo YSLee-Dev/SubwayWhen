@@ -9,5 +9,5 @@ import Foundation
 
 protocol DetailResultScheduleModelProtocol{
     func resultScheduleToDetailResultSection(_ data : [ResultSchdule]) -> [DetailResultScheduleViewSectionData]
-    func nowTimeMatcing(_ data: [DetailResultScheduleViewSectionData], nowHour : Int) -> Int
+    func nowTimeMatching(_ data: [DetailResultScheduleViewSectionData], nowHour : Int) -> Int
 }
