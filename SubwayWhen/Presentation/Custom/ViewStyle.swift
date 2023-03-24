@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Toast_Swift
-
 enum ViewStyle{
     enum FontSize{
         static let superSmallSize : CGFloat = 9
@@ -26,14 +24,5 @@ enum ViewStyle{
     enum padding{
         static let mainStyleViewLR : CGFloat = 20
         static let mainStyleViewTB : CGFloat = 7.5
-    }
-    
-    static var toastStyle : ToastStyle{
-        var style = ToastStyle()
-        style.cornerRadius = ViewStyle.Layer.radius
-        style.messageFont = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        style.backgroundColor = UIColor(named: "AppIconColor")?.withAlphaComponent(0.8) ?? .systemBackground
-        
-        return style
     }
 }
