@@ -20,6 +20,7 @@ class SettingContentsModalVC : ModalVCCustom{
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textColor = .label
         $0.isEditable = false
+        $0.isSelectable = false
     }
     
     let bag = DisposeBag()
