@@ -35,7 +35,7 @@ class DetailResultScheduleModel : DetailResultScheduleModelProtocol{
        return sortArray
     }
     
-    func nowTimeMatcing(_ data: [DetailResultScheduleViewSectionData], nowHour : Int) -> Int{
+    func nowTimeMatching(_ data: [DetailResultScheduleViewSectionData], nowHour : Int) -> Int{
         for x in data.enumerated(){
             if x.element.hour == nowHour{
                 return x.offset
