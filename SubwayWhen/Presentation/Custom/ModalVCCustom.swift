@@ -23,7 +23,7 @@ class ModalVCCustom : UIViewController{
     }
     
     var handBar = UIView().then{
-        $0.backgroundColor = .gray.withAlphaComponent(0.7)
+        $0.backgroundColor = .gray.withAlphaComponent(0.5)
         $0.layer.cornerRadius = 2.5
     }
     
@@ -104,9 +104,9 @@ extension ModalVCCustom{
         
         self.mainBG.addSubview(self.handBar)
         self.handBar.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().offset(5)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(50)
+            $0.width.equalTo(40)
             $0.height.equalTo(5)
         }
         
@@ -133,7 +133,8 @@ extension ModalVCCustom{
         }
     }
     
-    private func viewAnimation(){
+    @objc
+    func viewAnimation(){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBG.transform = .identity
             self?.grayBG.backgroundColor = .darkGray.withAlphaComponent(0.3)
