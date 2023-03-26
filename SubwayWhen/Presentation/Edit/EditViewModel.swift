@@ -115,7 +115,7 @@ class EditViewModel{
         self.refreshOn
             .withUnretained(self)
             .flatMap{viewmodel, _ in
-                viewmodel.editModel.fixDataToGroupData()
+                viewmodel.editModel.fixDataToGroupData(FixInfo.saveStation)
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
