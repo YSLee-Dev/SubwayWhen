@@ -109,7 +109,7 @@ iOSInjectionProject/
 # End of https://www.toptal.com/developers/gitignore/api/swift,cocoapods,xcode
 
 ## Token
-*.xcconfig
+RequestToken.plist
 
 ## Lottie File
 SubwayWhen/Resource/Lottie/
@@ -123,6 +123,10 @@ SubwayWhen.xcworkspace
 SubwayWhen.xcodeproj
 
 ## Dummy data
-SubwayWhen/SubwayWhenTests/Dummy/DummyData/
+SubwayWhenTests/Dummy/DummyData/
 
-bfg-1.14.0.jar
+## java
+*.jar
+
+## gitgnore
+.gitignore

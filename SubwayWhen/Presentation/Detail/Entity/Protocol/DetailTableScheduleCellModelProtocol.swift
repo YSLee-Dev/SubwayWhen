@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol DetailTableScheduleCellModelProtocol{
-    var scheduleData : PublishRelay<[ResultSchdule]>{get}
+    var scheduleData : BehaviorRelay<[ResultSchdule]>{get}
     var moreBtnClick : PublishRelay<Void>{get}
     
     // OUTPUT
