@@ -34,7 +34,7 @@ class ModalVCCustom : UIViewController{
     
     let subTitle = UILabel().then{
         $0.numberOfLines = 2
-        $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakMode = .byCharWrapping
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textColor = .gray
     }
