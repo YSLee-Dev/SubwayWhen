@@ -12,7 +12,7 @@ import RxCocoa
 
 class EditViewModel{
     // MODEL
-    let editModel = EditModel()
+    let editModel : EditModelProtocol
     
     // INPUT
     let deleteCell = PublishRelay<String>()
@@ -27,7 +27,11 @@ class EditViewModel{
     
     let bag = DisposeBag()
     
-    init(){
+    init(
+        model : EditModel = .init()
+    ){
+        self.editModel = model
+        
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         

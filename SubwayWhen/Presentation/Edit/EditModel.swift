@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-struct EditModel{
+class EditModel : EditModelProtocol{
     // FixInfo에서 그룹별 데이터로 변환
     func fixDataToGroupData() -> Single<[EditViewCellSection]>{
         let fixData = FixInfo.saveStation
