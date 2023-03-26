@@ -17,6 +17,7 @@ class ModalViewModel {
     let modalClose : Driver<Void>
     let alertShow : Driver<Void>
     let saveComplete : Driver<Void>
+    let disposableDetailMove : Driver<MainTableViewCellData>
     
     // INPUT
     let overlapOkBtnTap = PublishRelay<Void>()
@@ -25,40 +26,44 @@ class ModalViewModel {
     let notService = PublishRelay<Void>()
     let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)
     let exceptionLastStationText = BehaviorRelay<String?>(value: "")
+    let disposableBtnTap = PublishRelay<Bool>()
     
     let bag = DisposeBag()
     
+    let modalCloseEvent = PublishRelay<Bool>()
+    let mainCellData = PublishRelay<MainTableViewCellData>()
+    
     init(){
+        self.disposableDetailMove = self.mainCellData
+            .asDriver(onErrorDriveWith: .empty())
+        
         self.modalData = self.clickCellData
             .asDriver(onErrorDriveWith: .empty())
         
+        self.alertShow = self.modalCloseEvent
+            .filter{!$0}
+            .map{_ in Void()}
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.saveComplete = self.modalCloseEvent
+            .filter{$0}
+            .map{_ in Void()}
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.modalClose = Observable
+            .merge(
+                self.notService.asObservable(),
+                self.modalCloseEvent.map{_ in Void()}.asObservable(),
+                self.overlapOkBtnTap.asObservable()
+            )
+            .asDriver(onErrorDriveWith: .empty())
+        
         // 전체 데이터를 합친 후, 저장
-       let save = Observable
-            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick){ cellData, group, exception, updown -> Bool in
+        Observable
+            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
                 
-                var updownLine = ""
-                if cellData.useLine ==  "2호선" {
-                    updownLine = updown ? "내선" : "외선"
-                }else{
-                    updownLine = updown ? "상행" : "하행"
-                }
-                
-                var brand = ""
-                if cellData.useLine == "경의중앙"{
-                    brand = "K4"
-                }else if cellData.useLine == "수인분당"{
-                    brand = "K1"
-                }else if cellData.useLine == "경춘"{
-                    brand = "K2"
-                }else if cellData.useLine == "우이"{
-                    brand = "UI"
-                }else if cellData.useLine == "신분당"{
-                    brand = "D1"
-                }else if cellData.useLine == "공항"{
-                    brand = "A1"
-                }else{
-                    brand = ""
-                }
+                let updownLine = self?.updownFix(updown: updown, line: cellData.useLine) ?? ""
+                let brand = self?.useLineTokorailCode(cellData.useLine) ?? ""
                 
                 if FixInfo.saveSetting.searchOverlapAlert{
                     // 중복 지하철은 저장 X
@@ -72,24 +77,48 @@ class ModalViewModel {
                 FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 return true
             }
-            .share()
+            .bind(to: self.modalCloseEvent)
+            .disposed(by: self.bag)
         
-        self.alertShow = save
-            .filter{!$0}
-            .map{_ in Void()}
-            .asDriver(onErrorDriveWith: .empty())
+        self.disposableBtnTap
+            .withLatestFrom(self.clickCellData){[weak self] updown, data in
+                let updownFix = self?.updownFix(updown: updown, line: data.useLine) ?? ""
+                let korail = self?.useLineTokorailCode(data.useLine) ?? ""
+                
+                return MainTableViewCellData(upDown: updownFix, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, isFast: "", useLine: "", group: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", type: .real, backStationId: "-", nextStationId: "-", korailCode: korail)
+            }
+            .bind(to: self.mainCellData)
+            .disposed(by: self.bag)
+    }
+    
+    func useLineTokorailCode(_ useLine : String) -> String{
+        var brand = ""
+        if useLine == "경의중앙"{
+            brand = "K4"
+        }else if useLine == "수인분당"{
+            brand = "K1"
+        }else if useLine == "경춘"{
+            brand = "K2"
+        }else if useLine == "우이"{
+            brand = "UI"
+        }else if useLine == "신분당"{
+            brand = "D1"
+        }else if useLine == "공항"{
+            brand = "A1"
+        }else{
+            brand = ""
+        }
         
-        self.saveComplete = save
-            .filter{$0}
-            .map{_ in Void()}
-            .asDriver(onErrorDriveWith: .empty())
-      
-        self.modalClose = Observable
-            .merge(
-                self.notService.asObservable(),
-                save.filter{$0}.map{_ in Void()},
-                self.overlapOkBtnTap.asObservable()
-            )
-            .asDriver(onErrorDriveWith: .empty())
+        return brand
+    }
+    
+    func updownFix(updown : Bool, line : String) -> String{
+        var updownLine = ""
+        if line ==  "2호선" {
+            updownLine = updown ? "내선" : "외선"
+        }else{
+            updownLine = updown ? "상행" : "하행"
+        }
+        return updownLine
     }
 }

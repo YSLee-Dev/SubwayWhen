@@ -14,6 +14,7 @@ import RxDataSources
 
 class DetailVC : TableVCCustom{
     let bag = DisposeBag()
+    var disposable : Bool = false
 
     let detailViewModel : DetailViewModel
     
@@ -23,6 +24,11 @@ class DetailVC : TableVCCustom{
         self.detailViewModel = viewModel
         super.init(title: title, titleViewHeight: 30)
         self.bind(self.detailViewModel)
+        
+        // 임시 역 backBtn 분기
+        if title.contains("(저장안됨)"){
+            self.disposable = true
+        }
     }
     
     deinit{
@@ -52,6 +58,10 @@ extension DetailVC{
         self.tableView.register(DetailTableScheduleCell.self, forCellReuseIdentifier: "DetailTableScheduleCell")
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 150
+        
+        if self.disposable{
+            self.topView.backBtn.setImage(UIImage(systemName: "rectangle.badge.xmark"), for: .normal)
+        }
     }
     
     private func bind(_ viewModel : DetailViewModel){
