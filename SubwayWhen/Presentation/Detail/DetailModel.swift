@@ -66,7 +66,7 @@ class DetailModel : DetailModelProtocol{
             searchData.type = .Korail
             
             return searchData
-        }else if item.stationCode.contains("D") || item.stationCode.contains("A"){
+        }else if item.stationCode.contains("D") || item.stationCode.contains("A") || item.stationCode == ""{
             searchData.type = .Unowned
             
             return searchData
