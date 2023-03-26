@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol EditModelProtocol{
-    func fixDataToGroupData() -> Single<[EditViewCellSection]>
+    func fixDataToGroupData(_ data : [SaveStation]) -> Single<[EditViewCellSection]>
 }
