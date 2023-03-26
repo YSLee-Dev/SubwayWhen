@@ -62,13 +62,15 @@ class ModalVC : ModalVCCustom{
         $0.font = UIFont.systemFont(ofSize: ViewStyle.FontSize.superSmallSize)
     }
     
+    let disposableView = DisposableView()
+    
     deinit{
         print("DEINIT MODAL")
     }
     
     init(_ viewModel : ModalViewModel, modalHeight : CGFloat){
         self.modalViewModel = viewModel
-        super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹 및 제외 행을 선택하신 후 상/하행 버튼을 누르면 저장할 수 있어요.")
+        super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹, 제외 행을 선택 후 상/하행 버튼을 누르면 저장할 수 있어요.")
         self.bind(self.modalViewModel)
     }
     
@@ -79,14 +81,25 @@ class ModalVC : ModalVCCustom{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.layout()
+        self.atiribute()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewAnimation() {
+        super.viewAnimation()
+        self.disposableView.showAnimation()
     }
+    
+    override func modalDismiss() {
+        super.modalDismiss()
+        self.disposableView.hiddenAnimation()
+    }
+
 }
 
 extension ModalVC{
+    private func atiribute(){
+        self.disposableView.upDownLabelSet(up: self.upBtn.title(for: .normal) ?? "상행", down: self.downBtn.title(for: .normal) ?? "하행")
+    }
     private func layout(){
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{
@@ -132,6 +145,13 @@ extension ModalVC{
             $0.bottom.equalTo(self.grayBG).inset(35)
         }
         
+        self.view.addSubview(self.disposableView)
+        self.disposableView.snp.makeConstraints{
+            $0.bottom.equalTo(self.mainBG.snp.top).offset(-ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(7.5)
+            $0.height.equalTo(60)
+        }
+        
     }
     
     private func bind(_ viewModel : ModalViewModel){
@@ -173,6 +193,20 @@ extension ModalVC{
             .bind(to: viewModel.exceptionLastStationText)
             .disposed(by: self.bag)
         
+        self.disposableView.upBtn.rx.tap
+            .map{
+                true
+            }
+            .bind(to: viewModel.disposableBtnTap)
+            .disposed(by: self.bag)
+        
+        self.disposableView.downBtn.rx.tap
+            .map{
+                false
+            }
+            .bind(to: viewModel.disposableBtnTap)
+            .disposed(by: self.bag)
+        
         // VIEW
         self.exceptionLastStationTF.rx.controlEvent(.editingDidEndOnExit)
             .bind(to: self.rx.keyboardReturnBtn)
@@ -194,6 +228,10 @@ extension ModalVC{
         viewModel.alertShow
             .drive(self.rx.noSaveAlert)
             .disposed(by: self.bag)
+        
+        viewModel.disposableDetailMove
+            .drive(self.rx.disposableDetailPush)
+            .disposed(by: self.bag)
     }
 }
 
@@ -205,20 +243,21 @@ extension Reactive where Base : ModalVC{
             base.titleLabel.text = info.stationName
             
             if info.lineCode == ""{
-                [base.upBtn, base.downBtn, base.groupBtn]
+                [base.upBtn, base.downBtn, base.groupBtn, base.disposableView]
                     .forEach{
                         $0.isHidden = true
                     }
                 base.exceptionLastStationTF.isHidden = true
                 base.notServiceBtn.isHidden = false
-            }
-            
-            if info.lineNumber == "02호선"{
-                base.upBtn.setTitle("내선", for: .normal)
-                base.downBtn.setTitle("외선", for: .normal)
+                
             }else{
-                base.upBtn.setTitle("상행", for: .normal)
-                base.downBtn.setTitle("하행", for: .normal)
+                if info.lineNumber == "02호선"{
+                    base.upBtn.setTitle("내선", for: .normal)
+                    base.downBtn.setTitle("외선", for: .normal)
+                }else{
+                    base.upBtn.setTitle("상행", for: .normal)
+                    base.downBtn.setTitle("하행", for: .normal)
+                }
             }
         }
     }
@@ -252,4 +291,10 @@ extension Reactive where Base : ModalVC{
         }
     }
     
+    var disposableDetailPush : Binder<MainTableViewCellData>{
+        return Binder(base){base, data in
+            base.delegate?.disposableDetailPush(data: data)
+            base.modalDismiss()
+        }
+    }
 }

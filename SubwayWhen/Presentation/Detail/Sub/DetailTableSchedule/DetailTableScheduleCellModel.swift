@@ -12,14 +12,14 @@ import RxCocoa
 
 class DetailTableScheduleCellModel : DetailTableScheduleCellModelProtocol{
     // INPUT
-    let scheduleData = PublishRelay<[ResultSchdule]>()
+    let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
     let moreBtnClick = PublishRelay<Void>()
     
     // OUTPUT
     let cellData : Driver<[ResultSchdule]>
     
     // NOW
-    private let nowData = PublishRelay<[ResultSchdule]>()
+    private let nowData = BehaviorRelay<[ResultSchdule]>(value: [])
     
     let bag = DisposeBag()
     
