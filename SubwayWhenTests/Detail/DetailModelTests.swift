@@ -115,6 +115,28 @@ final class DetailModelTests: XCTestCase {
         )
     }
     
+    func testMainCellToScheduleSearchError(){
+        // GIVEN
+        let data = self.arrivalModel.mainCellDataToScheduleSearch(MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""))
+
+        // WHEN
+        let requestType = data.type
+        let dummyType = ScheduleType.Unowned
+        
+        let requestStationCode = data.stationCode
+        let dummyStationCode = ""
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "데이터가 없기 때문에 unowned이 나와야함"
+        )
+        
+        expect(requestStationCode).to(
+                equal(dummyStationCode),
+                description: "형식을 변경해도 StationCode는 동일해야함"
+        )
+    }
+    
     func testSechduleLoad(){
         // GIVEN
         let data = self.seoulScheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
@@ -151,6 +173,42 @@ final class DetailModelTests: XCTestCase {
         
     }
     
+    func testSechduleLoadError(){
+        // GIVEN
+        let data = self.seoulScheduleModel.scheduleLoad(.init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", type: .Unowned, korailCode: ""))
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        let dummyData = seoulScheduleDummyData
+        
+        // WHEN
+        let requestType = arrayData.first?.first?.type
+        let duumyType = ScheduleType.Unowned
+        
+        let reqeustCount = arrayData.first?.count
+        let dummyCount = 1
+        
+        let requestFirstTime = arrayData.first?.first?.startTime
+        let dummyFirstTime = "정보없음"
+        
+        // THEN
+        expect(requestType).to(
+            equal(duumyType),
+            description: "unowned타입이기 때문에 unowned이 나와야함"
+        )
+        
+        expect(reqeustCount).to(
+            equal(dummyCount),
+            description: "unowned타입이기 때문에 값은 하나가 나와야함"
+        )
+        
+        expect(requestFirstTime).to(
+            equal(dummyFirstTime),
+            description: "unowned타입이기 때문에 (정보없음)이 나와야함"
+        )
+        
+    }
+    
     func testArrivalDataMatching(){
         // GIVEN
         let dummyData = arrivalDummyData.realtimeArrivalList
@@ -180,6 +238,38 @@ final class DetailModelTests: XCTestCase {
         expect(requestFirstTime).to(
             equal(dummyFirstTime),
             description: "같은 데이터임으로 가장 빠른 도착 시간은 동일해야함"
+        )
+    }
+    
+    func testArrivalDataMatchingError(){
+        // GIVEN
+        let dummyData = arrivalDummyData.realtimeArrivalList
+        let data = self.arrivalModel.arrivalDataMatching(station: .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""), arrivalData: dummyData)
+        
+        // WHEN
+        let requestStationName = data.first?.stationName
+        let dummyStationName = "교대"
+        
+        let requestCount = data.count
+        let dummyCount = 1
+        
+        let requestPreviousStation = data.first?.previousStation
+        let dummyPreviousStation = "현재 실시간 열차 데이터가 없어요."
+        
+        // THEN
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "지하철 역명은 동일해야함"
+        )
+        
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "현재 데이터가 없을 때는 카운트가 하나여야함"
+        )
+        
+        expect(requestPreviousStation).to(
+            equal(dummyPreviousStation),
+            description: "데이터가 없을 때는 (현재 실시간 열차 데이터가 없어요.)가 나와야함"
         )
     }
 }
