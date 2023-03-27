@@ -11,11 +11,15 @@ class ModalVCCustom : UIViewController{
     let modalHeight : CGFloat
     let isBtn : Bool
     
-    let mainBG = UIView().then{
+    let mainBGContainer = UIView().then{
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 30
+        $0.layer.cornerRadius = 25
         $0.backgroundColor = .systemBackground
+        $0.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+        $0.layer.borderWidth = 0.5
     }
+    
+    let mainBG = UIView()
     
     lazy var grayBG = UIButton().then{
         $0.backgroundColor = .clear
@@ -81,9 +85,12 @@ class ModalVCCustom : UIViewController{
 extension ModalVCCustom{
     private func attribute(){
         self.view.backgroundColor = .clear
-        self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
         
-        self.mainBG.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.gestureAction(_ :))))
+        self.mainBG.transform = CGAffineTransform(translationX: 0, y: 45)
+        self.mainBG.alpha = 0.7
+        
+        self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+        self.mainBGContainer.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.gestureAction(_ :))))
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -95,14 +102,14 @@ extension ModalVCCustom{
             $0.edges.equalToSuperview()
         }
         
-        self.grayBG.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
+        self.grayBG.addSubview(self.mainBGContainer)
+        self.mainBGContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(modalHeight)
             $0.bottom.equalToSuperview().offset(25)
         }
         
-        self.mainBG.addSubview(self.handBar)
+        self.mainBGContainer.addSubview(self.handBar)
         self.handBar.snp.makeConstraints{
             $0.top.equalToSuperview().offset(5)
             $0.centerX.equalToSuperview()
@@ -110,17 +117,22 @@ extension ModalVCCustom{
             $0.height.equalTo(5)
         }
         
-        self.mainBG.addSubview(self.mainTitle)
+        self.mainBGContainer.addSubview(self.mainTitle)
         self.mainTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalToSuperview().inset(30)
             $0.height.equalTo(25)
         }
         
-        self.mainBG.addSubview(self.subTitle)
+        self.mainBGContainer.addSubview(self.subTitle)
         self.subTitle.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.mainTitle.snp.bottom)
+        }
+        
+        self.mainBGContainer.addSubview(self.mainBG)
+        self.mainBG.snp.makeConstraints{
+            $0.edges.equalToSuperview()
         }
         
         if isBtn{
@@ -135,9 +147,14 @@ extension ModalVCCustom{
     
     @objc
     func viewAnimation(){
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){[weak self] in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.88, initialSpringVelocity: 0.75){[weak self] in
+            self?.mainBGContainer.transform = .identity
+            self?.grayBG.backgroundColor = UIColor(named: "GrayBGColor")?.withAlphaComponent(0.5)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.15, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBG.transform = .identity
-            self?.grayBG.backgroundColor = .darkGray.withAlphaComponent(0.3)
+            self?.mainBG.alpha = 1
         }
     }
     
@@ -145,6 +162,7 @@ extension ModalVCCustom{
     func modalDismiss(){
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
             self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
             self.grayBG.backgroundColor = .clear
         }, completion: {_ in
             self.dismiss(animated: false)
@@ -192,21 +210,21 @@ extension ModalVCCustom{
             if self.moveTranslation.y > 75 {
                 self.modalDismiss()
             }else{
-                self.mainBG.snp.updateConstraints{
+                self.mainBGContainer.snp.updateConstraints{
                     $0.height.equalTo(self.modalHeight)
                 }
                 
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.75){
                     self.view.layoutIfNeeded()
                 }
             }
         case .changed:
             if self.moveTranslation.y > 0 || self.moveVelocity.y > 0{
-                self.mainBG.snp.updateConstraints{
+                self.mainBGContainer.snp.updateConstraints{
                     $0.height.equalTo(self.modalHeight - self.moveTranslation.y)
                 }
             }else{
-                self.mainBG.snp.updateConstraints{
+                self.mainBGContainer.snp.updateConstraints{
                     $0.height.equalTo(self.modalHeight + -(self.moveTranslation.y))
                 }
             }
@@ -215,11 +233,11 @@ extension ModalVCCustom{
                 self.view.layoutIfNeeded()
             }
         case .cancelled:
-            self.mainBG.snp.updateConstraints{
+            self.mainBGContainer.snp.updateConstraints{
                 $0.height.equalTo(self.modalHeight)
             }
             
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75){
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.75){
                 self.view.layoutIfNeeded()
             }
         default:
