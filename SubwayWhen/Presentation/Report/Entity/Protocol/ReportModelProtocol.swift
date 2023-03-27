@@ -15,6 +15,6 @@ protocol ReportModelProtocol{
     func twoStepQuestionData() -> ReportTableViewCellSection
     func twoStepSideException(_ data:ReportBrandData) -> ReportTableViewCellData?
     func theeStepQuestion() -> ReportTableViewCellSection
-    func cellDataMatching(index: IndexPath, matchingIndex : IndexPath, data : String) -> String?
+    func cellDataMatching(index: IndexPath, matchIndex : IndexPath, data : String) -> String?
     func cellDataSave(nowData : [ReportTableViewCellSection], data : String ,index : IndexPath) -> [ReportTableViewCellSection]
 }

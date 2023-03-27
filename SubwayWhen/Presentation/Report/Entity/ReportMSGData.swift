@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReportMSGData{
+struct ReportMSGData : Equatable{
     var line : ReportBrandData
     var nowStation : String
     var destination : String
