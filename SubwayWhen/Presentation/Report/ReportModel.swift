@@ -57,8 +57,9 @@ class ReportModel : ReportModelProtocol {
             .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)])
     }
     
-    func cellDataMatching(index: IndexPath, matchingIndex : IndexPath, data : String) -> String?{
-        if index.section == matchingIndex.section, index.row == matchingIndex.row{
+    func cellDataMatching(index: IndexPath, matchIndex : IndexPath, data : String) -> String?{
+        if index.section == matchIndex.section,
+            index.row == matchIndex.row{
             return data
         }else{
             return nil
@@ -66,10 +67,14 @@ class ReportModel : ReportModelProtocol {
     }
     
     func cellDataSave(nowData : [ReportTableViewCellSection], data : String ,index : IndexPath) -> [ReportTableViewCellSection]{
-        
         var changeData = nowData
-        changeData[index.section].items[index.row].cellData = data
-        changeData[index.section].items[index.row].focus = false
+        
+        if nowData.count > index.section{
+            if nowData[index.section].items.count > index.row{
+                changeData[index.section].items[index.row].cellData = data
+                changeData[index.section].items[index.row].focus = false
+            }
+        }
         
         return changeData
     }
