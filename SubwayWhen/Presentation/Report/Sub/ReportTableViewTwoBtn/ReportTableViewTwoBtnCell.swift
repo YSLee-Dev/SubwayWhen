@@ -85,7 +85,7 @@ extension ReportTableViewTwoBtnCell{
         }
     }
     
-    func bind(_ cellModel : ReportTableViewTwoBtnCellModel){
+    func bind(_ cellModel : ReportTableViewTwoBtnCellModelProtocol){
         self.upBtn.rx.tap
             .map{ [weak self] _  -> String in
                 self?.unseleted()

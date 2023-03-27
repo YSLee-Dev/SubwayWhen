@@ -55,7 +55,7 @@ extension ReportTableViewDefaultLineView{
         }
     }
     
-    func bind(_ viewModel : ReportTableViewDefaultLineViewModel){
+    func bind(_ viewModel : ReportTableViewDefaultLineViewModelProtocol){
         viewModel.cellData
             .drive(self.collectionView.rx.items){ collectionView, row, data in
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportTableViewDefaultLineCell", for: IndexPath(row: row, section: 0)) as? ReportTableViewDefaultLineCell else {return UICollectionViewCell()}
