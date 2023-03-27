@@ -30,8 +30,10 @@ class DetailCoordinator : Coordinator{
             excption.backStationId = next
         }
         
+        let detailLoadData = DetailLoadData(upDown: excption.upDown, subWayId: excption.subWayId, stationName: excption.stationName, lastStation: excption.lastStation, lineNumber: excption.lineNumber, useLine: excption.useLine, id: excption.id, stationCode: excption.stationCode, exceptionLastStation: excption.exceptionLastStation, backStationId: excption.backStationId, nextStationId: excption.nextStationId, korailCode: excption.korailCode)
+        
         let viewModel = DetailViewModel()
-        viewModel.detailViewData.accept(excption)
+        viewModel.detailViewData.accept(detailLoadData)
         
         let vc = DetailVC(title: "\(excption.useLine) \(excption.stationName)", viewModel: viewModel)
         vc.delegate = self
