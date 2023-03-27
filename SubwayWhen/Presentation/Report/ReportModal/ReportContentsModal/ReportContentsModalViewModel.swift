@@ -61,4 +61,8 @@ class ReportContentsModalViewModel{
         self.twoStepClose = checkModel.msgSeedDismiss
             .asDriver(onErrorDriveWith: .empty())
     }
+    
+    deinit{
+        print("ReportContentsModalViewModel DEINIT")
+    }
 }
