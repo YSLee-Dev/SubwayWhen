@@ -148,8 +148,8 @@ extension ModalVC{
         self.view.addSubview(self.disposableView)
         self.disposableView.snp.makeConstraints{
             $0.bottom.equalTo(self.mainBG.snp.top).offset(-ViewStyle.padding.mainStyleViewTB)
-            $0.leading.trailing.equalToSuperview().inset(7.5)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.height.equalTo(50)
         }
         
     }
@@ -291,7 +291,7 @@ extension Reactive where Base : ModalVC{
         }
     }
     
-    var disposableDetailPush : Binder<MainTableViewCellData>{
+    var disposableDetailPush : Binder<DetailLoadData>{
         return Binder(base){base, data in
             base.delegate?.disposableDetailPush(data: data)
             base.modalDismiss()

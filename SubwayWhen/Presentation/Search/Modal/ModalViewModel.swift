@@ -17,7 +17,7 @@ class ModalViewModel {
     let modalClose : Driver<Void>
     let alertShow : Driver<Void>
     let saveComplete : Driver<Void>
-    let disposableDetailMove : Driver<MainTableViewCellData>
+    let disposableDetailMove : Driver<DetailLoadData>
     
     // INPUT
     let overlapOkBtnTap = PublishRelay<Void>()
@@ -31,7 +31,7 @@ class ModalViewModel {
     let bag = DisposeBag()
     
     let modalCloseEvent = PublishRelay<Bool>()
-    let mainCellData = PublishRelay<MainTableViewCellData>()
+    let mainCellData = PublishRelay<DetailLoadData>()
     
     init(){
         self.disposableDetailMove = self.mainCellData
@@ -85,7 +85,7 @@ class ModalViewModel {
                 let updownFix = self?.updownFix(updown: updown, line: data.useLine) ?? ""
                 let korail = self?.useLineTokorailCode(data.useLine) ?? ""
                 
-                return MainTableViewCellData(upDown: updownFix, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, isFast: "", useLine: "", group: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", type: .real, backStationId: "-", nextStationId: "-", korailCode: korail)
+                return DetailLoadData(upDown: updownFix, subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, useLine: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
             }
             .bind(to: self.mainCellData)
             .disposed(by: self.bag)

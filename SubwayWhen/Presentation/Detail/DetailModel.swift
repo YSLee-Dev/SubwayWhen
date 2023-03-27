@@ -41,7 +41,7 @@ class DetailModel : DetailModelProtocol{
         return  [backStation, nextStation]
     }
     
-    func mainCellDataToDetailSection(_ data: MainTableViewCellData) -> [DetailTableViewSectionData] {
+    func mainCellDataToDetailSection(_ data: DetailLoadData) -> [DetailTableViewSectionData] {
         let backNext = self.nextAndBackStationSearch(backId: data.backStationId, nextId: data.nextStationId)
         
         var stationNameCut = ""
@@ -59,7 +59,7 @@ class DetailModel : DetailModelProtocol{
        ]
     }
     
-    func mainCellDataToScheduleSearch(_ item : MainTableViewCellData) -> ScheduleSearch{
+    func mainCellDataToScheduleSearch(_ item : DetailLoadData) -> ScheduleSearch{
         var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
         
         if item.stationCode.contains("K"){
@@ -90,8 +90,8 @@ class DetailModel : DetailModelProtocol{
             .map{$0.realtimeArrivalList}
     }
     
-    func arrivalDataMatching(station : MainTableViewCellData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
-        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: station.code, subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
+    func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
+        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
         
         for x in arrivalData{
             if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
@@ -104,7 +104,6 @@ class DetailModel : DetailModelProtocol{
                 }
             }
         }
-        
         return list
     }
 }

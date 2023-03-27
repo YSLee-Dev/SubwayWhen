@@ -9,5 +9,5 @@ import Foundation
 
 protocol ModalVCProtocol : AnyObject{
     func stationSave()
-    func disposableDetailPush(data : MainTableViewCellData)
+    func disposableDetailPush(data : DetailLoadData)
 }
