@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: MainTableViewCellData)
+typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: DetailLoadData)
 
 class DetailViewModel{
     // MODEL
@@ -21,17 +21,18 @@ class DetailViewModel{
     let scheduleCellModel : DetailTableScheduleCellModelProtocol
     
     // INPUT
-    let detailViewData = BehaviorRelay<MainTableViewCellData>(value: .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "",  korailCode: ""))
+    let detailViewData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
     let exceptionLastStationRemoveReload = PublishRelay<Void>()
     
     // OUTPUT
     let cellData : Driver<[DetailTableViewSectionData]>
     let moreBtnClickData : Driver<schduleResultData>
-    let exceptionLastStationRemoveBtnClick : Driver<MainTableViewCellData>
+    let exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>
     
     // DATA
     let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
     let scheduleData = PublishRelay<[ResultSchdule]>()
+    let arrivalData = PublishRelay<[RealtimeStationArrival]>()
     
     var bag = DisposeBag()
     var timerBag = DisposeBag()
@@ -80,6 +81,10 @@ class DetailViewModel{
         self.exceptionLastStationRemoveBtnClick = self.headerViewModel.exceptionLastStationBtnClick
             .withLatestFrom(self.detailViewData)
             .asDriver(onErrorDriveWith: .empty())
+        
+        self.arrivalData
+            .bind(to: self.arrivalCellModel.realTimeData)
+            .disposed(by: self.bag)
         
         // 재로딩 버튼 클릭 시 exception Station 제거
         self.exceptionLastStationRemoveReload
@@ -141,11 +146,32 @@ class DetailViewModel{
                 viewModel.detailModel.arrvialDataLoad(data.stationName)
             }
         
-        Observable.combineLatest(self.detailViewData, realTimeData){[weak self] station, realTime -> [RealtimeStationArrival] in
-            self?.detailModel.arrivalDataMatching(station: station, arrivalData: realTime) ?? []
+        let realTimeTotal = realTimeData
+            .withLatestFrom(self.detailViewData){[weak self] realTime, station -> [RealtimeStationArrival] in
+                self?.detailModel.arrivalDataMatching(station: station, arrivalData: realTime) ?? []
         }
-        .bind(to: self.arrivalCellModel.realTimeData)
+            .share()
+        
+        realTimeTotal
+        .bind(to: self.arrivalData)
         .disposed(by: self.bag)
+       
+        // 일회성 보기 or back,next ID가 없을 때
+        realTimeTotal
+            .withLatestFrom(self.detailViewData){ real, value -> DetailLoadData? in
+                var now = value
+                
+                if now.backStationId == "" && now.nextStationId == ""{
+                    now.nextStationId = real.first?.nextStationId ?? ""
+                    now.backStationId = real.first?.backStationId ?? ""
+                    return now
+                }else{
+                    return nil
+                }
+            }
+            .filterNil()
+            .bind(to: self.detailViewData)
+            .disposed(by: self.bag)
         
     }
 }
