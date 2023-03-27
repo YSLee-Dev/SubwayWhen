@@ -17,22 +17,22 @@ class DisposableView : UIView{
     let bag = DisposeBag()
     
     let titleLabel = UILabel().then{
-        $0.text = "저장하지 않고도 일회성으로 볼 수 있어요."
+        $0.text = "저장하지 않고 일회성으로 볼 수 있어요."
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.textColor = .label
+        $0.textColor = .white
         $0.adjustsFontSizeToFitWidth = true
     }
     
     let upBtn = ModalCustomButton().then{
         $0.setTitle("상행", for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.superSmallSize)
-        $0.backgroundColor = .systemGray
+        $0.backgroundColor = .black.withAlphaComponent(0.5)
     }
     
     let downBtn = ModalCustomButton().then{
         $0.setTitle("하행", for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.superSmallSize)
-        $0.backgroundColor = .systemGray
+        $0.backgroundColor = .black.withAlphaComponent(0.5)
     }
     
     override init(frame: CGRect) {
@@ -77,7 +77,7 @@ extension DisposableView{
     
     private func attribute(){
         self.layer.cornerRadius = ViewStyle.Layer.radius
-        self.backgroundColor = UIColor(named: "MainColor")
+        self.backgroundColor = UIColor(named: "AppIconColor")?.withAlphaComponent(0.7)
     }
     
     func upDownLabelSet(up: String, down: String){
