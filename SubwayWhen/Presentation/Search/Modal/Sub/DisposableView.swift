@@ -77,7 +77,7 @@ extension DisposableView{
     
     private func attribute(){
         self.layer.cornerRadius = ViewStyle.Layer.radius
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = UIColor(named: "MainColor")
     }
     
     func upDownLabelSet(up: String, down: String){
