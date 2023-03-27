@@ -92,7 +92,7 @@ extension SearchVC : ModalVCProtocol{
         }
     }
     
-    func disposableDetailPush(data: MainTableViewCellData) {
+    func disposableDetailPush(data: DetailLoadData) {
         let viewModel = DetailViewModel()
         let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
         viewModel.detailViewData.accept(data)

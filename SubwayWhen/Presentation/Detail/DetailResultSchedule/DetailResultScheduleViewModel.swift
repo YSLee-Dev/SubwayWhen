@@ -13,11 +13,11 @@ import RxCocoa
 class DetailResultScheduleViewModel{
     // INPUT
     let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
-    let cellData = BehaviorRelay<MainTableViewCellData>(value: MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""))
+    let cellData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
     let scheduleVCExceptionStationRemove = PublishRelay<Void>()
     
     // OUTPUT
-    let resultDefaultData : Driver<MainTableViewCellData>
+    let resultDefaultData : Driver<DetailLoadData>
     let groupScheduleData : Driver<[DetailResultScheduleViewSectionData]>
     let nowHourSectionSelect : Driver<Int>
     let scheduleVCExceptionLastStationBtnClick : Driver<Void>
