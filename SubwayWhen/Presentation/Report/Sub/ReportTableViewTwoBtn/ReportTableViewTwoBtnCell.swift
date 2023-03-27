@@ -119,10 +119,14 @@ extension ReportTableViewTwoBtnCell{
         self.mainBG.alpha = 0.5
     }
     
-    func viewDataSet(one: String, two:String, index : IndexPath, titleString : String){
+    func viewDataSet(one: String, two:String, index : IndexPath, titleString : String, data : String){
         self.upBtn.setTitle(one, for: .normal)
         self.downBtn.setTitle(two, for: .normal)
         self.index = index
         self.mainTitle.text = titleString
+        
+        if data != ""{
+            self.unseleted()
+        }
     }
 }

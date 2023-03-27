@@ -9,7 +9,7 @@ import Foundation
 
 import RxDataSources
 
-struct ReportTableViewCellSection{
+struct ReportTableViewCellSection : Equatable{
     var sectionName : String
     var items : [Item]
 }
