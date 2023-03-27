@@ -106,7 +106,7 @@ extension ReportTableViewLineCell{
         }
     }
     
-    func bind(_ cellModel : ReportTableViewLineCellModel){
+    func bind(_ cellModel : ReportTableViewLineCellModelProtocol){
         self.defaultView.bind(cellModel.defaultLineViewModel)
         
         // VIEWMODEL -> VIEW

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ReportTableViewTwoBtnCellModel {
+class ReportTableViewTwoBtnCellModel : ReportTableViewTwoBtnCellModelProtocol{
     let updownClick = BehaviorRelay<String>(value: "")
     let identityIndex = BehaviorRelay<IndexPath>(value: IndexPath(row: 9, section: 9))
 }

@@ -43,7 +43,7 @@ extension ReportTableViewTextFieldCell{
         }
     }
     
-    func bind(_ cellModel : ReportTableViewTextFieldCellModel){
+    func bind(_ cellModel : ReportTableViewTextFieldCellModelProtocol){
         let doenTap = self.textField.rx.controlEvent(.editingDidEnd)
             .withLatestFrom(self.textField.rx.text)
             .map{ data -> String? in
