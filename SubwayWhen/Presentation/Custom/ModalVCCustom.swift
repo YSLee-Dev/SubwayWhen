@@ -15,8 +15,6 @@ class ModalVCCustom : UIViewController{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 25
         $0.backgroundColor = .systemBackground
-        $0.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
-        $0.layer.borderWidth = 0.5
     }
     
     let mainBG = UIView()
