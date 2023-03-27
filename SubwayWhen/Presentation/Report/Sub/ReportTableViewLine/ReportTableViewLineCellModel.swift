@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ReportTableViewLineCellModel {
+class ReportTableViewLineCellModel : ReportTableViewLineCellModelProtocol{
     // OUTPUT
     let lineList : Driver<[String]>
     let lineSet : Driver<String>
@@ -22,9 +22,13 @@ struct ReportTableViewLineCellModel {
     let lineFix = PublishRelay<Void>()
     
     // MODEL
-    let defaultLineViewModel = ReportTableViewDefaultLineViewModel()
+    let defaultLineViewModel : ReportTableViewDefaultLineViewModelProtocol
     
-    init(){
+    init(
+        lineViewModel : ReportTableViewDefaultLineViewModel = .init()
+    ){
+        self.defaultLineViewModel = lineViewModel
+        
         self.lineList = self.lineInfo
         .asDriver(onErrorDriveWith: .empty())
         
