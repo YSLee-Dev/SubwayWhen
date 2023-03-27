@@ -71,18 +71,6 @@ class ReportViewModel {
         )
         .asDriver(onErrorDriveWith: .empty())
         
-        Observable<[ReportTableViewCellSection]>.create{
-            $0.onNext(
-                [ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)])
-                ])
-            $0.onCompleted()
-            return Disposables.create()
-        }
-        .delay(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
-        .bind(to: self.nowData)
-        .disposed(by: self.bag)
-        
-        
         // DefaultLineCell Data / delay 3s
         Observable<[String]>.create{
             $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전철"}))
@@ -94,28 +82,14 @@ class ReportViewModel {
         .disposed(by: self.bag)
         
         // 호선 리스트
-        Observable<[String]>.create{
-            $0.onNext([
-                ReportBrandData.not.rawValue,
-                ReportBrandData.one.rawValue,
-                ReportBrandData.two.rawValue,
-                ReportBrandData.three.rawValue,
-                ReportBrandData.four.rawValue,
-                ReportBrandData.five.rawValue,
-                ReportBrandData.six.rawValue,
-                ReportBrandData.seven.rawValue,
-                ReportBrandData.eight.rawValue,
-                ReportBrandData.nine.rawValue,
-                ReportBrandData.gyeongui.rawValue,
-                ReportBrandData.airport.rawValue,
-                ReportBrandData.gyeongchun.rawValue,
-                ReportBrandData.suinbundang.rawValue,
-                ReportBrandData.shinbundang.rawValue,
-            ])
-            $0.onCompleted()
-            return Disposables.create()
-        }
+        self.model.lineListData()
         .bind(to: self.lineCellModel.lineInfo)
+        .disposed(by: self.bag)
+        
+        // 첫 번째 질문
+        self.model.oneStepQuestionData()
+        .delay(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
+        .bind(to: self.nowData)
         .disposed(by: self.bag)
         
         let shareDefaultLine =  self.lineCellModel.defaultLineViewModel.cellClick
@@ -142,17 +116,10 @@ class ReportViewModel {
                 let value = cell.nowData.value
                 let first = value.first!
                 
-                var two = ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                    .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false)
-                ])
+                var two = cell.model.twoStepQuestionData()
                 
-                if data == ReportBrandData.one {
-                    two.items.insert((.init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
-                }else if data == ReportBrandData.three{
-                    two.items.insert((.init(cellTitle: "현재 역이 지축 ~ 대화 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
-                }else if data == ReportBrandData.four{
-                    two.items.insert((.init(cellTitle: "현재 역이 오이도 ~ 선바위 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)), at: 2)
+                if let exception = cell.model.twoStepSideException(data) {
+                    two.items.append(exception)
                 }
                 
                 return [first, two]
@@ -169,6 +136,7 @@ class ReportViewModel {
             .bind(to: self.nowStep)
             .disposed(by: self.bag)
         
+        
         let brand = self.twoBtnCellModel.identityIndex
             .withLatestFrom(self.twoBtnCellModel.updownClick){ index, brand -> String? in
                 if index.section == 1, index.row == 2{
@@ -182,12 +150,8 @@ class ReportViewModel {
             .filterNil()
         
         let destination = self.textFieldCellModel.identityIndex
-            .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, destination -> String? in
-                if index.section == 1, index.row == 0{
-                    return destination
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self] index, destination -> String? in
+                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 0, section: 1), data: destination)
             }
             .filterNil()
             .share()
@@ -197,10 +161,8 @@ class ReportViewModel {
         destination
             .map{[weak self] data in
                 var now = self?.nowData.value
-                now?[1].items[0].cellData = data
+                now = self?.model.cellDataSave(nowData: now ?? [], data: data, index: IndexPath(row: 0, section: 1))
                 
-                // 포커스 조정
-                now?[1].items[0].focus = false
                 if now?[1].items[1].cellData == ""{
                     now?[1].items[1].focus = true
                 }
@@ -212,12 +174,8 @@ class ReportViewModel {
         
         
         let nowStation = self.textFieldCellModel.identityIndex
-            .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
-                if index.section == 1, index.row == 1{
-                    return now
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self]index, now -> String?  in
+                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 1, section: 1), data: now)
             }
             .filterNil()
             .share()
@@ -225,10 +183,8 @@ class ReportViewModel {
         nowStation
             .map{[weak self] data in
                 var now = self?.nowData.value
-                now?[1].items[1].cellData = data
                 
-                // 포커스 조정
-                now?[1].items[1].focus = false
+                now = self?.model.cellDataSave(nowData: now ?? [], data: data, index: IndexPath(row: 1, section: 1))
                 
                 return now ?? []
             }
@@ -244,9 +200,7 @@ class ReportViewModel {
                 if now[1].items.count == 3 && value.2 == "N/A"{
                     return []
                 }else{
-                    now.append(.init(sectionName: "상세 정보", items: [
-                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)
-                    ]))
+                    now.append(cell.model.theeStepQuestion())
                     
                     return now
                 }
@@ -265,12 +219,8 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         let trainCar = self.textFieldCellModel.identityIndex
-            .withLatestFrom(self.textFieldCellModel.doenBtnClick){index, now -> String?  in
-                if index.section == 2, index.row == 0{
-                    return now
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self]index, now -> String?  in
+                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 0, section: 2), data: now)
             }
             .filterNil()
             .share()
@@ -279,10 +229,7 @@ class ReportViewModel {
         trainCar
             .map{[weak self] data in
                 var now = self?.nowData.value
-                now?[2].items[0].cellData = data
-                
-                // 포커스 조정
-                now?[2].items[0].focus = false
+                now = self?.model.cellDataSave(nowData: now ?? [], data: data, index: IndexPath(row: 0, section: 2))
                 
                 return now ?? []
             }

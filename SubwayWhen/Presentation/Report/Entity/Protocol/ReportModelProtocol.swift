@@ -7,11 +7,14 @@
 
 import Foundation
 
+import RxSwift
+
 protocol ReportModelProtocol{
-    func lineListData() -> [String]
-    func oneStepQuestionData() -> [ReportTableViewCellSection]
+    func lineListData() -> Observable<[String]>
+    func oneStepQuestionData() -> Observable<[ReportTableViewCellSection]>
     func twoStepQuestionData() -> ReportTableViewCellSection
     func twoStepSideException(_ data:ReportBrandData) -> ReportTableViewCellData?
     func theeStepQuestion() -> ReportTableViewCellSection
-    func cellDataSave(nowData : [ReportTableViewCellSection], index : IndexPath, isFocus : Bool)
+    func cellDataMatching(index: IndexPath, matchingIndex : IndexPath, data : String) -> String?
+    func cellDataSave(nowData : [ReportTableViewCellSection], data : String ,index : IndexPath) -> [ReportTableViewCellSection]
 }
