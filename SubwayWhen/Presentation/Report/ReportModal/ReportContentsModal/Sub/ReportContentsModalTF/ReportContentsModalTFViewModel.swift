@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-struct ReportContentsModalTFViewModel {
+class ReportContentsModalTFViewModel : ReportContentsModalTFViewModelProtocol {
     // INPUT
     let inputText = PublishSubject<String>()
 }
