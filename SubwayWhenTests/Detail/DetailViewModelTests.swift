@@ -15,7 +15,7 @@ import RxTest
 
 final class DetailViewModelTests: XCTestCase {
     var model : DetailModel!
-    var cellData : MainTableViewCellData!
+    var cellData : DetailLoadData!
     
     let bag = DisposeBag()
     
@@ -24,15 +24,15 @@ final class DetailViewModelTests: XCTestCase {
         
         self.model = DetailModel(totalLoadModel: TotalLoadModel(loadModel: seoulSchedule))
         
-        self.cellData = .init(upDown: "상행", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "제외", type: .real, backStationId: "", nextStationId: "",  korailCode: "")
+        self.cellData = .init(upDown: "상행", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "제외", backStationId: "", nextStationId: "", korailCode: "")
     }
 
     func testExceptionBtnTap(){
         // GIVEN
         let testScheduler = TestScheduler(initialClock: 0)
-        let observer = testScheduler.createObserver(MainTableViewCellData.self)
+        let observer = testScheduler.createObserver(DetailLoadData.self)
         
-        let detailViewData = BehaviorSubject<MainTableViewCellData>(value: self.cellData!)
+        let detailViewData = BehaviorSubject<DetailLoadData>(value: self.cellData!)
         
         detailViewData
             .subscribe(observer)
@@ -65,7 +65,7 @@ final class DetailViewModelTests: XCTestCase {
         expect(observer.events).to(
             equal([
                 .next(0, self.cellData!),
-                .next(1, .init(upDown: "상행", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "",  korailCode: ""))
+                .next(1, .init(upDown: "상행", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
             ])
         )
     }
@@ -73,7 +73,7 @@ final class DetailViewModelTests: XCTestCase {
     func testRealTimeData(){
         // GIVEN
         let testScheduler = TestScheduler(initialClock: 0)
-        let detailViewData = BehaviorSubject<MainTableViewCellData>(value: self.cellData!)
+        let detailViewData = BehaviorSubject<DetailLoadData>(value: self.cellData!)
         let realTime = BehaviorSubject<[Int]>(value: [])
         let observer = testScheduler.createObserver([Int].self)
         
@@ -101,8 +101,8 @@ final class DetailViewModelTests: XCTestCase {
                 viewModel.model.arrvialDataLoad(data.stationName)
             }
         
-        Observable.combineLatest(detailViewData, reailTimeData){[weak self] station, realTime -> [RealtimeStationArrival] in
-            self?.model.arrivalDataMatching(station: station, arrivalData: realTime) ?? []
+        Observable.combineLatest(detailViewData, reailTimeData){[weak self] data, realTime -> [RealtimeStationArrival] in
+            self?.model.arrivalDataMatching(station: data, arrivalData: realTime) ?? []
         }
         .map{ data in
             data.map{

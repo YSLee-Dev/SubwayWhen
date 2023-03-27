@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailLoadData{
+struct DetailLoadData : Equatable{
     let upDown : String
     let subWayId : String
     let stationName : String
