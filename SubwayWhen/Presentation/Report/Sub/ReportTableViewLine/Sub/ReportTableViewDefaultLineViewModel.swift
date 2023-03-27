@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ReportTableViewDefaultLineViewModel {
+class ReportTableViewDefaultLineViewModel : ReportTableViewDefaultLineViewModelProtocol {
     // INPUT
     let defaultCellData = BehaviorSubject<[String]>(value: [])
     let cellClick = PublishSubject<ReportBrandData>()

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ReportTableViewTextFieldCellModel{
+class ReportTableViewTextFieldCellModel : ReportTableViewTextFieldCellModelProtocol{
     let doenBtnClick = PublishRelay<String>()
     let identityIndex = PublishRelay<IndexPath>()
 }

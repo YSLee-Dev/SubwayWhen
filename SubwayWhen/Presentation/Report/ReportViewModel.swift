@@ -19,21 +19,30 @@ class ReportViewModel {
     let checkModalViewModel : Driver<ReportContentsModalViewModel>
     let popVC : Driver<Void>
     
-    // INPUT
-    
     // DATA
     let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
     let nowStep = PublishRelay<Int>()
     let msgData = PublishRelay<ReportMSGData>()
     
     // MODEL
-    let lineCellModel = ReportTableViewLineCellModel()
-    let textFieldCellModel = ReportTableViewTextFieldCellModel()
-    let twoBtnCellModel = ReportTableViewTwoBtnCellModel()
+    let lineCellModel : ReportTableViewLineCellModelProtocol
+    let textFieldCellModel : ReportTableViewTextFieldCellModelProtocol
+    let twoBtnCellModel : ReportTableViewTwoBtnCellModelProtocol
+    let model : ReportModelProtocol
     
     let bag = DisposeBag()
     
-    init(){
+    init(
+        model : ReportModel = .init(),
+        textField : ReportTableViewTextFieldCellModel = .init(),
+        twoBtn : ReportTableViewTwoBtnCellModel = .init(),
+        lineCell : ReportTableViewLineCellModel = .init()
+    ){
+        self.model = model
+        self.textFieldCellModel = textField
+        self.twoBtnCellModel = twoBtn
+        self.lineCellModel = lineCell
+        
         // LAZY contentsModalViewModel
         lazy var contentsModalViewModel = ReportContentsModalViewModel()
         
@@ -63,7 +72,9 @@ class ReportViewModel {
         .asDriver(onErrorDriveWith: .empty())
         
         Observable<[ReportTableViewCellSection]>.create{
-            $0.onNext([ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)])])
+            $0.onNext(
+                [ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)])
+                ])
             $0.onCompleted()
             return Disposables.create()
         }
