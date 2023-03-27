@@ -55,7 +55,7 @@ final class DetailModelTests: XCTestCase {
     
     func testMainCellToDetailSection(){
         // GIVEN
-        let data = self.arrivalModel.mainCellDataToDetailSection(mainCellDummyData)
+        let data = self.arrivalModel.mainCellDataToDetailSection(detailLoadDummyData)
         let dummyData = mainCellDummyData
         
         // WHEN
@@ -94,7 +94,7 @@ final class DetailModelTests: XCTestCase {
     
     func testMainCellToScheduleSearch(){
         // GIVEN
-        let data = self.arrivalModel.mainCellDataToScheduleSearch(mainCellDummyData)
+        let data = self.arrivalModel.mainCellDataToScheduleSearch(detailLoadDummyData)
         let dummyData = mainCellDummyData
         
         // WHEN
@@ -117,7 +117,7 @@ final class DetailModelTests: XCTestCase {
     
     func testMainCellToScheduleSearchError(){
         // GIVEN
-        let data = self.arrivalModel.mainCellDataToScheduleSearch(MainTableViewCellData(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""))
+        let data = self.arrivalModel.mainCellDataToScheduleSearch(DetailLoadData(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
 
         // WHEN
         let requestType = data.type
@@ -179,8 +179,6 @@ final class DetailModelTests: XCTestCase {
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
-        let dummyData = seoulScheduleDummyData
-        
         // WHEN
         let requestType = arrayData.first?.first?.type
         let duumyType = ScheduleType.Unowned
@@ -212,7 +210,7 @@ final class DetailModelTests: XCTestCase {
     func testArrivalDataMatching(){
         // GIVEN
         let dummyData = arrivalDummyData.realtimeArrivalList
-        let data = self.arrivalModel.arrivalDataMatching(station: mainCellDummyData, arrivalData: dummyData)
+        let data = self.arrivalModel.arrivalDataMatching(station: detailLoadDummyData, arrivalData: dummyData)
         
         // WHEN
         let requestStationName = data.first?.stationName
@@ -244,7 +242,8 @@ final class DetailModelTests: XCTestCase {
     func testArrivalDataMatchingError(){
         // GIVEN
         let dummyData = arrivalDummyData.realtimeArrivalList
-        let data = self.arrivalModel.arrivalDataMatching(station: .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: ""), arrivalData: dummyData)
+        let data = self.arrivalModel.arrivalDataMatching(station:
+                .init(upDown: "", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""), arrivalData: dummyData)
         
         // WHEN
         let requestStationName = data.first?.stationName
