@@ -49,7 +49,7 @@ extension ReportContentsModalTFView{
         }
     }
     
-    func bind(_ viewModel : ReportContentsModalTFViewModel){
+    func bind(_ viewModel : ReportContentsModalTFViewModelProtocol){
         self.textTf.rx.controlEvent(.editingDidEnd)
             .withLatestFrom(self.textTf.rx.text)
             .filterNil()
