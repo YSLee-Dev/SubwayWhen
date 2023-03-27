@@ -151,7 +151,7 @@ class ReportViewModel {
         
         let destination = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self] index, destination -> String? in
-                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 0, section: 1), data: destination)
+                self?.model.cellDataMatching(index: index, matchIndex: IndexPath(row: 0, section: 1), data: destination)
             }
             .filterNil()
             .share()
@@ -175,7 +175,7 @@ class ReportViewModel {
         
         let nowStation = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self]index, now -> String?  in
-                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 1, section: 1), data: now)
+                self?.model.cellDataMatching(index: index, matchIndex: IndexPath(row: 1, section: 1), data: now)
             }
             .filterNil()
             .share()
@@ -199,11 +199,13 @@ class ReportViewModel {
      
                 if now[1].items.count == 3 && value.2 == "N/A"{
                     return []
-                }else{
-                    now.append(cell.model.theeStepQuestion())
-                    
-                    return now
+                }else if value.2 != "N/A"{
+                    now[1].items[2].cellData = value.2
                 }
+                
+                now.append(cell.model.theeStepQuestion())
+                
+                return now
                 
             }
             .filterEmpty()
@@ -220,7 +222,7 @@ class ReportViewModel {
         
         let trainCar = self.textFieldCellModel.identityIndex
             .withLatestFrom(self.textFieldCellModel.doenBtnClick){[weak self]index, now -> String?  in
-                self?.model.cellDataMatching(index: index, matchingIndex: IndexPath(row: 0, section: 2), data: now)
+                self?.model.cellDataMatching(index: index, matchIndex: IndexPath(row: 0, section: 2), data: now)
             }
             .filterNil()
             .share()
@@ -237,12 +239,12 @@ class ReportViewModel {
             .disposed(by: self.bag)
         
         
-        Observable.combineLatest(lineData, nowStation, destination, trainCar, brand){[weak self] line, station, de, train, subwayBrand in
-            let now = self?.nowData.value
-            
+        Observable.combineLatest(lineData, nowStation, destination, trainCar, brand){ line, station, de, train, subwayBrand in
             var brand = subwayBrand
-            if now?[1].items.count == 2 && subwayBrand == "N/A"{
-                brand = "N"
+            if line != .one || line != .three || line != .four{
+                if subwayBrand == "N/A"{
+                    brand = "N"
+                }
             }
             
             return ReportMSGData(line: line, nowStation: station, destination: de, trainCar: train, contants: "", brand: brand)

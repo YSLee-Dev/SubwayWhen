@@ -68,11 +68,9 @@ extension ReportVC{
             case 1:
                 if data.type == .TwoBtn{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "ReportTableViewTwoBtnCell", for: index) as? ReportTableViewTwoBtnCell else {return UITableViewCell()}
-                    if index.row == 0{
-                        cell.viewDataSet(one: "상행", two: "하행", index: index, titleString: data.cellTitle)
-                    }else{
-                        cell.viewDataSet(one: "Y", two: "N", index: index, titleString: data.cellTitle)
-                    }
+                    
+                    cell.viewDataSet(one: "Y", two: "N", index: index, titleString: data.cellTitle, data: data.cellData)
+                    
                     cell.bind(viewModel.twoBtnCellModel)
                     return cell
                 }else if data.type == .TextField{
