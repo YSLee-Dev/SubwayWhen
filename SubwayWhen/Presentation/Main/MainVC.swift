@@ -16,11 +16,11 @@ class MainVC : TableVCCustom{
     let bag = DisposeBag()
     
     let mainTableView = MainTableView()
-    let mainViewModel : MainViewModel
+    let mainViewModel : MainViewModelProtocol
     
     var delegate : MainDelegate?
     
-    init(viewModel : MainViewModel){
+    init(viewModel : MainViewModelProtocol){
         self.mainViewModel = viewModel
         super.init(title: "홈", titleViewHeight: 62)
         self.tableView = self.mainTableView
@@ -62,7 +62,7 @@ extension MainVC{
         }
     }
     
-    private func bind(_ viewModel : MainViewModel){
+    private func bind(_ viewModel : MainViewModelProtocol){
         self.mainTableView.bind(viewModel.mainTableViewModel)
         
         // VIEWMODEL -> VIEW
