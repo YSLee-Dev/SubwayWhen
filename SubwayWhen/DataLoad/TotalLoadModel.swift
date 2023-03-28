@@ -225,6 +225,20 @@ class TotalLoadModel : TotalLoadProtocol{
         }
     }
     
+    func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion> {
+        self.loadModel.stationSearch(station: stationName)
+            .map{ data -> SearchStaion? in
+                guard case .success(let value) = data else {return nil}
+                return value
+            }
+            .asObservable()
+            .filterNil()
+    }
+    
+    func defaultViewListLoad() -> Observable<[String]>{
+        self.loadModel.defaultViewListRequest()
+    }
+    
     private func timeFormatter(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HHmmss"
