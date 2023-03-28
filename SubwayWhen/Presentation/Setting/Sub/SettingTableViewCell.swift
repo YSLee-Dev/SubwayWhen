@@ -76,7 +76,7 @@ extension SettingTableViewCell{
         }
     }
     
-    func bind(_ cellModel : SettingTableViewCellModel){
+    func bind(_ cellModel : SettingTableViewCellModelProtocol){
         self.textField.rx.controlEvent(.editingDidEnd)
         .withLatestFrom(self.textField.rx.text)
             .bind(to: cellModel.tfValue)

@@ -11,12 +11,16 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class SettingContentsModalViewModel {
+class SettingContentsModalViewModel : SettingContentsModalViewModelProtocol{
     let contents : Driver<String>
     
-    let model = SettingModel()
+    let model : SettingContentsModalModelProtocol
     
-    init(){
+    init(
+        model : SettingContentsModalModel = .init()
+    ){
+        self.model = model
+        
         let licenses = self.model.licensesRequest()
         
         self.contents = licenses
