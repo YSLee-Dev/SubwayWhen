@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class ModalViewModel {
+class ModalViewModel : ModalViewModelProtocol{
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
@@ -30,8 +30,8 @@ class ModalViewModel {
     
     let bag = DisposeBag()
     
-    let modalCloseEvent = PublishRelay<Bool>()
-    let mainCellData = PublishRelay<DetailLoadData>()
+    internal let modalCloseEvent = PublishRelay<Bool>()
+    internal let mainCellData = PublishRelay<DetailLoadData>()
     
     // MODEL
     let model : ModalModelProtocol

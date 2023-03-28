@@ -12,13 +12,13 @@ import RxCocoa
 
 class SearchVC : UIViewController{
     let bag = DisposeBag()
-    let searchViewModel : SearchViewModel
+    let searchViewModel : SearchViewModelProtocol
     
     var searchBarVC : SearchBarVC?
     let resultVC = ResultVC()
     let defaultView = DefaultView()
     
-    init(viewModel : SearchViewModel) {
+    init(viewModel : SearchViewModelProtocol) {
         self.searchViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,7 +52,7 @@ extension SearchVC{
         }
     }
     
-    private func bind(_ viewModel : SearchViewModel){
+    private func bind(_ viewModel : SearchViewModelProtocol){
         self.searchBarVC = SearchBarVC(searchResultsController: self.resultVC)
         
         self.resultVC.bind(viewModel.resultViewModel)
