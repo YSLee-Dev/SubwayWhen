@@ -33,7 +33,14 @@ class ModalViewModel {
     let modalCloseEvent = PublishRelay<Bool>()
     let mainCellData = PublishRelay<DetailLoadData>()
     
-    init(){
+    // MODEL
+    let model : ModalModelProtocol
+    
+    init(
+        model : ModalModel = .init()
+    ){
+        self.model = model
+        
         self.disposableDetailMove = self.mainCellData
             .asDriver(onErrorDriveWith: .empty())
         
@@ -62,8 +69,8 @@ class ModalViewModel {
         Observable
             .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
                 
-                let updownLine = self?.updownFix(updown: updown, line: cellData.useLine) ?? ""
-                let brand = self?.useLineTokorailCode(cellData.useLine) ?? ""
+                let updownLine = self?.model.updownFix(updown: updown, line: cellData.useLine) ?? ""
+                let brand = self?.model.useLineTokorailCode(cellData.useLine) ?? ""
                 
                 if FixInfo.saveSetting.searchOverlapAlert{
                     // 중복 지하철은 저장 X
@@ -82,43 +89,12 @@ class ModalViewModel {
         
         self.disposableBtnTap
             .withLatestFrom(self.clickCellData){[weak self] updown, data in
-                let updownFix = self?.updownFix(updown: updown, line: data.useLine) ?? ""
-                let korail = self?.useLineTokorailCode(data.useLine) ?? ""
+                let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
+                let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
                 
                 return DetailLoadData(upDown: updownFix, subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, useLine: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
             }
             .bind(to: self.mainCellData)
             .disposed(by: self.bag)
-    }
-    
-    func useLineTokorailCode(_ useLine : String) -> String{
-        var brand = ""
-        if useLine == "경의중앙"{
-            brand = "K4"
-        }else if useLine == "수인분당"{
-            brand = "K1"
-        }else if useLine == "경춘"{
-            brand = "K2"
-        }else if useLine == "우이"{
-            brand = "UI"
-        }else if useLine == "신분당"{
-            brand = "D1"
-        }else if useLine == "공항"{
-            brand = "A1"
-        }else{
-            brand = ""
-        }
-        
-        return brand
-    }
-    
-    func updownFix(updown : Bool, line : String) -> String{
-        var updownLine = ""
-        if line ==  "2호선" {
-            updownLine = updown ? "내선" : "외선"
-        }else{
-            updownLine = updown ? "상행" : "하행"
-        }
-        return updownLine
     }
 }
