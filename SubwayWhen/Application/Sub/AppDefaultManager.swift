@@ -23,11 +23,9 @@ extension AppDefaultManager{
             let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
             
             if nowVersion <= version{
-                let alert = UIAlertController(title: "업데이트 안내", message: "새로운 버전으로 업데이트 후 앱을 이용해주세요!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel){ _ in
-                    // 앱스토어 구문
-                })
-                self?.window.rootViewController?.children.first?.children.first?.present(alert, animated: true)
+                let popup = PopupModal(modalHeight: 400, popupTitle: "업데이트 안내", subTitle: "새로운 버전으로 업데이트 후 앱을 이용해주세요!",iconName: "Report", isUpdate: true)
+                popup.modalPresentationStyle = .overFullScreen
+                self?.window.rootViewController?.children.first?.children.first?.present(popup, animated: false)
             }
         }
     }

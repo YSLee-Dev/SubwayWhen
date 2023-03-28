@@ -10,4 +10,5 @@ import Foundation
 enum PopupType{
     case TextView
     case SuccessIcon
+    case Update
 }
