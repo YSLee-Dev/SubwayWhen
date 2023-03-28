@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class SearchViewModel {
+class SearchViewModel : SearchViewModelProtocol{
     // MODEL
     let serachBarViewModel : SearchBarViewModelProtocol
     let resultViewModel : ResultViewModelProtocol
