@@ -19,11 +19,11 @@ class DetailResultScheduleVC : TableVCCustom{
     var bag = DisposeBag()
     let detailTopView = DetailResultScheduleTopView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     
-    let detailResultScheduleViewModel : DetailResultScheduleViewModel
+    let detailResultScheduleViewModel : DetailResultScheduleViewModelProtocol
     
     var delegate : DetailResultScheduleDelegate?
     
-    init(title: String, titleViewHeight: CGFloat, viewModel : DetailResultScheduleViewModel) {
+    init(title: String, titleViewHeight: CGFloat, viewModel : DetailResultScheduleViewModelProtocol) {
         self.detailResultScheduleViewModel = viewModel
         super.init(title: title, titleViewHeight: titleViewHeight)
         self.topView = self.detailTopView
@@ -51,7 +51,7 @@ extension DetailResultScheduleVC{
         self.tableView.estimatedRowHeight = 50
     }
     
-    private func bind(_ viewModel : DetailResultScheduleViewModel){
+    private func bind(_ viewModel : DetailResultScheduleViewModelProtocol){
         self.detailTopView.bind(viewModel.detailResultScheduleTopViewModel)
         
         viewModel.resultDefaultData
