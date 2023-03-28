@@ -15,9 +15,9 @@ class MainTableViewModel : MainTableViewModelProtocol{
     let cellData : Driver<[MainTableViewSection]>
     
     // MODEL
-    let mainTableViewHeaderViewModel = MainTableViewHeaderCellModel()
-    let mainTableViewCellModel = MainTableViewCellModel()
-    let mainTableViewGroupModel = MainTableViewGroupCellModel()
+    let mainTableViewHeaderViewModel : MainTableViewHeaderViewModelProtocol
+    let mainTableViewCellModel : MainTableViewArrvialCellModelProtocol
+    let mainTableViewGroupModel : MainTableViewGroupCellModelProtocol
     
     // INPUT
     let cellClick = PublishRelay<MainTableViewCellData>()
@@ -25,7 +25,15 @@ class MainTableViewModel : MainTableViewModelProtocol{
     let refreshOn = PublishRelay<Void>()
     let plusBtnClick = PublishRelay<Void>()
     
-    init(){
+    init(
+        header : MainTableViewHeaderCellModel = .init(),
+        arrival : MainTableViewCellModel = .init(),
+        group : MainTableViewGroupCellModel = .init()
+    ){
+        self.mainTableViewHeaderViewModel = header
+        self.mainTableViewCellModel = arrival
+        self.mainTableViewGroupModel = group
+        
         self.cellData = self.resultData
             .asDriver(onErrorDriveWith: .empty())
     }

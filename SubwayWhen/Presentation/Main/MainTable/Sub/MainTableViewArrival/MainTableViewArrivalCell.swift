@@ -79,7 +79,7 @@ class MainTableViewCell : TableViewCellCustom{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewCellModel, indexPath : IndexPath){
+    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewArrvialCellModelProtocol, indexPath : IndexPath){
         self.bind(cellModel)
         self.index = indexPath
         
@@ -148,7 +148,7 @@ extension MainTableViewCell{
         }
     }
     
-    func bind(_ viewModel : MainTableViewCellModel){
+    func bind(_ viewModel : MainTableViewArrvialCellModelProtocol){
         self.changeBtn.rx.tap
             .map{[weak self] in
                 self?.index ?? IndexPath(row: 0, section: 0)
