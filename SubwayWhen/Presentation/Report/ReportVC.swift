@@ -13,11 +13,11 @@ import RxDataSources
 
 class ReportVC : TableVCCustom{
     let bag = DisposeBag()
-    let reportViewModel : ReportViewModel
+    let reportViewModel : ReportViewModelProtocol
     
     var delegate : ReportVCDelegate?
     
-    init(viewModel: ReportViewModel){
+    init(viewModel: ReportViewModelProtocol){
         self.reportViewModel = viewModel
         super.init(title: "지하철 민원", titleViewHeight: 30)
     }
@@ -54,7 +54,7 @@ extension ReportVC{
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func bind(_ viewModel : ReportViewModel){
+    private func bind(_ viewModel : ReportViewModelProtocol){
         let dataSources = RxTableViewSectionedAnimatedDataSource<ReportTableViewCellSection>(animationConfiguration: .init(insertAnimation: .top ,reloadAnimation: .fade, deleteAnimation: .bottom)){dataSource, tv, index, data in
             
             switch index.section{
