@@ -13,9 +13,9 @@ import RxOptional
 
 class SearchViewModel {
     // MODEL
-    let serachBarViewModel = SearchBarViewModel()
-    let resultViewModel = ResultViewModel()
-    let defaultViewModel = DefaultViewModel()
+    let serachBarViewModel : SearchBarViewModelProtocol
+    let resultViewModel : ResultViewModelProtocol
+    let defaultViewModel : DefaultViewModelProtocol
     let model : SearchModelProtocol
     
     // OUTPUT
@@ -27,9 +27,15 @@ class SearchViewModel {
     let bag = DisposeBag()
     
     init(
-        model : SearchModel = .init()
+        model : SearchModel = .init(),
+        searchBarViewModel : SearchBarViewModel = .init(),
+        resultViewModel : ResultViewModel = .init(),
+        defaultViewModel : DefaultViewModel = .init()
     ){
         self.model = model
+        self.serachBarViewModel = searchBarViewModel
+        self.resultViewModel = resultViewModel
+        self.defaultViewModel = defaultViewModel
         
         self.nowData
             .bind(to: self.resultViewModel.resultData)

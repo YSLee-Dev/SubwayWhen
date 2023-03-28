@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct SearchBarViewModel{
+class SearchBarViewModel : SearchBarViewModelProtocol{
     // INPUT
     let searchText = PublishRelay<String?>()
     let defaultViewClick = PublishRelay<String>()
