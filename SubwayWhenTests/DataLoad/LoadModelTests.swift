@@ -1,5 +1,5 @@
 //
-//  LoadModelTest.swift
+//  LoadModelTests.swift
 //  SubwayWhenTests
 //
 //  Created by 이윤수 on 2023/03/13.
@@ -14,7 +14,7 @@ import Nimble
 
 @testable import SubwayWhen
 
-class LoadModelTest : XCTestCase{
+class LoadModelTests : XCTestCase{
     var arrivalLoadModel : LoadModelProtocol!
     var seoulScheduleLoadModel : LoadModelProtocol!
     var korailScheduleLoadModel : LoadModelProtocol!
