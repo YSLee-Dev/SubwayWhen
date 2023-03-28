@@ -10,7 +10,7 @@ import Foundation
 import RxDataSources
 
 
-struct ResultVCSection{
+struct ResultVCSection : Equatable{
     var section : String
     var items : [resultCellData]
 }

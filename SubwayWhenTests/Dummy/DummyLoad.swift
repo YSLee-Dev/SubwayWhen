@@ -37,6 +37,7 @@ let url = "Test.url"
 let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "340", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
 let scheduleGyodaeStation3Line = ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
 let scheduleK215K1Line = ScheduleSearch(stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1")
+let searchDeafultList = ["123", "456", "789"]
 
 let urlResponse = HTTPURLResponse(url: URL(string: url)!,
                                   statusCode: 200,
