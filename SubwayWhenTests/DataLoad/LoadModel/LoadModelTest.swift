@@ -18,6 +18,7 @@ class LoadModelTest : XCTestCase{
     var arrivalLoadModel : LoadModelProtocol!
     var seoulScheduleLoadModel : LoadModelProtocol!
     var korailScheduleLoadModel : LoadModelProtocol!
+    var stationNameSearchModel : LoadModelProtocol!
     
     override func setUp() {
         let mockURL = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -29,6 +30,9 @@ class LoadModelTest : XCTestCase{
         
         let mockURLSession = MockURLSession((response: urlResponse!, data: korailStationSchduleData))
         self.korailScheduleLoadModel = LoadModel(networkManager: NetworkManager(session: mockURLSession))
+        
+        let stationNameMock = MockURLSession((response: urlResponse!, data: stationNameSearchData))
+        self.stationNameSearchModel = LoadModel(networkManager: NetworkManager(session: stationNameMock))
     }
     
     func testStationArrivalRequest(){
@@ -131,6 +135,30 @@ class LoadModelTest : XCTestCase{
         expect(requestLineCode).to(
             equal(dummyLineCode),
             description: "LineCode는 동일해야함"
+        )
+    }
+    
+    func testStationSearch(){
+        // GIVEN
+        let data = self.stationNameSearchModel.stationSearch(station: "교대")
+        let successData = data
+            .map{ data -> SearchStaion? in
+                guard case .success(let value) = data else {return nil}
+                return value
+            }
+            .asObservable()
+            .filterNil()
+        let blocking = successData.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestFirstStation = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
+        let dummyFirstStation = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.stationName
+        
+        // THEN
+        expect(requestFirstStation).to(
+            equal(dummyFirstStation),
+            description: "StationName은 검색한 역이 나와야함"
         )
     }
 }
