@@ -166,7 +166,7 @@ extension Reactive where Base : ReportVC{
         }
     }
     
-    var modalPresent : Binder<ReportContentsModalViewModel>{
+    var modalPresent : Binder<ReportContentsModalViewModelProtocol>{
         return Binder(base){base, model in
             let modal = ReportContentsModalVC(modalHeight: 520, viewModel: model)
             modal.modalPresentationStyle = .overFullScreen
