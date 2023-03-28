@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct DefaultViewModel{
+class DefaultViewModel : DefaultViewModelProtocol{
     // INPUT
     let defaultListClick = PublishRelay<String>()
     let defaultListData = BehaviorRelay<[String]>(value: [""])
