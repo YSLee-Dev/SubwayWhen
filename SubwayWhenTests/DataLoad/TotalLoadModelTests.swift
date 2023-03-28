@@ -1,5 +1,5 @@
 //
-//  TotalLoadModelTest.swift
+//  TotalLoadModelTests.swift
 //  SubwayWhenTests
 //
 //  Created by 이윤수 on 2023/03/14.
@@ -14,7 +14,7 @@ import RxBlocking
 
 @testable import SubwayWhen
 
-final class TotalLoadModelTest: XCTestCase {
+final class TotalLoadModelTests: XCTestCase {
     var arrivalTotalLoadModel : TotalLoadModel!
     var arrivalErrorTotalLoadModel : TotalLoadModel!
     var seoulScheduleLoadModel : TotalLoadModel!
@@ -337,6 +337,7 @@ final class TotalLoadModelTest: XCTestCase {
         )
     }
     
+    // KorailTest: 테스트 객체는 외부환경에 의존하면 안되지만, FireBase에서 불러오는 데이터가 1000건이 넘으며, TrainCode 특성상 변경될 일이 없기 때문에 Observable을 기다리는 형태로 테스트 진행
     func testKorailScheduleLoad_isFirst_isNow(){
         let bag = DisposeBag()
         let testException = XCTestExpectation(description: "옵저버블 대기")
