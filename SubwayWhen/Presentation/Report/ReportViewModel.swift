@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class ReportViewModel {
+class ReportViewModel : ReportViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[ReportTableViewCellSection]>
     let keyboardClose : Driver<Void>
