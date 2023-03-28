@@ -13,6 +13,7 @@ import Lottie
 
 class PopupModal : ModalVCCustom{
     let type : PopupType
+    var isUpdate : Bool = true
     
     lazy var textView = UITextView().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
@@ -37,6 +38,13 @@ class PopupModal : ModalVCCustom{
         self.animationIcon = LottieAnimationView(name: iconName)
     }
     
+    init(modalHeight: CGFloat, popupTitle : String, subTitle : String, iconName : String, isUpdate : Bool){
+        self.type = .Update
+        self.isUpdate = false
+        super.init(modalHeight: modalHeight, btnTitle: "확인", mainTitle: popupTitle, subTitle: subTitle)
+        self.animationIcon = LottieAnimationView(name: iconName)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,13 +64,29 @@ class PopupModal : ModalVCCustom{
             
         case .TextView:
             self.textViewlayout()
+            
+        case .Update:
+            self.iconLayout()
+            self.iconAnimationPlay()
+        }
+    }
+    
+    override func modalDismiss() {
+        if self.isUpdate{
+            super.modalDismiss()
+        }else{
+            self.appstoreLink()
         }
     }
 }
 
 extension PopupModal {
     private func attribute(){
-        self.okBtn?.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
+        if self.isUpdate{
+            self.okBtn?.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
+        }else{
+            self.okBtn?.addTarget(self, action: #selector(self.appstoreLink), for: .touchUpInside)
+        }
     }
     
     private func textViewlayout(){
@@ -86,5 +110,11 @@ extension PopupModal {
             $0.top.equalTo(self.subTitle.snp.bottom).offset(50)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    @objc
+    private func appstoreLink(){
+        guard let url = URL(string: "https://itunes.apple.com/app/id6446166573") else {return}
+        UIApplication.shared.open(url)
     }
 }
