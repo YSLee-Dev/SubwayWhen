@@ -28,7 +28,7 @@ class SearchModel : SearchModelProtocol{
         self.totalLoadModel.stationNameSearchReponse(name)
     }
     
-    func stationNameMatching(_ searchData : SearchStaion) -> [ResultVCSection]{
+    func searchStationToResultVCSection(_ searchData : SearchStaion) -> [ResultVCSection]{
         
         let data = searchData.SearchInfoBySubwayNameService.row
         // 기본 값 제거
