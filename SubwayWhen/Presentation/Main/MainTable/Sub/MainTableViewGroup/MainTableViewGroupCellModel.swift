@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct MainTableViewGroupCellModel {
+class MainTableViewGroupCellModel : MainTableViewGroupCellModelProtocol {
     // INPUT
     let groupSeleted = BehaviorRelay<SaveStationGroup>(value: .one)
     

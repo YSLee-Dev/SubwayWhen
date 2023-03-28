@@ -72,7 +72,7 @@ extension MainTableViewGroupCell{
         self.selectionStyle = .none
     }
     
-    func bind(_ viewModel : MainTableViewGroupCellModel){
+    func bind(_ viewModel : MainTableViewGroupCellModelProtocol){
         // VIEW -> VIEWMODEL
         let oneClick = self.groupOne.rx.tap
             .map{ _ -> SaveStationGroup in

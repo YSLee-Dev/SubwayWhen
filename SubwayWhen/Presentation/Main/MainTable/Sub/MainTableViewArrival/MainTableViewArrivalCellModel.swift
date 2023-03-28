@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct MainTableViewCellModel{
+class MainTableViewCellModel : MainTableViewArrvialCellModelProtocol{
     // INPUT
     let cellTimeChangeBtnClick = PublishRelay<IndexPath>()
 }
