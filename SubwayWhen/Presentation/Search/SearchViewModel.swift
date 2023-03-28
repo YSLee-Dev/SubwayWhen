@@ -16,20 +16,28 @@ class SearchViewModel {
     let serachBarViewModel = SearchBarViewModel()
     let resultViewModel = ResultViewModel()
     let defaultViewModel = DefaultViewModel()
-    let model = SearchModel()
+    let model : SearchModelProtocol
     
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     
+    let defaultData = BehaviorSubject<[String]>(value: ["강남", "광화문", "명동", "광화문", "판교", "수원"])
     let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
     
     let bag = DisposeBag()
     
-    init(){
+    init(
+        model : SearchModel = .init()
+    ){
+        self.model = model
+        
         self.nowData
             .bind(to: self.resultViewModel.resultData)
             .disposed(by: self.bag)
         
+        self.defaultData
+            .bind(to: self.defaultViewModel.defaultListData)
+            .disposed(by: self.bag)
     
         let cellClickData = self.resultViewModel.cellClick
             .withLatestFrom(nowData){
@@ -43,47 +51,31 @@ class SearchViewModel {
             .bind(to: self.serachBarViewModel.defaultViewClick)
             .disposed(by: self.bag)
         
-        let searchQuery = self.serachBarViewModel.searchText
-            .filterNil()
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-        
-        // 추천 역 가져오기 (API 통신)
-        Observable.just(["강남", "광화문", "명동", "광화문", "판교", "수원"])
-            .withUnretained(self)
-            .flatMap{viewModel, _ in
-                viewModel.model.defaultViewListRequest()
-            }
-            .bind(to: self.defaultViewModel.defaultListData)
+        // 추천 역 가져오기 (파이어베이스)
+        self.model.fireBaseDefaultViewListLoad()
+            .bind(to: self.defaultData)
             .disposed(by: self.bag)
         
         // 역명 검색 (API 통신)
-        Observable
+        let searchQuery = self.serachBarViewModel.searchText
+            .filterNil()
+            .filter{$0 != ""}
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+        
+        let search = Observable
             .merge(
                 searchQuery,
                 self.defaultViewModel.defaultListClick.asObservable()
             )
+        
+        search
             .withUnretained(self)
             .flatMap{ viewModel, data in
-                viewModel.model.stationSearch(station: data)
+                viewModel.model.stationNameSearchRequest(data)
             }
-            .map{ data -> SearchStaion? in
-                guard case .success(let value) = data else{
-                    return nil
-                }
-                return value
-            }
-            .filterNil()
-            .map{ stationModel -> [ResultVCSection] in
-                let data = stationModel.SearchInfoBySubwayNameService.row
-                // 기본 값 제거
-                if data.count == 5 && data[0].stationName == "용답"{
-                    return []
-                }else{
-                    let section = data.map{
-                        return ResultVCSection(section: "\($0.stationCode)\($0.lineCode)", items: [ResultVCCellData(stationName: $0.stationName, lineNumber: $0.lineNumber.rawValue, stationCode: $0.stationCode, useLine: $0.useLine, lineCode: $0.lineCode)])
-                    }
-                    return section
-                }
+            .withUnretained(self)
+            .map{ viewModel, data in
+                viewModel.model.stationNameMatching(data)
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
