@@ -24,10 +24,11 @@ class SettingContentsModalVC : ModalVCCustom{
     }
     
     let bag = DisposeBag()
-    let settingContentsViewModel : SettingContentsModalViewModel
+    let settingContentsViewModel : SettingContentsModalViewModelProtocol
     
-    override init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String) {
-        self.settingContentsViewModel = SettingContentsModalViewModel()
+    init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel : SettingContentsModalViewModelProtocol) {
+        self.settingContentsViewModel = viewModel
+        
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
         self.bind(self.settingContentsViewModel)
     }
@@ -57,7 +58,7 @@ extension SettingContentsModalVC{
         }
     }
     
-    func bind(_ viewModel : SettingContentsModalViewModel){
+    func bind(_ viewModel : SettingContentsModalViewModelProtocol){
         viewModel.contents
             .drive(self.textView.rx.text)
             .disposed(by: self.bag)

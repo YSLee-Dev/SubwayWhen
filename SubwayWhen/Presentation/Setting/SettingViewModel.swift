@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class SettingViewModel {
+class SettingViewModel : SettingViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[SettingTableViewCellSection]>
     let keyboardClose : Driver<Void>
@@ -21,11 +21,20 @@ class SettingViewModel {
     let cellClick = PublishRelay<SettingTableViewCellData>()
     
     // MODEL
-    let settingTableViewCellModel = SettingTableViewCellModel()
+    let model : SettingModelProtocol
+    let settingTableViewCellModel : SettingTableViewCellModelProtocol
+    
+    let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     
-    init(){
+    init(
+        model : SettingModel = .init(),
+        cellModel : SettingTableViewCellModel = .init()
+    ){
+        self.model = model
+        self.settingTableViewCellModel = cellModel
+        
         // 모달 present
         self.modalPresent = self.cellClick
             .filter{
@@ -38,40 +47,19 @@ class SettingViewModel {
             .asDriver(onErrorDriveWith: .empty())
         
         // 설정 셀 구성
-        self.cellData = Observable<[SettingTableViewCellSection]>.create{
-            $0.onNext(
-                [
-                    SettingTableViewCellSection(sectionName: "홈", items: [
-                        .init(settingTitle: "혼잡도 이모지", defaultData: FixInfo.saveSetting.mainCongestionLabel ,inputType: .TextField, groupType: .Main),
-                        .init(settingTitle: "특정 그룹 시간", defaultData: "", inputType: .NewVC, groupType: .Main)
-                    ]),
-                    SettingTableViewCellSection(sectionName: "상세화면", items: [
-                        .init(settingTitle: "자동 새로 고침",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail),
-                        .init(settingTitle: "시간표 자동 정렬",defaultData: "\(FixInfo.saveSetting.detailScheduleAutoTime)", inputType: .Switch, groupType: .Detail)
-                    ]),
-                    SettingTableViewCellSection(sectionName: "검색", items: [
-                        .init(settingTitle: "중복 저장 방지",defaultData: "\(FixInfo.saveSetting.searchOverlapAlert)", inputType: .Switch, groupType: .Detail)
-                    ]),
-                    SettingTableViewCellSection(sectionName: "기타", items: [
-                        .init(settingTitle: "오픈 라이선스", defaultData: "", inputType: .NewVC, groupType: .Other),
-                        .init(settingTitle: "기타", defaultData: "", inputType: .NewVC, groupType: .Other)
-                    ])
-                ]
-            )
-            $0.onCompleted()
-            
-            return Disposables.create()
-        }
-        .asDriver(onErrorDriveWith: .empty())
+        self.cellData = self.settingList
+            .asDriver(onErrorDriveWith: .empty())
         
+        // FixInfo 불러오는 시간 대기
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){[weak self] in
+            self?.model.createSettingList()
+                .bind(to: self?.settingList ?? BehaviorRelay<[SettingTableViewCellSection]>(value: []))
+                .dispose()
+        }
         // 자동 새로고침 여부
         self.settingTableViewCellModel.cellIndex
-            .withLatestFrom(self.settingTableViewCellModel.switchValue){ index, value -> Bool? in
-                if index == IndexPath(row: 0, section: 1){
-                    return value
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){ [weak self] index, value -> Bool? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 1), data: value)
             }
             .filterNil()
             .subscribe(onNext: {
@@ -81,12 +69,8 @@ class SettingViewModel {
         
         // 시간표 정렬
         self.settingTableViewCellModel.cellIndex
-            .withLatestFrom(self.settingTableViewCellModel.switchValue){ index, value -> Bool? in
-                if index == IndexPath(row: 1, section: 1){
-                    return value
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){[weak self] index, value -> Bool? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 1, section: 1), data: value)
             }
             .filterNil()
             .subscribe(onNext: {
@@ -96,12 +80,8 @@ class SettingViewModel {
         
         // 중복 저장 방지
         self.settingTableViewCellModel.cellIndex
-            .withLatestFrom(self.settingTableViewCellModel.switchValue){ index, value -> Bool? in
-                if index == IndexPath(row: 0, section: 2){
-                    return value
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){ [weak self] index, value -> Bool? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 2), data: value)
             }
             .filterNil()
             .subscribe(onNext: {
@@ -111,12 +91,8 @@ class SettingViewModel {
         
         // 메인 혼잡도 이모지 변경
        self.settingTableViewCellModel.cellIndex
-            .withLatestFrom(self.settingTableViewCellModel.tfValue){ index, tf -> String? in
-                if index == IndexPath(row: 0, section: 0){
-                    return tf
-                }else{
-                    return nil
-                }
+            .withLatestFrom(self.settingTableViewCellModel.tfValue){[weak self] index, tf -> String? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 0), data: tf ?? "")
             }
             .filterNil()
             .subscribe(onNext: {
