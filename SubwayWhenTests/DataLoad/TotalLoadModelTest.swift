@@ -19,6 +19,7 @@ final class TotalLoadModelTest: XCTestCase {
     var arrivalErrorTotalLoadModel : TotalLoadModel!
     var seoulScheduleLoadModel : TotalLoadModel!
     var korailScheduleLoadModel : TotalLoadModel!
+    var stationNameSearchModel : TotalLoadModel!
     
     override func setUp(){
         let session = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -30,6 +31,9 @@ final class TotalLoadModelTest: XCTestCase {
         self.arrivalErrorTotalLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: arrivalErrorData))))))
         self.seoulScheduleLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: seoulStationSchduleData))))))
         self.korailScheduleLoadModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: MockURLSession(((response: urlResponse!, data: korailStationSchduleData))))))
+        
+        let stationNameMock = MockURLSession((response: urlResponse!, data: stationNameSearchData))
+        self.stationNameSearchModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: stationNameMock)))
         
     }
     
@@ -525,6 +529,69 @@ final class TotalLoadModelTest: XCTestCase {
         expect(requestStart).to(
             equal(dummyStart),
             description: "정보가 없으면 (정보없음)으로 통일되어야 함"
+        )
+    }
+    
+    func testStationNameSearchReponse(){
+        // GIVEN
+        let data = self.stationNameSearchModel.stationNameSearchReponse("교대")
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
+        let dummyCount = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.count
+        
+        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
+        let dummyStationName = "교대"
+        
+        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
+        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.lineNumber
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "같은 데이터이기 때문에 count도 같아야함"
+        )
+        
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "StationName은 검색한 역이 나와야함"
+        )
+        
+        expect(requestFirstLine).to(
+            equal(dummyFirstLine),
+            description: "같은 데이터이기 때문에 첫 번째의 라인도 같아야함"
+        )
+    }
+    
+    func testStationNameSearchReponseError(){
+        // GIVEN
+        let data = self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
+        
+        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
+        
+        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
+        
+        // THEN
+        expect(requestCount).to(
+            beNil(),
+            description: "데이터가 없을 때는 Nil이 나와야함"
+        )
+        
+        expect(requestStationName).to(
+            beNil(),
+            description: "데이터가 없을 때는 Nil이 나와야함"
+        )
+        
+        expect(requestFirstLine).to(
+            beNil(),
+            description: "데이터가 없을 때는 Nil이 나와야함"
         )
     }
 }
