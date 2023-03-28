@@ -17,7 +17,7 @@ import RxDataSources
 class ReportContentsModalVC : ModalVCCustom{
     let bag = DisposeBag()
     
-    var reportContentsModalViewModel : ReportContentsModalViewModel
+    var reportContentsModalViewModel : ReportContentsModalViewModelProtocol
     
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then{
         $0.register(ReportContentsModalColletionViewCell.self, forCellWithReuseIdentifier: "ReportContentsModalColletionViewCell")
@@ -26,7 +26,7 @@ class ReportContentsModalVC : ModalVCCustom{
         $0.delegate = nil
     }
     
-    init(modalHeight: CGFloat, viewModel : ReportContentsModalViewModel) {
+    init(modalHeight: CGFloat, viewModel : ReportContentsModalViewModelProtocol) {
         self.reportContentsModalViewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 민원", subTitle: "민원내용을 선택하거나 입력해주세요.")
         self.bind(self.reportContentsModalViewModel)
@@ -61,7 +61,7 @@ extension ReportContentsModalVC {
         }
     }
     
-    func bind(_ viewModel : ReportContentsModalViewModel){
+    func bind(_ viewModel : ReportContentsModalViewModelProtocol){
         let dataSources = RxCollectionViewSectionedAnimatedDataSource<ReportContentsModalSection>(animationConfiguration: .init(insertAnimation: .top, reloadAnimation: .top)){_, collectionView, index, data in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportContentsModalColletionViewCell", for: index) as? ReportContentsModalColletionViewCell else {return UICollectionViewCell()}

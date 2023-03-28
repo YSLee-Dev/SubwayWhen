@@ -16,13 +16,14 @@ class ReportViewModel {
     let cellData : Driver<[ReportTableViewCellSection]>
     let keyboardClose : Driver<Void>
     let scrollSction : Driver<Int>
-    let checkModalViewModel : Driver<ReportContentsModalViewModel>
+    let checkModalViewModel : Driver<ReportContentsModalViewModelProtocol>
     let popVC : Driver<Void>
     
     // DATA
     let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
     let nowStep = PublishRelay<Int>()
     let msgData = PublishRelay<ReportMSGData>()
+    let checkModalViewModelData = PublishRelay<ReportContentsModalViewModelProtocol>()
     
     // MODEL
     let lineCellModel : ReportTableViewLineCellModelProtocol
@@ -47,17 +48,11 @@ class ReportViewModel {
         self.lineCellModel = lineCell
         self.contentsModalViewModel = contentsModelViewModel
         
-        // LAZY contentsModalViewModel
-        lazy var contentsModalViewModel = ReportContentsModalViewModel()
-        
         self.msgData
             .bind(to: contentsModalViewModel.msgData)
             .disposed(by: self.bag)
         
-        self.checkModalViewModel = self.msgData
-            .map{ _ in
-                contentsModalViewModel
-            }
+        self.checkModalViewModel = self.checkModalViewModelData
             .asDriver(onErrorDriveWith: .empty())
         
         self.cellData = self.nowData
@@ -74,6 +69,14 @@ class ReportViewModel {
             self.textFieldCellModel.doenBtnClick.map{_ in Void()}.asObservable()
         )
         .asDriver(onErrorDriveWith: .empty())
+        
+        self.msgData
+           .map{[weak self] _ in
+               self?.contentsModalViewModel
+           }
+           .filterNil()
+           .bind(to: self.checkModalViewModelData)
+           .disposed(by: self.bag)
         
         // DefaultLineCell Data / delay 3s
         Observable<[String]>.create{
