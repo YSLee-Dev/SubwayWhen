@@ -16,11 +16,11 @@ class DetailVC : TableVCCustom{
     let bag = DisposeBag()
     var disposable : Bool = false
 
-    let detailViewModel : DetailViewModel
+    let detailViewModel : DetailViewModelProtocol
     
     var delegate : DetailVCDelegate?
     
-    init(title: String, viewModel : DetailViewModel) {
+    init(title: String, viewModel : DetailViewModelProtocol) {
         self.detailViewModel = viewModel
         super.init(title: title, titleViewHeight: 30)
         self.bind(self.detailViewModel)
@@ -64,7 +64,7 @@ extension DetailVC{
         }
     }
     
-    private func bind(_ viewModel : DetailViewModel){
+    private func bind(_ viewModel : DetailViewModelProtocol){
         let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(reloadAnimation: .top)){ dataSource, tv, index, data in
             switch index.section{
             case 0:
