@@ -29,6 +29,7 @@ class ReportViewModel {
     let textFieldCellModel : ReportTableViewTextFieldCellModelProtocol
     let twoBtnCellModel : ReportTableViewTwoBtnCellModelProtocol
     let model : ReportModelProtocol
+    let contentsModalViewModel : ReportContentsModalViewModelProtocol
     
     let bag = DisposeBag()
     
@@ -36,12 +37,15 @@ class ReportViewModel {
         model : ReportModel = .init(),
         textField : ReportTableViewTextFieldCellModel = .init(),
         twoBtn : ReportTableViewTwoBtnCellModel = .init(),
-        lineCell : ReportTableViewLineCellModel = .init()
+        lineCell : ReportTableViewLineCellModel = .init(),
+        contentsModelViewModel : ReportContentsModalViewModel = .init()
+        
     ){
         self.model = model
         self.textFieldCellModel = textField
         self.twoBtnCellModel = twoBtn
         self.lineCellModel = lineCell
+        self.contentsModalViewModel = contentsModelViewModel
         
         // LAZY contentsModalViewModel
         lazy var contentsModalViewModel = ReportContentsModalViewModel()
