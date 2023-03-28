@@ -12,10 +12,10 @@ import RxCocoa
 import RxDataSources
 
 class SettingVC : TableVCCustom{
-    let settingVC : SettingViewModel
+    let settingVC : SettingViewModelProtocol
     let bag = DisposeBag()
     
-    init(viewModel : SettingViewModel) {
+    init(viewModel : SettingViewModelProtocol) {
         self.settingVC = viewModel
         super.init(title: "설정", titleViewHeight: 30)
     }
@@ -53,7 +53,7 @@ extension SettingVC{
         }
     }
     
-    private func bind(_ viewModel : SettingViewModel){
+    private func bind(_ viewModel : SettingViewModelProtocol){
         let dataSource = RxTableViewSectionedAnimatedDataSource<SettingTableViewCellSection>(animationConfiguration: .init(reloadAnimation: .top)){_, tv, index, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: index) as? SettingTableViewCell else {return UITableViewCell()}
             cell.titleSet(title: data.settingTitle, index: index)
@@ -100,12 +100,14 @@ extension Reactive where Base : SettingVC{
         return Binder(base){base, data in
             base.view.endEditing(true)
             if data.settingTitle == "특정 그룹 시간"{
-                let modal = SettingGroupModalVC(modalHeight: 405, btnTitle: "저장", mainTitle: "특정 그룹 시간", subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.")
+                let viewModel = SettingGroupModalViewModel()
+                let modal = SettingGroupModalVC(modalHeight: 405, btnTitle: "저장", mainTitle: "특정 그룹 시간", subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.", viewModel: viewModel)
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)
             }else if data.settingTitle == "기타"{
-                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "기타", subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.")
+                let viewModel = SettingContentsModalViewModel()
+                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "기타", subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.", viewModel: viewModel)
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)

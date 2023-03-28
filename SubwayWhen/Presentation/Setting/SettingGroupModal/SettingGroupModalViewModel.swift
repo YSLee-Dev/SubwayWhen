@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SettingGroupModalViewModel{
+class SettingGroupModalViewModel : SettingGroupModalViewModelProtocol{
     // INPUT
     let groupOneHourValue = BehaviorRelay<Int>(value: 0)
     let groupTwoHourValue = BehaviorRelay<Int>(value: 0)
