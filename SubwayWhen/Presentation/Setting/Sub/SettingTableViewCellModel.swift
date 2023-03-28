@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SettingTableViewCellModel {
+class SettingTableViewCellModel : SettingTableViewCellModelProtocol{
     // INPUT
     let tfValue = PublishRelay<String?>()
     let switchValue = PublishRelay<Bool>()

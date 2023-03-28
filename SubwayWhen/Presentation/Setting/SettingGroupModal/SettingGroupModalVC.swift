@@ -15,7 +15,7 @@ import RxOptional
 
 class SettingGroupModalVC : ModalVCCustom{
     let bag = DisposeBag()
-    let settingGroupViewModel : SettingGroupModalViewModel
+    let settingGroupViewModel : SettingGroupModalViewModelProtocol
     
     let groupOneTitle = UILabel().then{
         $0.text = "출근시간"
@@ -40,8 +40,8 @@ class SettingGroupModalVC : ModalVCCustom{
         $0.maximumValue = 23
     }
     
-    override init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String) {
-        self.settingGroupViewModel = SettingGroupModalViewModel()
+    init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String, viewModel : SettingGroupModalViewModelProtocol) {
+        self.settingGroupViewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
     }
     
@@ -99,7 +99,7 @@ extension SettingGroupModalVC{
         }
     }
     
-    private func bind(_ viewModel : SettingGroupModalViewModel){
+    private func bind(_ viewModel : SettingGroupModalViewModelProtocol){
         // VIEWMODEL -> VIEW
         viewModel.groupOneDefaultValue
             .map{
