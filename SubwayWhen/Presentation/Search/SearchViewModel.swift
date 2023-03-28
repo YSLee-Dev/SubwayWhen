@@ -81,7 +81,7 @@ class SearchViewModel {
             }
             .withUnretained(self)
             .map{ viewModel, data in
-                viewModel.model.stationNameMatching(data)
+                viewModel.model.searchStationToResultVCSection(data)
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
