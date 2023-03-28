@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 class ModalVC : ModalVCCustom{
-    let modalViewModel : ModalViewModel
+    let modalViewModel : ModalViewModelProtocol
     let bag = DisposeBag()
     
     weak var delegate : ModalVCProtocol?
@@ -68,7 +68,7 @@ class ModalVC : ModalVCCustom{
         print("DEINIT MODAL")
     }
     
-    init(_ viewModel : ModalViewModel, modalHeight : CGFloat){
+    init(_ viewModel : ModalViewModelProtocol, modalHeight : CGFloat){
         self.modalViewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹, 제외 행을 선택 후 상/하행 버튼을 누르면 저장할 수 있어요.")
         self.bind(self.modalViewModel)
@@ -154,7 +154,7 @@ extension ModalVC{
         
     }
     
-    private func bind(_ viewModel : ModalViewModel){
+    private func bind(_ viewModel : ModalViewModelProtocol){
         // VIEW -> VIEWMODEL
         self.upBtn.rx.tap
             .map{
