@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct MainTableViewHeaderCellModel{
+class MainTableViewHeaderCellModel : MainTableViewHeaderViewModelProtocol{
     // OUTPUT
     let peopleCount : Driver<Int>
     

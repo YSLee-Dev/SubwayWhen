@@ -110,7 +110,7 @@ extension MainTableViewHeaderCell {
         self.selectionStyle = .none
     }
     
-    func bind(_ viewModel : MainTableViewHeaderCellModel){
+    func bind(_ viewModel : MainTableViewHeaderViewModelProtocol){
         viewModel.peopleCount
             .map{ count -> String in
                 var result = ""

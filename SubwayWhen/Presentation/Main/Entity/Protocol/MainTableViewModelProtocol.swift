@@ -15,9 +15,9 @@ protocol MainTableViewModelProtocol{
     var cellData : Driver<[MainTableViewSection]> {get}
     
     // MODEL
-    var mainTableViewHeaderViewModel : MainTableViewHeaderCellModel {get}
-    var mainTableViewCellModel : MainTableViewCellModel {get}
-    var mainTableViewGroupModel : MainTableViewGroupCellModel {get}
+    var mainTableViewHeaderViewModel : MainTableViewHeaderViewModelProtocol {get}
+    var mainTableViewCellModel : MainTableViewArrvialCellModelProtocol {get}
+    var mainTableViewGroupModel : MainTableViewGroupCellModelProtocol {get}
     
     // INPUT
     var cellClick : PublishRelay<MainTableViewCellData> {get}
