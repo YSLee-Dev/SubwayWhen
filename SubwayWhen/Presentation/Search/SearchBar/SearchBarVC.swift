@@ -31,7 +31,7 @@ extension SearchBarVC{
         self.searchBar.setImage(UIImage(), for: UISearchBar.Icon.search, state: .normal)
     }
     
-    func bind(_ viewModel: SearchBarViewModel){
+    func bind(_ viewModel: SearchBarViewModelProtocol){
         // VIEW -> VIEWMODEL
         self.searchBar.rx.text
             .bind(to: viewModel.searchText)

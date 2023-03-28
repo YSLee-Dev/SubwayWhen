@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ResultViewModel {
+class ResultViewModel : ResultViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[ResultVCSection]>
     

@@ -61,7 +61,7 @@ extension DefaultView{
         self.backgroundColor = .systemBackground
     }
     
-    func bind(_ viewModel : DefaultViewModel){
+    func bind(_ viewModel : DefaultViewModelProtocol){
         // VIEWMODEL -> VIEW
         viewModel.listData
             .drive(self.listCollectionView.rx.items){cv, row, data in
