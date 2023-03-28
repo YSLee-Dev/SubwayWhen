@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class DetailResultScheduleViewModel{
+class DetailResultScheduleViewModel : DetailResultScheduleViewModelProtocol{
     // INPUT
     let scheduleData = BehaviorRelay<[ResultSchdule]>(value: [])
     let cellData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
@@ -26,8 +26,8 @@ class DetailResultScheduleViewModel{
     let detailResultScheduleTopViewModel : DetailResultScheduleTopViewProtocol
     let detailResultScheduleModel : DetailResultScheduleModelProtocol
     
-    private let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
-    private let sectionNumber = BehaviorRelay<Int>(value: 0)
+    internal let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
+    internal let sectionNumber = BehaviorRelay<Int>(value: 0)
     
     let bag = DisposeBag()
     

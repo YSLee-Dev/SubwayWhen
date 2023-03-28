@@ -13,7 +13,7 @@ import RxOptional
 
 typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: DetailLoadData)
 
-class DetailViewModel{
+class DetailViewModel : DetailViewModelProtocol{
     // MODEL
     let detailModel : DetailModelProtocol
     let headerViewModel : DetailTableHeaderViewModelProtocol
@@ -30,9 +30,9 @@ class DetailViewModel{
     let exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>
     
     // DATA
-    let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
-    let scheduleData = PublishRelay<[ResultSchdule]>()
-    let arrivalData = PublishRelay<[RealtimeStationArrival]>()
+    internal let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
+    internal let scheduleData = PublishRelay<[ResultSchdule]>()
+    internal let arrivalData = PublishRelay<[RealtimeStationArrival]>()
     
     var bag = DisposeBag()
     var timerBag = DisposeBag()
