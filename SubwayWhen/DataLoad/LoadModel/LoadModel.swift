@@ -98,4 +98,27 @@ final class LoadModel : LoadModelProtocol{
         
         return self.networkManager.requestData(url, dataType: KorailHeader.self)
     }
+    
+    // 지하철 역명 통신
+    internal func stationSearch(station: String) -> Single<Result<SearchStaion,URLError>>{
+        let url = "http://openapi.seoul.go.kr:8088/\(Bundle.main.tokenLoad("SEOUL_TOKEN"))/json/SearchInfoBySubwayNameService/1/5/\(station)"
+        
+        return self.networkManager.requestData(url, dataType: SearchStaion.self)
+    }
+    
+    // 추천 역 통신 (파이어베이스)
+    internal func defaultViewListRequest() -> Observable<[String]>{
+        let listData = PublishSubject<[String]>()
+        
+        self.database.observe(.value){dataBase, _ in
+            guard let data = dataBase.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let search = subwayWhen?["SearchDefaultList"]
+            let list = search as? [String]
+            
+            listData.onNext(list ?? [])
+        }
+        return listData
+            .asObservable()
+    }
 }
