@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class EditViewModel{
+class EditViewModel : EditViewModelProtocol{
     // MODEL
     let editModel : EditModelProtocol
     
@@ -23,7 +23,7 @@ class EditViewModel{
     let cellData : Driver<[EditViewCellSection]>
     
     // VALUE
-    let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
+    internal let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     

@@ -16,10 +16,10 @@ import RxDataSources
 class EditVC : TableVCCustom{
     let bag = DisposeBag()
     
-    var editViewModel : EditViewModel
+    var editViewModel : EditViewModelProtocol
     var delegate : EditVCDelegate?
     
-    init(viewModel : EditViewModel){
+    init(viewModel : EditViewModelProtocol){
         self.editViewModel = viewModel
         super.init(title: "편집", titleViewHeight: 30)
     }
@@ -68,7 +68,7 @@ extension EditVC{
         }
     }
     
-    private func bind(_ viewModel  : EditViewModel){
+    private func bind(_ viewModel  : EditViewModelProtocol){
         // VIEWMODEL -> VIEW
         let dataSource = RxTableViewSectionedAnimatedDataSource<EditViewCellSection>(animationConfiguration: .init(insertAnimation: .left, reloadAnimation: .fade, deleteAnimation: .right), configureCell: {_, tv, indexpath, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "EditViewCell", for: indexpath) as? EditViewCell else {return UITableViewCell()}
