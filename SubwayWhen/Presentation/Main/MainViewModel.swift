@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class MainViewModel{
+class MainViewModel : MainViewModelProtocol{
     // MODEL
     let mainTableViewModel : MainTableViewModelProtocol
     let mainModel : MainModelProtocol
@@ -19,8 +19,8 @@ class MainViewModel{
     let bag = DisposeBag()
     
     // 현재 데이터
-    private let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
-    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    internal let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    internal let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
