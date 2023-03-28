@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class ReportContentsModalViewModel{
+class ReportContentsModalViewModel : ReportContentsModalViewModelProtocol{
     let bag = DisposeBag()
     
     // INPUT
