@@ -20,6 +20,7 @@ class ReportTableViewDefaultLineView : UIView{
         $0.dataSource = nil
         $0.delegate = nil
         $0.layer.cornerRadius = ViewStyle.Layer.radius
+        $0.alwaysBounceVertical = false
         $0.contentInset = .init(top: 0, left: 10, bottom: 0, right: 0)
     }
     

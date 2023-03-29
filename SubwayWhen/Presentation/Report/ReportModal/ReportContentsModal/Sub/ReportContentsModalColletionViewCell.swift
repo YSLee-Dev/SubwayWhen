@@ -17,6 +17,7 @@ class ReportContentsModalColletionViewCell : UICollectionViewCell{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .center
         $0.textColor = .label.withAlphaComponent(0.7)
+        $0.adjustsFontSizeToFitWidth = true
     }
     
     let icon = UIImageView().then{
@@ -53,7 +54,7 @@ extension ReportContentsModalColletionViewCell {
         }
         
         self.titleLabel.snp.makeConstraints{
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(10)
         }
     }

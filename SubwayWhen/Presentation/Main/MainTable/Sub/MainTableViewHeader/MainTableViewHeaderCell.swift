@@ -31,6 +31,7 @@ class MainTableViewHeaderCell : UITableViewCell{
     let congestionLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.textAlignment = .left
+        $0.adjustsFontSizeToFitWidth = true
         $0.text = "😵😵😵😵😵😵😵😵🫥🫥"
     }
     
