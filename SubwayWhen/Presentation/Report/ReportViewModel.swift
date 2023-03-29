@@ -215,6 +215,7 @@ class ReportViewModel : ReportViewModelProtocol{
                 return now
                 
             }
+            .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance)
             .filterEmpty()
             .share()
         
@@ -224,6 +225,7 @@ class ReportViewModel : ReportViewModelProtocol{
         
         threeStep
             .map{_ in 2}
+            .delay(.milliseconds(200), scheduler: MainScheduler.asyncInstance)
             .bind(to: self.nowStep)
             .disposed(by: self.bag)
         
