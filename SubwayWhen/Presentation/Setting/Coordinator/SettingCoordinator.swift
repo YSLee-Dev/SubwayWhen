@@ -10,7 +10,6 @@ import UIKit
 import AcknowList
  
 class SettingCoordinator : Coordinator{
-    weak var parentCoordinator : Coordinator?
     var childCoordinator: [Coordinator] = []
     var naviagation : UINavigationController
     

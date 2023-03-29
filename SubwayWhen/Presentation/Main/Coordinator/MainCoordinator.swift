@@ -8,13 +8,13 @@
 import UIKit
 
 class MainCoordinator : Coordinator{
-    weak var parentCoordinator : Coordinator?
     var childCoordinator: [Coordinator] = []{
         didSet{
             print(self.childCoordinator)
         }
     }
     var navigation : UINavigationController
+    var delegate : MainCoordinatorDelegate?
     
     init(){
         self.navigation = UINavigationController()
@@ -29,6 +29,10 @@ class MainCoordinator : Coordinator{
 }
 
 extension MainCoordinator : MainDelegate{
+    func plusStationTap() {
+        self.delegate?.stationPlusBtnTap(self)
+    }
+    
     func pushTap(action : MainCoordinatorAction) {
         switch action{
         case .Report:
