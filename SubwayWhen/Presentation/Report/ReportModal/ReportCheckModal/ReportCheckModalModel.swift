@@ -11,9 +11,9 @@ class ReportCheckModalModel : ReportCheckModalModelProtocol{
     func createMsg(nowHour : Int, nowMinute : Int, data : ReportMSGData) -> String{
                        """
                     호선: \(data.line.rawValue)
-                    행선지: \(data.destination)행
-                    열차번호(칸 위치): \(data.trainCar)
-                    현재위치: (\(nowHour):\(nowMinute)) \(data.nowStation)역
+                    행선지: \(data.destination)
+                    열차위치: \(data.trainCar)
+                    현재위치: (\(nowHour)시 \(nowMinute)분) \(data.nowStation)
                     \(data.contants)
                     """
     }

@@ -10,7 +10,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+import FirebaseAnalytics
+
 class SettingGroupModalViewModel : SettingGroupModalViewModelProtocol{
+    
+    deinit{
+        print("SettingGroupModalViewModel DEINIT")
+    }
+    
     // INPUT
     let groupOneHourValue = BehaviorRelay<Int>(value: 0)
     let groupTwoHourValue = BehaviorRelay<Int>(value: 0)
@@ -59,6 +66,18 @@ class SettingGroupModalViewModel : SettingGroupModalViewModelProtocol{
             }
             .subscribe(onNext: {
                 FixInfo.saveSetting.mainGroupTwoTime = $0
+            })
+            .disposed(by: self.bag)
+        
+        // 구글 애널리틱스
+        saveClick
+            .subscribe(onNext: {[weak self] _ in
+                let one = self?.groupOneHourValue.value ?? 0
+                let two = self?.groupTwoHourValue.value ?? 0
+                Analytics.logEvent("SettingVC_Group_Save", parameters: [
+                    "Group_One" : one,
+                    "Group_Two" : two
+                ])
             })
             .disposed(by: self.bag)
     }

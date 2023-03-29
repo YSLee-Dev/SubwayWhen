@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
+import FirebaseAnalytics
+
 class SettingViewModel : SettingViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[SettingTableViewCellSection]>
@@ -98,6 +100,10 @@ class SettingViewModel : SettingViewModelProtocol{
             .subscribe(onNext: {
                 let label = $0 == "" ? "☹️" : $0
                 FixInfo.saveSetting.mainCongestionLabel = label
+                
+                Analytics.logEvent("SettingVC_MainCongestionIcon", parameters: [
+                    "Icon" : $0 == "" ? "☹️" : $0
+                ])
             })
             .disposed(by: self.bag)
     }
