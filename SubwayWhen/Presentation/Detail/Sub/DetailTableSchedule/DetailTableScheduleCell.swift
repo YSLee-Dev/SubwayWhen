@@ -116,7 +116,7 @@ extension DetailTableScheduleCell{
                     return "시간표를 불러올 수 없어요."
                 }else{
                     if FixInfo.saveSetting.detailScheduleAutoTime{
-                        return "\(first.lastStation)행 \(first.useArrTime) : \(first.useTime)남음"
+                        return "\(first.lastStation)행 \(first.useArrTime)"
                     }else{
                         return ""
                     }
