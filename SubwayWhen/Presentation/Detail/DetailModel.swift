@@ -47,7 +47,7 @@ class DetailModel : DetailModelProtocol{
         var stationNameCut = ""
         
         if data.stationName.count >= 6{
-            stationNameCut = "\(String(data.stationName[data.stationName.startIndex ... data.stationName.index(data.stationName.startIndex, offsetBy: 5)])).."
+            stationNameCut = "\(String(data.stationName[data.stationName.startIndex ... data.stationName.index(data.stationName.startIndex, offsetBy: 5)]))..."
         }else{
             stationNameCut = data.stationName
         }
