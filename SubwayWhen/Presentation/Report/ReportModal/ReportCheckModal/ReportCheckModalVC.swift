@@ -33,7 +33,7 @@ class ReportCheckModalVC : ModalVCCustom{
     
     init(modalHeight: CGFloat, viewModel : ReportCheckModalViewModel) {
         self.checkModalViewModel = viewModel
-        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단 내용으로 민원을 접수할까요?\n내용 수정은 접수 버튼을 누른 후 수정할 수 있어요.")
+        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 접수 버튼을 누른 후 수정할 수 있어요.")
         self.bind(self.checkModalViewModel)
     }
     
