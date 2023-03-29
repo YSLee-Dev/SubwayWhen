@@ -168,7 +168,7 @@ class MainModel : MainModelProtocol{
         }else if data.type == .Seoul{
             return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true)
         }else {
-            return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
+            return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "정보없음", lastStation: "정보없음")])
         }
     }
     
