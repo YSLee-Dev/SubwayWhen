@@ -107,7 +107,7 @@ extension Reactive where Base : MainVC {
     
     var tapChange : Binder<Void>{
         return Binder(base){base, _ in
-            base.tabBarController?.selectedIndex = 1
+            base.delegate?.plusStationTap()
         }
     }
     

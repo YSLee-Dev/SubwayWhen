@@ -10,14 +10,17 @@ import UIKit
 class AppCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var window : UIWindow
+    var tabbar : UITabBarController
     
     init(window : UIWindow){
         self.window = window
         self.window.makeKeyAndVisible()
+        self.tabbar = UITabBarController()
     }
     
     func start() {
-        self.window.rootViewController = self.setTabbarController()
+        self.tabbar = self.setTabbarController()
+        self.window.rootViewController = self.tabbar
     }
     
     func setTabbarController() -> UITabBarController{
@@ -27,19 +30,17 @@ class AppCoordinator : Coordinator{
         tabbarC.tabBar.tintColor = UIColor(named: "AppIconColor")
         
         let mainC = MainCoordinator()
-        mainC.parentCoordinator = self
+        mainC.delegate = self
         self.childCoordinator.append(mainC)
         
         mainC.start()
         
         let searchC = SearchCoordinator()
-        searchC.parentCoordinator = self
         self.childCoordinator.append(searchC)
         
         searchC.start()
         
         let settingC = SettingCoordinator()
-        searchC.parentCoordinator = self
         self.childCoordinator.append(searchC)
         
         settingC.start()
@@ -47,5 +48,11 @@ class AppCoordinator : Coordinator{
         tabbarC.viewControllers = [mainC.navigation, searchC.navigation, settingC.naviagation]
         
         return tabbarC
+    }
+}
+
+extension AppCoordinator : MainCoordinatorDelegate{
+    func stationPlusBtnTap(_ coordinator: MainCoordinator) {
+        self.tabbar.selectedIndex = 1
     }
 }
