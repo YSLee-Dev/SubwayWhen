@@ -35,8 +35,8 @@ class ReportModel : ReportModelProtocol {
     
     func twoStepQuestionData() -> ReportTableViewCellSection{
         ReportTableViewCellSection(sectionName: "호선 정보", items: [
-            .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-            .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false)
+            .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "", type: .TextField, focus: true),
+            .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "", type: .TextField, focus: false)
         ])
     }
     
@@ -54,7 +54,7 @@ class ReportModel : ReportModelProtocol {
     
     func theeStepQuestion() -> ReportTableViewCellSection{
         ReportTableViewCellSection(sectionName: "상세 정보", items: [
-            .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)])
+            .init(cellTitle: "고유(열차)번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)])
     }
     
     func cellDataMatching(index: IndexPath, matchIndex : IndexPath, data : String) -> String?{

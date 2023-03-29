@@ -24,17 +24,13 @@ final class ReportCheckModalModelTests: XCTestCase {
     
     func testCreateMsg(){
         // GIVEN
-        let hour = 1
-        let minute = 10
-        let data = self.model.createMsg(nowHour: hour, nowMinute: minute, data: self.msgData)
+        let data = self.model.createMsg(data: self.msgData)
         
         // WHEN
         let requestData = data
         let dummyData =  """
-                    호선: \(self.msgData.line.rawValue)
-                    행선지: \(self.msgData.destination)행
-                    열차번호(칸 위치): \(self.msgData.trainCar)
-                    현재위치: (\(hour):\(minute)) \(self.msgData.nowStation)역
+                    \(self.msgData.line.rawValue) \(self.msgData.destination)행 \(self.msgData.trainCar)
+                    현재 \(self.msgData.nowStation)역
                     \(self.msgData.contants)
                     """
         

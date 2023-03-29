@@ -44,10 +44,7 @@ class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
         
         self.msgData
             .map{ [weak self] data -> String in
-                let nowHour = Calendar.current.component(.hour, from: Date())
-                let nowMin = Calendar.current.component(.minute, from: Date())
-                
-                return self?.model.createMsg(nowHour: nowHour, nowMinute: nowMin, data: data) ?? ""
+                self?.model.createMsg(data: data) ?? ""
             }
             .bind(to: self.createMSG)
             .disposed(by: self.bag)
