@@ -56,7 +56,7 @@ extension SettingVC{
     }
     
     private func bind(_ viewModel : SettingViewModelProtocol){
-        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingTableViewCellSection>(animationConfiguration: .init(reloadAnimation: .top)){_, tv, index, data in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingTableViewCellSection>(animationConfiguration: .init(reloadAnimation: .fade)){_, tv, index, data in
             guard let cell = tv.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: index) as? SettingTableViewCell else {return UITableViewCell()}
             cell.titleSet(title: data.settingTitle, index: index)
             cell.cellStyleSet(data.inputType, defaultValue: data.defaultData)
