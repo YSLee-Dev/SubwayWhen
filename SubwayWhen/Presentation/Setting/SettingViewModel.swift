@@ -59,36 +59,78 @@ class SettingViewModel : SettingViewModelProtocol{
                 .dispose()
         }
         // 자동 새로고침 여부
-        self.settingTableViewCellModel.cellIndex
+        let autoRefresh = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.switchValue){ [weak self] index, value -> Bool? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 1), data: value)
             }
             .filterNil()
+            .share()
+        
+        autoRefresh
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailAutoReload = $0
             })
             .disposed(by: self.bag)
         
+        // 재사용 방지
+        autoRefresh
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[1].items[0].defaultData = "\(data)"
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
         // 시간표 정렬
-        self.settingTableViewCellModel.cellIndex
+        let scheduleSort = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.switchValue){[weak self] index, value -> Bool? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 1, section: 1), data: value)
             }
             .filterNil()
+            .share()
+        
+        scheduleSort
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailScheduleAutoTime = $0
             })
             .disposed(by: self.bag)
         
+        // 재사용 방지
+        scheduleSort
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[1].items[1].defaultData = "\(data)"
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
         // 중복 저장 방지
-        self.settingTableViewCellModel.cellIndex
+        let overlap = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.switchValue){ [weak self] index, value -> Bool? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 2), data: value)
             }
             .filterNil()
+            .share()
+        
+        overlap
             .subscribe(onNext: {
                 FixInfo.saveSetting.searchOverlapAlert = $0
             })
+            .disposed(by: self.bag)
+        
+        // 재사용 방지
+        overlap
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[2].items[0].defaultData = "\(data)"
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
             .disposed(by: self.bag)
         
         // 메인 혼잡도 이모지 변경
