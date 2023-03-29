@@ -31,7 +31,7 @@ final class ReportContentsModalModelTests: XCTestCase {
         let duumyCount = 9
         
         let requestFirst = arrayData?.first?.items.first?.contents
-        let dummyFirst = "차내 온도가 높습니다. 에어컨 조절 요청드립니다."
+        let dummyFirst = "차내가 덥습니다. 에어컨 조절 요청드립니다."
         
         // THEN
         expect(requestCount).to(
