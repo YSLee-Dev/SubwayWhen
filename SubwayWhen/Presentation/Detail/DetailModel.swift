@@ -66,7 +66,7 @@ class DetailModel : DetailModelProtocol{
             searchData.type = .Korail
             
             return searchData
-        }else if item.lineNumber == "신분당선" || item.lineNumber == "공항철도" || item.lineNumber == "우이신설경전철"{
+        }else if item.lineNumber == "신분당선" || item.lineNumber == "공항철도" || item.lineNumber == "우이신설경전철" || item.lineNumber == ""{
             searchData.type = .Unowned
             
             return searchData
