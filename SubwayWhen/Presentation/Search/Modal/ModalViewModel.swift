@@ -14,6 +14,10 @@ import RxOptional
 import FirebaseAnalytics
 
 class ModalViewModel : ModalViewModelProtocol{
+    deinit{
+        print("ModalViewModel DEINIT")
+    }
+    
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     let modalClose : Driver<Void>
@@ -62,7 +66,6 @@ class ModalViewModel : ModalViewModelProtocol{
         self.modalClose = Observable
             .merge(
                 self.notService.asObservable(),
-                self.modalCloseEvent.map{_ in Void()}.asObservable(),
                 self.overlapOkBtnTap.asObservable()
             )
             .asDriver(onErrorDriveWith: .empty())
