@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
+import FirebaseAnalytics
+
 class SearchViewModel : SearchViewModelProtocol{
     // MODEL
     let serachBarViewModel : SearchBarViewModelProtocol
@@ -72,6 +74,16 @@ class SearchViewModel : SearchViewModelProtocol{
                 searchQuery,
                 self.defaultViewModel.defaultListClick.asObservable()
             )
+            .share()
+        
+        // 구글 애널리틱스
+        search
+            .subscribe(onNext: {
+                Analytics.logEvent("SerachVC_Search", parameters: [
+                    "Search_Station" : $0
+                ])
+            })
+            .disposed(by: self.bag)
         
         search
             .withUnretained(self)

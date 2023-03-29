@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
+import FirebaseAnalytics
+
 typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: DetailLoadData)
 
 class DetailViewModel : DetailViewModelProtocol{
@@ -95,6 +97,15 @@ class DetailViewModel : DetailViewModelProtocol{
                 return now
             }
             .bind(to: self.detailViewData)
+            .disposed(by: self.bag)
+        
+        // 구글 애널리틱스
+        self.exceptionLastStationRemoveReload
+            .subscribe(onNext: {
+                Analytics.logEvent("DetailVC_ExceptionBtnTap", parameters: [
+                    "Exception" : "BTNTAP"
+                ])
+            })
             .disposed(by: self.bag)
         
         // 15초 타이머 초기화
