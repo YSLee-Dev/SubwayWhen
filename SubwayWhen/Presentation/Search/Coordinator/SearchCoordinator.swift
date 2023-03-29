@@ -8,7 +8,6 @@
 import UIKit
 
 class SearchCoordinator : Coordinator{
-    weak var parentCoordinator : Coordinator?
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     
