@@ -92,8 +92,8 @@ final class ReportViewModelTests: XCTestCase {
                 .next(3, [
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "", type: .TextField, focus: true),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)
                     ])
                 ])
@@ -116,8 +116,8 @@ final class ReportViewModelTests: XCTestCase {
             .next(3, [
                 ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                 ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                    .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false),
+                    .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "", type: .TextField, focus: true),
+                    .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "", type: .TextField, focus: false),
                     .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)
                 ])
             ])
@@ -208,36 +208,36 @@ final class ReportViewModelTests: XCTestCase {
                 .next(3, [
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "", type: .TextField, focus: true),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "", type: .TextField, focus: true),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)
                     ])
                 ]),
                 .next(5,[
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "", type: .TextField, focus: true),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "", type: .TextField, focus: true),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)
                     ])
                 ]),
                 .next(8,[
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "시청역", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "시청역", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "", type: .TwoBtn, focus: false)
                     ])
                 ]),
                 .next(8,[
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "시청역", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "시청역", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "Y", type: .TwoBtn, focus: false)
                     ]),
                     ReportTableViewCellSection(sectionName: "상세 정보", items: [
-                        .init(cellTitle: "칸 위치나 열차번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)])
+                        .init(cellTitle: "고유(열차)번호를 입력해주세요.", cellData: "", type: .TextField, focus: true)])
                 ])
             ])
         )
@@ -257,8 +257,8 @@ final class ReportViewModelTests: XCTestCase {
             .next(3, [
                 ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                 ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                    .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                    .init(cellTitle: "현재 역을 입력해주세요.", cellData: "시청역", type: .TextField, focus: false),
+                    .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                    .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "시청역", type: .TextField, focus: false),
                     .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "Y", type: .TwoBtn, focus: false)
                 ]),
                 ReportTableViewCellSection(sectionName: "상세 정보", items: [
@@ -300,8 +300,8 @@ final class ReportViewModelTests: XCTestCase {
                 .next(3, [
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "시청역", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "시청역", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "Y", type: .TwoBtn, focus: false)
                     ]),
                     ReportTableViewCellSection(sectionName: "상세 정보", items: [
@@ -310,8 +310,8 @@ final class ReportViewModelTests: XCTestCase {
                 .next(7, [
                     ReportTableViewCellSection(sectionName: "민원 호선", items: [.init(cellTitle: "몇호선 민원을 접수하시겠어요?", cellData: "", type: .Line, focus: false)]),
                     ReportTableViewCellSection(sectionName: "호선 정보", items: [
-                        .init(cellTitle: "열차의 행선지를 입력해주세요.", cellData: "인천행", type: .TextField, focus: false),
-                        .init(cellTitle: "현재 역을 입력해주세요.", cellData: "시청역", type: .TextField, focus: false),
+                        .init(cellTitle: "열차의 행선지를 입력해주세요. (행)", cellData: "인천행", type: .TextField, focus: false),
+                        .init(cellTitle: "현재 역을 입력해주세요. (역)", cellData: "시청역", type: .TextField, focus: false),
                         .init(cellTitle: "현재 역이 청량리 ~ 서울역 안에 있나요?", cellData: "Y", type: .TwoBtn, focus: false)
                     ]),
                     ReportTableViewCellSection(sectionName: "상세 정보", items: [

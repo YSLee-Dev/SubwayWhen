@@ -50,7 +50,8 @@ class TotalLoadModel : TotalLoadProtocol{
                 }
                 
                 if station.lineCode != ""{
-                    return .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode)
+                    let exceptionLastStation = station.exceptionLastStation == "" ? "" : "\(station.exceptionLastStation)행 제외"
+                    return .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(exceptionLastStation)", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode)
                 }else{
                     return .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
                 }
@@ -71,6 +72,7 @@ class TotalLoadModel : TotalLoadProtocol{
     // 코레일 시간표 계산
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) ->  Observable<[ResultSchdule]>{
         guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
+        let weekDay = Calendar.current.component(.weekday, from: Date())
         
         let requestRry = BehaviorSubject<Void>(value: Void())
         var searchInfo = scheduleSearch
@@ -94,6 +96,16 @@ class TotalLoadModel : TotalLoadProtocol{
                 return value.body
             }
         
+        let numberCheck = number.map{ data in
+            data.filter{
+                if weekDay == 1 || weekDay == 7{
+                    return $0.week == "주말" ? true : false
+                }else{
+                    return $0.week == "평일" ? true : false
+                }
+            }
+        }
+        
         // 상하행 구분 / 짝수일 경우 상행, 홀수일 경우 하행
         let updownCheck = success.map{data in
             return data.filter{
@@ -106,7 +118,7 @@ class TotalLoadModel : TotalLoadProtocol{
             }
         }
         
-        let schedule = Observable<[ResultSchdule]>.combineLatest(number, updownCheck){number, updownCheck -> [ResultSchdule] in
+        let schedule = Observable<[ResultSchdule]>.combineLatest(numberCheck, updownCheck){number, updownCheck -> [ResultSchdule] in
             var result : [ResultSchdule] = []
             
             // lastStation 값 주입
@@ -123,6 +135,7 @@ class TotalLoadModel : TotalLoadProtocol{
                     }
                 }
             }
+            
             
             return result
                 .sorted{
