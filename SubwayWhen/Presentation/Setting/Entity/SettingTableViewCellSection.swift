@@ -9,7 +9,7 @@ import Foundation
 
 import RxDataSources
 
-struct SettingTableViewCellSection : AnimatableSectionModelType{
+struct SettingTableViewCellSection : AnimatableSectionModelType, Equatable{
     var sectionName : String
     var items: [Item]
 }
