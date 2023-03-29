@@ -62,7 +62,8 @@ extension DetailTableScheduleCell{
     private func layout(){
         self.mainBG.addSubview(self.mainTitle)
         self.mainTitle.snp.makeConstraints{
-            $0.leading.top.trailing.equalToSuperview().inset(15)
+            $0.leading.top.equalToSuperview().inset(15)
+            $0.trailing.equalToSuperview().inset(40)
         }
         
         self.mainBG.addSubview(self.moreBtn)
@@ -111,8 +112,9 @@ extension DetailTableScheduleCell{
         viewModel.cellData
             .map{ data -> String? in
                 guard let first = data.first else {return nil}
-                
-                if first.startTime == "정보없음"{
+                if first.type == .Unowned{
+                    return "신분당선, 우이신설선, 공항철도는 시간표를 지원하지 않아요."
+                }else if first.startTime == "정보없음"{
                     return "시간표를 불러올 수 없어요."
                 }else{
                     if FixInfo.saveSetting.detailScheduleAutoTime{

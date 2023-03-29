@@ -14,6 +14,7 @@ protocol DetailTableScheduleCellModelProtocol{
     var scheduleData : BehaviorRelay<[ResultSchdule]>{get}
     var moreBtnClick : PublishRelay<Void>{get}
     
-    // OUTPUT
     var cellData : Driver<[ResultSchdule]>{get}
+    
+    var nowData : BehaviorRelay<[ResultSchdule]>{get}
 }
