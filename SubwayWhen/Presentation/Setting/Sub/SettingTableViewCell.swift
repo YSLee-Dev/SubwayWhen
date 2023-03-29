@@ -11,10 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class SettingTableViewCell : UITableViewCell{
+class SettingTableViewCell : TableViewCellCustom{
     var bag = DisposeBag()
-    
-    let mainBG = MainStyleUIView()
     
     let settingTitle = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
@@ -61,8 +59,7 @@ extension SettingTableViewCell{
         self.selectionStyle = .none
     }
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
+        self.mainBG.snp.updateConstraints{
             $0.top.equalToSuperview().offset(2.5)
             $0.bottom.equalToSuperview().inset(2.5)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
