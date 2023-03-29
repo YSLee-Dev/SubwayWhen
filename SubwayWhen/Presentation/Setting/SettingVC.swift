@@ -15,6 +15,8 @@ class SettingVC : TableVCCustom{
     let settingVC : SettingViewModelProtocol
     let bag = DisposeBag()
     
+    var delegate : SettingVCDelegate?
+    
     init(viewModel : SettingViewModelProtocol) {
         self.settingVC = viewModel
         super.init(title: "설정", titleViewHeight: 30)
@@ -111,6 +113,8 @@ extension Reactive where Base : SettingVC{
                 modal.modalPresentationStyle = .overFullScreen
                 
                 base.present(modal, animated: false)
+            }else if data.settingTitle == "오픈 라이선스"{
+                base.delegate?.licensesTap()
             }
         }
     }
