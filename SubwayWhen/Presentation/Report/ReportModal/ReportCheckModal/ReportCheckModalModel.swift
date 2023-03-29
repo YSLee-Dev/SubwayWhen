@@ -8,12 +8,10 @@
 import Foundation
 
 class ReportCheckModalModel : ReportCheckModalModelProtocol{
-    func createMsg(nowHour : Int, nowMinute : Int, data : ReportMSGData) -> String{
+    func createMsg(data : ReportMSGData) -> String{
                        """
-                    호선: \(data.line.rawValue)
-                    행선지: \(data.destination)
-                    열차위치: \(data.trainCar)
-                    현재위치: (\(nowHour)시 \(nowMinute)분) \(data.nowStation)
+                    \(data.line.rawValue) \(data.destination)행 \(data.trainCar)
+                    현재 \(data.nowStation)역
                     \(data.contants)
                     """
     }
