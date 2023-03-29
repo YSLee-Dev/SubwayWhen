@@ -11,7 +11,7 @@ import RxDataSources
 
 struct SettingTableViewCellData : IdentifiableType, Equatable{
     let settingTitle : String
-    let defaultData : String
+    var defaultData : String
     let inputType : SettingTableViewCellType
     let groupType : SettingTableViewCellGroupType
     
