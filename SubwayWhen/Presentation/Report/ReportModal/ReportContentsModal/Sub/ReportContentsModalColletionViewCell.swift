@@ -16,12 +16,12 @@ class ReportContentsModalColletionViewCell : UICollectionViewCell{
     let titleLabel = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .center
-        $0.textColor = .gray
+        $0.textColor = .label.withAlphaComponent(0.7)
     }
     
     let icon = UIImageView().then{
         $0.contentMode = .scaleToFill
-        $0.tintColor = .gray
+        $0.tintColor = .label.withAlphaComponent(0.7)
     }
     
     override init(frame: CGRect) {
