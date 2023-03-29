@@ -66,6 +66,7 @@ class ModalViewModel : ModalViewModelProtocol{
         self.modalClose = Observable
             .merge(
                 self.notService.asObservable(),
+                self.modalCloseEvent.filter{$0 == true}.map{_ in Void()},
                 self.overlapOkBtnTap.asObservable()
             )
             .asDriver(onErrorDriveWith: .empty())
