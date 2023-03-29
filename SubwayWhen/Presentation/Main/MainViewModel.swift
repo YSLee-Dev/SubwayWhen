@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
+import FirebaseAnalytics
+
 class MainViewModel : MainViewModelProtocol{
     // MODEL
     let mainTableViewModel : MainTableViewModelProtocol
@@ -139,6 +141,15 @@ class MainViewModel : MainViewModelProtocol{
             .withLatestFrom(self.groupData){ id, data in
                 data[id.row]
             }
+        
+        // 구글 애널리틱스
+        self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
+            .subscribe(onNext: { _ in
+                Analytics.logEvent("MainVC_cellTimeChangeBtnTap", parameters: [
+                    "Change" : "BTNTAP"
+                ])
+            })
+            .disposed(by: self.bag)
         
         // 시간표 검색 구조체로 변환
         let scheduleData = clickCellRow

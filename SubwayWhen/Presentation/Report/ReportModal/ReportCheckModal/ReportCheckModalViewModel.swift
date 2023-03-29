@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+import FirebaseAnalytics
+
 class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
     // INPUT
     let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, nowStation: "", destination: "", trainCar: "", contants: "", brand: ""))
@@ -50,6 +52,16 @@ class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
             .bind(to: self.createMSG)
             .disposed(by: self.bag)
         
+        // 구글 애널리틱스
+        self.msgData
+            .filter{$0.line != .not}
+            .bind(onNext: {
+                Analytics.logEvent("ReportVC_Send", parameters: [
+                    "Line" : $0.line.rawValue
+                ])
+            })
+            .disposed(by: self.bag)
+            
         self.okBtnClick
             .withLatestFrom(self.msgData)
             .map{[weak self] data in

@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
+import FirebaseAnalytics
+
 class ModalViewModel : ModalViewModelProtocol{
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
@@ -85,6 +87,16 @@ class ModalViewModel : ModalViewModelProtocol{
                 return true
             }
             .bind(to: self.modalCloseEvent)
+            .disposed(by: self.bag)
+        
+        // 구글 애널리틱스
+        self.upDownBtnClick
+            .withLatestFrom(self.clickCellData)
+            .subscribe(onNext: {
+                Analytics.logEvent("SerachVC_Modal_Save", parameters: [
+                    "Save_Station" : $0.stationName
+                ])
+            })
             .disposed(by: self.bag)
         
         self.disposableBtnTap
