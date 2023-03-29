@@ -62,11 +62,11 @@ class DetailModel : DetailModelProtocol{
     func mainCellDataToScheduleSearch(_ item : DetailLoadData) -> ScheduleSearch{
         var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
         
-        if item.stationCode.contains("K"){
+        if item.lineNumber == "경의선" || item.lineNumber == "경춘선" || item.lineNumber == "수인분당선" {
             searchData.type = .Korail
             
             return searchData
-        }else if item.stationCode.contains("D") || item.stationCode.contains("A") || item.stationCode == ""{
+        }else if item.lineNumber == "신분당선" || item.lineNumber == "공항철도" || item.lineNumber == "우이신설경전철"{
             searchData.type = .Unowned
             
             return searchData
