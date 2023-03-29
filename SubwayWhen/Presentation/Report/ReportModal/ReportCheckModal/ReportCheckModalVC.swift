@@ -105,7 +105,7 @@ extension ReportCheckModalVC {
         self.textView.removeFromSuperview()
         self.okBtn!.removeFromSuperview()
         self.mainTitle.text = "민원접수가 완료되었어요."
-        self.subTitle.text = "본앱에서의 민원접수는 문자메세지로의 접수를 도와주는 기능이에요.\n민원결과 및 처리내용은 문자메세지로 확인할 수 있어요."
+        self.subTitle.text = "본앱에서의 민원접수는 문자메세지로의 접수를 도와주는 기능이에요."
         self.subTitle.textColor = .systemRed
         
         // success icon

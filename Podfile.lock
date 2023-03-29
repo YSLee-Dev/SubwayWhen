@@ -1,4 +1,5 @@
 PODS:
+  - AcknowList (3.0.1)
   - Alamofire (5.6.4)
   - Differentiator (5.0.0)
   - Firebase/Analytics (10.2.0):
@@ -117,6 +118,7 @@ PODS:
   - Then (3.0.0)
 
 DEPENDENCIES:
+  - AcknowList
   - Alamofire
   - Firebase/Analytics
   - Firebase/Database
@@ -134,6 +136,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AcknowList
     - Alamofire
     - Differentiator
     - Firebase
@@ -161,6 +164,7 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
+  AcknowList: 1aca788e5f1fae79d671c9c48d83ef21027232c0
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Firebase: a3ea7eba4382afd83808376edb99acdaff078dcf
@@ -187,6 +191,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: e2d94e8b07b1c0948c654790795e12178282ddd1
+PODFILE CHECKSUM: a39b59ef406940a0bffba55237f6fd5e1b6c83e7
 
 COCOAPODS: 1.11.3
