@@ -102,7 +102,7 @@ extension SearchVC : ModalVCProtocol{
         if let sheet = detailVC.sheetPresentationController{
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 30
+            sheet.preferredCornerRadius = 25
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){[weak self] in
