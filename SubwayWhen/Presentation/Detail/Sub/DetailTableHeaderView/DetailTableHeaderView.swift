@@ -28,14 +28,12 @@ class DetailTableHeaderView : UITableViewCell{
     var backStation = UILabel().then{
         $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .right
     }
     
     var nextStation = UILabel().then{
         $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .left
     }
     
