@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ReportCheckModalModelProtocol{
-    func createMsg(nowHour : Int, nowMinute : Int, data : ReportMSGData) -> String
+    func createMsg(data : ReportMSGData) -> String
     func numberMatching(data : ReportMSGData) -> String
 }

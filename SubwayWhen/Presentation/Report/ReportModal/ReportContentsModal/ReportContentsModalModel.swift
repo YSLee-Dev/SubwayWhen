@@ -13,8 +13,8 @@ class ReportContentsModalModel : ReportContentsModalModelProtocol{
     func reportList() -> Observable<[ReportContentsModalSection]>{
         Observable<[ReportContentsModalSection]>.create{
             let data : [ReportContentsModalCellData] = [
-                .init(title: "차내 온도 높음", iconName: "thermometer.sun", contents: "차내 온도가 높습니다. 에어컨 조절 요청드립니다."),
-                .init(title: "차내 온도 낮음", iconName: "thermometer.snowflake", contents: "차내 온도가 낮습니다. 난방 조절 요청드립니다."),
+                .init(title: "차내 온도 높음", iconName: "thermometer.sun", contents: "차내가 덥습니다. 에어컨 조절 요청드립니다."),
+                .init(title: "차내 온도 낮음", iconName: "thermometer.snowflake", contents: "차내가 춥습니다. 난방 조절 요청드립니다."),
                 .init(title: "차내 폭력 사건", iconName: "hand.raised.slash",  contents: "차내 폭력사건이 발생하였습니다."),
                 .init(title: "차내 전도", iconName: "figure.wave",  contents: "차내 전도를 하고 있습니다."),
                 .init(title: "차내 소음", iconName: "ear.trianglebadge.exclamationmark",  contents: "차내 소음을 유발하는 사람이 있습니다."),
