@@ -147,7 +147,7 @@ extension ModalVCCustom{
     func viewAnimation(){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.88, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBGContainer.transform = .identity
-            self?.grayBG.backgroundColor = UIColor(named: "GrayBGColor")?.withAlphaComponent(0.5)
+            self?.grayBG.backgroundColor = UIColor(named: "GrayBGColor")
         }
         
         UIView.animate(withDuration: 0.5, delay: 0.15, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.75){[weak self] in
