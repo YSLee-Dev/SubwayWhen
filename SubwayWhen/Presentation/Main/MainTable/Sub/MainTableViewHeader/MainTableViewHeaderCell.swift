@@ -116,15 +116,21 @@ extension MainTableViewHeaderCell {
             .map{ count -> String in
                 var result = ""
                 
-                for _ in 1...count{
-                    result.append("\(FixInfo.saveSetting.mainCongestionLabel)")
-                }
-                if count != 10{
-                    for _ in result.count...9{
+                if count == 0{
+                    for _ in 1...10{
                         result.append("🫥")
                     }
+                }else{
+                    for _ in 1...count{
+                        result.append("\(FixInfo.saveSetting.mainCongestionLabel)")
+                    }
+                    if count != 10{
+                        for _ in result.count...9{
+                            result.append("🫥")
+                        }
+                    }
                 }
-               
+                
                 return result
             }
             .drive(self.congestionLabel.rx.text)
