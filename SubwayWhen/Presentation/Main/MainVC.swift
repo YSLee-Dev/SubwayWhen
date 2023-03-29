@@ -48,7 +48,7 @@ class MainVC : TableVCCustom{
 extension MainVC{
     private func attibute(){
         self.topView.backBtn.isHidden = true
-        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
     }
     
     private func layout(){

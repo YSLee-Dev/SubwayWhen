@@ -37,7 +37,7 @@ class SettingVC : TableVCCustom{
 extension SettingVC{
     private func attibute(){
         self.topView.backBtn.isHidden = true
-        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleMediumSize)
+        self.topView.subTitleLabel.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
         self.titleView.mainTitleLabel.numberOfLines = 1
         
         self.tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
