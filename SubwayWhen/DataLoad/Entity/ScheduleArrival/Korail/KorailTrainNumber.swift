@@ -13,4 +13,5 @@ struct KorailTrainNumber : Codable{
     let line : String
     let startStation : String
     let trainNumber : String
+    let week : String
 }
