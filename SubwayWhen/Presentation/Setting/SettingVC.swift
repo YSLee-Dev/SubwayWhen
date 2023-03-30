@@ -11,11 +11,11 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+import AcknowList
+
 class SettingVC : TableVCCustom{
     let settingVC : SettingViewModelProtocol
     let bag = DisposeBag()
-    
-    var delegate : SettingVCDelegate?
     
     init(viewModel : SettingViewModelProtocol) {
         self.settingVC = viewModel
@@ -114,7 +114,8 @@ extension Reactive where Base : SettingVC{
                 
                 base.present(modal, animated: false)
             }else if data.settingTitle == "오픈 라이선스"{
-                base.delegate?.licensesTap()
+                let vc = AcknowListViewController(fileNamed: "Pods-SubwayWhen-acknowledgements")
+                base.present(UINavigationController(rootViewController: vc), animated: true)
             }
         }
     }
