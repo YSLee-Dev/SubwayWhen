@@ -56,10 +56,11 @@
 - VC와 ViewModel간의 의존성 주입을 Coordinator에서 진행하였습니다.
 ``` 
 - 민실씨의 AppCoordinator은 TabbarController의 선언도 같이하게 설계하였습니다.
-- 민실씨의 경우 앱의 첫 화면부터 Tabbar가 존재하기 때문에 AppCoordinator와 TabbarCoordinator를 분리하는게 비효율적이라 생각이 들어 
-AppCoordinator가 TabbarController도 선언하도록 하였습니다.
+- 민실씨의 경우 앱의 첫 화면부터 Tabbar가 존재하기 때문에 AppCoordinator와 TabbarCoordinator를 분리하는게 
+비효율적이라 생각이 들어 AppCoordinator가 TabbarController도 선언하도록 하였습니다.
 ``` 
 
 <br/>
 
 ## 🔗 지하철 민실씨 다운로드 링크
+- https://apps.apple.com/us/app/지하철-민실씨/id6446166573
