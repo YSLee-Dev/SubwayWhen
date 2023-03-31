@@ -115,6 +115,9 @@ extension Reactive where Base : SettingVC{
                 base.present(modal, animated: false)
             }else if data.settingTitle == "오픈 라이선스"{
                 let vc = AcknowListViewController(fileNamed: "Pods-SubwayWhen-acknowledgements")
+                vc.title = "SubwayWhen Licenses"
+                vc.headerText = "지하철 민실씨 오픈 라이선스"
+                vc.footerText = "YoonSu Lee"
                 base.present(UINavigationController(rootViewController: vc), animated: true)
             }
         }
