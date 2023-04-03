@@ -16,13 +16,13 @@ import FirebaseAnalytics
 class MainViewModel : MainViewModelProtocol{
     // MODEL
     let mainTableViewModel : MainTableViewModelProtocol
-    let mainModel : MainModelProtocol
+    private let mainModel : MainModelProtocol
     
     let bag = DisposeBag()
     
     // 현재 데이터
-    internal let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
-    internal let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     
     // INPUT
     let reloadData = PublishRelay<Void>()
