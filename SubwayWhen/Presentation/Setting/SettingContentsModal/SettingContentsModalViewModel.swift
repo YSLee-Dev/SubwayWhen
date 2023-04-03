@@ -14,7 +14,7 @@ import RxOptional
 class SettingContentsModalViewModel : SettingContentsModalViewModelProtocol{
     let contents : Driver<String>
     
-    let model : SettingContentsModalModelProtocol
+    private let model : SettingContentsModalModelProtocol
     
     init(
         model : SettingContentsModalModel = .init()
