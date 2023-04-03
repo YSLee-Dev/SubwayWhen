@@ -19,7 +19,7 @@ class DetailTableScheduleCellModel : DetailTableScheduleCellModelProtocol{
     let cellData : Driver<[ResultSchdule]>
     
     // NOW
-    internal let nowData = BehaviorRelay<[ResultSchdule]>(value: [])
+    private let nowData = BehaviorRelay<[ResultSchdule]>(value: [])
     
     let bag = DisposeBag()
     
