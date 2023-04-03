@@ -36,11 +36,12 @@ class ModalViewModel : ModalViewModelProtocol{
     
     let bag = DisposeBag()
     
-    internal let modalCloseEvent = PublishRelay<Bool>()
-    internal let mainCellData = PublishRelay<DetailLoadData>()
+    // DATA
+    private let modalCloseEvent = PublishRelay<Bool>()
+    private let mainCellData = PublishRelay<DetailLoadData>()
     
     // MODEL
-    let model : ModalModelProtocol
+    private let model : ModalModelProtocol
     
     init(
         model : ModalModel = .init()
