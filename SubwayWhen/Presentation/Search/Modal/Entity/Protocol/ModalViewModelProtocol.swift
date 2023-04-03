@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol ModalViewModelProtocol{
+    // OUTPUT
     var modalData : Driver<ResultVCCellData>{get}
     var modalClose : Driver<Void>{get}
     var alertShow : Driver<Void>{get}
@@ -25,7 +26,4 @@ protocol ModalViewModelProtocol{
     var groupClick : BehaviorRelay<SaveStationGroup>{get}
     var exceptionLastStationText: BehaviorRelay<String?>{get}
     var disposableBtnTap : PublishRelay<Bool>{get}
-    
-    var modalCloseEvent : PublishRelay<Bool>{get}
-    var mainCellData : PublishRelay<DetailLoadData>{get}
 }
