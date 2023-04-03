@@ -11,8 +11,6 @@ import RxSwift
 import RxCocoa
 
 protocol EditViewModelProtocol{
-    var editModel : EditModelProtocol{get}
-    
     // INPUT
     var deleteCell : PublishRelay<String>{get}
     var refreshOn : PublishRelay<Void>{get}
@@ -20,7 +18,4 @@ protocol EditViewModelProtocol{
     
     // OUTPUT
     var cellData : Driver<[EditViewCellSection]>{get}
-    
-    // VALUE
-    var nowData : BehaviorSubject<[EditViewCellSection]>{get}
 }

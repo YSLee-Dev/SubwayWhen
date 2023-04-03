@@ -12,7 +12,7 @@ import RxCocoa
 
 class EditViewModel : EditViewModelProtocol{
     // MODEL
-    let editModel : EditModelProtocol
+    private let editModel : EditModelProtocol
     
     // INPUT
     let deleteCell = PublishRelay<String>()
@@ -23,7 +23,7 @@ class EditViewModel : EditViewModelProtocol{
     let cellData : Driver<[EditViewCellSection]>
     
     // VALUE
-    internal let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
+    private let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     
