@@ -24,7 +24,7 @@ class ReportContentsModalViewModel : ReportContentsModalViewModelProtocol{
     let twoStepClose : Driver<Void>
     
     // MODEL
-    let model : ReportContentsModalModelProtocol
+    private let model : ReportContentsModalModelProtocol
     let tfViewModel : ReportContentsModalTFViewModelProtocol
     let checkModel : ReportCheckModalViewModelProtocol
     
