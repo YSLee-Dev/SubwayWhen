@@ -23,10 +23,10 @@ class SettingViewModel : SettingViewModelProtocol{
     let cellClick = PublishRelay<SettingTableViewCellData>()
     
     // MODEL
-    let model : SettingModelProtocol
+    private let model : SettingModelProtocol
     let settingTableViewCellModel : SettingTableViewCellModelProtocol
     
-    let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
+    private let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     

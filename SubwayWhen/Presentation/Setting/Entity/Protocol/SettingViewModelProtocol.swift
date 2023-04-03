@@ -17,8 +17,6 @@ protocol SettingViewModelProtocol{
     
     var cellClick : PublishRelay<SettingTableViewCellData>{get}
     
-    var model : SettingModelProtocol{get}
     var settingTableViewCellModel : SettingTableViewCellModelProtocol{get}
     
-    var settingList : BehaviorRelay<[SettingTableViewCellSection]>{get}
 }
