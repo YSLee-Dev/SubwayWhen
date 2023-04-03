@@ -12,10 +12,6 @@ import RxCocoa
 
 protocol MainViewModelProtocol{
     var mainTableViewModel : MainTableViewModelProtocol{get}
-    var mainModel : MainModelProtocol{get}
-    
-    var groupData : BehaviorRelay<[MainTableViewCellData]>{get}
-    var totalData : BehaviorRelay<[MainTableViewCellData]>{get}
     
     var reloadData : PublishRelay<Void>{get}
     
