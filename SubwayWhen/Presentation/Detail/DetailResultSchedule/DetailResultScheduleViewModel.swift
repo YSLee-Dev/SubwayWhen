@@ -24,10 +24,10 @@ class DetailResultScheduleViewModel : DetailResultScheduleViewModelProtocol{
     
     // MODEL
     let detailResultScheduleTopViewModel : DetailResultScheduleTopViewProtocol
-    let detailResultScheduleModel : DetailResultScheduleModelProtocol
+    private let detailResultScheduleModel : DetailResultScheduleModelProtocol
     
-    internal let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
-    internal let sectionNumber = BehaviorRelay<Int>(value: 0)
+    private let nowData = BehaviorRelay<[DetailResultScheduleViewSectionData]>(value: [])
+    private let sectionNumber = BehaviorRelay<Int>(value: 0)
     
     let bag = DisposeBag()
     
