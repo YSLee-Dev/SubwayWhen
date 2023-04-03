@@ -22,7 +22,6 @@ protocol ReportContentsModalViewModelProtocol{
     var twoStepClose : Driver<Void>{get}
     
     
-    var model : ReportContentsModalModelProtocol{get}
     var tfViewModel : ReportContentsModalTFViewModelProtocol{get}
     var checkModel : ReportCheckModalViewModelProtocol{get}
 }

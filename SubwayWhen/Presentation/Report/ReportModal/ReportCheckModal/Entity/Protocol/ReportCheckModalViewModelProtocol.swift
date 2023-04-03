@@ -18,12 +18,5 @@ protocol ReportCheckModalViewModelProtocol{
     // OUTPUT
     var msg : Driver<String>{get}
     var number : Driver<String>{get}
-    
-    // MODEL
-    var model : ReportCheckModalModelProtocol{get}
-    
-    // DATA
-    var createMSG : BehaviorSubject<String>{get}
-    var matchingNumber : PublishSubject<String>{get}
 }
  

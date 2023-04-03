@@ -20,16 +20,16 @@ class ReportViewModel : ReportViewModelProtocol{
     let popVC : Driver<Void>
     
     // DATA
-    let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
-    let nowStep = PublishRelay<Int>()
-    let msgData = PublishRelay<ReportMSGData>()
-    let checkModalViewModelData = PublishRelay<ReportContentsModalViewModelProtocol>()
+    private let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
+    private let nowStep = PublishRelay<Int>()
+    private let msgData = PublishRelay<ReportMSGData>()
+    private let checkModalViewModelData = PublishRelay<ReportContentsModalViewModelProtocol>()
     
     // MODEL
     let lineCellModel : ReportTableViewLineCellModelProtocol
     let textFieldCellModel : ReportTableViewTextFieldCellModelProtocol
     let twoBtnCellModel : ReportTableViewTwoBtnCellModelProtocol
-    let model : ReportModelProtocol
+    private let model : ReportModelProtocol
     let contentsModalViewModel : ReportContentsModalViewModelProtocol
     
     let bag = DisposeBag()
