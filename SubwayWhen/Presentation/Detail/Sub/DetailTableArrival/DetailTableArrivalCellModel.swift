@@ -20,16 +20,32 @@ class DetailTableArrivalCellModel : DetailTableArrivalCellModelProtocol {
     let cellData : Driver<[RealtimeStationArrival]>
     let timer : Driver<Int>
     
+    // MODEL
+    let arrivalLiveViewModel : DetailTableArrivalLiveViewModelProtocol
+    
+    let bag = DisposeBag()
+    
     deinit{
         print("DetailTableArrivalCellModel DEINIT")
     }
     
-    init(){
+    init(
+        arrvialLiveViewModel : DetailTableArrivalLiveViewModel = .init()
+    ){
+        self.arrivalLiveViewModel = arrvialLiveViewModel
+        
         self.cellData = self.realTimeData
             .asDriver(onErrorDriveWith: .empty())
         
         self.timer = self.superTimer
             .asDriver(onErrorDriveWith: .empty())
         
+        self.realTimeData
+            .bind(to: self.arrivalLiveViewModel.arrivalData)
+            .disposed(by: self.bag)
+        
+        self.superTimer
+            .bind(to: self.arrivalLiveViewModel.superTimer)
+            .disposed(by: self.bag)
     }
 }
