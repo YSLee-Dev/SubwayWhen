@@ -19,4 +19,6 @@ protocol DetailTableArrivalCellModelProtocol{
     // OUTPUT
     var cellData : Driver<[RealtimeStationArrival]>{get}
     var timer : Driver<Int>{get}
+    
+    var arrivalLiveViewModel : DetailTableArrivalLiveViewModelProtocol {get}
 }
