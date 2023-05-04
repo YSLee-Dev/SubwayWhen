@@ -34,13 +34,20 @@ class DetailTableArrivalLiveViewModel : DetailTableArrivalLiveViewModelProtocol{
             .filterNil()
             .asDriver(onErrorDriveWith: .empty())
         
-        self.arrivalData
-            .filter{
+        let filterCodeThree = self.arrivalData
+            .map{
                 $0.first?.code == "3"
             }
-            .flatMapLatest{[weak self] _ in
-                self?.superTimer.asObservable() ?? .empty()
+        
+        self.superTimer
+            .withLatestFrom(filterCodeThree){ timer, filter -> Int? in
+                if filter{
+                    return timer
+                }else{
+                    return nil
+                }
             }
+            .filterNil()
             .bind(to: self.filterTimer)
             .disposed(by: self.bag)
     }
