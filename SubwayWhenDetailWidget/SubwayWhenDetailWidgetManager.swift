@@ -62,6 +62,7 @@ class SubwayWhenDetailWidgetManager{
       Task {
         for activity in Activity<SubwayWhenDetailWidgetAttributes>.activities {
           await activity.end(dismissalPolicy: .immediate)
+            
         }
       }
     }
