@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
