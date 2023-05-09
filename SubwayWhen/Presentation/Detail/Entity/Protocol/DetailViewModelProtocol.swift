@@ -21,4 +21,5 @@ protocol DetailViewModelProtocol {
     var cellData : Driver<[DetailTableViewSectionData]>{get}
     var moreBtnClickData : Driver<schduleResultData>{get}
     var exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>{get}
+    var liveActivityArrivalData : Driver<DetailActivityLoadData>{get}
 }
