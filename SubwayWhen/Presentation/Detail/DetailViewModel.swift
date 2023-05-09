@@ -30,11 +30,13 @@ class DetailViewModel : DetailViewModelProtocol{
     let cellData : Driver<[DetailTableViewSectionData]>
     let moreBtnClickData : Driver<schduleResultData>
     let exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>
+    let liveActivityArrivalData : Driver<DetailActivityLoadData>
     
     // DATA
     private let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
     private let scheduleData = PublishRelay<[ResultSchdule]>()
     private let arrivalData = PublishRelay<[RealtimeStationArrival]>()
+    private let liveActivityData = PublishSubject<DetailActivityLoadData>()
     
     var bag = DisposeBag()
     var timerBag = DisposeBag()
@@ -84,8 +86,22 @@ class DetailViewModel : DetailViewModelProtocol{
             .withLatestFrom(self.detailViewData)
             .asDriver(onErrorDriveWith: .empty())
         
+        self.liveActivityArrivalData = self.liveActivityData
+            .asDriver(onErrorDriveWith: .empty())
+        
         self.arrivalData
             .bind(to: self.arrivalCellModel.realTimeData)
+            .disposed(by: self.bag)
+        
+        // liveActivityArrivalData 값 조합 후 넘기기
+        self.arrivalData
+            .withLatestFrom(self.detailViewData){ arrival, detail -> DetailActivityLoadData? in
+                guard let now = arrival.first else {return nil}
+                
+                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, nowStation: now.previousStation ?? "", status: now.code, statusMSG: now.subPrevious)
+            }
+            .filterNil()
+            .bind(to: self.liveActivityData)
             .disposed(by: self.bag)
         
         // 재로딩 버튼 클릭 시 exception Station 제거
