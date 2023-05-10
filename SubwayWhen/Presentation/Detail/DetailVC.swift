@@ -147,6 +147,8 @@ extension Reactive where Base : DetailVC{
     
     var liveActivity : Binder<DetailActivityLoadData>{
         return Binder(base){base , data in
+            guard !base.disposable else {return}
+            
             if !base.liveActivity{
                 SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, nowStation: data.useNowStation, status: data.status, statusMSG: data.statusMSG)
                 base.liveActivity = !base.liveActivity
