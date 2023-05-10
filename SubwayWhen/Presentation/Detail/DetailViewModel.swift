@@ -97,6 +97,7 @@ class DetailViewModel : DetailViewModelProtocol{
         self.arrivalData
             .withLatestFrom(self.detailViewData){ arrival, detail -> DetailActivityLoadData? in
                 guard let now = arrival.first else {return nil}
+                guard FixInfo.saveSetting.detailAutoReload == true else {return nil}
                 
                 return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, nowStation: now.previousStation ?? "", status: now.code, statusMSG: now.subPrevious)
             }
