@@ -19,7 +19,7 @@ class SettingModel : SettingModelProtocol{
                         .init(settingTitle: "특정 그룹 시간", defaultData: "", inputType: .NewVC, groupType: .Main)
                     ]),
                     SettingTableViewCellSection(sectionName: "상세화면", items: [
-                        .init(settingTitle: "자동 새로 고침",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail),
+                        .init(settingTitle: "자동 새로 고침(Live Activity)",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail),
                         .init(settingTitle: "시간표 자동 정렬",defaultData: "\(FixInfo.saveSetting.detailScheduleAutoTime)", inputType: .Switch, groupType: .Detail)
                     ]),
                     SettingTableViewCellSection(sectionName: "검색", items: [
