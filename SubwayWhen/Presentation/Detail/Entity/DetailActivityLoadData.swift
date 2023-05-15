@@ -13,6 +13,7 @@ struct DetailActivityLoadData{
     let nowStation : String
     let status : String
     let statusMSG : String
+    let lastUpdate : String
     
     var useNowStation : String {
         return self.nowStation == self.saveStation ? "" : self.nowStation
