@@ -15,6 +15,7 @@ struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
         var status : String
         var statusMSG : String
         var nowStation : String
+        var lastUpdate : String
     }
     
     // Fixed non-changing properties about your activity go here!
@@ -43,10 +44,16 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                     
                     Spacer()
                     
-                    Text(context.state.statusMSG)
-                        .font(.system(size: 16))
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color(uiColor: .label))
+                    VStack(alignment: .trailing){
+                        Text(context.state.lastUpdate)
+                            .font(.system(size: 12))
+                            .foregroundColor(Color.gray)
+                        
+                        Text(context.state.statusMSG)
+                            .font(.system(size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color(uiColor: .label))
+                    }
                     
                 }
                 
@@ -141,8 +148,11 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                         }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack{
+                    VStack(alignment: .trailing){
                         Spacer()
+                        Text(context.state.lastUpdate)
+                            .font(.system(size: 12))
+                            .foregroundColor(Color.gray)
                         Text(context.state.statusMSG)
                             .font(.system(size: 17))
                             .foregroundColor(Color(uiColor: .label))
