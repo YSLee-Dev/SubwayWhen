@@ -148,14 +148,12 @@ extension Reactive where Base : DetailVC{
     var liveActivity : Binder<DetailActivityLoadData>{
         return Binder(base){base , data in
             guard !base.disposable else {return}
-            let minute = Calendar.current.component(.minute, from: Date())
-            let hour = Calendar.current.component(.hour, from: Date())
             
             if !base.liveActivity{
-                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, nowStation: data.useNowStation, status: data.status, statusMSG: data.statusMSG, lastUpdate: "\(hour)시 \(minute)분 기준")
+                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, nowStation: data.useNowStation, status: data.status, statusMSG: data.statusMSG, lastUpdate: data.lastUpdate)
                 base.liveActivity = !base.liveActivity
             }else{
-                SubwayWhenDetailWidgetManager.shared.update(status: data.status, statusMSG: data.statusMSG, nowStation: data.useNowStation, lastUpdate: "\(hour)시 \(minute)분 기준")
+                SubwayWhenDetailWidgetManager.shared.update(status: data.status, statusMSG: data.statusMSG, nowStation: data.useNowStation, lastUpdate: data.lastUpdate)
             }
         }
     }
