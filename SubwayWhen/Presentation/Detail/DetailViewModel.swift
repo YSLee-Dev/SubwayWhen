@@ -99,7 +99,10 @@ class DetailViewModel : DetailViewModelProtocol{
                 guard let now = arrival.first else {return nil}
                 guard FixInfo.saveSetting.detailAutoReload == true else {return nil}
                 
-                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, nowStation: now.previousStation ?? "", status: now.code, statusMSG: now.subPrevious)
+                let minute = Calendar.current.component(.minute, from: Date())
+                let hour = Calendar.current.component(.hour, from: Date())
+                
+                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, nowStation: now.previousStation ?? "", status: now.code, statusMSG: now.subPrevious, lastUpdate: "\(hour)시 \(minute)분 기준")
             }
             .filterNil()
             .bind(to: self.liveActivityData)
