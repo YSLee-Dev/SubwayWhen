@@ -36,6 +36,7 @@ class DetailViewModel : DetailViewModelProtocol{
     private let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
     private let scheduleData = PublishRelay<[ResultSchdule]>()
     private let arrivalData = PublishRelay<[RealtimeStationArrival]>()
+    private let scheduleSortedData = PublishSubject<[ResultSchdule]>()
     private let liveActivityData = PublishSubject<DetailActivityLoadData>()
     
     var bag = DisposeBag()
@@ -60,7 +61,7 @@ class DetailViewModel : DetailViewModelProtocol{
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
-        self.scheduleData
+        self.scheduleSortedData
             .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: self.scheduleCellModel.scheduleData)
             .disposed(by: self.bag)
@@ -93,12 +94,20 @@ class DetailViewModel : DetailViewModelProtocol{
             .bind(to: self.arrivalCellModel.realTimeData)
             .disposed(by: self.bag)
         
-        // liveActivityArrivalData 값 조합 후 넘기기
         self.scheduleData
             .withUnretained(self)
-            .map{ viewModel, data -> [ResultSchdule] in
-                viewModel.detailModel.scheduleSort(data)
+            .map{ viewModel, data in
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    return viewModel.detailModel.scheduleSort(data)
+                }else{
+                    return data
+                }
             }
+            .bind(to: self.scheduleSortedData)
+            .disposed(by: self.bag)
+        
+        // liveActivityArrivalData 값 조합 후 넘기기
+        self.scheduleSortedData
             .withLatestFrom(self.detailViewData){ schedule, detail -> DetailActivityLoadData? in
                 guard FixInfo.saveSetting.detailAutoReload == true else {return nil}
                 
@@ -171,14 +180,6 @@ class DetailViewModel : DetailViewModelProtocol{
             .skip(1)
             .flatMap{ viewModel, data -> Observable<[ResultSchdule]> in
                 viewModel.detailModel.scheduleLoad(data)
-            }
-            .withUnretained(self)
-            .map{ viewModel, data in
-                if FixInfo.saveSetting.detailScheduleAutoTime{
-                    return viewModel.detailModel.scheduleSort(data)
-                }else{
-                    return data
-                }
             }
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
