@@ -69,6 +69,10 @@ class SettingViewModel : SettingViewModelProtocol{
         autoRefresh
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailAutoReload = $0
+                
+                if !$0 {
+                    FixInfo.saveSetting.liveActivity = false
+                }
             })
             .disposed(by: self.bag)
         
@@ -77,6 +81,10 @@ class SettingViewModel : SettingViewModelProtocol{
             .map{[weak self] data in
                 var now = self?.settingList.value
                 now?[1].items[0].defaultData = "\(data)"
+                
+                if !data{
+                    now?[1].items[2].defaultData = "fasle"
+                }
                 
                 return now ?? []
             }
@@ -94,6 +102,10 @@ class SettingViewModel : SettingViewModelProtocol{
         scheduleSort
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailScheduleAutoTime = $0
+                
+                if !$0 {
+                    FixInfo.saveSetting.liveActivity = false
+                }
             })
             .disposed(by: self.bag)
         
@@ -102,6 +114,10 @@ class SettingViewModel : SettingViewModelProtocol{
             .map{[weak self] data in
                 var now = self?.settingList.value
                 now?[1].items[1].defaultData = "\(data)"
+                
+                if !data{
+                    now?[1].items[2].defaultData = "fasle"
+                }
                 
                 return now ?? []
             }
