@@ -53,10 +53,10 @@ class DetailModel : DetailModelProtocol{
         }
         
         return [
-           DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-           DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-           DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
-       ]
+            DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+            DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+            DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
+        ]
     }
     
     func mainCellDataToScheduleSearch(_ item : DetailLoadData) -> ScheduleSearch{
@@ -105,5 +105,29 @@ class DetailModel : DetailModelProtocol{
             }
         }
         return list
+    }
+    
+    func scheduleSort(_ scheduleList : [ResultSchdule]) -> [ResultSchdule]{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HHmmss"
+        
+        guard let now = Int(formatter.string(from: Date())) else {return scheduleList}
+        let schedule = scheduleList.filter{
+            guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
+            if scheduleTime >= now{
+                return true
+            }else{
+                return false
+            }
+        }
+        
+        if schedule.isEmpty{
+            return scheduleList
+        }else if schedule.count == 1{
+            guard let first = schedule.first else {return []}
+            return [first]
+        }else {
+            return schedule
+        }
     }
 }
