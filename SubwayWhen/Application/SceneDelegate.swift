@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var model = AppDefaultModel()
     
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
@@ -46,11 +45,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 팝업 로드
         self.appDefaultManager?.popup()
         
-    }
-    
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-        appDelegate.scheduleAppRefresh()
     }
 }
 
