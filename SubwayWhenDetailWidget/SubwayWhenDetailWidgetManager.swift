@@ -15,9 +15,9 @@ class SubwayWhenDetailWidgetManager{
     
     static let shared = SubwayWhenDetailWidgetManager()
     
-    func start(stationLine : String, saveStation : String, nowStation : String, status : String, statusMSG : String, lastUpdate : String){
+    func start(stationLine : String, saveStation : String, scheduleList : [String], lastUpdate : String){
         let attributes = SubwayWhenDetailWidgetAttributes(line: stationLine, saveStation: saveStation)
-        let contentState = SubwayWhenDetailWidgetAttributes.ContentState(status: status, statusMSG: statusMSG, nowStation: nowStation, lastUpdate: lastUpdate)
+        let contentState = SubwayWhenDetailWidgetAttributes.ContentState(scheduleList: scheduleList, lastUpdate: lastUpdate)
         
         if #available(iOS 16.2, *){
             do {
@@ -42,16 +42,14 @@ class SubwayWhenDetailWidgetManager{
         }
     }
     
-    func update(status : String, statusMSG : String, nowStation : String, lastUpdate : String){
+    func update(scheduleList : [String], lastUpdate : String){
         Task {
-            let updateContentState = SubwayWhenDetailWidgetAttributes.ContentState(status: status, statusMSG: statusMSG, nowStation: nowStation, lastUpdate: lastUpdate)
+            let updateContentState = SubwayWhenDetailWidgetAttributes.ContentState(scheduleList: scheduleList, lastUpdate: lastUpdate)
             for activity in Activity<SubwayWhenDetailWidgetAttributes>.activities {
                 if #available(iOS 16.2, *){
-                    await activity.update(ActivityContent(state: updateContentState, staleDate: .now.advanced(by: 120)),
-                                          alertConfiguration: .init(title: "\(statusMSG)", body: "\(nowStation)", sound: .named(""))
-                    )
+                    await activity.update(ActivityContent(state: updateContentState, staleDate: .now.advanced(by: 120)), alertConfiguration: nil)
                 }else{
-                    await activity.update(using: updateContentState, alertConfiguration: .init(title: "\(statusMSG)", body: "\(nowStation)", sound: .named("")))
+                    await activity.update(using: updateContentState, alertConfiguration: nil)
                 }
                
             }
