@@ -94,15 +94,24 @@ class DetailViewModel : DetailViewModelProtocol{
             .disposed(by: self.bag)
         
         // liveActivityArrivalData 값 조합 후 넘기기
-        self.arrivalData
-            .withLatestFrom(self.detailViewData){ arrival, detail -> DetailActivityLoadData? in
-                guard let now = arrival.first else {return nil}
+        self.scheduleData
+            .withUnretained(self)
+            .map{ viewModel, data -> [ResultSchdule] in
+                viewModel.detailModel.scheduleSort(data)
+            }
+            .withLatestFrom(self.detailViewData){ schedule, detail -> DetailActivityLoadData? in
                 guard FixInfo.saveSetting.detailAutoReload == true else {return nil}
+                
+                var list = schedule.map{
+                    "⏱️ \($0.useArrTime)"
+                }
+                
+                list = list.count > 5 ? (Array(list[0...3])) : list
                 
                 let minute = Calendar.current.component(.minute, from: Date())
                 let hour = Calendar.current.component(.hour, from: Date())
                 
-                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, nowStation: now.previousStation ?? "", status: now.code, statusMSG: now.subPrevious, lastUpdate: "\(hour)시 \(minute)분 기준")
+                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, scheduleList: list, lastUpdate: "\(hour)시 \(minute)분 기준")
             }
             .filterNil()
             .bind(to: self.liveActivityData)
@@ -162,6 +171,14 @@ class DetailViewModel : DetailViewModelProtocol{
             .skip(1)
             .flatMap{ viewModel, data -> Observable<[ResultSchdule]> in
                 viewModel.detailModel.scheduleLoad(data)
+            }
+            .withUnretained(self)
+            .map{ viewModel, data in
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    return viewModel.detailModel.scheduleSort(data)
+                }else{
+                    return data
+                }
             }
             .bind(to: self.scheduleData)
             .disposed(by: self.bag)
