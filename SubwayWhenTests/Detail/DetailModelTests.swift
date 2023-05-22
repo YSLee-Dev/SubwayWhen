@@ -271,4 +271,33 @@ final class DetailModelTests: XCTestCase {
             description: "데이터가 없을 때는 (현재 실시간 열차 데이터가 없어요.)가 나와야함"
         )
     }
+    
+    
+    func testSortScheduleList(){
+        // GIVEN
+        let dummyData = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row
+        
+        let data = self.seoulScheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray().first!
+        let sortData = self.seoulScheduleModel.scheduleSort(arrayData)
+        
+        // WHEN
+        let requestFirstSchedule = sortData.first?.useArrTime
+        let dummyFirstSchedule = dummyData.first?.startTime
+        
+        let requestCount = sortData.count
+        let dummyCount = dummyData.count
+        
+        // THEN
+        expect(requestFirstSchedule).toNot(
+            equal(dummyFirstSchedule) ,
+            description: "정렬되고 나서는 데이터가 달라야함"
+        )
+        
+        expect(requestCount).toNot(
+            equal(dummyCount) ,
+            description: "정렬되고 난 데이터의 개수는 달라야함"
+        )
+    }
 }
