@@ -10,6 +10,7 @@ import UIKit
 enum ViewStyle{
     enum FontSize{
         static let superSmallSize : CGFloat = 9
+        static let mediumSmallSize : CGFloat = 11
         static let smallSize : CGFloat = 13
         static let mediumSize : CGFloat = 15
         static let largeSize : CGFloat = 17

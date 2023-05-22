@@ -113,6 +113,7 @@ class DetailViewModel : DetailViewModelProtocol{
         self.scheduleSortedData
             .withLatestFrom(self.detailViewData){ schedule, detail -> DetailActivityLoadData? in
                 guard FixInfo.saveSetting.liveActivity == true else {return nil}
+                guard schedule.first?.startTime != "정보없음" else {return nil}
                 
                 var list = schedule.map{
                     "⏱️ \($0.useArrTime)"
