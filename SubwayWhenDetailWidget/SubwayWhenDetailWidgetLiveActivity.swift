@@ -12,9 +12,7 @@ import SwiftUI
 struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
-        var status : String
-        var statusMSG : String
-        var nowStation : String
+        var scheduleList : [String]
         var lastUpdate : String
     }
     
@@ -30,12 +28,12 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
             VStack{
                 HStack{
                     Text(context.attributes.line)
-                        .font(.system(size: 14))
+                        .font(.system(size: ViewStyle.FontSize.mediumSize))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.white)
                         .frame(
-                            width: 50,
-                            height: 50
+                            width: 60,
+                            height: 60
                         )
                         .background{
                             Circle()
@@ -45,86 +43,32 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                     Spacer()
                     
                     VStack(alignment: .trailing){
-                        Text(context.state.lastUpdate)
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.gray)
-                        
-                        Text(context.state.statusMSG)
-                            .font(.system(size: 16))
+                        Text(context.attributes.saveStation)
+                            .font(.system(size: ViewStyle.FontSize.largeSize))
                             .fontWeight(.semibold)
                             .foregroundColor(Color(uiColor: .label))
+                        
+                        Text(context.state.lastUpdate)
+                            .font(.system(size: ViewStyle.FontSize.smallSize))
+                            .foregroundColor(Color.secondary)
                     }
                     
                 }
                 
-                HStack(alignment: .center, spacing: 0){
-                    Text(context.attributes.saveStation)
-                        .font(.system(size: 14))
-                        .foregroundColor(Color(uiColor: .label))
-                        .padding(.leading, 5)
-                    
-                    Spacer()
-                    
-                    VStack{
-                        Divider()
-                            .frame(height: 3)
-                            .background(Color(context.attributes.line))
-                            .overlay{
-                                HStack{
-                                    Circle()
-                                        .fill(Color.white)
-                                        .overlay{
-                                            Circle()
-                                                .strokeBorder(Color(context.attributes.line))
-                                        }
-                                        .frame(
-                                            width: 12,
-                                            height: 12
-                                        )
-                                    Spacer()
-                                    
-                                    Circle()
-                                        .fill(Color.white)
-                                        .overlay{
-                                            Circle()
-                                                .strokeBorder(Color(context.attributes.line))
-                                        }
-                                        .frame(
-                                            width: 12,
-                                            height: 12
-                                        )
-                                }
-                                
-                                GeometryReader{ geometry in
-                                    if context.state.status == "0"{
-                                        Text("🚃")
-                                            .position(x: 25, y: -5)
-                                    }else if context.state.status == "1"{
-                                        Text("🚃")
-                                            .position(x: 5, y: -5)
-                                    }else if context.state.status == "2"{
-                                        Text("🚃")
-                                            .position(x: -5, y: -5)
-                                    }else if context.state.status == "3"{
-                                        Text("🚃")
-                                            .position(x: (geometry.size.width / 2), y: -5)
-                                    }else{
-                                        Text("🚃")
-                                            .position(x: geometry.size.width - 5, y: -5)
-                                    }
-                                }
-                                
+                HStack(alignment: .center, spacing: 5){
+                    ForEach(context.state.scheduleList, id: \.self){ data in
+                        Text(data)
+                            .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
+                            .padding(5)
+                            .foregroundColor(Color.white)
+                            .background{
+                                Capsule()
+                                    .fill(Color(context.attributes.line))
                             }
                     }
-                    
-                    Spacer()
-                    
-                    Text(context.state.nowStation)
-                        .font(.system(size: 14))
-                        .foregroundColor(Color(uiColor: .label))
                 }
             }
-            .frame(height: 85)
+            .frame(height: 95)
             .padding(15)
             .activityBackgroundTint(nil)
             .activitySystemActionForegroundColor(Color.black)
@@ -135,12 +79,12 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     Text(context.attributes.line)
-                        .font(.system(size: 14))
+                        .font(.system(size: ViewStyle.FontSize.mediumSize))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.white)
                         .frame(
-                            width: 50,
-                            height: 50
+                            width: 60,
+                            height: 60
                         )
                         .background{
                             Circle()
@@ -150,98 +94,42 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack(alignment: .trailing){
                         Spacer()
-                        Text(context.state.lastUpdate)
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.gray)
-                        Text(context.state.statusMSG)
-                            .font(.system(size: 17))
+                        Text(context.attributes.saveStation)
+                            .font(.system(size: ViewStyle.FontSize.largeSize))
                             .foregroundColor(Color(uiColor: .label))
+                        Text(context.state.lastUpdate)
+                            .font(.system(size: ViewStyle.FontSize.smallSize))
+                            .foregroundColor(Color.gray)
                         Spacer()
                     }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HStack(alignment: .center, spacing: 0){
-                        Text(context.attributes.saveStation)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color(uiColor: .label))
-                            .padding(.leading, 5)
-                        
-                        Spacer()
-                        
-                        VStack{
-                            Divider()
-                                .frame(height: 3)
-                                .background(Color(context.attributes.line))
-                                .overlay{
-                                    HStack{
-                                        Circle()
-                                            .fill(Color.white)
-                                            .overlay{
-                                                Circle()
-                                                    .strokeBorder(Color(context.attributes.line))
-                                            }
-                                            .frame(
-                                                width: 12,
-                                                height: 12
-                                            )
-                                        Spacer()
-                                        
-                                        Circle()
-                                            .fill(Color.white)
-                                            .overlay{
-                                                Circle()
-                                                    .strokeBorder(Color(context.attributes.line))
-                                            }
-                                            .frame(
-                                                width: 12,
-                                                height: 12
-                                            )
-                                    }
-                                    
-                                    GeometryReader{ geometry in
-                                        if context.state.status == "0"{
-                                            Text("🚃")
-                                                .position(x: 25, y: -5)
-                                        }else if context.state.status == "1"{
-                                            Text("🚃")
-                                                .position(x: 5, y: -5)
-                                        }else if context.state.status == "2"{
-                                            Text("🚃")
-                                                .position(x: -5, y: -5)
-                                        }else if context.state.status == "3"{
-                                            Text("🚃")
-                                                .position(x: (geometry.size.width / 2), y: -5)
-                                        }else{
-                                            Text("🚃")
-                                                .position(x: geometry.size.width - 5, y: -5)
-                                        }
-                                    }
-                                    
+                    HStack(alignment: .center, spacing: 5){
+                        ForEach(context.state.scheduleList, id: \.self){ data in
+                            Text(data)
+                                .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
+                                .padding(5)
+                                .foregroundColor(Color.white)
+                                .background{
+                                    Capsule()
+                                        .fill(Color(context.attributes.line))
                                 }
                         }
-                        
-                        Spacer()
-                        
-                        Text(context.state.nowStation)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color(uiColor: .label))
                     }
-                    .padding(5)
                 }
             } compactLeading: {
                 Text(context.attributes.line)
-                    .font(.system(size: 13))
+                    .font(.system(size: ViewStyle.FontSize.smallSize))
                     .fontWeight(.semibold)
                     .foregroundColor(Color(context.attributes.line))
             } compactTrailing: {
-                Text(context.state.statusMSG)
-                    .font(.system(size: 13))
+                Text(context.attributes.saveStation)
+                    .font(.system(size: ViewStyle.FontSize.smallSize))
             } minimal: {
-                Text(context.state.statusMSG)
-                    .font(.system(size: 13))
+                Text(context.attributes.saveStation)
+                    .font(.system(size:  ViewStyle.FontSize.smallSize))
                     .foregroundColor(Color(context.attributes.line))
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color(context.attributes.line))
         }
     }

@@ -150,10 +150,10 @@ extension Reactive where Base : DetailVC{
             guard !base.disposable else {return}
             
             if !base.liveActivity{
-                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, nowStation: data.useNowStation, status: data.status, statusMSG: data.statusMSG, lastUpdate: data.lastUpdate)
+                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
                 base.liveActivity = !base.liveActivity
             }else{
-                SubwayWhenDetailWidgetManager.shared.update(status: data.status, statusMSG: data.statusMSG, nowStation: data.useNowStation, lastUpdate: data.lastUpdate)
+                SubwayWhenDetailWidgetManager.shared.update(scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
             }
         }
     }
