@@ -94,7 +94,10 @@ class DetailViewModel : DetailViewModelProtocol{
             .bind(to: self.arrivalCellModel.realTimeData)
             .disposed(by: self.bag)
         
-        self.scheduleData
+        // 시간표 정렬
+        Observable.combineLatest(self.arrivalCellModel.refreshBtnClick, self.scheduleData){
+            $1
+        }
             .withUnretained(self)
             .map{ viewModel, data in
                 if FixInfo.saveSetting.detailScheduleAutoTime{
@@ -106,10 +109,10 @@ class DetailViewModel : DetailViewModelProtocol{
             .bind(to: self.scheduleSortedData)
             .disposed(by: self.bag)
         
-        // liveActivityArrivalData 값 조합 후 넘기기
+        // liveActivityArrivalData 값 조합 후 넘기기(refresh 버튼 클릭 시 마다 업데이트 (초기값 O))
         self.scheduleSortedData
             .withLatestFrom(self.detailViewData){ schedule, detail -> DetailActivityLoadData? in
-                guard FixInfo.saveSetting.detailAutoReload == true else {return nil}
+                guard FixInfo.saveSetting.liveActivity == true else {return nil}
                 
                 var list = schedule.map{
                     "⏱️ \($0.useArrTime)"

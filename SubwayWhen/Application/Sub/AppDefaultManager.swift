@@ -78,7 +78,7 @@ extension AppDefaultManager{
             FixInfo.saveSetting = setting
             print("setting load success")
         case .failure(let error):
-            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "☹️", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true, detailScheduleAutoTime: true, searchOverlapAlert : true)
+            FixInfo.saveSetting = SaveSetting(mainCongestionLabel: "☹️", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true, detailScheduleAutoTime: true, liveActivity: true, searchOverlapAlert : true)
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
     }

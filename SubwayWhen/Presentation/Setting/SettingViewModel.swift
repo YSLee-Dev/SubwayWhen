@@ -108,6 +108,41 @@ class SettingViewModel : SettingViewModelProtocol{
             .bind(to: self.settingList)
             .disposed(by: self.bag)
         
+        // Live Activity
+        let liveActivity = self.settingTableViewCellModel.cellIndex
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){[weak self] index, value -> Bool? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 2, section: 1), data: value)
+            }
+            .filterNil()
+            .share()
+        
+        liveActivity
+            .subscribe(onNext: {
+                FixInfo.saveSetting.liveActivity = $0
+                
+                if $0{
+                    FixInfo.saveSetting.detailScheduleAutoTime = true
+                    FixInfo.saveSetting.detailAutoReload = true
+                }
+            })
+            .disposed(by: self.bag)
+        
+        // 재사용 방지
+        liveActivity
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[1].items[2].defaultData = "\(data)"
+                
+                if data{
+                    now?[1].items[0].defaultData = "true"
+                    now?[1].items[1].defaultData = "true"
+                }
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
         // 중복 저장 방지
         let overlap = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.switchValue){ [weak self] index, value -> Bool? in
