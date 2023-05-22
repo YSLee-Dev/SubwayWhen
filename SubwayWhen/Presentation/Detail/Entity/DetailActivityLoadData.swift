@@ -10,12 +10,6 @@ import Foundation
 struct DetailActivityLoadData{
     let saveStation : String
     let saveLine : String
-    let nowStation : String
-    let status : String
-    let statusMSG : String
+    let scheduleList : [String]
     let lastUpdate : String
-    
-    var useNowStation : String {
-        return self.nowStation == self.saveStation ? "" : self.nowStation
-    }
 }
