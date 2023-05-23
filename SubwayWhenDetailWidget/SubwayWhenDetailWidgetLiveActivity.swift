@@ -54,11 +54,13 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                     }
                     
                 }
+                .padding(.bottom, 5)
                 
                 HStack(alignment: .center, spacing: 5){
                     ForEach(context.state.scheduleList, id: \.self){ data in
                         Text(data)
                             .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
+                            .lineLimit(1)
                             .padding(5)
                             .foregroundColor(Color.white)
                             .background{
@@ -90,6 +92,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                             Circle()
                                 .fill(Color(context.attributes.line))
                         }
+                        .padding(.bottom, 5)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack(alignment: .trailing){
@@ -108,6 +111,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                         ForEach(context.state.scheduleList, id: \.self){ data in
                             Text(data)
                                 .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
+                                .lineLimit(1)
                                 .padding(5)
                                 .foregroundColor(Color.white)
                                 .background{
