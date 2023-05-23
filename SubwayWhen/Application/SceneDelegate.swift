@@ -44,7 +44,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 팝업 로드
         self.appDefaultManager?.popup()
-        
     }
+    
+    func sceneDidDisconnect(_ scene: UIScene) {
+        SubwayWhenDetailWidgetManager.shared.stop()
+        print("sceneDidDisconnect")
+    }
+    
+    
+    
 }
 
