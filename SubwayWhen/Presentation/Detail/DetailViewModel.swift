@@ -119,7 +119,7 @@ class DetailViewModel : DetailViewModelProtocol{
                     "⏱️ \($0.useArrTime)"
                 }
                 
-                list = list.count > 5 ? (Array(list[0...3])) : list
+                list = list.count >= 6 ? (Array(list[0...4])) : list
                 
                 let minute = Calendar.current.component(.minute, from: Date())
                 let hour = Calendar.current.component(.hour, from: Date())
