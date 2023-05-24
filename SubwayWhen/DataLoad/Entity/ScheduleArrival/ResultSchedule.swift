@@ -61,15 +61,13 @@ struct ResultSchdule{
             var time = self.startTime
             if time != "0", time != "", !(time.contains("없음")){
                 let index1 = time.index(time.startIndex, offsetBy: 2)
-                let index2 = time.index(time.startIndex, offsetBy: 5)
                 
                 time.insert(":", at: index1)
-                time.insert(":", at: index2)
             }
           
-            return time
+            return String(time.dropLast(2))
         }else{
-            return self.startTime
+            return String(self.startTime.dropLast(3))
         }
     }
 }
