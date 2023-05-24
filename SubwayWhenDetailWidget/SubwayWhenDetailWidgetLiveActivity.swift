@@ -11,12 +11,10 @@ import SwiftUI
 
 struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
         var scheduleList : [String]
         var lastUpdate : String
     }
     
-    // Fixed non-changing properties about your activity go here!
     var line: String
     var saveStation : String
 }
@@ -57,7 +55,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                 .padding(.bottom, 5)
                 
                 HStack(alignment: .center, spacing: 5){
-                    ForEach(context.state.scheduleList, id: \.self){ data in
+                    ForEach(Array(context.state.scheduleList.enumerated()), id: \.offset){ offset, data  in
                         Text(data)
                             .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
                             .lineLimit(1)
@@ -67,6 +65,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                                 Capsule()
                                     .fill(Color(context.attributes.line))
                             }
+                            .layoutPriority(Double(-(offset) + 10))
                     }
                 }
             }
@@ -108,7 +107,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack(alignment: .center, spacing: 5){
-                        ForEach(context.state.scheduleList, id: \.self){ data in
+                        ForEach(Array(context.state.scheduleList.enumerated()), id: \.offset){ offset, data  in
                             Text(data)
                                 .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
                                 .lineLimit(1)
@@ -118,6 +117,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                                     Capsule()
                                         .fill(Color(context.attributes.line))
                                 }
+                                .layoutPriority(Double(-(offset) + 10))
                         }
                     }
                 }
