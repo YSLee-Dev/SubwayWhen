@@ -185,12 +185,14 @@ class SettingViewModel : SettingViewModelProtocol{
             .disposed(by: self.bag)
         
         // 메인 혼잡도 이모지 변경
-       self.settingTableViewCellModel.cellIndex
+       let congestionLabel = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.tfValue){[weak self] index, tf -> String? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 0), data: tf ?? "")
             }
             .filterNil()
-            .subscribe(onNext: {
+            .share()
+        
+        congestionLabel.subscribe(onNext: {
                 let label = $0 == "" ? "☹️" : $0
                 FixInfo.saveSetting.mainCongestionLabel = label
                 
@@ -199,5 +201,16 @@ class SettingViewModel : SettingViewModelProtocol{
                 ])
             })
             .disposed(by: self.bag)
+        
+        congestionLabel
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[0].items[0].defaultData = "\(data)"
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
     }
 }
