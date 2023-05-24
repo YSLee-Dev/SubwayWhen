@@ -40,6 +40,8 @@ class SettingTableViewCell : TableViewCellCustom{
     var index : IndexPath = .init(row: 0, section: 0)
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         self.bag = DisposeBag()
         [self.onoffSwitch, self.textField]
             .forEach{
