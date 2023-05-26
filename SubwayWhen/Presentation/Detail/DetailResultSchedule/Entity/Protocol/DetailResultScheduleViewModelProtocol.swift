@@ -21,8 +21,4 @@ protocol DetailResultScheduleViewModelProtocol{
     var scheduleVCExceptionLastStationBtnClick : Driver<Void>{get}
     
     var detailResultScheduleTopViewModel : DetailResultScheduleTopViewProtocol{get}
-    var detailResultScheduleModel : DetailResultScheduleModelProtocol{get}
-    
-    var nowData : BehaviorRelay<[DetailResultScheduleViewSectionData]>{get}
-    var sectionNumber : BehaviorRelay<Int>{get}
 }

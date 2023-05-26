@@ -40,7 +40,14 @@ class SettingTableViewCell : TableViewCellCustom{
     var index : IndexPath = .init(row: 0, section: 0)
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         self.bag = DisposeBag()
+        [self.onoffSwitch, self.textField]
+            .forEach{
+                $0.removeFromSuperview()
+            }
+        self.accessoryType = .none
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -58,6 +65,7 @@ extension SettingTableViewCell{
     private func attribute(){
         self.selectionStyle = .none
     }
+    
     private func layout(){
         self.mainBG.snp.updateConstraints{
             $0.top.equalToSuperview().offset(2.5)
@@ -69,7 +77,7 @@ extension SettingTableViewCell{
         self.settingTitle.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(self.snp.centerX)
+            $0.trailing.equalTo(self.snp.centerX).offset(25)
         }
     }
     
@@ -128,7 +136,7 @@ extension SettingTableViewCell{
     private func tfSet(defaultValue : String){
         self.mainBG.addSubview(self.textField)
         self.textField.snp.makeConstraints{
-            $0.leading.equalTo(self.snp.centerX)
+            $0.leading.equalTo(self.snp.centerX).offset(25)
             $0.trailing.equalToSuperview().inset(15)
             $0.centerY.equalToSuperview()
         }

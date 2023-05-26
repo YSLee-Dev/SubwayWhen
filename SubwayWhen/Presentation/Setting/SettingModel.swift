@@ -20,7 +20,8 @@ class SettingModel : SettingModelProtocol{
                     ]),
                     SettingTableViewCellSection(sectionName: "상세화면", items: [
                         .init(settingTitle: "자동 새로 고침",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail),
-                        .init(settingTitle: "시간표 자동 정렬",defaultData: "\(FixInfo.saveSetting.detailScheduleAutoTime)", inputType: .Switch, groupType: .Detail)
+                        .init(settingTitle: "시간표 자동 정렬",defaultData: "\(FixInfo.saveSetting.detailScheduleAutoTime)", inputType: .Switch, groupType: .Detail),
+                        .init(settingTitle: "Live Activity (잠금화면)",defaultData: "\(FixInfo.saveSetting.liveActivity)", inputType: .Switch, groupType: .Detail)
                     ]),
                     SettingTableViewCellSection(sectionName: "검색", items: [
                         .init(settingTitle: "중복 저장 방지",defaultData: "\(FixInfo.saveSetting.searchOverlapAlert)", inputType: .Switch, groupType: .Detail)

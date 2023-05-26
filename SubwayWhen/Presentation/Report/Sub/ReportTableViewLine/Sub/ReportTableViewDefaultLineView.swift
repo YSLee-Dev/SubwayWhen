@@ -67,6 +67,7 @@ extension ReportTableViewDefaultLineView{
             .disposed(by: self.bag)
         
         viewModel.cellData
+            .skip(1)
             .map{
                 $0.isEmpty
             }

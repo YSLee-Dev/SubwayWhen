@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol SettingGroupModalViewModelProtocol{
+    // INPUT
     var groupOneHourValue : BehaviorRelay<Int>{get}
     var groupTwoHourValue : BehaviorRelay<Int>{get}
     var saveBtnClick : PublishRelay<Void>{get}

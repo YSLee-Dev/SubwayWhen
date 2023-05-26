@@ -17,7 +17,7 @@ typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: DetailL
 
 class DetailViewModel : DetailViewModelProtocol{
     // MODEL
-    let detailModel : DetailModelProtocol
+    private let detailModel : DetailModelProtocol
     let headerViewModel : DetailTableHeaderViewModelProtocol
     let arrivalCellModel : DetailTableArrivalCellModelProtocol
     let scheduleCellModel : DetailTableScheduleCellModelProtocol
@@ -30,11 +30,14 @@ class DetailViewModel : DetailViewModelProtocol{
     let cellData : Driver<[DetailTableViewSectionData]>
     let moreBtnClickData : Driver<schduleResultData>
     let exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>
+    let liveActivityArrivalData : Driver<DetailActivityLoadData>
     
     // DATA
-    internal let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
-    internal let scheduleData = PublishRelay<[ResultSchdule]>()
-    internal let arrivalData = PublishRelay<[RealtimeStationArrival]>()
+    private let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
+    private let scheduleData = PublishRelay<[ResultSchdule]>()
+    private let arrivalData = PublishRelay<[RealtimeStationArrival]>()
+    private let scheduleSortedData = PublishSubject<[ResultSchdule]>()
+    private let liveActivityData = PublishSubject<DetailActivityLoadData>()
     
     var bag = DisposeBag()
     var timerBag = DisposeBag()
@@ -58,7 +61,7 @@ class DetailViewModel : DetailViewModelProtocol{
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
-        self.scheduleData
+        self.scheduleSortedData
             .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: self.scheduleCellModel.scheduleData)
             .disposed(by: self.bag)
@@ -84,8 +87,47 @@ class DetailViewModel : DetailViewModelProtocol{
             .withLatestFrom(self.detailViewData)
             .asDriver(onErrorDriveWith: .empty())
         
+        self.liveActivityArrivalData = self.liveActivityData
+            .asDriver(onErrorDriveWith: .empty())
+        
         self.arrivalData
             .bind(to: self.arrivalCellModel.realTimeData)
+            .disposed(by: self.bag)
+        
+        // 시간표 정렬
+        Observable.combineLatest(self.arrivalCellModel.refreshBtnClick, self.scheduleData){
+            $1
+        }
+            .withUnretained(self)
+            .map{ viewModel, data in
+                if FixInfo.saveSetting.detailScheduleAutoTime{
+                    return viewModel.detailModel.scheduleSort(data)
+                }else{
+                    return data
+                }
+            }
+            .bind(to: self.scheduleSortedData)
+            .disposed(by: self.bag)
+        
+        // liveActivityArrivalData 값 조합 후 넘기기(refresh 버튼 클릭 시 마다 업데이트 (초기값 O))
+        self.scheduleSortedData
+            .withLatestFrom(self.detailViewData){ schedule, detail -> DetailActivityLoadData? in
+                guard FixInfo.saveSetting.liveActivity == true else {return nil}
+                guard schedule.first?.startTime != "정보없음" else {return nil}
+                
+                var list = schedule.map{
+                    "⏱️ \($0.useArrTime)"
+                }
+                
+                list = list.count >= 6 ? (Array(list[0...4])) : list
+                
+                let minute = Calendar.current.component(.minute, from: Date())
+                let hour = Calendar.current.component(.hour, from: Date())
+                
+                return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, scheduleList: list, lastUpdate: "\(hour)시 \(minute)분 기준")
+            }
+            .filterNil()
+            .bind(to: self.liveActivityData)
             .disposed(by: self.bag)
         
         // 재로딩 버튼 클릭 시 exception Station 제거
