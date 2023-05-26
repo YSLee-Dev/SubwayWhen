@@ -20,16 +20,16 @@ class ReportViewModel : ReportViewModelProtocol{
     let popVC : Driver<Void>
     
     // DATA
-    let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
-    let nowStep = PublishRelay<Int>()
-    let msgData = PublishRelay<ReportMSGData>()
-    let checkModalViewModelData = PublishRelay<ReportContentsModalViewModelProtocol>()
+    private let nowData = BehaviorRelay<[ReportTableViewCellSection]>(value: [])
+    private let nowStep = PublishRelay<Int>()
+    private let msgData = PublishRelay<ReportMSGData>()
+    private let checkModalViewModelData = PublishRelay<ReportContentsModalViewModelProtocol>()
     
     // MODEL
     let lineCellModel : ReportTableViewLineCellModelProtocol
     let textFieldCellModel : ReportTableViewTextFieldCellModelProtocol
     let twoBtnCellModel : ReportTableViewTwoBtnCellModelProtocol
-    let model : ReportModelProtocol
+    private let model : ReportModelProtocol
     let contentsModalViewModel : ReportContentsModalViewModelProtocol
     
     let bag = DisposeBag()
@@ -78,13 +78,13 @@ class ReportViewModel : ReportViewModelProtocol{
            .bind(to: self.checkModalViewModelData)
            .disposed(by: self.bag)
         
-        // DefaultLineCell Data / delay 3s
+        // DefaultLineCell Data / delay 3.5s
         Observable<[String]>.create{
             $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전철"}))
             $0.onCompleted()
             return Disposables.create()
         }
-        .delay(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
+        .delay(.milliseconds(350), scheduler: MainScheduler.asyncInstance)
         .bind(to: self.lineCellModel.defaultLineViewModel.defaultCellData)
         .disposed(by: self.bag)
         

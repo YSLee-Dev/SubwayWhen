@@ -23,10 +23,10 @@ class SettingViewModel : SettingViewModelProtocol{
     let cellClick = PublishRelay<SettingTableViewCellData>()
     
     // MODEL
-    let model : SettingModelProtocol
+    private let model : SettingModelProtocol
     let settingTableViewCellModel : SettingTableViewCellModelProtocol
     
-    let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
+    private let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
     
     let bag = DisposeBag()
     
@@ -69,6 +69,10 @@ class SettingViewModel : SettingViewModelProtocol{
         autoRefresh
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailAutoReload = $0
+                
+                if !$0 {
+                    FixInfo.saveSetting.liveActivity = false
+                }
             })
             .disposed(by: self.bag)
         
@@ -77,6 +81,10 @@ class SettingViewModel : SettingViewModelProtocol{
             .map{[weak self] data in
                 var now = self?.settingList.value
                 now?[1].items[0].defaultData = "\(data)"
+                
+                if !data{
+                    now?[1].items[2].defaultData = "fasle"
+                }
                 
                 return now ?? []
             }
@@ -94,6 +102,10 @@ class SettingViewModel : SettingViewModelProtocol{
         scheduleSort
             .subscribe(onNext: {
                 FixInfo.saveSetting.detailScheduleAutoTime = $0
+                
+                if !$0 {
+                    FixInfo.saveSetting.liveActivity = false
+                }
             })
             .disposed(by: self.bag)
         
@@ -102,6 +114,45 @@ class SettingViewModel : SettingViewModelProtocol{
             .map{[weak self] data in
                 var now = self?.settingList.value
                 now?[1].items[1].defaultData = "\(data)"
+                
+                if !data{
+                    now?[1].items[2].defaultData = "fasle"
+                }
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
+        // Live Activity
+        let liveActivity = self.settingTableViewCellModel.cellIndex
+            .withLatestFrom(self.settingTableViewCellModel.switchValue){[weak self] index, value -> Bool? in
+                self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 2, section: 1), data: value)
+            }
+            .filterNil()
+            .share()
+        
+        liveActivity
+            .subscribe(onNext: {
+                FixInfo.saveSetting.liveActivity = $0
+                
+                if $0{
+                    FixInfo.saveSetting.detailScheduleAutoTime = true
+                    FixInfo.saveSetting.detailAutoReload = true
+                }
+            })
+            .disposed(by: self.bag)
+        
+        // 재사용 방지
+        liveActivity
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[1].items[2].defaultData = "\(data)"
+                
+                if data{
+                    now?[1].items[0].defaultData = "true"
+                    now?[1].items[1].defaultData = "true"
+                }
                 
                 return now ?? []
             }
@@ -134,12 +185,14 @@ class SettingViewModel : SettingViewModelProtocol{
             .disposed(by: self.bag)
         
         // 메인 혼잡도 이모지 변경
-       self.settingTableViewCellModel.cellIndex
+       let congestionLabel = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.tfValue){[weak self] index, tf -> String? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 0), data: tf ?? "")
             }
             .filterNil()
-            .subscribe(onNext: {
+            .share()
+        
+        congestionLabel.subscribe(onNext: {
                 let label = $0 == "" ? "☹️" : $0
                 FixInfo.saveSetting.mainCongestionLabel = label
                 
@@ -148,5 +201,16 @@ class SettingViewModel : SettingViewModelProtocol{
                 ])
             })
             .disposed(by: self.bag)
+        
+        congestionLabel
+            .map{[weak self] data in
+                var now = self?.settingList.value
+                now?[0].items[0].defaultData = "\(data)"
+                
+                return now ?? []
+            }
+            .bind(to: self.settingList)
+            .disposed(by: self.bag)
+        
     }
 }

@@ -18,13 +18,13 @@ class SearchViewModel : SearchViewModelProtocol{
     let serachBarViewModel : SearchBarViewModelProtocol
     let resultViewModel : ResultViewModelProtocol
     let defaultViewModel : DefaultViewModelProtocol
-    let model : SearchModelProtocol
+    private let model : SearchModelProtocol
     
     // OUTPUT
     let modalData : Driver<ResultVCCellData>
     
-    let defaultData = BehaviorSubject<[String]>(value: ["강남", "광화문", "명동", "광화문", "판교", "수원"])
-    let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
+    private let defaultData = BehaviorSubject<[String]>(value: ["강남", "광화문", "명동", "광화문", "판교", "수원"])
+    private let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
     
     let bag = DisposeBag()
     
