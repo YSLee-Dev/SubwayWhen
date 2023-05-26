@@ -23,11 +23,11 @@ class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
     let number : Driver<String>
     
     // MODEL
-    let model : ReportCheckModalModelProtocol
+    private let model : ReportCheckModalModelProtocol
     
     // DATA
-    let createMSG = BehaviorSubject<String>(value: "")
-    let matchingNumber = PublishSubject<String>()
+    private let createMSG = BehaviorSubject<String>(value: "")
+    private let matchingNumber = PublishSubject<String>()
     
     let bag = DisposeBag()
     

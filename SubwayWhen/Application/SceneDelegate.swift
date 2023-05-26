@@ -7,15 +7,12 @@
 
 import UIKit
 
-import SnapKit
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var appDefaultManager : AppDefaultManager?
     
     var model = AppDefaultModel()
-    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -47,14 +44,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 팝업 로드
         self.appDefaultManager?.popup()
-        
     }
     
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // 백그라운드에서 돌아올 때 메인 뷰 업데이트
-        // RootVC > NavigationC > MainVC
-        let root = self.window?.rootViewController?.children.first?.children.first
-        root?.viewWillAppear(true)
+    func sceneDidDisconnect(_ scene: UIScene) {
+        SubwayWhenDetailWidgetManager.shared.stop()
+        print("sceneDidDisconnect")
     }
+    
+    
+    
 }
 

@@ -15,7 +15,8 @@ import RxDataSources
 class DetailVC : TableVCCustom{
     let bag = DisposeBag()
     var disposable : Bool = false
-
+    var liveActivity : Bool = false
+    
     let detailViewModel : DetailViewModelProtocol
     
     var delegate : DetailVCDelegate?
@@ -32,6 +33,7 @@ class DetailVC : TableVCCustom{
     }
     
     deinit{
+        SubwayWhenDetailWidgetManager.shared.stop()
         print("DetailVC DEINIT")
     }
     
@@ -105,6 +107,10 @@ extension DetailVC{
             .drive(self.rx.exceptionLastStationRemoveAlert)
             .disposed(by: self.bag)
         
+        viewModel.liveActivityArrivalData
+            .drive(self.rx.liveActivity)
+            .disposed(by: self.bag)
+        
         // VIEW
         self.topView.backBtn.rx.tap
             .bind(to: self.rx.pop)
@@ -136,6 +142,19 @@ extension Reactive where Base : DetailVC{
     var pop : Binder<Void>{
         return Binder(base){base , _ in
             base.delegate?.pop()
+        }
+    }
+    
+    var liveActivity : Binder<DetailActivityLoadData>{
+        return Binder(base){base , data in
+            guard !base.disposable else {return}
+            
+            if !base.liveActivity{
+                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
+                base.liveActivity = !base.liveActivity
+            }else{
+                SubwayWhenDetailWidgetManager.shared.update(scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
+            }
         }
     }
 }

@@ -42,11 +42,11 @@ extension MainCoordinator : MainDelegate{
           
             report.start()
         case .Edit:
-            let report = EditCoordinator(navigation: self.navigation)
-            self.childCoordinator.append(report)
-            report.delegate = self
+            let edit = EditCoordinator(navigation: self.navigation)
+            self.childCoordinator.append(edit)
+            edit.delegate = self
           
-            report.start()
+            edit.start()
         }
     }
     
