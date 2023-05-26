@@ -24,6 +24,7 @@
 -	실시간 도착 정보와 시간표 정보를 비교하여 사용자의 판단을 돕습니다.
 -	출근과 퇴근 그룹으로 나누어 저장하여, 내 출퇴근 탑승 역만 볼 수 있습니다.
 -	출퇴근 그룹에 시간을 매핑하여 원하는 시간대에 원하는 그룹을 볼 수 있습니다.
+-	Live Activity 기능으로 잠금화면에서도 지하철 시간표를 확인할 수 있습니다.
 
 <br/>
 
@@ -59,7 +60,13 @@
 - 민실씨의 경우 앱의 첫 화면부터 Tabbar가 존재하기 때문에 AppCoordinator와 TabbarCoordinator를 분리하는게 
 비효율적이라 생각이 들어 AppCoordinator가 TabbarController도 선언하도록 하였습니다.
 ``` 
-
+> Singleton
+- Live Activity를 관리하는 Manager를 싱글톤 객체로 생성하여 관리하였습니다.
+``` 
+- UIKit에서 Live Activity를 사용하기 위해 Manager을 두 개의 Target에서 빌드되도록 했습니다.
+- Manager 객체는 유일성 위해 싱글톤으로 생성하고, 만든 인스턴스를 static으로 선언하여
+어디서든 접근할 수 있게 하였습니다.
+``` 
 <br/>
 
 ## 🔗 지하철 민실씨 다운로드 링크
