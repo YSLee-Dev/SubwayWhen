@@ -12,5 +12,4 @@ import RxCocoa
 
 protocol SettingContentsModalViewModelProtocol{
     var contents : Driver<String> {get}
-    var model : SettingContentsModalModelProtocol {get}
 }
