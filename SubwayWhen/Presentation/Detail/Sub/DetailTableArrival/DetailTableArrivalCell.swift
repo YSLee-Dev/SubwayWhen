@@ -143,6 +143,8 @@ extension DetailTableArrivalCell {
     }
     
     func bind(_ viewModel : DetailTableArrivalCellModelProtocol){
+        self.liveBG.bind(viewModel.arrivalLiveViewModel)
+        
         viewModel.realTimeData
             .bind(to: self.rx.dataViewSet)
             .disposed(by: self.bag)
@@ -215,8 +217,6 @@ extension Reactive where Base : DetailTableArrivalCell {
             if let firstData = dataArray.first{
                 base.mainTitle.text = firstData.subPrevious != "" ? "\(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
                 base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차(\(firstData.lastStation)행) \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
-                
-                base.liveBG.trainIconSet(code: firstData.code, now: firstData.previousStation ?? firstData.subPrevious)
                 
             }else{
                 base.mainTitle.text = "⚠️ 실시간 정보없음"

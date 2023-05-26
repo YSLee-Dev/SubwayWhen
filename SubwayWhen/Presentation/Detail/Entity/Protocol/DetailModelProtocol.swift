@@ -16,4 +16,5 @@ protocol DetailModelProtocol{
     func scheduleLoad(_ data : ScheduleSearch) -> Observable<[ResultSchdule]>
     func arrvialDataLoad(_ station : String) -> Observable<[RealtimeStationArrival]>
     func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]
+    func scheduleSort(_ scheduleList : [ResultSchdule]) -> [ResultSchdule]
 }

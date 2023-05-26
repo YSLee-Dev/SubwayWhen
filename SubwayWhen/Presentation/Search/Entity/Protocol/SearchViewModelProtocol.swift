@@ -14,10 +14,6 @@ protocol SearchViewModelProtocol{
     var serachBarViewModel : SearchBarViewModelProtocol{get}
     var resultViewModel : ResultViewModelProtocol{get}
     var defaultViewModel : DefaultViewModelProtocol{get}
-    var model : SearchModelProtocol{get}
     
     var modalData : Driver<ResultVCCellData>{get}
-    
-    var defaultData : BehaviorSubject<[String]>{get}
-    var nowData : BehaviorRelay<[ResultVCSection]>{get}
 }
