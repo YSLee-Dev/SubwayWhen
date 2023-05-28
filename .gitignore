@@ -131,4 +131,4 @@ SubwayWhenTests/Dummy/DummyData/
 ## gitgnore
 .gitignore
 
-Pods-SubwayWhen-acknowledgements.plist
+Pods-SubwayWhen-acknowledgements.plist.DS_Store
