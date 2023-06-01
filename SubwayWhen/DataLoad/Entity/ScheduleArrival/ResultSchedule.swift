@@ -57,7 +57,9 @@ struct ResultSchdule{
     }
     
     var useArrTime : String{
-        if self.type == .Korail{
+        if self.type == .Unowned{
+            return "정보없음"
+        }else if self.type == .Korail{
             var time = self.startTime
             if time != "0", time != "", !(time.contains("없음")){
                 let index1 = time.index(time.startIndex, offsetBy: 2)
