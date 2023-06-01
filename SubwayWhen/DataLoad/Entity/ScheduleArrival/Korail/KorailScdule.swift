@@ -8,7 +8,7 @@
 import Foundation
 
 struct KorailScdule : Decodable{
-    let time : String
+    let time : String?
     let trainCode : String
     let lineCode : String
     let weekDay : String
