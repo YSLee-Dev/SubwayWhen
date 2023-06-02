@@ -59,7 +59,13 @@ struct MainTableViewCellData : Decodable{
     }
     
     var useFast : String{
-        return self.isFast == "" ? "" : "(\(self.isFast.first ?? " "))"
+        if self.isFast == "급행"{
+            return "(\(self.isFast.first ?? " "))"
+        }else if self.isFast == "ITX"{
+            return "(ITX)"
+        }else{
+            return ""
+        }
     }
     
     var state : String{
