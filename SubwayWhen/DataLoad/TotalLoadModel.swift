@@ -116,6 +116,9 @@ class TotalLoadModel : TotalLoadProtocol{
                     return scheduleSearch.upDown == "하행" ? true : false
                 }
             }
+            .filter{
+                $0.time != nil && $0.time != ""
+            }
         }
         
         let schedule = Observable<[ResultSchdule]>.combineLatest(numberCheck, updownCheck){number, updownCheck -> [ResultSchdule] in
@@ -124,7 +127,7 @@ class TotalLoadModel : TotalLoadProtocol{
             // lastStation 값 주입
             for r in updownCheck.enumerated(){
                 if r.element.stationId == searchInfo.stationCode{
-                    result.append(ResultSchdule.init(startTime: r.element.time, type: .Korail, isFast: "", startStation: "", lastStation: ""))
+                    result.append(ResultSchdule.init(startTime: r.element.time ?? "", type: .Korail, isFast: "", startStation: "", lastStation: ""))
                     for n in number{
                         if r.element.trainCode == n.trainNumber{
                             result[r.offset].lastStation = n.endStation
