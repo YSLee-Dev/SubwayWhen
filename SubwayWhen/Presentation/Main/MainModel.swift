@@ -150,9 +150,9 @@ class MainModel : MainModelProtocol{
     
     func mainCellDataToScheduleData(_ item : MainTableViewCellData) -> ScheduleSearch? {
         if item.type == .real{
-            if item.stationCode.contains("K"){
+            if item.korailCode == "K4" || item.korailCode == "K1" || item.korailCode == "K2"{
                 return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Korail, korailCode: item.korailCode)
-            }else if item.stationCode.contains("D") || item.stationCode.contains("A"){
+            }else if item.korailCode == "UI" || item.korailCode == "D1" || item.korailCode == "A1"{
                 return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Unowned, korailCode: item.korailCode)
             }else{
                 return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
