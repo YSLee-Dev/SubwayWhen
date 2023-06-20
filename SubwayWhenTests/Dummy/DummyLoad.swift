@@ -21,7 +21,7 @@ var korailScheduleDummyData : [KorailScdule] = {
     let json = try! JSONDecoder().decode(KorailHeader.self, from: korailStationSchduleData)
     
     let dummySort = json.body.sorted{
-        Int($0.time) ?? 0 < Int($1.time) ?? 1
+        Int($0.time ?? "0") ?? 0 < Int($1.time ?? "1") ?? 1
     }
     return dummySort.filter{
         ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
