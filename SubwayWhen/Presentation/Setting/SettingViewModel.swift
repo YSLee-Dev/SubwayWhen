@@ -17,7 +17,6 @@ class SettingViewModel : SettingViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[SettingTableViewCellSection]>
     let keyboardClose : Driver<Void>
-    let modalPresent : Driver<SettingTableViewCellData>
     
     // INPUT
     let cellClick = PublishRelay<SettingTableViewCellData>()
@@ -25,6 +24,8 @@ class SettingViewModel : SettingViewModelProtocol{
     // MODEL
     private let model : SettingModelProtocol
     let settingTableViewCellModel : SettingTableViewCellModelProtocol
+    
+    var delegate: SettingVCAction?
     
     private let settingList = BehaviorRelay<[SettingTableViewCellSection]>(value: [])
     
@@ -37,13 +38,6 @@ class SettingViewModel : SettingViewModelProtocol{
         self.model = model
         self.settingTableViewCellModel = cellModel
         
-        // 모달 present
-        self.modalPresent = self.cellClick
-            .filter{
-                $0.inputType == .NewVC
-            }
-            .asDriver(onErrorDriveWith: .empty())
-        
         // 키보드 닫기
         self.keyboardClose = self.settingTableViewCellModel.keyboardClose
             .asDriver(onErrorDriveWith: .empty())
@@ -51,6 +45,8 @@ class SettingViewModel : SettingViewModelProtocol{
         // 설정 셀 구성
         self.cellData = self.settingList
             .asDriver(onErrorDriveWith: .empty())
+        
+        self.modalPresent()
         
         // FixInfo 불러오는 시간 대기
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){[weak self] in
@@ -185,7 +181,7 @@ class SettingViewModel : SettingViewModelProtocol{
             .disposed(by: self.bag)
         
         // 메인 혼잡도 이모지 변경
-       let congestionLabel = self.settingTableViewCellModel.cellIndex
+        let congestionLabel = self.settingTableViewCellModel.cellIndex
             .withLatestFrom(self.settingTableViewCellModel.tfValue){[weak self] index, tf -> String? in
                 self?.model.indexMatching(index: index, matchIndex: IndexPath(row: 0, section: 0), data: tf ?? "")
             }
@@ -193,14 +189,14 @@ class SettingViewModel : SettingViewModelProtocol{
             .share()
         
         congestionLabel.subscribe(onNext: {
-                let label = $0 == "" ? "☹️" : $0
-                FixInfo.saveSetting.mainCongestionLabel = label
-                
-                Analytics.logEvent("SettingVC_MainCongestionIcon", parameters: [
-                    "Icon" : $0 == "" ? "☹️" : $0
-                ])
-            })
-            .disposed(by: self.bag)
+            let label = $0 == "" ? "☹️" : $0
+            FixInfo.saveSetting.mainCongestionLabel = label
+            
+            Analytics.logEvent("SettingVC_MainCongestionIcon", parameters: [
+                "Icon" : $0 == "" ? "☹️" : $0
+            ])
+        })
+        .disposed(by: self.bag)
         
         congestionLabel
             .map{[weak self] data in
@@ -212,5 +208,31 @@ class SettingViewModel : SettingViewModelProtocol{
             .bind(to: self.settingList)
             .disposed(by: self.bag)
         
+    }
+}
+
+private extension SettingViewModel {
+    func modalPresent() {
+        // 모달 present
+        self.cellClick
+            .filter{
+                $0.inputType == .NewVC
+            }
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                guard let type = SettingNewVCType(rawValue: data.settingTitle) else {return}
+           
+                switch type{
+                case .groupModal:
+                    viewModel.delegate?.groupModal()
+                case .notiModal:
+                    viewModel.delegate?.notiModal()
+                case .licenseModal:
+                    viewModel.delegate?.licenseModal()
+                case .contentsModal:
+                    viewModel.delegate?.contentsModal()
+                }
+                })
+            .disposed(by: self.bag)
     }
 }
