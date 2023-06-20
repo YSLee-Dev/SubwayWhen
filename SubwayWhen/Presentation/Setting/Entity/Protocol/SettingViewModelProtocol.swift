@@ -13,7 +13,6 @@ import RxCocoa
 protocol SettingViewModelProtocol{
     var cellData : Driver<[SettingTableViewCellSection]>{get}
     var keyboardClose : Driver<Void>{get}
-    var modalPresent : Driver<SettingTableViewCellData>{get}
     
     var cellClick : PublishRelay<SettingTableViewCellData>{get}
     
