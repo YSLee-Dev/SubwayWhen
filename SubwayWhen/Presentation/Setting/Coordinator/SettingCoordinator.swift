@@ -31,19 +31,41 @@ class SettingCoordinator : Coordinator{
 extension SettingCoordinator: SettingVCAction {
     func groupModal() {
         let viewModel = SettingGroupModalViewModel()
-        let modal = SettingGroupModalVC(modalHeight: 405, btnTitle: "저장", mainTitle: "특정 그룹 시간", subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.", viewModel: viewModel)
+        let modal = SettingGroupModalVC(
+            modalHeight: 405,
+            btnTitle: "저장",
+            mainTitle: "특정 그룹 시간",
+            subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.",
+            viewModel: viewModel
+        )
         modal.modalPresentationStyle = .overFullScreen
         
         self.naviagation.present(modal, animated: false)
     }
     
     func notiModal() {
-        print("NOTI")
+        let viewModel = SettingNotiModalViewModel()
+        let modal = SettingNotiModalVC(
+            modalHeight: 400,
+            btnTitle: "저장",
+            mainTitle: "출퇴근 알림",
+            subTitle: "출퇴근 시간에 맞게 정해놓은 지하철역으로 알림을 주는 기능에요.",
+            viewModel: viewModel
+        )
+        modal.modalPresentationStyle = .overFullScreen
+        
+        self.naviagation.present(modal, animated: false)
     }
     
     func contentsModal() {
         let viewModel = SettingContentsModalViewModel()
-        let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "기타", subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.", viewModel: viewModel)
+        let modal = SettingContentsModalVC(
+            modalHeight: 400,
+            btnTitle: "닫기",
+            mainTitle: "기타",
+            subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.",
+            viewModel: viewModel
+        )
         modal.modalPresentationStyle = .overFullScreen
         
         self.naviagation.present(modal, animated: false)
