@@ -67,6 +67,7 @@ class SearchViewModel : SearchViewModelProtocol{
         // 역명 검색 (API 통신)
         let searchQuery = self.serachBarViewModel.searchText
             .filterNil()
+            .filterEmpty()
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
         
         let search = Observable
