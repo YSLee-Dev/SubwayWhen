@@ -10,7 +10,11 @@ import UIKit
 import AcknowList
  
 class SettingCoordinator : Coordinator{
-    var childCoordinator: [Coordinator] = []
+    var childCoordinator: [Coordinator] = [] {
+        didSet {
+            print(self.childCoordinator)
+        }
+    }
     var naviagation : UINavigationController
     
     init(){
@@ -44,17 +48,11 @@ extension SettingCoordinator: SettingVCAction {
     }
     
     func notiModal() {
-        let viewModel = SettingNotiModalViewModel()
-        let modal = SettingNotiModalVC(
-            modalHeight: 400,
-            btnTitle: "저장",
-            mainTitle: "출퇴근 알림",
-            subTitle: "출퇴근 시간에 맞게 정해놓은 지하철역으로 알림을 주는 기능에요.",
-            viewModel: viewModel
-        )
-        modal.modalPresentationStyle = .overFullScreen
+        let notiCoordinator = SettingNotiCoordinator(rootVC: self.naviagation)
+        notiCoordinator.start()
+        notiCoordinator.delegate = self
         
-        self.naviagation.present(modal, animated: false)
+        self.childCoordinator.append(notiCoordinator)
     }
     
     func contentsModal() {
@@ -78,5 +76,17 @@ extension SettingCoordinator: SettingVCAction {
         vc.footerText = "YoonSu Lee"
         
         self.naviagation.present(UINavigationController(rootViewController: vc), animated: true)
+    }
+}
+
+extension SettingCoordinator: SettingNotiCoordinatorProtocol {
+    func didDisappear(settingNotiCoordinator: Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter{
+            $0 !== settingNotiCoordinator
+        }
+    }
+    
+    func dismiss() {
+        self.naviagation.dismiss(animated: true)
     }
 }
