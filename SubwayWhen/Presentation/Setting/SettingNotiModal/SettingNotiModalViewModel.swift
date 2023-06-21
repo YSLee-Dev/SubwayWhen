@@ -13,11 +13,14 @@ import RxCocoa
 import UserNotifications
 
 class SettingNotiModalViewModel {
+    weak var delegate: SettingNotiModalVCAction?
+    
     private let auth = PublishSubject<Bool>()
     let bag = DisposeBag()
     
     struct Input {
-        
+        let didDisappearAction: PublishSubject<Void>
+        let dismissAction: PublishSubject<Void>
     }
     
     struct Output {
@@ -25,6 +28,19 @@ class SettingNotiModalViewModel {
     }
     
     func transform(input: Input) -> Output {
+        input.didDisappearAction
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.didDisappear()
+            })
+            .disposed(by: self.bag)
+        
+        input.dismissAction
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.dismiss()
+            })
+            .disposed(by: self.bag)
         
         return Output(
             authSuccess: self.auth
@@ -39,5 +55,9 @@ class SettingNotiModalViewModel {
                 self?.auth.onNext(granted)
             }
         )
+    }
+    
+    deinit {
+        print("SettingNotiModalViewModel DEINIT")
     }
 }
