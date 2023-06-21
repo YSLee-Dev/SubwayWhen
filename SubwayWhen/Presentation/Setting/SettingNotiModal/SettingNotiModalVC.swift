@@ -23,6 +23,7 @@ class SettingNotiModalVC: ModalVCCustom {
     
     private let didDisappearAction =  PublishSubject<Void>()
     private let dismissAction =  PublishSubject<Void>()
+    private let stationTap = PublishSubject<Bool>()
     
     
     init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: SettingNotiModalViewModel) {
@@ -69,14 +70,26 @@ extension SettingNotiModalVC {
         self.settingNotiStationView.snp.makeConstraints{
             $0.top.equalTo(self.subTitle.snp.bottom)
             $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(self.okBtn!.snp.top)
         }
     }
     
     private func bind() {
+        self.settingNotiStationView.groupOneBtn.rx.tap
+            .map{_ in true}
+            .bind(to: self.stationTap)
+            .disposed(by: self.bag)
+        
+        self.settingNotiStationView.groupTwoLBtn.rx.tap
+            .map{_ in false}
+            .bind(to: self.stationTap)
+            .disposed(by: self.bag)
+        
         let input = SettingNotiModalViewModel
             .Input(
                 didDisappearAction: self.didDisappearAction,
-                dismissAction: self.dismissAction
+                dismissAction: self.dismissAction,
+                stationTapAction: self.stationTap
             )
         let output =  self.viewModel.transform(input: input)
         
