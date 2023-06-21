@@ -21,6 +21,7 @@ class SettingNotiModalViewModel {
     struct Input {
         let didDisappearAction: PublishSubject<Void>
         let dismissAction: PublishSubject<Void>
+        let stationTapAction: PublishSubject<Bool>
     }
     
     struct Output {
@@ -39,6 +40,13 @@ class SettingNotiModalViewModel {
             .withUnretained(self)
             .subscribe(onNext: { viewModel, _ in
                 viewModel.delegate?.dismiss()
+            })
+            .disposed(by: self.bag)
+        
+        input.stationTapAction
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, type in
+                viewModel.delegate?.stationTap(type: type)
             })
             .disposed(by: self.bag)
         
