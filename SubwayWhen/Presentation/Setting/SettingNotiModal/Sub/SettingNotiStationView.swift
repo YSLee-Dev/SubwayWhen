@@ -27,7 +27,7 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupOneLineView = UIView().then {
+    let groupOneBtn = UIButton().then {
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.cornerRadius = ViewStyle.Layer.radius
     }
@@ -55,7 +55,7 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupTwoLineView = UIView().then {
+    let groupTwoLBtn = UIButton().then {
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.cornerRadius = ViewStyle.Layer.radius
     }
@@ -83,16 +83,16 @@ class SettingNotiStationView: UIView {
 
 private extension SettingNotiStationView {
     func layout() {
-        [self.groupOneTitle, self.groupTwoTitle, self.groupOneLineView, self.groupTwoLineView, self.border].forEach {
+        [self.groupOneTitle, self.groupTwoTitle, self.groupOneBtn, self.groupTwoLBtn, self.border].forEach {
             self.addSubview($0)
         }
         
         self.groupOneTitle.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.snp.bottom).offset(35)
+            $0.top.equalToSuperview().offset(35)
         }
         
-        self.groupOneLineView.snp.makeConstraints{
+        self.groupOneBtn.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.trailing.equalTo(self.snp.centerX).offset(-ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.groupOneTitle.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
@@ -101,7 +101,7 @@ private extension SettingNotiStationView {
         
         [self.groupOneLine, self.groupOneStation]
             .forEach{
-                self.groupOneLineView.addSubview($0)
+                self.groupOneBtn.addSubview($0)
             }
         
         self.groupOneLine.snp.makeConstraints {
@@ -118,10 +118,10 @@ private extension SettingNotiStationView {
         
         self.groupTwoTitle.snp.makeConstraints {
             $0.leading.equalTo(self.snp.centerX).offset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.snp.bottom).offset(35)
+            $0.top.equalToSuperview().offset(35)
         }
         
-        self.groupTwoLineView.snp.makeConstraints{
+        self.groupTwoLBtn.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-ViewStyle.padding.mainStyleViewLR)
             $0.leading.equalTo(self.snp.centerX).offset(ViewStyle.padding.mainStyleViewLR)
             $0.top.equalTo(self.groupTwoTitle.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
@@ -130,7 +130,7 @@ private extension SettingNotiStationView {
         
         [self.groupTwoLine, self.groupTwoStation]
             .forEach{
-                self.groupTwoLineView.addSubview($0)
+                self.groupTwoLBtn.addSubview($0)
             }
         
         self.groupTwoLine.snp.makeConstraints {
@@ -145,9 +145,9 @@ private extension SettingNotiStationView {
             $0.trailing.equalToSuperview().offset(-8)
         }
         
-        self.border.snp.makeConstraints{
+        self.border.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.bottom.equalTo(self.groupOneLineView)
+            $0.top.bottom.equalTo(self.groupOneBtn)
             $0.width.equalTo(0.5)
         }
     }
