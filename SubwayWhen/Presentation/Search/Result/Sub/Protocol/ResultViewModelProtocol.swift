@@ -13,5 +13,5 @@ import RxCocoa
 protocol ResultViewModelProtocol{
     var cellData : Driver<[ResultVCSection]>{get}
     var cellClick : PublishRelay<IndexPath>{get}
-    var resultData : PublishRelay<[ResultVCSection]>{get}
+    var resultData : BehaviorSubject<[ResultVCSection]>{get}
 }
