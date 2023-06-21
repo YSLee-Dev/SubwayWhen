@@ -15,9 +15,12 @@ import RxSwift
 import RxCocoa
 
 class SettingNotiModalVC: ModalVCCustom {
-    let bag = DisposeBag()
     var animationIcon : LottieAnimationView?
+    let settingNotiStationView = SettingNotiStationView()
+    
     var viewModel: SettingNotiModalViewModel
+    let bag = DisposeBag()
+    
     
     init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: SettingNotiModalViewModel) {
         self.viewModel = viewModel
@@ -41,7 +44,11 @@ extension SettingNotiModalVC {
     }
     
     func layout() {
-        
+        self.mainBG.addSubview(self.settingNotiStationView)
+        self.settingNotiStationView.snp.makeConstraints{
+            $0.top.equalTo(self.subTitle.snp.bottom)
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func bind() {
@@ -83,6 +90,7 @@ extension Reactive where Base: SettingNotiModalVC {
                 base.iconLayout()
                 base.animationStart()
                 base.subTitle.text = "알림 권한이 설정되어 있지 않아요."
+                base.okBtn?.titleLabel?.text = "닫기"
             }
         }
     }
