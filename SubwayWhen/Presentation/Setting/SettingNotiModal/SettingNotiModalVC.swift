@@ -21,6 +21,9 @@ class SettingNotiModalVC: ModalVCCustom {
     var viewModel: SettingNotiModalViewModel
     let bag = DisposeBag()
     
+    private let didDisappearAction =  PublishSubject<Void>()
+    private let dismissAction =  PublishSubject<Void>()
+    
     
     init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: SettingNotiModalViewModel) {
         self.viewModel = viewModel
@@ -29,12 +32,30 @@ class SettingNotiModalVC: ModalVCCustom {
         self.bind()
     }
     
+    deinit {
+        print("SettingNotiModalVC DEINIT")
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.didDisappearAction.onNext(Void())
+    }
+    
+    override func modalDismiss() {
+        UIView.animate(withDuration: 0.25, delay: 0, animations: {
+            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.grayBG.backgroundColor = .clear
+        }, completion: {_ in
+            self.dismissAction.onNext(Void())
+        })
     }
 }
 
@@ -52,7 +73,11 @@ extension SettingNotiModalVC {
     }
     
     private func bind() {
-        let input = SettingNotiModalViewModel.Input()
+        let input = SettingNotiModalViewModel
+            .Input(
+                didDisappearAction: self.didDisappearAction,
+                dismissAction: self.dismissAction
+            )
         let output =  self.viewModel.transform(input: input)
         
         output.authSuccess
