@@ -10,4 +10,5 @@ import Foundation
 protocol SettingNotiModalVCAction: AnyObject {
     func didDisappear()
     func dismiss()
+    func stationTap(type: Bool)
 }
