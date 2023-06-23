@@ -64,13 +64,13 @@ private extension SettingNotiSelectModalVC {
     func layout() {
         self.topView.snp.remakeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
-            $0.height.equalTo(55)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(40)
+            $0.height.equalTo(60)
         }
         
         self.tableView.snp.remakeConstraints{
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.top.equalTo(self.topView.snp.bottom).offset(-10)
+            $0.top.equalTo(self.topView.snp.bottom).offset(-15)
         }
     }
     
