@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 import RxSwift
 import RxCocoa
 
@@ -24,12 +26,18 @@ class SettingNotiSelectModalVC: TableVCCustom {
     ) {
         self.viewModel = viewModel
         super.init(title: title, titleViewHeight: titleViewHeight)
-        self.attribute()
-        self.bind()
     }
     
     deinit {
         print("SettingNotiSelectModalVC DEINIT")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.attribute()
+        self.layout()
+        self.bind()
+        self.animation()
     }
     
     required init?(coder: NSCoder) {
@@ -43,7 +51,36 @@ class SettingNotiSelectModalVC: TableVCCustom {
 
 private extension SettingNotiSelectModalVC {
     func attribute() {
+        self.view.backgroundColor = .lightGray
+        self.topView.layer.cornerRadius = ViewStyle.Layer.radius
         
+        [self.topView, self.tableView]
+            .forEach{
+                $0.transform = CGAffineTransform(translationX: 0, y: 250)
+            }
+        
+    }
+    
+    func layout() {
+        self.topView.snp.remakeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
+            $0.height.equalTo(55)
+        }
+        
+        self.tableView.snp.remakeConstraints{
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(self.topView.snp.bottom).offset(-10)
+        }
+    }
+    
+    func animation() {
+        UIView.animate(withDuration: 0.25, animations: {
+            [self.topView, self.tableView]
+                .forEach{
+                    $0.transform = .identity
+                }
+        })
     }
     
     func bind() {
