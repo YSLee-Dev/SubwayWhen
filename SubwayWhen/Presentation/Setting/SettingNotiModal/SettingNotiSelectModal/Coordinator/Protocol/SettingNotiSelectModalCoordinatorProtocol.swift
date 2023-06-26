@@ -10,4 +10,5 @@ import Foundation
 protocol SettingNotiSelectModalCoordinatorProtocol: AnyObject {
     func didDisappear(settingNotiSelectModalCoordinator: Coordinator)
     func pop()
+    func stationTap(item: SettingNotiSelectModalCellData, group: SaveStationGroup)
 }

@@ -10,4 +10,5 @@ import Foundation
 protocol SettingNotiSelectModalVCAction: AnyObject {
     func didDisappear()
     func pop()
+    func stationTap(item: SettingNotiSelectModalCellData, group: SaveStationGroup)
 }
