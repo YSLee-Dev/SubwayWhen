@@ -12,15 +12,19 @@ import RxCocoa
 
 class SettingNotiSelectModalViewModel {
     weak var delegate: SettingNotiSelectModalVCAction?
+    let group: SaveStationGroup
+    
     let bag = DisposeBag()
+    let model: SettingNotiSelectModalModelProtocol
     
     struct Input {
         let didDisappearAction: PublishSubject<Void>
-        let popAction: PublishSubject<Void>
+        let popAction: Observable<Void>
+        let stationTap: Observable<SettingNotiSelectModalCellData>
     }
     
     struct Output {
-    
+        let stationList: Driver<[SettingNotiSelectModalSectionData]>
     }
     
     func transform(input: Input) -> Output {
@@ -38,12 +42,31 @@ class SettingNotiSelectModalViewModel {
             })
             .disposed(by: self.bag)
         
-        return Output()
+        input.stationTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.stationTap(item: data, group: viewModel.group)
+            })
+            .disposed(by: self.bag)
+        
+        return Output(
+            stationList: self.model.notiSelectList(loadRroup: self.group)
+                .asObservable()
+                .withUnretained(self)
+                .flatMap { viewModel, data in
+                    viewModel.model.saveStationToSectionData(data: data)
+                }
+                .delay(.microseconds(250), scheduler: MainScheduler.asyncInstance)
+                .startWith([SettingNotiSelectModalSectionData(id: "startWith", items: [])])
+                .asDriver(onErrorDriveWith: .empty())
+        )
     }
     
     init (
-    
+        settingNotiSelectModalModel: SettingNotiSelectModalModelProtocol,
+        group: SaveStationGroup
     ) {
-        
+        self.model = settingNotiSelectModalModel
+        self.group = group
     }
 }
