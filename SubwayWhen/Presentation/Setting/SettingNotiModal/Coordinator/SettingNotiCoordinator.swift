@@ -43,7 +43,9 @@ class SettingNotiCoordinator: Coordinator {
 extension SettingNotiCoordinator: SettingNotiModalVCAction {
     func stationTap(type: Bool) {
         guard let naviagation = self.naviagation else {return}
-        let selectModalCoordinator = SettingNotiSelectCoordinator(navigation: naviagation)
+        let group = type ? SaveStationGroup.one : SaveStationGroup.two
+        let selectModalCoordinator = SettingNotiSelectCoordinator(navigation: naviagation, group: group)
+        
         selectModalCoordinator.delegate = self
         selectModalCoordinator.start()
       
@@ -62,6 +64,10 @@ extension SettingNotiCoordinator: SettingNotiModalVCAction {
 }
 
 extension SettingNotiCoordinator: SettingNotiSelectModalCoordinatorProtocol {
+    func stationTap(item: SettingNotiSelectModalCellData, group: SaveStationGroup) {
+        print(item)
+    }
+    
     func didDisappear(settingNotiSelectModalCoordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter{
             $0 !== settingNotiSelectModalCoordinator
