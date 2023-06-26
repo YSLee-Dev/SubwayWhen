@@ -33,9 +33,9 @@ class SettingNotiStationView: UIView {
     }
     
     let groupOneStation = UILabel().then {
-        $0.text = "station"
+        $0.text = "역 선택하기"
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize, weight: .medium)
         $0.textColor = .label
     }
     
@@ -61,9 +61,9 @@ class SettingNotiStationView: UIView {
     }
     
     let groupTwoStation = UILabel().then {
-        $0.text = "station"
+        $0.text = "역 선택하기"
         $0.textAlignment = .left
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.largeSize, weight: .medium)
+        $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize, weight: .medium)
         $0.textColor = .label
     }
     
@@ -81,8 +81,8 @@ class SettingNotiStationView: UIView {
     }
 }
 
-private extension SettingNotiStationView {
-    func layout() {
+extension SettingNotiStationView {
+    private func layout() {
         [self.groupOneTitle, self.groupTwoTitle, self.groupOneBtn, self.groupTwoLBtn, self.border].forEach {
             self.addSubview($0)
         }
@@ -150,5 +150,18 @@ private extension SettingNotiStationView {
             $0.top.bottom.equalTo(self.groupOneBtn)
             $0.width.equalTo(0.5)
         }
+    }
+    
+    func viewDataSet(data: SettingNotiModalData) {
+        if data.group == .one {
+            self.groupOneStation.text = data.stationName
+            self.groupOneLine.text = data.useLine
+            self.groupOneLine.backgroundColor = UIColor(named: data.line)
+        } else {
+            self.groupTwoStation.text = data.stationName
+            self.groupTwoLine.text = data.useLine
+            self.groupTwoLine.backgroundColor = UIColor(named: data.line)
+        }
+        
     }
 }

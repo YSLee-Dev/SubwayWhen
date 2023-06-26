@@ -16,6 +16,9 @@ class SettingNotiModalViewModel {
     weak var delegate: SettingNotiModalVCAction?
     
     private let auth = PublishSubject<Bool>()
+    let oneStationTap = BehaviorSubject<SettingNotiModalData>(value: SettingNotiModalData(id: "?", stationName: "", useLine: "", line: "", group: .one))
+    let twoStationTap = BehaviorSubject<SettingNotiModalData>(value: SettingNotiModalData(id: "?", stationName: "", useLine: "", line: "", group: .two))
+    
     let bag = DisposeBag()
     
     struct Input {
@@ -26,6 +29,8 @@ class SettingNotiModalViewModel {
     
     struct Output {
         let authSuccess: Driver<Bool>
+        let notiStationList: Driver<(SettingNotiModalData, SettingNotiModalData)>
+        
     }
     
     func transform(input: Input) -> Output {
@@ -50,9 +55,12 @@ class SettingNotiModalViewModel {
             })
             .disposed(by: self.bag)
         
+        let total = Observable.combineLatest(self.oneStationTap, self.twoStationTap)        
+        
         return Output(
             authSuccess: self.auth
-                .asDriver(onErrorDriveWith: .empty())
+                .asDriver(onErrorDriveWith: .empty()),
+            notiStationList: total.asDriver(onErrorDriveWith: .empty())
         )
     }
     

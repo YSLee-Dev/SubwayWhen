@@ -11,6 +11,7 @@ class SettingNotiCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     let rootVC: UINavigationController
     var naviagation: UINavigationController?
+    var viewModel: SettingNotiModalViewModel?
     
     weak var delegate: SettingNotiCoordinatorProtocol?
     
@@ -35,6 +36,8 @@ class SettingNotiCoordinator: Coordinator {
         
         guard let naviagation = self.naviagation else {return}
         naviagation.modalPresentationStyle = .overFullScreen
+        
+        self.viewModel = viewModel
         
         self.rootVC.present(naviagation, animated: false)
     }
@@ -65,7 +68,16 @@ extension SettingNotiCoordinator: SettingNotiModalVCAction {
 
 extension SettingNotiCoordinator: SettingNotiSelectModalCoordinatorProtocol {
     func stationTap(item: SettingNotiSelectModalCellData, group: SaveStationGroup) {
-        print(item)
+        guard let viewModel = self.viewModel else {return}
+        
+        let item = SettingNotiModalData(id: item.id, stationName: item.stationName, useLine: item.useLine, line: item.line, group: group)
+        if group == .one {
+            viewModel.oneStationTap.onNext(item)
+        } else {
+            viewModel.twoStationTap.onNext(item)
+        }
+        
+        self.naviagation?.popViewController(animated: true)
     }
     
     func didDisappear(settingNotiSelectModalCoordinator: Coordinator) {
