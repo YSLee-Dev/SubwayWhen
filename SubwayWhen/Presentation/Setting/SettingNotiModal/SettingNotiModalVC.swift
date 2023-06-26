@@ -96,6 +96,10 @@ extension SettingNotiModalVC {
         output.authSuccess
             .drive(self.rx.authSwitch)
             .disposed(by: self.bag)
+        
+        output.notiStationList
+            .drive(self.rx.viewSet)
+            .disposed(by: self.bag)
     }
     
     func iconLayout(){
@@ -129,6 +133,18 @@ extension Reactive where Base: SettingNotiModalVC {
                 base.animationStart()
                 base.subTitle.text = "알림 권한이 설정되어 있지 않아요."
                 base.okBtn?.titleLabel?.text = "닫기"
+            }
+        }
+    }
+    
+    var viewSet: Binder<(SettingNotiModalData, SettingNotiModalData)> {
+        return Binder(base){ base, data in
+            if data.0.id != "?" {
+                base.settingNotiStationView.viewDataSet(data: data.0)
+            }
+            
+            if data.1.id != "?" {
+                base.settingNotiStationView.viewDataSet(data: data.1)
             }
         }
     }
