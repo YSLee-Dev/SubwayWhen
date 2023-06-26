@@ -15,7 +15,18 @@ struct FixInfo : Codable{
         }
     }
     
-    static var saveSetting : SaveSetting = SaveSetting(mainCongestionLabel: "", mainGroupOneTime: 0, mainGroupTwoTime: 0, detailAutoReload: true, detailScheduleAutoTime: true, liveActivity: true, searchOverlapAlert: true) {
+    static var saveSetting : SaveSetting =
+    SaveSetting(
+        mainCongestionLabel: "",
+        mainGroupOneTime: 0,
+        mainGroupTwoTime: 0,
+        detailAutoReload: true,
+        detailScheduleAutoTime: true,
+        liveActivity: true,
+        searchOverlapAlert: true,
+        alertGroupOneID: "",
+        alertGroupTwoID: ""
+    ) {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveSetting)
             UserDefaults.standard.set(data, forKey: "saveSetting")
