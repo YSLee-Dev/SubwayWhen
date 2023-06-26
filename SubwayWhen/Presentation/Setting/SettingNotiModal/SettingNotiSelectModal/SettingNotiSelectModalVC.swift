@@ -11,13 +11,13 @@ import SnapKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SettingNotiSelectModalVC: TableVCCustom {
     let bag = DisposeBag()
     let viewModel: SettingNotiSelectModalViewModel
     
     private let didDisappearAction =  PublishSubject<Void>()
-    let popAction = PublishSubject<Void>()
     
     init(
         title: String,
@@ -53,6 +53,8 @@ private extension SettingNotiSelectModalVC {
     func attribute() {
         self.view.backgroundColor = .lightGray
         self.topView.layer.cornerRadius = ViewStyle.Layer.radius
+        self.tableView.register(SettingNotiSelectModalCell.self, forCellReuseIdentifier: "SettingNotiSelectModalCell")
+        self.tableView.rowHeight = 90
         
         [self.topView, self.tableView]
             .forEach{
@@ -84,23 +86,25 @@ private extension SettingNotiSelectModalVC {
     }
     
     func bind() {
-        self.topView.backBtn.rx.tap
-            .bind(to: self.rx.backBtnTap)
-            .disposed(by: self.bag)
-        
         let input = SettingNotiSelectModalViewModel.Input(
             didDisappearAction: self.didDisappearAction,
-            popAction: self.popAction
+            popAction: self.topView.backBtn.rx.tap.asObservable(),
+            stationTap: self.tableView.rx.modelSelected(SettingNotiSelectModalCellData.self).asObservable()
         )
         
-       let _ =  self.viewModel.transform(input: input)
-    }
-}
-
-extension Reactive where Base: SettingNotiSelectModalVC {
-    var backBtnTap: Binder<Void> {
-        return Binder(base) { base, _ in
-            base.popAction.onNext(Void())
-        }
+        let output = self.viewModel.transform(input: input)
+        
+        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingNotiSelectModalSectionData>(
+            animationConfiguration: .init(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade),
+            configureCell: { _, tv, index, data in
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "SettingNotiSelectModalCell", for: index) as? SettingNotiSelectModalCell else {return UITableViewCell()}
+                cell.cellSet(data: data)
+                return cell
+            })
+        
+        output.stationList
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.bag)
+        
     }
 }
