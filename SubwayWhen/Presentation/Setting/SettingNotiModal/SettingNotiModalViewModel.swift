@@ -27,6 +27,7 @@ class SettingNotiModalViewModel {
         let didDisappearAction: PublishSubject<Void>
         let dismissAction: PublishSubject<Void>
         let stationTapAction: PublishSubject<Bool>
+        let okBtnTap: Observable<Void>
     }
     
     struct Output {
@@ -36,29 +37,9 @@ class SettingNotiModalViewModel {
     }
     
     func transform(input: Input) -> Output {
-        self.model.alertIDListLoad()
-            .map {
-                $0.first
-            }
-            .filterNil()
-            .withUnretained(self)
-            .subscribe(onNext: { viewModel, data in
-                viewModel.oneStationTap.onNext(data)
-            })
-            .disposed(by: self.bag)
+        self.saveListLoad()
+        self.authCheck()
         
-        self.model.alertIDListLoad()
-            .map {
-                $0.last
-            }
-            .filterNil()
-            .withUnretained(self)
-            .subscribe(onNext: { viewModel, data in
-                viewModel.twoStationTap.onNext(data)
-            })
-            .disposed(by: self.bag)
-            
-            
         input.didDisappearAction
             .withUnretained(self)
             .subscribe(onNext: { viewModel, _ in
@@ -73,10 +54,18 @@ class SettingNotiModalViewModel {
             })
             .disposed(by: self.bag)
         
-        input.stationTapAction
+        let oneTap = input.stationTapAction
+            .filter {$0}
+            .withLatestFrom(self.oneStationTap)
+        
+        let twoTap = input.stationTapAction
+            .filter {!$0}
+            .withLatestFrom(self.twoStationTap)
+        
+         Observable.merge(oneTap, twoTap)
             .withUnretained(self)
-            .subscribe(onNext: { viewModel, type in
-                viewModel.delegate?.stationTap(type: type)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.stationTap(type: data.group, id: data.id)
             })
             .disposed(by: self.bag)
         
@@ -84,7 +73,7 @@ class SettingNotiModalViewModel {
             [$0, $1]
         }
         
-        input.dismissAction
+        input.okBtnTap
             .withLatestFrom(total)
             .map {
                 $0.map {
@@ -97,12 +86,6 @@ class SettingNotiModalViewModel {
             })
             .disposed(by: self.bag)
     
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: [.alert, .sound, .badge],
-            completionHandler: { [weak self] (granted, _) in
-                self?.auth.onNext(granted)
-            }
-        )
         
         return Output(
             authSuccess: self.auth
@@ -119,5 +102,30 @@ class SettingNotiModalViewModel {
     
     deinit {
         print("SettingNotiModalViewModel DEINIT")
+    }
+}
+
+private extension SettingNotiModalViewModel {
+    func authCheck() {
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound, .badge],
+            completionHandler: { [weak self] (granted, _) in
+                self?.auth.onNext(granted)
+            }
+        )
+    }
+    
+    func saveListLoad() {
+        self.model.alertIDListLoad()
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                let nilData = SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .one)
+                let nilDataTwo = SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .two)
+                
+                viewModel.oneStationTap.onNext(data.first ?? nilData)
+                viewModel.twoStationTap.onNext(data.last ?? nilDataTwo)
+            })
+            .disposed(by: self.bag)
+            
     }
 }

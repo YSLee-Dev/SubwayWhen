@@ -17,28 +17,33 @@ class SettingNotiModalModel: SettingNotiModalModelProtocol{
     
     func alertIDListLoad() -> Observable<[SettingNotiModalData]> {
         let oneID = FixInfo.saveSetting.alertGroupOneID
-        guard let one = self.idMatching(id: oneID) else {return Observable<[SettingNotiModalData]>.just([])}
-        let oneData = self.saveStationToSettingNotiModalData(data: one)
+        let one = self.idMatching(id: oneID, group: .one)
+        let oneData = self.saveStationToSettingNotiModalData(data: one, group: .one)
         
         let twoID = FixInfo.saveSetting.alertGroupTwoID
-        guard let two = self.idMatching(id: twoID) else {return Observable<[SettingNotiModalData]>.just([])}
-        let twoData = self.saveStationToSettingNotiModalData(data: two)
+        let two = self.idMatching(id: twoID, group: .two)
+        let twoData = self.saveStationToSettingNotiModalData(data: two, group: .two)
         
         return Observable.just([oneData, twoData])
     }
 }
 
 private extension SettingNotiModalModel {
-    func idMatching(id: String) -> SaveStation? {
+    func idMatching(id: String, group: SaveStationGroup) -> SaveStation? {
         FixInfo.saveStation.filter {
-            $0.id == id
+            $0.id == id && $0.group == group
         }
         .first
     }
     
-    func saveStationToSettingNotiModalData(data: SaveStation) -> SettingNotiModalData {
-        SettingNotiModalData(
-            id: data.id, stationName: data.stationName, useLine: data.useLine, line: data.line, group: data.group
-        )
+    func saveStationToSettingNotiModalData(data: SaveStation?, group: SaveStationGroup) -> SettingNotiModalData {
+        if let data = data {
+            return SettingNotiModalData(
+                id: data.id, stationName: data.stationName, useLine: data.useLine, line: data.line, group: data.group
+            )
+        } else {
+            return SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: group)
+        }
+        
     }
 }
