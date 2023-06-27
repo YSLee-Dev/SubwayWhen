@@ -15,6 +15,7 @@ struct SettingNotiSelectModalCellData: IdentifiableType, Equatable {
     let updnLine : String
     let line : String
     let useLine : String
+    let isChecked: Bool
 }
 
 extension SettingNotiSelectModalCellData {
