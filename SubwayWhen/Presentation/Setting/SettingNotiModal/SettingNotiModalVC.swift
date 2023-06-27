@@ -89,7 +89,8 @@ extension SettingNotiModalVC {
             .Input(
                 didDisappearAction: self.didDisappearAction,
                 dismissAction: self.dismissAction,
-                stationTapAction: self.stationTap
+                stationTapAction: self.stationTap,
+                okBtnTap: self.okBtn!.rx.tap.asObservable()
             )
         let output =  self.viewModel.transform(input: input)
         

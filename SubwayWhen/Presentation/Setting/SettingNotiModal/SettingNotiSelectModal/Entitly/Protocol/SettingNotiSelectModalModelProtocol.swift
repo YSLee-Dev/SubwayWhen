@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 
 protocol SettingNotiSelectModalModelProtocol {
-    func notiSelectList(loadRroup: SaveStationGroup) -> Single<[SaveStation]>
-    func saveStationToSectionData(data: [SaveStation]) -> Single<[SettingNotiSelectModalSectionData]> 
+    func notiSelectList(loadGroup: SaveStationGroup) -> Single<[SaveStation]>
+    func saveStationToSectionData(data: [SaveStation], id: String) -> Single<[SettingNotiSelectModalSectionData]>
 }
