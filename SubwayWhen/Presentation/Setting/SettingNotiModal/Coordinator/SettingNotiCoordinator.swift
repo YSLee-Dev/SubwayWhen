@@ -45,10 +45,10 @@ class SettingNotiCoordinator: Coordinator {
 }
 
 extension SettingNotiCoordinator: SettingNotiModalVCAction {
-    func stationTap(type: Bool) {
+    func stationTap(type: SaveStationGroup, id: String) {
         guard let naviagation = self.naviagation else {return}
-        let group = type ? SaveStationGroup.one : SaveStationGroup.two
-        let selectModalCoordinator = SettingNotiSelectCoordinator(navigation: naviagation, group: group)
+        
+        let selectModalCoordinator = SettingNotiSelectCoordinator(navigation: naviagation, group: type, id: id)
         
         selectModalCoordinator.delegate = self
         selectModalCoordinator.start()
