@@ -51,7 +51,7 @@ class SettingNotiSelectModalVC: TableVCCustom {
 
 private extension SettingNotiSelectModalVC {
     func attribute() {
-        self.view.backgroundColor = .lightGray
+        self.view.backgroundColor = UIColor(named: "LigthGrayColor") ?? .lightGray
         self.topView.layer.cornerRadius = ViewStyle.Layer.radius
         self.tableView.register(SettingNotiSelectModalCell.self, forCellReuseIdentifier: "SettingNotiSelectModalCell")
         self.tableView.rowHeight = 90
@@ -105,6 +105,5 @@ private extension SettingNotiSelectModalVC {
         output.stationList
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
-        
     }
 }
