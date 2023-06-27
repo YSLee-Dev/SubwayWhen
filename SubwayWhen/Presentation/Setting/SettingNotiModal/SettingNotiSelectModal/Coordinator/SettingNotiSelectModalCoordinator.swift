@@ -13,18 +13,21 @@ class SettingNotiSelectCoordinator: Coordinator {
 
     var navigation: UINavigationController
     let group: SaveStationGroup
+    let id: String
     
     init (
         navigation: UINavigationController,
-        group: SaveStationGroup
+        group: SaveStationGroup,
+        id: String
     ) {
         self.navigation = navigation
         self.group = group
+        self.id = id
     }
     
     func start() {
         let model = SettingNotiSelectModalModel()
-        let viewModel = SettingNotiSelectModalViewModel(settingNotiSelectModalModel: model, group: self.group)
+        let viewModel = SettingNotiSelectModalViewModel(settingNotiSelectModalModel: model, group: self.group, id: id)
         viewModel.delegate = self
         
         let title = self.group == .one ? "출근" : "퇴근"
