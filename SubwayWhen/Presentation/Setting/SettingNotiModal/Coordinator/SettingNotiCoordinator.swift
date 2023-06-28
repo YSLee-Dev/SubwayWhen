@@ -23,7 +23,8 @@ class SettingNotiCoordinator: Coordinator {
     
     func start() {
         let model = SettingNotiModalModel()
-        let viewModel = SettingNotiModalViewModel(model: model)
+        let nonimanager = NotificationManager()
+        let viewModel = SettingNotiModalViewModel(model: model, notiManager: nonimanager)
         viewModel.delegate = self
         let modal = SettingNotiModalVC(
             modalHeight: 400,
