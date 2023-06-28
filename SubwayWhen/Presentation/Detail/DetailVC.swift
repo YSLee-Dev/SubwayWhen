@@ -62,12 +62,12 @@ extension DetailVC{
         self.tableView.estimatedRowHeight = 150
         
         if self.disposable{
-            self.topView.backBtn.setImage(UIImage(systemName: "rectangle.badge.xmark"), for: .normal)
+            self.topView.backBtn.setImage(UIImage(systemName: "tag.slash"), for: .normal)
         }
     }
     
     private func bind(_ viewModel : DetailViewModelProtocol){
-        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(reloadAnimation: .fade)){ dataSource, tv, index, data in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<DetailTableViewSectionData>(animationConfiguration: AnimationConfiguration(reloadAnimation: .fade)){ [weak self] dataSource, tv, index, data in
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableHeaderView", for: index) as? DetailTableHeaderView else {return UITableViewCell()}
@@ -83,7 +83,7 @@ extension DetailVC{
                 
             case 2:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "DetailTableScheduleCell", for: index) as? DetailTableScheduleCell else {return UITableViewCell()}
-                cell.cellSet(data)
+                cell.cellSet(data, isDisposable: self?.disposable ?? false)
                 cell.bind(viewModel.scheduleCellModel)
                 return cell
             default:
