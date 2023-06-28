@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 기존 LiveActivity 제거
         SubwayWhenDetailWidgetManager.shared.allLiveStop()
         
+        // 포그라운드에서 노티 받기
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
     
@@ -39,3 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubwayWhenDetailWidgetManager.shared.stop()
     }
 }
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [.list, .banner, .sound, .badge]
+      }
+}
+ 
