@@ -109,7 +109,7 @@ class ModalViewModel : ModalViewModelProtocol{
                 let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
                 let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
                 
-                return DetailLoadData(upDown: updownFix, subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, useLine: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
+                return DetailLoadData(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, lineCode: data.lineCode, useLine: "", stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
             }
             .bind(to: self.mainCellData)
             .disposed(by: self.bag)
