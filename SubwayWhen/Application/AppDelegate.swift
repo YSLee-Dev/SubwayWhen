@@ -47,5 +47,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         [.list, .banner, .sound, .badge]
       }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        // 노티 클릭 시
+        NotificationManager.shared.notiTapAction(id: response.notification.request.identifier)
+    }
 }
  

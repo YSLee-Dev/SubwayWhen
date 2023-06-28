@@ -10,6 +10,11 @@ import Foundation
 import RxSwift
 
 class NotificationManager: NotificationManagerProtocol {
+    static let shared: NotificationManagerProtocol = NotificationManager()
+    private init() {}
+    
+    let notiOpen = BehaviorSubject<SaveStation?>(value: nil)
+    
     func authCheck() -> Observable<Bool> {
         let auth = PublishSubject<Bool>()
         UNUserNotificationCenter.current().requestAuthorization(
@@ -39,15 +44,20 @@ class NotificationManager: NotificationManagerProtocol {
             repeats: true
         )
         
-        let testTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-        
         let request = UNNotificationRequest(
             identifier: data.id,
             content: content,
-            trigger: testTrigger
+            trigger: trigger
         )
-       print(request)
+        
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    func notiTapAction(id: String) {
+        for item in FixInfo.saveStation where item.id == id {
+            self.notiOpen.onNext(item)
+            break
+        }
     }
 }
 
