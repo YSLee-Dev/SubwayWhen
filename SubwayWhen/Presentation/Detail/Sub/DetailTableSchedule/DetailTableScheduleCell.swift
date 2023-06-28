@@ -133,8 +133,9 @@ extension DetailTableScheduleCell{
             .disposed(by: self.bag)
     }
     
-    func cellSet(_ data : DetailTableViewCellData){
+    func cellSet(_ data : DetailTableViewCellData, isDisposable: Bool){
         self.cellData = data
+        self.moreBtn.isHidden = isDisposable
     }
     
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout{
