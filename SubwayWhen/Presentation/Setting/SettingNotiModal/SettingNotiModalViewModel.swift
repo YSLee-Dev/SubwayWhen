@@ -16,6 +16,7 @@ import UserNotifications
 class SettingNotiModalViewModel {
     weak var delegate: SettingNotiModalVCAction?
     let model: SettingNotiModalModelProtocol
+    let notiManager: NotificationManagerProtocol
     
     private let auth = PublishSubject<Bool>()
     let oneStationTap = BehaviorSubject<SettingNotiModalData>(value: SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .one))
@@ -73,8 +74,11 @@ class SettingNotiModalViewModel {
             [$0, $1]
         }
         
-        input.okBtnTap
+        let okBtnTap = input.okBtnTap
             .withLatestFrom(total)
+            .share()
+        
+        okBtnTap
             .map {
                 $0.map {
                     $0.id
@@ -85,7 +89,15 @@ class SettingNotiModalViewModel {
                 viewModel.model.alertIDListSave(data: data)
             })
             .disposed(by: self.bag)
-    
+        
+        okBtnTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                data.forEach{
+                    viewModel.notiManager.notiScheduleAdd(data: $0)
+                }
+            })
+            .disposed(by: self.bag)
         
         return Output(
             authSuccess: self.auth
@@ -95,9 +107,11 @@ class SettingNotiModalViewModel {
     }
     
     init(
-        model: SettingNotiModalModelProtocol
+        model: SettingNotiModalModelProtocol,
+        notiManager: NotificationManagerProtocol
     ) {
         self.model = model
+        self.notiManager = notiManager
     }
     
     deinit {
@@ -107,12 +121,9 @@ class SettingNotiModalViewModel {
 
 private extension SettingNotiModalViewModel {
     func authCheck() {
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: [.alert, .sound, .badge],
-            completionHandler: { [weak self] (granted, _) in
-                self?.auth.onNext(granted)
-            }
-        )
+        self.notiManager.authCheck()
+            .bind(to: self.auth)
+            .disposed(by: self.bag)
     }
     
     func saveListLoad() {
