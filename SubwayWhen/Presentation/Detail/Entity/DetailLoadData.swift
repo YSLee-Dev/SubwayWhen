@@ -9,12 +9,10 @@ import Foundation
 
 struct DetailLoadData : Equatable{
     let upDown : String
-    let subWayId : String
     let stationName : String
-    let lastStation : String
     let lineNumber : String
+    let lineCode: String
     let useLine : String
-    let id : String
     let stationCode : String
     var exceptionLastStation : String
     var backStationId : String
