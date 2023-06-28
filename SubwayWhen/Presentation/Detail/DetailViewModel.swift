@@ -23,7 +23,7 @@ class DetailViewModel : DetailViewModelProtocol{
     let scheduleCellModel : DetailTableScheduleCellModelProtocol
     
     // INPUT
-    let detailViewData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
+    let detailViewData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", stationName: "", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
     let exceptionLastStationRemoveReload = PublishRelay<Void>()
     
     // OUTPUT
