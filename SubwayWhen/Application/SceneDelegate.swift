@@ -46,12 +46,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.appDefaultManager?.popup()
     }
     
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        // 뱃지 제거
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         SubwayWhenDetailWidgetManager.shared.stop()
         print("sceneDidDisconnect")
     }
-    
-    
-    
 }
 
