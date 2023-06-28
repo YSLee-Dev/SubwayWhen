@@ -37,13 +37,15 @@ class TotalLoadModel : TotalLoadProtocol{
                 var nextId = ""
                 
                 for x in data.realtimeArrivalList{
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                    let spaceRemoveStationName = x.stationName.replacingOccurrences(of: " ", with: "")
+                    
+                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         let code = x.previousStation != nil ? x.code : ""
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
                         return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode)
-                    }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName{
+                    }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
                     }
