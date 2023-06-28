@@ -86,7 +86,7 @@ extension SearchVC : ModalVCProtocol{
     func stationSave() {
         // modal close까지 0.3초 대기
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){[weak self] in
-            let popup = PopupModal(modalHeight: 400, popupTitle: "저장 완료", subTitle: "지하철 역이 저장되었어요.", iconName: "CheckMark")
+            let popup = PopupModal(modalHeight: 400, popupTitle: "저장 완료", subTitle: "지하철 역이 저장되었어요.", iconName: "CheckMark", congratulations: true)
             popup.modalPresentationStyle = .overFullScreen
             self?.present(popup, animated: false)
         }
