@@ -25,6 +25,7 @@ class PopupModal : ModalVCCustom{
     }
     
     lazy var animationIcon = LottieAnimationView()
+    lazy var congratulationsIcon = LottieAnimationView()
     
     init(modalHeight: CGFloat, popupTitle : String, subTitle : String, popupValue : String) {
         self.type = .TextView
@@ -32,10 +33,11 @@ class PopupModal : ModalVCCustom{
         self.textView.text = popupValue
     }
     
-    init(modalHeight: CGFloat, popupTitle : String, subTitle : String, iconName : String){
+    init(modalHeight: CGFloat, popupTitle : String, subTitle : String, iconName : String, congratulations: Bool){
         self.type = .SuccessIcon
         super.init(modalHeight: modalHeight, btnTitle: "확인", mainTitle: popupTitle, subTitle: subTitle)
         self.animationIcon = LottieAnimationView(name: iconName)
+        self.congratulationsIcon = LottieAnimationView(name: "Congratulations")
     }
     
     init(modalHeight: CGFloat, popupTitle : String, subTitle : String, iconName : String, isUpdate : Bool){
@@ -62,6 +64,10 @@ class PopupModal : ModalVCCustom{
             self.iconLayout()
             self.iconAnimationPlay()
             
+            self.congratulationsIconLayout()
+            self.congratulationsIcon.play()
+            self.congratulationsIconAttribute()
+            
         case .TextView:
             self.textViewlayout()
             
@@ -80,8 +86,8 @@ class PopupModal : ModalVCCustom{
     }
 }
 
-extension PopupModal {
-    private func attribute(){
+private extension PopupModal {
+    func attribute(){
         if self.isUpdate{
             self.okBtn?.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
         }else{
@@ -89,7 +95,7 @@ extension PopupModal {
         }
     }
     
-    private func textViewlayout(){
+    func textViewlayout(){
         self.mainBG.addSubview(self.textView)
         self.textView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
@@ -98,12 +104,12 @@ extension PopupModal {
         }
     }
     
-    private func iconAnimationPlay(){
+    func iconAnimationPlay(){
         self.animationIcon.animationSpeed = 2
         self.animationIcon.play()
     }
     
-    private func iconLayout(){
+    func iconLayout(){
         self.mainBG.addSubview(self.animationIcon)
         self.animationIcon.snp.makeConstraints{
             $0.size.equalTo(100)
@@ -112,9 +118,27 @@ extension PopupModal {
         }
     }
     
+    func congratulationsIconLayout() {
+        self.grayBG.addSubview(self.congratulationsIcon)
+        self.congratulationsIcon.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.mainBG.snp.top)
+        }
+    }
+    
+    func congratulationsIconAttribute() {
+        let tapGestrue = UITapGestureRecognizer(target: self, action: #selector(self.congratulationsIconTap(_:)))
+        self.congratulationsIcon.addGestureRecognizer(tapGestrue)
+    }
+    
     @objc
-    private func appstoreLink(){
+    func appstoreLink(){
         guard let url = URL(string: "https://itunes.apple.com/app/id6446166573") else {return}
         UIApplication.shared.open(url)
+    }
+    
+    @objc
+    func congratulationsIconTap(_ sender: Any) {
+        self.modalDismiss()
     }
 }
