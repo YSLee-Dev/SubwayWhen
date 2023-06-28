@@ -17,7 +17,11 @@ final class NetworkManager : NetworkManagerProtocol{
     }
     
     func requestData<T : Decodable>(_ url :String, dataType: T.Type) -> Single<Result<T,URLError>>{
-        guard let url = URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {return .just(.failure(.init(.badURL)))}
+        let urlSpaceRemove = url.replacingOccurrences(of: " ", with: "")
+        guard let url = URL(string: urlSpaceRemove.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {
+            return .just(.failure(.init(.badURL)))
+            
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
