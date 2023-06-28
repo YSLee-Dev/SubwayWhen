@@ -214,7 +214,9 @@ extension DetailTableArrivalCell {
 extension Reactive where Base : DetailTableArrivalCell {
     var dataViewSet : Binder<[RealtimeStationArrival]>{
         return Binder(base){ base, dataArray in
+
             if let firstData = dataArray.first{
+                guard firstData.arrivalTime != "" else {return}
                 base.mainTitle.text = firstData.subPrevious != "" ? "\(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
                 base.firstSubway.text = firstData.subPrevious != "" ? "🚇 \(firstData.trainCode) 열차(\(firstData.lastStation)행) \n \(firstData.subPrevious)" : "⚠️ 실시간 정보없음"
                 
@@ -224,6 +226,7 @@ extension Reactive where Base : DetailTableArrivalCell {
             }
             
             if let secondData = dataArray.last{
+                guard secondData.arrivalTime != "" else {return}
                 base.secondSubway.text = secondData.subPrevious != "" ? "🚇 \(secondData.trainCode) 열차(\(secondData.lastStation)행) \n \(secondData.subPrevious)" : "⚠️ 실시간 정보없음"
             }else{
                 base.secondSubway.text = "⚠️ 실시간 정보없음"
