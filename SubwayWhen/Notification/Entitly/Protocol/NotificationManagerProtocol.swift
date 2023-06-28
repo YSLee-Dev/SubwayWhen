@@ -10,6 +10,9 @@ import Foundation
 import RxSwift
 
 protocol NotificationManagerProtocol {
+    var notiOpen : BehaviorSubject<SaveStation?>{get}
+    
     func authCheck() -> Observable<Bool>
     func notiScheduleAdd(data: SettingNotiModalData)
+    func notiTapAction(id: String)
 }

@@ -7,10 +7,17 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class AppCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var window : UIWindow
     var tabbar : UITabBarController
+    
+    var mainCoordinator: MainCoordinator?
+    
+    let bag = DisposeBag()
     
     init(window : UIWindow){
         self.window = window
@@ -21,6 +28,8 @@ class AppCoordinator : Coordinator{
     func start() {
         self.tabbar = self.setTabbarController()
         self.window.rootViewController = self.tabbar
+        
+        self.notiTapResponse()
     }
     
     func setTabbarController() -> UITabBarController{
@@ -34,6 +43,8 @@ class AppCoordinator : Coordinator{
         self.childCoordinator.append(mainC)
         
         mainC.start()
+        
+        self.mainCoordinator = mainC
         
         let searchC = SearchCoordinator()
         self.childCoordinator.append(searchC)
@@ -54,5 +65,23 @@ class AppCoordinator : Coordinator{
 extension AppCoordinator : MainCoordinatorDelegate{
     func stationPlusBtnTap(_ coordinator: MainCoordinator) {
         self.tabbar.selectedIndex = 1
+    }
+}
+
+private extension AppCoordinator {
+    func notiTapResponse() {
+        NotificationManager.shared.notiOpen
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                guard let data = data else {return}
+                viewModel.notiTapAction(data: data)
+            })
+            .disposed(by: self.bag)
+    }
+    
+    func notiTapAction(data: SaveStation) {
+        guard let mainCoordinator = self.mainCoordinator else {return}
+        self.tabbar.selectedIndex = 0
+        mainCoordinator.notiTap(saveStation: data)
     }
 }
