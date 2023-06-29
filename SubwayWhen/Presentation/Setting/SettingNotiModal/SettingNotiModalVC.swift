@@ -17,6 +17,7 @@ import RxCocoa
 class SettingNotiModalVC: ModalVCCustom {
     var animationIcon : LottieAnimationView?
     let settingNotiStationView = SettingNotiStationView()
+    let settingNotiExplanationView = SettingNotiModalExplanationView()
     
     var viewModel: SettingNotiModalViewModel
     let bag = DisposeBag()
@@ -49,11 +50,17 @@ class SettingNotiModalVC: ModalVCCustom {
         self.didDisappearAction.onNext(Void())
     }
     
+    override func viewAnimation() {
+        super.viewAnimation()
+        self.settingNotiExplanationView.showAnimation()
+    }
+    
     override func modalDismiss() {
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
             self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
             self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
             self.grayBG.backgroundColor = .clear
+            self.settingNotiExplanationView.hiddenAnimation()
         }, completion: {_ in
             self.dismissAction.onNext(Void())
         })
@@ -71,6 +78,13 @@ extension SettingNotiModalVC {
             $0.top.equalTo(self.subTitle.snp.bottom)
             $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             $0.bottom.equalTo(self.okBtn!.snp.top)
+        }
+        
+        self.view.addSubview(self.settingNotiExplanationView)
+        self.settingNotiExplanationView.snp.makeConstraints{
+            $0.bottom.equalTo(self.mainBG.snp.top).offset(-ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.height.equalTo(50)
         }
     }
     
@@ -90,7 +104,8 @@ extension SettingNotiModalVC {
                 didDisappearAction: self.didDisappearAction,
                 dismissAction: self.dismissAction,
                 stationTapAction: self.stationTap,
-                okBtnTap: self.okBtn!.rx.tap.asObservable()
+                okBtnTap: self.okBtn!.rx.tap.asObservable(),
+                groupTimeGoBtnTap: self.settingNotiExplanationView.goBtn.rx.tap.asObservable()
             )
         let output =  self.viewModel.transform(input: input)
         
@@ -100,6 +115,13 @@ extension SettingNotiModalVC {
         
         output.notiStationList
             .drive(self.rx.viewSet)
+            .disposed(by: self.bag)
+        
+        self.settingNotiExplanationView.goBtn.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.modalDismiss()
+            })
             .disposed(by: self.bag)
     }
     
