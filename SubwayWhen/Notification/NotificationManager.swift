@@ -36,6 +36,9 @@ class NotificationManager: NotificationManagerProtocol {
         let groupTitle = data.group == .one ? "출근" : "퇴근"
         let time = data.group == .one ? FixInfo.saveSetting.mainGroupOneTime : FixInfo.saveSetting.mainGroupTwoTime
         
+        // 0시인 경우 무시
+        guard time != 0 else {return}
+        
         let content = UNMutableNotificationContent()
         content.title = "\(groupTitle)시간 알림"
         content.body = "\(data.useLine) \(data.stationName)역의 도착정보를 빠르게 확인하세요!"
