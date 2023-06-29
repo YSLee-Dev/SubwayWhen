@@ -19,8 +19,8 @@ class SettingNotiModalViewModel {
     let notiManager: NotificationManagerProtocol
     
     private let auth = PublishSubject<Bool>()
-    let oneStationTap = BehaviorSubject<SettingNotiModalData>(value: SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .one))
-    let twoStationTap = BehaviorSubject<SettingNotiModalData>(value: SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .two))
+    let oneStationTap = BehaviorSubject<NotificationManagerRequestData>(value: NotificationManagerRequestData(id: "", stationName: "", useLine: "", line: "", group: .one))
+    let twoStationTap = BehaviorSubject<NotificationManagerRequestData>(value: NotificationManagerRequestData(id: "", stationName: "", useLine: "", line: "", group: .two))
     
     let bag = DisposeBag()
     
@@ -33,7 +33,7 @@ class SettingNotiModalViewModel {
     
     struct Output {
         let authSuccess: Driver<Bool>
-        let notiStationList: Driver<[SettingNotiModalData]>
+        let notiStationList: Driver<[NotificationManagerRequestData]>
         
     }
     
@@ -127,11 +127,11 @@ private extension SettingNotiModalViewModel {
     }
     
     func saveListLoad() {
-        self.model.alertIDListLoad()
+        self.notiManager.alertIDListLoad()
             .withUnretained(self)
             .subscribe(onNext: { viewModel, data in
-                let nilData = SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .one)
-                let nilDataTwo = SettingNotiModalData(id: "", stationName: "", useLine: "", line: "", group: .two)
+                let nilData = NotificationManagerRequestData(id: "", stationName: "", useLine: "", line: "", group: .one)
+                let nilDataTwo = NotificationManagerRequestData(id: "", stationName: "", useLine: "", line: "", group: .two)
                 
                 viewModel.oneStationTap.onNext(data.first ?? nilData)
                 viewModel.twoStationTap.onNext(data.last ?? nilDataTwo)
