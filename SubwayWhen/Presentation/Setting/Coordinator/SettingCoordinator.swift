@@ -80,6 +80,11 @@ extension SettingCoordinator: SettingVCAction {
 }
 
 extension SettingCoordinator: SettingNotiCoordinatorProtocol {
+    func groupTimeGoBtnTap() {
+        self.naviagation.dismiss(animated: false)
+        self.groupModal()
+    }
+    
     func didDisappear(settingNotiCoordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter{
             $0 !== settingNotiCoordinator

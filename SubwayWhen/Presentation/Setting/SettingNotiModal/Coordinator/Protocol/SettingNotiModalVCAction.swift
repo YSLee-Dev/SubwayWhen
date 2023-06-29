@@ -11,4 +11,5 @@ protocol SettingNotiModalVCAction: AnyObject {
     func didDisappear()
     func dismiss()
     func stationTap(type: SaveStationGroup, id: String)
+    func groupTimeGoBtnTap()
 }

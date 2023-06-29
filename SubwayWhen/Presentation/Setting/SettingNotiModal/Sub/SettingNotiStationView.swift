@@ -33,7 +33,7 @@ class SettingNotiStationView: UIView {
     }
     
     let groupOneStation = UILabel().then {
-        $0.text = "역 선택하기"
+        $0.text = "역 선택"
         $0.textAlignment = .left
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize, weight: .medium)
         $0.textColor = .label
@@ -61,7 +61,7 @@ class SettingNotiStationView: UIView {
     }
     
     let groupTwoStation = UILabel().then {
-        $0.text = "역 선택하기"
+        $0.text = "역 선택"
         $0.textAlignment = .left
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize, weight: .medium)
         $0.textColor = .label
