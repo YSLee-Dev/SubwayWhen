@@ -29,6 +29,7 @@ class SettingNotiSelectModalViewModel {
     
     struct Output {
         let stationList: Driver<[SettingNotiSelectModalSectionData]>
+        let noLabelListShow: Driver<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -67,6 +68,12 @@ class SettingNotiSelectModalViewModel {
         
         return Output(
             stationList: self.cellData
+                .asDriver(onErrorDriveWith: .empty()),
+            noLabelListShow: self.cellData
+                .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
+                .filter{($0.first?.id != "startWith" ?? "") && ($0.first?.items.isEmpty ?? false) }
+                .debug()
+                .map {_ in Void() }
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
