@@ -72,7 +72,7 @@ extension SettingNotiCoordinator: SettingNotiSelectModalCoordinatorProtocol {
     func stationTap(item: SettingNotiSelectModalCellData, group: SaveStationGroup) {
         guard let viewModel = self.viewModel else {return}
         
-        let item = SettingNotiModalData(id: item.id, stationName: item.stationName, useLine: item.useLine, line: item.line, group: group)
+        let item = NotificationManagerRequestData(id: item.id, stationName: item.stationName, useLine: item.useLine, line: item.line, group: group)
         if group == .one {
             viewModel.oneStationTap.onNext(item)
         } else {
