@@ -11,5 +11,4 @@ import RxSwift
 
 protocol SettingNotiModalModelProtocol {
     func alertIDListSave(data: [String])
-    func alertIDListLoad() -> Observable<[SettingNotiModalData]>
 }

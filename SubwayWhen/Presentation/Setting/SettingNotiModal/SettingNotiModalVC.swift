@@ -138,7 +138,7 @@ extension Reactive where Base: SettingNotiModalVC {
         }
     }
     
-    var viewSet: Binder<[SettingNotiModalData]> {
+    var viewSet: Binder<[NotificationManagerRequestData]> {
         return Binder(base){ base, data in
             for item in data {
                 if item.id != "" {

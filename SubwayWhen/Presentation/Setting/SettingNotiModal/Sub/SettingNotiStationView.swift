@@ -152,7 +152,7 @@ extension SettingNotiStationView {
         }
     }
     
-    func viewDataSet(data: SettingNotiModalData) {
+    func viewDataSet(data: NotificationManagerRequestData) {
         if data.group == .one {
             self.groupOneStation.text = data.stationName
             self.groupOneLine.text = data.useLine
