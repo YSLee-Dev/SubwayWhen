@@ -17,6 +17,13 @@ class SettingNotiSelectModalVC: TableVCCustom {
     let bag = DisposeBag()
     let viewModel: SettingNotiSelectModalViewModel
     
+    lazy var noListLabel = UILabel().then{
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
+        $0.textColor = .gray
+        $0.text = "현재 저장되어 있는 지하철역이 없어요."
+        $0.textAlignment = .center
+    }
+    
     private let didDisappearAction =  PublishSubject<Void>()
     
     init(
@@ -105,5 +112,21 @@ private extension SettingNotiSelectModalVC {
         output.stationList
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.bag)
+        
+        output.noLabelListShow
+            .drive(self.rx.labelShow)
+            .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base: SettingNotiSelectModalVC {
+    var labelShow: Binder<Void> {
+        return Binder(base) { base, _ in
+            base.view.addSubview(base.noListLabel)
+            base.noListLabel.snp.makeConstraints{
+                $0.centerX.equalToSuperview()
+                $0.centerY.equalToSuperview().offset(40)
+            }
+        }
     }
 }
