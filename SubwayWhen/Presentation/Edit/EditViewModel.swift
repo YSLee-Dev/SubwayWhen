@@ -13,6 +13,7 @@ import RxCocoa
 class EditViewModel : EditViewModelProtocol{
     // MODEL
     private let editModel : EditModelProtocol
+    private let notiManager: NotificationManagerProtocol
     
     // INPUT
     let deleteCell = PublishRelay<String>()
@@ -28,9 +29,11 @@ class EditViewModel : EditViewModelProtocol{
     let bag = DisposeBag()
     
     init(
-        model : EditModel = .init()
+        model : EditModel = .init(),
+        noti: NotificationManagerProtocol = NotificationManager.shared
     ){
         self.editModel = model
+        self.notiManager = noti
         
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
@@ -134,8 +137,11 @@ private extension EditViewModel {
     func deleteAlertID(id: String) {
         if FixInfo.saveSetting.alertGroupOneID == id {
             FixInfo.saveSetting.alertGroupOneID = ""
+            self.notiManager.notiRemove(id: id)
+            
         } else if FixInfo.saveSetting.alertGroupTwoID == id {
             FixInfo.saveSetting.alertGroupTwoID = ""
+            self.notiManager.notiRemove(id: id)
         }
     }
 }
