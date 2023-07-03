@@ -18,10 +18,10 @@ class SettingNotiModalExplanationView : UIView{
         $0.adjustsFontSizeToFitWidth = true
     }
     
-    let goBtn = ModalCustomButton().then{
+    let goBtn = ModalSubCustomButton().then{
         $0.setTitle("수정하기", for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.superSmallSize)
-        $0.backgroundColor = .black.withAlphaComponent(0.3)
+        $0.backgroundColor = .systemRed.withAlphaComponent(0.7)
     }
     
     override init(frame: CGRect) {

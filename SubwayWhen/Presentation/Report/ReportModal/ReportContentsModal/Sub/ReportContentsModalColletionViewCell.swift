@@ -10,9 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class ReportContentsModalColletionViewCell : UICollectionViewCell{
-    let mainBG = MainStyleUIView()
-    
+class ReportContentsModalColletionViewCell : CollectionViewCellCustom{
     let titleLabel = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .center
