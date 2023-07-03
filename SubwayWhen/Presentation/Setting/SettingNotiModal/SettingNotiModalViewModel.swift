@@ -131,6 +131,7 @@ class SettingNotiModalViewModel {
 private extension SettingNotiModalViewModel {
     func authCheck() {
         self.notiManager.authCheck()
+            .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind(to: self.auth)
             .disposed(by: self.bag)
     }
