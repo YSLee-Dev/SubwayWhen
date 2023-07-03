@@ -12,8 +12,7 @@ import SnapKit
 
 import Lottie
 
-class MainTableViewHeaderBtn : UIButton{
-    
+class MainTableViewHeaderBtn : ModalCustomButton{
     let btnLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
     }
@@ -22,7 +21,7 @@ class MainTableViewHeaderBtn : UIButton{
     
     init(title : String, img : String){
         self.btnImg = LottieAnimationView(name: img)
-        super.init(frame: .null)
+        super.init(frame: .zero)
         self.layout()
         self.attribute(title : title, img: img)
         self.iconAnimationPlay()
@@ -49,10 +48,8 @@ extension MainTableViewHeaderBtn{
     }
     
     private func attribute(title : String, img : String){
-        self.backgroundColor = UIColor(named: "MainColor")
-        self.layer.cornerRadius = ViewStyle.Layer.radius
         self.tintColor = .gray
-        
+        self.backgroundColor = UIColor(named: "MainColor")
         self.btnLabel.text = title
     }
     

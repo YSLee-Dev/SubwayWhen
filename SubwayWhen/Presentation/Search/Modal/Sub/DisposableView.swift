@@ -23,16 +23,16 @@ class DisposableView : UIView{
         $0.adjustsFontSizeToFitWidth = true
     }
     
-    let upBtn = ModalCustomButton().then{
+    let upBtn = ModalSubCustomButton().then{
         $0.setTitle("상행", for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.superSmallSize)
-        $0.backgroundColor = .black.withAlphaComponent(0.3)
+        $0.backgroundColor = .systemRed.withAlphaComponent(0.5)
     }
     
-    let downBtn = ModalCustomButton().then{
+    let downBtn = ModalSubCustomButton().then{
         $0.setTitle("하행", for: .normal)
         $0.titleLabel?.font = .boldSystemFont(ofSize: ViewStyle.FontSize.superSmallSize)
-        $0.backgroundColor = .black.withAlphaComponent(0.3)
+        $0.backgroundColor = .systemBlue.withAlphaComponent(0.5)
     }
     
     override init(frame: CGRect) {

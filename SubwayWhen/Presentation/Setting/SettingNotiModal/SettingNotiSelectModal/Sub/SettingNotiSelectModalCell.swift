@@ -36,14 +36,13 @@ class SettingNotiSelectModalCell: TableViewCellCustom{
         super.prepareForReuse()
         
         // 재사용 시 포인트 컬러 제거
-        self.mainBG.backgroundColor = UIColor(named: "MainColor")
-        self.stationName.textColor = .label
-        self.upDown.textColor = .label
+        self.mainBG.layer.borderWidth = 0.0
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
+        self.attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +71,10 @@ extension SettingNotiSelectModalCell{
         }
     }
     
+    private func attribute() {
+        self.mainBG.layer.borderColor = UIColor(named: "AppIconColor")?.cgColor ?? UIColor.blue.cgColor
+    }
+    
     func lineColor(line: String) {
         self.line.backgroundColor = UIColor(named: line)
     }
@@ -83,9 +86,7 @@ extension SettingNotiSelectModalCell{
         self.line.text = data.useLine
         
         if data.isChecked {
-            self.mainBG.backgroundColor = UIColor(named: "AppIconColor")?.withAlphaComponent(0.7)
-            self.stationName.textColor = .white
-            self.upDown.textColor = .white
+            self.mainBG.layer.borderWidth = 1.0
         }
     }
 }

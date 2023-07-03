@@ -42,8 +42,11 @@ class ModalVC : ModalVCCustom{
     }
     
     let groupBtn = ModalCustomButton().then{
-        $0.backgroundColor = .systemGray
+        $0.setTitleColor(.label, for: .normal)
+        $0.backgroundColor = UIColor(named: "MainColor")
         $0.setTitle("출근", for: .normal)
+        $0.layer.borderColor = UIColor.systemGray.cgColor
+        $0.layer.borderWidth = 0.5
     }
     
     let notServiceBtn = ModalCustomButton().then{

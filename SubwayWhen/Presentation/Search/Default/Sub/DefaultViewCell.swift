@@ -10,12 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-class DefaultViewCell : UICollectionViewCell{
+class DefaultViewCell : CollectionViewCellCustom{
     var stationName = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = ViewStyle.Layer.radius
         $0.textAlignment = .center
     }
     
@@ -35,5 +33,9 @@ extension DefaultViewCell{
         self.stationName.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
+    }
+    
+    private func attribute() {
+        self.layer.cornerRadius = ViewStyle.Layer.radius
     }
 }
