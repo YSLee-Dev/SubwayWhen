@@ -34,14 +34,14 @@ extension ModalCustomButton {
     }
     
     private func tapBgcolorChange(isTap: Bool) {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: ViewStyle.AnimateView.speed, animations: {
             if isTap {
                 if self.bgColor == nil {
                     self.bgColor = self.backgroundColor
                 }
                 
                 self.subviews.forEach{
-                    $0.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
+                    $0.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
                 }
                 
                 self.backgroundColor = UIColor(named: "ButtonTappedColor")
