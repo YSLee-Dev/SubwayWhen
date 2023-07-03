@@ -15,6 +15,8 @@ import Then
 class DefaultView : UIView{
     let bag = DisposeBag()
     
+    let locationView = LocationView()
+    
     let markLabel = UILabelCustom(padding: .init(top: 5, left: 10, bottom: 5, right: 10)).then{
         $0.text = " 💡 많은 사람들이 이용하는 지하철역을 골라봤어요."
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
@@ -41,17 +43,24 @@ class DefaultView : UIView{
 
 extension DefaultView{
     private func layout(){
+        self.addSubview(self.locationView)
+        self.locationView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalToSuperview()
+            $0.height.equalTo(280)
+        }
+        
         self.addSubview(self.markLabel)
         self.markLabel.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalTo(self.locationView.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
             $0.height.equalTo(50)
         }
         
         self.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints{
-            $0.top.equalTo(self.markLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(self.markLabel.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.bottom.equalToSuperview()
         }
     }
