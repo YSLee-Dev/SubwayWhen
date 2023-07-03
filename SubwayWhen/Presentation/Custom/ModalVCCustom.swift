@@ -55,9 +55,8 @@ class ModalVCCustom : UIViewController{
         self.subTitle.text = subTitle
         
         if self.isBtn{
-            self.okBtn = ModalCustomButton()
+            self.okBtn = ModalCustomButton(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
             self.okBtn!.setTitle(btnTitle, for: .normal)
-            self.okBtn!.backgroundColor = UIColor(named: "MainColor")
             self.okBtn!.setTitleColor(.label, for: .normal)
         }
     }
