@@ -27,9 +27,8 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupOneBtn = UIButton().then {
+    let groupOneBtn = ModalCustomButton().then {
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.cornerRadius = ViewStyle.Layer.radius
     }
     
     let groupOneStation = UILabel().then {
@@ -55,9 +54,8 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupTwoLBtn = UIButton().then {
+    let groupTwoLBtn = ModalCustomButton().then {
         $0.backgroundColor = UIColor(named: "MainColor")
-        $0.layer.cornerRadius = ViewStyle.Layer.radius
     }
     
     let groupTwoStation = UILabel().then {

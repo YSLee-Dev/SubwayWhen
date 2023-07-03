@@ -136,7 +136,7 @@ extension SettingTableViewCell{
     private func tfSet(defaultValue : String){
         self.mainBG.addSubview(self.textField)
         self.textField.snp.makeConstraints{
-            $0.leading.equalTo(self.snp.centerX).offset(25)
+            $0.leading.equalTo(self.settingTitle.snp.trailing)
             $0.trailing.equalToSuperview().inset(15)
             $0.centerY.equalToSuperview()
         }
@@ -145,6 +145,8 @@ extension SettingTableViewCell{
         
         self.tfToolBar.setItems([self.doneBarBtn], animated: true)
         self.textField.inputAccessoryView = self.tfToolBar
+        
+        self.textField.backgroundColor = .clear
     }
     
     private func switchSet(defaultValue : String){
