@@ -26,4 +26,9 @@ enum ViewStyle{
         static let mainStyleViewLR : CGFloat = 20
         static let mainStyleViewTB : CGFloat = 7.5
     }
+    
+    enum AnimateView {
+        static let speed: CGFloat = 0.15
+        static let size: CGFloat = 0.94
+    }
 }
