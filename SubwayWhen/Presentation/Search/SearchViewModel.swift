@@ -56,6 +56,7 @@ class SearchViewModel : SearchViewModelProtocol{
             .asDriver(onErrorDriveWith: .empty())
         
         self.defaultViewModel.defaultListClick
+            .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind(to: self.serachBarViewModel.defaultViewClick)
             .disposed(by: self.bag)
         

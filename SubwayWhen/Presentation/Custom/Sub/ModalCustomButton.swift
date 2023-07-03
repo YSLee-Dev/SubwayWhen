@@ -40,17 +40,13 @@ extension ModalCustomButton {
                     self.bgColor = self.backgroundColor
                 }
                 
-                self.subviews.forEach{
-                    $0.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
-                }
-                
+               
+                self.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
                 self.backgroundColor = UIColor(named: "ButtonTappedColor")
             }else {
                 self.backgroundColor = self.bgColor
+                self.transform = .identity
                 
-                self.subviews.forEach{
-                    $0.transform = .identity
-                }
             }
         })
     }
