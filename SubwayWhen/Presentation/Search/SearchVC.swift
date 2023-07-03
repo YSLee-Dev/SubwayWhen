@@ -35,6 +35,7 @@ class SearchVC : UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         self.searchBarVC?.isActive = false
+        self.defaultView.locationView.animationPlay()
     }
 }
 
