@@ -74,7 +74,7 @@ extension SettingNotiModalExplanationView{
     }
     
     func hiddenAnimation(){
-        UIView.animate(withDuration: 0.25, delay: 0){[weak self] in
+        UIView.animate(withDuration: 0.2, delay: 0){[weak self] in
             self?.transform = CGAffineTransform(translationX: 0, y: 50)
             self?.alpha = 0
         }
