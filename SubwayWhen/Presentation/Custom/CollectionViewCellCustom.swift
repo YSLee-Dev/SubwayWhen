@@ -33,15 +33,17 @@ class CollectionViewCellCustom: UICollectionViewCell {
 
 private extension CollectionViewCellCustom {
     func tapBgcolorChange(isTap: Bool) {
-        UIView.animate(withDuration: ViewStyle.AnimateView.speed, animations: {
-            if isTap {
+        if isTap {
+            UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0, options: [.curveEaseOut],  animations: {
                 self.mainBG.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
                 self.mainBG.backgroundColor = UIColor(named: "ButtonTappedColor")
-            }else {
+            })
+        }else {
+            UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0.1, options: [.curveEaseOut],  animations: {
                 self.mainBG.backgroundColor = UIColor(named: "MainColor")
                 self.mainBG.transform = .identity
-            }
-        })
+            })
+        }
     }
     
     func layout() {
