@@ -27,9 +27,7 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupOneBtn = ModalCustomButton().then {
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
+    let groupOneBtn = ModalCustomButton(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
     
     let groupOneStation = UILabel().then {
         $0.text = "역 선택"
@@ -54,9 +52,7 @@ class SettingNotiStationView: UIView {
         $0.text = "?"
     }
     
-    let groupTwoLBtn = ModalCustomButton().then {
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
+    let groupTwoLBtn = ModalCustomButton(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
     
     let groupTwoStation = UILabel().then {
         $0.text = "역 선택"

@@ -8,10 +8,14 @@
 import UIKit
 
 class ModalCustomButton : UIButton{
-    var bgColor: UIColor?
+    var bgColor: UIColor
+    var customTappedBG: String?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(bgColor: UIColor, customTappedBG: String?) {
+        self.bgColor = bgColor
+        self.customTappedBG = customTappedBG
+        
+        super.init(frame: .zero)
         self.attribute()
     }
     
@@ -28,6 +32,7 @@ class ModalCustomButton : UIButton{
 
 extension ModalCustomButton {
     private func attribute(){
+        self.backgroundColor = self.bgColor
         self.layer.cornerRadius = ViewStyle.Layer.radius
         self.layer.masksToBounds = true
         self.titleLabel?.font = .systemFont(ofSize: ViewStyle.FontSize.mediumSize)
@@ -35,14 +40,15 @@ extension ModalCustomButton {
     
     private func tapBgcolorChange(isTap: Bool) {
         if isTap {
-            UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0.1, options: [.curveEaseOut],  animations: {
-                if self.bgColor == nil {
-                    self.bgColor = self.backgroundColor
+            UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0, options: [.curveEaseOut],  animations: {
+                self.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
+                
+                if self.customTappedBG == nil {
+                    self.backgroundColor = UIColor(named: "ButtonTappedColor")
+                } else {
+                    self.backgroundColor = UIColor(named: "\(self.customTappedBG ?? "")TappedColor")
                 }
                 
-                
-                self.transform = CGAffineTransform(scaleX: ViewStyle.AnimateView.size, y: ViewStyle.AnimateView.size)
-                self.backgroundColor = UIColor(named: "ButtonTappedColor")
             })
         }else {
             UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0.1, options: [.curveEaseOut],  animations: {

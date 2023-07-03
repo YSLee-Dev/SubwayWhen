@@ -21,7 +21,7 @@ class MainTableViewHeaderBtn : ModalCustomButton{
     
     init(title : String, img : String){
         self.btnImg = LottieAnimationView(name: img)
-        super.init(frame: .zero)
+        super.init(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
         self.layout()
         self.attribute(title : title, img: img)
         self.iconAnimationPlay()
@@ -49,7 +49,6 @@ extension MainTableViewHeaderBtn{
     
     private func attribute(title : String, img : String){
         self.tintColor = .gray
-        self.backgroundColor = UIColor(named: "MainColor")
         self.btnLabel.text = title
     }
     

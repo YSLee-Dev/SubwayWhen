@@ -31,26 +31,22 @@ class ModalVC : ModalVCCustom{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
     }
     
-    let upBtn = ModalCustomButton().then{
-        $0.backgroundColor = .systemRed
+    let upBtn = ModalCustomButton(bgColor: UIColor.systemRed, customTappedBG: nil).then{
         $0.setTitle("상행", for: .normal)
     }
     
-    let downBtn = ModalCustomButton().then{
-        $0.backgroundColor = .systemBlue
+    let downBtn = ModalCustomButton(bgColor: UIColor.systemBlue, customTappedBG: nil).then{
         $0.setTitle("하행", for: .normal)
     }
     
-    let groupBtn = ModalCustomButton().then{
+    let groupBtn = ModalCustomButton(bgColor: UIColor(named: "MainColor") ?? .gray , customTappedBG: nil).then{
         $0.setTitleColor(.label, for: .normal)
-        $0.backgroundColor = UIColor(named: "MainColor")
         $0.setTitle("출근", for: .normal)
         $0.layer.borderColor = UIColor.systemGray.cgColor
         $0.layer.borderWidth = 0.5
     }
     
-    let notServiceBtn = ModalCustomButton().then{
-        $0.backgroundColor = .black
+    let notServiceBtn = ModalCustomButton(bgColor: .black, customTappedBG: nil).then{
         $0.setTitle("해당 노선은 서비스를 지원하지 않아요.", for: .normal)
         $0.isHidden = true
     }
