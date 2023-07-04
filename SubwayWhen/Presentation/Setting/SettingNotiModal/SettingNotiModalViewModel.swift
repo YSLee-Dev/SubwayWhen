@@ -102,8 +102,13 @@ class SettingNotiModalViewModel {
         okBtnTap
             .withUnretained(self)
             .subscribe(onNext: { viewModel, data in
-                data.forEach{
-                    viewModel.notiManager.notiScheduleAdd(data: $0)
+                viewModel.notiManager.notiAllRemove()
+                
+                // 0.5 초 이후 (삭제 이후)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                    data.forEach{
+                        viewModel.notiManager.notiScheduleAdd(data: $0)
+                    }
                 }
             })
             .disposed(by: self.bag)

@@ -70,8 +70,12 @@ class NotificationManager: NotificationManagerProtocol {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
     }
     
-    func notiTimeChange() {
+    func notiAllRemove() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+    
+    func notiTimeChange() {
+        self.notiAllRemove()
         
         self.alertIDListLoad()
             .withUnretained(self)
