@@ -14,6 +14,4 @@ protocol SearchViewModelProtocol{
     var serachBarViewModel : SearchBarViewModelProtocol{get}
     var resultViewModel : ResultViewModelProtocol{get}
     var defaultViewModel : DefaultViewModelProtocol{get}
-    
-    var modalData : Driver<ResultVCCellData>{get}
 }
