@@ -17,5 +17,6 @@ protocol NotificationManagerProtocol {
     func notiTapAction(id: String)
     func notiRemove(id: String)
     func alertIDListLoad() -> Observable<[NotificationManagerRequestData]>
-    func notiTimeChange() 
+    func notiTimeChange()
+    func notiAllRemove() 
 }
