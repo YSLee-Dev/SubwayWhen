@@ -16,8 +16,60 @@ class SearchCoordinator : Coordinator{
     }
     
     func start() {
-        let search = SearchVC(viewModel: SearchViewModel())
+        let viewModel = SearchViewModel()
+        viewModel.delegate = self
+        let search = SearchVC(viewModel: viewModel)
         search.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
         self.navigation.pushViewController(search, animated: true)
     }
+}
+
+extension SearchCoordinator: SearchVCActionProtocol {
+    func modalPresent(data: ResultVCCellData) {
+        let modalCoordinator = ModalCoordinator(navigation: self.navigation, data: data)
+        modalCoordinator.delegate = self
+        modalCoordinator.start()
+        
+        self.childCoordinator.append(modalCoordinator)
+    }
+}
+
+extension SearchCoordinator: ModalCoordinatorProtocol {
+    func dismiss() {
+        self.navigation.dismiss(animated: false)
+    }
+    
+    func stationSave() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){[weak self] in
+            let popup = PopupModal(modalHeight: 400, popupTitle: "저장 완료", subTitle: "지하철 역이 저장되었어요.", iconName: "CheckMark", congratulations: true)
+            popup.modalPresentationStyle = .overFullScreen
+            self?.navigation.present(popup, animated: false)
+        }
+    }
+    
+    func disposableDetailPush(data: DetailLoadData) {
+        let viewModel = DetailViewModel()
+        let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
+        viewModel.detailViewData.accept(data)
+        
+        detailVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = detailVC.sheetPresentationController{
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 25
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
+            self?.navigation.present(detailVC, animated: true)
+        }
+    }
+    
+    func didDisappear(modalCoordinator: Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter {
+            $0 !== modalCoordinator
+        }
+    }
+    
+    
 }

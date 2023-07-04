@@ -13,10 +13,8 @@ import SnapKit
 import Then
 
 class ModalVC : ModalVCCustom{
-    let modalViewModel : ModalViewModelProtocol
+    let modalViewModel : ModalViewModel
     let bag = DisposeBag()
-    
-    weak var delegate : ModalVCProtocol?
     
     let titleLabel = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
@@ -63,14 +61,17 @@ class ModalVC : ModalVCCustom{
     
     let disposableView = DisposableView()
     
+    let didDisappear = PublishSubject<Void>()
+    let modalGesture = PublishSubject<Void>()
+    
     deinit{
         print("DEINIT MODAL")
     }
     
-    init(_ viewModel : ModalViewModelProtocol, modalHeight : CGFloat){
+    init(_ viewModel : ModalViewModel, modalHeight : CGFloat){
         self.modalViewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹, 제외 행을 선택 후 상/하행 버튼을 누르면 저장할 수 있어요.")
-        self.bind(self.modalViewModel)
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
@@ -88,11 +89,22 @@ class ModalVC : ModalVCCustom{
         self.disposableView.showAnimation()
     }
     
-    override func modalDismiss() {
-        super.modalDismiss()
-        self.disposableView.hiddenAnimation()
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.didDisappear.onNext(Void())
     }
-
+    
+    override func modalDismiss() {
+        self.disposableView.hiddenAnimation()
+        
+        UIView.animate(withDuration: 0.25, delay: 0, animations: {
+            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.grayBG.backgroundColor = .clear
+        }, completion: { _ in
+            self.modalGesture.onNext(Void())
+        })
+    }
 }
 
 extension ModalVC{
@@ -153,27 +165,21 @@ extension ModalVC{
         
     }
     
-    private func bind(_ viewModel : ModalViewModelProtocol){
+    private func bind(){
         // VIEW -> VIEWMODEL
-        self.upBtn.rx.tap
+        let upBtnTap = self.upBtn.rx.tap
             .map{
                 true
             }
-            .bind(to: viewModel.upDownBtnClick)
-            .disposed(by: self.bag)
         
-        self.downBtn.rx.tap
+        let downBtnTap = self.downBtn.rx.tap
             .map{
                 false
             }
-            .bind(to: viewModel.upDownBtnClick)
-            .disposed(by: self.bag)
         
-        self.notServiceBtn.rx.tap.asObservable()
-            .bind(to: viewModel.notService)
-            .disposed(by: self.bag)
+        let updownBtnTap = Observable.merge(upBtnTap, downBtnTap)
         
-        self.groupBtn.rx.tap
+        let groupTap = self.groupBtn.rx.tap
             .map{ [weak self] _ -> SaveStationGroup in
                 if self?.groupBtn.titleLabel!.text == "출근"{
                     self?.groupBtn.setTitle("퇴근", for: .normal)
@@ -182,54 +188,48 @@ extension ModalVC{
                     self?.groupBtn.setTitle("출근", for: .normal)
                     return .one
                 }
-                
             }
-            .bind(to: viewModel.groupClick)
-            .disposed(by: self.bag)
+            .startWith(.one)
         
-        self.exceptionLastStationTF.rx.text
+       let exceptionLValue = self.exceptionLastStationTF.rx.text
             .skip(1)
-            .bind(to: viewModel.exceptionLastStationText)
-            .disposed(by: self.bag)
+            .startWith("")
         
-        self.disposableView.upBtn.rx.tap
+       let disposableUpBtn =  self.disposableView.upBtn.rx.tap
             .map{
                 true
             }
-            .bind(to: viewModel.disposableBtnTap)
-            .disposed(by: self.bag)
         
-        self.disposableView.downBtn.rx.tap
+        let disposableDownBtn =  self.disposableView.downBtn.rx.tap
             .map{
                 false
             }
-            .bind(to: viewModel.disposableBtnTap)
-            .disposed(by: self.bag)
         
-        // VIEW
-        self.exceptionLastStationTF.rx.controlEvent(.editingDidEndOnExit)
-            .bind(to: self.rx.keyboardReturnBtn)
-            .disposed(by: self.bag)
+        let disposableUpDownBtn = Observable.merge(disposableUpBtn, disposableDownBtn)
         
-        // VIEWMODEL -> VIEW
-        viewModel.saveComplete
-            .drive(self.rx.toastMagShow)
-            .disposed(by: self.bag)
+        let input = ModalViewModel.Input(
+                upDownBtnClick: updownBtnTap,
+                notService: self.notServiceBtn.rx.tap.asObservable(),
+                groupClick: groupTap,
+                exceptionLastStationText: exceptionLValue,
+                disposableBtnTap: disposableUpDownBtn,
+                didDisappear: self.didDisappear.asObservable(),
+                modalGesture: self.modalGesture.asObservable()
+            )
         
-        viewModel.modalData
+        let output = self.modalViewModel.transform(input: input)
+        
+        output.modalData
             .drive(self.rx.modalLabelSet)
             .disposed(by: self.bag)
         
-        viewModel.modalClose
+        output.modalClose
             .drive(self.rx.modalClose)
             .disposed(by: self.bag)
         
-        viewModel.alertShow
-            .drive(self.rx.noSaveAlert)
-            .disposed(by: self.bag)
         
-        viewModel.disposableDetailMove
-            .drive(self.rx.disposableDetailPush)
+        self.exceptionLastStationTF.rx.controlEvent(.editingDidEndOnExit)
+            .bind(to: self.rx.keyboardReturnBtn)
             .disposed(by: self.bag)
     }
 }
@@ -267,32 +267,8 @@ extension Reactive where Base : ModalVC{
         }
     }
     
-    var modalClose : Binder<Void>{
-        return Binder(base){base, _ in
-            base.modalDismiss()
-        }
-    }
-    
-    var toastMagShow : Binder<Void>{
-        return Binder(base){base, _ in
-            base.delegate?.stationSave()
-        }
-    }
-    
-    var noSaveAlert : Binder<Void>{
-        return Binder(base){ base, _ in
-            let alert = UIAlertController(title: "이미 저장된 지하철역이에요.", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .cancel){_ in
-                base.modalViewModel.overlapOkBtnTap.accept(Void())
-            })
-            
-            base.present(alert, animated: true)
-        }
-    }
-    
-    var disposableDetailPush : Binder<DetailLoadData>{
-        return Binder(base){base, data in
-            base.delegate?.disposableDetailPush(data: data)
+    var modalClose: Binder<Void> {
+        return Binder(base) { base, _ in
             base.modalDismiss()
         }
     }
