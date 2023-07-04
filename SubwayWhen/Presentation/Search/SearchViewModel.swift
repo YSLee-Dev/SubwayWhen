@@ -20,11 +20,10 @@ class SearchViewModel : SearchViewModelProtocol{
     let defaultViewModel : DefaultViewModelProtocol
     private let model : SearchModelProtocol
     
-    // OUTPUT
-    let modalData : Driver<ResultVCCellData>
-    
     private let defaultData = BehaviorSubject<[String]>(value: ["강남", "광화문", "명동", "광화문", "판교", "수원"])
     private let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
+    
+    weak var delegate: SearchVCActionProtocol?
     
     let bag = DisposeBag()
     
@@ -47,13 +46,15 @@ class SearchViewModel : SearchViewModelProtocol{
             .bind(to: self.defaultViewModel.defaultListData)
             .disposed(by: self.bag)
     
-        let cellClickData = self.resultViewModel.cellClick
+        self.resultViewModel.cellClick
             .withLatestFrom(nowData){
                 $1[$0.section].items[$0.row]
         }
-        
-        self.modalData = cellClickData
-            .asDriver(onErrorDriveWith: .empty())
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.modalPresent(data: data)
+            })
+            .disposed(by: self.bag)
         
         self.defaultViewModel.defaultListClick
             .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
