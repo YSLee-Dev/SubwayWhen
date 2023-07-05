@@ -11,5 +11,6 @@ import RxSwift
 
 protocol LocationModalModelProtocol {
     func locationAuthCheck() -> Observable<Bool>
-    func locationRequest() -> Observable<LocationData> 
+    func locationRequest() -> Observable<LocationData>
+    func locationToVicinityStationRequest(locationData: LocationData) -> Observable<[LocationModalSectionData]>
 }
