@@ -12,8 +12,10 @@ import RxCocoa
 
 class LocationModalViewModel {
     weak var delegate: LocationModalVCActionProtocol?
+    let model: LocationModalModelProtocol
     
     private let modalDismissAction = PublishSubject<Void>()
+    private let auth = PublishSubject<Bool>()
     private let bag = DisposeBag()
     
     struct Input {
@@ -24,19 +26,25 @@ class LocationModalViewModel {
     
     struct Output {
         let modalDismissAnimation: Driver<Void>
+        let locationAuthStatus: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
         self.vcFlow(input: input)
+        self.authCheck()
         
         return Output(
             modalDismissAnimation: self.modalDismissAction
+                .asDriver(onErrorDriveWith: .empty()),
+            locationAuthStatus: self.auth
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
     
-    init() {
-        
+    init(
+        model: LocationModalModelProtocol = LocationModalModel()
+    ) {
+        self.model = model
     }
 }
 
@@ -58,6 +66,14 @@ extension LocationModalViewModel {
             .subscribe(onNext: { viewModel, _ in
                 viewModel.delegate?.didDisappear()
             })
+            .disposed(by: self.bag)
+    }
+    
+    func authCheck() {
+        self.model.locationAuthCheck()
+            .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
+            .debug()
+            .bind(to: self.auth)
             .disposed(by: self.bag)
     }
 }
