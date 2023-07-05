@@ -29,7 +29,12 @@ class DefaultViewCell : CollectionViewCellCustom{
 
 extension DefaultViewCell{
     private func layout(){
-        self.contentView.addSubview(self.stationName)
+        self.mainBG.snp.remakeConstraints {
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+        }
+        
+        self.mainBG.addSubview(self.stationName)
         self.stationName.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
