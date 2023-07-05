@@ -16,4 +16,5 @@ protocol LoadModelProtocol : AnyObject{
     func korailSchduleLoad(scheduleSearch : ScheduleSearch) -> Single<Result<KorailHeader, URLError>>
     func stationSearch(station: String) -> Single<Result<SearchStaion,URLError>>
     func defaultViewListRequest() -> Observable<[String]>
+    func vicinityStationsLoad(x: Double, y: Double) -> Single<Result<VcinityStationsData,URLError>>
 }
