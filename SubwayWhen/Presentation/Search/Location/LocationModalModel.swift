@@ -16,6 +16,7 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
     let locationManager: CLLocationManager
     
     private let auth = PublishSubject<Bool>()
+    private let locationData = PublishSubject<LocationData>()
     
     init (
         locationManager: CLLocationManager = .init()
@@ -30,6 +31,13 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
         return self.auth
             .asObservable()
     }
+    
+    func locationRequest() -> Observable<LocationData> {
+        self.locationManager.requestLocation()
+        
+        return self.locationData
+            .asObservable()
+    }
 }
 
 extension LocationModalModel: CLLocationManagerDelegate {
@@ -39,5 +47,19 @@ extension LocationModalModel: CLLocationManagerDelegate {
         } else if status == .authorizedWhenInUse {
             self.auth.onNext(true)
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            
+            self.locationData.onNext(.init(lat: lat, lon: lon))
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        self.locationData.onNext(.init(lat: 0.0, lon: 0.0))
+        print(error)
     }
 }
