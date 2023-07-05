@@ -35,11 +35,6 @@ class ReportContentsModalColletionViewCell : CollectionViewCellCustom{
 
 extension ReportContentsModalColletionViewCell {
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-            
-        }
         [self.titleLabel, self.icon]
             .forEach{
                 self.mainBG.addSubview($0)
