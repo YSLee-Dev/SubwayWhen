@@ -117,7 +117,7 @@ final class DetailModelTests: XCTestCase {
     
     func testMainCellToScheduleSearchError(){
         // GIVEN
-        let data = self.arrivalModel.mainCellDataToScheduleSearch(DetailLoadData(upDown: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
+        let data = self.arrivalModel.mainCellDataToScheduleSearch(DetailLoadData(upDown: "", stationName: "", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
 
         // WHEN
         let requestType = data.type
@@ -243,7 +243,7 @@ final class DetailModelTests: XCTestCase {
         // GIVEN
         let dummyData = arrivalDummyData.realtimeArrivalList
         let data = self.arrivalModel.arrivalDataMatching(station:
-                .init(upDown: "", subWayId: "", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""), arrivalData: dummyData)
+                .init(upDown: "", stationName: "교대", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""), arrivalData: dummyData)
         
         // WHEN
         let requestStationName = data.first?.stationName

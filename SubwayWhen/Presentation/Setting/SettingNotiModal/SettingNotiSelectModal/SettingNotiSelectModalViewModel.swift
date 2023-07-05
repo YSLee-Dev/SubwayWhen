@@ -72,7 +72,6 @@ class SettingNotiSelectModalViewModel {
             noLabelListShow: self.cellData
                 .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
                 .filter{($0.first?.id != "startWith" ) && ($0.first?.items.isEmpty ?? false) }
-                .debug()
                 .map {_ in Void() }
                 .asDriver(onErrorDriveWith: .empty())
         )
