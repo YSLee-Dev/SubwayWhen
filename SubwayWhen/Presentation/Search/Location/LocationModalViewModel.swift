@@ -32,6 +32,7 @@ class LocationModalViewModel {
     func transform(input: Input) -> Output {
         self.vcFlow(input: input)
         self.authCheck()
+        self.locationRequest()
         
         return Output(
             modalDismissAnimation: self.modalDismissAction
@@ -72,8 +73,20 @@ extension LocationModalViewModel {
     func authCheck() {
         self.model.locationAuthCheck()
             .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
-            .debug()
             .bind(to: self.auth)
+            .disposed(by: self.bag)
+    }
+    
+    func locationRequest() {
+        self.auth
+            .filter {$0}
+            .withUnretained(self)
+            .flatMapLatest{ viewModel, _ in
+                viewModel.model.locationRequest()
+            }
+            .subscribe(onNext: {
+                print($0)
+            })
             .disposed(by: self.bag)
     }
 }
