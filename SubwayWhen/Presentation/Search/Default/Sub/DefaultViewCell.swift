@@ -34,8 +34,4 @@ extension DefaultViewCell{
             $0.edges.equalToSuperview()
         }
     }
-    
-    private func attribute() {
-        self.layer.cornerRadius = ViewStyle.Layer.radius
-    }
 }

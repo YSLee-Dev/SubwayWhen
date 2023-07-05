@@ -29,7 +29,7 @@ class DetailCoordinator : Coordinator{
             excption.nextStationId = excption.backStationId
             excption.backStationId = next
         }
-        
+        print(data.lineNumber)
         let detailLoadData = DetailLoadData(upDown: excption.upDown, stationName: excption.stationName, lineNumber: excption.lineNumber, lineCode: excption.subWayId, useLine: excption.useLine, stationCode: excption.stationCode, exceptionLastStation: excption.exceptionLastStation, backStationId: excption.backStationId, nextStationId: excption.nextStationId, korailCode: excption.korailCode)
         
         let viewModel = DetailViewModel()

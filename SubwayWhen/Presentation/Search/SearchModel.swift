@@ -20,8 +20,16 @@ class SearchModel : SearchModelProtocol{
         self.totalLoadModel = model
     }
     
-    func fireBaseDefaultViewListLoad() -> Observable<[String]>{
-        self.totalLoadModel.defaultViewListLoad()
+    func fireBaseDefaultViewListLoad() -> Observable<[DefaultSectionData]>{
+        let stringList = self.totalLoadModel.defaultViewListLoad()
+        return stringList.map { data in
+            data.map {
+                DefaultCellData(title: $0)
+            }
+        }
+        .map {
+            [DefaultSectionData(id: UUID().uuidString, items: $0)]
+        }
     }
     
     func stationNameSearchRequest(_ name : String) -> Observable<SearchStaion>{
