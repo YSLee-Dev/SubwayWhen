@@ -25,6 +25,14 @@ class SearchCoordinator : Coordinator{
 }
 
 extension SearchCoordinator: SearchVCActionProtocol {
+    func locationPresent() {
+        let locationCoordinator = LocationModalCoordinator(navigation: self.navigation)
+        locationCoordinator.delegate = self
+        locationCoordinator.start()
+        
+        self.childCoordinator.append(locationCoordinator)
+    }
+    
     func modalPresent(data: ResultVCCellData) {
         let modalCoordinator = ModalCoordinator(navigation: self.navigation, data: data)
         modalCoordinator.delegate = self
@@ -70,6 +78,12 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
             $0 !== modalCoordinator
         }
     }
-    
-    
+}
+
+extension SearchCoordinator: LocationModalCoordinatorProtocol {
+    func didDisappear(locationModalCoordinator: Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter {
+            $0 !== locationModalCoordinator
+        }
+    }
 }

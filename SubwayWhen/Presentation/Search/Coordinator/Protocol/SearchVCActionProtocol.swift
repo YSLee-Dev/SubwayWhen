@@ -9,4 +9,5 @@ import Foundation
 
 protocol SearchVCActionProtocol: AnyObject {
     func modalPresent(data: ResultVCCellData)
+    func locationPresent()
 }
