@@ -35,7 +35,6 @@ class SearchVC : UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         self.searchBarVC?.isActive = false
-        self.defaultView.locationView.animationPlay()
     }
 }
 
@@ -48,8 +47,7 @@ extension SearchVC{
     private func layout(){
         self.view.addSubview(self.defaultView)
         self.defaultView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview()
-            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
     }
     

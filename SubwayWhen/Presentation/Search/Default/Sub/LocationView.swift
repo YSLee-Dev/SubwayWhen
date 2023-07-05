@@ -11,7 +11,7 @@ import Then
 import SnapKit
 import Lottie
 
-class LocationView: MainStyleUIView {
+class LocationView: CollectionViewCellCustom {
     let title = UILabel().then {
         $0.adjustsFontSizeToFitWidth = true
         $0.numberOfLines = 2
@@ -41,6 +41,7 @@ class LocationView: MainStyleUIView {
 extension LocationView {
     private func attribute() {
         self.backgroundColor = UIColor(named: "MainColor")
+        self.layer.cornerRadius = ViewStyle.Layer.radius
     }
     
     private func layout() {
