@@ -29,7 +29,6 @@ class LocationView: CollectionViewCellCustom {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.attribute()
         self.layout()
     }
     
@@ -39,19 +38,19 @@ class LocationView: CollectionViewCellCustom {
 }
 
 extension LocationView {
-    private func attribute() {
-        self.backgroundColor = UIColor(named: "MainColor")
-        self.layer.cornerRadius = ViewStyle.Layer.radius
-    }
-    
     private func layout() {
+        self.mainBG.snp.remakeConstraints {
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+        }
+        
         [self.title, self.animationView, self.okBtn]
             .forEach {
-                self.addSubview($0)
+                self.mainBG.addSubview($0)
             }
         
         self.title.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
         }
         
@@ -62,7 +61,7 @@ extension LocationView {
         }
         
         self.okBtn.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(40)
         }

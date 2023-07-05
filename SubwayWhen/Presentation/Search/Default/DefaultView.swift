@@ -40,8 +40,7 @@ extension DefaultView{
     private func layout(){
         self.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -85,14 +84,13 @@ extension DefaultView{
     private func collectionViewLayout() -> UICollectionViewCompositionalLayout{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        let grouptSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(70))
+        let grouptSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(65))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: grouptSize, repeatingSubitem: item, count: 2)
         
         let section = NSCollectionLayoutSection(group: group)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(280))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(290))
         
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
