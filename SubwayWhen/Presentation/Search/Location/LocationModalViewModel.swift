@@ -16,6 +16,7 @@ class LocationModalViewModel {
     
     private let modalDismissAction = PublishSubject<Void>()
     private let auth = PublishSubject<Bool>()
+    private let locationData = PublishSubject<LocationData>()
     private let bag = DisposeBag()
     
     struct Input {
@@ -81,12 +82,22 @@ extension LocationModalViewModel {
         self.auth
             .filter {$0}
             .withUnretained(self)
-            .flatMapLatest{ viewModel, _ in
+            .flatMap{ viewModel, _ in
                 viewModel.model.locationRequest()
+            }
+            .bind(to: self.locationData)
+            .disposed(by: self.bag)
+        
+       
+        self.locationData
+            .debug()
+            .flatMapLatest{ [weak self] data in
+                self?.model.locationToVicinityStationRequest(locationData: data) ?? .empty()
             }
             .subscribe(onNext: {
                 print($0)
             })
             .disposed(by: self.bag)
+            
     }
 }
