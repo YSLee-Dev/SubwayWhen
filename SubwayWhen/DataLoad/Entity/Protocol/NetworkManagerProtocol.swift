@@ -11,4 +11,5 @@ import RxSwift
 
 protocol NetworkManagerProtocol{
     func requestData<T : Decodable>(_ url :String, dataType: T.Type) -> Single<Result<T,URLError>>
+    func requestData<T: Decodable>(_ url: String, decodingType: T.Type, headers: [[String: String]], queryList: [[String: String]]) -> Single<Result<T,URLError>>
 }

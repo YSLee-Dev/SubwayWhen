@@ -257,6 +257,19 @@ class TotalLoadModel : TotalLoadProtocol{
         self.loadModel.defaultViewListRequest()
     }
     
+    func vcinityStationsDataLoad(x: Double, y: Double) -> Observable<[VcinityDocumentData]> {
+        self.loadModel.vicinityStationsLoad(x: x, y: y)
+            .map { data -> VcinityStationsData? in
+                guard case .success(let value) = data else {return nil}
+                return value
+            }
+            .asObservable()
+            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음")]))
+            .map {
+                $0.documents
+            }
+    }
+    
     private func timeFormatter(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HHmmss"

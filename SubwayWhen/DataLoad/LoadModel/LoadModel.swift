@@ -121,4 +121,20 @@ final class LoadModel : LoadModelProtocol{
         return listData
             .asObservable()
     }
+    
+    // 카카오 근접 지하철 역 통신
+    func vicinityStationsLoad(x: Double, y: Double) -> Single<Result<VcinityStationsData,URLError>>{
+        let url = "https://dapi.kakao.com/v2/local/search/category.json"
+        let query = [
+            ["category_group_code": "SW8"],
+            ["radius": "20000"],
+            ["x": "\(x)"],
+            ["y": "\(y)"]
+        ]
+        let headers = [
+            ["Authorization": "\(Bundle.main.tokenLoad("KAKAO_TOKEN"))"]
+        ]
+        
+        return self.networkManager.requestData(url, decodingType: VcinityStationsData.self, headers: headers, queryList: query)
+    }
 }
