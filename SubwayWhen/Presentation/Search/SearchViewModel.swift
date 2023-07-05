@@ -101,5 +101,12 @@ class SearchViewModel : SearchViewModelProtocol{
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
+        
+        self.defaultViewModel.locationBtnTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.locationPresent()
+            })
+            .disposed(by: self.bag)
     }
 }
