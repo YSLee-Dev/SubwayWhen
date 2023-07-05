@@ -19,8 +19,10 @@ class SearchViewModel : SearchViewModelProtocol{
     let resultViewModel : ResultViewModelProtocol
     let defaultViewModel : DefaultViewModelProtocol
     private let model : SearchModelProtocol
-    
-    private let defaultData = BehaviorSubject<[String]>(value: ["강남", "광화문", "명동", "광화문", "판교", "수원"])
+   
+    private let defaultData = BehaviorSubject<[DefaultSectionData]>(
+        value: [.init(id: "Default", items: [.init(title: "강남"), .init(title: "광화문"), .init(title: "명동"), .init(title: "판교")])]
+    )
     private let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
     
     weak var delegate: SearchVCActionProtocol?
@@ -99,6 +101,5 @@ class SearchViewModel : SearchViewModelProtocol{
             }
             .bind(to: self.nowData)
             .disposed(by: self.bag)
-        
     }
 }
