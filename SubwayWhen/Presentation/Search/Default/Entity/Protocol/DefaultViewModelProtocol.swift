@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol DefaultViewModelProtocol{
     var defaultListClick : PublishRelay<String>{get}
-    var defaultListData : BehaviorRelay<[String]>{get}
-    var listData : Driver<[String]>{get}
+    var defaultListData : BehaviorRelay<[DefaultSectionData]>{get}
+    var listData : Driver<[DefaultSectionData]>{get}
+    var locationBtnTap: PublishSubject<Void>{get}
 }
