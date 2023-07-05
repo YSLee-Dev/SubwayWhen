@@ -13,8 +13,11 @@ import RxDataSources
 
 import Then
 import SnapKit
+import Lottie
 
 class LocationModalVC: ModalVCCustom {
+    var animationIcon : LottieAnimationView?
+    
     let viewModel: LocationModalViewModel
     
     private let modalCompletion =  PublishSubject<Void>()
@@ -26,7 +29,6 @@ class LocationModalVC: ModalVCCustom {
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
         self.attribute()
         self.bind()
-        self.layout()
     }
     
     deinit {
@@ -76,6 +78,29 @@ private extension LocationModalVC {
         output.modalDismissAnimation
             .drive(self.rx.modalDismiss)
             .disposed(by: self.bag)
+        
+        output.locationAuthStatus
+            .drive(self.rx.authSwitch)
+            .disposed(by: self.bag)
+    }
+    
+    func iconLayout(){
+        self.animationIcon = LottieAnimationView(name: "Report")
+        guard let animationIcon = self.animationIcon else {return}
+        
+        self.mainBG.addSubview(animationIcon)
+        animationIcon.snp.makeConstraints{
+            $0.size.equalTo(100)
+            $0.top.equalTo(self.subTitle.snp.bottom).offset(100)
+            $0.centerX.equalToSuperview()
+        }
+    }
+    
+    func animationStart() {
+        guard let animationIcon = self.animationIcon else {return}
+        
+        animationIcon.animationSpeed = 2
+        animationIcon.play()
     }
 }
 
@@ -83,6 +108,19 @@ extension Reactive where Base: LocationModalVC {
     var modalDismiss: Binder<Void> {
         return Binder(base) { base, _ in
             base.modalDismiss()
+        }
+    }
+    
+    var authSwitch: Binder<Bool>{
+        return Binder(base){ base, bool in
+            if bool{
+                base.layout()
+            }else{
+                base.iconLayout()
+                base.animationStart()
+                base.subTitle.text = "위치 권한이 설정되어 있지 않아요."
+                base.okBtn?.titleLabel?.text = "닫기"
+            }
         }
     }
 }
