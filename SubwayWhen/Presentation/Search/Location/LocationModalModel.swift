@@ -14,14 +14,17 @@ import CoreLocation
 
 class LocationModalModel: NSObject, LocationModalModelProtocol {
     let locationManager: CLLocationManager
+    let totalLoadModel : TotalLoadProtocol
     
     private let auth = PublishSubject<Bool>()
     private let locationData = PublishSubject<LocationData>()
     
     init (
-        locationManager: CLLocationManager = .init()
+        locationManager: CLLocationManager = .init(),
+        model : TotalLoadModel = .init()
     ) {
         self.locationManager = locationManager
+        self.totalLoadModel = model
     }
     
     func locationAuthCheck() -> Observable<Bool> {
@@ -38,6 +41,42 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
         return self.locationData
             .asObservable()
     }
+    
+    func locationToVicinityStationRequest(locationData: LocationData) -> Observable<[LocationModalSectionData]> {
+        self.totalLoadModel.vcinityStationsDataLoad(x: locationData.lon, y: locationData.lat)
+            .withUnretained(self)
+            .map { model, data in
+                let cellData = data.map {
+                    LocationModalCellData(
+                        id: $0.distance + $0.name,
+                        name: model.stationNameSeparation(oldValue: $0.name),
+                        line: model.lineSeparation(oldValue: $0.name),
+                        distance: model.distanceTransform(oldValue: $0.distance)
+                    )
+                }
+                
+                return [LocationModalSectionData(id: UUID().uuidString, items: cellData)]
+            }
+    }
+    
+    private func distanceTransform(oldValue: String) -> String {
+        guard let doubleValue = Int(oldValue) else {return "정보없음"}
+        let numberFomatter = NumberFormatter()
+        numberFomatter.numberStyle = .decimal
+        
+        guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+        return "\(newValue)m"
+    }
+    
+    private func stationNameSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.firstIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.startIndex ..< wordIndex])
+    }
+    
+    private func lineSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex])
+    }
 }
 
 extension LocationModalModel: CLLocationManagerDelegate {
@@ -46,7 +85,7 @@ extension LocationModalModel: CLLocationManagerDelegate {
             self.auth.onNext(false)
         } else if status == .authorizedWhenInUse {
             self.auth.onNext(true)
-        }
+        } 
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
