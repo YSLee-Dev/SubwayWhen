@@ -9,23 +9,18 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
+
 import SnapKit
 import Then
 
 class DefaultView : UIView{
     let bag = DisposeBag()
     
-    let locationView = LocationView()
-    
-    let markLabel = UILabelCustom(padding: .init(top: 5, left: 10, bottom: 5, right: 10)).then{
-        $0.text = " 💡 많은 사람들이 이용하는 지하철역을 골라봤어요."
-        $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.backgroundColor = UIColor(named: "MainColor")
-    }
-    
     var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then{
         $0.backgroundColor = .systemBackground
         $0.register(DefaultViewCell.self, forCellWithReuseIdentifier: "DefaultViewCell")
+        $0.register(LocationView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "LocationView")
         $0.dataSource = nil
         $0.delegate = nil
     }
@@ -43,25 +38,10 @@ class DefaultView : UIView{
 
 extension DefaultView{
     private func layout(){
-        self.addSubview(self.locationView)
-        self.locationView.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalToSuperview()
-            $0.height.equalTo(280)
-        }
-        
-        self.addSubview(self.markLabel)
-        self.markLabel.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.locationView.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
-            $0.height.equalTo(50)
-        }
-        
         self.addSubview(self.listCollectionView)
         self.listCollectionView.snp.makeConstraints{
-            $0.top.equalTo(self.markLabel.snp.bottom).offset(ViewStyle.padding.mainStyleViewTB)
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
         }
     }
     
@@ -72,16 +52,32 @@ extension DefaultView{
     
     func bind(_ viewModel : DefaultViewModelProtocol){
         // VIEWMODEL -> VIEW
-        viewModel.listData
-            .drive(self.listCollectionView.rx.items){cv, row, data in
-                guard let cell = cv.dequeueReusableCell(withReuseIdentifier: "DefaultViewCell", for: IndexPath(row: row, section: 0)) as? DefaultViewCell else {return UICollectionViewCell()}
-                cell.stationName.text = data
+        let dataSources = RxCollectionViewSectionedAnimatedDataSource<DefaultSectionData>(
+            animationConfiguration: .init(insertAnimation: .fade),
+            configureCell: { _, cv, index, data in
+                guard let cell = cv.dequeueReusableCell(withReuseIdentifier: "DefaultViewCell", for: index) as? DefaultViewCell else {return UICollectionViewCell()}
+                cell.stationName.text = data.title
                 return cell
-            }
+        })
+        
+        dataSources.configureSupplementaryView = {_, cv, kind, index in
+            guard let header = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LocationView", for: index) as? LocationView else {return UICollectionReusableView()}
+            header.animationPlay()
+            
+            header.okBtn.rx.tap
+                .bind(to: viewModel.locationBtnTap)
+                .disposed(by: self.bag)
+            
+            return header
+        }
+        
+        viewModel.listData
+            .drive(self.listCollectionView.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
         
         // VIEW -> VIEWMODEL
-        self.listCollectionView.rx.modelSelected(String.self)
+        self.listCollectionView.rx.modelSelected(DefaultCellData.self)
+            .map {$0.title}
             .bind(to: viewModel.defaultListClick)
             .disposed(by: self.bag)
     }
@@ -93,9 +89,14 @@ extension DefaultView{
         
         let grouptSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(70))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: grouptSize, repeatingSubitem: item, count: 2)
-    
         
         let section = NSCollectionLayoutSection(group: group)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(280))
+        
+        section.boundarySupplementaryItems = [
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        ]
         
         return UICollectionViewCompositionalLayout(section: section)
     }
