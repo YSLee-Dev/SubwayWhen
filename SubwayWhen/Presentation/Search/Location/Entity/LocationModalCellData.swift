@@ -14,6 +14,16 @@ struct LocationModalCellData: Equatable, IdentifiableType {
     let name: String
     let line: String
     let distance: String
+    
+    var lineColorName: String {
+        guard self.line != "경의중앙선" else {return "경의선"}
+        
+        guard Int(String(self.line.first ?? "A")) != nil else {return self.line}
+
+        var value = self.line
+        value.insert("0", at: self.line.startIndex)
+        return value
+    }
 }
 
 extension LocationModalCellData {
