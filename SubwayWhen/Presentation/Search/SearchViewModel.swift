@@ -24,6 +24,7 @@ class SearchViewModel : SearchViewModelProtocol{
         value: [.init(id: "Default", items: [.init(title: "강남"), .init(title: "광화문"), .init(title: "명동"), .init(title: "판교")])]
     )
     private let nowData = BehaviorRelay<[ResultVCSection]>(value: [ResultVCSection(section: "", items: [])])
+    let locationModalTap = PublishSubject<String>()
     
     weak var delegate: SearchVCActionProtocol?
     
@@ -58,7 +59,11 @@ class SearchViewModel : SearchViewModelProtocol{
             })
             .disposed(by: self.bag)
         
-        self.defaultViewModel.defaultListClick
+        let stationTap = Observable.merge(
+            self.defaultViewModel.defaultListClick.asObservable(),
+            self.locationModalTap.asObservable()
+        )
+        stationTap
             .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind(to: self.serachBarViewModel.defaultViewClick)
             .disposed(by: self.bag)
@@ -77,7 +82,7 @@ class SearchViewModel : SearchViewModelProtocol{
         let search = Observable
             .merge(
                 searchQuery,
-                self.defaultViewModel.defaultListClick.asObservable()
+                stationTap
             )
             .share()
         

@@ -17,6 +17,7 @@ struct LocationModalCellData: Equatable, IdentifiableType {
     
     var lineColorName: String {
         guard self.line != "경의중앙선" else {return "경의선"}
+        guard self.line != "에버라인" else {return "용인경전철"}
         
         guard Int(String(self.line.first ?? "A")) != nil else {return self.line}
 
