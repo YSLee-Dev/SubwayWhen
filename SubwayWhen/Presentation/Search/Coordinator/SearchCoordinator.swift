@@ -10,6 +10,7 @@ import UIKit
 class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
+    var viewModel: SearchViewModelProtocol?
     
     init(){
         self.navigation = .init()
@@ -18,6 +19,8 @@ class SearchCoordinator : Coordinator{
     func start() {
         let viewModel = SearchViewModel()
         viewModel.delegate = self
+        self.viewModel = viewModel
+        
         let search = SearchVC(viewModel: viewModel)
         search.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
         self.navigation.pushViewController(search, animated: true)
@@ -81,6 +84,13 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
 }
 
 extension SearchCoordinator: LocationModalCoordinatorProtocol {
+    func stationTap(stationName: String) {
+        self.dismiss()
+        
+        guard let viewModel = self.viewModel else {return}
+        viewModel.locationModalTap.onNext(stationName)
+    }
+    
     func didDisappear(locationModalCoordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter {
             $0 !== locationModalCoordinator

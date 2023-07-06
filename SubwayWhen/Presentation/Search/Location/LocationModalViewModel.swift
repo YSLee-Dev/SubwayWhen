@@ -81,6 +81,7 @@ extension LocationModalViewModel {
             .disposed(by: self.bag)
         
         input.stationTap
+            .filter {$0.name != "정보없음"}
             .withUnretained(self)
             .subscribe(onNext: { viewModel, data in
                 viewModel.delegate?.stationTap(stationName: data.name)

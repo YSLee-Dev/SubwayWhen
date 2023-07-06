@@ -10,4 +10,5 @@ import Foundation
 protocol LocationModalCoordinatorProtocol: AnyObject {
     func dismiss()
     func didDisappear(locationModalCoordinator: Coordinator)
+    func stationTap(stationName: String)
 }
