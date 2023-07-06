@@ -127,7 +127,7 @@ final class LoadModel : LoadModelProtocol{
         let url = "https://dapi.kakao.com/v2/local/search/category.json"
         let query = [
             ["category_group_code": "SW8"],
-            ["radius": "20000"],
+            ["radius": "3000"],
             ["x": "\(x)"],
             ["y": "\(y)"]
         ]
