@@ -31,7 +31,7 @@ class SettingNotiSelectCoordinator: Coordinator {
         viewModel.delegate = self
         
         let title = self.group == .one ? "출근" : "퇴근"
-        let selectVC = SettingNotiSelectModalVC(title: "\(title) 알림을 받을 지하철 역 선택", titleViewHeight: 30, viewModel: viewModel)
+        let selectVC = SettingNotiSelectModalVC(title: "\(title)알림", titleViewHeight: 30, viewModel: viewModel)
         
         
         self.navigation.pushViewController(selectVC, animated: true)

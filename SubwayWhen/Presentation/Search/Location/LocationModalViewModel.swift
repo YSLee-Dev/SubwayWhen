@@ -16,18 +16,22 @@ class LocationModalViewModel {
     
     private let modalDismissAction = PublishSubject<Void>()
     private let auth = PublishSubject<Bool>()
-    private let locationData = PublishSubject<LocationData>()
+    private let vcinityStationList = BehaviorSubject<[LocationModalSectionData]>(value: [])
+    
     private let bag = DisposeBag()
     
     struct Input {
         let modalCompletion: Observable<Void>
         let okBtnTap: Observable<Void>
         let didDisappear: Observable<Void>
+        let stationTap: Observable<LocationModalCellData>
     }
     
     struct Output {
         let modalDismissAnimation: Driver<Void>
         let locationAuthStatus: Driver<Bool>
+        let vcinityStations: Driver<[LocationModalSectionData]>
+        let loadingStop: Driver<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -39,6 +43,12 @@ class LocationModalViewModel {
             modalDismissAnimation: self.modalDismissAction
                 .asDriver(onErrorDriveWith: .empty()),
             locationAuthStatus: self.auth
+                .asDriver(onErrorDriveWith: .empty()),
+            vcinityStations: self.vcinityStationList
+                .asDriver(onErrorDriveWith: .empty()),
+            loadingStop: self.vcinityStationList
+                .filter { !$0.isEmpty }
+                .map {_ in Void()}
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
@@ -69,6 +79,13 @@ extension LocationModalViewModel {
                 viewModel.delegate?.didDisappear()
             })
             .disposed(by: self.bag)
+        
+        input.stationTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.stationTap(stationName: data.name)
+            })
+            .disposed(by: self.bag)
     }
     
     func authCheck() {
@@ -82,21 +99,13 @@ extension LocationModalViewModel {
         self.auth
             .filter {$0}
             .withUnretained(self)
-            .flatMap{ viewModel, _ in
+            .flatMapLatest{ viewModel, _ in
                 viewModel.model.locationRequest()
             }
-            .bind(to: self.locationData)
-            .disposed(by: self.bag)
-        
-       
-        self.locationData
-            .debug()
             .flatMapLatest{ [weak self] data in
                 self?.model.locationToVicinityStationRequest(locationData: data) ?? .empty()
             }
-            .subscribe(onNext: {
-                print($0)
-            })
+            .bind(to: self.vcinityStationList)
             .disposed(by: self.bag)
             
     }

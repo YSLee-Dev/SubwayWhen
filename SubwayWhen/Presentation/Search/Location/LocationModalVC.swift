@@ -18,6 +18,10 @@ import Lottie
 class LocationModalVC: ModalVCCustom {
     var animationIcon : LottieAnimationView?
     
+    let refreshIcon = UIActivityIndicatorView().then{
+        $0.color = UIColor(named: "AppIconColor")
+    }
+    
     let viewModel: LocationModalViewModel
     
     private let modalCompletion =  PublishSubject<Void>()
@@ -27,8 +31,16 @@ class LocationModalVC: ModalVCCustom {
     init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: LocationModalViewModel) {
         self.viewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
-        self.attribute()
         self.bind()
+    }
+    
+    lazy var tableView = UITableView().then {
+        $0.rowHeight = 90
+        $0.backgroundColor = .systemBackground
+        $0.register(LocationModalCell.self, forCellReuseIdentifier: "LocationModalCell")
+        $0.dataSource = nil
+        $0.delegate = nil
+        $0.separatorStyle = .none
     }
     
     deinit {
@@ -57,11 +69,23 @@ class LocationModalVC: ModalVCCustom {
 
 private extension LocationModalVC {
     func attribute() {
-        
+        self.refreshIcon.startAnimating()
     }
     
     func layout() {
+        guard let okBtn = self.okBtn else {return}
         
+        self.mainBG.addSubview(self.tableView)
+        self.tableView.snp.makeConstraints {
+            $0.top.equalTo(self.subTitle.snp.bottom).offset(10)
+            $0.bottom.equalTo(okBtn.snp.top).offset(-10)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        self.tableView.addSubview(self.refreshIcon)
+        self.refreshIcon.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     func bind() {
@@ -70,7 +94,8 @@ private extension LocationModalVC {
         let input = LocationModalViewModel.Input(
             modalCompletion: self.modalCompletion.asObservable(),
             okBtnTap: okBtn.rx.tap.asObservable(),
-            didDisappear: self.didDisappear.asObservable()
+            didDisappear: self.didDisappear.asObservable(),
+            stationTap: self.tableView.rx.modelSelected(LocationModalCellData.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input)
@@ -82,6 +107,24 @@ private extension LocationModalVC {
         output.locationAuthStatus
             .drive(self.rx.authSwitch)
             .disposed(by: self.bag)
+        
+        
+        let dataSources = RxTableViewSectionedAnimatedDataSource<LocationModalSectionData>(
+            animationConfiguration: .init(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade),
+            configureCell: { _, tv, index, data in
+                guard let cell = tv.dequeueReusableCell(withIdentifier: "LocationModalCell", for: index) as? LocationModalCell else {return UITableViewCell()}
+                cell.cellSet(data: data)
+                return cell
+            })
+        
+        output.vcinityStations
+            .drive(self.tableView.rx.items(dataSource: dataSources))
+            .disposed(by: self.bag)
+        
+        output.loadingStop
+            .drive(self.rx.refreshIconStop)
+            .disposed(by: self.bag)
+        
     }
     
     func iconLayout(){
@@ -115,12 +158,19 @@ extension Reactive where Base: LocationModalVC {
         return Binder(base){ base, bool in
             if bool{
                 base.layout()
+                base.refreshIcon.startAnimating()
             }else{
                 base.iconLayout()
                 base.animationStart()
                 base.subTitle.text = "위치 권한이 설정되어 있지 않아요."
                 base.okBtn?.titleLabel?.text = "닫기"
             }
+        }
+    }
+    
+    var refreshIconStop: Binder<Void> {
+        return Binder(base) { base, _ in
+            base.refreshIcon.stopAnimating()
         }
     }
 }
