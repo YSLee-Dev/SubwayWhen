@@ -22,7 +22,7 @@ class LocationModalCoordinator: Coordinator {
     func start() {
         let viewModel = LocationModalViewModel()
         viewModel.delegate = self
-        let locationModal = LocationModalVC(modalHeight: 500, btnTitle: "닫기", mainTitle: "가까운 지하철역 찾기", subTitle: "현재 위치에 기반하여 가장 가까운 지하철역을 검색할 수 있어요.", viewModel: viewModel)
+        let locationModal = LocationModalVC(modalHeight: 500, btnTitle: "닫기", mainTitle: "가까운 지하철역 찾기", subTitle: "현재 위치에 기반하여 3km 이내 지하철역을 찾을 수 있어요.", viewModel: viewModel)
         
         locationModal.modalPresentationStyle = .overFullScreen
         self.navigation.present(locationModal, animated: false)
