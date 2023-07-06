@@ -36,7 +36,7 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
     }
     
     func locationRequest() -> Observable<LocationData> {
-        self.locationManager.requestLocation()
+        self.locationManager.startUpdatingLocation()
         
         return self.locationData
             .asObservable()
@@ -94,6 +94,7 @@ extension LocationModalModel: CLLocationManagerDelegate {
             let lon = location.coordinate.longitude
             
             self.locationData.onNext(.init(lat: lat, lon: lon))
+            self.locationManager.stopUpdatingLocation()
         }
     }
     
