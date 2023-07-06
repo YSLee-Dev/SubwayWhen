@@ -30,6 +30,10 @@ class LocationModalCoordinator: Coordinator {
 }
 
 extension LocationModalCoordinator: LocationModalVCActionProtocol {
+    func stationTap(stationName: String) {
+        self.delegate?.stationTap(stationName: stationName)
+    }
+    
     func dismiss() {
         self.delegate?.dismiss()
     }
