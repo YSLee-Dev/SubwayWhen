@@ -268,6 +268,13 @@ class TotalLoadModel : TotalLoadProtocol{
             .map {
                 $0.documents
             }
+            .map { data in
+                data.sorted {
+                    let first = Int($0.distance) ?? 0
+                    let second = Int($1.distance) ?? 1
+                    return first < second
+                }
+            }
     }
     
     private func timeFormatter(date : Date) -> String {
