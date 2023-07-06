@@ -71,6 +71,6 @@ extension LocationModalCell {
         self.lineColor(line: data.lineColorName)
         self.stationName.text = data.name
         self.distance.text = data.distance
-        self.line.text = data.line
+        self.line.text = data.lineName
     }
 }
