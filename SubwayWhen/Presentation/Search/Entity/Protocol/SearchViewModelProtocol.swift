@@ -14,4 +14,6 @@ protocol SearchViewModelProtocol{
     var serachBarViewModel : SearchBarViewModelProtocol{get}
     var resultViewModel : ResultViewModelProtocol{get}
     var defaultViewModel : DefaultViewModelProtocol{get}
+    
+    var locationModalTap: PublishSubject<String>{get}
 }
