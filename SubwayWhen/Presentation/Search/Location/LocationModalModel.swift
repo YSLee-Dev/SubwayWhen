@@ -75,7 +75,7 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
     
     private func lineSeparation(oldValue: String) -> String {
         guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
-        return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex])
+        return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex]).replacingOccurrences(of: " ", with: "")
     }
 }
 
