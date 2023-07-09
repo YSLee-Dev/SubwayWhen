@@ -69,7 +69,7 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
     }
     
     private func stationNameSeparation(oldValue: String) -> String {
-        guard let wordIndex = oldValue.firstIndex(of: "역") else {return "정보없음"}
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
         return String(oldValue[oldValue.startIndex ..< wordIndex])
     }
     
