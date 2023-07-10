@@ -171,7 +171,7 @@ class LoadModelTests : XCTestCase{
         let data = self.kakaoVicinityStationModel.vicinityStationsLoad(
             x: 37.49388026940836, y: 127.01360357128935
         )
-        let filterData = data.map { data -> [VcinityDocumentData] in
+        let filterData = data.map { data -> [VicinityDocumentData] in
             guard case .success(let success) = data else {return []}
             return success.documents
         }
