@@ -24,6 +24,10 @@ class SettingNotiSelectModalVC: TableVCCustom {
         $0.textAlignment = .center
     }
     
+    lazy var stationRemoveBtn = UIButton().then {
+        $0.setImage(UIImage(systemName: "bell.slash"), for: .normal)
+    }
+    
     private let didDisappearAction =  PublishSubject<Void>()
     
     init(
@@ -71,13 +75,13 @@ private extension SettingNotiSelectModalVC {
     }
     
     func layout() {
-        self.topView.snp.remakeConstraints{
+        self.topView.snp.remakeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(40)
             $0.height.equalTo(60)
         }
         
-        self.tableView.snp.remakeConstraints{
+        self.tableView.snp.remakeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.top.equalTo(self.topView.snp.bottom).offset(-15)
         }
@@ -96,7 +100,8 @@ private extension SettingNotiSelectModalVC {
         let input = SettingNotiSelectModalViewModel.Input(
             didDisappearAction: self.didDisappearAction,
             popAction: self.topView.backBtn.rx.tap.asObservable(),
-            stationTap: self.tableView.rx.modelSelected(SettingNotiSelectModalCellData.self).asObservable()
+            stationTap: self.tableView.rx.modelSelected(SettingNotiSelectModalCellData.self).asObservable(),
+            stationRemoveTap: self.stationRemoveBtn.rx.tap.asObservable()
         )
         
         let output = self.viewModel.transform(input: input)
@@ -120,12 +125,20 @@ private extension SettingNotiSelectModalVC {
 }
 
 extension Reactive where Base: SettingNotiSelectModalVC {
-    var labelShow: Binder<Void> {
-        return Binder(base) { base, _ in
-            base.view.addSubview(base.noListLabel)
-            base.noListLabel.snp.makeConstraints{
-                $0.centerX.equalToSuperview()
-                $0.centerY.equalToSuperview().offset(40)
+    var labelShow: Binder<Bool> {
+        return Binder(base) { base, isEmpty in
+            if isEmpty {
+                base.view.addSubview(base.noListLabel)
+                base.noListLabel.snp.makeConstraints{
+                    $0.centerX.equalToSuperview()
+                    $0.centerY.equalToSuperview().offset(40)
+                }
+            } else {
+                base.topView.addSubview(base.stationRemoveBtn)
+                base.stationRemoveBtn.snp.makeConstraints {
+                    $0.trailing.equalToSuperview().inset(20)
+                    $0.centerY.equalTo(base.topView.backBtn)
+                }
             }
         }
     }

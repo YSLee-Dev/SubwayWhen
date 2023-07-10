@@ -146,16 +146,31 @@ extension SettingNotiStationView {
         }
     }
     
-    func viewDataSet(data: NotificationManagerRequestData) {
-        if data.group == .one {
-            self.groupOneStation.text = data.stationName
-            self.groupOneLine.text = data.useLine
-            self.groupOneLine.backgroundColor = UIColor(named: data.line)
+    func viewDataSet(data: NotificationManagerRequestData, isRemove: Bool) {
+        if isRemove {
+            self.defaultSet(group: data.group)
         } else {
-            self.groupTwoStation.text = data.stationName
-            self.groupTwoLine.text = data.useLine
-            self.groupTwoLine.backgroundColor = UIColor(named: data.line)
+            if data.group == .one {
+                self.groupOneStation.text = data.stationName
+                self.groupOneLine.text = data.useLine
+                self.groupOneLine.backgroundColor = UIColor(named: data.line)
+            } else {
+                self.groupTwoStation.text = data.stationName
+                self.groupTwoLine.text = data.useLine
+                self.groupTwoLine.backgroundColor = UIColor(named: data.line)
+            }
         }
-        
+    }
+    
+    private func defaultSet(group: SaveStationGroup) {
+        if group == .one {
+            self.groupOneStation.text = "역 선택"
+            self.groupOneLine.text = "?"
+            self.groupOneLine.backgroundColor = .systemGray
+        } else {
+            self.groupTwoStation.text = "역 선택"
+            self.groupTwoLine.text = "?"
+            self.groupTwoLine.backgroundColor = .systemGray
+        }
     }
 }
