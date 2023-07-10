@@ -163,8 +163,9 @@ extension Reactive where Base: SettingNotiModalVC {
     var viewSet: Binder<[NotificationManagerRequestData]> {
         return Binder(base){ base, data in
             for item in data {
-                if item.id != "" {
-                    base.settingNotiStationView.viewDataSet(data: item)
+                if item.stationName != "" {
+                    base.settingNotiStationView.viewDataSet(
+                        data: item, isRemove: item.stationName == "역 선택")
                 }
             }
         }
