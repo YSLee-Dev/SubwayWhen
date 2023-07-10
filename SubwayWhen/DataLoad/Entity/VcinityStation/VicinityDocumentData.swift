@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VicinityDocumentData: Decodable {
+struct VicinityDocumentData: Decodable, Equatable {
     let name: String
     let distance: String
     let category: String
