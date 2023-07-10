@@ -264,12 +264,16 @@ class TotalLoadModel : TotalLoadProtocol{
                 return value
             }
             .asObservable()
-            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음")]))
+            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음", category: "정보없음")]))
             .map {
                 $0.documents
             }
             .map { data in
-                data.sorted {
+                let filter = data.filter {
+                    $0.category == "SW8"
+                }
+                
+                return filter.sorted {
                     let first = Int($0.distance) ?? 0
                     let second = Int($1.distance) ?? 1
                     return first < second
