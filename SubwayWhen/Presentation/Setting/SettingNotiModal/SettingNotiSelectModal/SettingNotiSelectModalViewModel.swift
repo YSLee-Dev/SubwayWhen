@@ -25,11 +25,12 @@ class SettingNotiSelectModalViewModel {
         let didDisappearAction: PublishSubject<Void>
         let popAction: Observable<Void>
         let stationTap: Observable<SettingNotiSelectModalCellData>
+        let stationRemoveTap: Observable<Void>
     }
     
     struct Output {
         let stationList: Driver<[SettingNotiSelectModalSectionData]>
-        let noLabelListShow: Driver<Void>
+        let noLabelListShow: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -54,6 +55,14 @@ class SettingNotiSelectModalViewModel {
             })
             .disposed(by: self.bag)
         
+        input.stationRemoveTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.stationTap(
+                    item: .init(id: "", stationName: "역 선택", updnLine: "", line: "", useLine: "", isChecked: false), group: viewModel.group)
+            })
+            .disposed(by: self.bag)
+        
         self.model.notiSelectList(loadGroup: self.group)
             .asObservable()
             .withUnretained(self)
@@ -70,9 +79,8 @@ class SettingNotiSelectModalViewModel {
             stationList: self.cellData
                 .asDriver(onErrorDriveWith: .empty()),
             noLabelListShow: self.cellData
-                .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
-                .filter{($0.first?.id != "startWith" ) && ($0.first?.items.isEmpty ?? false) }
-                .map {_ in Void() }
+                .filter {$0.first?.id != "startWith"}
+                .map { $0.first?.items.isEmpty ?? false }
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
