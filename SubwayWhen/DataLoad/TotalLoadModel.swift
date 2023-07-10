@@ -257,9 +257,9 @@ class TotalLoadModel : TotalLoadProtocol{
         self.loadModel.defaultViewListRequest()
     }
     
-    func vcinityStationsDataLoad(x: Double, y: Double) -> Observable<[VcinityDocumentData]> {
+    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]> {
         self.loadModel.vicinityStationsLoad(x: x, y: y)
-            .map { data -> VcinityStationsData? in
+            .map { data -> VicinityStationsData? in
                 guard case .success(let value) = data else {return nil}
                 return value
             }
