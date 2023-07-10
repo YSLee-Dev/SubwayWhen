@@ -43,7 +43,7 @@ class LocationModalModel: NSObject, LocationModalModelProtocol {
     }
     
     func locationToVicinityStationRequest(locationData: LocationData) -> Observable<[LocationModalSectionData]> {
-        self.totalLoadModel.vcinityStationsDataLoad(x: locationData.lon, y: locationData.lat)
+        self.totalLoadModel.vicinityStationsDataLoad(x: locationData.lon, y: locationData.lat)
             .withUnretained(self)
             .map { model, data in
                 let cellData = data.map {

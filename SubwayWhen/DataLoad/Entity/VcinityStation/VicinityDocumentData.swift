@@ -1,5 +1,5 @@
 //
-//  VcinityDocumentData.swift
+//  VicinityDocumentData.swift
 //  SubwayWhen
 //
 //  Created by 이윤수 on 2023/07/05.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VcinityDocumentData: Decodable {
+struct VicinityDocumentData: Decodable {
     let name: String
     let distance: String
     let category: String
