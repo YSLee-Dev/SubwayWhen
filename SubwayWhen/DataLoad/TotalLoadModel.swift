@@ -270,7 +270,7 @@ class TotalLoadModel : TotalLoadProtocol{
             }
             .map { data in
                 let filter = data.filter {
-                    $0.category == "SW8"
+                    $0.category == "SW8" || $0.category == "정보없음"
                 }
                 
                 return filter.sorted {
