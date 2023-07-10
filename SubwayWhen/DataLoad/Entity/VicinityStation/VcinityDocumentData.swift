@@ -10,10 +10,12 @@ import Foundation
 struct VcinityDocumentData: Decodable {
     let name: String
     let distance: String
+    let category: String
     
     enum CodingKeys: String, CodingKey {
         case name = "place_name"
         case distance = "distance"
+        case category = "category_group_code"
     }
     
 }
