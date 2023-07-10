@@ -14,6 +14,7 @@ let arrivalErrorData = DummyLoad().fileLoad("StationArrivalRequestErrorDummy.jso
 let seoulStationSchduleData = DummyLoad().fileLoad("SeoulStationScheduleDummy.json")
 let korailStationSchduleData = DummyLoad().fileLoad("KorailStationScheduleDummy.json")
 let stationNameSearchData = DummyLoad().fileLoad("StationNameSearchDummy.json")
+let vicinityData = DummyLoad().fileLoad("KakaoLocationAPIDummy.json")
 
 let arrivalDummyData = try! JSONDecoder().decode(LiveStationModel.self, from: arrivalData)
 let seoulScheduleDummyData = try! JSONDecoder().decode(ScheduleStationModel.self, from: seoulStationSchduleData)
@@ -28,6 +29,7 @@ var korailScheduleDummyData : [KorailScdule] = {
     }
 }()
 let stationNameSearcDummyhData = try! JSONDecoder().decode(SearchStaion.self, from: stationNameSearchData)
+let vicinityStationsDummyData = try! JSONDecoder().decode(VcinityStationsData.self, from: vicinityData)
 
 let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "340", exceptionLastStation: "", type: .real, backStationId: "1003000339", nextStationId: "1003000341", korailCode: "")
 
