@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NotificationManagerRequestData {
+struct NotificationManagerRequestData: Equatable {
     let id: String
     let stationName: String
     let useLine: String
