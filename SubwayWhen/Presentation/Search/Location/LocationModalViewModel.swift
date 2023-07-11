@@ -103,6 +103,7 @@ extension LocationModalViewModel {
             .flatMapLatest{ viewModel, _ in
                 viewModel.model.locationRequest()
             }
+            .distinctUntilChanged()
             .flatMapLatest{ [weak self] data in
                 self?.model.locationToVicinityStationRequest(locationData: data) ?? .empty()
             }
