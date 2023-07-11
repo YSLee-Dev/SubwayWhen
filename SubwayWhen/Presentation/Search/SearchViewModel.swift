@@ -59,6 +59,12 @@ class SearchViewModel : SearchViewModelProtocol{
             })
             .disposed(by: self.bag)
         
+        // 키보드 내리기
+        self.resultViewModel.cellClick
+            .map { _ in Void()}
+            .bind(to: self.serachBarViewModel.dataTapAction)
+            .disposed(by: self.bag)
+        
         let stationTap = Observable.merge(
             self.defaultViewModel.defaultListClick.asObservable(),
             self.locationModalTap.asObservable()
