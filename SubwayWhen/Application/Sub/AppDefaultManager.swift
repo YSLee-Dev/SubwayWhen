@@ -33,7 +33,7 @@ extension AppDefaultManager{
     func popup(){
         self.model.popupRequest{[weak self] title, subTitle, contents in
             if title != "Nil"{
-                let popup = PopupModal(modalHeight: 400, popupTitle: title, subTitle: subTitle, popupValue: contents)
+                let popup = PopupModal(modalHeight: 400, popupTitle: title, subTitle: subTitle, popupValue: self?.popupContentsStyle(text: contents) ?? "")
                 popup.modalPresentationStyle = .overFullScreen
                 self?.window.rootViewController?.children.first?.children.first?.present(popup, animated: false)
             }
@@ -103,5 +103,11 @@ extension AppDefaultManager{
         case .failure(let error):
             print("station not load, 초기 값 없음", error)
         }
+    }
+}
+
+private extension AppDefaultManager {
+    func popupContentsStyle(text: String) -> String {
+        text.replacingOccurrences(of: "(E)", with: "\n")
     }
 }
