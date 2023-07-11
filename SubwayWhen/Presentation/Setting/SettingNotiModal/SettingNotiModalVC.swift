@@ -155,7 +155,7 @@ extension Reactive where Base: SettingNotiModalVC {
                 base.iconLayout()
                 base.animationStart()
                 base.subTitle.text = "알림 권한이 설정되어 있지 않아요."
-                base.okBtn?.titleLabel?.text = "닫기"
+                base.okBtn?.setTitle("닫기", for: .normal)
             }
         }
     }
