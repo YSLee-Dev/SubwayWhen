@@ -48,6 +48,10 @@ extension SearchBarVC{
             }
             .drive(self.rx.searchPresent)
             .disposed(by: self.bag)
+        
+        viewModel.keyboardClose
+            .drive(self.rx.keyboardClose)
+            .disposed(by: self.bag)
     }
 }
 
@@ -55,6 +59,12 @@ extension Reactive where Base : SearchBarVC{
     var searchPresent : Binder<Void>{
         return Binder(base){base, _ in
             base.isActive = true
+        }
+    }
+    
+    var keyboardClose : Binder<Void>{
+        return Binder(base){base, _ in
+            base.searchBar.resignFirstResponder()
         }
     }
 }

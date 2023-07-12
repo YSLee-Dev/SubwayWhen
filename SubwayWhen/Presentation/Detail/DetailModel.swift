@@ -53,9 +53,9 @@ class DetailModel : DetailModelProtocol{
         }
         
         return [
-            DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-            DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
-            DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, subWayId: data.subWayId, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
+            DetailTableViewSectionData(sectionName: "", items: [DetailTableViewCellData(id: "Header", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+            DetailTableViewSectionData(sectionName: "실시간 현황", items:  [DetailTableViewCellData(id:  "Live", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])]),
+            DetailTableViewSectionData(sectionName: "시간표", items:  [DetailTableViewCellData(id:  "Schedule", stationCode: data.stationCode, exceptionLastStation: data.exceptionLastStation, upDown: data.upDown, lineNumber: data.lineNumber, useLine: data.useLine, stationName: stationNameCut, backStationName: backNext[0], nextStationName: backNext[1])])
         ]
     }
     
@@ -91,10 +91,10 @@ class DetailModel : DetailModelProtocol{
     }
     
     func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
-        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.subWayId, stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: "", backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
+        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "현재 실시간 열차 데이터가 없어요.", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: nil, backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
         
         for x in arrivalData{
-            if station.upDown == x.upDown && station.subWayId == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
+            if station.upDown == x.upDown && station.lineCode == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
                 if list.count == 1{
                     list.insert(x, at: 0)
                 }else if list.count == 2{
