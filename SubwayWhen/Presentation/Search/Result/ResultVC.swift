@@ -43,6 +43,7 @@ extension ResultVC{
         
         // VIEW -> VIEWMODEL
         self.tableView.rx.itemSelected
+            .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind(to: viewModel.cellClick)
             .disposed(by: self.bag)
     }

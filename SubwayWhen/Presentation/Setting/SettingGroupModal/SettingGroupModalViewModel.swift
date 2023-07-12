@@ -30,7 +30,13 @@ class SettingGroupModalViewModel : SettingGroupModalViewModelProtocol{
     
     let bag = DisposeBag()
     
-    init(){
+    let notiManager: NotificationManagerProtocol
+    
+    init(
+        noti: NotificationManagerProtocol = NotificationManager.shared
+    ){
+        self.notiManager = noti
+    
         self.groupOneDefaultValue = Observable<Int>.create{
             $0.onNext(FixInfo.saveSetting.mainGroupOneTime)
             $0.onCompleted()
@@ -51,21 +57,15 @@ class SettingGroupModalViewModel : SettingGroupModalViewModelProtocol{
         self.modalClose = saveClick
             .asDriver(onErrorDriveWith: .empty())
         
-        saveClick
-            .withLatestFrom(self.groupOneHourValue){
-                return $1
-            }
-            .subscribe(onNext: {
-                FixInfo.saveSetting.mainGroupOneTime = $0
-            })
-            .disposed(by: self.bag)
+        let hourValue = Observable.combineLatest(self.groupOneHourValue, self.groupTwoHourValue)
         
         saveClick
-            .withLatestFrom(self.groupTwoHourValue){
-                return $1
-            }
-            .subscribe(onNext: {
-                FixInfo.saveSetting.mainGroupTwoTime = $0
+            .withLatestFrom(hourValue)
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                FixInfo.saveSetting.mainGroupOneTime = data.0
+                FixInfo.saveSetting.mainGroupTwoTime = data.1
+                viewModel.notiManager.notiTimeChange()
             })
             .disposed(by: self.bag)
         

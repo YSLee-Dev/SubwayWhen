@@ -9,7 +9,6 @@ import Foundation
 
 enum SettingTableViewCellType{
     case TextField
-    case Time
     case Switch
     case NewVC
 }

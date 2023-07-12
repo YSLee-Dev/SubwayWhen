@@ -10,12 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-class DefaultViewCell : UICollectionViewCell{
+class DefaultViewCell : CollectionViewCellCustom{
     var stationName = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
-        $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = ViewStyle.Layer.radius
         $0.textAlignment = .center
     }
     
@@ -31,7 +29,12 @@ class DefaultViewCell : UICollectionViewCell{
 
 extension DefaultViewCell{
     private func layout(){
-        self.contentView.addSubview(self.stationName)
+        self.mainBG.snp.remakeConstraints {
+            $0.top.bottom.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+        }
+        
+        self.mainBG.addSubview(self.stationName)
         self.stationName.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }

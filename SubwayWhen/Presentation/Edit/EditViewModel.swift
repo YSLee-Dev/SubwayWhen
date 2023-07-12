@@ -13,6 +13,7 @@ import RxCocoa
 class EditViewModel : EditViewModelProtocol{
     // MODEL
     private let editModel : EditModelProtocol
+    private let notiManager: NotificationManagerProtocol
     
     // INPUT
     let deleteCell = PublishRelay<String>()
@@ -28,22 +29,28 @@ class EditViewModel : EditViewModelProtocol{
     let bag = DisposeBag()
     
     init(
-        model : EditModel = .init()
+        model : EditModel = .init(),
+        noti: NotificationManagerProtocol = NotificationManager.shared
     ){
         self.editModel = model
+        self.notiManager = noti
         
         self.cellData = self.nowData
             .asDriver(onErrorDriveWith: .empty())
         
         // 셀 삭제
         self.deleteCell
-            .map{
+            .withUnretained(self)
+            .map{ viewModel, id in
                 for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == $0{
+                    if x.element.id == id{
                         FixInfo.saveStation.remove(at: x.offset)
                         break
                     }
                 }
+                
+                viewModel.deleteAlertID(id: id)
+                
                 return Void()
             }
             .bind(to: self.refreshOn)
@@ -83,6 +90,8 @@ class EditViewModel : EditViewModelProtocol{
                     // 세션 이동 감지
                     if old[0] != now[0]{
                         FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
+                        $0.deleteAlertID(id: FixInfo.saveStation[oldIndex].id)
+                        
                     }
                     
                     if now[1] == nowVaue[now[0]].items.count{
@@ -100,6 +109,7 @@ class EditViewModel : EditViewModelProtocol{
                         FixInfo.saveStation.remove(at: oldIndex)
                         FixInfo.saveStation.insert(fixData, at: nowIndex)
                     }
+                    
                     
                     return Void()
                 }catch{
@@ -120,5 +130,18 @@ class EditViewModel : EditViewModelProtocol{
             .bind(to: self.nowData)
             .disposed(by: self.bag)
         
+    }
+}
+
+private extension EditViewModel {
+    func deleteAlertID(id: String) {
+        if FixInfo.saveSetting.alertGroupOneID == id {
+            FixInfo.saveSetting.alertGroupOneID = ""
+            self.notiManager.notiRemove(id: id)
+            
+        } else if FixInfo.saveSetting.alertGroupTwoID == id {
+            FixInfo.saveSetting.alertGroupTwoID = ""
+            self.notiManager.notiRemove(id: id)
+        }
     }
 }
