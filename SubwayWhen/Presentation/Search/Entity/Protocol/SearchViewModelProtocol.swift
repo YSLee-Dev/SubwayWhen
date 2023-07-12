@@ -15,5 +15,5 @@ protocol SearchViewModelProtocol{
     var resultViewModel : ResultViewModelProtocol{get}
     var defaultViewModel : DefaultViewModelProtocol{get}
     
-    var modalData : Driver<ResultVCCellData>{get}
+    var locationModalTap: PublishSubject<String>{get}
 }

@@ -10,9 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class ReportContentsModalColletionViewCell : UICollectionViewCell{
-    let mainBG = MainStyleUIView()
-    
+class ReportContentsModalColletionViewCell : CollectionViewCellCustom{
     let titleLabel = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .center
@@ -37,11 +35,6 @@ class ReportContentsModalColletionViewCell : UICollectionViewCell{
 
 extension ReportContentsModalColletionViewCell {
     private func layout(){
-        self.contentView.addSubview(self.mainBG)
-        self.mainBG.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-            
-        }
         [self.titleLabel, self.icon]
             .forEach{
                 self.mainBG.addSubview($0)

@@ -16,7 +16,8 @@ class SettingModel : SettingModelProtocol{
                 [
                     SettingTableViewCellSection(sectionName: "홈", items: [
                         .init(settingTitle: "혼잡도 이모지", defaultData: FixInfo.saveSetting.mainCongestionLabel ,inputType: .TextField, groupType: .Main),
-                        .init(settingTitle: "특정 그룹 시간", defaultData: "", inputType: .NewVC, groupType: .Main)
+                        .init(settingTitle: SettingNewVCType.groupModal.rawValue, defaultData: "", inputType: .NewVC, groupType: .Main),
+                        .init(settingTitle: SettingNewVCType.notiModal.rawValue, defaultData: "", inputType: .NewVC, groupType: .Main)
                     ]),
                     SettingTableViewCellSection(sectionName: "상세화면", items: [
                         .init(settingTitle: "자동 새로 고침",defaultData: "\(FixInfo.saveSetting.detailAutoReload)", inputType: .Switch, groupType: .Detail),
@@ -27,8 +28,8 @@ class SettingModel : SettingModelProtocol{
                         .init(settingTitle: "중복 저장 방지",defaultData: "\(FixInfo.saveSetting.searchOverlapAlert)", inputType: .Switch, groupType: .Detail)
                     ]),
                     SettingTableViewCellSection(sectionName: "기타", items: [
-                        .init(settingTitle: "오픈 라이선스", defaultData: "", inputType: .NewVC, groupType: .Other),
-                        .init(settingTitle: "기타", defaultData: "", inputType: .NewVC, groupType: .Other)
+                        .init(settingTitle: SettingNewVCType.licenseModal.rawValue, defaultData: "", inputType: .NewVC, groupType: .Other),
+                        .init(settingTitle: SettingNewVCType.contentsModal.rawValue, defaultData: "", inputType: .NewVC, groupType: .Other)
                     ])
                 ]
             )

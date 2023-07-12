@@ -20,6 +20,7 @@ final class TotalLoadModelTests: XCTestCase {
     var seoulScheduleLoadModel : TotalLoadModel!
     var korailScheduleLoadModel : TotalLoadModel!
     var stationNameSearchModel : TotalLoadModel!
+    var kakaoVicinityStationModel: TotalLoadModel!
     
     override func setUp(){
         let session = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -34,6 +35,9 @@ final class TotalLoadModelTests: XCTestCase {
         
         let stationNameMock = MockURLSession((response: urlResponse!, data: stationNameSearchData))
         self.stationNameSearchModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: stationNameMock)))
+        
+        let vicinityMock = MockURLSession((response: urlResponse!, data: vicinityData))
+        self.kakaoVicinityStationModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: vicinityMock)))
         
     }
     
@@ -593,6 +597,78 @@ final class TotalLoadModelTests: XCTestCase {
         expect(requestFirstLine).to(
             beNil(),
             description: "데이터가 없을 때는 Nil이 나와야함"
+        )
+    }
+    
+    func testVicinityStationsDataLoad() {
+        // GIVEN
+        let data = self.kakaoVicinityStationModel.vicinityStationsDataLoad(
+            x: 37.49388026940836, y: 127.01360357128935
+        )
+        let blocking = data.toBlocking()
+        let requestData = try! blocking.toArray()
+        
+        let dummyData = vicinityStationsDummyData.documents
+        
+        // WHEN
+        let requestFirstDataName = requestData.first?.first?.name
+        let dummyFirstDataName = dummyData.first?.name
+        
+        let requestCategoryCount = requestData.first?.filter {
+            $0.category != "SW8"
+        }
+            .count
+        
+        let dummyCategoryCount = 0
+        
+        let requestSortData = requestData.first
+        let dummySortData = dummyData.sorted {
+            let first = Int($0.distance) ?? 0
+            let second = Int($1.distance) ?? 1
+            return first < second
+        }
+        
+        // THEN
+        expect(requestFirstDataName).toNot(
+            equal(dummyFirstDataName),
+            description: "정렬이 적용되어 있지 않은 dummy하고는 첫번째 값은 달라야함"
+        )
+        
+        expect(requestCategoryCount).to(
+            equal(dummyCategoryCount),
+            description: "SW8(지하철역)이 아닌 카테고리는 없어야함"
+        )
+        
+        expect(requestSortData).to(
+            equal(dummySortData),
+            description: "정렬된 데이터는 값이 동일해야함"
+        )
+    }
+    
+    func testVicinityStationDataLoadError() {
+        // GIVEN
+        let data = self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
+            x: 37.49388026940836, y: 127.01360357128935
+        )
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.count
+        let dummyCount = 1
+        
+        let requestFirstData = arrayData.first?.first
+        let dummyFirstData: VicinityDocumentData? = VicinityDocumentData(name: "정보없음", distance: "정보없음", category: "정보없음")
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "데이터 오류 발생 시 데이터는 하나만 존재해야함"
+        )
+        
+        expect(requestFirstData).to(
+            equal(dummyFirstData),
+            description: "데이터 오류 발생 시 모든 데이터는 정보없음으로 표기되어야 함"
         )
     }
 }

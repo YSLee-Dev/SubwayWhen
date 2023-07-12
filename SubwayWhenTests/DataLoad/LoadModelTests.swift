@@ -19,6 +19,7 @@ class LoadModelTests : XCTestCase{
     var seoulScheduleLoadModel : LoadModelProtocol!
     var korailScheduleLoadModel : LoadModelProtocol!
     var stationNameSearchModel : LoadModelProtocol!
+    var kakaoVicinityStationModel: LoadModelProtocol!
     
     override func setUp() {
         let mockURL = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -33,6 +34,9 @@ class LoadModelTests : XCTestCase{
         
         let stationNameMock = MockURLSession((response: urlResponse!, data: stationNameSearchData))
         self.stationNameSearchModel = LoadModel(networkManager: NetworkManager(session: stationNameMock))
+        
+        let vicinityMock = MockURLSession((response: urlResponse!, data: vicinityData))
+        self.kakaoVicinityStationModel = LoadModel(networkManager: NetworkManager(session: vicinityMock))
     }
     
     func testStationArrivalRequest(){
@@ -159,6 +163,65 @@ class LoadModelTests : XCTestCase{
         expect(requestFirstStation).to(
             equal(dummyFirstStation),
             description: "StationName은 검색한 역이 나와야함"
+        )
+    }
+    
+    func testVicinityStationLoad() {
+        //GIVEN
+        let data = self.kakaoVicinityStationModel.vicinityStationsLoad(
+            x: 37.49388026940836, y: 127.01360357128935
+        )
+        let filterData = data.map { data -> [VicinityDocumentData] in
+            guard case .success(let success) = data else {return []}
+            return success.documents
+        }
+            .asObservable()
+            .filterEmpty()
+        let blocking = filterData.toBlocking()
+        let requestData = try! blocking.toArray()
+        
+        let dummyData = vicinityStationsDummyData.documents
+        
+        // WHEN
+        let reuqestFirstName = requestData.first?.first?.name
+        let dummyFirstName = dummyData.first?.name
+        
+        let requestLastName = requestData.first?.last?.name
+        let dummyLastName = dummyData.last?.name
+        
+        let requestRadiusCount = requestData.first?.filter {
+            Int($0.distance) ?? 0 >= 3000
+        }
+            .count
+        
+        let dummyRadiusCount = 0
+        
+        let requestCategoryCount = requestData.first?.filter {
+            $0.category != "SW8"
+        }
+            .count
+        
+        let dummyCategoryCount = 0
+        
+        // THEN
+        expect(reuqestFirstName).to(
+            equal(dummyFirstName),
+            description: "모든 값은 순서를 포함해서 동일해야함"
+        )
+        
+        expect(requestLastName).to(
+            equal(dummyLastName),
+            description: "모든 값은 순서를 포함해서 동일해야함"
+        )
+        
+        expect(requestRadiusCount).to(
+            equal(dummyRadiusCount),
+            description: "3000m가 넘어가는 지하철역은 없어야함"
+        )
+        
+        expect(requestCategoryCount).to(
+            equal(dummyCategoryCount),
+            description: "SW8(지하철역)이 아닌 카테고리는 없어야함"
         )
     }
 }

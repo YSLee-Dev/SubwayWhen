@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().largeTitleTextAttributes = [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25),
@@ -46,12 +46,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.appDefaultManager?.popup()
     }
     
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        // 뱃지 제거
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         SubwayWhenDetailWidgetManager.shared.stop()
         print("sceneDidDisconnect")
     }
-    
-    
-    
 }
 
