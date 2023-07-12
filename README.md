@@ -4,17 +4,17 @@
 
 > 지하철 민원 & 실시간 위치 & 시간표를 한눈에 보여주는 '지하철 민실씨'<br/>
 > V1.0 개발기간: 2022.11.29 ~ 2023.03.30<br/>
-> V1.1 개발기간: 2023.04.18 ~ 2023.05.25
- 
-<br/>
+> V1.1 개발기간: 2023.04.18 ~ 2023.05.25<br/>
+> v1.2 개발기간: 2023.06.20 ~ 2023.07.12<br/>
  
 ## 📋 지하철 민실씨 소개, 기능
 <div align=left>
-<img src="https://user-images.githubusercontent.com/94354145/228754681-6bcc47df-66d2-4fb1-bc3b-d83473901ef9.png" height="350" />
-<img src="https://user-images.githubusercontent.com/94354145/228755344-1950519e-a5b2-44d3-888a-d9f2fc335965.png" height="350" />
-<img src="https://user-images.githubusercontent.com/94354145/228755347-377ce4c6-db40-4cc8-9518-d235d469a2de.png" height="350" />
-<img src="https://user-images.githubusercontent.com/94354145/228755359-a7fe579e-5a94-43d9-ae14-af934c4968f6.png" height="350" />
-<img src="https://user-images.githubusercontent.com/94354145/228755378-da3b22ed-f62f-493e-94d4-f888fb2c6ff5.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/c25f2cc5-0530-40c1-859a-848626946f6a.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/1613caae-15ad-42b7-9271-6b2e51dd3d4b.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/f809acc6-8e18-4b8b-b697-4ce480fc22ce.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/3a846c53-6a71-42e0-881a-c2d6080c4e4d.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/37af6fe5-67ee-405e-b0dd-536aa333b515.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/3c80ea6a-348c-41dc-8131-fe99a3cd30c8.png" height="350" />
 </div>
 
 <br/>
@@ -24,8 +24,9 @@
 -	지하철역을 검색 후 저장하면, 내가 원하는 역만 보거나 중간 종착 열차를 빼고 볼 수 있습니다.
 -	실시간 도착 정보와 시간표 정보를 비교하여 사용자의 판단을 돕습니다.
 -	출근과 퇴근 그룹으로 나누어 저장하여, 내 출퇴근 탑승 역만 볼 수 있습니다.
--	출퇴근 그룹에 시간을 매핑하여 원하는 시간대에 원하는 그룹을 볼 수 있습니다.
+-	출퇴근 그룹에 시간을 매핑하여 원하는 시간대에 원하는 그룹을 볼 수 있고, 알림도 받을 수 있습니다. (알림은 v1.2부터 사용 가능)
 -	Live Activity 기능으로 잠금화면에서도 지하철 시간표를 확인할 수 있습니다. (v1.1부터 사용 가능)
+- 주변에 있는 지하철을 바로 확인하고 검색할 수 있습니다. (v1.2부터 사용 가능)
 
 <br/>
 
@@ -42,8 +43,8 @@
 <br/>
 
 ## 💡 지하철 민실씨에 사용된 아키텍쳐
-### ✅ MVVM-C
-<img src="https://user-images.githubusercontent.com/94354145/228791125-092fef3e-fed0-4aa3-9a3e-90003c48757b.png" height="350" />
+### ✅ MVVM-C (일부 input/output 패턴)
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/a20d9cfc-6803-4d42-aae8-297e11563d9c.png" height="400" />
 
 > MVVM 
 - View(VC)는 View를 그리는데 집중하고, ViewModel과 Model가 데이터 처리를 하도록 분리하였습니다.
@@ -55,6 +56,7 @@
 ``` 
 > Coordinator
 - UINavigationController를 이용한 화면전환을 Coordinator를 사용하도록 분리하였습니다.
+- Present를 이용한 화면전환도 Coordinator를 사용하도록 리팩토링 중입니다. (v1.2~)
 - VC와 ViewModel간의 의존성 주입을 Coordinator에서 진행하였습니다.
 ``` 
 - 민실씨의 AppCoordinator은 TabbarController의 선언도 같이하게 설계하였습니다.
@@ -62,7 +64,7 @@
 비효율적이라 생각이 들어 AppCoordinator가 TabbarController도 선언하도록 하였습니다.
 ``` 
 > Singleton
-- Live Activity를 관리하는 Manager를 싱글톤 객체로 생성하여 관리하였습니다.
+- Live Activity, UNUserNotificationCenter를 관리하는 Manager를 싱글톤 객체로 생성하여 관리하였습니다.
 ``` 
 - UIKit에서 Live Activity를 사용하기 위해 Manager을 두 개의 Target에서 빌드되도록 했습니다.
 - Manager 객체는 유일성 위해 싱글톤으로 생성하고, 만든 인스턴스를 static으로 선언하여
