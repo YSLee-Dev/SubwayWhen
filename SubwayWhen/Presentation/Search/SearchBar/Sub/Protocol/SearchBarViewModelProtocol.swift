@@ -14,4 +14,7 @@ protocol SearchBarViewModelProtocol{
     var searchText : PublishRelay<String?>{get}
     var defaultViewClick : PublishRelay<String>{get}
     var searchStart : Driver<String>{get}
+    
+    var dataTapAction: PublishSubject<Void>{get}
+    var keyboardClose: Driver<Void>{get}
 }

@@ -14,7 +14,6 @@ struct DetailTableViewCellData : IdentifiableType, Equatable {
     let id : String
     let stationCode : String
     let exceptionLastStation : String
-    let subWayId : String
     let upDown : String
     let lineNumber : String
     let useLine : String

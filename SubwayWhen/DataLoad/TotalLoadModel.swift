@@ -37,13 +37,15 @@ class TotalLoadModel : TotalLoadProtocol{
                 var nextId = ""
                 
                 for x in data.realtimeArrivalList{
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                    let spaceRemoveStationName = x.stationName.replacingOccurrences(of: " ", with: "")
+                    
+                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         let code = x.previousStation != nil ? x.code : ""
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
                         return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode)
-                    }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && station.stationName == x.stationName{
+                    }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
                     }
@@ -253,6 +255,30 @@ class TotalLoadModel : TotalLoadProtocol{
     
     func defaultViewListLoad() -> Observable<[String]>{
         self.loadModel.defaultViewListRequest()
+    }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]> {
+        self.loadModel.vicinityStationsLoad(x: x, y: y)
+            .map { data -> VicinityStationsData? in
+                guard case .success(let value) = data else {return nil}
+                return value
+            }
+            .asObservable()
+            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음", category: "정보없음")]))
+            .map {
+                $0.documents
+            }
+            .map { data in
+                let filter = data.filter {
+                    $0.category == "SW8" || $0.category == "정보없음"
+                }
+                
+                return filter.sorted {
+                    let first = Int($0.distance) ?? 0
+                    let second = Int($1.distance) ?? 1
+                    return first < second
+                }
+            }
     }
     
     private func timeFormatter(date : Date) -> String {

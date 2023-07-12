@@ -84,10 +84,6 @@ extension SettingVC{
         viewModel.keyboardClose
             .drive(self.rx.keyboardClose)
             .disposed(by: self.bag)
-        
-        viewModel.modalPresent
-            .drive(self.rx.modalPresent)
-            .disposed(by: self.bag)
     }
 }
 
@@ -95,31 +91,6 @@ extension Reactive where Base : SettingVC{
     var keyboardClose : Binder<Void>{
         return Binder(base){ base, _ in
             base.view.endEditing(true)
-        }
-    }
-    
-    var modalPresent : Binder<SettingTableViewCellData>{
-        return Binder(base){base, data in
-            base.view.endEditing(true)
-            if data.settingTitle == "특정 그룹 시간"{
-                let viewModel = SettingGroupModalViewModel()
-                let modal = SettingGroupModalVC(modalHeight: 405, btnTitle: "저장", mainTitle: "특정 그룹 시간", subTitle: "정해진 시간에 맞게 출,퇴근 그룹을 자동으로 변경해주는 기능이에요.", viewModel: viewModel)
-                modal.modalPresentationStyle = .overFullScreen
-                
-                base.present(modal, animated: false)
-            }else if data.settingTitle == "기타"{
-                let viewModel = SettingContentsModalViewModel()
-                let modal = SettingContentsModalVC(modalHeight: 400, btnTitle: "닫기", mainTitle: "기타", subTitle: "저작권 및 데이터 출처를 표시하는 공간이에요.", viewModel: viewModel)
-                modal.modalPresentationStyle = .overFullScreen
-                
-                base.present(modal, animated: false)
-            }else if data.settingTitle == "오픈 라이선스"{
-                let vc = AcknowListViewController(fileNamed: "Pods-SubwayWhen-acknowledgements")
-                vc.title = "SubwayWhen Licenses"
-                vc.headerText = "지하철 민실씨 오픈 라이선스"
-                vc.footerText = "YoonSu Lee"
-                base.present(UINavigationController(rootViewController: vc), animated: true)
-            }
         }
     }
 }

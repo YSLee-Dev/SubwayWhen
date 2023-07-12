@@ -26,6 +26,19 @@ class MainCoordinator : Coordinator{
         main.delegate = self
         self.navigation.setViewControllers([main], animated: true)
     }
+    
+    func notiTap(saveStation: SaveStation) {
+        self.pop()
+        self.navigation.dismiss(animated: true)
+        
+        let data = MainTableViewCellData(upDown: saveStation.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: saveStation.lineCode, stationName: saveStation.stationName, lastStation: "", lineNumber: saveStation.line, isFast: "", useLine: saveStation.useLine, group: saveStation.group.rawValue, id: saveStation.id, stationCode: saveStation.stationCode, exceptionLastStation: saveStation.exceptionLastStation, type: .real, backStationId: "", nextStationId: "", korailCode: saveStation.korailCode)
+        
+        let detail = DetailCoordinator(navigation: self.navigation, data: data)
+        self.childCoordinator.append(detail)
+        detail.delegate = self
+        
+        detail.start()
+    }
 }
 
 extension MainCoordinator : MainDelegate{

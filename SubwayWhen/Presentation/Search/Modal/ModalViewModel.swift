@@ -13,68 +13,64 @@ import RxOptional
 
 import FirebaseAnalytics
 
-class ModalViewModel : ModalViewModelProtocol{
+class ModalViewModel{
     deinit{
         print("ModalViewModel DEINIT")
     }
     
-    // OUTPUT
-    let modalData : Driver<ResultVCCellData>
-    let modalClose : Driver<Void>
-    let alertShow : Driver<Void>
-    let saveComplete : Driver<Void>
-    let disposableDetailMove : Driver<DetailLoadData>
+    struct Input {
+        let upDownBtnClick: Observable<Bool>
+        let notService: Observable<Void>
+        let groupClick: Observable<SaveStationGroup>
+        let exceptionLastStationText: Observable<String?>
+        let disposableBtnTap: Observable<Bool>
+        let didDisappear: Observable<Void>
+        let modalGesture: Observable<Void>
+    }
     
-    // INPUT
-    let overlapOkBtnTap = PublishRelay<Void>()
-    let clickCellData = PublishRelay<ResultVCCellData>()
-    let upDownBtnClick = PublishRelay<Bool>()
-    let notService = PublishRelay<Void>()
-    let groupClick = BehaviorRelay<SaveStationGroup>(value: .one)
-    let exceptionLastStationText = BehaviorRelay<String?>(value: "")
-    let disposableBtnTap = PublishRelay<Bool>()
+    struct Output {
+        let modalData : Driver<ResultVCCellData>
+        let modalClose: Driver<Void>
+    }
+    
+    func transform(input: Input) -> Output {
+        self.stationSave(input: input)
+        self.present(input: input)
+        
+        return Output(
+            modalData: self.clickCellData
+            .asDriver(onErrorDriveWith: .empty()),
+            modalClose: self.modalClose
+            .asDriver(onErrorDriveWith: .empty())
+        )
+    }
     
     let bag = DisposeBag()
     
     // DATA
     private let modalCloseEvent = PublishRelay<Bool>()
     private let mainCellData = PublishRelay<DetailLoadData>()
+    private let modalClose = PublishSubject<Void>()
+    
+    let clickCellData = PublishRelay<ResultVCCellData>()
+    let overlapOkBtnTap = PublishSubject<Void>()
     
     // MODEL
     private let model : ModalModelProtocol
+    
+    weak var delegate: ModalVCActionProtocol?
     
     init(
         model : ModalModel = .init()
     ){
         self.model = model
-        
-        self.disposableDetailMove = self.mainCellData
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.modalData = self.clickCellData
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.alertShow = self.modalCloseEvent
-            .filter{!$0}
-            .map{_ in Void()}
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.saveComplete = self.modalCloseEvent
-            .filter{$0}
-            .map{_ in Void()}
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.modalClose = Observable
-            .merge(
-                self.notService.asObservable(),
-                self.modalCloseEvent.filter{$0 == true}.map{_ in Void()},
-                self.overlapOkBtnTap.asObservable()
-            )
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // 전체 데이터를 합친 후, 저장
+    }
+}
+
+private extension ModalViewModel {
+    func stationSave(input: Input) {
         Observable
-            .combineLatest(clickCellData, self.groupClick, self.exceptionLastStationText, self.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
+            .combineLatest(self.clickCellData, input.groupClick, input.exceptionLastStationText, input.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
                 
                 let updownLine = self?.model.updownFix(updown: updown, line: cellData.useLine) ?? ""
                 let brand = self?.model.useLineTokorailCode(cellData.useLine) ?? ""
@@ -94,8 +90,8 @@ class ModalViewModel : ModalViewModelProtocol{
             .bind(to: self.modalCloseEvent)
             .disposed(by: self.bag)
         
-        // 구글 애널리틱스
-        self.upDownBtnClick
+        
+        input.upDownBtnClick
             .withLatestFrom(self.clickCellData)
             .subscribe(onNext: {
                 Analytics.logEvent("SerachVC_Modal_Save", parameters: [
@@ -103,15 +99,64 @@ class ModalViewModel : ModalViewModelProtocol{
                 ])
             })
             .disposed(by: self.bag)
-        
-        self.disposableBtnTap
+    }
+    
+    func present(input: Input) {
+        input.disposableBtnTap
             .withLatestFrom(self.clickCellData){[weak self] updown, data in
                 let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
                 let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
                 
-                return DetailLoadData(upDown: updownFix, subWayId: data.lineCode, stationName: data.stationName, lastStation: "", lineNumber: data.lineNumber, useLine: "", id: data.identity, stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
+                return DetailLoadData(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, lineCode: data.lineCode, useLine: "", stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
             }
-            .bind(to: self.mainCellData)
+            .withUnretained(self)
+            .delay(.milliseconds(250), scheduler: MainScheduler.asyncInstance)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.disposableDetailPush(data: data)
+            })
+            .disposed(by: self.bag)
+        
+        let close = Observable
+            .merge(
+                input.notService.asObservable(),
+                self.modalCloseEvent.filter{$0 == true}.map{_ in Void()},
+                self.overlapOkBtnTap.asObservable(),
+                input.disposableBtnTap.map{ _ in Void()}
+            )
+            .share()
+        
+        close
+            .bind(to: self.modalClose)
+            .disposed(by: self.bag)
+        
+        input.modalGesture
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.dismiss()
+            })
+            .disposed(by: self.bag)
+        
+        self.modalCloseEvent
+            .filter{!$0}
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.overlap()
+            })
+            .disposed(by: self.bag)
+        
+        self.modalCloseEvent
+            .filter{$0}
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.stationSave()
+            })
+            .disposed(by: self.bag)
+        
+        input.didDisappear
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.didDisappear()
+            })
             .disposed(by: self.bag)
     }
 }

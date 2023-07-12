@@ -15,4 +15,6 @@ struct SaveSetting : Codable{
     var detailScheduleAutoTime : Bool
     var liveActivity : Bool
     var searchOverlapAlert : Bool
+    var alertGroupOneID: String
+    var alertGroupTwoID: String
 }

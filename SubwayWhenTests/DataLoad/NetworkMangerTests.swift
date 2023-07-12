@@ -44,4 +44,29 @@ class NetworkMangerTests : XCTestCase{
         expect(arrayValue.first?.realtimeArrivalList.first?.stationName).to(equal("교대"))
     
     }
+    
+    func testHeaderNetworkManger(){
+        // GIVEN
+        let mockURL = MockURLSession((response: urlResponse!, data: arrivalData))
+        let mockNetworkManger = NetworkManager(session: mockURL)
+        
+        // WHEN
+        let requestData = mockNetworkManger.requestData(url, decodingType: LiveStationModel.self, headers: [], queryList: [])
+        
+        let value = requestData
+            .map{ data -> LiveStationModel? in
+                guard case let .success(value) = data else {return nil}
+                return value
+            }
+            .map{$0!}
+            .asObservable()
+        
+        let blocking = value.toBlocking()
+        let arrayValue = try! blocking.toArray()
+        
+        // THEN
+        expect(arrayValue.first?.realtimeArrivalList.first?.stationName).to(equal("교대"))
+    
+    }
+    
 }
