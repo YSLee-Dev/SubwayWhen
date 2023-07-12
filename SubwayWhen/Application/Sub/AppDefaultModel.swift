@@ -28,8 +28,7 @@ class AppDefaultModel : AppDefaultModelProtocol{
             let defaultPopup = subwayWhen?["DefaultPopup"]
             let value = defaultPopup as? [String]
             
-            result(value?[0] ?? "Nil", value?[1] ?? "", value?[2] ?? "")
-            
+            result(value?[0] ?? "Nil", value?[1] ?? "", value?[2].replacingOccurrences(of: "(E)", with: "\n") ?? "")
         }
     }
     
@@ -42,7 +41,6 @@ class AppDefaultModel : AppDefaultModelProtocol{
             let version = appUpdateVersion as? [String]
             
             result(version?.first ?? "1.0.0")
-            
         }
     }
     

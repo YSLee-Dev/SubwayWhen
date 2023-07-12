@@ -20,12 +20,12 @@ class ReportTableViewTwoBtnCell : UITableViewCell{
         $0.adjustsFontSizeToFitWidth = true
     }
     
-    let upBtn = ModalCustomButton().then{
+    let upBtn = ModalSubCustomButton().then{
         $0.backgroundColor = .systemRed
         $0.setTitle("상행", for: .normal)
     }
     
-    let downBtn = ModalCustomButton().then{
+    let downBtn = ModalSubCustomButton().then{
         $0.backgroundColor = .systemBlue
         $0.setTitle("하행", for: .normal)
     }

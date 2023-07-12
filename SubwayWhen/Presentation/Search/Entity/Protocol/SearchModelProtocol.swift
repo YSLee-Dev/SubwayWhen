@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol SearchModelProtocol{
-    func fireBaseDefaultViewListLoad() -> Observable<[String]>
+    func fireBaseDefaultViewListLoad() -> Observable<[DefaultSectionData]>
     func stationNameSearchRequest(_ name : String) -> Observable<SearchStaion>
     func searchStationToResultVCSection(_ searchData : SearchStaion) -> [ResultVCSection]
 }

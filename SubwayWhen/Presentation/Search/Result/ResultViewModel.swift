@@ -16,7 +16,7 @@ class ResultViewModel : ResultViewModelProtocol{
     
     // INPUT
     let cellClick = PublishRelay<IndexPath>()
-    let resultData = PublishRelay<[ResultVCSection]>()
+    let resultData = BehaviorSubject<[ResultVCSection]>(value: [])
     
     init(){
         // CellData로 가공

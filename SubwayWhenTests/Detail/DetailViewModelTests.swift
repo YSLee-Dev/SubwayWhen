@@ -24,7 +24,8 @@ final class DetailViewModelTests: XCTestCase {
         
         self.model = DetailModel(totalLoadModel: TotalLoadModel(loadModel: seoulSchedule))
         
-        self.cellData = .init(upDown: "상행", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "제외", backStationId: "", nextStationId: "", korailCode: "")
+        self.cellData = .init(upDown: "상행", stationName: "교대", lineNumber: "", lineCode: "1003", useLine: "", stationCode: "", exceptionLastStation: "제외", backStationId: "", nextStationId: "", korailCode: "")
+      
     }
 
     func testExceptionBtnTap(){
@@ -65,7 +66,7 @@ final class DetailViewModelTests: XCTestCase {
         expect(observer.events).to(
             equal([
                 .next(0, self.cellData!),
-                .next(1, .init(upDown: "상행", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "", useLine: "", id: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
+                .next(1, .init(upDown: "상행", stationName: "교대", lineNumber: "", lineCode: "1003", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
             ])
         )
     }
