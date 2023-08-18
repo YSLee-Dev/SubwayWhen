@@ -1,0 +1,23 @@
+{
+    "SearchInfoBySubwayNameService": {
+        "list_total_count": 2,
+        "RESULT": {
+            "CODE": "INFO-000",
+            "MESSAGE": "정상 처리되었습니다"
+        },
+        "row": [
+            {
+                "STATION_CD": "0330",
+                "STATION_NM": "교대",
+                "LINE_NUM": "03호선",
+                "FR_CODE": "340"
+            },
+            {
+                "STATION_CD": "0223",
+                "STATION_NM": "교대",
+                "LINE_NUM": "02호선",
+                "FR_CODE": "223"
+            }
+        ]
+    }
+}
