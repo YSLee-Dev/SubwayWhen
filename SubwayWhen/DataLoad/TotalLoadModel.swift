@@ -11,7 +11,7 @@ import RxSwift
 import RxOptional
 import RxCocoa
 
-class TotalLoadModel : TotalLoadProtocol{
+class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
     
     init(loadModel : LoadModel = .init()){
@@ -279,6 +279,10 @@ class TotalLoadModel : TotalLoadProtocol{
                     return first < second
                 }
             }
+    }
+    
+    func importantDataLoad() -> RxSwift.Observable<ImportantData> {
+        self.loadModel.importantDataLoad()
     }
     
     private func timeFormatter(date : Date) -> String {

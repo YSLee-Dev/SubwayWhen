@@ -153,3 +153,7 @@ extension MainTableViewHeaderCell {
             .disposed(by: self.bag)
     }
 }
+
+extension Reactive where Base: MainTableViewHeaderCell {
+    
+}
