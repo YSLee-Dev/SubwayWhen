@@ -17,4 +17,5 @@ protocol TotalLoadProtocol{
     func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion>
     func defaultViewListLoad() -> Observable<[String]>
     func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
+    func importantDataLoad() -> Observable<ImportantData>
 }
