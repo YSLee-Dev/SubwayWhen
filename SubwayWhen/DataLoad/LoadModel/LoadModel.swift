@@ -137,4 +137,24 @@ final class LoadModel : LoadModelProtocol{
         
         return self.networkManager.requestData(url, decodingType: VicinityStationsData.self, headers: headers, queryList: query)
     }
+    
+    func importantDataLoad() -> Observable<ImportantData> {
+        let importantData = PublishSubject<ImportantData>()
+        
+        self.database.observe(.value){ dataBase, _ in
+            guard let data = dataBase.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let search = subwayWhen?["ImportantData"]
+            let list = search as? [String]
+            
+            if let infoData = list,
+               infoData[0] != "Nil"
+            {
+                importantData.onNext(.init(title: infoData[0], contents: infoData[1]))
+            }
+        }
+        
+        return importantData
+            .asObservable()
+    }
 }

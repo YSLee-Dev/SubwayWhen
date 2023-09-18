@@ -19,4 +19,5 @@ protocol MainModelProtocol{
     func mainCellDataToScheduleData(_ item : MainTableViewCellData) -> ScheduleSearch?
     func scheduleLoad(_ data : ScheduleSearch) ->  Observable<[ResultSchdule]>
     func scheduleDataToMainTableViewCell(data : ResultSchdule, nowData : MainTableViewCellData) -> MainTableViewCellData
+    func headerImportantDataLoad() -> Observable<ImportantData>
 }
