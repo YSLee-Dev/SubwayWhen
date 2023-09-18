@@ -17,4 +17,5 @@ protocol LoadModelProtocol : AnyObject{
     func stationSearch(station: String) -> Single<Result<SearchStaion,URLError>>
     func defaultViewListRequest() -> Observable<[String]>
     func vicinityStationsLoad(x: Double, y: Double) -> Single<Result<VicinityStationsData,URLError>>
+    func importantDataLoad() -> Observable<ImportantData>
 }
