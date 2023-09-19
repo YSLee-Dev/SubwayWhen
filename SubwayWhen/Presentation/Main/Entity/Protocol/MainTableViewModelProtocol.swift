@@ -13,6 +13,7 @@ import RxCocoa
 protocol MainTableViewModelProtocol{
     // OUTPUT
     var cellData : Driver<[MainTableViewSection]> {get}
+    var importantLayout: Driver<ImportantData> {get}
     
     // MODEL
     var mainTableViewHeaderViewModel : MainTableViewHeaderViewModelProtocol {get}
@@ -24,4 +25,5 @@ protocol MainTableViewModelProtocol{
     var resultData : BehaviorRelay<[MainTableViewSection]>{get}
     var refreshOn : PublishRelay<Void> {get}
     var plusBtnClick : PublishRelay<Void> {get}
+    var importantData: BehaviorSubject<ImportantData?>{get}
 }

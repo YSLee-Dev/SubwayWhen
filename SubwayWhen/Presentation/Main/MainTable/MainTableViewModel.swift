@@ -9,10 +9,12 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class MainTableViewModel : MainTableViewModelProtocol{
     // OUTPUT
     let cellData : Driver<[MainTableViewSection]>
+    let importantLayout: Driver<ImportantData>
     
     // MODEL
     let mainTableViewHeaderViewModel : MainTableViewHeaderViewModelProtocol
@@ -24,6 +26,8 @@ class MainTableViewModel : MainTableViewModelProtocol{
     let resultData = BehaviorRelay<[MainTableViewSection]>(value: [])
     let refreshOn = PublishRelay<Void>()
     let plusBtnClick = PublishRelay<Void>()
+    let importantData = BehaviorSubject<ImportantData?>(value: nil)
+    
     
     init(
         header : MainTableViewHeaderCellModel = .init(),
@@ -35,6 +39,10 @@ class MainTableViewModel : MainTableViewModelProtocol{
         self.mainTableViewGroupModel = group
         
         self.cellData = self.resultData
+            .asDriver(onErrorDriveWith: .empty())
+        
+        self.importantLayout = self.importantData
+            .filterNil()
             .asDriver(onErrorDriveWith: .empty())
     }
 }

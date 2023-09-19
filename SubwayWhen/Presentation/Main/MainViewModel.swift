@@ -179,5 +179,10 @@ class MainViewModel : MainViewModelProtocol{
             .filterEmpty()
             .bind(to: self.groupData)
             .disposed(by: self.bag)
+        
+        // 중요데이터가 있을 때
+        self.mainModel.headerImportantDataLoad()
+            .bind(to: self.mainTableViewModel.importantData)
+            .disposed(by: self.bag)
     }
 }
