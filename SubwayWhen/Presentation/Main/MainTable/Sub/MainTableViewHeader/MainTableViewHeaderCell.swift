@@ -19,21 +19,13 @@ class MainTableViewHeaderCell : UITableViewCell{
         $0.backgroundColor = .systemBackground
     }
     
-    var firstBG = MainStyleUIView()
+    var congestionLabelBG = MainTableViewHeaderView(
+        title: "현재 지하철 예상 혼잡도", subTitle: "🫥🫥🫥🫥🫥🫥🫥🫥🫥🫥"
+    )
     
-    let mainTitle = UILabel().then{
-        $0.text = "현재 지하철 예상 혼잡도"
-        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textAlignment = .left
-        $0.textColor = .label
-    }
-    
-    let congestionLabel = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
-        $0.textAlignment = .left
-        $0.adjustsFontSizeToFitWidth = true
-        $0.text = "😵😵😵😵😵😵😵😵🫥🫥"
-    }
+    lazy var importantLabelBG = MainTableViewHeaderView (
+        title: "중요알림", subTitle: "중요알림"
+    )
     
     var reportBtn = MainTableViewHeaderBtn(title: "지하철 민원", img: "Report")
     var editBtn = MainTableViewHeaderBtn(title: "편집", img: "List")
@@ -44,12 +36,22 @@ class MainTableViewHeaderCell : UITableViewCell{
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.layout()
         self.attribute()
+        self.layout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func isImportant(data: ImportantData?) {
+        self.importantLayout()
+        if let data = data {
+            self.importantLabelBG.subTitle.text = data.contents
+            self.importantLabelBG.smallSizeTransform(title: data.title)
+        }
+        self.congestionLabelBG.smallSizeTransform(title: "예상 혼잡도")
+        
     }
 }
 
@@ -63,12 +65,12 @@ extension MainTableViewHeaderCell {
             $0.height.equalTo(190)
         }
         
-        [self.firstBG, self.editBtn, self.reportBtn]
+        [self.congestionLabelBG, self.editBtn, self.reportBtn]
             .forEach{
                 self.mainBG.addSubview($0)
             }
         
-        self.firstBG.snp.makeConstraints{
+        self.congestionLabelBG.snp.makeConstraints{
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
@@ -76,34 +78,38 @@ extension MainTableViewHeaderCell {
         }
         
         self.reportBtn.snp.makeConstraints{
-            $0.top.equalTo(self.firstBG.snp.bottom).offset(10)
+            $0.top.equalTo(self.congestionLabelBG.snp.bottom).offset(10)
             $0.leading.equalTo(self.mainBG)
             $0.trailing.equalTo(self.mainBG.snp.centerX).offset(-5)
-            $0.height.equalTo(90)
             $0.bottom.equalToSuperview()
         }
         
         self.editBtn.snp.makeConstraints{
-            $0.top.equalTo(self.firstBG.snp.bottom).offset(10)
+            $0.top.equalTo(self.congestionLabelBG.snp.bottom).offset(10)
             $0.trailing.equalTo(self.mainBG)
             $0.leading.equalTo(self.mainBG.snp.centerX).offset(5)
-            $0.height.equalTo(90)
             $0.bottom.equalToSuperview()
         }
-        
-        
-        [self.mainTitle, self.congestionLabel]
-            .forEach{
-                self.firstBG.addSubview($0)
-            }
-        
-        self.mainTitle.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalTo(self.firstBG.snp.centerY).offset(-5)
+    }
+    
+    private func importantLayout() {
+        self.mainBG.snp.updateConstraints {
+            $0.height.equalTo(250)
         }
-        self.congestionLabel.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(15)
-            $0.top.equalTo(self.firstBG.snp.centerY)
+        
+        self.mainBG.addSubview(self.importantLabelBG)
+        self.importantLabelBG.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(70)
+        }
+        
+        self.congestionLabelBG.snp.remakeConstraints {
+            $0.top.equalTo(self.importantLabelBG.snp.bottom).offset(10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(70)
         }
     }
     
@@ -133,7 +139,7 @@ extension MainTableViewHeaderCell {
                 
                 return result
             }
-            .drive(self.congestionLabel.rx.text)
+            .drive(self.congestionLabelBG.subTitle.rx.text)
             .disposed(by: self.bag)
         
         viewModel.peopleCount
@@ -152,8 +158,4 @@ extension MainTableViewHeaderCell {
             .bind(to: viewModel.editBtnClick)
             .disposed(by: self.bag)
     }
-}
-
-extension Reactive where Base: MainTableViewHeaderCell {
-    
 }

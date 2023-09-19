@@ -50,7 +50,7 @@ extension MainTableView{
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainHeader", for: index) as? MainTableViewHeaderCell else {return UITableViewCell()}
-          
+                
                 cell.bind(viewModel.mainTableViewHeaderViewModel)
                 return cell
                 
@@ -83,6 +83,10 @@ extension MainTableView{
             .drive(self.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
         
+        viewModel.importantLayout
+            .drive(self.rx.importantTransform)
+            .disposed(by: self.bag)
+        
 
         // VIEW -> VIEWMODEL
         self.rx.modelSelected(MainTableViewCellData.self)
@@ -109,5 +113,18 @@ extension MainTableView{
             .bind(to: viewModel.refreshOn)
             .disposed(by: self.bag)
         
+    }
+}
+
+extension Reactive where Base: MainTableView {
+    var importantTransform: Binder<ImportantData> {
+        return Binder(base) { base, data in
+            guard let cell = base.cellForRow(at: IndexPath(row: 0, section: 0)) as? MainTableViewHeaderCell else {return}
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                cell.isImportant(data: data)
+                base.reloadData()
+            })
+        }
     }
 }
