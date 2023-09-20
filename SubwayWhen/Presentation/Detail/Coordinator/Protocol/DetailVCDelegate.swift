@@ -11,4 +11,5 @@ protocol DetailVCDelegate{
     func scheduleTap(schduleResultData : schduleResultData)
     func pop()
     func disappear()
+    func exceptionLastStationPopup(station: String)
 }
