@@ -46,7 +46,6 @@
 		3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */; };
 		3497DC9529D2F8B800D2ABB9 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9429D2F8B800D2ABB9 /* MainViewModelProtocol.swift */; };
 		3497DC9729D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */; };
-		3497DC9929D2FA7C00D2ABB9 /* DetailViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9829D2FA7C00D2ABB9 /* DetailViewModelProtocol.swift */; };
 		3497DC9B29D2FB8900D2ABB9 /* EditViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9A29D2FB8900D2ABB9 /* EditViewModelProtocol.swift */; };
 		3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */; };
 		3497DC9F29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */; };
@@ -397,7 +396,6 @@
 		3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelTests.swift; sourceTree = "<group>"; };
 		3497DC9429D2F8B800D2ABB9 /* MainViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC9829D2FA7C00D2ABB9 /* DetailViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9A29D2FB8900D2ABB9 /* EditViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -1487,7 +1485,6 @@
 				3499F5FE29ED411300A3F198 /* DetailTableArrivalLiveViewModelProtocol.swift */,
 				34A221C929CB1BF5003F035D /* DetailTableScheduleCellModelProtocol.swift */,
 				34A221CB29CB1C7F003F035D /* DetailTableArrivalCellModelProtocol.swift */,
-				3497DC9829D2FA7C00D2ABB9 /* DetailViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2734,7 +2731,6 @@
 				349E2F6E29BDF89D00C54EE9 /* SettingCoordinator.swift in Sources */,
 				349E2F3529BDA44100C54EE9 /* MainCoordinator.swift in Sources */,
 				349C00892A0A1B92008A85BF /* SubwayWhenDetailWidget.intentdefinition in Sources */,
-				3497DC9929D2FA7C00D2ABB9 /* DetailViewModelProtocol.swift in Sources */,
 				349B517729A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift in Sources */,
 				3497DC8A29D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift in Sources */,
 				34A303B629AF86FD00948EDD /* ScheduleType.swift in Sources */,
