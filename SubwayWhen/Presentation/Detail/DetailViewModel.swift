@@ -15,22 +15,16 @@ import FirebaseAnalytics
 
 typealias schduleResultData = (scheduleData : [ResultSchdule], cellData: DetailLoadData)
 
-class DetailViewModel : DetailViewModelProtocol{
+class DetailViewModel {
     // MODEL
     private let detailModel : DetailModelProtocol
     let headerViewModel : DetailTableHeaderViewModelProtocol
     let arrivalCellModel : DetailTableArrivalCellModelProtocol
     let scheduleCellModel : DetailTableScheduleCellModelProtocol
     
-    // INPUT
+    // INPUT(COORDINATOR)
     let detailViewData = BehaviorRelay<DetailLoadData>(value: .init(upDown: "", stationName: "", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
     let exceptionLastStationRemoveReload = PublishRelay<Void>()
-    
-    // OUTPUT
-    let cellData : Driver<[DetailTableViewSectionData]>
-    let moreBtnClickData : Driver<schduleResultData>
-    let exceptionLastStationRemoveBtnClick : Driver<DetailLoadData>
-    let liveActivityArrivalData : Driver<DetailActivityLoadData>
     
     // DATA
     private let nowData = BehaviorRelay<[DetailTableViewSectionData]>(value: [])
@@ -39,8 +33,38 @@ class DetailViewModel : DetailViewModelProtocol{
     private let scheduleSortedData = PublishSubject<[ResultSchdule]>()
     private let liveActivityData = PublishSubject<DetailActivityLoadData>()
     
+    var delegate : DetailVCDelegate?
+    
+    struct Input {
+        let popBtnTap: Observable<Void>
+        let disappear: Observable<Void>
+    }
+    
+    struct Output {
+        let cellData : Driver<[DetailTableViewSectionData]>
+        let isDisposable: Bool
+        let headerViewModel: DetailTableHeaderViewModelProtocol
+        let arrivalCellModel: DetailTableArrivalCellModelProtocol
+        let scheduleCellModel: DetailTableScheduleCellModelProtocol
+    }
+    
+    func transform(input: Input) -> Output {
+        self.flowLogic(input)
+        
+        return Output(
+            cellData: self.nowData
+                .asDriver(onErrorDriveWith: .empty()),
+            isDisposable: self.disposable,
+            headerViewModel: self.headerViewModel,
+            arrivalCellModel: self.arrivalCellModel,
+            scheduleCellModel: self.scheduleCellModel)
+    }
+    
     var bag = DisposeBag()
     var timerBag = DisposeBag()
+    
+    var disposable : Bool
+    var liveActivity : Bool = false
     
     deinit{
         print("DetailViewModel DEINIT")
@@ -50,7 +74,8 @@ class DetailViewModel : DetailViewModelProtocol{
         headerViewModel : DetailTableHeaderViewModel = .init(),
         arrivalCellModel : DetailTableArrivalCellModel = .init(),
         scheduleCellModel : DetailTableScheduleCellModel = .init(),
-        detailModel : DetailModel = .init()
+        detailModel : DetailModel = .init(),
+        isDisposable: Bool
     ){
         // Model Init
         self.detailModel = detailModel
@@ -58,37 +83,12 @@ class DetailViewModel : DetailViewModelProtocol{
         self.arrivalCellModel = arrivalCellModel
         self.scheduleCellModel = scheduleCellModel
         
-        self.cellData = self.nowData
-            .asDriver(onErrorDriveWith: .empty())
+        self.disposable = isDisposable
         
         self.scheduleSortedData
             .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: self.scheduleCellModel.scheduleData)
             .disposed(by: self.bag)
-        
-        let showData = self.scheduleData
-            .withLatestFrom(self.detailViewData){ schedule, cell -> schduleResultData in
-                schduleResultData(scheduleData: schedule, cellData: cell)
-            }
-        
-        self.moreBtnClickData = self.scheduleCellModel.moreBtnClick
-            .withLatestFrom(showData)
-            .map{ data -> schduleResultData? in
-                if data.scheduleData.first?.startTime == "정보없음" || data.scheduleData.isEmpty{
-                    return nil
-                }else{
-                    return data
-                }
-            }
-            .filterNil()
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.exceptionLastStationRemoveBtnClick = self.headerViewModel.exceptionLastStationBtnClick
-            .withLatestFrom(self.detailViewData)
-            .asDriver(onErrorDriveWith: .empty())
-        
-        self.liveActivityArrivalData = self.liveActivityData
-            .asDriver(onErrorDriveWith: .empty())
         
         self.arrivalData
             .bind(to: self.arrivalCellModel.realTimeData)
@@ -200,6 +200,7 @@ class DetailViewModel : DetailViewModelProtocol{
             }
         
         let realTimeTotal = realTimeData
+            .delay(.microseconds(100), scheduler: MainScheduler.asyncInstance)
             .withLatestFrom(self.detailViewData){[weak self] realTime, station -> [RealtimeStationArrival] in
                 self?.detailModel.arrivalDataMatching(station: station, arrivalData: realTime) ?? []
         }
@@ -226,5 +227,68 @@ class DetailViewModel : DetailViewModelProtocol{
             .bind(to: self.detailViewData)
             .disposed(by: self.bag)
         
+    }
+}
+
+private extension DetailViewModel {
+    func flowLogic(_ input: Input) {
+        self.headerViewModel.exceptionLastStationBtnClick
+            .withLatestFrom(self.detailViewData)
+            .map {$0.exceptionLastStation}
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.exceptionLastStationPopup(station: data)
+            })
+            .disposed(by: self.bag)
+        
+        let showData = self.scheduleData
+            .withLatestFrom(self.detailViewData){ schedule, cell -> schduleResultData in
+                schduleResultData(scheduleData: schedule, cellData: cell)
+        }
+        
+        self.scheduleCellModel.moreBtnClick
+            .withLatestFrom(showData)
+            .map{ data -> schduleResultData? in
+                if data.scheduleData.first?.startTime == "정보없음" || data.scheduleData.isEmpty{
+                    return nil
+                }else{
+                    return data
+                }
+            }
+            .filterNil()
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.delegate?.scheduleTap(schduleResultData: data)
+            })
+            .disposed(by: self.bag)
+        
+        input.disappear
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.disappear()
+            })
+            .disposed(by: self.bag)
+        
+        input.popBtnTap
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.pop()
+            })
+            .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base: DetailViewModel {
+    var liveActivity : Binder<DetailActivityLoadData>{
+        return Binder(base){base , data in
+            guard !base.disposable else {return}
+            
+            if !base.liveActivity {
+                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
+                base.liveActivity = !base.liveActivity
+            } else{
+                SubwayWhenDetailWidgetManager.shared.update(scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
+            }
+        }
     }
 }
