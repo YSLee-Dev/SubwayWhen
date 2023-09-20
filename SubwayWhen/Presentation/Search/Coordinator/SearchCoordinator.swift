@@ -59,7 +59,7 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
     }
     
     func disposableDetailPush(data: DetailLoadData) {
-        let viewModel = DetailViewModel()
+        let viewModel = DetailViewModel(isDisposable: true)
         let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
         viewModel.detailViewData.accept(data)
         

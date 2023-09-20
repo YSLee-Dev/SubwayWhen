@@ -33,7 +33,7 @@ class MainCoordinator : Coordinator{
         
         let data = MainTableViewCellData(upDown: saveStation.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: saveStation.lineCode, stationName: saveStation.stationName, lastStation: "", lineNumber: saveStation.line, isFast: "", useLine: saveStation.useLine, group: saveStation.group.rawValue, id: saveStation.id, stationCode: saveStation.stationCode, exceptionLastStation: saveStation.exceptionLastStation, type: .real, backStationId: "", nextStationId: "", korailCode: saveStation.korailCode)
         
-        let detail = DetailCoordinator(navigation: self.navigation, data: data)
+        let detail = DetailCoordinator(navigation: self.navigation, data: data, isDisposable: false)
         self.childCoordinator.append(detail)
         detail.delegate = self
         
@@ -64,7 +64,7 @@ extension MainCoordinator : MainDelegate{
     }
     
     func pushDetailTap(data: MainTableViewCellData) {
-        let detail = DetailCoordinator(navigation: self.navigation, data: data)
+        let detail = DetailCoordinator(navigation: self.navigation, data: data, isDisposable: false)
         self.childCoordinator.append(detail)
         detail.delegate = self
         
