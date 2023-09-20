@@ -22,7 +22,6 @@ struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
 struct SubwayWhenDetailWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: SubwayWhenDetailWidgetAttributes.self) { context in
-            // Lock screen/banner UI goes here
             VStack{
                 HStack{
                     Text(context.attributes.line)
@@ -44,11 +43,11 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                         Text(context.attributes.saveStation)
                             .font(.system(size: ViewStyle.FontSize.largeSize))
                             .fontWeight(.semibold)
-                            .foregroundColor(Color(uiColor: .label))
+                            .foregroundColor(Color.white)
                         
                         Text(context.state.lastUpdate)
                             .font(.system(size: ViewStyle.FontSize.smallSize))
-                            .foregroundColor(Color.secondary)
+                            .foregroundColor(Color.white)
                     }
                     
                 }
@@ -71,7 +70,10 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
             }
             .frame(height: 95)
             .padding(15)
-            .activityBackgroundTint(nil)
+            .activityBackgroundTint(
+                Color("WidgetBackground")
+                    .opacity(0.3)
+            )
             .activitySystemActionForegroundColor(Color.black)
             
         } dynamicIsland: { context in
