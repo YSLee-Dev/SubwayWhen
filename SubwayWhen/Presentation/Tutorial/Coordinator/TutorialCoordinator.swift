@@ -18,7 +18,9 @@ class TutorialCoordinator: Coordinator {
     }
     
     func start() {
-        let tutorialVC = TutorialVC()
+        let viewModel = TutorialViewModel()
+        let tutorialVC = TutorialVC(viewModel: viewModel)
+        
         tutorialVC.modalPresentationStyle = .overFullScreen
         self.navigationController.present(tutorialVC, animated: false)
     }

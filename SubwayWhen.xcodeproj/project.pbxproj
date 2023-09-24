@@ -321,9 +321,13 @@
 		881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */; };
 		B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200D029D00C7F00D64A3A /* DisposableView.swift */; };
 		B64200DF29D05EEF00D64A3A /* EditModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */; };
-		B68302BE2AC0501000E010B7 /* TutorialData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302BD2AC0501000E010B7 /* TutorialData.swift */; };
+		B68302BE2AC0501000E010B7 /* TutorialCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302BD2AC0501000E010B7 /* TutorialCellData.swift */; };
 		B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302BF2AC0505C00E010B7 /* TurorialModel.swift */; };
 		B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C12AC0506400E010B7 /* TutorialViewModel.swift */; };
+		B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C42AC050F000E010B7 /* TutorialModelProtocol.swift */; };
+		B68302C72AC0541B00E010B7 /* TutorialCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C62AC0541B00E010B7 /* TutorialCollectionCell.swift */; };
+		B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */; };
+		B68302CB2AC0670000E010B7 /* TutorialSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302CA2AC0670000E010B7 /* TutorialSectionData.swift */; };
 		B68A8CCB29C1E00E0076D7AE /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */; };
 		B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */; };
@@ -679,9 +683,13 @@
 		7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubwayWhen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B64200D029D00C7F00D64A3A /* DisposableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableView.swift; sourceTree = "<group>"; };
 		B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelProtocol.swift; sourceTree = "<group>"; };
-		B68302BD2AC0501000E010B7 /* TutorialData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialData.swift; sourceTree = "<group>"; };
+		B68302BD2AC0501000E010B7 /* TutorialCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellData.swift; sourceTree = "<group>"; };
 		B68302BF2AC0505C00E010B7 /* TurorialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurorialModel.swift; sourceTree = "<group>"; };
 		B68302C12AC0506400E010B7 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		B68302C42AC050F000E010B7 /* TutorialModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialModelProtocol.swift; sourceTree = "<group>"; };
+		B68302C62AC0541B00E010B7 /* TutorialCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionCell.swift; sourceTree = "<group>"; };
+		B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleLabelView.swift; sourceTree = "<group>"; };
+		B68302CA2AC0670000E010B7 /* TutorialSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSectionData.swift; sourceTree = "<group>"; };
 		B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadProtocol.swift; sourceTree = "<group>"; };
 		B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionData.swift; sourceTree = "<group>"; };
 		B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellData.swift; sourceTree = "<group>"; };
@@ -2180,6 +2188,7 @@
 				34F5F0F92962E6580010A21D /* TableVCCustom.swift */,
 				34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */,
 				349E32C12978DF1C00147DEE /* MainStyleUIView.swift */,
+				B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */,
 				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
 				34F5F0F02962DCF50010A21D /* Sub */,
 			);
@@ -2277,6 +2286,7 @@
 		B68302BB2AC03F2E00E010B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B68302C62AC0541B00E010B7 /* TutorialCollectionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2284,9 +2294,19 @@
 		B68302BC2AC04FF800E010B7 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				B68302BD2AC0501000E010B7 /* TutorialData.swift */,
+				B68302BD2AC0501000E010B7 /* TutorialCellData.swift */,
+				B68302CA2AC0670000E010B7 /* TutorialSectionData.swift */,
+				B68302C32AC050E100E010B7 /* Protocol */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		B68302C32AC050E100E010B7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				B68302C42AC050F000E010B7 /* TutorialModelProtocol.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2594,7 +2614,7 @@
 				34D9EA122A5662290080AD17 /* LocationModalCell.swift in Sources */,
 				3499F5FD29ED40BC00A3F198 /* DetailTableArrivalLiveViewModel.swift in Sources */,
 				34324CAE29D15740008AE274 /* ReportModel.swift in Sources */,
-				B68302BE2AC0501000E010B7 /* TutorialData.swift in Sources */,
+				B68302BE2AC0501000E010B7 /* TutorialCellData.swift in Sources */,
 				B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */,
 				34B6ADE72A49930200D7A6DA /* SettingNotiSelectModalModelProtocol.swift in Sources */,
 				34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */,
@@ -2631,6 +2651,7 @@
 				349C00912A0A1BAB008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
 				34D9EA002A556C4C0080AD17 /* LocationModalModel.swift in Sources */,
 				34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */,
+				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
 				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				349894AD29CD994800768B88 /* BundleExtension.swift in Sources */,
@@ -2654,6 +2675,7 @@
 				34B6ADE12A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift in Sources */,
 				341200FC29375A2600C77050 /* MainViewModel.swift in Sources */,
 				349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */,
+				B68302C72AC0541B00E010B7 /* TutorialCollectionCell.swift in Sources */,
 				34E47A092A430C56006BF6AA /* SettingNotiModalVCAction.swift in Sources */,
 				3427D9032A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift in Sources */,
 				34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */,
@@ -2694,6 +2716,7 @@
 				34A303BC29AF86FD00948EDD /* KorailBody.swift in Sources */,
 				34E47A062A430AC8006BF6AA /* SettingNotiCoordinator.swift in Sources */,
 				3497DCA329D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift in Sources */,
+				B68302CB2AC0670000E010B7 /* TutorialSectionData.swift in Sources */,
 				34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */,
 				34A221CC29CB1C7F003F035D /* DetailTableArrivalCellModelProtocol.swift in Sources */,
 				341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */,
@@ -2758,6 +2781,7 @@
 				3498949A29CD403A00768B88 /* PopupType.swift in Sources */,
 				3499DE9C29D1B34100A6E8C1 /* ReportContentsModalTFViewModelProtocol.swift in Sources */,
 				349E2F3F29BDB3B700C54EE9 /* ReportCoordinatorDelegate.swift in Sources */,
+				B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */,
 				3499DE8629D15D4E00A6E8C1 /* ReportModelProtocol.swift in Sources */,
 				34A303B229AF86FD00948EDD /* NetworkManager.swift in Sources */,
 				34A303C229AF86FD00948EDD /* URLSessionProtocol.swift in Sources */,

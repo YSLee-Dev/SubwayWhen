@@ -10,38 +10,35 @@ import UIKit
 import SnapKit
 import Then
 
+import RxSwift
+import RxCocoa
+import RxDataSources
+
 class TutorialVC: UIViewController {
     let mainTitle = TitleView()
-    lazy var subTitle: MainStyleUIView = {
-        let mainBg = MainStyleUIView()
-        
-        let title = UILabel()
-        title.font = .boldSystemFont(ofSize: ViewStyle.FontSize.largeSize)
-        title.textAlignment = .left
-        title.adjustsFontSizeToFitWidth = true
-        title.numberOfLines = 0
-        title.text = "다음 버튼을 누르면, 민실씨의 기능을 확인할 수 있어요."
-        
-        mainBg.addSubview(title)
-        title.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(16)
-        }
-        return mainBg
-    }()
+    lazy var subTitle = MainStyleLabelView()
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
+        $0.register(TutorialCollectionCell.self, forCellWithReuseIdentifier: TutorialCollectionCell.id)
         $0.backgroundColor = .systemBackground
         $0.delegate = nil
         $0.dataSource = nil
     }
     
-    init() {
+    let viewModel: TutorialViewModel
+    let bag = DisposeBag()
+    
+    init(
+        viewModel: TutorialViewModel
+    ) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
         self.attribute()
         self.layout()
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +51,7 @@ extension TutorialVC {
         self.view.backgroundColor = .systemBackground
         self.mainTitle.mainTitleLabel.text = "지하철 민실씨를 \n설치해주셔서감사합니다."
         
-        self.collectionView.collectionViewLayout = self.collectionViewLayout()
+        self.collectionView.collectionViewLayout = UICollectionViewCompositionalLayout(section: self.collectionViewLayout())
     }
     
     private func layout() {
@@ -78,21 +75,54 @@ extension TutorialVC {
         }
     }
     
-    private func collectionViewLayout() -> UICollectionViewLayout{
+    private func collectionViewLayout() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)
         )
-        let item = NSCollectionLayoutDecorationItem(layoutSize: itemSize)
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         
-        return UICollectionViewCompositionalLayout(section: section)
+        return section
+    }
+    
+    private func bind() {
+        let input = TutorialViewModel.Input(
+            scrollRow: self.collectionView.rx.willDisplayCell
+                .map {$0.at.row}
+                .startWith(0)
+                .asObservable(),
+            scrollDone: self.collectionView.rx.didEndDisplayingCell
+                .map {_ in Void()}
+                .startWith(Void())
+                .asObservable()
+        )
+        
+        let output = self.viewModel.transform(input: input)
+        
+        let dataSources = RxCollectionViewSectionedAnimatedDataSource<TutorialSectionData>(
+            animationConfiguration: .init(insertAnimation: .left),
+            configureCell: { _, collectionView, index, data in
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionCell.id, for: index) as? TutorialCollectionCell else {
+                    return UICollectionViewCell()
+                }
+                cell.cellSet(data)
+                return cell
+        })
+        output.tutorialData
+            .drive(self.collectionView.rx.items(dataSource: dataSources))
+            .disposed(by: self.bag)
+        
+        output.title
+            .drive(self.subTitle.titleLabel.rx.text)
+            .disposed(by: self.bag)
     }
 }
