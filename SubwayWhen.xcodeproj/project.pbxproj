@@ -321,6 +321,9 @@
 		881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */; };
 		B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200D029D00C7F00D64A3A /* DisposableView.swift */; };
 		B64200DF29D05EEF00D64A3A /* EditModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */; };
+		B68302BE2AC0501000E010B7 /* TutorialData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302BD2AC0501000E010B7 /* TutorialData.swift */; };
+		B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302BF2AC0505C00E010B7 /* TurorialModel.swift */; };
+		B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C12AC0506400E010B7 /* TutorialViewModel.swift */; };
 		B68A8CCB29C1E00E0076D7AE /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */; };
 		B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */; };
@@ -676,6 +679,9 @@
 		7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubwayWhen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B64200D029D00C7F00D64A3A /* DisposableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableView.swift; sourceTree = "<group>"; };
 		B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelProtocol.swift; sourceTree = "<group>"; };
+		B68302BD2AC0501000E010B7 /* TutorialData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialData.swift; sourceTree = "<group>"; };
+		B68302BF2AC0505C00E010B7 /* TurorialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurorialModel.swift; sourceTree = "<group>"; };
+		B68302C12AC0506400E010B7 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadProtocol.swift; sourceTree = "<group>"; };
 		B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionData.swift; sourceTree = "<group>"; };
 		B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellData.swift; sourceTree = "<group>"; };
@@ -767,6 +773,10 @@
 			isa = PBXGroup;
 			children = (
 				344D6A0F2ABD84AE00ECB57D /* TutorialVC.swift */,
+				B68302C12AC0506400E010B7 /* TutorialViewModel.swift */,
+				B68302BF2AC0505C00E010B7 /* TurorialModel.swift */,
+				B68302BC2AC04FF800E010B7 /* Entity */,
+				B68302BB2AC03F2E00E010B7 /* View */,
 				344D6A132ABD8A1500ECB57D /* Coordinator */,
 			);
 			path = Tutorial;
@@ -2264,6 +2274,21 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		B68302BB2AC03F2E00E010B7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B68302BC2AC04FF800E010B7 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				B68302BD2AC0501000E010B7 /* TutorialData.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2569,6 +2594,8 @@
 				34D9EA122A5662290080AD17 /* LocationModalCell.swift in Sources */,
 				3499F5FD29ED40BC00A3F198 /* DetailTableArrivalLiveViewModel.swift in Sources */,
 				34324CAE29D15740008AE274 /* ReportModel.swift in Sources */,
+				B68302BE2AC0501000E010B7 /* TutorialData.swift in Sources */,
+				B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */,
 				34B6ADE72A49930200D7A6DA /* SettingNotiSelectModalModelProtocol.swift in Sources */,
 				34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */,
 				34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */,
@@ -2796,6 +2823,7 @@
 				3499DEAA29D1BCE700A6E8C1 /* ReportCheckModalViewModelProtocol.swift in Sources */,
 				349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */,
 				34D9EA0D2A5583220080AD17 /* LocationModalSectionData.swift in Sources */,
+				B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */,
 				34A221BE29C9DBAB003F035D /* MainModel.swift in Sources */,
 				34A0504C29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift in Sources */,
 				34A1F5732A0A5CA000996839 /* DetailActivityLoadData.swift in Sources */,
