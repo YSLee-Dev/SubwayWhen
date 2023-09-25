@@ -19,6 +19,8 @@ class TutorialVC: UIViewController {
     lazy var subTitle = MainStyleLabelView()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
+        $0.isScrollEnabled = false
+        $0.register(TutorialCollectionFirstCell.self, forCellWithReuseIdentifier: TutorialCollectionFirstCell.id)
         $0.register(TutorialCollectionCell.self, forCellWithReuseIdentifier: TutorialCollectionCell.id)
         $0.backgroundColor = .systemBackground
         $0.delegate = nil
@@ -49,7 +51,7 @@ class TutorialVC: UIViewController {
 extension TutorialVC {
     private func attribute() {
         self.view.backgroundColor = .systemBackground
-        self.mainTitle.mainTitleLabel.text = "지하철 민실씨를 \n설치해주셔서감사합니다."
+        self.mainTitle.mainTitleLabel.text = "지하철 민실씨를 \n설치해주셔서 감사합니다."
         
         self.collectionView.collectionViewLayout = UICollectionViewCompositionalLayout(section: self.collectionViewLayout())
     }
@@ -69,7 +71,7 @@ extension TutorialVC {
             $0.top.equalTo(self.mainTitle.snp.bottom).offset(20)
         }
         self.collectionView.snp.makeConstraints {
-            $0.leading.trailing.equalTo(self.subTitle)
+            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(self.subTitle.snp.bottom).offset(20)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
@@ -80,7 +82,11 @@ extension TutorialVC {
             widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        item.contentInsets = .init(top: ViewStyle.padding.mainStyleViewTB,
+                                   leading: ViewStyle.padding.mainStyleViewLR,
+                                   bottom: ViewStyle.padding.mainStyleViewTB, 
+                                   trailing: ViewStyle.padding.mainStyleViewLR
+        )
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)
@@ -110,12 +116,23 @@ extension TutorialVC {
         
         let dataSources = RxCollectionViewSectionedAnimatedDataSource<TutorialSectionData>(
             animationConfiguration: .init(insertAnimation: .left),
-            configureCell: { _, collectionView, index, data in
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionCell.id, for: index) as? TutorialCollectionCell else {
-                    return UICollectionViewCell()
+            configureCell: {_, collectionView, index, data in
+                switch index.row {
+                case 0 :
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionFirstCell.id, for: index) as? TutorialCollectionFirstCell else {
+                        return UICollectionViewCell()
+                    }
+                    cell.bind(output.cellModel)
+                    cell.okBtn.setTitle(data.btnTitle, for: .normal)
+                    return cell
+                default:
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionCell.id, for: index) as? TutorialCollectionCell else {
+                        return UICollectionViewCell()
+                    }
+                    cell.bind(output.cellModel)
+                    cell.cellSet(data)
+                    return cell
                 }
-                cell.cellSet(data)
-                return cell
         })
         output.tutorialData
             .drive(self.collectionView.rx.items(dataSource: dataSources))
@@ -124,5 +141,17 @@ extension TutorialVC {
         output.title
             .drive(self.subTitle.titleLabel.rx.text)
             .disposed(by: self.bag)
+        
+        output.nextRow
+            .drive(self.rx.nextRow)
+            .disposed(by: self.bag)
+    }
+}
+
+extension Reactive where Base: TutorialVC {
+    var nextRow: Binder<Int> {
+        return Binder(base) { base, row in
+            base.collectionView.scrollToItem(at: IndexPath(row: row, section: 0), at: .right, animated: true)
+        }
     }
 }

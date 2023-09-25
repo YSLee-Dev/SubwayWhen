@@ -149,6 +149,9 @@
 		349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */; };
 		349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F15D6299B6FD100007420 /* DetailResultScheduleTopViewModel.swift */; };
 		349F1A58299A1CFA005E07CA /* DetailResultScheduleTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349F1A57299A1CFA005E07CA /* DetailResultScheduleTopView.swift */; };
+		349FD9AC2AC12EB400741BBE /* TutorialCollectionFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FD9AB2AC12EB400741BBE /* TutorialCollectionFirstCell.swift */; };
+		349FD9AE2AC14C8C00741BBE /* TutorialCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FD9AD2AC14C8C00741BBE /* TutorialCollectionViewCellModel.swift */; };
+		349FD9B02AC14CCF00741BBE /* TutorialCollectionViewCellModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FD9AF2AC14CCF00741BBE /* TutorialCollectionViewCellModelProtocol.swift */; };
 		349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF286299DBC95007A98F4 /* SettingVC.swift */; };
 		349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF289299DEDE1007A98F4 /* SettingViewModel.swift */; };
 		349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349FF28B299DEE00007A98F4 /* SaveSetting.swift */; };
@@ -504,6 +507,9 @@
 		349E32C32978E24D00147DEE /* DetailTableScheduleCellSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableScheduleCellSubCell.swift; sourceTree = "<group>"; };
 		349F15D6299B6FD100007420 /* DetailResultScheduleTopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleTopViewModel.swift; sourceTree = "<group>"; };
 		349F1A57299A1CFA005E07CA /* DetailResultScheduleTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleTopView.swift; sourceTree = "<group>"; };
+		349FD9AB2AC12EB400741BBE /* TutorialCollectionFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionFirstCell.swift; sourceTree = "<group>"; };
+		349FD9AD2AC14C8C00741BBE /* TutorialCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		349FD9AF2AC14CCF00741BBE /* TutorialCollectionViewCellModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionViewCellModelProtocol.swift; sourceTree = "<group>"; };
 		349FF286299DBC95007A98F4 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		349FF289299DEDE1007A98F4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		349FF28B299DEE00007A98F4 /* SaveSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSetting.swift; sourceTree = "<group>"; };
@@ -784,7 +790,7 @@
 				B68302C12AC0506400E010B7 /* TutorialViewModel.swift */,
 				B68302BF2AC0505C00E010B7 /* TurorialModel.swift */,
 				B68302BC2AC04FF800E010B7 /* Entity */,
-				B68302BB2AC03F2E00E010B7 /* View */,
+				B68302BB2AC03F2E00E010B7 /* Sub */,
 				344D6A132ABD8A1500ECB57D /* Coordinator */,
 			);
 			path = Tutorial;
@@ -2283,12 +2289,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		B68302BB2AC03F2E00E010B7 /* View */ = {
+		B68302BB2AC03F2E00E010B7 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
 				B68302C62AC0541B00E010B7 /* TutorialCollectionCell.swift */,
+				349FD9AB2AC12EB400741BBE /* TutorialCollectionFirstCell.swift */,
+				349FD9AD2AC14C8C00741BBE /* TutorialCollectionViewCellModel.swift */,
 			);
-			path = View;
+			path = Sub;
 			sourceTree = "<group>";
 		};
 		B68302BC2AC04FF800E010B7 /* Entity */ = {
@@ -2305,6 +2313,7 @@
 			isa = PBXGroup;
 			children = (
 				B68302C42AC050F000E010B7 /* TutorialModelProtocol.swift */,
+				349FD9AF2AC14CCF00741BBE /* TutorialCollectionViewCellModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2613,6 +2622,7 @@
 				34A221CE29CB1DC4003F035D /* DetailModelProtocol.swift in Sources */,
 				34D9EA122A5662290080AD17 /* LocationModalCell.swift in Sources */,
 				3499F5FD29ED40BC00A3F198 /* DetailTableArrivalLiveViewModel.swift in Sources */,
+				349FD9B02AC14CCF00741BBE /* TutorialCollectionViewCellModelProtocol.swift in Sources */,
 				34324CAE29D15740008AE274 /* ReportModel.swift in Sources */,
 				B68302BE2AC0501000E010B7 /* TutorialCellData.swift in Sources */,
 				B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */,
@@ -2631,6 +2641,7 @@
 				B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */,
 				34A303B929AF86FD00948EDD /* SearchInfoBySubwayNameService.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
+				349FD9AE2AC14C8C00741BBE /* TutorialCollectionViewCellModel.swift in Sources */,
 				34D9EA092A557E3F0080AD17 /* VicinityStationsData.swift in Sources */,
 				34A3F0A72AB8210B0012115F /* ImportantData.swift in Sources */,
 				349B516629A4631B00A53879 /* ReportViewModel.swift in Sources */,
@@ -2848,6 +2859,7 @@
 				349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */,
 				34D9EA0D2A5583220080AD17 /* LocationModalSectionData.swift in Sources */,
 				B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */,
+				349FD9AC2AC12EB400741BBE /* TutorialCollectionFirstCell.swift in Sources */,
 				34A221BE29C9DBAB003F035D /* MainModel.swift in Sources */,
 				34A0504C29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift in Sources */,
 				34A1F5732A0A5CA000996839 /* DetailActivityLoadData.swift in Sources */,
