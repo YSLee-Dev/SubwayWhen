@@ -19,7 +19,7 @@ class TutorialCollectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         self.bag = DisposeBag()
-        self.contentView.transform = CGAffineTransform(translationX: 0, y: 200)
+        self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
     }
     
     var mainBG = UIView().then{
@@ -67,18 +67,18 @@ extension TutorialCollectionCell {
         }
         
         self.imageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalToSuperview().inset(ViewStyle.padding.mainStyleViewTB)
-            $0.bottom.equalTo(self.okBtn.snp.top).inset(ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(16)
+            $0.bottom.equalTo(self.okBtn.snp.top).offset(-16)
         }
     }
     
     private func attribute() {
         self.okBtn.setTitleColor(.white, for: .normal)
-        self.contentView.transform = CGAffineTransform(translationX: 0, y: 200)
     }
     
     func cellSet(_ data: TutorialCellData) {
+        self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
         self.imageView.image = data.contents
         self.okBtn.setTitle(data.btnTitle, for: .normal)
         
