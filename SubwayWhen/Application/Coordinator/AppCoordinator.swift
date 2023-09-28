@@ -26,10 +26,19 @@ class AppCoordinator : Coordinator{
     }
     
     func start() {
+        /*
         self.tabbar = self.setTabbarController()
         self.window.rootViewController = self.tabbar
         
         self.notiTapResponse()
+       
+         */
+        let un =  UINavigationController()
+        let test = TutorialCoordinator(navigationController: un)
+        self.window.rootViewController = un
+        un.viewControllers = [UIViewController()]
+        test.start()
+        
     }
     
     func setTabbarController() -> UITabBarController{

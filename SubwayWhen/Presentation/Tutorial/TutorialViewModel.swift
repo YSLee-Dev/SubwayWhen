@@ -52,7 +52,8 @@ class TutorialViewModel {
                     viewModel.tutorialData.value[0].items[row].title
                 }
                 .asDriver(onErrorDriveWith: .empty()),
-            nextRow: self.nowRow
+            nextRow: self.cellModel.nextBtnTap
+                .withLatestFrom(self.nowRow)
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
