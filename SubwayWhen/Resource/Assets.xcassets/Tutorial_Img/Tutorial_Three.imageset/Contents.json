@@ -6,12 +6,45 @@
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "그림3 3.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "filename" : "그림3 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "그림3 4.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
       "filename" : "그림3 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "그림3 5.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
