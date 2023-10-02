@@ -25,6 +25,7 @@ class TutorialVC: UIViewController {
     }
     
     let viewModel: TutorialViewModel
+    let collectionViewRow = PublishSubject<Int>()
     let bag = DisposeBag()
     
     init(
@@ -89,22 +90,22 @@ extension TutorialVC {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
+        section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
+            let value = contentOffset.x / environment.container.contentSize.width
+            if value == floor(value) {
+                self?.collectionViewRow.onNext(Int(value))
+            }
+        }
         
         return section
     }
     
     private func bind() {
         let input = TutorialViewModel.Input(
-            scrollRow: self.collectionView.rx.willDisplayCell
-                .map {$0.at.row}
-                .startWith(0)
-                .asObservable(),
-            scrollDone: self.collectionView.rx.didEndDisplayingCell
-                .map {_ in Void()}
-                .startWith(Void())
+            scrollRow: self.collectionViewRow
                 .asObservable()
         )
-        
+    
         let output = self.viewModel.transform(input: input)
         
         let dataSources = RxCollectionViewSectionedAnimatedDataSource<TutorialSectionData>(

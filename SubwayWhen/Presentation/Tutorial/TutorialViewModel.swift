@@ -15,7 +15,7 @@ class TutorialViewModel {
     private let cellModel: TutorialCollectionViewCellModelProtocol
     
     private let tutorialData = BehaviorRelay<[TutorialSectionData]>(value: [])
-    private let nowRow = BehaviorRelay<Int>(value: 0)
+    private let nextRow = BehaviorRelay<Int>(value: 0)
     
     let bag = DisposeBag()
     
@@ -29,7 +29,6 @@ class TutorialViewModel {
     
     struct Input {
         let scrollRow: Observable<Int>
-        let scrollDone: Observable<Void>
     }
     
     struct Output {
@@ -46,7 +45,7 @@ class TutorialViewModel {
             tutorialData: self.tutorialData
                 .asDriver(onErrorDriveWith: .empty()),
             nextRow: self.cellModel.nextBtnTap
-                .withLatestFrom(self.nowRow)
+                .withLatestFrom(self.nextRow)
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
@@ -58,22 +57,16 @@ private extension TutorialViewModel {
             .bind(to: self.tutorialData)
             .disposed(by: self.bag)
         
-        input.scrollDone
-            .withLatestFrom(input.scrollRow)
-            .bind(to: self.nowRow)
-            .disposed(by: self.bag)
-        
-        self.cellModel.nextBtnTap
+        input.scrollRow
             .withUnretained(self)
-            .map { viewModel, _ in
-                let value = viewModel.nowRow.value + 1
-                if viewModel.tutorialData.value[0].items.count <= value {
-                    return value - 1
+            .map { viewModel, row in
+                if viewModel.tutorialData.value[0].items.count <= row + 1{
+                    return row
                 } else {
-                    return value
+                    return row + 1
                 }
             }
-            .bind(to: self.nowRow)
+            .bind(to: self.nextRow)
             .disposed(by: self.bag)
     }
 }
