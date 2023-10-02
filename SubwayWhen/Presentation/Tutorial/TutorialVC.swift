@@ -16,15 +16,12 @@ import RxDataSources
 
 class TutorialVC: UIViewController {
     let mainTitle = TitleView()
-    lazy var subTitle = MainStyleLabelView()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
         $0.isScrollEnabled = false
         $0.register(TutorialCollectionFirstCell.self, forCellWithReuseIdentifier: TutorialCollectionFirstCell.id)
         $0.register(TutorialCollectionCell.self, forCellWithReuseIdentifier: TutorialCollectionCell.id)
         $0.backgroundColor = .systemBackground
-        $0.delegate = nil
-        $0.dataSource = nil
     }
     
     let viewModel: TutorialViewModel
@@ -57,7 +54,7 @@ extension TutorialVC {
     }
     
     private func layout() {
-        [self.mainTitle, self.subTitle, self.collectionView].forEach {
+        [self.mainTitle, self.collectionView].forEach {
             self.view.addSubview($0)
         }
         
@@ -66,13 +63,9 @@ extension TutorialVC {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
             $0.height.equalTo(45)
         }
-        self.subTitle.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.mainTitle.snp.bottom).offset(20)
-        }
         self.collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(self.subTitle.snp.bottom).offset(20)
+            $0.top.equalTo(self.mainTitle.snp.bottom).offset(20)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(20)
         }
     }
@@ -95,7 +88,7 @@ extension TutorialVC {
         
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.orthogonalScrollingBehavior = .paging
         
         return section
     }
@@ -115,7 +108,7 @@ extension TutorialVC {
         let output = self.viewModel.transform(input: input)
         
         let dataSources = RxCollectionViewSectionedAnimatedDataSource<TutorialSectionData>(
-            animationConfiguration: .init(insertAnimation: .left),
+            animationConfiguration: .init(insertAnimation: .fade),
             configureCell: {_, collectionView, index, data in
                 switch index.row {
                 case 0 :
@@ -136,10 +129,6 @@ extension TutorialVC {
         })
         output.tutorialData
             .drive(self.collectionView.rx.items(dataSource: dataSources))
-            .disposed(by: self.bag)
-        
-        output.title
-            .drive(self.subTitle.titleLabel.rx.text)
             .disposed(by: self.bag)
         
         output.nextRow

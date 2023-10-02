@@ -204,6 +204,7 @@
 		34A303C029AF86FD00948EDD /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303AF29AF86FD00948EDD /* LoadModel.swift */; };
 		34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */; };
 		34A303C229AF86FD00948EDD /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */; };
+		34A316742AC579FF00883FC9 /* TutorialCollectionLastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */; };
 		34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */; };
 		34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */; };
 		34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */; };
@@ -563,6 +564,7 @@
 		34A303AF29AF86FD00948EDD /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModel.swift; sourceTree = "<group>"; };
 		34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModelProtocol.swift; sourceTree = "<group>"; };
 		34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionLastCell.swift; sourceTree = "<group>"; };
 		34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFView.swift; sourceTree = "<group>"; };
 		34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalSection.swift; sourceTree = "<group>"; };
 		34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFViewModel.swift; sourceTree = "<group>"; };
@@ -1723,6 +1725,7 @@
 				34A58ADC2AC3BAEE00C8A563 /* TutorialCollectionCell.swift */,
 				34A58ADD2AC3BAEE00C8A563 /* TutorialCollectionViewCellModel.swift */,
 				34A58ADE2AC3BAEE00C8A563 /* TutorialCollectionFirstCell.swift */,
+				34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */,
 			);
 			name = Sub;
 			path = SubwayWhen/Presentation/Tutorial/Sub;
@@ -2693,6 +2696,7 @@
 				34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */,
 				34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
+				34A316742AC579FF00883FC9 /* TutorialCollectionLastCell.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,

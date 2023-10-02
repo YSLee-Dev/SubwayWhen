@@ -22,6 +22,8 @@ class TutorialCollectionCell: UICollectionViewCell {
         self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
     }
     
+    lazy var subTitle = MainStyleLabelView()
+    
     var mainBG = UIView().then{
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.layer.cornerRadius = ViewStyle.Layer.radius
@@ -38,6 +40,10 @@ class TutorialCollectionCell: UICollectionViewCell {
         customTappedBG: "AppIconColor"
     )
     
+    var whiteBG = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layout()
@@ -51,9 +57,19 @@ class TutorialCollectionCell: UICollectionViewCell {
 
 extension TutorialCollectionCell {
     private func layout() {
-        self.contentView.addSubview(self.mainBG)
+        [self.subTitle, self.mainBG].forEach {
+            self.contentView.addSubview($0)
+        }
+        
+        self.subTitle.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(80)
+            $0.top.equalToSuperview()
+        }
+        
         self.mainBG.snp.makeConstraints{
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(self.subTitle.snp.bottom).offset(20)
         }
         
         [self.imageView, self.okBtn].forEach {
@@ -81,6 +97,7 @@ extension TutorialCollectionCell {
         self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
         self.imageView.image = data.contents
         self.okBtn.setTitle(data.btnTitle, for: .normal)
+        self.subTitle.titleLabel.text = data.title
         
         UIView.animate(withDuration: 0.25, animations: {
             self.contentView.transform = .identity

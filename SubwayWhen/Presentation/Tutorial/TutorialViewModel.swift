@@ -35,7 +35,6 @@ class TutorialViewModel {
     struct Output {
         let cellModel: TutorialCollectionViewCellModelProtocol
         let tutorialData: Driver<[TutorialSectionData]>
-        let title: Driver<String>
         let nextRow: Driver<Int>
     }
     
@@ -45,12 +44,6 @@ class TutorialViewModel {
         return Output(
             cellModel: self.cellModel,
             tutorialData: self.tutorialData
-                .asDriver(onErrorDriveWith: .empty()),
-            title: self.nowRow
-                .withUnretained(self)
-                .map { viewModel, row in
-                    viewModel.tutorialData.value[0].items[row].title
-                }
                 .asDriver(onErrorDriveWith: .empty()),
             nextRow: self.cellModel.nextBtnTap
                 .withLatestFrom(self.nowRow)

@@ -14,7 +14,7 @@ class TutorialModel: TutorialModelProtocol {
         return Observable<[TutorialSectionData]>.create {
             $0.onNext([
                 .init(sectionName: "first", items: [
-                    .init(title: "버튼을 눌러, 민실씨의 기능을 확인해보세요!",
+                    .init(title: "환영합니다.",
                           contents: UIImage(systemName: "doc.text")!,
                           btnTitle: "시작하기"
                          ),
