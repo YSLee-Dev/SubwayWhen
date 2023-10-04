@@ -79,4 +79,10 @@ extension TutorialCollectionLastCell {
             }
         })
     }
+    
+    func bind(_ viewModel: TutorialCollectionViewCellModelProtocol) {
+        self.okBtn.rx.tap
+            .bind(to: viewModel.nextBtnTap)
+            .disposed(by: self.bag)
+    }
 }
