@@ -16,18 +16,30 @@ class AppCoordinator : Coordinator{
     var tabbar : UITabBarController
     
     var mainCoordinator: MainCoordinator?
+    var appDefaultManager : AppDefaultManager?
     
     let bag = DisposeBag()
     
-    init(window : UIWindow){
+    init(
+        window : UIWindow
+    ) {
         self.window = window
         self.window.makeKeyAndVisible()
         self.tabbar = UITabBarController()
+        
+        self.appDefaultManager = AppDefaultManager(window: self.window)
+        
+        // 노티 로드
+        self.notiTapResponse()
+        
+        // 설정 로드
+        self.appDefaultManager?.settingLoad()
+        
+        // 저장된 지하철 로드
+        self.appDefaultManager?.stationLoad()
     }
     
     func start() {
-        self.notiTapResponse()
-        
         if (!FixInfo.saveSetting.tutorialSuccess) && FixInfo.saveStation.isEmpty {
             let navigation = UINavigationController()
             navigation.view.backgroundColor = .systemBackground
@@ -40,7 +52,7 @@ class AppCoordinator : Coordinator{
             self.window.rootViewController = navigation
             tutorialC.start()
         } else {
-            self.tabbarLoad()
+            self.mainLoad()
         }
     }
     
@@ -78,12 +90,6 @@ class AppCoordinator : Coordinator{
     }
 }
 
-extension AppCoordinator : MainCoordinatorDelegate{
-    func stationPlusBtnTap(_ coordinator: MainCoordinator) {
-        self.tabbar.selectedIndex = 1
-    }
-}
-
 private extension AppCoordinator {
     func notiTapResponse() {
         NotificationManager.shared.notiOpen
@@ -101,10 +107,25 @@ private extension AppCoordinator {
         mainCoordinator.notiTap(saveStation: data)
     }
     
-    func tabbarLoad() {
+    func mainLoad() {
         let tabbar = self.setTabbarController()
         self.window.rootViewController = tabbar
         FixInfo.saveSetting.tutorialSuccess = true
+        
+        // 인터넷 연결 팝업
+        self.appDefaultManager?.networkNotConnectedView()
+        
+        // 버전 확인
+        self.appDefaultManager?.appstoreUpdateAlert()
+        
+        // 팝업 로드
+        self.appDefaultManager?.popup()
+    }
+}
+
+extension AppCoordinator : MainCoordinatorDelegate{
+    func stationPlusBtnTap(_ coordinator: MainCoordinator) {
+        self.tabbar.selectedIndex = 1
     }
 }
 
@@ -116,6 +137,6 @@ extension AppCoordinator: TutorialVCCoordinatorProtocol {
     }
     
     func lastBtnTap() {
-        self.tabbarLoad()
+        self.mainLoad()
     }
 }
