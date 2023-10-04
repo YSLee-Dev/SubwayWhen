@@ -27,6 +27,7 @@ class TutorialVC: UIViewController {
     
     let viewModel: TutorialViewModel
     let collectionViewRow = PublishSubject<Int>()
+    let disappear = PublishSubject<Void>()
     let bag = DisposeBag()
     
     init(
@@ -36,15 +37,20 @@ class TutorialVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         self.attribute()
         self.layout()
         self.bind()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disappear.onNext(Void())
     }
+    
 }
 
 extension TutorialVC {
@@ -62,7 +68,7 @@ extension TutorialVC {
         
         self.mainTitle.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(45)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(48)
             $0.height.equalTo(45)
         }
         self.collectionView.snp.makeConstraints {
@@ -104,6 +110,8 @@ extension TutorialVC {
     private func bind() {
         let input = TutorialViewModel.Input(
             scrollRow: self.collectionViewRow
+                .asObservable(),
+            disappear: self.disappear
                 .asObservable()
         )
     
@@ -124,6 +132,7 @@ extension TutorialVC {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionLastCell.id, for: index) as? TutorialCollectionLastCell else {
                         return UICollectionViewCell()
                     }
+                    cell.bind(output.cellModel)
                     cell.okBtn.setTitle(data.btnTitle, for: .normal)
                     return cell
                 default:
