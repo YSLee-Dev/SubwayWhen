@@ -91,7 +91,6 @@ extension TutorialCollectionFirstCell {
                 self.okBtn.alpha = 1
             })
         })
-       
     }
     
     func bind(_ viewModel: TutorialCollectionViewCellModelProtocol) {
