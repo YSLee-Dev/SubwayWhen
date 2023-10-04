@@ -26,26 +26,26 @@ class AppCoordinator : Coordinator{
     }
     
     func start() {
-        /*
-        self.tabbar = self.setTabbarController()
-        self.window.rootViewController = self.tabbar
-        
         self.notiTapResponse()
-       
-         */
-        let un =  UINavigationController()
-        let test = TutorialCoordinator(navigationController: un)
-        self.window.rootViewController = un
-        un.viewControllers = [UIViewController()]
-        test.start()
         
+        if (!FixInfo.saveSetting.tutorialSuccess) && FixInfo.saveStation.isEmpty {
+            let navigation = UINavigationController()
+            let tutorialC = TutorialCoordinator(navigationController: navigation)
+            self.childCoordinator.append(tutorialC)
+            tutorialC.deleagate = self
+            
+            self.window.rootViewController = navigation
+            tutorialC.start()
+        } else {
+            self.tabbarLoad()
+        }
     }
     
     func setTabbarController() -> UITabBarController{
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
         
-        let tabbarC = UITabBarController()
+        let tabbarC = self.tabbar
         tabbarC.tabBar.itemWidth = 50.0
         tabbarC.tabBar.itemPositioning = .centered
         tabbarC.tabBar.backgroundColor = .systemBackground
@@ -96,5 +96,23 @@ private extension AppCoordinator {
         guard let mainCoordinator = self.mainCoordinator else {return}
         self.tabbar.selectedIndex = 0
         mainCoordinator.notiTap(saveStation: data)
+    }
+    
+    func tabbarLoad() {
+        let tabbar = self.setTabbarController()
+        self.window.rootViewController = tabbar
+    }
+}
+
+extension AppCoordinator: TutorialVCCoordinatorProtocol {
+    func didDisappear(coordinator: Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter {
+            $0 !== coordinator
+        }
+    }
+    
+    func lastBtnTap() {
+        FixInfo.saveSetting.tutorialSuccess = true
+        self.tabbarLoad()
     }
 }
