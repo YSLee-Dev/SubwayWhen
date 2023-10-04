@@ -20,6 +20,7 @@ class TutorialVC: UIViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
         $0.isScrollEnabled = false
         $0.register(TutorialCollectionFirstCell.self, forCellWithReuseIdentifier: TutorialCollectionFirstCell.id)
+        $0.register(TutorialCollectionLastCell.self, forCellWithReuseIdentifier: TutorialCollectionLastCell.id)
         $0.register(TutorialCollectionCell.self, forCellWithReuseIdentifier: TutorialCollectionCell.id)
         $0.backgroundColor = .systemBackground
     }
@@ -119,6 +120,12 @@ extension TutorialVC {
                     cell.bind(output.cellModel)
                     cell.okBtn.setTitle(data.btnTitle, for: .normal)
                     return cell
+                case 6:
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionLastCell.id, for: index) as? TutorialCollectionLastCell else {
+                        return UICollectionViewCell()
+                    }
+                    cell.okBtn.setTitle(data.btnTitle, for: .normal)
+                    return cell
                 default:
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TutorialCollectionCell.id, for: index) as? TutorialCollectionCell else {
                         return UICollectionViewCell()
@@ -135,6 +142,10 @@ extension TutorialVC {
         output.nextRow
             .drive(self.rx.nextRow)
             .disposed(by: self.bag)
+        
+        output.lastRow
+            .drive(self.rx.lastRow)
+            .disposed(by: self.bag)
     }
 }
 
@@ -142,6 +153,26 @@ extension Reactive where Base: TutorialVC {
     var nextRow: Binder<Int> {
         return Binder(base) { base, row in
             base.collectionView.scrollToItem(at: IndexPath(row: row, section: 0), at: .right, animated: true)
+        }
+    }
+    
+    var lastRow: Binder<Bool> {
+        return Binder(base) { base, isLast in
+            UIView.animate(withDuration: 0.3, animations: {
+                if isLast {
+                    base.view.backgroundColor = UIColor(named: "AppIconColor")
+                    base.collectionView.backgroundColor = UIColor(named: "AppIconColor")
+                    base.mainTitle.backgroundColor = UIColor(named: "AppIconColor")
+                    base.mainTitle.mainTitleLabel.textColor = .white
+                } else {
+                    if base.view.backgroundColor != .systemBackground {
+                        base.view.backgroundColor = .systemBackground
+                        base.collectionView.backgroundColor = .systemBackground
+                        base.mainTitle.backgroundColor = .systemBackground
+                        base.mainTitle.mainTitleLabel.textColor = .label
+                    }
+                }
+            })
         }
     }
 }
