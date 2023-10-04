@@ -17,11 +17,6 @@ class TutorialCollectionCell: UICollectionViewCell {
     static let id = "TutorialCollectionCell"
     var bag = DisposeBag()
     
-    override func prepareForReuse() {
-        self.bag = DisposeBag()
-        self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
-    }
-    
     lazy var subTitle = MainStyleLabelView()
     
     var mainBG = UIView().then{
@@ -94,14 +89,9 @@ extension TutorialCollectionCell {
     }
     
     func cellSet(_ data: TutorialCellData) {
-        self.contentView.transform = CGAffineTransform(translationX: 0, y: 150)
         self.imageView.image = data.contents
         self.okBtn.setTitle(data.btnTitle, for: .normal)
         self.subTitle.titleLabel.text = data.title
-        
-        UIView.animate(withDuration: 0.25, animations: {
-            self.contentView.transform = .identity
-        })
     }
     
     func bind(_ viewModel: TutorialCollectionViewCellModelProtocol) {
