@@ -17,4 +17,5 @@ struct SaveSetting : Codable{
     var searchOverlapAlert : Bool
     var alertGroupOneID: String
     var alertGroupTwoID: String
+    var tutorialSuccess: Bool
 }
