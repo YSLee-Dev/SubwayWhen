@@ -30,6 +30,9 @@ class AppCoordinator : Coordinator{
         
         if (!FixInfo.saveSetting.tutorialSuccess) && FixInfo.saveStation.isEmpty {
             let navigation = UINavigationController()
+            navigation.view.backgroundColor = .systemBackground
+            navigation.setNavigationBarHidden(true, animated: false)
+            
             let tutorialC = TutorialCoordinator(navigationController: navigation)
             self.childCoordinator.append(tutorialC)
             tutorialC.deleagate = self
@@ -101,6 +104,7 @@ private extension AppCoordinator {
     func tabbarLoad() {
         let tabbar = self.setTabbarController()
         self.window.rootViewController = tabbar
+        FixInfo.saveSetting.tutorialSuccess = true
     }
 }
 
@@ -112,7 +116,6 @@ extension AppCoordinator: TutorialVCCoordinatorProtocol {
     }
     
     func lastBtnTap() {
-        FixInfo.saveSetting.tutorialSuccess = true
         self.tabbarLoad()
     }
 }

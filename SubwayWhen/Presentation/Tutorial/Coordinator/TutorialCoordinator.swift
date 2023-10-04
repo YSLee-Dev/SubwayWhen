@@ -39,7 +39,6 @@ extension TutorialCoordinator: TutorialVCAction {
     }
     
     func lastBtnTap() {
-        
         self.deleagate?.lastBtnTap()
     }
 }
