@@ -17,6 +17,7 @@ class TutorialViewModel {
     private let tutorialData = BehaviorRelay<[TutorialSectionData]>(value: [])
     private let nextRow = BehaviorRelay<Int>(value: 0)
     
+    weak var delegate: TutorialVCAction?
     let bag = DisposeBag()
     
     init(
@@ -27,8 +28,13 @@ class TutorialViewModel {
         self.cellModel = cellModel
     }
     
+    deinit {
+        print("TutorialViewModel DEINIT")
+    }
+    
     struct Input {
         let scrollRow: Observable<Int>
+        let disappear: Observable<Void>
     }
     
     struct Output {
@@ -40,6 +46,7 @@ class TutorialViewModel {
     
     func transform(input: Input) -> Output {
         self.viewDataSet(input: input)
+        self.flowLogic(input: input)
         
         return Output(
             cellModel: self.cellModel,
@@ -72,6 +79,24 @@ private extension TutorialViewModel {
                 }
             }
             .bind(to: self.nextRow)
+            .disposed(by: self.bag)
+    }
+    
+    func flowLogic(input: Input) {
+        input.disappear
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.didDisappear()
+            })
+            .disposed(by: self.bag)
+        
+        self.cellModel.nextBtnTap
+            .withLatestFrom(self.nextRow)
+            .filter {$0 == -1}
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                viewModel.delegate?.lastBtnTap()
+            })
             .disposed(by: self.bag)
     }
 }
