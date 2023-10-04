@@ -87,7 +87,8 @@ extension AppDefaultManager{
                 liveActivity: true,
                 searchOverlapAlert : true,
                 alertGroupOneID: "",
-                alertGroupTwoID: ""
+                alertGroupTwoID: "",
+                tutorialSuccess: false
             )
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
