@@ -14,9 +14,9 @@ class TutorialModel: TutorialModelProtocol {
         return Observable<[TutorialSectionData]>.create {
             $0.onNext([
                 .init(sectionName: "first", items: [
-                    .init(title: "환영합니다.",
+                    .init(title: "환영합니다 👏",
                           contents: UIImage(systemName: "doc.text")!,
-                          btnTitle: "시작하기"
+                          btnTitle: "지하철 민실씨 알아보기"
                          ),
                     .init(title: "홈화면의 + 버튼이나, 검색 버튼을 이용하여 선호하는 지하철역을 추가할 수 있어요.",
                           contents: UIImage(named: "Tutorial_One") ?? UIImage(systemName: "doc.text")!,
@@ -34,13 +34,13 @@ class TutorialModel: TutorialModelProtocol {
                           contents: UIImage(named: "Tutorial_Four") ?? UIImage(systemName: "doc.text")!,
                           btnTitle: "다음 4/5"
                          ),
-                    .init(title: "지하철 민원 접수 시 원하는 메시지를 적을 수 있어요.",
+                    .init(title: "지하철 민원 접수 시 원하는 메시지를 직접 보낼 수 있어요.",
                           contents: UIImage(named: "Tutorial_Five") ?? UIImage(systemName: "doc.text")!,
                           btnTitle: "다음 5/5"
                          ),
                     .init(title: "버튼을 눌러 민실씨를 바로 사용해 보세요!",
                           contents: UIImage(systemName: "doc.text")!,
-                          btnTitle: "완료"
+                          btnTitle: "시작하기"
                          )
                 ])
             ])
