@@ -35,6 +35,7 @@ class TutorialViewModel {
         let cellModel: TutorialCollectionViewCellModelProtocol
         let tutorialData: Driver<[TutorialSectionData]>
         let nextRow: Driver<Int>
+        let lastRow: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -46,6 +47,10 @@ class TutorialViewModel {
                 .asDriver(onErrorDriveWith: .empty()),
             nextRow: self.cellModel.nextBtnTap
                 .withLatestFrom(self.nextRow)
+                .filter {$0 != -1}
+                .asDriver(onErrorDriveWith: .empty()),
+            lastRow: self.nextRow
+                .map {$0 == -1}
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
@@ -61,7 +66,7 @@ private extension TutorialViewModel {
             .withUnretained(self)
             .map { viewModel, row in
                 if viewModel.tutorialData.value[0].items.count <= row + 1{
-                    return row
+                    return -1
                 } else {
                     return row + 1
                 }

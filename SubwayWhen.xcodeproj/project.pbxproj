@@ -12,6 +12,8 @@
 		341200F1293753E500C77050 /* MainTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200F0293753E500C77050 /* MainTableViewModel.swift */; };
 		341200F92937566800C77050 /* MainTableViewArrivalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200F82937566800C77050 /* MainTableViewArrivalCell.swift */; };
 		341200FC29375A2600C77050 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200FB29375A2600C77050 /* MainViewModel.swift */; };
+		341EEA6D2ACD498E00E8F1EF /* TutorialSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 341EEA6C2ACD498E00E8F1EF /* TutorialSuccess.json */; };
+		341EEA6F2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341EEA6E2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift */; };
 		3427D8FE2A432020000AEEED /* SettingNotiSelectModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3427D8FD2A432020000AEEED /* SettingNotiSelectModalViewModel.swift */; };
 		3427D9002A43202E000AEEED /* SettingNotiSelectModalVCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3427D8FF2A43202E000AEEED /* SettingNotiSelectModalVCAction.swift */; };
 		3427D9032A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3427D9022A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift */; };
@@ -204,7 +206,6 @@
 		34A303C029AF86FD00948EDD /* LoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303AF29AF86FD00948EDD /* LoadModel.swift */; };
 		34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */; };
 		34A303C229AF86FD00948EDD /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */; };
-		34A316742AC579FF00883FC9 /* TutorialCollectionLastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */; };
 		34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */; };
 		34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */; };
 		34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */; };
@@ -375,6 +376,8 @@
 		341200F0293753E500C77050 /* MainTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewModel.swift; sourceTree = "<group>"; };
 		341200F82937566800C77050 /* MainTableViewArrivalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewArrivalCell.swift; sourceTree = "<group>"; };
 		341200FB29375A2600C77050 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		341EEA6C2ACD498E00E8F1EF /* TutorialSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TutorialSuccess.json; sourceTree = "<group>"; };
+		341EEA6E2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionLastCell.swift; sourceTree = "<group>"; };
 		3427D8FD2A432020000AEEED /* SettingNotiSelectModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalViewModel.swift; sourceTree = "<group>"; };
 		3427D8FF2A43202E000AEEED /* SettingNotiSelectModalVCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalVCAction.swift; sourceTree = "<group>"; };
 		3427D9022A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalCoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -564,7 +567,6 @@
 		34A303AF29AF86FD00948EDD /* LoadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModel.swift; sourceTree = "<group>"; };
 		34A303B029AF86FD00948EDD /* LoadModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModelProtocol.swift; sourceTree = "<group>"; };
 		34A303B129AF86FD00948EDD /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
-		34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionLastCell.swift; sourceTree = "<group>"; };
 		34A32E6A29B8268200AA1C67 /* ReportContentsModalTFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFView.swift; sourceTree = "<group>"; };
 		34A32E6E29B828C600AA1C67 /* ReportContentsModalSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalSection.swift; sourceTree = "<group>"; };
 		34A32E7029B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalTFViewModel.swift; sourceTree = "<group>"; };
@@ -1131,6 +1133,7 @@
 				3496557729A73B3F00530EB6 /* Report.json */,
 				34A2563D29ACAF52008CC885 /* Plus.json */,
 				3455CF9B2A529E9B001ADE61 /* Location.json */,
+				341EEA6C2ACD498E00E8F1EF /* TutorialSuccess.json */,
 				3496559129A756F500530EB6 /* CheckMark.json */,
 				3496558329A74B4800530EB6 /* List.json */,
 			);
@@ -1725,7 +1728,7 @@
 				34A58ADC2AC3BAEE00C8A563 /* TutorialCollectionCell.swift */,
 				34A58ADD2AC3BAEE00C8A563 /* TutorialCollectionViewCellModel.swift */,
 				34A58ADE2AC3BAEE00C8A563 /* TutorialCollectionFirstCell.swift */,
-				34A316732AC579FF00883FC9 /* TutorialCollectionLastCell.swift */,
+				341EEA6E2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift */,
 			);
 			name = Sub;
 			path = SubwayWhen/Presentation/Tutorial/Sub;
@@ -2466,6 +2469,7 @@
 				34A906DD2A4BCC67002C7655 /* Congratulations.json in Resources */,
 				349894AB29CD964000768B88 /* RequestToken.plist in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
+				341EEA6D2ACD498E00E8F1EF /* TutorialSuccess.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2696,7 +2700,7 @@
 				34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */,
 				34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
-				34A316742AC579FF00883FC9 /* TutorialCollectionLastCell.swift in Sources */,
+				341EEA6F2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,
