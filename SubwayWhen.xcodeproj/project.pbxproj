@@ -239,6 +239,7 @@
 		34A906E02A4C3178002C7655 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A906DF2A4C3177002C7655 /* NotificationManager.swift */; };
 		34A906E42A4C322A002C7655 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A906E32A4C322A002C7655 /* NotificationManagerProtocol.swift */; };
 		34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A906E72A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift */; };
+		34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB13362ACFB04F008D04B0 /* TutorialViewModelTests.swift */; };
 		34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */; };
 		34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */; };
 		34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */; };
@@ -602,6 +603,7 @@
 		34A906DF2A4C3177002C7655 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		34A906E32A4C322A002C7655 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		34A906E72A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiModalExplanationView.swift; sourceTree = "<group>"; };
+		34AB13362ACFB04F008D04B0 /* TutorialViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModelTests.swift; sourceTree = "<group>"; };
 		34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalModel.swift; sourceTree = "<group>"; };
@@ -1575,6 +1577,7 @@
 			isa = PBXGroup;
 			children = (
 				34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */,
+				34AB13352ACFB032008D04B0 /* Tutorial */,
 				3497DCC529D43D4200D2ABB9 /* Setting */,
 				3497DC8F29D2E7BE00D2ABB9 /* Search */,
 				3499DE9429D17BCA00A6E8C1 /* Report */,
@@ -1804,6 +1807,14 @@
 				34A906E32A4C322A002C7655 /* NotificationManagerProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		34AB13352ACFB032008D04B0 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				34AB13362ACFB04F008D04B0 /* TutorialViewModelTests.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		34B6ADDF2A4990EC00D7A6DA /* Sub */ = {
@@ -2598,6 +2609,7 @@
 				3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */,
 				34C655752A5CF8210039C16B /* SettingNotiSelectModalModelTests.swift in Sources */,
 				3499DE9829D17BE600A6E8C1 /* ReportModelTests.swift in Sources */,
+				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
 				3499DEAC29D1BEBB00A6E8C1 /* ReportContentsModalModelTests.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
@@ -3158,7 +3170,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3174,7 +3186,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -3194,7 +3206,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3210,7 +3222,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
