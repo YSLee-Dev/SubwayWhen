@@ -31,7 +31,6 @@ class DetailViewModel {
     private let scheduleData = PublishRelay<[ResultSchdule]>()
     private let arrivalData = PublishRelay<[RealtimeStationArrival]>()
     private let scheduleSortedData = PublishSubject<[ResultSchdule]>()
-    private let liveActivityData = PublishSubject<DetailActivityLoadData>()
     
     var delegate : DetailVCDelegate?
     
@@ -127,7 +126,10 @@ class DetailViewModel {
                 return DetailActivityLoadData(saveStation: detail.stationName, saveLine: detail.useLine, scheduleList: list, lastUpdate: "\(hour)시 \(minute)분 기준")
             }
             .filterNil()
-            .bind(to: self.liveActivityData)
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, data in
+                viewModel.liveActivitySet(data)
+            })
             .disposed(by: self.bag)
         
         // 재로딩 버튼 클릭 시 exception Station 제거
@@ -276,19 +278,15 @@ private extension DetailViewModel {
             })
             .disposed(by: self.bag)
     }
-}
-
-extension Reactive where Base: DetailViewModel {
-    var liveActivity : Binder<DetailActivityLoadData>{
-        return Binder(base){base , data in
-            guard !base.disposable else {return}
-            
-            if !base.liveActivity {
-                SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
-                base.liveActivity = !base.liveActivity
-            } else{
-                SubwayWhenDetailWidgetManager.shared.update(scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
-            }
+    
+    func liveActivitySet(_ data: DetailActivityLoadData) {
+        guard !self.disposable else {return}
+        
+        if !self.liveActivity {
+            SubwayWhenDetailWidgetManager.shared.start(stationLine: data.saveLine, saveStation: data.saveStation, scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
+            self.liveActivity = !self.liveActivity
+        } else{
+            SubwayWhenDetailWidgetManager.shared.update(scheduleList: data.scheduleList, lastUpdate: data.lastUpdate)
         }
     }
 }
