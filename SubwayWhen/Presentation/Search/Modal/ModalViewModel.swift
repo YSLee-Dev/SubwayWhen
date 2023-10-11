@@ -138,6 +138,7 @@ private extension ModalViewModel {
         
         self.modalCloseEvent
             .filter{!$0}
+            .take(1)
             .withUnretained(self)
             .subscribe(onNext: { viewModel, _ in
                 viewModel.delegate?.overlap()
