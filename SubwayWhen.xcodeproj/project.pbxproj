@@ -52,7 +52,6 @@
 		3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */; };
 		3497DC9529D2F8B800D2ABB9 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9429D2F8B800D2ABB9 /* MainViewModelProtocol.swift */; };
 		3497DC9729D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */; };
-		3497DC9B29D2FB8900D2ABB9 /* EditViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9A29D2FB8900D2ABB9 /* EditViewModelProtocol.swift */; };
 		3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */; };
 		3497DC9F29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */; };
 		3497DCA329D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DCA229D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift */; };
@@ -419,7 +418,6 @@
 		3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelTests.swift; sourceTree = "<group>"; };
 		3497DC9429D2F8B800D2ABB9 /* MainViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC9A29D2FB8900D2ABB9 /* EditViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DCA229D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroupModalViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -2326,7 +2324,6 @@
 			isa = PBXGroup;
 			children = (
 				B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */,
-				3497DC9A29D2FB8900D2ABB9 /* EditViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2791,7 +2788,6 @@
 				3499F5FF29ED411300A3F198 /* DetailTableArrivalLiveViewModelProtocol.swift in Sources */,
 				34A221CA29CB1BF5003F035D /* DetailTableScheduleCellModelProtocol.swift in Sources */,
 				34A36BE329502A4000FB0DDB /* EditViewCellData.swift in Sources */,
-				3497DC9B29D2FB8900D2ABB9 /* EditViewModelProtocol.swift in Sources */,
 				34D9E9FA2A54FBB70080AD17 /* LocationModalViewModel.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
 				34F5F0FD29641AC10010A21D /* TitleView.swift in Sources */,
