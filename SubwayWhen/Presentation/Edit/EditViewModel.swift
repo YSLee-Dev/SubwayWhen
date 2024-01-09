@@ -10,39 +10,42 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class EditViewModel : EditViewModelProtocol{
+class EditViewModel {
+    
     // MODEL
     private let editModel : EditModelProtocol
     private let notiManager: NotificationManagerProtocol
     
-    // INPUT
-    let deleteCell = PublishRelay<String>()
-    let refreshOn = PublishRelay<Void>()
-    let moveCell = PublishRelay<ItemMovedEvent>()
-    
-    // OUTPUT
-    let cellData : Driver<[EditViewCellSection]>
-    
     // VALUE
     private let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
     
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
     
-    init(
-        model : EditModel = .init(),
-        noti: NotificationManagerProtocol = NotificationManager.shared
-    ){
-        self.editModel = model
-        self.notiManager = noti
-        
-        self.cellData = self.nowData
-            .asDriver(onErrorDriveWith: .empty())
+    struct Input {
+        let deleteCell: Observable<String>
+        let refreshOn: Observable<Void>
+        let moveCell: Observable<ItemMovedEvent>
+    }
+    
+    struct Output {
+        let cellData: Driver<[EditViewCellSection]>
+    }
+    
+    func transform(input: Input) -> Output {
+        // 셀 데이터 불러오기
+        input.refreshOn
+            .withUnretained(self)
+            .flatMap {viewmodel, _ in
+                viewmodel.editModel.fixDataToGroupData(FixInfo.saveStation)
+            }
+            .bind(to: self.nowData)
+            .disposed(by: self.bag)
         
         // 셀 삭제
-        self.deleteCell
+        input.deleteCell
             .withUnretained(self)
-            .map{ viewModel, id in
-                for x in FixInfo.saveStation.enumerated(){
+            .subscribe(onNext: { viewModel, id in
+                for x in FixInfo.saveStation.enumerated() {
                     if x.element.id == id{
                         FixInfo.saveStation.remove(at: x.offset)
                         break
@@ -50,16 +53,13 @@ class EditViewModel : EditViewModelProtocol{
                 }
                 
                 viewModel.deleteAlertID(id: id)
-                
-                return Void()
-            }
-            .bind(to: self.refreshOn)
+            })
             .disposed(by: self.bag)
         
         // 셀 move
-        self.moveCell
+        input.moveCell
             .withUnretained(self)
-            .map{
+            .subscribe(onNext: {
                 do {
                     let nowVaue = try $0.nowData.value()
                     
@@ -70,66 +70,66 @@ class EditViewModel : EditViewModelProtocol{
                     var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "", useLine: "")
                     
                     // 가장 최상/하단으로 변경 시
-                    if now[1] != nowVaue[now[0]].items.count{
+                    if now[1] != nowVaue[now[0]].items.count {
                         nowData = nowVaue[now[0]].items[now[1]]
                     }
                     
                     var oldIndex = 0
                     var nowIndex = 0
                     
-                    for x in FixInfo.saveStation.enumerated(){
-                        if x.element.id == oldData.id{
+                    for x in FixInfo.saveStation.enumerated() {
+                        if x.element.id == oldData.id {
                             oldIndex = x.offset
                         }
                         
-                        if x.element.id == nowData.id{
+                        if x.element.id == nowData.id {
                             nowIndex = x.offset
                         }
                     }
                     
                     // 세션 이동 감지
-                    if old[0] != now[0]{
+                    if old[0] != now[0] {
                         FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
                         $0.deleteAlertID(id: FixInfo.saveStation[oldIndex].id)
                         
                     }
                     
-                    if now[1] == nowVaue[now[0]].items.count{
+                    if now[1] == nowVaue[now[0]].items.count {
                         let fixData = FixInfo.saveStation[oldIndex]
                         FixInfo.saveStation.remove(at: oldIndex)
                         FixInfo.saveStation.append(fixData)
-                    }else if now[1] == 0{
+                        
+                    } else if now[1] == 0 {
                         let fixData = FixInfo.saveStation[oldIndex]
                         FixInfo.saveStation.remove(at: oldIndex)
                         FixInfo.saveStation.insert(fixData, at: 0)
-                    }else if old[0] == now[0]{
+                        
+                    } else if old[0] == now[0] {
                         FixInfo.saveStation.swapAt(oldIndex, nowIndex)
-                    }else{
+                        
+                    } else {
                         let fixData = FixInfo.saveStation[oldIndex]
                         FixInfo.saveStation.remove(at: oldIndex)
                         FixInfo.saveStation.insert(fixData, at: nowIndex)
                     }
-                    
-                    
-                    return Void()
-                }catch{
-                    return Void()
+                } catch {
+                    print("ERROR")
                 }
-            }
-            .bind(to: self.refreshOn)
+            })
             .disposed(by: self.bag)
         
-        
-        
-        // 셀 데이터 불러오기
-        self.refreshOn
-            .withUnretained(self)
-            .flatMap{viewmodel, _ in
-                viewmodel.editModel.fixDataToGroupData(FixInfo.saveStation)
-            }
-            .bind(to: self.nowData)
-            .disposed(by: self.bag)
-        
+        return Output(
+            cellData: self.nowData
+                .asDriver(onErrorDriveWith: .empty())
+        )
+    }
+    
+    init(
+        model : EditModel = .init(),
+        noti: NotificationManagerProtocol = NotificationManager.shared
+    ){
+        self.editModel = model
+        self.notiManager = noti
     }
 }
 
