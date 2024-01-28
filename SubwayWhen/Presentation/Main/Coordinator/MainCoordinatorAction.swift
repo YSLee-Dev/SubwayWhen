@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MainCoordinatorAction{
+enum MainCoordinatorAction {
     case Report
     case Edit
 }
