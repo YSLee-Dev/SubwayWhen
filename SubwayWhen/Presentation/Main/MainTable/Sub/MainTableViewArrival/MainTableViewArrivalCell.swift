@@ -13,7 +13,6 @@ import Then
 import SnapKit
 
 class MainTableViewCell : TableViewCellCustom{
-    var index = IndexPath(row: 0, section: 0)
     var type : MainTableViewCellType = .real
     
     var bag = DisposeBag()
@@ -67,22 +66,21 @@ class MainTableViewCell : TableViewCellCustom{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.layout()
+        self.bind()
     }
     
     // 재사용 시 초기화 구문
     override func prepareForReuse() {
         self.bag = DisposeBag()
         self.refreshIcon.stopAnimating()
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cellSet(data : MainTableViewCellData, cellModel : MainTableViewArrvialCellModelProtocol, indexPath : IndexPath){
-        self.bind(cellModel)
-        self.index = indexPath
-        
+    func cellSet(data : MainTableViewCellData){
         self.station.text = "\(data.stationName) | \(data.lastStation)"
         self.line.text = data.useLine
         
@@ -148,14 +146,7 @@ extension MainTableViewCell{
         }
     }
     
-    func bind(_ viewModel : MainTableViewArrvialCellModelProtocol){
-        self.changeBtn.rx.tap
-            .map{[weak self] in
-                self?.index ?? IndexPath(row: 0, section: 0)
-            }
-            .bind(to: viewModel.cellTimeChangeBtnClick)
-            .disposed(by: self.bag)
-        
+   private func bind(){
         self.changeBtn.rx.tap
             .map{[weak self] in
                 self?.type ?? .real

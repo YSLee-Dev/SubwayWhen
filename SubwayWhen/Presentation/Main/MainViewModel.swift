@@ -13,176 +13,172 @@ import RxOptional
 
 import FirebaseAnalytics
 
-class MainViewModel : MainViewModelProtocol{
+enum MainViewAction {
+    case cellTap(MainTableViewCellData)
+    case scheduleTap(IndexPath)
+    case refreshEvent
+    case groupTap(SaveStationGroup)
+    case reportBtnTap
+    case editBtnTap
+}
+
+class MainViewModel {
+    struct Input {
+        let actionList: Observable<MainViewAction>
+    }
+    
+    struct Output {
+        let mainTitle: Driver<String>
+        let importantData: Driver<ImportantData>
+        let tableViewData: Driver<[MainTableViewSection]>
+        let peopleData: Driver<Int>
+        let groupData: Driver<SaveStationGroup>
+    }
+    
+    func trasnform(input: Input) -> Output {
+        self.stationDataLoad()
+        
+        input.actionList
+            .bind(onNext: self.actionProcess)
+            .disposed(by: self.bag)
+        
+        return Output(
+            mainTitle: self.mainModel.mainTitleLoad()
+                .asDriver(onErrorDriveWith: .empty()),
+            importantData: self.mainModel.headerImportantDataLoad()
+                .asDriver(onErrorDriveWith: .empty()),
+            tableViewData: self.nowTableViewCellData
+                .asDriver(),
+            peopleData: self.nowPeopleData
+                .asDriver(),
+            groupData: self.nowGroupSet
+                .asDriver()
+        )
+    }
+    
     // MODEL
-    let mainTableViewModel : MainTableViewModelProtocol
     private let mainModel : MainModelProtocol
     
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
     
     // 현재 데이터
-    private let groupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
-    private let totalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let nowTableViewCellData = BehaviorRelay<[MainTableViewSection]>(value: [])
+    private let nowTotalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let nowGroupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let nowGroupSet = BehaviorRelay<SaveStationGroup>(value: .one)
+    private let nowPeopleData = BehaviorRelay<Int>(value: 0)
     
-    // INPUT
-    let reloadData = PublishRelay<Void>()
-    
-    // OUTPUT
-    let reportBtnClick : Driver<Void>
-    let stationPlusBtnClick : Driver<Void>
-    let editBtnClick : Driver<Void>
-    let clickCellData : Driver<MainTableViewCellData>
-    let mainTitle : Driver<String>
-    let mainTitleHidden : Driver<Void>
+    weak var delegate : MainDelegate?
     
     init(
-        mainTableViewModel : MainTableViewModel = .init(),
         mainModel : MainModel = .init())
     {
         // Model Init
         self.mainModel = mainModel
-        self.mainTableViewModel = mainTableViewModel
-        
-        // 메인 타이틀(요일마다 변경)
-        self.mainTitle = self.mainModel.mainTitleLoad()
-        .asDriver(onErrorDriveWith: .empty())
-        
-        // 민원 버튼 클릭 시
-        self.reportBtnClick = self.mainTableViewModel.mainTableViewHeaderViewModel.reportBtnClick
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // 검색,플러스 버튼 클릭 시
-        self.stationPlusBtnClick = self.mainTableViewModel.plusBtnClick
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // edit 버튼 클릭 시
-        self.editBtnClick = self.mainTableViewModel.mainTableViewHeaderViewModel.editBtnClick
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // 그룹 변경 시 타이틀 제거
-        self.mainTitleHidden = self.mainTableViewModel.mainTableViewGroupModel.groupSeleted
-            .map{_ in Void()}
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // 셀 클릭 시
-        self.clickCellData = self.mainTableViewModel.cellClick
-            .asDriver(onErrorDriveWith: .empty())
-        
-        
+    }
+}
+
+private extension MainViewModel {
+    func actionProcess(type: MainViewAction) {
+        switch type {
+        case .editBtnTap:
+            self.delegate?.pushTap(action: .Edit)
+            
+        case .reportBtnTap:
+            self.delegate?.pushTap(action: .Report)
+            
+        case .cellTap(let cellData):
+            if cellData.id == "NoData" {
+                self.delegate?.plusStationTap()
+            } else if cellData.id != "header" && cellData.id != "group" {
+                self.delegate?.pushDetailTap(data: cellData)
+            }
+            
+        case .refreshEvent:
+            // 데이터 리로딩 전 기존 데이터 삭제
+            self.mainModel.totalDataRemove()
+                .bind(to: self.nowTotalData)
+                .disposed(by: self.bag)
+            
+            // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
+            self.mainModel.arrivalDataLoad(stations: FixInfo.saveStation)
+                .withUnretained(self)
+                .map{viewModel, data in
+                    var now = viewModel.nowTotalData.value
+                    now.append(data)
+                    return now
+                }
+                .bind(to: self.nowTotalData)
+                .disposed(by: self.bag)
+            
+            // 시간에 맞는 그룹 set
+            self.mainModel.timeGroup(
+                oneTime: FixInfo.saveSetting.mainGroupOneTime,
+                twoTime: FixInfo.saveSetting.mainGroupTwoTime,
+                nowHour: Calendar.current.component(.hour, from: Date())
+                )
+            .bind(to: self.nowGroupSet)
+            .disposed(by: self.bag)
+            
+            // 혼잡도 세팅
+            self.mainModel.congestionDataLoad()
+                .bind(to: self.nowPeopleData)
+                .disposed(by: self.bag)
+                
+        case .scheduleTap(let index):
+            scheduleBtnAction(index: index)
+            
+        case .groupTap(let group):
+            self.nowGroupSet.accept(group)
+        }
+    }
+    
+    func stationDataLoad() {
         // 모든 데이터를 받은 후 그룹에 맞춰서 return
-        Observable.combineLatest(self.totalData, self.mainTableViewModel.mainTableViewGroupModel.groupSeleted){ data, group in
+        Observable.combineLatest(
+            self.nowTotalData, self.nowGroupSet){ data, group in
             return data.filter{
                 $0.group == group.rawValue
             }
         }
-        .bind(to: self.groupData)
+        .bind(to: self.nowGroupData)
         .disposed(by: self.bag)
         
-        
-        // 데이터 리로드 할 때(메인VC 데이터 리로드는 2초에 한번으로 제한)
-        let reload = Observable.merge(
-            self.reloadData.asObservable(),
-            self.mainTableViewModel.refreshOn.asObservable()
-        )
-            .throttle(.seconds(1), latest: false ,scheduler: MainScheduler.instance)
-            .share()
-        
-        // 데이터 리로딩 전 기존 데이터 삭제
-        reload
-            .flatMap{[weak self] _ in
-                self?.mainModel.totalDataRemove() ?? .never()
-            }
-            .bind(to: self.totalData)
-            .disposed(by: self.bag)
-        
-        // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
-        reload
-            .flatMap{[weak self] _ in
-                self?.mainModel.arrivalDataLoad(stations: FixInfo.saveStation) ?? .never()
-            }
+        self.nowGroupData
             .withUnretained(self)
-            .map{viewModel, data in
-                var now = viewModel.totalData.value
-                now.append(data)
-                return now
+            .map { viewModel, data in
+                viewModel.mainModel.createMainTableViewSection(data)
             }
-            .bind(to: self.totalData)
+            .bind(to: self.nowTableViewCellData)
             .disposed(by: self.bag)
-        
-        // 시간에 맞는 그룹 set
-        reload
-            .flatMap{[weak self] in
-                self?.mainModel.timeGroup(oneTime: FixInfo.saveSetting.mainGroupOneTime,
-                                          twoTime: FixInfo.saveSetting.mainGroupTwoTime,
-                                          nowHour: Calendar.current.component(.hour, from: Date())
-                ) ?? .never()
-            }
-            .bind(to: self.mainTableViewModel.mainTableViewGroupModel.groupSeleted)
-            .disposed(by: self.bag)
-        
-        // 혼잡도 세팅
-        reload
-            .flatMap{[weak self] in
-                self?.mainModel.congestionDataLoad() ?? .never()
-            }
-            .bind(to: self.mainTableViewModel.mainTableViewHeaderViewModel.congestionData)
-            .disposed(by: self.bag)
-        
-        // 데이터 로드
-        self.groupData
-            .map{[weak self] data -> [MainTableViewSection]in
-                self?.mainModel.createMainTableViewSection(data) ?? []
-            }
-            .bind(to: self.mainTableViewModel.resultData)
-            .disposed(by: self.bag)
-        
+    }
+    
+    func scheduleBtnAction(index: IndexPath) {
         // 시간표 버튼 클릭
-        let clickCellRow = self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
-            .withLatestFrom(self.groupData){ id, data in
-                data[id.row]
-            }
+        let clickCellRow = self.nowGroupData.value[index.row]
         
         // 구글 애널리틱스
-        self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick
-            .subscribe(onNext: { _ in
-                Analytics.logEvent("MainVC_cellTimeChangeBtnTap", parameters: [
-                    "Change" : "BTNTAP"
-                ])
-            })
-            .disposed(by: self.bag)
+        Analytics.logEvent("MainVC_cellTimeChangeBtnTap", parameters: [
+            "Change" : "BTNTAP"
+        ])
         
         // 시간표 검색 구조체로 변환
-        let scheduleData = clickCellRow
-            .map{ [weak self] item -> ScheduleSearch? in
-                self?.mainModel.mainCellDataToScheduleData(item)
-            }
-            .filterNil()
+        guard let searchInfo = self.mainModel.mainCellDataToScheduleData(clickCellRow) else {return}
         
-        // 시간표 통신
-        let scheduleTotalData = scheduleData
-            .withUnretained(self)
-            .flatMap{viewModel, data -> Observable<[ResultSchdule]> in
-                viewModel.mainModel.scheduleLoad(data)
-            }
-        
-        // 통신 후 groupData로 바꾸기
-        scheduleTotalData
-            .withLatestFrom(self.mainTableViewModel.mainTableViewCellModel.cellTimeChangeBtnClick){[weak self] scheduleData, index -> [MainTableViewCellData] in
+        // 시간표 통신 후 groupData로 바꾸기
+        self.mainModel.scheduleLoad(searchInfo)
+            .map {[weak self] scheduleData -> [MainTableViewCellData] in
                 guard let scheduleData = scheduleData.first else {return []}
-                guard let groupData = self?.groupData.value[index.row] else {return []}
+                guard let groupData = self?.nowGroupData.value[index.row] else {return []}
                 guard let newData = self?.mainModel.scheduleDataToMainTableViewCell(data: scheduleData, nowData: groupData) else {return []}
                 
-                guard var now = self?.groupData.value else {return []}
+                guard var now = self?.nowGroupData.value else {return []}
                 now[index.row] = newData
                 return now
             }
             .filterEmpty()
-            .bind(to: self.groupData)
+            .bind(to: self.nowGroupData)
             .disposed(by: self.bag)
         
-        // 중요데이터가 있을 때
-        self.mainModel.headerImportantDataLoad()
-            .bind(to: self.mainTableViewModel.importantData)
-            .disposed(by: self.bag)
     }
 }
