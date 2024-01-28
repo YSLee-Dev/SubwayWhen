@@ -36,6 +36,7 @@ class MainTableViewHeaderCell : UITableViewCell{
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         self.attribute()
         self.layout()
     }
@@ -117,8 +118,8 @@ extension MainTableViewHeaderCell {
         self.selectionStyle = .none
     }
     
-    func bind(_ viewModel : MainTableViewHeaderViewModelProtocol){
-        viewModel.peopleCount
+    func bind(peopleData: Driver<Int>) {
+        peopleData
             .map{ count -> String in
                 var result = ""
                 
@@ -142,20 +143,12 @@ extension MainTableViewHeaderCell {
             .drive(self.congestionLabelBG.subTitle.rx.text)
             .disposed(by: self.bag)
         
-        viewModel.peopleCount
+        peopleData
             .throttle(.seconds(2), latest: false)
             .drive(onNext: { [weak self] _ in
                 self?.editBtn.iconAnimationPlay()
                 self?.reportBtn.iconAnimationPlay()
             })
-            .disposed(by: self.bag)
-        
-        self.reportBtn.rx.tap
-            .bind(to: viewModel.reportBtnClick)
-            .disposed(by: self.bag)
-        
-        self.editBtn.rx.tap
-            .bind(to: viewModel.editBtnClick)
             .disposed(by: self.bag)
     }
 }
