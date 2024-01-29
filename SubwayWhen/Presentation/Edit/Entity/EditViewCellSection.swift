@@ -9,7 +9,7 @@ import Foundation
 
 import RxDataSources
 
-struct EditViewCellSection : AnimatableSectionModelType{
+struct EditViewCellSection: AnimatableSectionModelType {
     var sectionName : String
     var items: [Item]
 }
@@ -19,10 +19,10 @@ extension EditViewCellSection{
         self.sectionName
     }
     
-    typealias Item = EditViewCellData
+    typealias Item = SaveStation
     typealias Identity = String
     
-    init(original: EditViewCellSection, items: [EditViewCellData]) {
+    init(original: EditViewCellSection, items: [SaveStation]) {
         self = original
         self.items = items
     }

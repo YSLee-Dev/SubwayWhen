@@ -13,11 +13,18 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class EditVC : TableVCCustom{
-    let bag = DisposeBag()
+class EditVC: TableVCCustom{
+    private let bag = DisposeBag()
+    private let editAction = PublishRelay<EditVCAction>()
+    private let editViewModel: EditViewModel
     
-    var editViewModel : EditViewModel
-    var delegate : EditVCDelegate?
+    private let noListLabel = UILabel().then{
+        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
+        $0.textColor = .gray
+        $0.text = "현재 저장되어 있는 지하철역이 없어요."
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
     
     init(
         viewModel: EditViewModel
@@ -34,14 +41,6 @@ class EditVC : TableVCCustom{
         print("DEINIT EDITVC")
     }
     
-    let noListLabel = UILabel().then{
-        $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
-        $0.textColor = .gray
-        $0.text = "현재 저장되어 있는 지하철역이 없어요."
-        $0.textAlignment = .center
-        $0.isHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attribute()
@@ -49,10 +48,9 @@ class EditVC : TableVCCustom{
         self.bind()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        self.delegate?.disappear()
+    override func viewWillDisappear(_ animated: Bool) {
+        self.editAction.accept(.willDisappear)
     }
-    
 }
 
 private extension EditVC{
@@ -60,7 +58,6 @@ private extension EditVC{
         self.tableView.rowHeight = 90
         self.tableView.setEditing(true, animated: true)
         self.tableView.register(EditViewCell.self, forCellReuseIdentifier: "EditViewCell")
-        self.tableView.refreshControl = UIRefreshControl()
     }
     
     func layout(){
@@ -71,20 +68,22 @@ private extension EditVC{
     }
     
     func bind(){
+        self.tableView.rx.modelDeleted(SaveStation.self)
+            .map {
+                .deleteCell($0)
+            }
+            .bind(to: self.editAction)
+            .disposed(by: self.bag)
+        
+        self.tableView.rx.itemMoved
+            .map {
+                .moveCell($0)
+            }
+            .bind(to: self.editAction)
+            .disposed(by: self.bag)
+        
         let input = EditViewModel.Input(
-            deleteCell: self.tableView.rx.modelDeleted(EditViewCellData.self)
-                .map {
-                    $0.id
-                }
-                .asObservable(),
-            refreshOn: self.tableView.refreshControl!.rx.controlEvent(.valueChanged)
-                .withUnretained(self)
-                .map { vc, _ in
-                    vc.tableView.refreshControl?.endRefreshing()
-                    return Void()
-                }
-                .startWith(Void()),
-            moveCell: self.tableView.rx.itemMoved
+            actionList: self.editAction
                 .asObservable()
         )
         let output = self.editViewModel.transform(input: input)
@@ -125,15 +124,8 @@ private extension EditVC{
         
         // VIEW
         self.topView.backBtn.rx.tap
-            .bind(to: self.rx.pop)
+            .map {_ in .backBtnTap}
+            .bind(to: self.editAction)
             .disposed(by: self.bag)
-    }
-}
-
-extension Reactive where Base : EditVC{
-    var pop : Binder<Void>{
-        return Binder(base){ base, _ in
-            base.delegate?.pop()
-        }
     }
 }
