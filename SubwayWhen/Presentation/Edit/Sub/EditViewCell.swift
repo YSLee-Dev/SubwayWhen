@@ -11,7 +11,7 @@ import Then
 import SnapKit
 
 class EditViewCell : TableViewCellCustom{
-    lazy var line = UILabel().then{
+    private let line = UILabel().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 30
         $0.textColor = .white
@@ -19,14 +19,14 @@ class EditViewCell : TableViewCellCustom{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.smallSize)
     }
     
-    var stationName = UILabel().then{
+    private let stationName = UILabel().then{
         $0.font = .boldSystemFont(ofSize: ViewStyle.FontSize.mediumSize)
         $0.textAlignment = .left
         $0.textColor = .label
         $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
-    var upDown = UILabel().then{
+    private let upDown = UILabel().then{
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.smallSize)
         $0.textAlignment = .right
         $0.textColor = .label
@@ -63,12 +63,8 @@ extension EditViewCell{
         }
     }
     
-    func lineColor(line : String){
-        self.line.backgroundColor = UIColor(named: line)
-    }
-    
-    func cellSet(data : EditViewCellData){
-        self.lineColor(line: data.line)
+    func cellSet(data: SaveStation){
+        self.line.backgroundColor = UIColor(named: data.line)
         self.stationName.text = data.stationName
         self.upDown.text = data.updnLine
         self.line.text = data.useLine
