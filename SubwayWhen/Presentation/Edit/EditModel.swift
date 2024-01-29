@@ -17,9 +17,9 @@ class EditModel : EditModelProtocol{
 
         for x in data {
             if x.group == .one{
-                groupOne.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line, useLine: x.useLine))
+                groupOne.items.append(x)
             }else{
-                groupTwo.items.append(.init(id: x.id, stationName: x.stationName, updnLine: x.updnLine, line: x.line, useLine: x.useLine))
+                groupTwo.items.append(x)
             }
         }
         

@@ -7,20 +7,22 @@
 
 import UIKit
 
-class EditCoordinator : Coordinator{
+class EditCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
-    var navigation : UINavigationController
+    var navigation: UINavigationController
     
-    var delegate : EditCoordinatorDelegate?
+    var delegate: EditCoordinatorDelegate?
     
-    init(navigation : UINavigationController){
+    init(navigation: UINavigationController){
         self.navigation = navigation
     }
     
     func start() {
-        let editVC = EditVC(viewModel: EditViewModel())
+        let editViewModel = EditViewModel()
+        let editVC = EditVC(viewModel: editViewModel)
         editVC.hidesBottomBarWhenPushed = true
-        editVC.delegate = self
+        editViewModel.delegate = self
+        
         self.navigation.pushViewController(editVC, animated: true)
     }
 }
