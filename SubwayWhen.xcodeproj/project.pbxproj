@@ -290,6 +290,7 @@
 		34F5F11D2966DC6D0010A21D /* DetailTableArrivalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F11C2966DC6D0010A21D /* DetailTableArrivalCell.swift */; };
 		6DD0D393633E6FFCFAC49B35 /* Pods_SubwayWhenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26EE13EA85544CC6BB767EC1 /* Pods_SubwayWhenTests.framework */; };
 		881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */; };
+		B61A6F882B6E0D710070F74C /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
 		B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200D029D00C7F00D64A3A /* DisposableView.swift */; };
 		B64200DF29D05EEF00D64A3A /* EditModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */; };
 		B6438D3D2B667CB10099BFEF /* MainCoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6438D1F2B667CB10099BFEF /* MainCoordinatorAction.swift */; };
@@ -318,7 +319,6 @@
 		B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */; };
 		B68302CB2AC0670000E010B7 /* TutorialSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68302CA2AC0670000E010B7 /* TutorialSectionData.swift */; };
 		B68A8CCB29C1E00E0076D7AE /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
-		B696B5422B5D458A008A2A51 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B696B5412B5D458A008A2A51 /* RequestToken.plist */; };
 		B696B55A2B5D45A2008A2A51 /* TutorialSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = B696B54C2B5D45A2008A2A51 /* TutorialSuccess.json */; };
 		B696B55B2B5D45A2008A2A51 /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = B696B54D2B5D45A2008A2A51 /* Plus.json */; };
 		B696B55C2B5D45A2008A2A51 /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = B696B54E2B5D45A2008A2A51 /* Report.json */; };
@@ -649,6 +649,7 @@
 		420BD66D4897D30AB2364A51 /* Pods-SubwayWhenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhenTests.release.xcconfig"; path = "Target Support Files/Pods-SubwayWhenTests/Pods-SubwayWhenTests.release.xcconfig"; sourceTree = "<group>"; };
 		52FE11214BBA9DF4B533FC01 /* Pods-SubwayWhen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.release.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.release.xcconfig"; sourceTree = "<group>"; };
 		7D35E4E1027B258EAC727E36 /* Pods_SubwayWhen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubwayWhen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B61A6F872B6E0D710070F74C /* RequestToken.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RequestToken.plist; sourceTree = "<group>"; };
 		B64200D029D00C7F00D64A3A /* DisposableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableView.swift; sourceTree = "<group>"; };
 		B64200DE29D05EEF00D64A3A /* EditModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelProtocol.swift; sourceTree = "<group>"; };
 		B6438D1F2B667CB10099BFEF /* MainCoordinatorAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinatorAction.swift; sourceTree = "<group>"; };
@@ -677,7 +678,6 @@
 		B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleLabelView.swift; sourceTree = "<group>"; };
 		B68302CA2AC0670000E010B7 /* TutorialSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSectionData.swift; sourceTree = "<group>"; };
 		B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadProtocol.swift; sourceTree = "<group>"; };
-		B696B5412B5D458A008A2A51 /* RequestToken.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RequestToken.plist; sourceTree = "<group>"; };
 		B696B54C2B5D45A2008A2A51 /* TutorialSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TutorialSuccess.json; sourceTree = "<group>"; };
 		B696B54D2B5D45A2008A2A51 /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B696B54E2B5D45A2008A2A51 /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
@@ -1759,8 +1759,8 @@
 		34C6DB532936274400C4ED80 /* SubwayWhen */ = {
 			isa = PBXGroup;
 			children = (
+				B61A6F872B6E0D710070F74C /* RequestToken.plist */,
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
-				B696B5412B5D458A008A2A51 /* RequestToken.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
@@ -2451,12 +2451,12 @@
 			files = (
 				B696B5602B5D45A2008A2A51 /* Congratulations.json in Resources */,
 				3497DCBF29D3CA7200D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist in Resources */,
+				B61A6F882B6E0D710070F74C /* RequestToken.plist in Resources */,
 				347AF806293629F1001FB813 /* Assets.xcassets in Resources */,
 				B696B55F2B5D45A2008A2A51 /* List.json in Resources */,
 				B696B55B2B5D45A2008A2A51 /* Plus.json in Resources */,
 				B696B55C2B5D45A2008A2A51 /* Report.json in Resources */,
 				B696B55A2B5D45A2008A2A51 /* TutorialSuccess.json in Resources */,
-				B696B5422B5D458A008A2A51 /* RequestToken.plist in Resources */,
 				B696B55E2B5D45A2008A2A51 /* CheckMark.json in Resources */,
 				34C7113E29BABF6400160694 /* SubwayWhen_Icon.png in Resources */,
 				349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */,
@@ -3144,6 +3144,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -3180,6 +3181,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

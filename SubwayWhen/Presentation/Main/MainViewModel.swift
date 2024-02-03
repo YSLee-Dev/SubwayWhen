@@ -33,11 +33,10 @@ class MainViewModel {
         let tableViewData: Driver<[MainTableViewSection]>
         let peopleData: Driver<Int>
         let groupData: Driver<SaveStationGroup>
+        let cellData: Driver<(MainTableViewCellData, Int)>
     }
     
     func trasnform(input: Input) -> Output {
-        self.stationDataLoad()
-        
         input.actionList
             .bind(onNext: self.actionProcess)
             .disposed(by: self.bag)
@@ -52,7 +51,12 @@ class MainViewModel {
             peopleData: self.nowPeopleData
                 .asDriver(),
             groupData: self.nowGroupSet
-                .asDriver()
+                .filter {!$0.1}
+                .map {$0.0}
+                .asDriver(onErrorDriveWith: .empty()),
+            cellData: self.nowSingleLiveData
+                .filterNil()
+                .asDriver(onErrorDriveWith: .empty())
         )
     }
     
@@ -63,10 +67,11 @@ class MainViewModel {
     
     // 현재 데이터
     private let nowTableViewCellData = BehaviorRelay<[MainTableViewSection]>(value: [])
-    private let nowTotalData = BehaviorRelay<[MainTableViewCellData]>(value: [])
+    private let nowSaveStationEmptyData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     private let nowGroupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
-    private let nowGroupSet = BehaviorRelay<SaveStationGroup>(value: .one)
+    private let nowGroupSet = BehaviorRelay<(SaveStationGroup, Bool)>(value: (.one, false))
     private let nowPeopleData = BehaviorRelay<Int>(value: 0)
+    private let nowSingleLiveData = BehaviorRelay<(MainTableViewCellData, Int)?>(value: nil)
     
     weak var delegate : MainDelegate?
     
@@ -95,54 +100,44 @@ private extension MainViewModel {
             }
             
         case .refreshEvent:
-            // 데이터 리로딩 전 기존 데이터 삭제
-            self.mainModel.totalDataRemove()
-                .bind(to: self.nowTotalData)
+            self.mainModel.emptyLiveData(stations: FixInfo.saveStation)
+                .bind(to: self.nowSaveStationEmptyData)
                 .disposed(by: self.bag)
             
-            // 지하철 데이터를 하나 씩 받음, 기존 total데이터를 받아, 배열 형태에 추가한 후 totalData에 전달
-            self.mainModel.arrivalDataLoad(stations: FixInfo.saveStation)
-                .withUnretained(self)
-                .map{viewModel, data in
-                    var now = viewModel.nowTotalData.value
-                    now.append(data)
-                    return now
-                }
-                .bind(to: self.nowTotalData)
-                .disposed(by: self.bag)
-            
-            // 시간에 맞는 그룹 set
-            self.mainModel.timeGroup(
-                oneTime: FixInfo.saveSetting.mainGroupOneTime,
-                twoTime: FixInfo.saveSetting.mainGroupTwoTime,
-                nowHour: Calendar.current.component(.hour, from: Date())
-                )
-            .bind(to: self.nowGroupSet)
-            .disposed(by: self.bag)
+           // 시간에 맞는 그룹 set
+           self.mainModel.timeGroup(
+               oneTime: FixInfo.saveSetting.mainGroupOneTime,
+               twoTime: FixInfo.saveSetting.mainGroupTwoTime,
+               nowHour: Calendar.current.component(.hour, from: Date())
+               )
+           .map {($0, false)}
+           .bind(to: self.nowGroupSet)
+           .disposed(by: self.bag)
             
             // 혼잡도 세팅
             self.mainModel.congestionDataLoad()
                 .bind(to: self.nowPeopleData)
                 .disposed(by: self.bag)
+            
+            // 데이터 로드
+            self.tableViewDataSet()
+            self.stationLiveDataLoad()
                 
         case .scheduleTap(let index):
             scheduleBtnAction(index: index)
             
         case .groupTap(let group):
-            self.nowGroupSet.accept(group)
+            self.nowGroupSet.accept((group, true))
+            
+            // 데이터 로드
+            self.tableViewDataSet()
+            self.stationLiveDataLoad()
         }
     }
     
-    func stationDataLoad() {
-        // 모든 데이터를 받은 후 그룹에 맞춰서 return
-        Observable.combineLatest(
-            self.nowTotalData, self.nowGroupSet){ data, group in
-            return data.filter{
-                $0.group == group.rawValue
-            }
-        }
-        .bind(to: self.nowGroupData)
-        .disposed(by: self.bag)
+    func tableViewDataSet() {
+        let data = self.nowSaveStationEmptyData.value.filter {$0.group == self.nowGroupSet.value.0.rawValue}
+        self.nowGroupData.accept(data)
         
         self.nowGroupData
             .withUnretained(self)
@@ -151,6 +146,14 @@ private extension MainViewModel {
             }
             .bind(to: self.nowTableViewCellData)
             .disposed(by: self.bag)
+    }
+    
+    func stationLiveDataLoad() {
+        self.mainModel.arrivalDataLoad(
+            stations: FixInfo.saveStation.filter {$0.group ==  self.nowGroupSet.value.0}
+        )
+        .bind(to: self.nowSingleLiveData)
+        .disposed(by: self.bag)
     }
     
     func scheduleBtnAction(index: IndexPath) {
@@ -179,6 +182,5 @@ private extension MainViewModel {
             .filterEmpty()
             .bind(to: self.nowGroupData)
             .disposed(by: self.bag)
-        
     }
 }
