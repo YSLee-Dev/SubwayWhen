@@ -70,10 +70,11 @@ extension MainVC{
         let output = self.mainViewModel.trasnform(input: input)
         self.mainTableView.setDI(action: self.mainAction)
             .setDI(importantData: output.importantData)
-            .setTableView(
+            .setDI(
                 tableViewData: output.tableViewData,
                 peopleData: output.peopleData,
                 groupData: output.groupData)
+            .setDI(setCellData: output.cellData)
         
         output.tableViewData
             .map { _ in Void()}
