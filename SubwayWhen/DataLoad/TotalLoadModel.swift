@@ -19,20 +19,21 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
-    func totalLiveDataLoad(stations : [SaveStation]) -> Observable<MainTableViewCellData>{
-        let saveStation = Observable.from(stations)
+    func totalLiveDataLoad(stations: [SaveStation]) -> Observable<(MainTableViewCellData, Int)>{
+        let saveStation = Observable.from(stations.enumerated())
         
         let liveStation = saveStation
             .concatMap{[weak self] in
-                return self!.loadModel.stationArrivalRequest(stationName: $0.stationName)
+                return self!.loadModel.stationArrivalRequest(stationName: $0.element.stationName)
             }.map{ data -> LiveStationModel in
                 guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
             }
         
         return Observable
-            .zip(saveStation, liveStation){ station, data -> MainTableViewCellData in
+            .zip(saveStation, liveStation){ saveStation, data -> (MainTableViewCellData, Int) in
                 // 실시간 데이터가 없을 때
+                let station = saveStation.element
                 var backId = ""
                 var nextId = ""
                 
@@ -44,7 +45,7 @@ class TotalLoadModel : TotalLoadProtocol {
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
-                        return .init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode)
+                        return (.init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode), saveStation.offset)
                     }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
@@ -53,9 +54,9 @@ class TotalLoadModel : TotalLoadProtocol {
                 
                 if station.lineCode != ""{
                     let exceptionLastStation = station.exceptionLastStation == "" ? "" : "\(station.exceptionLastStation)행 제외"
-                    return .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(exceptionLastStation)", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode)
+                    return (.init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(exceptionLastStation)", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode), saveStation.offset)
                 }else{
-                    return .init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
+                    return (.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode), saveStation.offset)
                 }
             }
             .asObservable()

@@ -78,18 +78,28 @@ extension MainTableView{
         return self
     }
     
-    func setTableView(
+    @discardableResult
+    func setDI(setCellData: Driver<(MainTableViewCellData, Int)>) -> Self {
+        setCellData
+            .drive(self.rx.cellDataUpdate)
+            .disposed(by: self.bag)
+        
+        return self
+    }
+    
+    @discardableResult
+    func setDI(
         tableViewData: Driver<[MainTableViewSection]>,
         peopleData: Driver<Int>,
         groupData: Driver<SaveStationGroup>
-    ) {
+    ) -> Self {
         let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {[weak self] dataSource, tv, index, item in
             guard let self = self else {return UITableViewCell()}
             
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainHeader", for: index) as? MainTableViewHeaderCell else {return UITableViewCell()}
-                
+                cell.bag = DisposeBag()
                 cell.bind(peopleData: peopleData)
                 
                 cell.reportBtn.rx.tap
@@ -106,22 +116,9 @@ extension MainTableView{
                 
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainGroup", for: index) as? MainTableViewGroupCell else {return UITableViewCell()}
-          
+                
+                cell.bag = DisposeBag()
                 cell.bind(groupData: groupData)
-                
-                let oneClick = cell.groupOne.rx.tap
-                    .map{ _ -> SaveStationGroup in
-                        return .one
-                    }
-                let twoClick = cell.groupTwo.rx.tap
-                    .map{_ -> SaveStationGroup in
-                        return .two
-                    }
-                
-                Observable
-                    .merge(
-                        oneClick, twoClick
-                    )
                     .map {.groupTap($0)}
                     .bind(to: self.mainTableViewAction)
                     .disposed(by: cell.bag)
@@ -136,7 +133,8 @@ extension MainTableView{
                     return cell
                 }else{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
-               
+                    
+                    cell.bag = DisposeBag()
                     cell.cellSet(data: item)
                     
                     cell.changeBtn.rx.tap
@@ -164,6 +162,8 @@ extension MainTableView{
                 vc.refresh.endRefreshing()
             })
             .disposed(by: self.bag)
+        
+        return self
     }
 }
 
@@ -176,6 +176,17 @@ extension Reactive where Base: MainTableView {
                 cell.isImportant(data: data)
                 base.reloadData()
             })
+        }
+    }
+    
+    var cellDataUpdate: Binder<(MainTableViewCellData, Int)> {
+        return Binder(base) { base, data in
+            if data.0.id == "NoData" {
+                return
+            }
+            
+            guard let cell = base.cellForRow(at: IndexPath(row: data.1, section: 2)) as? MainTableViewCell else {return}
+            cell.cellSet(data: data.0)
         }
     }
 }

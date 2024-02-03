@@ -72,11 +72,30 @@ extension MainTableViewGroupCell{
         self.selectionStyle = .none
     }
     
-    func bind(groupData: Driver<SaveStationGroup>){
+    func bind(groupData: Driver<SaveStationGroup>) -> Observable<SaveStationGroup> {
         groupData
             .skip(1)
             .drive(self.rx.groupDesign)
             .disposed(by: self.bag)
+        
+        let oneClick = groupOne.rx.tap
+            .map{ _ -> SaveStationGroup in
+                return .one
+            }
+        let twoClick = groupTwo.rx.tap
+            .map{_ -> SaveStationGroup in
+                return .two
+            }
+        
+        let click = Observable
+            .merge(oneClick, twoClick)
+            .share()
+        
+        click
+            .bind(to: self.rx.groupDesign)
+            .disposed(by: self.bag)
+        
+        return click
     }
     
     func btnClickSizeChange(group : Bool){
