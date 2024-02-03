@@ -85,7 +85,7 @@ class MainTableViewCell : TableViewCellCustom{
         self.line.text = data.useLine
         
         self.arrivalTime.text = "\(data.useTime)"
-        self.now.text = data.type == .real ? "\(data.useFast)\(data.state)" : "⏱️\(data.useFast)\(data.state)"
+        self.now.text = data.type == .schedule ? "⏱️\(data.useFast)\(data.state)" : "\(data.useFast)\(data.state)"
         self.lineColor(line: data.lineNumber)
         
         self.type = data.type
