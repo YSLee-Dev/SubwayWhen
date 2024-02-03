@@ -93,10 +93,6 @@ class MainModel : MainModelProtocol{
             }
     }
     
-    func totalDataRemove() -> Observable<[MainTableViewCellData]>{
-        Observable<[MainTableViewCellData]>.just([])
-    }
-    
     func timeGroup(oneTime : Int, twoTime : Int, nowHour : Int) -> Observable<SaveStationGroup>{
         Observable<SaveStationGroup>.just(.one)
             .map{ _ -> SaveStationGroup? in
@@ -129,11 +125,11 @@ class MainModel : MainModelProtocol{
             .delay(.milliseconds(150), scheduler: MainScheduler.instance)
     }
     
-    func arrivalDataLoad(stations : [SaveStation]) -> Observable<MainTableViewCellData>{
+    func arrivalDataLoad(stations: [SaveStation]) -> Observable<(MainTableViewCellData, Int)>{
         self.model.totalLiveDataLoad(stations: stations)
     }
     
-    func createMainTableViewSection(_ data : [MainTableViewCellData]) -> [MainTableViewSection]{
+    func createMainTableViewSection(_ data: [MainTableViewCellData]) -> [MainTableViewSection]{
         let header = MainTableViewSection(id : "header", sectionName: "", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "header", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "header", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "",  korailCode: "")])
         let group = MainTableViewSection(id : "group", sectionName: "실시간 현황", items: [.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: "group", lastStation: "", lineNumber: "", isFast: "", useLine: "", group: "", id: "group", stationCode: "", exceptionLastStation: "", type: .real, backStationId: "", nextStationId: "", korailCode: "")])
         
@@ -148,7 +144,7 @@ class MainModel : MainModelProtocol{
         return [header,group,groupData]
     }
     
-    func mainCellDataToScheduleData(_ item : MainTableViewCellData) -> ScheduleSearch? {
+    func mainCellDataToScheduleData(_ item: MainTableViewCellData) -> ScheduleSearch? {
         if item.type == .real{
             if item.korailCode == "K4" || item.korailCode == "K1" || item.korailCode == "K2"{
                 return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Korail, korailCode: item.korailCode)
@@ -162,7 +158,7 @@ class MainModel : MainModelProtocol{
         }
     }
     
-    func scheduleLoad(_ data : ScheduleSearch) ->  Observable<[ResultSchdule]>{
+    func scheduleLoad(_ data: ScheduleSearch) ->  Observable<[ResultSchdule]>{
         if data.type == .Korail{
             return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true)
         }else if data.type == .Seoul{
@@ -172,12 +168,24 @@ class MainModel : MainModelProtocol{
         }
     }
     
-    func scheduleDataToMainTableViewCell(data : ResultSchdule, nowData : MainTableViewCellData) -> MainTableViewCellData{
+    func scheduleDataToMainTableViewCell(data: ResultSchdule, nowData: MainTableViewCellData) -> MainTableViewCellData{
         MainTableViewCellData(upDown: nowData.upDown, arrivalTime: data.useArrTime, previousStation: "", subPrevious: "\(data.useTime)", code: "\(data.useArrTime)", subWayId: nowData.subWayId, stationName: nowData.stationName, lastStation: "\(data.lastStation)행", lineNumber: nowData.lineNumber, isFast: "\(data.isFast)", useLine: nowData.useLine, group: nowData.group, id: nowData.id, stationCode: nowData.stationCode, exceptionLastStation: nowData.exceptionLastStation, type: .schedule, backStationId: nowData.backStationId, nextStationId: nowData.nextStationId, korailCode: nowData.korailCode)
     }
     
     func headerImportantDataLoad() -> Observable<ImportantData> {
         self.model.importantDataLoad()
+    }
+    
+    func emptyLiveData(stations: [SaveStation]) -> Observable<[MainTableViewCellData]> {
+        Observable<[MainTableViewCellData]>.create {
+            $0.onNext(
+                stations.map { station -> MainTableViewCellData in
+                        .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "데이터를 로드하고 있어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
+                }
+            )
+            
+            return Disposables.create()
+        }
     }
 }
 
