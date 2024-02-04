@@ -122,7 +122,6 @@ class MainModel : MainModelProtocol{
                 }
             }
             .filterNil()
-            .delay(.milliseconds(150), scheduler: MainScheduler.instance)
     }
     
     func arrivalDataLoad(stations: [SaveStation]) -> Observable<(MainTableViewCellData, Int)>{

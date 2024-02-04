@@ -74,7 +74,6 @@ extension MainTableViewGroupCell{
     
     func bind(groupData: Driver<SaveStationGroup>) -> Observable<SaveStationGroup> {
         groupData
-            .skip(1)
             .drive(self.rx.groupDesign)
             .disposed(by: self.bag)
         
