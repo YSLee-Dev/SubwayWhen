@@ -9,7 +9,7 @@ import Foundation
 
 import RxDataSources
 
-struct MainTableViewCellData : Decodable{
+struct MainTableViewCellData: Decodable, Hashable {
     let upDown : String
     let arrivalTime : String
     let previousStation : String
