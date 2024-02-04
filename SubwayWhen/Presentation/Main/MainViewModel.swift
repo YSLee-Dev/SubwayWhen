@@ -14,7 +14,7 @@ import RxOptional
 import FirebaseAnalytics
 
 enum MainViewAction {
-    case cellTap(MainTableViewCellData)
+    case cellTap(IndexPath)
     case scheduleTap(IndexPath)
     case refreshEvent
     case groupTap(SaveStationGroup)
@@ -41,13 +41,27 @@ class MainViewModel {
             .bind(onNext: self.actionProcess)
             .disposed(by: self.bag)
         
+        let importantData = self.mainModel.headerImportantDataLoad()
+        
+        importantData
+            .filter {$0.title != ""}
+            .withUnretained(self)
+            .subscribe(onNext: { viewModel, _ in
+                // importantData오면 뷰 자체를 다시 그림
+                viewModel.tableViewDataSet()
+                viewModel.stationLiveDataLoad()
+            })
+            .disposed(by: self.bag)
+        
         return Output(
             mainTitle: self.mainModel.mainTitleLoad()
                 .asDriver(onErrorDriveWith: .empty()),
-            importantData: self.mainModel.headerImportantDataLoad()
+            importantData: importantData
                 .asDriver(onErrorDriveWith: .empty()),
             tableViewData: self.nowTableViewCellData
-                .asDriver(),
+                .filter {$0.1}
+                .map {$0.0}
+                .asDriver(onErrorDriveWith: .empty()),
             peopleData: self.nowPeopleData
                 .asDriver(),
             groupData: self.nowGroupSet
@@ -66,7 +80,8 @@ class MainViewModel {
     private let bag = DisposeBag()
     
     // 현재 데이터
-    private let nowTableViewCellData = BehaviorRelay<[MainTableViewSection]>(value: [])
+    private let nowTableViewCellData = BehaviorRelay<([MainTableViewSection], Bool)>(value: ([], true))
+        // false 로 된 데이터는 MainTableView를 재로딩 하지 않고, 값을 저장하는 용도로만 사용함
     private let nowSaveStationEmptyData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     private let nowGroupData = BehaviorRelay<[MainTableViewCellData]>(value: [])
     private let nowGroupSet = BehaviorRelay<(SaveStationGroup, Bool)>(value: (.one, false))
@@ -92,7 +107,11 @@ private extension MainViewModel {
         case .reportBtnTap:
             self.delegate?.pushTap(action: .Report)
             
-        case .cellTap(let cellData):
+        case .cellTap(let index):
+            let nowValue = nowTableViewCellData.value.0[2].items
+            if nowValue.count <= index.row {return}
+            let cellData = nowValue[index.row]
+            
             if cellData.id == "NoData" {
                 self.delegate?.plusStationTap()
             } else if cellData.id != "header" && cellData.id != "group" {
@@ -142,18 +161,32 @@ private extension MainViewModel {
         self.nowGroupData
             .withUnretained(self)
             .map { viewModel, data in
-                viewModel.mainModel.createMainTableViewSection(data)
+                (viewModel.mainModel.createMainTableViewSection(data), true)
             }
             .bind(to: self.nowTableViewCellData)
             .disposed(by: self.bag)
     }
     
     func stationLiveDataLoad() {
-        self.mainModel.arrivalDataLoad(
+        let liveData = self.mainModel.arrivalDataLoad(
             stations: FixInfo.saveStation.filter {$0.group ==  self.nowGroupSet.value.0}
         )
+            .share()
+
+        liveData
         .bind(to: self.nowSingleLiveData)
         .disposed(by: self.bag)
+        
+        liveData
+            .withUnretained(self)
+            .map { viewModel, data -> ([MainTableViewSection], Bool)? in
+                var nowSecionData = viewModel.nowTableViewCellData.value.0
+                nowSecionData[2].items[data.1] = data.0
+                return (nowSecionData, false)
+            }
+            .filterNil()
+            .bind(to: self.nowTableViewCellData)
+            .disposed(by: self.bag)
     }
     
     func scheduleBtnAction(index: IndexPath) {
