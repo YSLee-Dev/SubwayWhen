@@ -13,14 +13,15 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class MainTableView : UITableView{
-    private let bag = DisposeBag()
-    private let mainTableViewAction = PublishRelay<MainViewAction>()
-    
+class MainTableView: UITableView {
     private lazy var refresh = UIRefreshControl().then{
         $0.backgroundColor = .systemBackground
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
+    
+    fileprivate var willDisplayCellData = [Int: MainTableViewCellData]()
+    private let bag = DisposeBag()
+    private let mainTableViewAction = PublishRelay<MainViewAction>()
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -34,7 +35,7 @@ class MainTableView : UITableView{
     }
 }
 
-extension MainTableView{
+extension MainTableView {
     private func attribute(){
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
         self.register(MainTableViewGroupCell.self, forCellReuseIdentifier: "MainGroup")
@@ -48,7 +49,7 @@ extension MainTableView{
     }
     
     private func bind(){
-        self.rx.modelSelected(MainTableViewCellData.self)
+        self.rx.itemSelected
             .map {.cellTap($0)}
             .bind(to: self.mainTableViewAction)
             .disposed(by: self.bag)
@@ -135,7 +136,15 @@ extension MainTableView{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
                     
                     cell.bag = DisposeBag()
-                    cell.cellSet(data: item)
+                  
+                    if item.code == "데이터를 로드하고 있어요.",
+                       let willData = self.willDisplayCellData[index.row],
+                       willData.group == item.group
+                    {
+                        cell.cellSet(data: willData)
+                    } else {
+                        cell.cellSet(data: item)
+                    }
                     
                     cell.changeBtn.rx.tap
                         .map{ _ in .scheduleTap(index)}
@@ -184,6 +193,8 @@ extension Reactive where Base: MainTableView {
             if data.0.id == "NoData" {
                 return
             }
+            
+            base.willDisplayCellData[data.1] = data.0
             
             guard let cell = base.cellForRow(at: IndexPath(row: data.1, section: 2)) as? MainTableViewCell else {return}
             cell.cellSet(data: data.0)
