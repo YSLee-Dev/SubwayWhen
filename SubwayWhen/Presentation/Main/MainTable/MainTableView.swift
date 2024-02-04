@@ -100,7 +100,7 @@ extension MainTableView {
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainHeader", for: index) as? MainTableViewHeaderCell else {return UITableViewCell()}
-                cell.bag = DisposeBag()
+                
                 cell.bind(peopleData: peopleData)
                 
                 cell.reportBtn.rx.tap
@@ -118,7 +118,6 @@ extension MainTableView {
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainGroup", for: index) as? MainTableViewGroupCell else {return UITableViewCell()}
                 
-                cell.bag = DisposeBag()
                 cell.bind(groupData: groupData)
                     .map {.groupTap($0)}
                     .bind(to: self.mainTableViewAction)
@@ -135,8 +134,6 @@ extension MainTableView {
                 }else{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
                     
-                    cell.bag = DisposeBag()
-                  
                     if item.code == "데이터를 로드하고 있어요.",
                        let willData = self.willDisplayCellData[index.row],
                        willData.group == item.group
