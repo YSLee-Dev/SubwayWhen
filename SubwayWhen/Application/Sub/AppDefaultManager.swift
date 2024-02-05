@@ -49,13 +49,6 @@ extension AppDefaultManager{
             $0.height.equalTo(0)
         }
         
-        // 앱 진입 시 바로
-        if !NetworkMonitor.shared.isConnected{
-            noNetworkView.snp.updateConstraints{
-                $0.height.equalTo(100)
-            }
-        }
-            
         NetworkMonitor.shared.pathUpdate{ [weak self] status in
             if !status{
                 noNetworkView.snp.updateConstraints{
