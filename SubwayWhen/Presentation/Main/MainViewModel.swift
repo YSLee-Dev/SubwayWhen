@@ -108,6 +108,8 @@ private extension MainViewModel {
             self.delegate?.pushTap(action: .Report)
             
         case .cellTap(let index):
+            if index.section != 2 {return}
+            
             let nowValue = nowTableViewCellData.value.0[2].items
             if nowValue.count <= index.row {return}
             let cellData = nowValue[index.row]
