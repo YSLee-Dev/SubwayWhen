@@ -173,18 +173,27 @@ private extension MainViewModel {
         let liveData = self.mainModel.arrivalDataLoad(
             stations: FixInfo.saveStation.filter {$0.group ==  self.nowGroupSet.value.0}
         )
+            .withUnretained(self)
+            .filter { viewModel, data in
+                let nowSecionData = viewModel.nowTableViewCellData.value.0
+                
+                guard data.0.group == viewModel.nowGroupSet.value.0.rawValue,
+                   nowSecionData[2].items.count > data.1,
+                   nowSecionData[2].items[data.1].id == data.0.id
+                else {return false}
+                
+                return true
+            }
             .share()
 
         liveData
-        .bind(to: self.nowSingleLiveData)
-        .disposed(by: self.bag)
+            .map {$0.1}
+            .bind(to: self.nowSingleLiveData)
+            .disposed(by: self.bag)
         
         liveData
-            .withUnretained(self)
             .map { viewModel, data -> ([MainTableViewSection], Bool)? in
                 var nowSecionData = viewModel.nowTableViewCellData.value.0
-                
-                if data.0.group != viewModel.nowGroupSet.value.0.rawValue {return nil}
                 
                 nowSecionData[2].items[data.1] = data.0
                 return (nowSecionData, false)
