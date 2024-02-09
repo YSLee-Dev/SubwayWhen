@@ -26,7 +26,8 @@ struct FixInfo : Codable{
         searchOverlapAlert: true,
         alertGroupOneID: "",
         alertGroupTwoID: "",
-        tutorialSuccess: false
+        tutorialSuccess: false,
+        detailVCTrainIcon: "🚃"
     ) {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveSetting)
