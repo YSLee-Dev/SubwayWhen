@@ -225,12 +225,18 @@ private extension SettingViewModel {
                 switch type{
                 case .groupModal:
                     viewModel.delegate?.groupModal()
+                    
                 case .notiModal:
                     viewModel.delegate?.notiModal()
+                    
                 case .licenseModal:
                     viewModel.delegate?.licenseModal()
+                    
                 case .contentsModal:
                     viewModel.delegate?.contentsModal()
+                    
+                case .trainIcon:
+                    viewModel.delegate?.trainIconModal()
                 }
                 })
             .disposed(by: self.bag)
