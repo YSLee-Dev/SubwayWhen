@@ -12,4 +12,5 @@ protocol SettingVCAction: AnyObject {
     func notiModal()
     func contentsModal()
     func licenseModal()
+    func trainIconModal()
 }
