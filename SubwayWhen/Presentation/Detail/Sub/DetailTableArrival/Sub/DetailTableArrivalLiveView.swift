@@ -55,7 +55,7 @@ class DetailTableArrivalLiveView : MainStyleUIView{
     }
     
     var trainIcon = UILabel().then{
-        $0.text = "🚃"
+        $0.text = FixInfo.saveSetting.detailVCTrainIcon
         $0.font = .systemFont(ofSize: ViewStyle.FontSize.mainTitleSize)
         $0.alpha = 0
     }
