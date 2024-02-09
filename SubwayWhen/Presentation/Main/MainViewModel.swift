@@ -183,6 +183,9 @@ private extension MainViewModel {
             .withUnretained(self)
             .map { viewModel, data -> ([MainTableViewSection], Bool)? in
                 var nowSecionData = viewModel.nowTableViewCellData.value.0
+                
+                if data.0.group != viewModel.nowGroupSet.value.0.rawValue {return nil}
+                
                 nowSecionData[2].items[data.1] = data.0
                 return (nowSecionData, false)
             }

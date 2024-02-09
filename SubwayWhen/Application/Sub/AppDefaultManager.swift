@@ -81,7 +81,8 @@ extension AppDefaultManager{
                 searchOverlapAlert : true,
                 alertGroupOneID: "",
                 alertGroupTwoID: "",
-                tutorialSuccess: false
+                tutorialSuccess: false,
+                detailVCTrainIcon: "🚃"
             )
             print("setting not load, 초기 값 세팅 완료\n", error)
         }
