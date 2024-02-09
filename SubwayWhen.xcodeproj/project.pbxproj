@@ -323,6 +323,11 @@
 		B68FB3432B7128FB0075339F /* Location.json in Resources */ = {isa = PBXBuildFile; fileRef = B68FB3402B7128FB0075339F /* Location.json */; };
 		B68FB3442B7128FB0075339F /* Congratulations.json in Resources */ = {isa = PBXBuildFile; fileRef = B68FB3412B7128FB0075339F /* Congratulations.json */; };
 		B68FB3452B7128FB0075339F /* TutorialSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = B68FB3422B7128FB0075339F /* TutorialSuccess.json */; };
+		B68FB3482B75EFB70075339F /* SettingTrainIconModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB3472B75EFB70075339F /* SettingTrainIconModalVC.swift */; };
+		B68FB34A2B75EFF80075339F /* SettingTrainIconModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB3492B75EFF80075339F /* SettingTrainIconModalViewModel.swift */; };
+		B68FB34C2B75F1CA0075339F /* SettingTrainIconCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB34B2B75F1CA0075339F /* SettingTrainIconCoordinator.swift */; };
+		B68FB34F2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB34E2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift */; };
+		B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */; };
 		B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811C2B6FBC6600FE8E7B /* Plus.json */; };
 		B6F781212B6FBC6600FE8E7B /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811D2B6FBC6600FE8E7B /* Report.json */; };
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
@@ -682,6 +687,11 @@
 		B68FB3402B7128FB0075339F /* Location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Location.json; sourceTree = "<group>"; };
 		B68FB3412B7128FB0075339F /* Congratulations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Congratulations.json; sourceTree = "<group>"; };
 		B68FB3422B7128FB0075339F /* TutorialSuccess.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TutorialSuccess.json; sourceTree = "<group>"; };
+		B68FB3472B75EFB70075339F /* SettingTrainIconModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalVC.swift; sourceTree = "<group>"; };
+		B68FB3492B75EFF80075339F /* SettingTrainIconModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalViewModel.swift; sourceTree = "<group>"; };
+		B68FB34B2B75F1CA0075339F /* SettingTrainIconCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconCoordinator.swift; sourceTree = "<group>"; };
+		B68FB34E2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalVCAction.swift; sourceTree = "<group>"; };
+		B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		B6F7811C2B6FBC6600FE8E7B /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B6F7811D2B6FBC6600FE8E7B /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		B6F7811F2B6FBC6600FE8E7B /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
@@ -1347,6 +1357,7 @@
 				34EEDC5C2A41B413006A1364 /* SettingNotiModal */,
 				3496559529A777A400530EB6 /* SettingContentsModal */,
 				349FF29F299F2154007A98F4 /* SettingGroupModal */,
+				B68FB3462B75EF940075339F /* SettingTrainIconModal */,
 				349FF298299E0C0C007A98F4 /* Sub */,
 				349FF297299E0C03007A98F4 /* Entity */,
 				349E2F6C29BDF88800C54EE9 /* Coordinator */,
@@ -2303,6 +2314,34 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		B68FB3462B75EF940075339F /* SettingTrainIconModal */ = {
+			isa = PBXGroup;
+			children = (
+				B68FB3472B75EFB70075339F /* SettingTrainIconModalVC.swift */,
+				B68FB3492B75EFF80075339F /* SettingTrainIconModalViewModel.swift */,
+				B68FB34D2B75F1DD0075339F /* Coordinator */,
+			);
+			path = SettingTrainIconModal;
+			sourceTree = "<group>";
+		};
+		B68FB34D2B75F1DD0075339F /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				B68FB34B2B75F1CA0075339F /* SettingTrainIconCoordinator.swift */,
+				B68FB3502B75F2040075339F /* Protocol */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		B68FB3502B75F2040075339F /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				B68FB34E2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift */,
+				B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		B6F7811B2B6FBC6600FE8E7B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -2602,6 +2641,7 @@
 				3499DE8B29D15EAC00A6E8C1 /* ReportTableViewTextFieldCellModelProtocol.swift in Sources */,
 				34A303B829AF86FD00948EDD /* ScheduleStationModel.swift in Sources */,
 				34C6DB9C293627AF00C4ED80 /* FixInfo.swift in Sources */,
+				B68FB3482B75EFB70075339F /* SettingTrainIconModalVC.swift in Sources */,
 				349E2F5929BDD0ED00C54EE9 /* DetailResultScheduleDelegate.swift in Sources */,
 				349E2F3729BDAF2200C54EE9 /* ReportCoordinator.swift in Sources */,
 				34D9EA062A5571BA0080AD17 /* LocationData.swift in Sources */,
@@ -2630,6 +2670,7 @@
 				34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */,
 				34C94B0A2A41BC6E006339FF /* SettingNotiModalViewModel.swift in Sources */,
 				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
+				B68FB34A2B75EFF80075339F /* SettingTrainIconModalViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				34A906E42A4C322A002C7655 /* NotificationManagerProtocol.swift in Sources */,
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
@@ -2658,6 +2699,7 @@
 				349C00912A0A1BAB008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
 				34D9EA002A556C4C0080AD17 /* LocationModalModel.swift in Sources */,
 				34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */,
+				B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */,
 				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
 				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
@@ -2678,6 +2720,7 @@
 				349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */,
 				349D788B29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift in Sources */,
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
+				B68FB34C2B75F1CA0075339F /* SettingTrainIconCoordinator.swift in Sources */,
 				34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */,
 				34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */,
 				349FF29A299E2C5B007A98F4 /* SettingTableViewCellModel.swift in Sources */,
@@ -2785,6 +2828,7 @@
 				34A6BF9229B728800059CF1A /* ReportContentsModalVC.swift in Sources */,
 				349B517529A4A2E800A53879 /* ReportTableViewTwoBtnCell.swift in Sources */,
 				349FF296299E08C6007A98F4 /* SettingTableViewCellSection.swift in Sources */,
+				B68FB34F2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift in Sources */,
 				3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */,
 				3498949A29CD403A00768B88 /* PopupType.swift in Sources */,
 				3499DE9C29D1B34100A6E8C1 /* ReportContentsModalTFViewModelProtocol.swift in Sources */,
