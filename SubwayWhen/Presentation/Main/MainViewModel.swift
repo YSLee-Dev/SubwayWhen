@@ -205,7 +205,8 @@ private extension MainViewModel {
     
     func scheduleBtnAction(index: IndexPath) {
         // 시간표 버튼 클릭
-        let clickCellRow = self.nowGroupData.value[index.row]
+        let clickCellRow = self.nowTableViewCellData.value.0[2].items[index.row]
+        var nowSecionData = self.nowTableViewCellData.value.0
         
         // 구글 애널리틱스
         Analytics.logEvent("MainVC_cellTimeChangeBtnTap", parameters: [
@@ -215,19 +216,36 @@ private extension MainViewModel {
         // 시간표 검색 구조체로 변환
         guard let searchInfo = self.mainModel.mainCellDataToScheduleData(clickCellRow) else {return}
         
-        // 시간표 통신 후 groupData로 바꾸기
-        self.mainModel.scheduleLoad(searchInfo)
-            .map {[weak self] scheduleData -> [MainTableViewCellData] in
-                guard let scheduleData = scheduleData.first else {return []}
-                guard let groupData = self?.nowGroupData.value[index.row] else {return []}
-                guard let newData = self?.mainModel.scheduleDataToMainTableViewCell(data: scheduleData, nowData: groupData) else {return []}
+        // 시간표 통신 후 TableView에 전달
+        let scheduleData = self.mainModel.scheduleLoad(searchInfo)
+            .withUnretained(self)
+            .map { viewModel, scheduleData -> (MainTableViewCellData, Int)?  in
+                guard let scheduleData = scheduleData.first else {return nil}
+                let newData = viewModel.mainModel.scheduleDataToMainTableViewCell(data: scheduleData, nowData: clickCellRow)
                 
-                guard var now = self?.nowGroupData.value else {return []}
-                now[index.row] = newData
-                return now
+                guard newData.group == viewModel.nowGroupSet.value.0.rawValue,
+                      nowSecionData[2].items.count > index.row,
+                      nowSecionData[2].items[index.row].id == newData.id
+                else {return nil}
+                
+                return (newData, index.row)
             }
-            .filterEmpty()
-            .bind(to: self.nowGroupData)
+            .filterNil()
+            .share()
+        
+        scheduleData
+            .bind(to: self.nowSingleLiveData)
             .disposed(by: self.bag)
+        
+        scheduleData
+            .withUnretained(self)
+            .map { viewModel, data -> ([MainTableViewSection], Bool)? in
+                nowSecionData[2].items[data.1] = data.0
+                return (nowSecionData, false)
+            }
+            .filterNil()
+            .bind(to: self.nowTableViewCellData)
+            .disposed(by: self.bag)
+       
     }
 }
