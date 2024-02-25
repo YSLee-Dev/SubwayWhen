@@ -9,17 +9,22 @@ import UIKit
 
 import Then
 import SnapKit
+import SwiftUI
 
 import RxSwift
 import RxCocoa
 
 class SettingTrainIconModalVC: ModalVCCustom {
+    private let settingModalView: SettingTrainIconModalView
+    
     private let viewModel: SettingTrainIconModalViewModel
     private let viewAction = PublishRelay<SettingTrainIconModalAction>()
     private let bag = DisposeBag()
     
-    init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: SettingTrainIconModalViewModel) {
+    init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: SettingTrainIconModalViewModel, modalView: SettingTrainIconModalView) {
         self.viewModel = viewModel
+        self.settingModalView = modalView
+        
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
     }
     
@@ -33,6 +38,9 @@ class SettingTrainIconModalVC: ModalVCCustom {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.attribute()
+        self.layout()
         self.bind()
     }
     
@@ -53,7 +61,34 @@ class SettingTrainIconModalVC: ModalVCCustom {
 }
 
 private extension SettingTrainIconModalVC {
+    func attribute() {
+        
+    }
+    
+    func layout() {
+        let settingSwiftUIVC = UIHostingController(rootView: self.settingModalView)
+        let settingModalView = settingSwiftUIVC.view!
+        
+        self.addChild(settingSwiftUIVC)
+        self.mainBG.addSubview(settingModalView)
+        settingModalView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.top.equalTo(self.subTitle.snp.bottom)
+            $0.bottom.equalTo(self.okBtn!.snp.top)
+        }
+    }
+    
     func bind() {
+        self.okBtn!.rx.tap
+            .do(onNext: { [weak self] in
+                self?.modalDismiss()
+            })
+            .map { _ in
+                .okBtnTap
+            }
+            .bind(to: self.viewAction)
+            .disposed(by: self.bag)
+        
         let input = SettingTrainIconModalViewModel.Input(
             actionList: self.viewAction
                 .asObservable()

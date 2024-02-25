@@ -328,6 +328,9 @@
 		B68FB34C2B75F1CA0075339F /* SettingTrainIconCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB34B2B75F1CA0075339F /* SettingTrainIconCoordinator.swift */; };
 		B68FB34F2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB34E2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift */; };
 		B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */; };
+		B6B225762B8AF30F00F6D669 /* SettingTrainIconModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B225752B8AF30F00F6D669 /* SettingTrainIconModalView.swift */; };
+		B6B225782B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B225772B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift */; };
+		B6B2257B2B8B069900F6D669 /* SettingTrainIconModalSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B2257A2B8B069900F6D669 /* SettingTrainIconModalSubView.swift */; };
 		B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811C2B6FBC6600FE8E7B /* Plus.json */; };
 		B6F781212B6FBC6600FE8E7B /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811D2B6FBC6600FE8E7B /* Report.json */; };
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
@@ -692,6 +695,9 @@
 		B68FB34B2B75F1CA0075339F /* SettingTrainIconCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconCoordinator.swift; sourceTree = "<group>"; };
 		B68FB34E2B75F1FB0075339F /* SettingTrainIconModalVCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalVCAction.swift; sourceTree = "<group>"; };
 		B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconCoordinatorProtocol.swift; sourceTree = "<group>"; };
+		B6B225752B8AF30F00F6D669 /* SettingTrainIconModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalView.swift; sourceTree = "<group>"; };
+		B6B225772B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalSubViewModel.swift; sourceTree = "<group>"; };
+		B6B2257A2B8B069900F6D669 /* SettingTrainIconModalSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalSubView.swift; sourceTree = "<group>"; };
 		B6F7811C2B6FBC6600FE8E7B /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B6F7811D2B6FBC6600FE8E7B /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		B6F7811F2B6FBC6600FE8E7B /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
@@ -1166,11 +1172,11 @@
 		349E2F5C29BDF68700C54EE9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				34F5F0FB2962E66A0010A21D /* Common */,
 				B6438D1D2B667CB10099BFEF /* Main */,
 				344D6A0E2ABD848800ECB57D /* Tutorial */,
 				34A221B729C9AB25003F035D /* NoNetwork */,
 				34A2563929AC5801008CC885 /* Popup */,
-				34F5F0FB2962E66A0010A21D /* Common */,
 				34F5F0E92962D8BC0010A21D /* Detail */,
 				34A36BE1295028AC00FB0DDB /* Edit */,
 				349B516429A4630D00A53879 /* Report */,
@@ -2319,6 +2325,9 @@
 			children = (
 				B68FB3472B75EFB70075339F /* SettingTrainIconModalVC.swift */,
 				B68FB3492B75EFF80075339F /* SettingTrainIconModalViewModel.swift */,
+				B6B225752B8AF30F00F6D669 /* SettingTrainIconModalView.swift */,
+				B6B225772B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift */,
+				B6B225792B8B068B00F6D669 /* Sub */,
 				B68FB34D2B75F1DD0075339F /* Coordinator */,
 			);
 			path = SettingTrainIconModal;
@@ -2340,6 +2349,14 @@
 				B68FB3512B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		B6B225792B8B068B00F6D669 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				B6B2257A2B8B069900F6D669 /* SettingTrainIconModalSubView.swift */,
+			);
+			path = Sub;
 			sourceTree = "<group>";
 		};
 		B6F7811B2B6FBC6600FE8E7B /* Lottie */ = {
@@ -2705,6 +2722,7 @@
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				349894AD29CD994800768B88 /* BundleExtension.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
+				B6B225762B8AF30F00F6D669 /* SettingTrainIconModalView.swift in Sources */,
 				349E2F4129BDB99600C54EE9 /* EditCoordinator.swift in Sources */,
 				B6438D462B667CB10099BFEF /* MainTableViewHeaderBtn.swift in Sources */,
 				34A221B329C98A47003F035D /* NoNetworkView.swift in Sources */,
@@ -2733,6 +2751,7 @@
 				3427D9032A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift in Sources */,
 				34A32E6B29B8268200AA1C67 /* ReportContentsModalTFView.swift in Sources */,
 				34A6BF9429B728940059CF1A /* ReportContentsModalViewModel.swift in Sources */,
+				B6B2257B2B8B069900F6D669 /* SettingTrainIconModalSubView.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
 				341EEA6F2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift in Sources */,
 				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
@@ -2885,6 +2904,7 @@
 				34F5F10429642AE00010A21D /* DetailTableHeaderView.swift in Sources */,
 				3455CF9F2A53DB26001ADE61 /* ModalCoordinator.swift in Sources */,
 				349E2F5729BDC44D00C54EE9 /* DetailResultScheduleCoordinator.swift in Sources */,
+				B6B225782B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift in Sources */,
 				B6438D412B667CB10099BFEF /* MainTableView.swift in Sources */,
 				3497DC7629D28B0500D2ABB9 /* SearchModelProtocol.swift in Sources */,
 				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
