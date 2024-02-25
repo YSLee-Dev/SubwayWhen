@@ -10,12 +10,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+import Combine
+
 enum SettingTrainIconModalAction {
     case closeBtnTap
     case viewDidDisappear
+    case okBtnTap
 }
 
 class SettingTrainIconModalViewModel {
+    private let subViewModel: SettingTrainIconModalSubViewModel
+    
     weak var delegate: SettingTrainIconModalVCAction?
     let bag = DisposeBag()
     
@@ -31,7 +36,16 @@ class SettingTrainIconModalViewModel {
         input.actionList
             .bind(onNext: actionProcess)
             .disposed(by: self.bag)
+        
+        self.subViewModel.isTappedIndex = self.trainIconToIndex(iconString: FixInfo.saveSetting.detailVCTrainIcon)
+        
         return Output()
+    }
+    
+    init(
+        subViewModel: SettingTrainIconModalSubViewModel
+    ) {
+        self.subViewModel = subViewModel
     }
 }
 
@@ -43,6 +57,27 @@ private extension SettingTrainIconModalViewModel {
             
         case .viewDidDisappear:
             self.delegate?.didDisappear()
+            
+        case .okBtnTap:
+            FixInfo.saveSetting.detailVCTrainIcon = self.indexToTrainIcon(index: self.subViewModel.isTappedIndex)
+        }
+    }
+    
+    func trainIconToIndex(iconString: String) -> Int {
+        switch iconString {
+        case "🚂": 1
+        case "🚈": 2
+        case "🚅": 3
+        default: 0
+        }
+    }
+    
+    func indexToTrainIcon(index: Int) -> String {
+        switch index {
+        case 1: "🚂"
+        case 2: "🚈"
+        case 3: "🚅"
+        default: "🚃"
         }
     }
 }
