@@ -20,7 +20,8 @@ class SettingTrainIconModalCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = SettingTrainIconModalViewModel()
+        let subViewModel = SettingTrainIconModalSubViewModel()
+        let viewModel = SettingTrainIconModalViewModel(subViewModel: subViewModel)
         viewModel.delegate = self
         
         let vc = SettingTrainIconModalVC(
@@ -28,7 +29,8 @@ class SettingTrainIconModalCoordinator: Coordinator {
             btnTitle: "저장",
             mainTitle: "열차 아이콘",
             subTitle: "상세화면의 열차 아이콘을 변경하는 기능이에요.",
-            viewModel: viewModel
+            viewModel: viewModel,
+            modalView: SettingTrainIconModalView(viewModel: subViewModel)
         )
         vc.modalPresentationStyle = .overFullScreen
         self.navigation.present(vc, animated: false)
