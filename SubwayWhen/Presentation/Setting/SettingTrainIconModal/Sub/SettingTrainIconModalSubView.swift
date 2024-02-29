@@ -13,10 +13,15 @@ struct SettingTrainIconModalSubView: View {
     
     var body: some View {
         Circle()
-            .foregroundColor(isTapped ? .init(uiColor: UIColor(named: "ButtonTappedColor") ?? .lightGray) : .init(uiColor: UIColor(named: "MainColor") ?? .lightGray))
+            .stroke(isTapped ? .init(uiColor: UIColor(named: "AppIconColor") ?? .blue) : Color.clear, lineWidth: isTapped ? 1.0 : 0.0)
+            .background {
+                Circle()
+                    .foregroundColor(.init(uiColor: UIColor(named: "MainColor") ?? .lightGray))
+            }
             .overlay {
                 Text(trainIcon)
                     .font(.system(size: 30))
+                
             }
             .padding(10)
         
