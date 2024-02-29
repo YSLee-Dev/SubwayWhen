@@ -331,6 +331,7 @@
 		B6B225762B8AF30F00F6D669 /* SettingTrainIconModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B225752B8AF30F00F6D669 /* SettingTrainIconModalView.swift */; };
 		B6B225782B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B225772B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift */; };
 		B6B2257B2B8B069900F6D669 /* SettingTrainIconModalSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B2257A2B8B069900F6D669 /* SettingTrainIconModalSubView.swift */; };
+		B6B2257D2B90C07C00F6D669 /* SaveTrainIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */; };
 		B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811C2B6FBC6600FE8E7B /* Plus.json */; };
 		B6F781212B6FBC6600FE8E7B /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811D2B6FBC6600FE8E7B /* Report.json */; };
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
@@ -698,6 +699,7 @@
 		B6B225752B8AF30F00F6D669 /* SettingTrainIconModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalView.swift; sourceTree = "<group>"; };
 		B6B225772B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalSubViewModel.swift; sourceTree = "<group>"; };
 		B6B2257A2B8B069900F6D669 /* SettingTrainIconModalSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTrainIconModalSubView.swift; sourceTree = "<group>"; };
+		B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTrainIcon.swift; sourceTree = "<group>"; };
 		B6F7811C2B6FBC6600FE8E7B /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B6F7811D2B6FBC6600FE8E7B /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		B6F7811F2B6FBC6600FE8E7B /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
@@ -1887,6 +1889,7 @@
 				34C6DB89293627AE00C4ED80 /* SaveStation.swift */,
 				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
 				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
+				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
 			);
 			path = Save;
 			sourceTree = "<group>";
@@ -2851,6 +2854,7 @@
 				3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */,
 				3498949A29CD403A00768B88 /* PopupType.swift in Sources */,
 				3499DE9C29D1B34100A6E8C1 /* ReportContentsModalTFViewModelProtocol.swift in Sources */,
+				B6B2257D2B90C07C00F6D669 /* SaveTrainIcon.swift in Sources */,
 				349E2F3F29BDB3B700C54EE9 /* ReportCoordinatorDelegate.swift in Sources */,
 				B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */,
 				3499DE8629D15D4E00A6E8C1 /* ReportModelProtocol.swift in Sources */,
