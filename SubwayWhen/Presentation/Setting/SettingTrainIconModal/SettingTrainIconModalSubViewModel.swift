@@ -10,6 +10,6 @@ import SwiftUI
 import Combine
 
 class SettingTrainIconModalSubViewModel: ObservableObject {
-    @Published var isTappedIndex: Int = 0 // 초기값
-    let trainIcon = ["🚃", "🚂", "🚈", "🚅"]
+    @Published var tappedIcon: SaveTrainIcon = .basic // 초기값
+    let trainIcon = SaveTrainIcon.allCases
 }

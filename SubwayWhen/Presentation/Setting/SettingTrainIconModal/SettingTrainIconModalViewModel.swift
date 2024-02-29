@@ -37,7 +37,7 @@ class SettingTrainIconModalViewModel {
             .bind(onNext: actionProcess)
             .disposed(by: self.bag)
         
-        self.subViewModel.isTappedIndex = self.trainIconToIndex(iconString: FixInfo.saveSetting.detailVCTrainIcon)
+        self.subViewModel.tappedIcon = SaveTrainIcon(rawValue: FixInfo.saveSetting.detailVCTrainIcon)!
         
         return Output()
     }
@@ -59,25 +59,7 @@ private extension SettingTrainIconModalViewModel {
             self.delegate?.didDisappear()
             
         case .okBtnTap:
-            FixInfo.saveSetting.detailVCTrainIcon = self.indexToTrainIcon(index: self.subViewModel.isTappedIndex)
-        }
-    }
-    
-    func trainIconToIndex(iconString: String) -> Int {
-        switch iconString {
-        case "🚂": 1
-        case "🚈": 2
-        case "🚅": 3
-        default: 0
-        }
-    }
-    
-    func indexToTrainIcon(index: Int) -> String {
-        switch index {
-        case 1: "🚂"
-        case 2: "🚈"
-        case 3: "🚅"
-        default: "🚃"
+            FixInfo.saveSetting.detailVCTrainIcon = self.subViewModel.tappedIcon.rawValue
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FixInfo : Codable{
+struct FixInfo: Codable{
     static var saveStation : [SaveStation] = [] {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveStation)
