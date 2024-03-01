@@ -88,11 +88,11 @@ final class EditViewModelTests: XCTestCase {
         editData
             .onNext([
                 .init(sectionName: "출근", items: [
-                    .init(id: "1", stationName: "1", updnLine: "1", line: "1", useLine: "1"),
-                    .init(id: "2", stationName: "2", updnLine: "2", line: "2", useLine: "2")
+                    .init(id: "1", stationName: "1", stationCode: "1", updnLine: "1", line: "1", lineCode: "1", group: .one, exceptionLastStation: "1", korailCode: "1"),
+                    .init(id: "2", stationName: "2", stationCode: "2", updnLine: "2", line: "2", lineCode: "2", group: .one, exceptionLastStation: "2", korailCode: "2")
                 ]),
                 .init(sectionName: "퇴근", items: [
-                    .init(id: "1", stationName: "3", updnLine: "3", line: "3", useLine: "3")
+                    .init(id: "1", stationName: "1", stationCode: "1", updnLine: "1", line: "1", lineCode: "1", group: .one, exceptionLastStation: "1", korailCode: "1")
                 ])
             ])
         let saveStations = BehaviorSubject<[SaveStation]>(value: [])
@@ -125,7 +125,7 @@ final class EditViewModelTests: XCTestCase {
                     let now = index.destinationIndex
                     
                     let oldData = nowValue[old[0]].items[old[1]]
-                    var nowData = EditViewCellData(id: "", stationName: "", updnLine: "", line: "", useLine: "")
+                    var nowData = SaveStation(id: "1", stationName: "1", stationCode: "1", updnLine: "1", line: "1", lineCode: "1", group: .one, exceptionLastStation: "1", korailCode: "1")
                     
                     if now[1] != nowValue[now[0]].items.count{
                         nowData = nowValue[now[0]].items[now[1]]
