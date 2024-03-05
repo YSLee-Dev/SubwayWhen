@@ -39,7 +39,6 @@ class SettingTrainIconModalVC: ModalVCCustom {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.attribute()
         self.layout()
         self.bind()
     }
@@ -61,10 +60,6 @@ class SettingTrainIconModalVC: ModalVCCustom {
 }
 
 private extension SettingTrainIconModalVC {
-    func attribute() {
-        
-    }
-    
     func layout() {
         let settingSwiftUIVC = UIHostingController(rootView: self.settingModalView)
         let settingModalView = settingSwiftUIVC.view!
@@ -73,8 +68,8 @@ private extension SettingTrainIconModalVC {
         self.mainBG.addSubview(settingModalView)
         settingModalView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.top.equalTo(self.subTitle.snp.bottom)
-            $0.bottom.equalTo(self.okBtn!.snp.top)
+            $0.top.equalTo(self.subTitle.snp.bottom).offset(20)
+            $0.bottom.equalTo(self.okBtn!.snp.top).offset(-10)
         }
     }
     
@@ -93,6 +88,6 @@ private extension SettingTrainIconModalVC {
             actionList: self.viewAction
                 .asObservable()
         )
-        let output = self.viewModel.transform(input: input)
+        let _ = self.viewModel.transform(input: input)
     }
 }

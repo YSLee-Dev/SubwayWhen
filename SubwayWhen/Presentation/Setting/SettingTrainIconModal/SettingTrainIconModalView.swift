@@ -75,6 +75,7 @@ struct SettingTrainIconModalView: View {
                 }
             }
         }
+        Spacer()
     }
 }
 
