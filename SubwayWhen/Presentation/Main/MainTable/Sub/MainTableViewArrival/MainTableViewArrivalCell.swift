@@ -81,7 +81,11 @@ class MainTableViewCell : TableViewCellCustom{
     }
     
     func cellSet(data : MainTableViewCellData){
-        self.refreshIcon.stopAnimating()
+        if data.type == .loading {
+            self.refreshIcon.startAnimating()
+        } else {
+            self.refreshIcon.stopAnimating()
+        }
         
         self.station.text = "\(data.stationName) | \(data.lastStation)"
         self.line.text = data.useLine
