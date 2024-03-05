@@ -179,7 +179,7 @@ class MainModel : MainModelProtocol{
         Observable<[MainTableViewCellData]>.create {
             $0.onNext(
                 stations.map { station -> MainTableViewCellData in
-                        .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "데이터를 로드하고 있어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
+                        .init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "데이터를 로드하고 있어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .loading, backStationId: "", nextStationId: "",  korailCode: station.korailCode)
                 }
             )
             
