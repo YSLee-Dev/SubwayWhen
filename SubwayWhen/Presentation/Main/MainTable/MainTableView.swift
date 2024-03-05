@@ -118,7 +118,14 @@ extension MainTableView {
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainGroup", for: index) as? MainTableViewGroupCell else {return UITableViewCell()}
                 
-                cell.bind(groupData: groupData)
+                let group = cell.bind(groupData: groupData)
+                    .share()
+                
+                group
+                    .bind(to: self.rx.willDisplayCellDataRemove)
+                    .disposed(by: cell.bag)
+                
+                group
                     .map {.groupTap($0)}
                     .bind(to: self.mainTableViewAction)
                     .disposed(by: cell.bag)
@@ -134,7 +141,7 @@ extension MainTableView {
                 }else{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
                     
-                    if item.code == "데이터를 로드하고 있어요.",
+                    if item.type == .loading,
                        let willData = self.willDisplayCellData[index.row],
                        willData.group == item.group
                     {
@@ -195,6 +202,12 @@ extension Reactive where Base: MainTableView {
             
             guard let cell = base.cellForRow(at: IndexPath(row: data.1, section: 2)) as? MainTableViewCell else {return}
             cell.cellSet(data: data.0)
+        }
+    }
+    
+    var willDisplayCellDataRemove: Binder<SaveStationGroup> {
+        return Binder(base) { base, group in
+            base.willDisplayCellData = base.willDisplayCellData.filter {$0.value.group == group.rawValue}
         }
     }
 }
