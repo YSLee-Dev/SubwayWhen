@@ -7,6 +7,7 @@
 > V1.1 개발기간: 2023.04.18 ~ 2023.05.25<br/>
 > v1.2 개발기간: 2023.06.20 ~ 2023.07.12<br/>
 > v1.3 개발기간: 2023.09.18 ~ 2023.10.11<br/>
+> v1.3.1 개발기간: 2024.01.09 ~ 2024.03.07<br/>
  
 ## 📋 지하철 민실씨 소개, 기능
 <div align=left>
@@ -47,7 +48,7 @@
 <br/>
 
 ## 💡 지하철 민실씨에 사용된 아키텍쳐
-### ✅ MVVM-C (일부 input/output 패턴)
+### ✅ MVVM-C + input/output 패턴 (일부 미적용)
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/a20d9cfc-6803-4d42-aae8-297e11563d9c.png" height="400" />
 
 > MVVM 
