@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EditVCDelegate{
+protocol EditVCDelegate: AnyObject {
     func pop()
     func disappear()
 }

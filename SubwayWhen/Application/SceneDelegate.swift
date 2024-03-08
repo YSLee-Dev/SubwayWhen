@@ -31,6 +31,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // App Coordinator 선언
         self.appCoordinator = AppCoordinator(window: self.window!)
         self.appCoordinator?.start()
+        
+        // 네트워크 감지 class
+        NetworkMonitor.shared.monitorStart()
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {

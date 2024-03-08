@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FixInfo : Codable{
+struct FixInfo: Codable{
     static var saveStation : [SaveStation] = [] {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveStation)
@@ -26,7 +26,8 @@ struct FixInfo : Codable{
         searchOverlapAlert: true,
         alertGroupOneID: "",
         alertGroupTwoID: "",
-        tutorialSuccess: false
+        tutorialSuccess: false,
+        detailVCTrainIcon: "🚃"
     ) {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveSetting)
