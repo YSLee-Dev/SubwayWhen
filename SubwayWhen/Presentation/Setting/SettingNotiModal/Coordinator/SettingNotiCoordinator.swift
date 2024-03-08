@@ -63,7 +63,7 @@ extension SettingNotiCoordinator: SettingNotiModalVCAction {
     
     func didDisappear() {
         if self.childCoordinator.isEmpty {
-            self.delegate?.didDisappear(settingNotiCoordinator: self)
+            self.delegate?.didDisappear(coordinator: self)
         }
     }
     

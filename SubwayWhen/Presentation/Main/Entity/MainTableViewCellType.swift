@@ -10,4 +10,5 @@ import Foundation
 enum MainTableViewCellType : Decodable{
     case real
     case schedule
+    case loading
 }

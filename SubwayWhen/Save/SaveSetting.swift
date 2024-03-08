@@ -8,14 +8,15 @@
 import Foundation
 
 struct SaveSetting : Codable{
-    var mainCongestionLabel : String
-    var mainGroupOneTime : Int
-    var mainGroupTwoTime : Int
-    var detailAutoReload : Bool
+    var mainCongestionLabel: String
+    var mainGroupOneTime: Int
+    var mainGroupTwoTime: Int
+    var detailAutoReload: Bool
     var detailScheduleAutoTime : Bool
-    var liveActivity : Bool
-    var searchOverlapAlert : Bool
+    var liveActivity: Bool
+    var searchOverlapAlert: Bool
     var alertGroupOneID: String
     var alertGroupTwoID: String
     var tutorialSuccess: Bool
+    var detailVCTrainIcon: String
 }
