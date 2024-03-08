@@ -10,23 +10,49 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class EditViewModel : EditViewModelProtocol{
+enum EditVCAction {
+    case willDisappear
+    case backBtnTap
+    case deleteCell(SaveStation)
+    case moveCell(ItemMovedEvent)
+}
+
+class EditViewModel {
+    
     // MODEL
-    private let editModel : EditModelProtocol
+    private let editModel: EditModelProtocol
     private let notiManager: NotificationManagerProtocol
     
-    // INPUT
-    let deleteCell = PublishRelay<String>()
-    let refreshOn = PublishRelay<Void>()
-    let moveCell = PublishRelay<ItemMovedEvent>()
-    
-    // OUTPUT
-    let cellData : Driver<[EditViewCellSection]>
-    
     // VALUE
-    private let nowData = BehaviorSubject<[EditViewCellSection]>(value: [])
+    private let nowData = BehaviorRelay<[EditViewCellSection]>(value: [])
     
-    let bag = DisposeBag()
+    weak var delegate: EditVCDelegate?
+    private let bag = DisposeBag()
+    
+    struct Input {
+        let actionList: Observable<EditVCAction>
+    }
+    
+    struct Output {
+        let cellData: Driver<[EditViewCellSection]>
+    }
+    
+    func transform(input: Input) -> Output {
+        self.editModel.fixDataToGroupData(FixInfo.saveStation)
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(self.nowData)
+            .disposed(by: self.bag)
+        
+        input.actionList
+            .bind(onNext: self.actionProcess)
+            .disposed(by: self.bag)
+        
+        return Output(
+            cellData: self.nowData
+                .delay(.microseconds(500), scheduler: MainScheduler.asyncInstance)
+                .asDriver(onErrorDriveWith: .empty())
+        )
+    }
     
     init(
         model : EditModel = .init(),
@@ -34,102 +60,6 @@ class EditViewModel : EditViewModelProtocol{
     ){
         self.editModel = model
         self.notiManager = noti
-        
-        self.cellData = self.nowData
-            .asDriver(onErrorDriveWith: .empty())
-        
-        // 셀 삭제
-        self.deleteCell
-            .withUnretained(self)
-            .map{ viewModel, id in
-                for x in FixInfo.saveStation.enumerated(){
-                    if x.element.id == id{
-                        FixInfo.saveStation.remove(at: x.offset)
-                        break
-                    }
-                }
-                
-                viewModel.deleteAlertID(id: id)
-                
-                return Void()
-            }
-            .bind(to: self.refreshOn)
-            .disposed(by: self.bag)
-        
-        // 셀 move
-        self.moveCell
-            .withUnretained(self)
-            .map{
-                do {
-                    let nowVaue = try $0.nowData.value()
-                    
-                    let old = $1.sourceIndex
-                    let now = $1.destinationIndex
-                    
-                    let oldData = nowVaue[old[0]].items[old[1]]
-                    var nowData = EditViewCellSection.Item(id: "", stationName: "", updnLine: "", line: "", useLine: "")
-                    
-                    // 가장 최상/하단으로 변경 시
-                    if now[1] != nowVaue[now[0]].items.count{
-                        nowData = nowVaue[now[0]].items[now[1]]
-                    }
-                    
-                    var oldIndex = 0
-                    var nowIndex = 0
-                    
-                    for x in FixInfo.saveStation.enumerated(){
-                        if x.element.id == oldData.id{
-                            oldIndex = x.offset
-                        }
-                        
-                        if x.element.id == nowData.id{
-                            nowIndex = x.offset
-                        }
-                    }
-                    
-                    // 세션 이동 감지
-                    if old[0] != now[0]{
-                        FixInfo.saveStation[oldIndex].group = FixInfo.saveStation[oldIndex].group == .one ? .two : .one
-                        $0.deleteAlertID(id: FixInfo.saveStation[oldIndex].id)
-                        
-                    }
-                    
-                    if now[1] == nowVaue[now[0]].items.count{
-                        let fixData = FixInfo.saveStation[oldIndex]
-                        FixInfo.saveStation.remove(at: oldIndex)
-                        FixInfo.saveStation.append(fixData)
-                    }else if now[1] == 0{
-                        let fixData = FixInfo.saveStation[oldIndex]
-                        FixInfo.saveStation.remove(at: oldIndex)
-                        FixInfo.saveStation.insert(fixData, at: 0)
-                    }else if old[0] == now[0]{
-                        FixInfo.saveStation.swapAt(oldIndex, nowIndex)
-                    }else{
-                        let fixData = FixInfo.saveStation[oldIndex]
-                        FixInfo.saveStation.remove(at: oldIndex)
-                        FixInfo.saveStation.insert(fixData, at: nowIndex)
-                    }
-                    
-                    
-                    return Void()
-                }catch{
-                    return Void()
-                }
-            }
-            .bind(to: self.refreshOn)
-            .disposed(by: self.bag)
-        
-        
-        
-        // 셀 데이터 불러오기
-        self.refreshOn
-            .withUnretained(self)
-            .flatMap{viewmodel, _ in
-                viewmodel.editModel.fixDataToGroupData(FixInfo.saveStation)
-            }
-            .bind(to: self.nowData)
-            .disposed(by: self.bag)
-        
     }
 }
 
@@ -142,6 +72,57 @@ private extension EditViewModel {
         } else if FixInfo.saveSetting.alertGroupTwoID == id {
             FixInfo.saveSetting.alertGroupTwoID = ""
             self.notiManager.notiRemove(id: id)
+        }
+    }
+    
+    func actionProcess(type: EditVCAction) {
+        switch type {
+        case .deleteCell(let item):
+            self.deleteAlertID(id: item.id)
+            
+            var nowValue = self.nowData.value
+            var groupOne = nowValue[0].items
+            var groupTwo = nowValue[1].items
+            
+            let removeOne = groupOne.firstIndex(of: item)
+            let removeTwo = groupTwo.firstIndex(of: item)
+            
+            if let removeOne = removeOne {
+                groupOne.remove(at: removeOne)
+            }
+            if let removeTwo = removeTwo {
+                groupTwo.remove(at: removeTwo)
+            }
+            
+            nowValue[0].items = groupOne
+            nowValue[1].items = groupTwo
+            self.nowData.accept(nowValue)
+            
+        case .moveCell(let itemMovedEvent):
+            var nowValue = self.nowData.value
+            
+            let old = itemMovedEvent.sourceIndex
+            let now = itemMovedEvent.destinationIndex
+            
+            let value = nowValue[old.section].items.remove(at: old.row)
+            nowValue[now.section].items.insert(value, at: now.row)
+            
+            if old[0] != now[0] {
+                self.deleteAlertID(id: nowValue[now.section].items[now.row].id)
+                nowValue[now.section].items[now.row].group = .one == nowValue[now.section].items[now.row].group ? .two : .one
+            }
+            
+            self.nowData.accept(nowValue)
+            
+        case .backBtnTap:
+            self.delegate?.pop()
+            
+        case .willDisappear:
+            // 데이터 저장
+            let nowValue = self.nowData.value
+            FixInfo.saveStation = nowValue[0].items + nowValue[1].items
+            print(FixInfo.saveStation.map {($0.stationName,$0.group)})
+            self.delegate?.disappear()
         }
     }
 }

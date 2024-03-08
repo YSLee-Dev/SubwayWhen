@@ -13,17 +13,21 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class MainTableView : UITableView{
-    let bag = DisposeBag()
-    
-    lazy var refresh = UIRefreshControl().then{
+class MainTableView: UITableView {
+    private lazy var refresh = UIRefreshControl().then{
         $0.backgroundColor = .systemBackground
         $0.attributedTitle = NSAttributedString("🔄 당겨서 새로고침")
     }
     
+    fileprivate var willDisplayCellData = [Int: MainTableViewCellData]()
+    private let bag = DisposeBag()
+    private let mainTableViewAction = PublishRelay<MainViewAction>()
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        
         self.attribute()
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +35,7 @@ class MainTableView : UITableView{
     }
 }
 
-extension MainTableView{
+extension MainTableView {
     private func attribute(){
         self.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
         self.register(MainTableViewGroupCell.self, forCellReuseIdentifier: "MainGroup")
@@ -44,21 +48,90 @@ extension MainTableView{
         self.refreshControl = self.refresh
     }
     
-    func bind(_ viewModel : MainTableViewModelProtocol){
-        // VIEWMODEl -> VIEW
-        let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {dataSource, tv, index, item in
+    private func bind(){
+        self.rx.itemSelected
+            .map {.cellTap($0)}
+            .bind(to: self.mainTableViewAction)
+            .disposed(by: self.bag)
+        
+        self.refresh.rx.controlEvent(.valueChanged)
+            .map {_ in .refreshEvent}
+            .bind(to: self.mainTableViewAction)
+            .disposed(by: self.bag)
+        
+    }
+    
+    @discardableResult
+    func setDI(action: PublishRelay<MainViewAction>) -> Self {
+        mainTableViewAction
+            .bind(to: action)
+            .disposed(by: self.bag)
+        
+        return self
+    }
+    
+    @discardableResult
+    func setDI(importantData: Driver<ImportantData>) -> Self {
+        importantData
+            .drive(self.rx.importantTransform)
+            .disposed(by: self.bag)
+        
+        return self
+    }
+    
+    @discardableResult
+    func setDI(setCellData: Driver<(MainTableViewCellData, Int)>) -> Self {
+        setCellData
+            .drive(self.rx.cellDataUpdate)
+            .disposed(by: self.bag)
+        
+        return self
+    }
+    
+    @discardableResult
+    func setDI(
+        tableViewData: Driver<[MainTableViewSection]>,
+        peopleData: Driver<Int>,
+        groupData: Driver<SaveStationGroup>
+    ) -> Self {
+        let dataSources = RxTableViewSectionedAnimatedDataSource<MainTableViewSection>(animationConfiguration: AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade), configureCell: {[weak self] dataSource, tv, index, item in
+            guard let self = self else {return UITableViewCell()}
+            
             switch index.section{
             case 0:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainHeader", for: index) as? MainTableViewHeaderCell else {return UITableViewCell()}
                 
-                cell.bind(viewModel.mainTableViewHeaderViewModel)
+                cell.bind(peopleData: peopleData)
+                
+                cell.reportBtn.rx.tap
+                    .map {_ in .reportBtnTap}
+                    .bind(to: self.mainTableViewAction)
+                    .disposed(by: cell.bag)
+                
+                cell.editBtn.rx.tap
+                    .map {_ in .editBtnTap}
+                    .bind(to: self.mainTableViewAction)
+                    .disposed(by: cell.bag)
+                
                 return cell
                 
             case 1:
                 guard let cell = tv.dequeueReusableCell(withIdentifier: "MainGroup", for: index) as? MainTableViewGroupCell else {return UITableViewCell()}
-          
-                cell.bind(viewModel.mainTableViewGroupModel)
+                
+                let group = cell.bind(groupData: groupData)
+                    .share()
+                
+                group
+                    .bind(to: self.rx.willDisplayCellDataRemove)
+                    .disposed(by: cell.bag)
+                
+                group
+                    .map {.groupTap($0)}
+                    .bind(to: self.mainTableViewAction)
+                    .disposed(by: cell.bag)
+                
                 return cell
+                
             default:
                 if item.id == "NoData"{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainDefault", for: index) as? MainTableViewDefaultCell else {return UITableViewCell()}
@@ -67,52 +140,43 @@ extension MainTableView{
                     return cell
                 }else{
                     guard let cell = tv.dequeueReusableCell(withIdentifier: "MainCell", for: index) as? MainTableViewCell else {return UITableViewCell()}
-               
-                    cell.cellSet(data: item, cellModel: viewModel.mainTableViewCellModel, indexPath: index)
+                    
+                    if item.type == .loading,
+                       let willData = self.willDisplayCellData[index.row],
+                       willData.group == item.group
+                    {
+                        cell.cellSet(data: willData)
+                    } else {
+                        cell.cellSet(data: item)
+                    }
+                    
+                    cell.changeBtn.rx.tap
+                        .map{ _ in .scheduleTap(index)}
+                        .bind(to: self.mainTableViewAction)
+                        .disposed(by: cell.bag)
+
                     return cell
                 }
             }
-           
         })
         
         dataSources.titleForHeaderInSection = {dataSource, index in
             dataSource[index].sectionName
         }
         
-        viewModel.cellData
+        tableViewData
             .drive(self.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
         
-        viewModel.importantLayout
-            .drive(self.rx.importantTransform)
+        tableViewData
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { vc, _ in
+                vc.refresh.endRefreshing()
+            })
             .disposed(by: self.bag)
         
-
-        // VIEW -> VIEWMODEL
-        self.rx.modelSelected(MainTableViewCellData.self)
-            .filter{
-                !($0.id == "header" || $0.id == "group" || $0.id == "NoData")
-            }
-            .bind(to: viewModel.cellClick)
-            .disposed(by: self.bag)
-        
-        self.rx.modelSelected(MainTableViewCellData.self)
-            .filter{
-                $0.id == "NoData"
-            }
-            .map{_ in Void()}
-            .bind(to: viewModel.plusBtnClick)
-            .disposed(by: self.bag)
-        
-        
-        self.refreshControl?.rx.controlEvent(.valueChanged)
-            .map{[weak self] _ in
-                self?.refreshControl?.endRefreshing()
-                return Void()
-            }
-            .bind(to: viewModel.refreshOn)
-            .disposed(by: self.bag)
-        
+        return self
     }
 }
 
@@ -125,6 +189,25 @@ extension Reactive where Base: MainTableView {
                 cell.isImportant(data: data)
                 base.reloadData()
             })
+        }
+    }
+    
+    var cellDataUpdate: Binder<(MainTableViewCellData, Int)> {
+        return Binder(base) { base, data in
+            if data.0.id == "NoData" {
+                return
+            }
+            
+            base.willDisplayCellData[data.1] = data.0
+            
+            guard let cell = base.cellForRow(at: IndexPath(row: data.1, section: 2)) as? MainTableViewCell else {return}
+            cell.cellSet(data: data.0)
+        }
+    }
+    
+    var willDisplayCellDataRemove: Binder<SaveStationGroup> {
+        return Binder(base) { base, group in
+            base.willDisplayCellData = base.willDisplayCellData.filter {$0.value.group == group.rawValue}
         }
     }
 }

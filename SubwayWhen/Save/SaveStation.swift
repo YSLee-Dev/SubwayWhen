@@ -7,16 +7,18 @@
 
 import Foundation
 
-struct SaveStation : Codable, Equatable{
-    let id : String
-    let stationName : String
-    let stationCode : String
-    let updnLine : String
-    let line : String
-    let lineCode : String
-    var group : SaveStationGroup
-    let exceptionLastStation : String
-    var korailCode : String
+import RxDataSources
+
+struct SaveStation: Codable, Equatable, IdentifiableType {
+    let id: String
+    let stationName: String
+    let stationCode: String
+    let updnLine: String
+    let line: String
+    let lineCode: String
+    var group: SaveStationGroup
+    let exceptionLastStation: String
+    var korailCode: String
     
     var useLine: String{
         let zeroCut = self.line.replacingOccurrences(of: "0", with: "")
@@ -26,5 +28,13 @@ struct SaveStation : Codable, Equatable{
         }else{
             return String(zeroCut[zeroCut.startIndex ..< zeroCut.index(zeroCut.startIndex, offsetBy: 4)])
         }
+    }
+}
+
+extension SaveStation {
+    typealias Identity = String
+    
+    var identity: String {
+        self.id
     }
 }

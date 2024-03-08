@@ -23,10 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 포그라운드에서 노티 받기
         UNUserNotificationCenter.current().delegate = self
         
-        // 네트워크 감지 class
-        NetworkMonitor.shared.monitorStart()
-        
-        
         return true
     }
     

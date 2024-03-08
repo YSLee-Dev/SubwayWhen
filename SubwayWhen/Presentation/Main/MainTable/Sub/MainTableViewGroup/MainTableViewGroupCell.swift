@@ -72,29 +72,29 @@ extension MainTableViewGroupCell{
         self.selectionStyle = .none
     }
     
-    func bind(_ viewModel : MainTableViewGroupCellModelProtocol){
-        // VIEW -> VIEWMODEL
-        let oneClick = self.groupOne.rx.tap
+    func bind(groupData: Driver<SaveStationGroup>) -> Observable<SaveStationGroup> {
+        groupData
+            .drive(self.rx.groupDesign)
+            .disposed(by: self.bag)
+        
+        let oneClick = groupOne.rx.tap
             .map{ _ -> SaveStationGroup in
                 return .one
             }
-        
-       let twoClick = self.groupTwo.rx.tap
+        let twoClick = groupTwo.rx.tap
             .map{_ -> SaveStationGroup in
                 return .two
             }
         
-        Observable
-            .merge(
-                oneClick, twoClick
-            )
-            .bind(to: viewModel.groupSeleted)
+        let click = Observable
+            .merge(oneClick, twoClick)
+            .share()
+        
+        click
+            .bind(to: self.rx.groupDesign)
             .disposed(by: self.bag)
         
-        viewModel.groupDesign
-            .skip(1)
-            .drive(self.rx.groupDesign)
-            .disposed(by: self.bag)
+        return click
     }
     
     func btnClickSizeChange(group : Bool){

@@ -9,7 +9,7 @@ import UIKit
 
 import AcknowList
  
-class SettingCoordinator : Coordinator{
+class SettingCoordinator : Coordinator {
     var childCoordinator: [Coordinator] = [] {
         didSet {
             print(self.childCoordinator)
@@ -33,6 +33,14 @@ class SettingCoordinator : Coordinator{
 }
 
 extension SettingCoordinator: SettingVCAction {
+    func trainIconModal() {
+        let trainIconCoordinator = SettingTrainIconModalCoordinator(navigation: self.naviagation)
+        trainIconCoordinator.start()
+        trainIconCoordinator.delegate = self
+        
+        self.childCoordinator.append(trainIconCoordinator)
+    }
+    
     func groupModal() {
         let viewModel = SettingGroupModalViewModel()
         let modal = SettingGroupModalVC(
@@ -79,15 +87,15 @@ extension SettingCoordinator: SettingVCAction {
     }
 }
 
-extension SettingCoordinator: SettingNotiCoordinatorProtocol {
+extension SettingCoordinator: SettingNotiCoordinatorProtocol, SettingTrainIconCoordinatorProtocol {
     func groupTimeGoBtnTap() {
         self.naviagation.dismiss(animated: false)
         self.groupModal()
     }
     
-    func didDisappear(settingNotiCoordinator: Coordinator) {
+    func didDisappear(coordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter{
-            $0 !== settingNotiCoordinator
+            $0 !== coordinator
         }
     }
     

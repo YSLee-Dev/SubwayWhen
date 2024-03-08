@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol TotalLoadProtocol{
-    func totalLiveDataLoad(stations : [SaveStation]) -> Observable<MainTableViewCellData>
+    func totalLiveDataLoad(stations : [SaveStation]) -> Observable<(MainTableViewCellData, Int)>
     func singleLiveDataLoad(station : String) -> Observable<LiveStationModel>
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) ->  Observable<[ResultSchdule]>
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) -> Observable<[ResultSchdule]>

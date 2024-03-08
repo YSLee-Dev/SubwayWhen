@@ -49,13 +49,6 @@ extension AppDefaultManager{
             $0.height.equalTo(0)
         }
         
-        // 앱 진입 시 바로
-        if !NetworkMonitor.shared.isConnected{
-            noNetworkView.snp.updateConstraints{
-                $0.height.equalTo(100)
-            }
-        }
-            
         NetworkMonitor.shared.pathUpdate{ [weak self] status in
             if !status{
                 noNetworkView.snp.updateConstraints{
@@ -88,7 +81,8 @@ extension AppDefaultManager{
                 searchOverlapAlert : true,
                 alertGroupOneID: "",
                 alertGroupTwoID: "",
-                tutorialSuccess: false
+                tutorialSuccess: false,
+                detailVCTrainIcon: "🚃"
             )
             print("setting not load, 초기 값 세팅 완료\n", error)
         }

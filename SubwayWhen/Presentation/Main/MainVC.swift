@@ -12,17 +12,17 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class MainVC : TableVCCustom{
-    let bag = DisposeBag()
+class MainVC: TableVCCustom {
+    private let bag = DisposeBag()
     
-    let mainTableView = MainTableView()
-    let mainViewModel : MainViewModelProtocol
+    private let mainTableView = MainTableView()
+    private let mainViewModel : MainViewModel
+    private let mainAction = PublishRelay<MainViewAction>()
     
-    var delegate : MainDelegate?
-    
-    init(viewModel : MainViewModelProtocol){
+    init(viewModel: MainViewModel){
         self.mainViewModel = viewModel
         super.init(title: "홈", titleViewHeight: 62)
+        
         self.tableView = self.mainTableView
         self.tableView.delegate = self
     }
@@ -33,15 +33,14 @@ class MainVC : TableVCCustom{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bind(self.mainViewModel)
+        self.bind()
         self.attibute()
         self.layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // view 다시 들어올 때 리프레시
-        self.mainViewModel.reloadData
-            .accept(Void())
+        self.mainAction.accept(.refreshEvent)
     }
 }
  
@@ -62,34 +61,31 @@ extension MainVC{
         }
     }
     
-    private func bind(_ viewModel : MainViewModelProtocol){
-        self.mainTableView.bind(viewModel.mainTableViewModel)
+    private func bind(){
+        let input = MainViewModel.Input(
+            actionList: self.mainAction
+                .asObservable()
+        )
         
-        // VIEWMODEL -> VIEW
-        viewModel.stationPlusBtnClick
-            .drive(self.rx.tapChange)
-            .disposed(by: self.bag)
+        let output = self.mainViewModel.trasnform(input: input)
+        self.mainTableView.setDI(action: self.mainAction)
+            .setDI(importantData: output.importantData)
+            .setDI(
+                tableViewData: output.tableViewData,
+                peopleData: output.peopleData,
+                groupData: output.groupData)
+            .setDI(setCellData: output.cellData)
         
-        viewModel.clickCellData
-            .drive(self.rx.detailVCPush)
-            .disposed(by: self.bag)
-        
-        viewModel.editBtnClick
-            .drive(self.rx.editVCPresent)
-            .disposed(by: self.bag)
-        
-        viewModel.mainTitle
-            .drive(self.rx.mainTitleSet)
-            .disposed(by: self.bag)
-        
-        viewModel.mainTitleHidden
+        output.tableViewData
+            .map { _ in Void()}
             .drive(self.rx.mainTitleHidden)
             .disposed(by: self.bag)
         
-        viewModel.reportBtnClick
-            .drive(self.rx.reportVCPush)
+        output.mainTitle
+            .drive(self.rx.mainTitleSet)
             .disposed(by: self.bag)
     }
+        
 }
 
 extension Reactive where Base : MainVC {
@@ -102,30 +98,6 @@ extension Reactive where Base : MainVC {
     var mainTitleSet : Binder<String>{
         return Binder(base){base, data in
             base.titleView.mainTitleLabel.text = data
-        }
-    }
-    
-    var tapChange : Binder<Void>{
-        return Binder(base){base, _ in
-            base.delegate?.plusStationTap()
-        }
-    }
-    
-    var editVCPresent : Binder<Void>{
-        return Binder(base){base, _ in
-            base.delegate?.pushTap(action: .Edit)
-        }
-    }
-    
-    var detailVCPush : Binder<MainTableViewCellData>{
-        return Binder(base){base, data in
-            base.delegate?.pushDetailTap(data: data)
-        }
-    }
-    
-    var reportVCPush : Binder<Void>{
-        return Binder(base){base, _ in
-            base.delegate?.pushTap(action: .Report)
         }
     }
 }
