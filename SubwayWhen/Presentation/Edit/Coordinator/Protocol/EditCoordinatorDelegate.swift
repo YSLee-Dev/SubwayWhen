@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EditCoordinatorDelegate{
+protocol EditCoordinatorDelegate: AnyObject {
     func pop()
     func disappear(editCoordinatorDelegate : EditCoordinator)
 }

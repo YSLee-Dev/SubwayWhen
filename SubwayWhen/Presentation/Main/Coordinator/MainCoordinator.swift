@@ -21,9 +21,12 @@ class MainCoordinator : Coordinator{
     }
     
     func start() {
-        let main = MainVC(viewModel: MainViewModel())
+        let viewModel = MainViewModel()
+        viewModel.delegate = self
+        
+        let main = MainVC(viewModel: viewModel)
         main.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
-        main.delegate = self
+   
         self.navigation.setViewControllers([main], animated: true)
     }
     
