@@ -49,16 +49,16 @@ final class TotalLoadModelTests: XCTestCase {
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let requestStationName = arrayData.first?.stationName
+        let requestStationName = arrayData.first?.0.stationName
         let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
-        let requestType = arrayData.first?.type
+        let requestType = arrayData.first?.0.type
         let dummyType = MainTableViewCellType.real
         
-        let requestLine = arrayData.first?.lineNumber
+        let requestLine = arrayData.first?.0.lineNumber
         let dummyLine = "03호선"
         
-        let requestCode = arrayData.first?.code
+        let requestCode = arrayData.first?.0.code
         let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
         
         // THEN
@@ -91,13 +91,13 @@ final class TotalLoadModelTests: XCTestCase {
         let arrayData = try! blocking.toArray()
         
         // WHEN
-        let requestCode = arrayData.first?.code
+        let requestCode = arrayData.first?.0.code
         let dummyStationCode = "현재 실시간 열차 데이터가 없어요."
         
-        let requestStationName = arrayData.first?.stationName
+        let requestStationName = arrayData.first?.0.stationName
         let dummyStationName = "교대"
         
-        let requestBackId = arrayData.first?.backStationId
+        let requestBackId = arrayData.first?.0.backStationId
         let dummyBackId = ""
         
         // THEN
