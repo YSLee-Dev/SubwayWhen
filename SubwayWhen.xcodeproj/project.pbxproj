@@ -337,6 +337,13 @@
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
 		B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */; };
 		B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */; };
+		FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */; };
+		FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9E2A08FCBE00A8E1FF /* SwiftUI.framework */; };
+		FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */; };
+		FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */; };
+		FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F62BB566A800B95B52 /* AppIntent.swift */; };
+		FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD2F5F82BB566A900B95B52 /* Assets.xcassets */; };
+		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,6 +361,13 @@
 			remoteGlobalIDString = 349C00792A0A1B8C008A85BF;
 			remoteInfo = SubwayWhenDetailWidgetExtension;
 		};
+		FAD2F5FB2BB566A900B95B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAD2F5ED2BB566A800B95B52;
+			remoteInfo = SubwayWhenHomeWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -363,6 +377,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */,
 				349C008C2A0A1B92008A85BF /* SubwayWhenDetailWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -706,6 +721,12 @@
 		B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionData.swift; sourceTree = "<group>"; };
 		B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellData.swift; sourceTree = "<group>"; };
 		EBD1759627CE8B434B29B6B3 /* Pods-SubwayWhen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.debug.xcconfig"; sourceTree = "<group>"; };
+		FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SubwayWhenHomeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidgetBundle.swift; sourceTree = "<group>"; };
+		FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidget.swift; sourceTree = "<group>"; };
+		FAD2F5F62BB566A800B95B52 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		FAD2F5F82BB566A900B95B52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAD2F5FA2BB566A900B95B52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -731,6 +752,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAD2F5EB2BB566A800B95B52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */,
+				FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1759,6 +1789,7 @@
 				34C6DB532936274400C4ED80 /* SubwayWhen */,
 				34A3036F29AF239300948EDD /* SubwayWhenTests */,
 				349C007D2A0A1B8D008A85BF /* SubwayWhenDetailWidget */,
+				FAD2F5F12BB566A800B95B52 /* SubwayWhenHomeWidget */,
 				34C6DB522936274400C4ED80 /* Products */,
 				A66F780E21740540C37C8525 /* Pods */,
 				27B8186A1B2F499F01B3B2F3 /* Frameworks */,
@@ -1771,6 +1802,7 @@
 				34C6DB512936274400C4ED80 /* SubwayWhen.app */,
 				34A3036E29AF239300948EDD /* SubwayWhenTests.xctest */,
 				349C007A2A0A1B8C008A85BF /* SubwayWhenDetailWidgetExtension.appex */,
+				FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2376,6 +2408,18 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		FAD2F5F12BB566A800B95B52 /* SubwayWhenHomeWidget */ = {
+			isa = PBXGroup;
+			children = (
+				FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */,
+				FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */,
+				FAD2F5F62BB566A800B95B52 /* AppIntent.swift */,
+				FAD2F5F82BB566A900B95B52 /* Assets.xcassets */,
+				FAD2F5FA2BB566A900B95B52 /* Info.plist */,
+			);
+			path = SubwayWhenHomeWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2431,11 +2475,29 @@
 			);
 			dependencies = (
 				B6B658A62B5D47C40028828E /* PBXTargetDependency */,
+				FAD2F5FC2BB566A900B95B52 /* PBXTargetDependency */,
 			);
 			name = SubwayWhen;
 			productName = SubwayWhen;
 			productReference = 34C6DB512936274400C4ED80 /* SubwayWhen.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FAD2F5ED2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAD2F6002BB566A900B95B52 /* Build configuration list for PBXNativeTarget "SubwayWhenHomeWidgetExtension" */;
+			buildPhases = (
+				FAD2F5EA2BB566A800B95B52 /* Sources */,
+				FAD2F5EB2BB566A800B95B52 /* Frameworks */,
+				FAD2F5EC2BB566A800B95B52 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SubwayWhenHomeWidgetExtension;
+			productName = SubwayWhenHomeWidgetExtension;
+			productReference = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -2444,7 +2506,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					349C00792A0A1B8C008A85BF = {
@@ -2457,6 +2519,9 @@
 					};
 					34C6DB502936274400C4ED80 = {
 						CreatedOnToolsVersion = 14.0.1;
+					};
+					FAD2F5ED2BB566A800B95B52 = {
+						CreatedOnToolsVersion = 15.3;
 					};
 				};
 			};
@@ -2477,6 +2542,7 @@
 				34C6DB502936274400C4ED80 /* SubwayWhen */,
 				34A3036D29AF239300948EDD /* SubwayWhenTests */,
 				349C00792A0A1B8C008A85BF /* SubwayWhenDetailWidgetExtension */,
+				FAD2F5ED2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -2521,6 +2587,14 @@
 				B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */,
 				34D6F2C62936E453005DAF39 /* GoogleService-Info.plist in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAD2F5EC2BB566A800B95B52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2933,6 +3007,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAD2F5EA2BB566A800B95B52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */,
+				FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */,
+				FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2945,6 +3029,11 @@
 			isa = PBXTargetDependency;
 			target = 349C00792A0A1B8C008A85BF /* SubwayWhenDetailWidgetExtension */;
 			targetProxy = B6B658A52B5D47C40028828E /* PBXContainerItemProxy */;
+		};
+		FAD2F5FC2BB566A900B95B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAD2F5ED2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension */;
+			targetProxy = FAD2F5FB2BB566A900B95B52 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3260,6 +3349,71 @@
 			};
 			name = Release;
 		};
+		FAD2F5FE2BB566A900B95B52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V8879W55Z;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayWhenHomeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SubwayWhenHomeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenHomeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FAD2F5FF2BB566A900B95B52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V8879W55Z;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayWhenHomeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SubwayWhenHomeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenHomeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3295,6 +3449,15 @@
 			buildConfigurations = (
 				34C6DB662936274600C4ED80 /* Debug */,
 				34C6DB672936274600C4ED80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAD2F6002BB566A900B95B52 /* Build configuration list for PBXNativeTarget "SubwayWhenHomeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAD2F5FE2BB566A900B95B52 /* Debug */,
+				FAD2F5FF2BB566A900B95B52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
