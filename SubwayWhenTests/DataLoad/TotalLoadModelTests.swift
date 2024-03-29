@@ -316,7 +316,7 @@ final class TotalLoadModelTests: XCTestCase {
     func testSeoulScheduleLoadInputError(){
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
-            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
             , isFirst: false, isNow: false)
         
         let blocking = data.toBlocking()
@@ -505,7 +505,7 @@ final class TotalLoadModelTests: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
             isFirst: false, isNow: false)
         data
             .subscribe(onNext: {
