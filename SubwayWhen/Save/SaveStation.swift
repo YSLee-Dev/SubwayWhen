@@ -7,9 +7,7 @@
 
 import Foundation
 
-import RxDataSources
-
-struct SaveStation: Codable, Equatable, IdentifiableType {
+struct SaveStation: Codable, Equatable {
     let id: String
     let stationName: String
     let stationCode: String
@@ -31,10 +29,4 @@ struct SaveStation: Codable, Equatable, IdentifiableType {
     }
 }
 
-extension SaveStation {
-    typealias Identity = String
-    
-    var identity: String {
-        self.id
-    }
-}
+
