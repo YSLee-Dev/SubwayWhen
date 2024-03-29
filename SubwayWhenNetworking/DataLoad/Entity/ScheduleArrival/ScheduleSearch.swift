@@ -12,6 +12,15 @@ struct ScheduleSearch{
     let upDown : String
     let exceptionLastStation : String
     let line : String
-    var type : ScheduleType
     let korailCode : String
+    
+    var allowScheduleLoad: ScheduleType {
+        if  line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == "" {
+            return .Unowned
+        } else if line == "경의선" || line == "경춘선" || line == "수인분당선" {
+            return .Korail
+        } else {
+            return .Seoul
+        }
+    }
 }

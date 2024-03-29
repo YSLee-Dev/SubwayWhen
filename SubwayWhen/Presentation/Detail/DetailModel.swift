@@ -60,25 +60,13 @@ class DetailModel : DetailModelProtocol{
     }
     
     func mainCellDataToScheduleSearch(_ item : DetailLoadData) -> ScheduleSearch{
-        var searchData = ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, type: .Seoul, korailCode: item.korailCode)
-        
-        if item.lineNumber == "경의선" || item.lineNumber == "경춘선" || item.lineNumber == "수인분당선" {
-            searchData.type = .Korail
-            
-            return searchData
-        }else if item.lineNumber == "신분당선" || item.lineNumber == "공항철도" || item.lineNumber == "우이신설경전철" || item.lineNumber == ""{
-            searchData.type = .Unowned
-            
-            return searchData
-        }else{
-            return searchData
-        }
+        ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, korailCode: item.korailCode)
     }
     
     func scheduleLoad(_ data : ScheduleSearch) -> Observable<[ResultSchdule]>{
-        if data.type == .Korail{
+        if data.allowScheduleLoad == .Korail{
             return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
-        }else if data.type == .Seoul{
+        }else if data.allowScheduleLoad == .Seoul{
             return self.model.seoulScheduleLoad(data, isFirst: false, isNow: false)
         }else {
             return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])
