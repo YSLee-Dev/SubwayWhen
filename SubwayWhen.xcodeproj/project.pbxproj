@@ -337,6 +337,10 @@
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
 		B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */; };
 		B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */; };
+		FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
+		FA4CB7772BB64FA7003C41F6 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
+		FA4CB7792BB651C0003C41F6 /* SaveStation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */; };
+		FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB89293627AE00C4ED80 /* SaveStation.swift */; };
 		FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */; };
 		FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9E2A08FCBE00A8E1FF /* SwiftUI.framework */; };
 		FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */; };
@@ -344,6 +348,7 @@
 		FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F62BB566A800B95B52 /* AppIntent.swift */; };
 		FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD2F5F82BB566A900B95B52 /* Assets.xcassets */; };
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -721,12 +726,16 @@
 		B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionData.swift; sourceTree = "<group>"; };
 		B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellData.swift; sourceTree = "<group>"; };
 		EBD1759627CE8B434B29B6B3 /* Pods-SubwayWhen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.debug.xcconfig"; sourceTree = "<group>"; };
+		FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SaveStation+.swift"; sourceTree = "<group>"; };
 		FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SubwayWhenHomeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidgetBundle.swift; sourceTree = "<group>"; };
 		FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidget.swift; sourceTree = "<group>"; };
 		FAD2F5F62BB566A800B95B52 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		FAD2F5F82BB566A900B95B52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD2F5FA2BB566A900B95B52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAD2F6012BB5683A00B95B52 /* SubwayWhen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhen.entitlements; sourceTree = "<group>"; };
+		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1786,6 +1795,7 @@
 		34C6DB482936274400C4ED80 = {
 			isa = PBXGroup;
 			children = (
+				FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */,
 				34C6DB532936274400C4ED80 /* SubwayWhen */,
 				34A3036F29AF239300948EDD /* SubwayWhenTests */,
 				349C007D2A0A1B8D008A85BF /* SubwayWhenDetailWidget */,
@@ -1810,6 +1820,7 @@
 		34C6DB532936274400C4ED80 /* SubwayWhen */ = {
 			isa = PBXGroup;
 			children = (
+				FAD2F6012BB5683A00B95B52 /* SubwayWhen.entitlements */,
 				B61A6F872B6E0D710070F74C /* RequestToken.plist */,
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
@@ -1917,8 +1928,10 @@
 		34C6DB87293627AE00C4ED80 /* Save */ = {
 			isa = PBXGroup;
 			children = (
+				FAD2F6032BB568B000B95B52 /* UserDefault+.swift */,
 				34C6DB88293627AE00C4ED80 /* FixInfo.swift */,
 				34C6DB89293627AE00C4ED80 /* SaveStation.swift */,
+				FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */,
 				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
 				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
 				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
@@ -2751,6 +2764,7 @@
 				34D9EA042A556EEA0080AD17 /* LocationModalModelProtocol.swift in Sources */,
 				B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */,
 				3499DE8D29D15EE700A6E8C1 /* ReportTableViewTwoBtnCellModelProtocol.swift in Sources */,
+				FA4CB7792BB651C0003C41F6 /* SaveStation+.swift in Sources */,
 				34EEDC602A41B4A8006A1364 /* SettingVCAction.swift in Sources */,
 				34A221CE29CB1DC4003F035D /* DetailModelProtocol.swift in Sources */,
 				34D9EA122A5662290080AD17 /* LocationModalCell.swift in Sources */,
@@ -2966,6 +2980,7 @@
 				34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */,
 				34A303B429AF86FD00948EDD /* RealtimeStationArrival.swift in Sources */,
 				349E2F5129BDBF9200C54EE9 /* DetailVCDelegate.swift in Sources */,
+				FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */,
 				34A303C029AF86FD00948EDD /* LoadModel.swift in Sources */,
 				3499DEA429D1B53D00A6E8C1 /* ReportCheckModalModel.swift in Sources */,
 				34C6DB9D293627AF00C4ED80 /* SaveStation.swift in Sources */,
@@ -3011,6 +3026,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */,
+				FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */,
+				FA4CB7772BB64FA7003C41F6 /* SaveStationGroup.swift in Sources */,
 				FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */,
 				FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */,
 				FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */,
@@ -3282,6 +3300,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.315;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
@@ -3319,6 +3338,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.315;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
@@ -3355,6 +3375,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SubwayWhenHomeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
@@ -3388,6 +3409,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SubwayWhenHomeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6V8879W55Z;

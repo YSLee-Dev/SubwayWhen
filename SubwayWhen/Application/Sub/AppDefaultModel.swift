@@ -46,7 +46,7 @@ class AppDefaultModel : AppDefaultModelProtocol{
     
     // 저장된 설정 불러오기
     func saveSettingLoad() -> Result<SaveSetting, URLError>{
-        guard let data = UserDefaults.standard.data(forKey: "saveSetting") else {return .failure(.init(.dataNotAllowed))}
+        guard let data = UserDefaults.shared.data(forKey: "saveSetting") else {return .failure(.init(.dataNotAllowed))}
         guard let setting = try? PropertyListDecoder().decode(SaveSetting.self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
         
         return .success(setting)
@@ -55,7 +55,7 @@ class AppDefaultModel : AppDefaultModelProtocol{
     
     // 저장된 지하철역 불러오기
     func saveStationLoad() -> Result<[SaveStation], URLError>{
-        guard let data = UserDefaults.standard.data(forKey: "saveStation") else {return .failure(.init(.dataNotAllowed))}
+        guard let data = UserDefaults.shared.data(forKey: "saveStation") else {return .failure(.init(.dataNotAllowed))}
         guard let list = try? PropertyListDecoder().decode([SaveStation].self, from: data) else {return .failure(.init(.cannotDecodeContentData))}
         
         return .success(list)
