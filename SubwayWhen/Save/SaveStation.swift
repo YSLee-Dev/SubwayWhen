@@ -27,6 +27,12 @@ struct SaveStation: Codable, Equatable {
             return String(zeroCut[zeroCut.startIndex ..< zeroCut.index(zeroCut.startIndex, offsetBy: 4)])
         }
     }
+    
+    var widgetUseText: String {
+        let group = group == .one ? "출근" : "퇴근"
+        let exception = exceptionLastStation == "" ? "" : " (\(exceptionLastStation) 행 제외)"
+        return  group + " " +  useLine + " (" + updnLine + ") "  + "\n" + stationName + exception
+    }
 }
 
 

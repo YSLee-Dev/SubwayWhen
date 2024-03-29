@@ -44,9 +44,9 @@ struct SubwayWhenHomeWidgetEntryView : View {
         VStack {
             Text("Time:")
             Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+            
+            Text("선택한 지하철")
+            Text(entry.configuration.seletedStation)
         }
     }
 }
@@ -65,13 +65,7 @@ struct SubwayWhenHomeWidget: Widget {
 extension ConfigurationAppIntent {
     fileprivate static var smiley: ConfigurationAppIntent {
         let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
+        intent.seletedStation = "강남"
         return intent
     }
 }
@@ -80,5 +74,4 @@ extension ConfigurationAppIntent {
     SubwayWhenHomeWidget()
 } timeline: {
     SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
 }
