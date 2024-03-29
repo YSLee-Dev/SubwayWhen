@@ -70,7 +70,7 @@ class LoadModelTests : XCTestCase{
     
     func testSeoulStationScheduleLoad(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulStationScheduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", type: .Unowned, korailCode: ""))
+        let data = self.seoulScheduleLoadModel.seoulStationScheduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", korailCode: ""))
         
         let filterData = data
             .asObservable()
@@ -108,7 +108,7 @@ class LoadModelTests : XCTestCase{
     
     func testKorailScheduleLoad(){
         // GIVEN
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", type: .Unowned, korailCode: ""))
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "",  korailCode: ""))
         
         let filterData = data
             .asObservable()
