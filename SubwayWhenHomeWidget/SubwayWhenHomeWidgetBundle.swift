@@ -7,9 +7,14 @@
 
 import WidgetKit
 import SwiftUI
+import Firebase
 
 @main
 struct SubwayWhenHomeWidgetBundle: WidgetBundle {
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Widget {
         SubwayWhenHomeWidget()
     }

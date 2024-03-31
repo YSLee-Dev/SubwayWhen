@@ -7,33 +7,49 @@
 
 import WidgetKit
 import SwiftUI
+import RxSwift
 
 struct Provider: AppIntentTimelineProvider {
+    let totalLoadModel: TotalLoadProtocol = TotalLoadModel()
+    let bag = DisposeBag()
+    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        SimpleEntry(date: Date(), scheduleData:[ .init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: ConfigurationAppIntent())
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+        SimpleEntry(date: Date(), scheduleData:[ .init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: configuration)
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
+        
+        guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
+              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data),
+              // 위젯에서 선택한 항목을 고름
+              let nowWidgetShowStation = list.filter({$0.widgetUseText ==  configuration.seletedStation}).first
+        else {return Timeline(entries: entries, policy: .atEnd)}
+        
+        let scheduleRequest = ScheduleSearch(stationCode: nowWidgetShowStation.stationCode, upDown: nowWidgetShowStation.updnLine, exceptionLastStation: nowWidgetShowStation.exceptionLastStation, line: nowWidgetShowStation.line, korailCode: nowWidgetShowStation.korailCode)
+        
+        var scheduleResult: Observable<[ResultSchdule]>!
+        if scheduleRequest.allowScheduleLoad  == .Korail{
+            scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true)
+        } else if scheduleRequest.allowScheduleLoad == .Seoul {
+            scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
+        } else {
+            return  Timeline(entries: entries, policy: .after(.now.addingTimeInterval(600)))
         }
-
-        return Timeline(entries: entries, policy: .atEnd)
+        
+        let asyncData = await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
+        entries = [SimpleEntry(date: .now.addingTimeInterval(600), scheduleData: asyncData, configuration: configuration)]
+        return Timeline(entries: entries, policy: .after(.now.addingTimeInterval(600)))
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let scheduleData: [ResultSchdule]
     let configuration: ConfigurationAppIntent
 }
 
@@ -46,7 +62,11 @@ struct SubwayWhenHomeWidgetEntryView : View {
             Text(entry.date, style: .time)
             
             Text("선택한 지하철")
-            Text(entry.configuration.seletedStation)
+            Text(entry.configuration.seletedStation ?? "없음")
+            
+            Text("TEST")
+            Text(entry.scheduleData.first?.useArrTime ?? "오류")
+            Text(entry.scheduleData.first?.startTime ?? "오류")
         }
     }
 }
@@ -73,5 +93,5 @@ extension ConfigurationAppIntent {
 #Preview(as: .systemSmall) {
     SubwayWhenHomeWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
+    SimpleEntry(date: .now, scheduleData: [.init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: .smiley)
 }
