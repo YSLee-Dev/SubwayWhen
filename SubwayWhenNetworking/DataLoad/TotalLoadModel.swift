@@ -13,6 +13,7 @@ import RxCocoa
 
 class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
+    private let bag = DisposeBag()
     
     init(loadModel : LoadModel = .init()){
         self.loadModel = loadModel
@@ -284,6 +285,16 @@ class TotalLoadModel : TotalLoadProtocol {
     
     func importantDataLoad() -> RxSwift.Observable<ImportantData> {
         self.loadModel.importantDataLoad()
+    }
+    
+    func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule] {
+        return await withCheckedContinuation { continuation in
+            scheduleData
+                .subscribe(onNext: { data in
+                    continuation.resume(returning: data)
+                })
+                .disposed(by: self.bag)
+        }
     }
     
     private func timeFormatter(date : Date) -> String {
