@@ -12,7 +12,7 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "위젯에서 보고 싶은 지하철역을 골라주세요."
     
     @Parameter(title: "지하철역 선택", optionsProvider: SaveStationProvider())
-    var seletedStation: String
+    var seletedStation: String?
     
     struct SaveStationProvider: DynamicOptionsProvider {
         typealias Result = [String]
