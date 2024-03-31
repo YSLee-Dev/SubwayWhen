@@ -398,6 +398,9 @@
 		FA4CB7C92BB687E9003C41F6 /* SearchStaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB78293627AE00C4ED80 /* SearchStaion.swift */; };
 		FA4CB7CA2BB68882003C41F6 /* SaveStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB89293627AE00C4ED80 /* SaveStation.swift */; };
 		FA4CB7CB2BB68903003C41F6 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
+		FA4CB7F52BB6C2A5003C41F6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA4CB7F42BB6C2A5003C41F6 /* GoogleService-Info.plist */; };
+		FA4CB7F62BB92149003C41F6 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
+		FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
 		FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */; };
 		FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9E2A08FCBE00A8E1FF /* SwiftUI.framework */; };
 		FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */; };
@@ -812,6 +815,7 @@
 		FA4CB7822BB68473003C41F6 /* SubwayWhenNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenNetworking.h; sourceTree = "<group>"; };
 		FA4CB7B82BB685EA003C41F6 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4CB7B92BB685EA003C41F6 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA4CB7F42BB6C2A5003C41F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SubwayWhenHomeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidgetBundle.swift; sourceTree = "<group>"; };
 		FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidget.swift; sourceTree = "<group>"; };
@@ -2538,6 +2542,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */,
+				FA4CB7F42BB6C2A5003C41F6 /* GoogleService-Info.plist */,
 				FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */,
 				FAD2F5F62BB566A800B95B52 /* AppIntent.swift */,
 				FAD2F5F82BB566A900B95B52 /* Assets.xcassets */,
@@ -2757,6 +2762,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA4CB7F62BB92149003C41F6 /* RequestToken.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2764,7 +2770,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */,
 				FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */,
+				FA4CB7F52BB6C2A5003C41F6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
