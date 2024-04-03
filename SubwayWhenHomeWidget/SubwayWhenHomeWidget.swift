@@ -9,6 +9,16 @@ import WidgetKit
 import SwiftUI
 import RxSwift
 
+struct Preview {
+    static let saveStationData = SaveStation(id: "preview", stationName: "강남", stationCode: "222", updnLine: "외선", line: "02호선", lineCode: "1002", group: .one, exceptionLastStation: "", korailCode: "")
+    static let scheduleData = [
+        ResultSchdule(startTime: "9:00", type: .Seoul, isFast: "", startStation: "시청", lastStation: "성수"),
+        ResultSchdule(startTime: "9:02", type: .Seoul, isFast: "", startStation: "성수", lastStation: "신도림"),
+        ResultSchdule(startTime: "9:04", type: .Seoul, isFast: "", startStation: "시청", lastStation: "성수"),
+        ResultSchdule(startTime: "9:06", type: .Seoul, isFast: "", startStation: "성수", lastStation: "시청")
+    ]
+}
+
 struct Provider: AppIntentTimelineProvider {
     private let totalLoadModel: TotalLoadProtocol = TotalLoadModel()
     private var saveStation: [SaveStation] {
@@ -18,11 +28,16 @@ struct Provider: AppIntentTimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), scheduleData:[ .init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: ConfigurationAppIntent())
+        return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent())
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), scheduleData:[ .init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: configuration)
+        if self.saveStation.isEmpty {
+            return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent())
+        } else {
+            let scheduleData = await self.scheduleLoad(saveStation: self.saveStation.first!)
+            return SimpleEntry(date: Date(), scheduleData: scheduleData, configuration: ConfigurationAppIntent())
+        }
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
@@ -34,20 +49,8 @@ struct Provider: AppIntentTimelineProvider {
             // 선택된 지하철이 없는 경우 Timeine을 재로딩하지 않음
             return Timeline(entries: entries, policy: .never)
         }
-        
-        let scheduleRequest = ScheduleSearch(stationCode: nowWidgetShowStation.stationCode, upDown: nowWidgetShowStation.updnLine, exceptionLastStation: nowWidgetShowStation.exceptionLastStation, line: nowWidgetShowStation.line, korailCode: nowWidgetShowStation.korailCode)
-        
-        var scheduleResult: Observable<[ResultSchdule]>!
-        if scheduleRequest.allowScheduleLoad  == .Korail{
-            scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true)
-        } else if scheduleRequest.allowScheduleLoad == .Seoul {
-            scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
-        } else {
-            // 지원되지 않는 지하철을 선택했을 경우 Timeine을 재로딩하지 않음
-            return  Timeline(entries: entries, policy: .never)
-        }
-        
-        let asyncData = await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
+
+        let asyncData = await self.scheduleLoad(saveStation: nowWidgetShowStation)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
@@ -65,7 +68,7 @@ struct Provider: AppIntentTimelineProvider {
                     backLoadingTime =  asyncData[ index - 2].startTime
                 }
                 
-                if scheduleRequest.allowScheduleLoad == .Korail {
+                if scheduleData.first?.type == .Korail {
                     loadingTime.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
                     backLoadingTime?.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
                     loadingTime = String(loadingTime.dropLast(2))
@@ -74,7 +77,7 @@ struct Provider: AppIntentTimelineProvider {
                 }
                 
                 if backLoadingTime != nil {
-                    backLoadingTime = String(backLoadingTime!.dropLast(scheduleRequest.allowScheduleLoad == .Korail ? 2 : 3))
+                    backLoadingTime = String(backLoadingTime!.dropLast(scheduleData.first?.type == .Korail ? 2 : 3))
                 }
                 
                 let currentDateString = dateFormatter.string(from:  Date())
@@ -95,6 +98,19 @@ struct Provider: AppIntentTimelineProvider {
         }
         return Timeline(entries: entries, policy: .atEnd)
     }
+    
+    private func scheduleLoad(saveStation: SaveStation) async -> [ResultSchdule] {
+        let scheduleRequest = ScheduleSearch(stationCode: saveStation.stationCode, upDown: saveStation.updnLine, exceptionLastStation: saveStation.exceptionLastStation, line: saveStation.line, korailCode: saveStation.korailCode)
+        
+        var scheduleResult: Observable<[ResultSchdule]>!
+        if scheduleRequest.allowScheduleLoad  == .Korail{
+            scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true)
+        } else if scheduleRequest.allowScheduleLoad == .Seoul {
+            scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
+        }
+        
+        return await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
+    }
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -103,11 +119,11 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationAppIntent
     var nowWidgetShowStation: SaveStation? {
         guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
-              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data),
-              // 위젯에서 선택한 항목을 고름
-              let nowWidgetShowStation = list.filter({$0.widgetUseText ==  configuration.seletedStation}).first
+              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data)
         else {return nil}
-        return nowWidgetShowStation
+        // 위젯에서 선택한 항목을 고름
+        let nowWidgetShowStation = list.filter({$0.widgetUseText ==  configuration.seletedStation}).first
+        return nowWidgetShowStation ?? list.first
     }
 }
 
@@ -116,7 +132,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
     @Environment(\.widgetFamily) private var widgetFamily
 
     var body: some View {
-        if let seletedStation = entry.nowWidgetShowStation {
+        let seletedStation = entry.nowWidgetShowStation ??  (entry.nowWidgetShowStation ?? Preview.saveStationData) 
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
                     Text(seletedStation.useLine)
@@ -176,12 +192,6 @@ struct SubwayWhenHomeWidgetEntryView : View {
                         .padding(.leading, 2.5)
                     }
                 }
-                
-            }
-        } else {
-            Text("현재 선택된 지하철역이 없어요.")
-                .foregroundStyle(Color(uiColor: .label))
-                .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
         }
     }
 }
