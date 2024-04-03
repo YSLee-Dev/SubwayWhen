@@ -192,7 +192,6 @@
 		34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BDF295028A700FB0DDB /* EditViewModel.swift */; };
 		34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BE429502BE100FB0DDB /* EditViewCell.swift */; };
 		34A3F0A72AB8210B0012115F /* ImportantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3F0A62AB8210B0012115F /* ImportantData.swift */; };
-		34A40A652A1B3B0500D4D51C /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
 		34A486232987C00E007F3D1A /* DetailTableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A486222987C00E007F3D1A /* DetailTableHeaderViewModel.swift */; };
 		34A4F2722A5263FB002CA564 /* CollectionViewCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A4F2712A5263FB002CA564 /* CollectionViewCellCustom.swift */; };
 		34A4F2742A527132002CA564 /* ModalSubCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A4F2732A527132002CA564 /* ModalSubCustomButton.swift */; };
@@ -401,6 +400,8 @@
 		FA4CB7F52BB6C2A5003C41F6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA4CB7F42BB6C2A5003C41F6 /* GoogleService-Info.plist */; };
 		FA4CB7F62BB92149003C41F6 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
 		FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
+		FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
+		FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
 		FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */; };
 		FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9E2A08FCBE00A8E1FF /* SwiftUI.framework */; };
 		FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */; };
@@ -2911,7 +2912,7 @@
 				349C00882A0A1B92008A85BF /* SubwayWhenDetailWidget.intentdefinition in Sources */,
 				349C00812A0A1B8D008A85BF /* SubwayWhenDetailWidgetLiveActivity.swift in Sources */,
 				349C00922A0A1BE8008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
-				34A40A652A1B3B0500D4D51C /* ViewStyle.swift in Sources */,
+				FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				349C007F2A0A1B8D008A85BF /* SubwayWhenDetailWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3291,6 +3292,7 @@
 				FA4CB7B42BB684B1003C41F6 /* ImportantData.swift in Sources */,
 				FA4CB7B52BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
 				FA4CB7B62BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
+				FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				FA4CB7B72BB684B1003C41F6 /* KorailBody.swift in Sources */,
 				FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */,
 				FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */,
@@ -3586,7 +3588,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3624,7 +3626,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3661,7 +3663,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3703,7 +3705,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3742,7 +3744,7 @@
 				INFOPLIST_FILE = SubwayWhenHomeWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SubwayWhenHomeWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3777,7 +3779,7 @@
 				INFOPLIST_FILE = SubwayWhenHomeWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SubwayWhenHomeWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
