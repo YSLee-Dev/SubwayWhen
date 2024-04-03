@@ -14,7 +14,7 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
     @Parameter(title: "지하철역 선택", optionsProvider: SaveStationProvider())
     var seletedStation: String?
     
-    @Parameter(title: "현재 시각 시간표 포함 여부", default: true)
+    @Parameter(title: "현재 시각 시간표 포함", default: true)
     var nowTimeScheduleIsInsert: Bool
     
     struct SaveStationProvider: DynamicOptionsProvider {
