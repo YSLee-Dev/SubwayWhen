@@ -10,9 +10,12 @@ import SwiftUI
 import RxSwift
 
 struct Provider: AppIntentTimelineProvider {
-    let totalLoadModel: TotalLoadProtocol = TotalLoadModel()
-    let bag = DisposeBag()
-    @Environment(\.widgetFamily) private var widgetFamily
+    private let totalLoadModel: TotalLoadProtocol = TotalLoadModel()
+    private var saveStation: [SaveStation] {
+        guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
+              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data) else {return []}
+        return list
+    }
     
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), scheduleData:[ .init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: ConfigurationAppIntent())
@@ -25,11 +28,12 @@ struct Provider: AppIntentTimelineProvider {
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
         
-        guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
-              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data),
-              // 위젯에서 선택한 항목을 고름
-              let nowWidgetShowStation = list.filter({$0.widgetUseText ==  configuration.seletedStation}).first
-        else {return Timeline(entries: entries, policy: .atEnd)}
+        // 위젯에서 선택한 항목을 고름
+        guard  let nowWidgetShowStation = self.saveStation.filter({$0.widgetUseText ==  configuration.seletedStation}).first
+        else {
+            // 선택된 지하철이 없는 경우 Timeine을 재로딩하지 않음
+            return Timeline(entries: entries, policy: .never)
+        }
         
         let scheduleRequest = ScheduleSearch(stationCode: nowWidgetShowStation.stationCode, upDown: nowWidgetShowStation.updnLine, exceptionLastStation: nowWidgetShowStation.exceptionLastStation, line: nowWidgetShowStation.line, korailCode: nowWidgetShowStation.korailCode)
         
@@ -39,12 +43,57 @@ struct Provider: AppIntentTimelineProvider {
         } else if scheduleRequest.allowScheduleLoad == .Seoul {
             scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
         } else {
-            return  Timeline(entries: entries, policy: .after(.now.addingTimeInterval(600)))
+            // 지원되지 않는 지하철을 선택했을 경우 Timeine을 재로딩하지 않음
+            return  Timeline(entries: entries, policy: .never)
         }
         
         let asyncData = await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
-        entries = [SimpleEntry(date: .now.addingTimeInterval(600), scheduleData: asyncData, configuration: configuration)]
-        return Timeline(entries: entries, policy: .after(.now.addingTimeInterval(600)))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone.current
+        
+        if asyncData.count <= 3 {
+            // 데이터가 4개 이하인 경우 300초 이후 다시 로드하도록
+            entries = [SimpleEntry(date: .now.addingTimeInterval(300), scheduleData: asyncData, configuration: configuration)]
+        } else {
+            for index in stride(from: 1, through: asyncData.count - 1, by: 2) {
+                let scheduleData = Array(asyncData[index - 1 ... min(index + 2 , asyncData.count - 1)])
+                var loadingTime = scheduleData[0].startTime
+                var backLoadingTime: String?
+                
+                if index != 1 {
+                    backLoadingTime =  asyncData[ index - 2].startTime
+                }
+                
+                if scheduleRequest.allowScheduleLoad == .Korail {
+                    loadingTime.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
+                    backLoadingTime?.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
+                    loadingTime = String(loadingTime.dropLast(2))
+                } else {
+                    loadingTime = String(loadingTime.dropLast(3))
+                }
+                
+                if backLoadingTime != nil {
+                    backLoadingTime = String(backLoadingTime!.dropLast(scheduleRequest.allowScheduleLoad == .Korail ? 2 : 3))
+                }
+                
+                let currentDateString = dateFormatter.string(from:  Date())
+                let combinedDateString = "\(currentDateString.prefix(10)) \(loadingTime)"
+                
+                if let targetDate = dateFormatter.date(from: combinedDateString) {
+                    var loadingDate: Date!
+                    if backLoadingTime == nil {
+                        loadingDate = targetDate.addingTimeInterval(-300) // 전 시간이 없는 경우
+                    } else {
+                        let backLoadingDate = dateFormatter.date(from:  "\(currentDateString.prefix(10)) \(backLoadingTime!)")!
+                        let reloadingTime =  backLoadingDate.timeIntervalSince(targetDate)
+                        loadingDate = targetDate.addingTimeInterval(reloadingTime +  (configuration.nowTimeScheduleIsInsert ? 60.0 : 0.0))
+                    }
+                    entries.append(SimpleEntry(date: loadingDate, scheduleData: scheduleData, configuration: configuration))
+                }
+            }
+        }
+        return Timeline(entries: entries, policy: .atEnd)
     }
 }
 
