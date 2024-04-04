@@ -64,9 +64,9 @@ class DetailModel : DetailModelProtocol{
     }
     
     func scheduleLoad(_ data : ScheduleSearch) -> Observable<[ResultSchdule]>{
-        if data.allowScheduleLoad == .Korail{
+        if data.lineScheduleType == .Korail{
             return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: false, isNow: false)
-        }else if data.allowScheduleLoad == .Seoul{
+        }else if data.lineScheduleType == .Seoul{
             return self.model.seoulScheduleLoad(data, isFirst: false, isNow: false)
         }else {
             return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "정보없음", startStation: "정보없음", lastStation: "정보없음")])

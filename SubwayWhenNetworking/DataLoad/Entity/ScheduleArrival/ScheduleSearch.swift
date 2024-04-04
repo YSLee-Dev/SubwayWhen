@@ -14,7 +14,7 @@ struct ScheduleSearch{
     let line : String
     let korailCode : String
     
-    var allowScheduleLoad: ScheduleType {
+    var lineScheduleType: ScheduleType {
         if  line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == "" {
             return .Unowned
         } else if line == "경의선" || line == "경춘선" || line == "수인분당선" {

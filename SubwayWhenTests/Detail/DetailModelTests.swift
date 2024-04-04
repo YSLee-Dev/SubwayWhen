@@ -98,7 +98,7 @@ final class DetailModelTests: XCTestCase {
         let dummyData = mainCellDummyData
         
         // WHEN
-        let requestType = data.allowScheduleLoad
+        let requestType = data.lineScheduleType
         let dummyType = ScheduleType.Seoul
         
         let requestStationCode = data.stationCode
@@ -120,7 +120,7 @@ final class DetailModelTests: XCTestCase {
         let data = self.arrivalModel.mainCellDataToScheduleSearch(DetailLoadData(upDown: "", stationName: "", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
 
         // WHEN
-        let requestType = data.allowScheduleLoad
+        let requestType = data.lineScheduleType
         let dummyType = ScheduleType.Unowned
         
         let requestStationCode = data.stationCode

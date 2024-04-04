@@ -33,6 +33,10 @@ struct SaveStation: Codable, Equatable {
         let exception = exceptionLastStation == "" ? "" : " (\(exceptionLastStation) 행 제외)"
         return  group + " " +  useLine + " (" + updnLine + ") "  + "\n" + stationName + exception
     }
+    
+    var allowScheduleLoad: Bool {
+        return !(line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == "")
+    }
 }
 
 
