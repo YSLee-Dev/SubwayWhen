@@ -24,19 +24,19 @@ struct Provider: AppIntentTimelineProvider {
     private var saveStation: [SaveStation] {
         guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
               let list = try? PropertyListDecoder().decode([SaveStation].self, from: data) else {return []}
-        return list
+        return  list.filter {$0.allowScheduleLoad}
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent())
+        return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: Preview.saveStationData)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
         if self.saveStation.isEmpty {
-            return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent())
+            return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: Preview.saveStationData)
         } else {
             let scheduleData = await self.scheduleLoad(saveStation: self.saveStation.first!)
-            return SimpleEntry(date: Date(), scheduleData: scheduleData, configuration: ConfigurationAppIntent())
+            return SimpleEntry(date: Date(), scheduleData: scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: self.saveStation.filter({$0.widgetUseText ==  configuration.seletedStation}).first ?? Preview.saveStationData)
         }
     }
     
@@ -57,7 +57,7 @@ struct Provider: AppIntentTimelineProvider {
         
         if asyncData.count <= 3 {
             // 데이터가 4개 이하인 경우 300초 이후 다시 로드하도록
-            entries = [SimpleEntry(date: .now.addingTimeInterval(300), scheduleData: asyncData, configuration: configuration)]
+            entries = [SimpleEntry(date: .now.addingTimeInterval(300), scheduleData: asyncData, configuration: configuration, nowWidgetShowStation: nowWidgetShowStation)]
         } else {
             for index in stride(from: 1, through: asyncData.count - 1, by: 2) {
                 let scheduleData = Array(asyncData[index - 1 ... min(index + 2 , asyncData.count - 1)])
@@ -92,7 +92,7 @@ struct Provider: AppIntentTimelineProvider {
                         let reloadingTime =  backLoadingDate.timeIntervalSince(targetDate)
                         loadingDate = targetDate.addingTimeInterval(reloadingTime +  (configuration.nowTimeScheduleIsInsert ? 60.0 : 0.0))
                     }
-                    entries.append(SimpleEntry(date: loadingDate, scheduleData: scheduleData, configuration: configuration))
+                    entries.append(SimpleEntry(date: loadingDate, scheduleData: scheduleData, configuration: configuration, nowWidgetShowStation: nowWidgetShowStation))
                 }
             }
         }
@@ -103,9 +103,9 @@ struct Provider: AppIntentTimelineProvider {
         let scheduleRequest = ScheduleSearch(stationCode: saveStation.stationCode, upDown: saveStation.updnLine, exceptionLastStation: saveStation.exceptionLastStation, line: saveStation.line, korailCode: saveStation.korailCode)
         
         var scheduleResult: Observable<[ResultSchdule]>!
-        if scheduleRequest.allowScheduleLoad  == .Korail{
+        if scheduleRequest.lineScheduleType  == .Korail{
             scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true)
-        } else if scheduleRequest.allowScheduleLoad == .Seoul {
+        } else if scheduleRequest.lineScheduleType == .Seoul {
             scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
         }
         
@@ -117,14 +117,7 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let scheduleData: [ResultSchdule]
     let configuration: ConfigurationAppIntent
-    var nowWidgetShowStation: SaveStation? {
-        guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
-              let list = try? PropertyListDecoder().decode([SaveStation].self, from: data)
-        else {return nil}
-        // 위젯에서 선택한 항목을 고름
-        let nowWidgetShowStation = list.filter({$0.widgetUseText ==  configuration.seletedStation}).first
-        return nowWidgetShowStation ?? list.first
-    }
+    var nowWidgetShowStation: SaveStation
 }
 
 struct SubwayWhenHomeWidgetEntryView : View {
@@ -132,7 +125,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
     @Environment(\.widgetFamily) private var widgetFamily
 
     var body: some View {
-        let seletedStation = entry.nowWidgetShowStation ??  (entry.nowWidgetShowStation ?? Preview.saveStationData) 
+        let seletedStation = entry.nowWidgetShowStation
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
                     Text(seletedStation.useLine)
@@ -240,5 +233,5 @@ extension ConfigurationAppIntent {
 #Preview(as: .systemSmall) {
     SubwayWhenHomeWidget()
 } timeline: {
-    SimpleEntry(date: .now, scheduleData: [.init(startTime: "9:00", type: .Seoul, isFast: "", startStation: "강남", lastStation: "성수")], configuration: .smiley)
+    SimpleEntry(date: .now, scheduleData: Preview.scheduleData, configuration: .smiley, nowWidgetShowStation: Preview.saveStationData)
 }

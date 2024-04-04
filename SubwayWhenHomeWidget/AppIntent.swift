@@ -25,7 +25,7 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
                   let list = try? PropertyListDecoder().decode([SaveStation].self, from: data)
             else {return []}
             
-            return list.map {$0.widgetUseText}
+            return list.filter{$0.allowScheduleLoad}.map {$0.widgetUseText}
         }
     }
 }
