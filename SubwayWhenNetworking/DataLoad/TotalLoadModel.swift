@@ -77,6 +77,7 @@ class TotalLoadModel : TotalLoadProtocol {
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) ->  Observable<[ResultSchdule]>{
         guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
         let weekDay = Calendar.current.component(.weekday, from: Date())
+        var retry = false
         
         let requestRry = BehaviorSubject<Void>(value: Void())
         var searchInfo = scheduleSearch
@@ -89,12 +90,18 @@ class TotalLoadModel : TotalLoadProtocol {
             .asObservable()
         
         let success = request
-            .map{data -> [KorailScdule] in
+            .map{data -> [KorailScdule]? in
                 guard case .success(let value) = data else {
                     searchInfo.stationCode = searchInfo.stationCode.lowercased()
                     requestRry.onNext(Void())
                     requestRry.onCompleted()
-                    return []
+                    
+                    if !retry {
+                        retry = true
+                        return nil
+                    } else {
+                        return []
+                    }
                 }
                 requestRry.onCompleted()
                 return value.body
@@ -111,7 +118,7 @@ class TotalLoadModel : TotalLoadProtocol {
         }
         
         // 상하행 구분 / 짝수일 경우 상행, 홀수일 경우 하행
-        let updownCheck = success.map{data in
+        let updownCheck = success.filter {$0 != nil}.map {$0!}.map{data in
             return data.filter{
                 let updownRequest = Int(String($0.trainCode.last ?? "9")) ?? 9
                 if updownRequest % 2 == 0{
