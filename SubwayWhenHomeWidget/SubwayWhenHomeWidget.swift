@@ -187,6 +187,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
                     }
                 }
         }
+            .widgetURL(URL(string: "widget://deeplink?text=\(entry.configuration.seletedStation?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"))
     }
 }
 
