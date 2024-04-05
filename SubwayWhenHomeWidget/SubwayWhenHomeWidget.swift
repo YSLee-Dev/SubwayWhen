@@ -36,7 +36,7 @@ struct Provider: AppIntentTimelineProvider {
             return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: Preview.saveStationData)
         } else {
             let scheduleData = await self.scheduleLoad(saveStation: self.saveStation.first!)
-            return SimpleEntry(date: Date(), scheduleData: scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: self.saveStation.filter({$0.widgetUseText ==  configuration.seletedStation}).first ?? Preview.saveStationData)
+            return SimpleEntry(date: Date(), scheduleData: scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: self.saveStation.first ?? Preview.saveStationData)
         }
     }
     
@@ -126,6 +126,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
 
     var body: some View {
         let seletedStation = entry.nowWidgetShowStation
+        
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
                     Text(seletedStation.useLine)
@@ -219,6 +220,9 @@ struct SubwayWhenHomeWidget: Widget {
             SubwayWhenHomeWidgetEntryView(entry: entry)
                 .containerBackground(Color("AppIconColor"), for: .widget)
         }
+        .configurationDisplayName("시간표 확인하기")
+        .description("원하는 지하철역의 시간표를 빠르게 확인할 수 있어요.")
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
