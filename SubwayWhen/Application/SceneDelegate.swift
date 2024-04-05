@@ -34,6 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 네트워크 감지 class
         NetworkMonitor.shared.monitorStart()
+        
+        // 딥링크 처리
+        self.deepLinkMove(url: connectionOptions.urlContexts.first?.url)
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -46,7 +49,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url,
+        self.deepLinkMove(url: URLContexts.first?.url)
+    }
+}
+
+private extension SceneDelegate {
+    func deepLinkMove(url: URL?) {
+        guard let url = url,
               let urlString = url.absoluteString.removingPercentEncoding,
               let startIndex = urlString.lastIndex(of: "=") // text = 부분만 추출
         else {return}
@@ -58,6 +67,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.appCoordinator?.deepLinkAction(data: seletedStation)
         }
     }
-    
 }
-
