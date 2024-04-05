@@ -164,7 +164,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
                 } else  if widgetFamily == .systemSmall {
                     VStack(spacing: 10) {
                         ForEach(result, id: \.startTime) {
-                            SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine)
+                            SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine, isFast: $0.isFast)
                                 .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                         }
                     }
@@ -172,14 +172,14 @@ struct SubwayWhenHomeWidgetEntryView : View {
                     HStack {
                         VStack(spacing: 10) {
                             ForEach(result.enumerated().filter {$0.offset % 2 == 0}.map {$0.element}, id: \.startTime) {
-                                SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine)
+                                SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine, isFast: $0.isFast)
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             }
                         }
                         .padding(.trailing, 2.5)
                         VStack(spacing: 10) {
                             ForEach(result.enumerated().filter {$0.offset % 2 == 1}.map {$0.element}, id: \.startTime) {
-                                SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine)
+                                SubwayWhenHomeWidgetSubView(time: $0.useArrTime, lastStation: $0.lastStation, lineColor: seletedStation.useLine, isFast: $0.isFast)
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             }
                         }
@@ -192,16 +192,27 @@ struct SubwayWhenHomeWidgetEntryView : View {
 }
 
 struct SubwayWhenHomeWidgetSubView : View {
+    @Environment(\.widgetFamily) private var widgetFamily
+    
     let time: String
     let lastStation: String
     let lineColor: String
+    let isFast: String
     
     var body: some View {
-        HStack {
-            Text("⏱️ " + lastStation + "행 " + time)
-                .foregroundStyle(Color(uiColor: .label))
+        HStack(spacing: 2) {
+            Text("⏱️ " + "\((widgetFamily != .systemSmall && isFast == "급행") ? "(급)" : "" )" + lastStation + "행" )
+                .foregroundStyle((widgetFamily == .systemSmall && isFast == "급행") ? Color(uiColor: .systemRed) : Color(uiColor: .label))
                 .padding(.leading, 5)
                 .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            
+            Text(time)
+                .foregroundStyle(Color(uiColor: .label))
+                .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
             
             Spacer()
         }
