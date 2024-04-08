@@ -18,14 +18,21 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
     var nowTimeScheduleIsInsert: Bool
     
     struct SaveStationProvider: DynamicOptionsProvider {
-        typealias Result = [String]
-        
-        func results() async throws -> Result {
+        var saveStation: [String] {
             guard let data = UserDefaults.shared.data(forKey: "saveStation") ,
                   let list = try? PropertyListDecoder().decode([SaveStation].self, from: data)
             else {return []}
             
             return list.filter{$0.allowScheduleLoad}.map {$0.widgetUseText}
+        }
+        typealias Result = [String]
+        
+        func results() async throws -> Result {
+            saveStation
+        }
+        
+        func defaultResult() async -> String? {
+            saveStation.first
         }
     }
 }
