@@ -10,6 +10,7 @@ import SwiftUI
 import RxSwift
 
 struct Preview {
+    static let saveStationPlaceHolderData = SaveStation(id: "previewPlaceHolder", stationName: "민실씨", stationCode: "000", updnLine: "상행", line: "00호선", lineCode: "0000", group: .one, exceptionLastStation: "", korailCode: "")
     static let saveStationData = SaveStation(id: "preview", stationName: "강남", stationCode: "222", updnLine: "외선", line: "02호선", lineCode: "1002", group: .one, exceptionLastStation: "", korailCode: "")
     static let scheduleData = [
         ResultSchdule(startTime: "9:00", type: .Seoul, isFast: "", startStation: "시청", lastStation: "성수"),
@@ -28,7 +29,7 @@ struct Provider: AppIntentTimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: Preview.saveStationData)
+        return SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: Preview.saveStationPlaceHolderData)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
