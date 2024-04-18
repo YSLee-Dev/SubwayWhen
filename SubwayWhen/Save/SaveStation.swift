@@ -19,7 +19,7 @@ struct SaveStation: Codable, Equatable {
     var korailCode: String
     
     var useLine: String{
-        let zeroCut = self.line.replacingOccurrences(of: "0", with: "")
+        let zeroCut = self.line.replacingOccurrences(of: "0", with: "").replacingOccurrences(of: "-", with: "")
         
         if zeroCut.count < 4 {
             return String(zeroCut[zeroCut.startIndex ..< zeroCut.index(zeroCut.startIndex, offsetBy: zeroCut.count)])
@@ -35,7 +35,7 @@ struct SaveStation: Codable, Equatable {
     }
     
     var allowScheduleLoad: Bool {
-        return !(line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == "")
+        return !(line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == ""  || line == "경강선" || line == "서해선" || line == "GTX-A" )
     }
 }
 
