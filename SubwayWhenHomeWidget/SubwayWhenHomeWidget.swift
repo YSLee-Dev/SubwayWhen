@@ -47,7 +47,8 @@ struct Provider: AppIntentTimelineProvider {
         // 위젯에서 선택한 항목을 고름
         guard  let nowWidgetShowStation = self.saveStation.filter({$0.widgetUseText ==  configuration.seletedStation}).first
         else {
-            // 선택된 지하철이 없는 경우 Timeine을 재로딩하지 않음
+            // 선택된 지하철이 없는 경우
+            entries.append(SimpleEntry(date: Date(), scheduleData: Preview.scheduleData, configuration: ConfigurationAppIntent(), nowWidgetShowStation: .init(id: "NOSTATION", stationName: "-", stationCode: "000", updnLine: "-",  line: "00호선", lineCode: "0000", group: .one, exceptionLastStation: "", korailCode: "")))
             return Timeline(entries: entries, policy: .never)
         }
 
@@ -130,7 +131,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
         
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
-                    Text(seletedStation.useLine)
+                    Text(entry.nowWidgetShowStation.id == "NOSTATION" ? "" : seletedStation.useLine)
                         .foregroundColor(.white)
                         .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                         .background {
@@ -158,10 +159,19 @@ struct SubwayWhenHomeWidgetEntryView : View {
                 
                 let count = widgetFamily == .systemSmall ? 2 : 4
                 let result = entry.scheduleData.count <= count ?  entry.scheduleData :  Array(entry.scheduleData[0...count - 1])
-                if result.isEmpty {
-                    Text("현재 시간표 데이터가 없어요.")
+                if result.isEmpty || entry.nowWidgetShowStation.id == "NOSTATION" {
+                    Text(result.isEmpty  ? "시간표 데이터가 없어요." : "지하철역을 추가해주세요.")
                         .foregroundStyle(Color(uiColor: .label))
                         .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color("MainColor"))
+                        }
+                    
                 } else  if widgetFamily == .systemSmall {
                     VStack(spacing: 10) {
                         ForEach(result, id: \.startTime) {
@@ -169,6 +179,7 @@ struct SubwayWhenHomeWidgetEntryView : View {
                                 .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                         }
                     }
+                    
                 } else {
                     HStack {
                         VStack(spacing: 10) {
