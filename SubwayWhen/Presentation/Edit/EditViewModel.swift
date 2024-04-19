@@ -9,6 +9,7 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import WidgetKit
 
 enum EditVCAction {
     case willDisappear
@@ -64,7 +65,7 @@ class EditViewModel {
 }
 
 private extension EditViewModel {
-    func deleteAlertID(id: String) {
+    func extensionRemove(id: String) {
         if FixInfo.saveSetting.alertGroupOneID == id {
             FixInfo.saveSetting.alertGroupOneID = ""
             self.notiManager.notiRemove(id: id)
@@ -73,12 +74,14 @@ private extension EditViewModel {
             FixInfo.saveSetting.alertGroupTwoID = ""
             self.notiManager.notiRemove(id: id)
         }
+        
+        WidgetCenter.shared.reloadTimelines(ofKind: "SubwayWhenHomeWidget")
     }
     
     func actionProcess(type: EditVCAction) {
         switch type {
         case .deleteCell(let item):
-            self.deleteAlertID(id: item.id)
+            self.extensionRemove(id: item.id)
             
             var nowValue = self.nowData.value
             var groupOne = nowValue[0].items
@@ -108,7 +111,7 @@ private extension EditViewModel {
             nowValue[now.section].items.insert(value, at: now.row)
             
             if old[0] != now[0] {
-                self.deleteAlertID(id: nowValue[now.section].items[now.row].id)
+                self.extensionRemove(id: nowValue[now.section].items[now.row].id)
                 nowValue[now.section].items[now.row].group = .one == nowValue[now.section].items[now.row].group ? .two : .one
             }
             
