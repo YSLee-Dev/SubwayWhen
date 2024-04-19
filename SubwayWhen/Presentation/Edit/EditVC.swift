@@ -26,6 +26,14 @@ class EditVC: TableVCCustom{
         $0.isHidden = true
     }
     
+    private let saveBtn = UIButton().then {
+        $0.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+    }
+    
+    private  lazy var backGestureView = UIView().then {
+        $0.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(leftGestrueCheck)))
+    }
+    
     init(
         viewModel: EditViewModel
     ){
@@ -48,7 +56,7 @@ class EditVC: TableVCCustom{
         self.bind()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         self.editAction.accept(.willDisappear)
     }
 }
@@ -61,9 +69,22 @@ private extension EditVC{
     }
     
     func layout(){
-        self.view.addSubview(self.noListLabel)
+        [self.saveBtn, self.noListLabel, backGestureView].forEach {
+            self.view.addSubview($0)
+        }
         self.noListLabel.snp.makeConstraints{
             $0.center.equalToSuperview()
+        }
+        
+        self.saveBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalTo(self.topView.backBtn)
+        }
+        
+        self.backGestureView.snp.makeConstraints {
+            $0.leading.bottom.equalToSuperview()
+            $0.width.equalTo(15)
+            $0.top.equalTo(self.topView.snp.bottom)
         }
     }
     
@@ -78,6 +99,13 @@ private extension EditVC{
         self.tableView.rx.itemMoved
             .map {
                 .moveCell($0)
+            }
+            .bind(to: self.editAction)
+            .disposed(by: self.bag)
+        
+        self.saveBtn.rx.tap
+            .map {
+                .saveBtnTap
             }
             .bind(to: self.editAction)
             .disposed(by: self.bag)
@@ -122,10 +150,27 @@ private extension EditVC{
             .drive(self.noListLabel.rx.isHidden)
             .disposed(by: self.bag)
         
+        output.saveBtnIsEnabled
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { vc, isEnabled in
+                vc.saveBtn.isEnabled = isEnabled
+                vc.backGestureView.isHidden = !isEnabled
+                vc.navigationController?.interactivePopGestureRecognizer?.isEnabled = !isEnabled
+            })
+            .disposed(by: self.bag)
+        
         // VIEW
         self.topView.backBtn.rx.tap
             .map {_ in .backBtnTap}
             .bind(to: self.editAction)
             .disposed(by: self.bag)
+    }
+    
+    @objc
+    func leftGestrueCheck(_ sender: UIGestureRecognizer) {
+        if sender.state == .began {
+            self.editAction.accept(.backBtnTap)
+        }
     }
 }
