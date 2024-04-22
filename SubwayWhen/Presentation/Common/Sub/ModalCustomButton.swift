@@ -10,10 +10,12 @@ import UIKit
 class ModalCustomButton : UIButton{
     var bgColor: UIColor
     var customTappedBG: String?
+    var disabledColor: UIColor?
     
-    init(bgColor: UIColor, customTappedBG: String?) {
+    init(bgColor: UIColor, customTappedBG: String?, disabledBG: UIColor? = nil) {
         self.bgColor = bgColor
         self.customTappedBG = customTappedBG
+        self.disabledColor = disabledBG
         
         super.init(frame: .zero)
         self.attribute()
@@ -26,6 +28,15 @@ class ModalCustomButton : UIButton{
     override var isHighlighted: Bool {
         didSet {
             self.tapBgcolorChange(isTap: self.isHighlighted)
+        }
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            if self.disabledColor == nil {return}
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.backgroundColor = self.isEnabled ? self.bgColor : self.disabledColor!
+            }
         }
     }
 }
@@ -54,7 +65,6 @@ extension ModalCustomButton {
             UIView.animate(withDuration: ViewStyle.AnimateView.speed, delay: 0.1, options: [.curveEaseOut],  animations: {
                 self.backgroundColor = self.bgColor
                 self.transform = .identity
-                
             })
         }
     }
