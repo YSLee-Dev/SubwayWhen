@@ -26,8 +26,15 @@ class EditVC: TableVCCustom{
         $0.isHidden = true
     }
     
-    private let saveBtn = UIButton().then {
-        $0.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+    private let saveBtn = ModalCustomButton(
+        bgColor: UIColor(named: "AppIconColor") ?? .systemBackground,
+        customTappedBG: "AppIconColor",
+        disabledBG: UIColor(named: "AppIconColor")?.withAlphaComponent(0.7)
+    ).then {
+        $0.setTitleColor(.white, for: .normal)
+        $0.setTitleColor(.white, for: .disabled)
+        $0.setTitle("저장", for: .normal)
+        $0.setTitle("저장", for: .disabled)
     }
     
     private  lazy var backGestureView = UIView().then {
@@ -66,6 +73,7 @@ private extension EditVC{
         self.tableView.rowHeight = 90
         self.tableView.setEditing(true, animated: true)
         self.tableView.register(EditViewCell.self, forCellReuseIdentifier: "EditViewCell")
+        self.tableView.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
     }
     
     func layout(){
@@ -76,15 +84,22 @@ private extension EditVC{
             $0.center.equalToSuperview()
         }
         
+        self.tableView.snp.remakeConstraints {
+            $0.top.equalTo(self.topView.snp.bottom)
+            $0.bottom.equalTo(self.saveBtn.snp.top).offset(-ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
         self.saveBtn.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.centerY.equalTo(self.topView.backBtn)
+            $0.bottom.equalToSuperview().inset(UIApplication.shared.safeAreaSize(position: .bottom) == 0 ? ViewStyle.padding.mainStyleViewTB :  42.5)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.height.equalTo(50)
         }
         
         self.backGestureView.snp.makeConstraints {
+            $0.top.equalTo(self.topView.snp.bottom)
             $0.leading.bottom.equalToSuperview()
             $0.width.equalTo(15)
-            $0.top.equalTo(self.topView.snp.bottom)
         }
     }
     
