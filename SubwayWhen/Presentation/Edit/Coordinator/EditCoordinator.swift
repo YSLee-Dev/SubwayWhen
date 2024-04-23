@@ -10,16 +10,17 @@ import UIKit
 class EditCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation: UINavigationController
+    let editViewModel: EditViewModel
     
     var delegate: EditCoordinatorDelegate?
     
     init(navigation: UINavigationController){
         self.navigation = navigation
+        self.editViewModel = EditViewModel()
     }
     
     func start() {
-        let editViewModel = EditViewModel()
-        let editVC = EditVC(viewModel: editViewModel)
+        let editVC = EditVC(viewModel: self.editViewModel)
         editVC.hidesBottomBarWhenPushed = true
         editViewModel.delegate = self
         
@@ -49,7 +50,11 @@ private extension EditCoordinator {
             message: nil,
             preferredStyle: .actionSheet
         )
-        alert.addAction(UIAlertAction(title: "저장하지 않음", style: .default) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: "저장", style: .default) { [weak self] _ in
+            self?.editViewModel.requestSave.onNext(Void())
+            self?.pop()
+        })
+        alert.addAction(UIAlertAction(title: "저장하지 않음", style: .destructive) { [weak self] _ in
             self?.pop()
         })
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
