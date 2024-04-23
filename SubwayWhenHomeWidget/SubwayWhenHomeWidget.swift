@@ -57,7 +57,19 @@ struct Provider: AppIntentTimelineProvider {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
         
-        if asyncData.count <= 3 {
+        if asyncData.first?.startTime == "-" {
+            // 지하철 막차 시간표까지 종료인 경우 12시에 다시 로드하도록
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone.current
+            var tomorrow = calendar.dateComponents([.year, .month, .day], from: .now)
+            tomorrow.day! += 1
+            tomorrow.hour = 0
+            tomorrow.minute = 0
+            tomorrow.second = 10 // 여유 시간
+            
+            let reloadingSecond = calendar.date(from: tomorrow)?.timeIntervalSinceNow ?? 300
+            entries = [SimpleEntry(date: .now.addingTimeInterval(reloadingSecond), scheduleData: asyncData, configuration: configuration, nowWidgetShowStation: nowWidgetShowStation)]
+        } else if asyncData.count <= 3 {
             // 데이터가 4개 이하인 경우 300초 이후 다시 로드하도록
             entries = [SimpleEntry(date: .now.addingTimeInterval(300), scheduleData: asyncData, configuration: configuration, nowWidgetShowStation: nowWidgetShowStation)]
         } else {
@@ -106,9 +118,9 @@ struct Provider: AppIntentTimelineProvider {
         
         var scheduleResult: Observable<[ResultSchdule]>!
         if scheduleRequest.lineScheduleType  == .Korail{
-            scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true)
+            scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true, isWidget: true)
         } else if scheduleRequest.lineScheduleType == .Seoul {
-            scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true)
+            scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true, isWidget: true)
         }
         
         return await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
@@ -159,8 +171,8 @@ struct SubwayWhenHomeWidgetEntryView : View {
                 
                 let count = widgetFamily == .systemSmall ? 2 : 4
                 let result = entry.scheduleData.count <= count ?  entry.scheduleData :  Array(entry.scheduleData[0...count - 1])
-                if result.isEmpty || entry.nowWidgetShowStation.id == "NOSTATION" {
-                    Text(result.isEmpty  ? "시간표 데이터가 없어요." : "지하철역을 추가해주세요.")
+                if result.first?.startTime == "-" || entry.nowWidgetShowStation.id == "NOSTATION" {
+                    Text(result.first?.startTime == "-"  ? "금일 지하철 운행 종료" : "지하철역을 추가해주세요.")
                         .foregroundStyle(Color(uiColor: .label))
                         .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                         .lineLimit(1)
