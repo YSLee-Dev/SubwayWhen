@@ -159,9 +159,9 @@ class MainModel : MainModelProtocol{
     
     func scheduleLoad(_ data: ScheduleSearch) ->  Observable<[ResultSchdule]>{
         if data.lineScheduleType == .Korail{
-            return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true)
+            return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false)
         }else if data.lineScheduleType == .Seoul{
-            return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true)
+            return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true, isWidget: false)
         }else {
             return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "정보없음", lastStation: "정보없음")])
         }
