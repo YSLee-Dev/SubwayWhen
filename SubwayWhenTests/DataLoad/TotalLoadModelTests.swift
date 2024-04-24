@@ -177,7 +177,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -211,7 +211,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -237,7 +237,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -263,7 +263,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -289,7 +289,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoadServerError(){
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(scheduleK215K1Line, isFirst: false, isNow: false)
+        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(scheduleK215K1Line, isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -317,7 +317,7 @@ final class TotalLoadModelTests: XCTestCase {
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
             .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
-            , isFirst: false, isNow: false)
+            , isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -348,7 +348,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -392,7 +392,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -429,7 +429,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -466,7 +466,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -506,7 +506,7 @@ final class TotalLoadModelTests: XCTestCase {
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
                 stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
-            isFirst: false, isNow: false)
+            isFirst: false, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
