@@ -85,10 +85,10 @@ final class DetailViewModelTests: XCTestCase {
             .disposed(by: self.bag)
         
         // WHEN
+        let reload = PublishSubject<Void>()
         let reloadEvnet = testScheduler.createHotObservable([
             .next(1, Void())
         ])
-        let reload = PublishSubject<Void>()
         reloadEvnet
             .subscribe(reload)
             .disposed(by: self.bag)
@@ -102,19 +102,21 @@ final class DetailViewModelTests: XCTestCase {
                 viewModel.model.arrvialDataLoad(data.stationName)
             }
         
+        let expectation = XCTestExpectation(description: "비동기")
         Observable.combineLatest(detailViewData, reailTimeData){[weak self] data, realTime -> [RealtimeStationArrival] in
             self?.model.arrivalDataMatching(station: data, arrivalData: realTime) ?? []
         }
         .map{ data in
-            data.map{
+            expectation.fulfill()
+            return data.map{
                 Int($0.arrivalTime) ?? 0
             }
         }
         .bind(to: realTime)
         .disposed(by: self.bag)
         
-        
         testScheduler.start()
+        wait(for: [expectation], timeout: 2.0)
         
         // THEN
         expect(observer.events).to(
@@ -129,6 +131,5 @@ final class DetailViewModelTests: XCTestCase {
                      )
             ])
         )
-        
     }
 }
