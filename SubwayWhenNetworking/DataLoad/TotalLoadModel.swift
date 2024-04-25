@@ -74,8 +74,8 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     // 코레일 시간표 계산
-    func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool) ->  Observable<[ResultSchdule]>{
-        guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
+    func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>{
+        guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
         let weekDay = Calendar.current.component(.weekday, from: Date())
         var retry = false
         
@@ -200,8 +200,8 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     // 서울 시간표 계산
-    func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool) -> Observable<[ResultSchdule]>{
-        guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
+    func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>{
+        guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
         
         var inOut = ""
         
