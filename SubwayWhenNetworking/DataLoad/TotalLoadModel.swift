@@ -70,7 +70,6 @@ class TotalLoadModel : TotalLoadProtocol {
                 guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
             }
-            .delay(.microseconds(10), scheduler: MainScheduler.asyncInstance)
             .asObservable()
     }
     
