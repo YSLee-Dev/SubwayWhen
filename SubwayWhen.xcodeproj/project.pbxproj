@@ -402,6 +402,7 @@
 		FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
 		FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
 		FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
+		FA9AA9B22BD639F300906A5B /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AA9B12BD639F300906A5B /* UIApplication+.swift */; };
 		FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */; };
 		FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BE0D9E2A08FCBE00A8E1FF /* SwiftUI.framework */; };
 		FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */; };
@@ -817,6 +818,7 @@
 		FA4CB7B82BB685EA003C41F6 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4CB7B92BB685EA003C41F6 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4CB7F42BB6C2A5003C41F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FA9AA9B12BD639F300906A5B /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SubwayWhenHomeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD2F5F22BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidgetBundle.swift; sourceTree = "<group>"; };
 		FAD2F5F42BB566A800B95B52 /* SubwayWhenHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayWhenHomeWidget.swift; sourceTree = "<group>"; };
@@ -2225,6 +2227,7 @@
 				34A4F2732A527132002CA564 /* ModalSubCustomButton.swift */,
 				34F5F0EC2962DCE80010A21D /* TopView.swift */,
 				34F5F0FC29641AC10010A21D /* TitleView.swift */,
+				FA9AA9B12BD639F300906A5B /* UIApplication+.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -3059,6 +3062,7 @@
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,
 				3497DC7B29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift in Sources */,
+				FA9AA9B22BD639F300906A5B /* UIApplication+.swift in Sources */,
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
 				3455CFA22A53DC79001ADE61 /* ModalVCActionProtocol.swift in Sources */,
 				3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */,
@@ -3409,7 +3413,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3436,7 +3440,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3577,7 +3581,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.315;
+				CURRENT_PROJECT_VERSION = 1.4.2;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3593,7 +3597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3615,7 +3619,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.315;
+				CURRENT_PROJECT_VERSION = 1.4.2;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3631,7 +3635,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
