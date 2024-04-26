@@ -10,23 +10,9 @@ import RxSwift
 
 class ReportModel : ReportModelProtocol {
     func lineListData() -> Observable<[String]>{
-        Observable<[String]>.just([
-            ReportBrandData.not.rawValue,
-            ReportBrandData.one.rawValue,
-            ReportBrandData.two.rawValue,
-            ReportBrandData.three.rawValue,
-            ReportBrandData.four.rawValue,
-            ReportBrandData.five.rawValue,
-            ReportBrandData.six.rawValue,
-            ReportBrandData.seven.rawValue,
-            ReportBrandData.eight.rawValue,
-            ReportBrandData.nine.rawValue,
-            ReportBrandData.gyeongui.rawValue,
-            ReportBrandData.airport.rawValue,
-            ReportBrandData.gyeongchun.rawValue,
-            ReportBrandData.suinbundang.rawValue,
-            ReportBrandData.shinbundang.rawValue,
-        ])
+        Observable<[String]>.just(
+            ReportBrandData.allCases.map {$0.rawValue}
+        )
     }
     
     func oneStepQuestionData() -> Observable<[ReportTableViewCellSection]>{

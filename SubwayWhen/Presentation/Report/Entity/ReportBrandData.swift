@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum ReportBrandData : String{
+enum ReportBrandData : String, CaseIterable{
+    case not = "노선을 선택해주세요."
    case one = "01호선"
    case two = "02호선"
    case three = "03호선"
@@ -21,6 +22,5 @@ enum ReportBrandData : String{
    case airport = "공항철도"
    case gyeongchun = "경춘선"
    case suinbundang = "수인분당선"
-   case shinbundang = "신분당선"
-   case not = "노선을 선택해주세요."
+    case gyeonggang = "경강선"
 }
