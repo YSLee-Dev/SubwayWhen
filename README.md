@@ -8,6 +8,7 @@
 > v1.2 개발기간: 2023.06.20 ~ 2023.07.12<br/>
 > v1.3 개발기간: 2023.09.18 ~ 2023.10.11<br/>
 > v1.3.1 개발기간: 2024.01.09 ~ 2024.03.07<br/>
+> v1.4 개발기간: 2024.03.28 ~ 2024.04.30<br/>
  
 ## 📋 지하철 민실씨 소개, 기능
 <div align=left>
@@ -16,9 +17,10 @@
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/1613caae-15ad-42b7-9271-6b2e51dd3d4b.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/f809acc6-8e18-4b8b-b697-4ce480fc22ce.png" height="350" />
  <br>
+ 
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/ed1d2dfc-9a21-4923-b312-e726387b206b.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/3a846c53-6a71-42e0-881a-c2d6080c4e4d.png" height="350" />
-<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/37af6fe5-67ee-405e-b0dd-536aa333b515.png" height="350" />
+<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/348270e5-752f-4c8b-aab8-b561878a9048" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/3c80ea6a-348c-41dc-8131-fe99a3cd30c8.png" height="350" />
 </div>
 
@@ -30,7 +32,7 @@
 -	실시간 도착 정보와 시간표 정보를 비교하여 사용자의 판단을 돕습니다.
 -	출근과 퇴근 그룹으로 나누어 저장하여, 내 출퇴근 탑승 역만 볼 수 있습니다.
 -	출퇴근 그룹에 시간을 매핑하여 원하는 시간대에 원하는 그룹을 볼 수 있고, 알림도 받을 수 있습니다. (알림은 v1.2부터 사용 가능)
--	Live Activity 기능으로 잠금화면에서도 지하철 시간표를 확인할 수 있습니다. (v1.1부터 사용 가능)
+-	Live Activity, 위젯 기능으로 홈/잠금화면에서도 지하철 시간표를 확인할 수 있습니다. (Live Activity: v1.1부터 사용 가능, 위젯: v1.4부터 사용 가능)
 - 주변에 있는 지하철을 바로 확인하고 검색할 수 있습니다. (v1.2부터 사용 가능)
 
 <br/>
@@ -40,10 +42,11 @@
 
 <br/>
 
-## 🛠 지하철 민실씨에 사용된 라이브러리
+## 🛠 지하철 민실씨에 사용된 라이브러리 / 프레임워크
+- UIKit, SwiftUI, WidgetKit, ActivityKit
 - RxSwift, RxCocoa, RxDataSources, RxOptional, RxAlamofire
 - Alamofire, Then, SnapKit, lottie-ios, AcknowList, Firebase/Analytics, Firebase/Database
-- Nimble, RxBlocking, RxTest
+- Nimble, RxBlocking, RxTest 
 
 <br/>
 
