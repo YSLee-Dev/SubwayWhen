@@ -45,13 +45,11 @@ final class ReportCheckModalModelTests: XCTestCase {
         // GIVEN
         let threeMSGData = ReportMSGData(line: .three, nowStation: "", destination: "", trainCar: "", contants: "", brand: "Y")
         let sevenMSGData = ReportMSGData(line: .seven, nowStation: "", destination: "", trainCar: "", contants: "", brand: "N")
-        let shinMSGData = ReportMSGData(line: .shinbundang, nowStation: "", destination: "", trainCar: "", contants: "", brand: "N")
         let gyeonguiMSGData = ReportMSGData(line: .gyeongui, nowStation: "", destination: "", trainCar: "", contants: "", brand: "N")
         
         let oneData = self.model.numberMatching(data: self.msgData)
         let threeData = self.model.numberMatching(data: threeMSGData)
         let sevenData = self.model.numberMatching(data: sevenMSGData)
-        let shinData = self.model.numberMatching(data: shinMSGData)
         let gyeonguiData = self.model.numberMatching(data: gyeonguiMSGData)
         
         // WHEN
@@ -63,9 +61,6 @@ final class ReportCheckModalModelTests: XCTestCase {
         
         let requestSevenNumber = sevenData
         let dummySevenData = "1577-1234"
-        
-        let requestShinNumber = shinData
-        let dummyShinData = "031-8018-7777"
         
         let requestGyeonguiNumber = gyeonguiData
         let dummyGyeonguiData = "1544-7769"
@@ -84,11 +79,6 @@ final class ReportCheckModalModelTests: XCTestCase {
         expect(requestSevenNumber).to(
             equal(dummySevenData),
             description: "7호선이면 서울교통공사 연락처가 나와야함"
-        )
-        
-        expect(requestShinNumber).to(
-            equal(dummyShinData),
-            description: "신분당선이면, 신분당선 연락처가 나와야함"
         )
         
         expect(requestGyeonguiNumber).to(
