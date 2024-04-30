@@ -13,6 +13,7 @@ import RxCocoa
 
 class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
+    private let bag = DisposeBag()
     
     init(loadModel : LoadModel = .init()){
         self.loadModel = loadModel
@@ -73,9 +74,10 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     // 코레일 시간표 계산
-    func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) ->  Observable<[ResultSchdule]>{
-        guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
+    func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>{
+        guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
         let weekDay = Calendar.current.component(.weekday, from: Date())
+        var retry = false
         
         let requestRry = BehaviorSubject<Void>(value: Void())
         var searchInfo = scheduleSearch
@@ -88,12 +90,18 @@ class TotalLoadModel : TotalLoadProtocol {
             .asObservable()
         
         let success = request
-            .map{data -> [KorailScdule] in
+            .map{data -> [KorailScdule]? in
                 guard case .success(let value) = data else {
                     searchInfo.stationCode = searchInfo.stationCode.lowercased()
                     requestRry.onNext(Void())
                     requestRry.onCompleted()
-                    return []
+                    
+                    if !retry {
+                        retry = true
+                        return nil
+                    } else {
+                        return []
+                    }
                 }
                 requestRry.onCompleted()
                 return value.body
@@ -110,7 +118,7 @@ class TotalLoadModel : TotalLoadProtocol {
         }
         
         // 상하행 구분 / 짝수일 경우 상행, 홀수일 경우 하행
-        let updownCheck = success.map{data in
+        let updownCheck = success.filter {$0 != nil}.map {$0!}.map{data in
             return data.filter{
                 let updownRequest = Int(String($0.trainCode.last ?? "9")) ?? 9
                 if updownRequest % 2 == 0{
@@ -142,7 +150,6 @@ class TotalLoadModel : TotalLoadProtocol {
                 }
             }
             
-            
             return result
                 .sorted{
                     let one = Int($0.startTime) ?? 0
@@ -152,28 +159,36 @@ class TotalLoadModel : TotalLoadProtocol {
                 }
         }
         
+        var realDataIn = false
         let filterData = schedule.map{ data in
             data.filter{
-                if isNow{
-                    if now <= Int($0.startTime) ?? 0 && !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
+                if !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
+                    if isNow{
+                        if now <= Int($0.startTime) ?? 0 {
+                            return true
+                        } else {
+                            if !realDataIn {
+                                realDataIn = true
+                            }
+                        }
+                    } else {
                         return true
-                    }else{
-                        return false
-                    }
-                }else{
-                    if !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
-                        return true
-                    }else{
-                        return false
                     }
                 }
+                return false
             }
         }
         
         return filterData
             .map{ list in
                 if list.isEmpty{
-                    return [ResultSchdule(startTime: "정보없음", type: .Korail, isFast: "", startStation: "정보없음", lastStation: "정보없음")]
+                    var result: ResultSchdule!
+                    if isWidget && realDataIn {
+                        result = ResultSchdule(startTime: "-", type: .Seoul, isFast: "", startStation: "", lastStation: "")
+                    } else {
+                        result = ResultSchdule(startTime: "정보없음", type: .Seoul, isFast: "", startStation: "정보없음", lastStation: "정보없음")
+                    }
+                    return [result]
                 }else{
                     if isFirst{
                         return [list.first!]
@@ -182,12 +197,11 @@ class TotalLoadModel : TotalLoadProtocol {
                         }
                     }
                 }
-            
     }
     
     // 서울 시간표 계산
-    func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool) -> Observable<[ResultSchdule]>{
-        guard let now = Int(self.timeFormatter(date: Date())) else {return .empty()}
+    func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>{
+        guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
         
         var inOut = ""
         
@@ -206,24 +220,25 @@ class TotalLoadModel : TotalLoadProtocol {
             }
             .asObservable()
         
-        
+        var realDataIn = false
         return schedule.map{ data -> [ScheduleStationArrival] in
             let scheduleData = data.filter{
                 guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
                 
-                if isNow{
-                    if scheduleSearch.stationCode == $0.stationCode && now <= scheduleTime && inOut == $0.upDown && !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
+                if scheduleSearch.stationCode == $0.stationCode && inOut == $0.upDown && !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
+                    if isNow {
+                        if now <= scheduleTime {
+                            return true
+                        } else {
+                            if !realDataIn {
+                               realDataIn = true
+                           }
+                        }
+                    } else {
                         return true
-                    }else{
-                        return false
-                    }
-                }else{
-                    if scheduleSearch.stationCode == $0.stationCode && inOut == $0.upDown && !(scheduleSearch.exceptionLastStation.contains($0.lastStation)){
-                        return true
-                    }else{
-                        return false
                     }
                 }
+                return false
             }
             
             if isFirst{
@@ -235,7 +250,13 @@ class TotalLoadModel : TotalLoadProtocol {
         }
         .map{ list in
             if list.isEmpty{
-                return [ResultSchdule(startTime: "정보없음", type: .Seoul, isFast: "", startStation: "정보없음", lastStation: "정보없음")]
+                var result: ResultSchdule!
+                if isWidget && realDataIn {
+                    result = ResultSchdule(startTime: "-", type: .Seoul, isFast: "", startStation: "", lastStation: "")
+                } else {
+                    result = ResultSchdule(startTime: "정보없음", type: .Seoul, isFast: "", startStation: "정보없음", lastStation: "정보없음")
+                }
+                return [result]
             }else{
                 return list.map{
                     ResultSchdule(startTime: $0.startTime, type: .Seoul, isFast: $0.isFast == "D" ? "급행" : "", startStation: $0.startStation, lastStation: $0.lastStation)
@@ -284,6 +305,16 @@ class TotalLoadModel : TotalLoadProtocol {
     
     func importantDataLoad() -> RxSwift.Observable<ImportantData> {
         self.loadModel.importantDataLoad()
+    }
+    
+    func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule] {
+        return await withCheckedContinuation { continuation in
+            scheduleData
+                .subscribe(onNext: { data in
+                    continuation.resume(returning: data)
+                })
+                .disposed(by: self.bag)
+        }
     }
     
     private func timeFormatter(date : Date) -> String {

@@ -7,9 +7,7 @@
 
 import Foundation
 
-import RxDataSources
-
-struct SaveStation: Codable, Equatable, IdentifiableType {
+struct SaveStation: Codable, Equatable {
     let id: String
     let stationName: String
     let stationCode: String
@@ -21,7 +19,7 @@ struct SaveStation: Codable, Equatable, IdentifiableType {
     var korailCode: String
     
     var useLine: String{
-        let zeroCut = self.line.replacingOccurrences(of: "0", with: "")
+        let zeroCut = self.line.replacingOccurrences(of: "0", with: "").replacingOccurrences(of: "-", with: "")
         
         if zeroCut.count < 4 {
             return String(zeroCut[zeroCut.startIndex ..< zeroCut.index(zeroCut.startIndex, offsetBy: zeroCut.count)])
@@ -29,12 +27,20 @@ struct SaveStation: Codable, Equatable, IdentifiableType {
             return String(zeroCut[zeroCut.startIndex ..< zeroCut.index(zeroCut.startIndex, offsetBy: 4)])
         }
     }
-}
-
-extension SaveStation {
-    typealias Identity = String
     
-    var identity: String {
-        self.id
+    var widgetUseText: String {
+        let group = group == .one ? "출근" : "퇴근"
+        let exception = exceptionLastStation == "" ? "" : " (\(exceptionLastStation) 행 제외)"
+        return  group + " " +  useLine + " (" + updnLine + ") "  + "\n" + stationName + exception
+    }
+    
+    var allowScheduleLoad: Bool {
+        return !(line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == ""  || line == "경강선" || line == "서해선" || line == "GTX-A" )
+    }
+    
+    var allowReport: Bool {
+        return !(line == "우이신설경전철" || line == "GTX-A" || line == "신분당선" || line == "서해선")
     }
 }
+
+

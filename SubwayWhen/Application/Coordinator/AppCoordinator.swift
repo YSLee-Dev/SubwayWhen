@@ -88,6 +88,12 @@ class AppCoordinator : Coordinator{
         
         return tabbarC
     }
+    
+    func deepLinkAction(data: SaveStation) {
+        guard let mainCoordinator = self.mainCoordinator else {return}
+        self.tabbar.selectedIndex = 0
+        mainCoordinator.notiTap(saveStation: data)
+    }
 }
 
 private extension AppCoordinator {
@@ -96,17 +102,11 @@ private extension AppCoordinator {
             .withUnretained(self)
             .subscribe(onNext: { viewModel, data in
                 guard let data = data else {return}
-                viewModel.notiTapAction(data: data)
+                viewModel.deepLinkAction(data: data)
             })
             .disposed(by: self.bag)
     }
-    
-    func notiTapAction(data: SaveStation) {
-        guard let mainCoordinator = self.mainCoordinator else {return}
-        self.tabbar.selectedIndex = 0
-        mainCoordinator.notiTap(saveStation: data)
-    }
-    
+
     func mainLoad() {
         let tabbar = self.setTabbarController()
         self.window.rootViewController = tabbar

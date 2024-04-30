@@ -12,6 +12,7 @@ import RxBlocking
 import Nimble
 
 @testable import SubwayWhen
+@testable import SubwayWhenNetworking
 
 class SearchModelTests : XCTestCase{
     var model : SearchModelProtocol!

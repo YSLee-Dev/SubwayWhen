@@ -177,7 +177,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -211,7 +211,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -237,7 +237,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isNow(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -263,7 +263,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false)
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -289,7 +289,7 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoadServerError(){
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(scheduleK215K1Line, isFirst: false, isNow: false)
+        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(scheduleK215K1Line, isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -316,8 +316,8 @@ final class TotalLoadModelTests: XCTestCase {
     func testSeoulScheduleLoadInputError(){
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
-            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", type: .Seoul, korailCode: "")
-            , isFirst: false, isNow: false)
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
+            , isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -348,7 +348,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -392,7 +392,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -429,7 +429,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -466,7 +466,7 @@ final class TotalLoadModelTests: XCTestCase {
         
         // GIVEN
         var arrayData : [ResultSchdule] = []
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: false)
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -505,8 +505,8 @@ final class TotalLoadModelTests: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", type: .Korail, korailCode: "K1"),
-            isFirst: false, isNow: false)
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
+            isFirst: false, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
                 arrayData = $0
@@ -669,6 +669,255 @@ final class TotalLoadModelTests: XCTestCase {
         expect(requestFirstData).to(
             equal(dummyFirstData),
             description: "데이터 오류 발생 시 모든 데이터는 정보없음으로 표기되어야 함"
+        )
+    }
+    
+    func testWidgetSeoulScheduleLoad() {
+        // GIVEN
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true)
+        
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.count
+        let dummyCount = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.count
+        
+        let requestStart = arrayData.first?.first?.startTime
+        let dummyStart = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row.first?.startTime
+        
+        let requestType = arrayData.first?.first?.type
+        let dummyType = ScheduleType.Seoul
+        
+        // THEN
+        expect(requestCount).toNot(
+            equal(dummyCount),
+            description: "위젯 데이터는 isNow가 True이기 때문에 개수가 달라야함"
+        )
+        
+        expect(requestStart).toNot(
+            equal(dummyStart),
+            description: "위젯 데이터는 isNow가 True이기 때문에 시작 값이 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "서울 지하철이기 때문에 Seoul 타입이 반환되어야 함"
+        )
+    }
+    
+    func testWidgetSeoulScheduleLoad_ErrorOne() {
+        // GIVEN
+        let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
+            , isFirst: false, isNow: true, isWidget: true)
+        
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.count
+        let dummyCount = 1
+        
+        let requestStartTime = arrayData.first?.first?.startTime
+        let dummyStartTime = "정보없음"
+        
+        let requestStartStation = arrayData.first?.first?.startStation
+        let dummyStartStation = "정보없음"
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "위젯 데이터도 오류 발생 시 데이터는 1개로 동일함"
+        )
+        
+        expect(requestStartTime).to(
+            equal(dummyStartTime),
+            description: "일반적인 오류 발생 시 정보없음으로 오류 동일함"
+        )
+        
+        expect(requestStartStation).to(
+            equal(dummyStartStation),
+            description: "일반적인 오류 발생 시 정보없음으로 오류  동일함"
+        )
+    }
+    
+    func testWidgetSeoulScheduleLoad_ErrorTwo() {
+        // GIVEN
+        var components = Calendar.current.dateComponents([.hour, .minute], from: .now)
+        components.hour = 23
+        components.minute = 59
+        let requestDate = Calendar.current.date(from: components)!
+        
+        let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true, requestDate: requestDate)
+        
+        let blocking = data.toBlocking()
+        let arrayData = try! blocking.toArray()
+        
+        // WHEN
+        let requestCount = arrayData.first?.count
+        let dummyCount = 1
+        
+        let requestStartTime = arrayData.first?.first?.startTime
+        let dummyStartTime = "-"
+        
+        let requestStartStation = arrayData.first?.first?.startStation
+        let dummyStartStation = ""
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "위젯 데이터도 오류 발생 시 데이터는 1개로 동일함"
+        )
+        
+        expect(requestStartTime).to(
+            equal(dummyStartTime),
+            description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 -로 표시"
+        )
+        
+        expect(requestStartStation).to(
+            equal(dummyStartStation),
+            description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 공백으로 표시"
+        )
+    }
+    
+    func testWidgetKorailScheduleLoad(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+    
+        wait(for: [testException], timeout: 3)
+    
+        // WHEN
+        let requestCount = arrayData.count
+        let dummyCount = korailScheduleDummyData.count
+        
+        let requestStart = arrayData.first?.startTime
+        let dummyStart = korailScheduleDummyData.first?.time
+        
+        let requestType = arrayData.first?.type
+        let dummyType = ScheduleType.Korail
+        
+        // THEN
+        expect(requestCount).toNot(
+            equal(dummyCount),
+            description: "위젯 데이터는 isNow가 True이기 때문에 개수가 달라야함"
+        )
+        
+        expect(requestStart).toNot(
+            equal(dummyStart),
+            description: "위젯 데이터는 isNow가 True이기 때문에 시작 값이 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "타입은 동일해야함"
+        )
+    }
+    
+    func testWidgetKorailScheduleLoad_ErrorOne(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(
+            scheduleSearch: .init(
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
+            isFirst: false, isNow: true, isWidget: true)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                print($0)
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestCount = arrayData.count
+        let dummyCount = 1
+        
+        let requestStartTime = arrayData.first?.startTime
+        let dummyStartTime = "정보없음"
+        
+        let requestStartStation = arrayData.first?.startStation
+        let dummyStartStation = "정보없음"
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "위젯 데이터도 오류 발생 시 데이터는 1개로 동일함"
+        )
+        
+        expect(requestStartTime).to(
+            equal(dummyStartTime),
+            description: "일반적인 오류 발생 시 정보없음으로 오류 동일함"
+        )
+        
+        expect(requestStartStation).to(
+            equal(dummyStartStation),
+            description: "일반적인 오류 발생 시 정보없음으로 오류 동일함"
+        )
+    }
+    
+    func testWidgetKorailScheduleLoad_ErrorTwo(){
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        // GIVEN
+        var components = Calendar.current.dateComponents([.hour, .minute], from: .now)
+        components.hour = 23
+        components.minute = 59
+        let requestDate = Calendar.current.date(from: components)!
+        
+        var arrayData : [ResultSchdule] = []
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true, requestDate: requestDate)
+        data
+            .subscribe(onNext: {
+                arrayData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestCount = arrayData.count
+        let dummyCount = 1
+        
+        let requestStartTime = arrayData.first?.startTime
+        let dummyStartTime = "-"
+        
+        let requestStartStation = arrayData.first?.startStation
+        let dummyStartStation = ""
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "위젯 데이터도 오류 발생 시 데이터는 1개로 동일함"
+        )
+        
+        expect(requestStartTime).to(
+            equal(dummyStartTime),
+            description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 -로 표시"
+        )
+        
+        expect(requestStartStation).to(
+            equal(dummyStartStation),
+            description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 공백으로 표시"
         )
     }
 }
