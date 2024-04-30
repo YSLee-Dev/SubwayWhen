@@ -11,7 +11,7 @@ struct FixInfo: Codable{
     static var saveStation : [SaveStation] = [] {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveStation)
-            UserDefaults.standard.set(data, forKey: "saveStation")
+            UserDefaults.shared.set(data, forKey: "saveStation")
         }
     }
     
@@ -31,7 +31,7 @@ struct FixInfo: Codable{
     ) {
         didSet{
             let data = try? PropertyListEncoder().encode(self.saveSetting)
-            UserDefaults.standard.set(data, forKey: "saveSetting")
+            UserDefaults.shared.set(data, forKey: "saveSetting")
         }
     }
 }

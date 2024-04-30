@@ -113,7 +113,7 @@ extension DetailTableScheduleCell{
             .map{ data -> String? in
                 guard let first = data.first else {return nil}
                 if first.type == .Unowned{
-                    return "신분당선, 우이신설선, 공항철도는 시간표를 지원하지 않아요."
+                    return "시간표를 지원하지 않는 노선이에요."
                 }else if first.startTime == "정보없음"{
                     return "시간표를 불러올 수 없어요."
                 }else{

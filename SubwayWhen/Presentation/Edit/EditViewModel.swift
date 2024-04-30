@@ -9,12 +9,14 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import WidgetKit
 
 enum EditVCAction {
     case willDisappear
     case backBtnTap
     case deleteCell(SaveStation)
     case moveCell(ItemMovedEvent)
+    case saveBtnTap
 }
 
 class EditViewModel {
@@ -25,6 +27,13 @@ class EditViewModel {
     
     // VALUE
     private let nowData = BehaviorRelay<[EditViewCellSection]>(value: [])
+    private let lastSaveData = BehaviorRelay<[SaveStation]>(value: [])
+    private let nowSaveBtnIsEnabled = BehaviorRelay<Bool>(value: false)
+    private var removeAlertList: [String] = []
+    
+    // Coordinator -> ViewModel
+    /// Coordinator가 ViewModel에게 지하철역 저장을 요청할 때 사용
+    let requestSave = PublishSubject<Void>()
     
     weak var delegate: EditVCDelegate?
     private let bag = DisposeBag()
@@ -35,12 +44,35 @@ class EditViewModel {
     
     struct Output {
         let cellData: Driver<[EditViewCellSection]>
+        let saveBtnIsEnabled: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
-        self.editModel.fixDataToGroupData(FixInfo.saveStation)
+        let saveGroupData = self.editModel.fixDataToGroupData(FixInfo.saveStation)
             .asDriver(onErrorDriveWith: .empty())
+        
+        saveGroupData
             .drive(self.nowData)
+            .disposed(by: self.bag)
+        
+        saveGroupData
+            .map { $0[0].items + $0[1].items}
+            .drive(self.lastSaveData)
+            .disposed(by: self.bag)
+        
+        requestSave
+            .bind(onNext: self.stationsSave)
+            .disposed(by: self.bag)
+        
+        nowData
+            .withUnretained(self)
+            .map { viewModel, data in
+                let changeData = data[0].items + data[1].items
+                let lastSave = viewModel.lastSaveData.value
+                
+                return changeData != lastSave
+            }
+            .bind(to: self.nowSaveBtnIsEnabled)
             .disposed(by: self.bag)
         
         input.actionList
@@ -50,7 +82,9 @@ class EditViewModel {
         return Output(
             cellData: self.nowData
                 .delay(.microseconds(500), scheduler: MainScheduler.asyncInstance)
-                .asDriver(onErrorDriveWith: .empty())
+                .asDriver(onErrorDriveWith: .empty()),
+            saveBtnIsEnabled: self.nowSaveBtnIsEnabled
+                .asDriver()
         )
     }
     
@@ -64,7 +98,7 @@ class EditViewModel {
 }
 
 private extension EditViewModel {
-    func deleteAlertID(id: String) {
+    func removeAlertID(id: String) {
         if FixInfo.saveSetting.alertGroupOneID == id {
             FixInfo.saveSetting.alertGroupOneID = ""
             self.notiManager.notiRemove(id: id)
@@ -78,7 +112,7 @@ private extension EditViewModel {
     func actionProcess(type: EditVCAction) {
         switch type {
         case .deleteCell(let item):
-            self.deleteAlertID(id: item.id)
+            removeAlertList.append(item.id)
             
             var nowValue = self.nowData.value
             var groupOne = nowValue[0].items
@@ -108,21 +142,43 @@ private extension EditViewModel {
             nowValue[now.section].items.insert(value, at: now.row)
             
             if old[0] != now[0] {
-                self.deleteAlertID(id: nowValue[now.section].items[now.row].id)
+                removeAlertList.append(nowValue[now.section].items[now.row].id)
                 nowValue[now.section].items[now.row].group = .one == nowValue[now.section].items[now.row].group ? .two : .one
             }
             
             self.nowData.accept(nowValue)
             
         case .backBtnTap:
-            self.delegate?.pop()
+            if self.nowSaveBtnIsEnabled.value {
+                self.delegate?.notSaveCheck()
+            } else {
+                self.delegate?.pop()
+            }
+            
+        case .saveBtnTap:
+            // 데이터 저장
+            self.stationsSave()
             
         case .willDisappear:
-            // 데이터 저장
-            let nowValue = self.nowData.value
-            FixInfo.saveStation = nowValue[0].items + nowValue[1].items
-            print(FixInfo.saveStation.map {($0.stationName,$0.group)})
             self.delegate?.disappear()
         }
+    }
+}
+
+private extension EditViewModel {
+    func stationsSave() {
+        // 데이터 저장
+        let nowValue = self.nowData.value
+        let newValue = nowValue[0].items + nowValue[1].items
+        
+        FixInfo.saveStation = newValue
+        self.lastSaveData.accept(newValue)
+        self.nowSaveBtnIsEnabled.accept(false)
+        
+        self.removeAlertList.forEach {
+            self.removeAlertID(id: $0)
+        }
+        self.removeAlertList = []
+        WidgetCenter.shared.reloadTimelines(ofKind: "SubwayWhenHomeWidget")
     }
 }
