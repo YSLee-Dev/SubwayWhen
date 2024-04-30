@@ -26,6 +26,21 @@ class EditVC: TableVCCustom{
         $0.isHidden = true
     }
     
+    private let saveBtn = ModalCustomButton(
+        bgColor: UIColor(named: "AppIconColor") ?? .systemBackground,
+        customTappedBG: "AppIconColor",
+        disabledBG: UIColor(named: "AppIconColor")?.withAlphaComponent(0.7)
+    ).then {
+        $0.setTitleColor(.white, for: .normal)
+        $0.setTitleColor(.white, for: .disabled)
+        $0.setTitle("저장", for: .normal)
+        $0.setTitle("저장", for: .disabled)
+    }
+    
+    private  lazy var backGestureView = UIView().then {
+        $0.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(leftGestrueCheck)))
+    }
+    
     init(
         viewModel: EditViewModel
     ){
@@ -48,7 +63,7 @@ class EditVC: TableVCCustom{
         self.bind()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         self.editAction.accept(.willDisappear)
     }
 }
@@ -58,12 +73,33 @@ private extension EditVC{
         self.tableView.rowHeight = 90
         self.tableView.setEditing(true, animated: true)
         self.tableView.register(EditViewCell.self, forCellReuseIdentifier: "EditViewCell")
+        self.tableView.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
     }
     
     func layout(){
-        self.view.addSubview(self.noListLabel)
+        [self.saveBtn, self.noListLabel, backGestureView].forEach {
+            self.view.addSubview($0)
+        }
         self.noListLabel.snp.makeConstraints{
             $0.center.equalToSuperview()
+        }
+        
+        self.tableView.snp.remakeConstraints {
+            $0.top.equalTo(self.topView.snp.bottom)
+            $0.bottom.equalTo(self.saveBtn.snp.top).offset(-ViewStyle.padding.mainStyleViewTB)
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        self.saveBtn.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(UIApplication.shared.safeAreaSize(position: .bottom) == 0 ? ViewStyle.padding.mainStyleViewTB :  42.5)
+            $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
+            $0.height.equalTo(50)
+        }
+        
+        self.backGestureView.snp.makeConstraints {
+            $0.top.equalTo(self.topView.snp.bottom)
+            $0.leading.bottom.equalToSuperview()
+            $0.width.equalTo(15)
         }
     }
     
@@ -78,6 +114,13 @@ private extension EditVC{
         self.tableView.rx.itemMoved
             .map {
                 .moveCell($0)
+            }
+            .bind(to: self.editAction)
+            .disposed(by: self.bag)
+        
+        self.saveBtn.rx.tap
+            .map {
+                .saveBtnTap
             }
             .bind(to: self.editAction)
             .disposed(by: self.bag)
@@ -122,10 +165,27 @@ private extension EditVC{
             .drive(self.noListLabel.rx.isHidden)
             .disposed(by: self.bag)
         
+        output.saveBtnIsEnabled
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { vc, isEnabled in
+                vc.saveBtn.isEnabled = isEnabled
+                vc.backGestureView.isHidden = !isEnabled
+                vc.navigationController?.interactivePopGestureRecognizer?.isEnabled = !isEnabled
+            })
+            .disposed(by: self.bag)
+        
         // VIEW
         self.topView.backBtn.rx.tap
             .map {_ in .backBtnTap}
             .bind(to: self.editAction)
             .disposed(by: self.bag)
+    }
+    
+    @objc
+    func leftGestrueCheck(_ sender: UIGestureRecognizer) {
+        if sender.state == .began {
+            self.editAction.accept(.backBtnTap)
+        }
     }
 }

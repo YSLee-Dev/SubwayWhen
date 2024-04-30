@@ -32,7 +32,7 @@ final class ReportModelTests: XCTestCase {
         let dummyCount = 15
         
         let requestLastLine = arrayData.first?.last
-        let dummyLastLine = "신분당선"
+        let dummyLastLine = "경강선"
         
         // THEN
         expect(requestCount).to(

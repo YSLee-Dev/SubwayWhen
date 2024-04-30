@@ -80,7 +80,7 @@ class ReportViewModel : ReportViewModelProtocol{
         
         // DefaultLineCell Data / delay 3.5s
         Observable<[String]>.create{
-            $0.onNext(Array(Set(FixInfo.saveStation.map{$0.line}).filter{$0 != "우이신설경전철"}))
+            $0.onNext(Array(Set(FixInfo.saveStation.filter {$0.allowReport}.map{$0.line})))
             $0.onCompleted()
             return Disposables.create()
         }

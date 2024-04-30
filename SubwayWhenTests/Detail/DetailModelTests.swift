@@ -98,7 +98,7 @@ final class DetailModelTests: XCTestCase {
         let dummyData = mainCellDummyData
         
         // WHEN
-        let requestType = data.type
+        let requestType = data.lineScheduleType
         let dummyType = ScheduleType.Seoul
         
         let requestStationCode = data.stationCode
@@ -120,7 +120,7 @@ final class DetailModelTests: XCTestCase {
         let data = self.arrivalModel.mainCellDataToScheduleSearch(DetailLoadData(upDown: "", stationName: "", lineNumber: "", lineCode: "", useLine: "", stationCode: "", exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: ""))
 
         // WHEN
-        let requestType = data.type
+        let requestType = data.lineScheduleType
         let dummyType = ScheduleType.Unowned
         
         let requestStationCode = data.stationCode
@@ -175,7 +175,7 @@ final class DetailModelTests: XCTestCase {
     
     func testSechduleLoadError(){
         // GIVEN
-        let data = self.seoulScheduleModel.scheduleLoad(.init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", type: .Unowned, korailCode: ""))
+        let data = self.seoulScheduleModel.scheduleLoad(.init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", korailCode: ""))
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         

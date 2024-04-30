@@ -101,7 +101,7 @@ final class MainModelTests: XCTestCase {
         let data = self.scheduleModel.mainCellDataToScheduleData(mainCellDummyData)
         
         // WHEN
-        let requestType = data?.type
+        let requestType = data?.lineScheduleType
         let dummyType = ScheduleType.Seoul
         
         let requestCode = data?.stationCode

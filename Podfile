@@ -2,11 +2,9 @@
 # platform :ios, '9.0'
 
 target 'SubwayWhen' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
 
-  # Pods for SubwayWhen
-
+def requisite
+ 
 pod 'RxAlamofire'
 pod 'RxSwift', '6.5.0' 
 pod 'RxCocoa', '6.5.0'
@@ -14,6 +12,16 @@ pod 'RxDataSources'
 pod 'RxOptional'
 
 pod 'Alamofire'
+end
+
+
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for SubwayWhen
+
+requisite
+
 pod 'Then'
 pod 'SnapKit', '~> 5.6.0'
 pod 'lottie-ios'
@@ -21,6 +29,20 @@ pod 'AcknowList'
  
 pod 'Firebase/Analytics'
 pod 'Firebase/Database'
+
+target 'SubwayWhenNetworking' do
+  use_frameworks!
+
+requisite
+
+end
+
+target 'SubwayWhenHomeWidgetExtension' do
+  use_frameworks!
+
+pod 'RxDataSources'
+
+end
 
 	target 'SubwayWhenTests' do
 	inherit! :search_paths
@@ -46,6 +68,9 @@ installer.pods_project.targets.each do |target|
     end
   end
 end
+
+
+
 
 end
 end

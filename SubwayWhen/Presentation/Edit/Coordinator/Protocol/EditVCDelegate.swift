@@ -10,4 +10,5 @@ import Foundation
 protocol EditVCDelegate: AnyObject {
     func pop()
     func disappear()
+    func notSaveCheck()
 }

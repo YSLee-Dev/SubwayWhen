@@ -50,6 +50,7 @@ struct searchStationInfo : Decodable{
         case uijeingbu = "의정부경전철"
         case incheon1 = "인천선"
         case incheon2 = "인천2호선"
+        case gtxA = "GTX-A"
         case not = "not"
     }
     
@@ -101,6 +102,8 @@ struct searchStationInfo : Decodable{
             return "인천1"
         case .incheon2:
             return "인천2"
+        case .gtxA:
+            return "GTX-A"
         case .not:
             return "NOT"
         }
@@ -139,6 +142,12 @@ struct searchStationInfo : Decodable{
             return "1077"
         case .ui:
             return "1092"
+        case .gtxA:
+            return "1032"
+        case .seohae:
+            return "1093"
+        case .gyeonggang:
+            return "1081"
         default :
             return ""
         }

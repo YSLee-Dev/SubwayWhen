@@ -85,10 +85,10 @@ final class DetailViewModelTests: XCTestCase {
             .disposed(by: self.bag)
         
         // WHEN
+        let reload = PublishSubject<Void>()
         let reloadEvnet = testScheduler.createHotObservable([
             .next(1, Void())
         ])
-        let reload = PublishSubject<Void>()
         reloadEvnet
             .subscribe(reload)
             .disposed(by: self.bag)
@@ -113,7 +113,6 @@ final class DetailViewModelTests: XCTestCase {
         .bind(to: realTime)
         .disposed(by: self.bag)
         
-        
         testScheduler.start()
         
         // THEN
@@ -129,6 +128,5 @@ final class DetailViewModelTests: XCTestCase {
                      )
             ])
         )
-        
     }
 }
