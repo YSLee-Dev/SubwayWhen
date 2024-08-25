@@ -410,7 +410,7 @@
 		FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD2F5F82BB566A900B95B52 /* Assets.xcassets */; };
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
-		FAF21C1F2BE0D20300D93171 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAF21C1E2BE0D20300D93171 /* GoogleService-Info.plist */; };
+		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -827,7 +827,7 @@
 		FAD2F6012BB5683A00B95B52 /* SubwayWhen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhen.entitlements; sourceTree = "<group>"; };
 		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
-		FAF21C1E2BE0D20300D93171 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1419,7 +1419,7 @@
 			children = (
 				34C6DB542936274400C4ED80 /* AppDelegate.swift */,
 				34C6DB562936274400C4ED80 /* SceneDelegate.swift */,
-				FAF21C1E2BE0D20300D93171 /* GoogleService-Info.plist */,
+				FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */,
 				34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */,
 				34A221B629C99195003F035D /* Sub */,
 				349E2F6A29BDF86B00C54EE9 /* Coordinator */,
@@ -2747,6 +2747,7 @@
 			files = (
 				B6F781212B6FBC6600FE8E7B /* Report.json in Resources */,
 				B68FB3452B7128FB0075339F /* TutorialSuccess.json in Resources */,
+				FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */,
 				3497DCBF29D3CA7200D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist in Resources */,
 				B68FB3442B7128FB0075339F /* Congratulations.json in Resources */,
 				B68FB3432B7128FB0075339F /* Location.json in Resources */,
@@ -2758,7 +2759,6 @@
 				349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */,
 				B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */,
 				34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */,
-				FAF21C1F2BE0D20300D93171 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
