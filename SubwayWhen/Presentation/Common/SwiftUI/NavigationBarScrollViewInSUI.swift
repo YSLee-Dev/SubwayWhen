@@ -11,12 +11,14 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
     private let title: String
     private let contentsView:  () -> Contents
     private let backBtnTapped: (() -> ())?
+    private var isLargeTitleHidden: Bool = false
     @State private var isSubTitleShow: Bool = false
     @State private var isFirstValue: CGFloat? = nil
     
-    init(title: String, backBtnTapped: (() -> ())? = nil, @ViewBuilder content: @escaping () -> Contents) {
+    init(title: String, isLargeTitleHidden: Bool = false,  backBtnTapped: (() -> ())? = nil, @ViewBuilder content: @escaping () -> Contents) {
         self.contentsView = content
         self.title = title
+        self.isLargeTitleHidden = isLargeTitleHidden
         self.backBtnTapped = backBtnTapped
     }
     
@@ -44,11 +46,13 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
             
             OffsetScrollViewInSUI {
                 VStack(spacing: 0) {
-                    HStack {
-                        Text(self.title)
-                            .font(.system(size: ViewStyle.FontSize.mainTitleSize, weight: .heavy))
-                        
-                        Spacer()
+                    if !self.isLargeTitleHidden {
+                        HStack {
+                            Text(self.title)
+                                .font(.system(size: ViewStyle.FontSize.mainTitleSize, weight: .heavy))
+                            
+                            Spacer()
+                        }
                     }
                     self.contentsView()
                 }
