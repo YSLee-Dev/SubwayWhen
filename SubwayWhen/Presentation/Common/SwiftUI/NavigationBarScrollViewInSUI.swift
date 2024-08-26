@@ -14,7 +14,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
     @State private var isSubTitleShow: Bool = false
     @State private var isFirstValue: CGFloat? = nil
     
-    init(title: String, @ViewBuilder content: @escaping () -> Contents, backBtnTapped: (() -> ())? = nil) {
+    init(title: String, backBtnTapped: (() -> ())? = nil, @ViewBuilder content: @escaping () -> Contents) {
         self.contentsView = content
         self.title = title
         self.backBtnTapped = backBtnTapped
@@ -25,11 +25,10 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
             HStack {
                 if backBtnTapped != nil {
                     Button(action: {
-                        
+                        self.backBtnTapped!()
                     }) {
                         Image(systemName: "arrow.left")
                             .foregroundColor(.init(uiColor: .label))
-                        
                     }
                 }
                 
@@ -41,7 +40,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 
                 Spacer()
             }
-            .padding(.top, 10)
+            .frame(height: 45)
             
             OffsetScrollViewInSUI {
                 VStack(spacing: 0) {
@@ -67,7 +66,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
 }
 
 #Preview {
-    NavigationBarScrollViewInSUI(title: "홈") {
-        Text("123")
+    NavigationBarScrollViewInSUI(title: "상세화면", backBtnTapped: {}) {
+            Text("123")
     }
 }
