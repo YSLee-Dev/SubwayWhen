@@ -10,5 +10,5 @@ import ComposableArchitecture
 
 enum TotalLoadModelDependencyKey: DependencyKey {
     static var liveValue: TotalLoadProtocol = TotalLoadModel()
-    static var previewValue: any TotalLoadProtocol = TotalLoadModel()
+    static var previewValue: any TotalLoadProtocol = PreviewTotalLoadModel()
 }

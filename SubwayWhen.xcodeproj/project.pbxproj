@@ -414,6 +414,7 @@
 		FF7A712A2C7C41480080B72B /* PreviewTotalLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71292C7C41480080B72B /* PreviewTotalLoadModel.swift */; };
 		FF7A712C2C7C42E00080B72B /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A711C2C7C09680080B72B /* Dependency+.swift */; };
 		FF7A712D2C7C443A0080B72B /* PreviewTotalLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71292C7C41480080B72B /* PreviewTotalLoadModel.swift */; };
+		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
 		FF7ECAC72C7BF82D00D4643A /* OffsetScrollViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAC62C7BF82D00D4643A /* OffsetScrollViewInSUI.swift */; };
 		FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */; };
@@ -839,6 +840,7 @@
 		FF7A711C2C7C09680080B72B /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
 		FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
 		FF7A71292C7C41480080B72B /* PreviewTotalLoadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadModel.swift; sourceTree = "<group>"; };
+		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
 		FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FF7ECAC62C7BF82D00D4643A /* OffsetScrollViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetScrollViewInSUI.swift; sourceTree = "<group>"; };
 		FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarScrollViewInSUI.swift; sourceTree = "<group>"; };
@@ -2256,7 +2258,6 @@
 		34F5F0FB2962E66A0010A21D /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FF7ECAC82C7BF83300D4643A /* SwiftUI */,
 				34A4F2712A5263FB002CA564 /* CollectionViewCellCustom.swift */,
 				34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */,
 				349FF29B299F1AF9007A98F4 /* ModalVCCustom.swift */,
@@ -2265,6 +2266,7 @@
 				349E32C12978DF1C00147DEE /* MainStyleUIView.swift */,
 				B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */,
 				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
+				FF7ECAC82C7BF83300D4643A /* SwiftUI */,
 				34F5F0F02962DCF50010A21D /* Sub */,
 			);
 			path = Common;
@@ -2599,6 +2601,7 @@
 			children = (
 				FF7ECAC62C7BF82D00D4643A /* OffsetScrollViewInSUI.swift */,
 				FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */,
+				FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -3122,6 +3125,7 @@
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,
 				3497DC7B29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift in Sources */,
+				FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */,
 				FA9AA9B22BD639F300906A5B /* UIApplication+.swift in Sources */,
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
 				3455CFA22A53DC79001ADE61 /* ModalVCActionProtocol.swift in Sources */,
