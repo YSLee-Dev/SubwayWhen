@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScheduleSearch{
+struct ScheduleSearch: Equatable {
     var stationCode : String
     let upDown : String
     let exceptionLastStation : String
