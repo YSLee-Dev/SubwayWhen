@@ -413,8 +413,9 @@
 		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
 		FF7ECAC72C7BF82D00D4643A /* OffsetScrollViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAC62C7BF82D00D4643A /* OffsetScrollViewInSUI.swift */; };
 		FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */; };
-		FF7ECACD2C7C040D00D4643A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF7ECACC2C7C040D00D4643A /* ComposableArchitecture */; };
 		FF7ECACF2C7C041B00D4643A /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECACE2C7C041B00D4643A /* DetailView.swift */; };
+		FF7ECAD12C7C04A000D4643A /* DetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */; };
+		FF7ECAD32C7C054F00D4643A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -835,6 +836,7 @@
 		FF7ECAC62C7BF82D00D4643A /* OffsetScrollViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetScrollViewInSUI.swift; sourceTree = "<group>"; };
 		FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarScrollViewInSUI.swift; sourceTree = "<group>"; };
 		FF7ECACE2C7C041B00D4643A /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -861,7 +863,7 @@
 			files = (
 				881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */,
 				FA4CB7862BB68473003C41F6 /* SubwayWhenNetworking.framework in Frameworks */,
-				FF7ECACD2C7C040D00D4643A /* ComposableArchitecture in Frameworks */,
+				FF7ECAD32C7C054F00D4643A /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2218,6 +2220,7 @@
 			isa = PBXGroup;
 			children = (
 				FF7ECACE2C7C041B00D4643A /* DetailView.swift */,
+				FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */,
 				34F5F0E52962D8990010A21D /* DetailVC.swift */,
 				34F5F0E72962D8B10010A21D /* DetailViewModel.swift */,
 				34F5F10B296561F50010A21D /* DetailModel.swift */,
@@ -2646,7 +2649,7 @@
 			);
 			name = SubwayWhen;
 			packageProductDependencies = (
-				FF7ECACC2C7C040D00D4643A /* ComposableArchitecture */,
+				FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */,
 			);
 			productName = SubwayWhen;
 			productReference = 34C6DB512936274400C4ED80 /* SubwayWhen.app */;
@@ -2667,6 +2670,8 @@
 			dependencies = (
 			);
 			name = SubwayWhenNetworking;
+			packageProductDependencies = (
+			);
 			productName = SubwayWhenNetworking;
 			productReference = FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3068,6 +3073,7 @@
 				B6438D402B667CB10099BFEF /* MainCoordinator.swift in Sources */,
 				349E32C42978E24D00147DEE /* DetailTableScheduleCellSubCell.swift in Sources */,
 				349D788B29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift in Sources */,
+				FF7ECAD12C7C04A000D4643A /* DetailFeature.swift in Sources */,
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
 				B68FB34C2B75F1CA0075339F /* SettingTrainIconCoordinator.swift in Sources */,
 				34B9FD212976A2E400E349A1 /* DetailTableScheduleCell.swift in Sources */,
@@ -3899,7 +3905,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FF7ECACC2C7C040D00D4643A /* ComposableArchitecture */ = {
+		FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FF7ECACB2C7C040D00D4643A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
