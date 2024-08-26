@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RealtimeStationArrival : Decodable{
+struct RealtimeStationArrival : Decodable, Equatable {
     let upDown : String
     let arrivalTime : String
     let previousStation : String?
