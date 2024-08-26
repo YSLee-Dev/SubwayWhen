@@ -317,6 +317,16 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
+    func singleLiveAsyncData(station: String)  async -> LiveStationModel {
+        await withCheckedContinuation { continuation  in
+            self.singleLiveDataLoad(station: station)
+                .subscribe(onNext: { data in
+                    continuation.resume(returning: data)
+                })
+                .disposed(by: self.bag)
+        }
+    }
+    
     private func timeFormatter(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HHmmss"
