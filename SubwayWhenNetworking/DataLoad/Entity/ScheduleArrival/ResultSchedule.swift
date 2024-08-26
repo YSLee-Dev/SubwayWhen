@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ResultSchdule{
+struct ResultSchdule: Equatable {
     var startTime : String
     var type : ScheduleType
     var isFast : String

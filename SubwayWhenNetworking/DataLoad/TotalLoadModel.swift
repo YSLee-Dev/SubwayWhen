@@ -317,6 +317,25 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
+    func scheduleDataFetchAsyncData(type: ScheduleType, searchModel: ScheduleSearch)  async -> [ResultSchdule]  {
+        var scheduleResult: Observable<[ResultSchdule]>!
+        if searchModel.lineScheduleType  == .Korail{
+            scheduleResult = self.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: true, isWidget: true)
+        } else if searchModel.lineScheduleType == .Seoul {
+            scheduleResult = self.seoulScheduleLoad(searchModel, isFirst: false, isNow: false, isWidget: false)
+        } else {
+            return []
+        }
+        
+        return await withCheckedContinuation { continuation  in
+            scheduleResult
+                .subscribe(onNext: { data in
+                    continuation.resume(returning: data)
+                })
+                .disposed(by: self.bag)
+        }
+    }
+    
     func singleLiveAsyncData(station: String)  async -> LiveStationModel {
         await withCheckedContinuation { continuation  in
             self.singleLiveDataLoad(station: station)
