@@ -76,7 +76,12 @@ struct DetailView: View {
                             .frame(height: 40)
                         }
                     }
-                    .padding(.top, 15)
+                    .padding(.vertical, 15)
+                    
+                    DetailArrivalView(
+                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "") {
+                            self.store.send(.refreshBtnTapped)
+                        }
                 }
                 .padding(.top, 12.5)
             }
