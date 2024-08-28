@@ -14,6 +14,7 @@ struct DetailArrivalView: View {
     @State private var borderPostion = 0.0
     @State private var nowAnimationPlaying = false
     @State private var trainPostion = 0.0
+    private let screenWidthSize = UIScreen.main.bounds.width -  40
     
     var arrivalDataList: [RealtimeStationArrival]
     let stationInfo: ScheduleSearch
@@ -29,11 +30,6 @@ struct DetailArrivalView: View {
                     .foregroundColor(.gray)
                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                 Spacer()
-                Button(action: {
-                    self.refreshBtnTapped()
-                }, label: {
-                    Text("TEST")
-                })
             }
             .padding(.bottom, 15)
             
@@ -101,6 +97,52 @@ struct DetailArrivalView: View {
                             .animation(.easeInOut(duration: 0.5), value: self.trainPostion)
                     }
                 }
+            }
+            .padding(.bottom, 10)
+            
+            MainStyleViewInSUI {
+                VStack {
+                    HStack {
+                        let title = (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보없음" : self.arrivalDataList.first!.subPrevious
+                        Text(title)
+                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            self.refreshBtnTapped()
+                        }, label: {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .foregroundColor(.init(uiColor: .label))
+                        })
+                    }
+                    .padding(.bottom, 10)
+                    
+                    ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
+                        let width = (self.screenWidthSize / 2) + 35
+                        VStack(alignment: .center, spacing: 0) {
+                            HStack {
+                                Text(data.1.detailArraivalViewText)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                    .foregroundColor(.white)
+                                    .lineLimit(2)
+                                    .padding(.horizontal, 5)
+                                Spacer()
+                            }
+                            .frame(width: width,  height: 40)
+                            .background {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(Color(self.stationInfo.line))
+                            }
+                            .offset(
+                                x: data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
+                                : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
+                            )
+                            .padding(.bottom, 5)
+                        }
+                    }
+                }
+                .padding(15)
             }
         }
         .onChange(of: self.nowLoading) {
@@ -170,7 +212,7 @@ extension DetailArrivalView {
     }
     
     fileprivate func stationPositionMoveAndAlphaValue(code: String, type: StationType) -> (CGFloat, Double)  {
-        let borderSize = UIScreen.main.bounds.width -  40
+        let borderSize = self.screenWidthSize
         guard let intCode = Int(code) else {
             if type == .next {
                 return (0, 1)

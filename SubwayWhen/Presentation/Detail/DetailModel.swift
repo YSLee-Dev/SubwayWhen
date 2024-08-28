@@ -79,7 +79,7 @@ class DetailModel : DetailModelProtocol{
     }
     
     func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
-        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "현재 실시간 열차 데이터가 없어요.", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: nil, backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
+        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: nil, backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
         
         for x in arrivalData{
             if station.upDown == x.upDown && station.lineCode == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
