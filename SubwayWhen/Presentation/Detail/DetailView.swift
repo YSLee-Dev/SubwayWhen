@@ -79,7 +79,7 @@ struct DetailView: View {
                     .padding(.vertical, 15)
                     
                     DetailArrivalView(
-                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "") {
+                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading) {
                             self.store.send(.refreshBtnTapped)
                         }
                 }
@@ -90,7 +90,6 @@ struct DetailView: View {
             }
     }
 }
-
 #Preview {
     DetailView(store: .init(initialState: .init(sendedStationName: "교대", sendedScheduleModel: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: "")), reducer: {DetailFeature()}))
 }
