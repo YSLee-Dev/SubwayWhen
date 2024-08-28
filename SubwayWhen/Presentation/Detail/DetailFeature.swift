@@ -22,6 +22,7 @@ struct DetailFeature: Reducer {
         var nowSculeduleSortedData: [ResultSchdule]?
         var backStationName: String?
         var nextStationName: String?
+        var nowArrivalLoading: Bool = false
     }
     
     enum Action: Equatable {
@@ -32,6 +33,7 @@ struct DetailFeature: Reducer {
         case scheduleMoreBtnTapped
         case arrivalDataRequestSuccess([RealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
+        case arrivalDataRequest(String)
     }
     
     var body: some Reducer<State, Action> {
@@ -42,15 +44,20 @@ struct DetailFeature: Reducer {
                 let scheduleModel = state.sendedScheduleModel
                 
                 return .merge(
-                    .run { send in
-                        let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
-                        await send(.arrivalDataRequestSuccess(loadData.realtimeArrivalList))
-                    },
+                    .send(.arrivalDataRequest(stationName)),
                     .run { send in
                         let loadData = await self.totalLoad.scheduleDataFetchAsyncData(type: scheduleModel.lineScheduleType, searchModel: scheduleModel)
                         await send(.scheduleDataRequestSuccess(loadData))
                     }
                 )
+                
+            case .arrivalDataRequest(let stationName):
+                state.nowArrivalLoading = true
+                
+                return .run { send in
+                    let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
+                    await send(.arrivalDataRequestSuccess(loadData.realtimeArrivalList))
+                }
                 
             case .arrivalDataRequestSuccess(let data):
                 let backNextStationName = self.nextAndBackStationSearch(backId: data.first?.backStationId, nextId: data.first?.nextStationId)
@@ -58,6 +65,8 @@ struct DetailFeature: Reducer {
                 state.nowArrivalData = data
                 state.backStationName = backNextStationName[0]
                 state.nextStationName = backNextStationName[1]
+                state.nowArrivalLoading = false
+                
                 return .none
                 
             case .scheduleDataRequestSuccess(let data):
@@ -69,6 +78,10 @@ struct DetailFeature: Reducer {
                     state.nowScheduleData = data
                 }
                 return .none
+                
+            case .refreshBtnTapped:
+                state.nowArrivalLoading = true
+                return .send(.arrivalDataRequest(state.sendedStationName))
                 
             default: return .none
             }
