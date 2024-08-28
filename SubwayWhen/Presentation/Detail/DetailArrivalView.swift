@@ -120,9 +120,17 @@ struct DetailArrivalView: View {
                     
                     ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
                         let width = (self.screenWidthSize / 2) + 35
+                        let text = data.0 == 0 ? data.1.detailArraivalViewText
+                        : (self.stationInfo.exceptionLastStation.isEmpty ? data.1.detailArraivalViewText : "⛔️ 제외 행을 설정하면\n두 번째 열차를 볼 수 없어요."
+                        )
+                        let bgColor = data.0 == 0 ? Color(self.stationInfo.line)
+                        : (self.stationInfo.exceptionLastStation.isEmpty ?
+                           Color(self.stationInfo.line) : Color.init(uiColor: .lightGray)
+                        )
+                           
                         VStack(alignment: .center, spacing: 0) {
                             HStack {
-                                Text(data.1.detailArraivalViewText)
+                                Text(text)
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                                     .foregroundColor(.white)
                                     .lineLimit(2)
@@ -132,7 +140,7 @@ struct DetailArrivalView: View {
                             .frame(width: width,  height: 40)
                             .background {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(self.stationInfo.line))
+                                    .fill(bgColor)
                             }
                             .offset(
                                 x: data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
