@@ -12,10 +12,13 @@ struct DetailArrivalView: View {
     @State private var nextStationPostion: (CGFloat, Double) = (0, 1)
     @State private var borderSize = 1.0
     @State private var nowAnimationPlaying = false
+    @State private var trainPostion = 0.0
+    
     var arrivalDataList: [RealtimeStationArrival]
     let stationInfo: ScheduleSearch
     let stationName: String
     let backStationName: String
+    var nowLoading: Bool
     let refreshBtnTapped: () -> ()
     
     var body: some View {
@@ -81,28 +84,28 @@ struct DetailArrivalView: View {
                         .fill(Color.init(self.stationInfo.line))
                         .frame(maxWidth: .infinity)
                         .frame(height: 5)
-                        .offset(x: self.nowAnimationPlaying ? (self.borderSize == 1.2 ?  39 : 12) : 0)
+                        .offset(x: self.nowAnimationPlaying ? (self.borderSize == 1.2 ?  39 : 15) : 0)
                         .scaleEffect(x: self.borderSize)
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 9, trailing: 20))
                 }
             }
             .overlay {
-                if let code = Int(self.arrivalDataList.first?.code ?? "") {
-                    let position = self.trainIconMoveValue(code: code)
+                if Int(self.arrivalDataList.first?.code ?? "") != nil {
                     HStack {
                         Spacer()
-                        
                         Text(FixInfo.saveSetting.detailVCTrainIcon)
                             .font(.system(size: ViewStyle.FontSize.mainTitleSize))
-                            .offset(y: -15)
-                            .offset(x: position)
+                            .offset(x: self.trainPostion, y: -15)
                             .opacity(self.nowAnimationPlaying ? 0 : 1)
+                            .animation(.easeInOut(duration: 0.5), value: self.trainPostion)
                     }
                 }
             }
         }
-        .onChange(of: self.arrivalDataList) {
+        .onChange(of: self.nowLoading) {
             let code = self.arrivalDataList.first?.code ?? "-"
+            self.trainPostion  = 0
+            
             withAnimation(.easeInOut(duration: 0)) {
                 let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
                 self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
@@ -125,6 +128,10 @@ struct DetailArrivalView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
                         self.nowAnimationPlaying = false
                         self.borderSize = 1.0
+                        
+                        if let code = Int(self.arrivalDataList.first?.code ?? "") {
+                            self.trainPostion =  self.trainIconMoveValue(code: code)
+                        }
                     }
                 }
             }
@@ -138,16 +145,16 @@ extension DetailArrivalView {
     }
     
     fileprivate func trainIconMoveValue(code: Int) -> CGFloat {
-        let borderSize = UIScreen.main.bounds.width -  40
+        let borderSize = UIScreen.main.bounds.width -  80
         switch code {
         case 0: // 첫번째역 바로 전
-            return (-borderSize) + 15
+            return (-borderSize) + 10
         case 1: // 첫번째 역
             return (-borderSize)
         case 2: // 첫번째 역 지나침
-            return (-borderSize) - 15
+            return (-borderSize) - 10
         case 3: // 이동 (애니메이션 처리):
-            return (borderSize / 2)
+            return (-borderSize / 2)
         case 4: //  3번째역 바로 전
             return  0
         default: // 3번째 역
@@ -161,12 +168,12 @@ extension DetailArrivalView {
             if type == .next {
                 return (0, 1)
             } else {
-                return (borderSize - 88, 0)
+                return (borderSize - 125, 0)
             }
         }
         
         if intCode < 6 && type  == .back {
-            return (borderSize - 88, 0) // 2개의 역만 필요
+            return (borderSize - 125, 0) // 2개의 역만 필요
         } else if type == .back  {
             return (0, 1)
         }
@@ -183,8 +190,8 @@ extension DetailArrivalView {
 
 #Preview {
     DetailArrivalView(arrivalDataList: [
-        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
+        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
                                   .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
-    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널"
+    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널", nowLoading: false
     ) {}
 }
