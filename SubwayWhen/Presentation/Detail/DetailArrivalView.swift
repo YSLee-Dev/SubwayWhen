@@ -11,6 +11,7 @@ struct DetailArrivalView: View {
     @State private var backStationPostion: (CGFloat, Double) = (0, 0)
     @State private var nextStationPostion: (CGFloat, Double) = (0, 1)
     @State private var borderSize = 1.0
+    @State private var borderPostion = 0.0
     @State private var nowAnimationPlaying = false
     @State private var trainPostion = 0.0
     
@@ -84,7 +85,7 @@ struct DetailArrivalView: View {
                         .fill(Color.init(self.stationInfo.line))
                         .frame(maxWidth: .infinity)
                         .frame(height: 5)
-                        .offset(x: self.nowAnimationPlaying ? (self.borderSize == 1.2 ?  39 : 15) : 0)
+                        .offset(x: self.borderPostion)
                         .scaleEffect(x: self.borderSize)
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 9, trailing: 20))
                 }
@@ -112,6 +113,9 @@ struct DetailArrivalView: View {
                 self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .back)
                 if code == "99" {
                     self.borderSize = 1.2
+                    self.borderPostion = 35
+                } else {
+                    self.borderPostion = 15
                 }
                 self.nowAnimationPlaying = true
             } completion: {
@@ -121,13 +125,16 @@ struct DetailArrivalView: View {
                     
                     if code != "99" {
                         self.borderSize = 1.2
+                        self.borderPostion = 35
                     } else {
                         self.borderSize = 1.0
+                        self.borderPostion = 0
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
                         self.nowAnimationPlaying = false
                         self.borderSize = 1.0
+                        self.borderPostion = 0
                         
                         if let code = Int(self.arrivalDataList.first?.code ?? "") {
                             self.trainPostion =  self.trainIconMoveValue(code: code)

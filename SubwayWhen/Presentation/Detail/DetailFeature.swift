@@ -80,7 +80,6 @@ struct DetailFeature: Reducer {
                 return .none
                 
             case .refreshBtnTapped:
-                state.nowArrivalLoading = true
                 return .send(.arrivalDataRequest(state.sendedStationName))
                 
             default: return .none
