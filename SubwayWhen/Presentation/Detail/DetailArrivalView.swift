@@ -14,6 +14,8 @@ struct DetailArrivalView: View {
     @State private var borderPostion = 0.0
     @State private var nowAnimationPlaying = false
     @State private var trainPostion = 0.0
+    @State private var nowAnimationHalfPlaying = false
+    
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
     var arrivalDataList: [RealtimeStationArrival]
@@ -127,6 +129,8 @@ struct DetailArrivalView: View {
                         : (self.stationInfo.exceptionLastStation.isEmpty ?
                            Color(self.stationInfo.line) : Color.init(uiColor: .lightGray)
                         )
+                        let offset = data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
+                        : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
                            
                         VStack(alignment: .center, spacing: 0) {
                             HStack {
@@ -142,10 +146,8 @@ struct DetailArrivalView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(bgColor)
                             }
-                            .offset(
-                                x: data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
-                                : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
-                            )
+                            .offset(x: self.nowAnimationHalfPlaying ? offset + 35 : offset)
+                            .opacity(self.nowAnimationHalfPlaying ? 0 : 1)
                             .padding(.bottom, 5)
                         }
                     }
@@ -168,7 +170,11 @@ struct DetailArrivalView: View {
                     self.borderPostion = 15
                 }
                 self.nowAnimationPlaying = true
+                self.nowAnimationHalfPlaying = true
             } completion: {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0).delay(0.4)) {
+                    self.nowAnimationHalfPlaying = false
+                }
                 withAnimation(.easeInOut(duration: 0.7)) {
                     self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .back)
                     self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .next)
@@ -180,7 +186,6 @@ struct DetailArrivalView: View {
                         self.borderSize = 1.0
                         self.borderPostion = 0
                     }
-                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
                         self.nowAnimationPlaying = false
                         self.borderSize = 1.0
