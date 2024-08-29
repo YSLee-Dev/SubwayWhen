@@ -63,12 +63,43 @@ class TotalLoadModel : TotalLoadProtocol {
             .asObservable()
     }
     
-    // live 정보만 반환
+    // live 정보만 반환 (삭제 예정)
     func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
         self.loadModel.stationArrivalRequest(stationName: station)
             .map{ data -> LiveStationModel in
                 guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
                 return value
+            }
+            .asObservable()
+    }
+    
+    // live 정보만 반환하되, 필터링을 거침
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [RealtimeStationArrival]> {
+        self.loadModel.stationArrivalRequest(stationName: requestModel.stationName)
+            .map{ data -> LiveStationModel in
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [])}
+                return value
+            }
+            .map { data -> [RealtimeStationArrival] in
+                let errorModel = RealtimeStationArrival(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.lineNumber, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: "")
+                
+                if data.realtimeArrivalList.isEmpty {
+                    return [errorModel, errorModel]
+                } else {
+                    var arrivalData: [RealtimeStationArrival] = []
+                    var errorCount = 0
+                    for x in data.realtimeArrivalList {
+                        if requestModel.upDown == x.upDown && requestModel.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
+                            arrivalData.append(x)
+                        } else {
+                            errorCount += 1
+                        }
+                    }
+                    for _ in 0 ..< errorCount {
+                        arrivalData.append(errorModel)
+                    }
+                    return arrivalData
+                }
             }
             .asObservable()
     }
@@ -310,35 +341,6 @@ class TotalLoadModel : TotalLoadProtocol {
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule] {
         return await withCheckedContinuation { continuation in
             scheduleData
-                .subscribe(onNext: { data in
-                    continuation.resume(returning: data)
-                })
-                .disposed(by: self.bag)
-        }
-    }
-    
-    func scheduleDataFetchAsyncData(type: ScheduleType, searchModel: ScheduleSearch)  async -> [ResultSchdule]  {
-        var scheduleResult: Observable<[ResultSchdule]>!
-        if searchModel.lineScheduleType  == .Korail{
-            scheduleResult = self.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: true, isWidget: true)
-        } else if searchModel.lineScheduleType == .Seoul {
-            scheduleResult = self.seoulScheduleLoad(searchModel, isFirst: false, isNow: false, isWidget: false)
-        } else {
-            return []
-        }
-        
-        return await withCheckedContinuation { continuation  in
-            scheduleResult
-                .subscribe(onNext: { data in
-                    continuation.resume(returning: data)
-                })
-                .disposed(by: self.bag)
-        }
-    }
-    
-    func singleLiveAsyncData(station: String)  async -> LiveStationModel {
-        await withCheckedContinuation { continuation  in
-            self.singleLiveDataLoad(station: station)
                 .subscribe(onNext: { data in
                     continuation.resume(returning: data)
                 })

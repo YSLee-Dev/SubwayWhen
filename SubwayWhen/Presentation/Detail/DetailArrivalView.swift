@@ -289,7 +289,7 @@ extension DetailArrivalView {
         arrivalDataList: [
             .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
                                       .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
-        ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", exceptionLastStation: "", korailCode: ""),
+        ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""),
         backStationName: "남부터미널",
         nowLoading: true,
         refreshBtnTapped: {}
