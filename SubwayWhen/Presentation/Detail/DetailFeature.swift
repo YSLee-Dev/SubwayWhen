@@ -17,9 +17,9 @@ struct DetailFeature: Reducer {
     struct State: Equatable {
         let sendedStationName: String
         let sendedScheduleModel: ScheduleSearch
-        var nowArrivalData: [RealtimeStationArrival]?
-        var nowScheduleData: [ResultSchdule]?
-        var nowSculeduleSortedData: [ResultSchdule]?
+        var nowArrivalData: [RealtimeStationArrival] = []
+        var nowScheduleData: [ResultSchdule] = []
+        var nowSculeduleSortedData: [ResultSchdule] = []
         var backStationName: String?
         var nextStationName: String?
         var nowArrivalLoading: Bool = false
@@ -34,6 +34,7 @@ struct DetailFeature: Reducer {
         case scheduleMoreBtnTapped
         case arrivalDataRequestSuccess([RealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
+        case scheduleDataSort
         case arrivalDataRequest
         case timerSettingRequest
         case timerDecrease
@@ -79,11 +80,13 @@ struct DetailFeature: Reducer {
                 
             case .scheduleDataRequestSuccess(let data):
                 state.nowScheduleData = data
+                return .send(.scheduleDataSort)
                 
+            case .scheduleDataSort:
                 if FixInfo.saveSetting.detailScheduleAutoTime {
-                    state.nowScheduleData = self.scheduleSort(data)
+                    state.nowSculeduleSortedData = self.scheduleSort(state.nowScheduleData)
                 } else {
-                    state.nowScheduleData = data
+                    state.nowSculeduleSortedData = state.nowScheduleData
                 }
                 return .none
                 
