@@ -23,7 +23,7 @@ struct DetailView: View {
             backBtnTapped: {
                 self.store.send(.backBtnTapped)
             }) {
-                VStack {
+                VStack(spacing: 20) {
                     HStack {
                         Text(self.store.backStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
@@ -76,12 +76,16 @@ struct DetailView: View {
                             .frame(height: 40)
                         }
                     }
-                    .padding(.vertical, 15)
                     
                     DetailArrivalView(
-                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
+                        arrivalDataList: self.store.nowArrivalData, stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
                             self.store.send(.refreshBtnTapped)
                         }
+                    
+                    DetailScheduleView(
+                        scheduleDataList: self.store.nowSculeduleSortedData,
+                        stationInfo: self.store.sendedScheduleModel
+                    )
                 }
                 .padding(.top, 12.5)
             }
