@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 extension DependencyValues {
-    var totalLoad: TotalLoadProtocol {
+    var totalLoad: TotalLoadTCADependencyProtocol {
         get {self[TotalLoadModelDependencyKey.self]}
         set {self[TotalLoadModelDependencyKey.self] = newValue}
     }
