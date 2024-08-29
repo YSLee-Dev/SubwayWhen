@@ -20,8 +20,7 @@ struct DetailArrivalView: View {
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
     var arrivalDataList: [RealtimeStationArrival]
-    let stationInfo: ScheduleSearch
-    let stationName: String
+    let stationInfo: DetailSendModel
     let backStationName: String
     var nowLoading: Bool
     var nowSeconds: Int?
@@ -41,17 +40,17 @@ struct DetailArrivalView: View {
                 HStack(spacing: 50) {
                     VStack(alignment: .leading, spacing: 5) {
                         Circle()
-                            .stroke(Color.init(self.stationInfo.line))
+                            .stroke(Color.init(self.stationInfo.lineNumber))
                             .fill(Color.white)
                             .frame(width: 15, height: 15)
                         
-                        Text(self.stationName)
+                        Text(self.stationInfo.stationName)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
                     }
 
                     VStack(alignment: .leading, spacing: 5) {
                         Circle()
-                            .stroke(Color.init(self.stationInfo.line))
+                            .stroke(Color.init(self.stationInfo.lineNumber))
                             .fill(Color.white)
                             .frame(width: 15, height: 15)
                             .offset(x: self.backStationPostion.0)
@@ -66,7 +65,7 @@ struct DetailArrivalView: View {
                     
                     VStack(alignment: .trailing, spacing: 5) {
                         Circle()
-                            .stroke(Color.init(self.stationInfo.line))
+                            .stroke(Color.init(self.stationInfo.lineNumber))
                             .fill(Color.white)
                             .frame(width: 15, height: 15)
                             .offset(x: self.nowAnimationPlaying ?  self.nextStationPostion.0 : 1)
@@ -82,7 +81,7 @@ struct DetailArrivalView: View {
                 .frame(height: 73)
                 .background {
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.init(self.stationInfo.line))
+                        .fill(Color.init(self.stationInfo.lineNumber))
                         .frame(maxWidth: .infinity)
                         .frame(height: 5)
                         .offset(x: self.borderPostion)
@@ -151,9 +150,9 @@ struct DetailArrivalView: View {
                             let text = data.0 == 0 ? data.1.detailArraivalViewText
                             : (self.stationInfo.exceptionLastStation.isEmpty ? data.1.detailArraivalViewText : "⛔️ 제외 행을 설정하면\n두 번째 열차를 볼 수 없어요."
                             )
-                            let bgColor = data.0 == 0 ? Color(self.stationInfo.line)
+                            let bgColor = data.0 == 0 ? Color(self.stationInfo.lineNumber)
                             : (self.stationInfo.exceptionLastStation.isEmpty ?
-                               Color(self.stationInfo.line) : Color.init(uiColor: .lightGray)
+                               Color(self.stationInfo.lineNumber) : Color.init(uiColor: .lightGray)
                             )
                             let offset = data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
                             : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
@@ -286,9 +285,13 @@ extension DetailArrivalView {
 }
 
 #Preview {
-    DetailArrivalView(arrivalDataList: [
-        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
-                                  .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
-    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널", nowLoading: false, nowSeconds: 10
-    ) {}
+    DetailArrivalView(
+        arrivalDataList: [
+            .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
+                                      .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
+        ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", exceptionLastStation: "", korailCode: ""),
+        backStationName: "남부터미널",
+        nowLoading: true,
+        refreshBtnTapped: {}
+    )
 }
