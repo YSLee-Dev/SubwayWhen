@@ -15,6 +15,7 @@ struct DetailArrivalView: View {
     @State private var nowAnimationPlaying = false
     @State private var trainPostion = 0.0
     @State private var nowAnimationHalfPlaying = false
+    @State private var refreshBtnTapAnimation = false
     
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
@@ -23,6 +24,7 @@ struct DetailArrivalView: View {
     let stationName: String
     let backStationName: String
     var nowLoading: Bool
+    var nowSeconds: Int?
     let refreshBtnTapped: () -> ()
     
     var body: some View {
@@ -113,10 +115,24 @@ struct DetailArrivalView: View {
                         
                         Button(action: {
                             self.refreshBtnTapped()
+                            self.refreshBtnTapAnimation.toggle()
+                            
+                            Task {
+                                try? await Task.sleep(for: .milliseconds(550))
+                                self.refreshBtnTapAnimation.toggle()
+                            }
                         }, label: {
                             Image(systemName: "arrow.triangle.2.circlepath")
                                 .foregroundColor(.init(uiColor: .label))
                         })
+                        .overlay {
+                            if let seconds = self.nowSeconds {
+                                Text("\(seconds)")
+                                    .font(.system(size: ViewStyle.FontSize.superSmallSize))
+                            }
+                        }
+                        .rotationEffect(.init(degrees: self.refreshBtnTapAnimation ? 360 : 0))
+                        .animation(.easeInOut(duration: self.refreshBtnTapAnimation ? 0.5 : 0), value: self.refreshBtnTapAnimation)
                     }
                     .padding(.bottom, 10)
                     
@@ -254,6 +270,6 @@ extension DetailArrivalView {
     DetailArrivalView(arrivalDataList: [
         .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
                                   .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
-    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널", nowLoading: false
+    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널", nowLoading: false, nowSeconds: 10
     ) {}
 }
