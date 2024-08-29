@@ -97,7 +97,7 @@ struct DetailArrivalView: View {
                         Text(FixInfo.saveSetting.detailVCTrainIcon)
                             .font(.system(size: ViewStyle.FontSize.mainTitleSize))
                             .offset(x: self.trainPostion, y: -15)
-                            .opacity(self.nowAnimationPlaying ? 0 : 1)
+                            .opacity(self.nowLoading ? 0 : self.nowAnimationPlaying ? 0 : 1)
                             .animation(.easeInOut(duration: 0.5), value: self.trainPostion)
                     }
                 }
@@ -107,19 +107,21 @@ struct DetailArrivalView: View {
             MainStyleViewInSUI {
                 VStack {
                     HStack {
-                        let title = (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보없음" : self.arrivalDataList.first!.subPrevious
+                        let title = self.nowLoading ? "📡 열차 정보를 가져오고 있어요." : (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보없음" : self.arrivalDataList.first!.subPrevious
                         Text(title)
                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                         
                         Spacer()
                         
                         Button(action: {
-                            self.refreshBtnTapped()
-                            self.refreshBtnTapAnimation.toggle()
-                            
-                            Task {
-                                try? await Task.sleep(for: .milliseconds(550))
+                            if !self.nowLoading {
+                                self.refreshBtnTapped()
                                 self.refreshBtnTapAnimation.toggle()
+                                
+                                Task {
+                                    try? await Task.sleep(for: .milliseconds(550))
+                                    self.refreshBtnTapAnimation.toggle()
+                                }
                             }
                         }, label: {
                             Image(systemName: "arrow.triangle.2.circlepath")
@@ -136,35 +138,44 @@ struct DetailArrivalView: View {
                     }
                     .padding(.bottom, 10)
                     
-                    ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
-                        let width = (self.screenWidthSize / 2) + 35
-                        let text = data.0 == 0 ? data.1.detailArraivalViewText
-                        : (self.stationInfo.exceptionLastStation.isEmpty ? data.1.detailArraivalViewText : "⛔️ 제외 행을 설정하면\n두 번째 열차를 볼 수 없어요."
-                        )
-                        let bgColor = data.0 == 0 ? Color(self.stationInfo.line)
-                        : (self.stationInfo.exceptionLastStation.isEmpty ?
-                           Color(self.stationInfo.line) : Color.init(uiColor: .lightGray)
-                        )
-                        let offset = data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
-                        : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
-                           
-                        VStack(alignment: .center, spacing: 0) {
-                            HStack {
-                                Text(text)
-                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
-                                    .foregroundColor(.white)
-                                    .lineLimit(2)
-                                    .padding(.horizontal, 5)
-                                Spacer()
+                    if self.nowLoading {
+                        VStack {
+                            ProgressView()
+                                .tint(Color("AppIconColor"))
+                                .padding(.bottom, 5)
+                        }
+                        .frame(height: 97.5)
+                    } else {
+                        ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
+                            let width = (self.screenWidthSize / 2) + 35
+                            let text = data.0 == 0 ? data.1.detailArraivalViewText
+                            : (self.stationInfo.exceptionLastStation.isEmpty ? data.1.detailArraivalViewText : "⛔️ 제외 행을 설정하면\n두 번째 열차를 볼 수 없어요."
+                            )
+                            let bgColor = data.0 == 0 ? Color(self.stationInfo.line)
+                            : (self.stationInfo.exceptionLastStation.isEmpty ?
+                               Color(self.stationInfo.line) : Color.init(uiColor: .lightGray)
+                            )
+                            let offset = data.0 == 0 ? -(self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 + 50
+                            : (self.screenWidthSize - (self.screenWidthSize / 2) + 35)  / 2 - 50
+                               
+                            VStack(alignment: .center, spacing: 0) {
+                                HStack {
+                                    Text(text)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                        .foregroundColor(.white)
+                                        .lineLimit(2)
+                                        .padding(.horizontal, 5)
+                                    Spacer()
+                                }
+                                .frame(width: width,  height: 40)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(bgColor)
+                                }
+                                .offset(x: self.nowAnimationHalfPlaying ? offset + 35 : offset)
+                                .opacity(self.nowAnimationHalfPlaying ? 0 : 1)
+                                .padding(.bottom, 5)
                             }
-                            .frame(width: width,  height: 40)
-                            .background {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(bgColor)
-                            }
-                            .offset(x: self.nowAnimationHalfPlaying ? offset + 35 : offset)
-                            .opacity(self.nowAnimationHalfPlaying ? 0 : 1)
-                            .padding(.bottom, 5)
                         }
                     }
                 }
@@ -172,43 +183,54 @@ struct DetailArrivalView: View {
             }
         }
         .onChange(of: self.nowLoading) {
-            let code = self.arrivalDataList.first?.code ?? "-"
-            self.trainPostion  = 0
             
-            withAnimation(.easeInOut(duration: 0)) {
-                let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
-                self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
-                self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .back)
-                if code == "99" {
+            if self.nowLoading {
+                withAnimation(.easeInOut(duration: 0.25)) {
                     self.borderSize = 1.2
-                    self.borderPostion = 35
-                } else {
-                    self.borderPostion = 15
+                    self.nextStationPostion = (200, 0)
+                    self.backStationPostion = (-200, 0)
                 }
-                self.nowAnimationPlaying = true
-                self.nowAnimationHalfPlaying = true
-            } completion: {
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0).delay(0.4)) {
-                    self.nowAnimationHalfPlaying = false
-                }
-                withAnimation(.easeInOut(duration: 0.7)) {
-                    self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .back)
-                    self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .next)
-                    
-                    if code != "99" {
-                        self.borderSize = 1.2
+            } else {
+                let code = self.arrivalDataList.first?.code ?? "-"
+                self.trainPostion  = 0
+                
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    if code == "99" {
                         self.borderPostion = 35
                     } else {
-                        self.borderSize = 1.0
-                        self.borderPostion = 0
+                        self.borderPostion = 15
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
-                        self.nowAnimationPlaying = false
-                        self.borderSize = 1.0
-                        self.borderPostion = 0
+                }
+                withAnimation(.easeInOut(duration: 0)) {
+                    let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
+                    self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
+                    self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .back)
+                   
+                    self.nowAnimationPlaying = true
+                    self.nowAnimationHalfPlaying = true
+                } completion: {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0).delay(0.4)) {
+                        self.nowAnimationHalfPlaying = false
+                    }
+                    withAnimation(.easeInOut(duration: 0.7)) {
+                        self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .back)
+                        self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .next)
                         
-                        if let code = Int(self.arrivalDataList.first?.code ?? "") {
-                            self.trainPostion =  self.trainIconMoveValue(code: code)
+                        if code != "99" {
+                            self.borderSize = 1.2
+                            self.borderPostion = 35
+                        } else {
+                            self.borderSize = 1.0
+                            self.borderPostion = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
+                            self.nowAnimationPlaying = false
+                            self.borderSize = 1.0
+                            self.borderPostion = 0
+                            
+                            if let code = Int(self.arrivalDataList.first?.code ?? "") {
+                                self.trainPostion =  self.trainIconMoveValue(code: code)
+                            }
                         }
                     }
                 }
@@ -268,7 +290,7 @@ extension DetailArrivalView {
 
 #Preview {
     DetailArrivalView(arrivalDataList: [
-        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
+        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
                                   .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
     ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""), stationName: "교대", backStationName: "남부터미널", nowLoading: false, nowSeconds: 10
     ) {}
