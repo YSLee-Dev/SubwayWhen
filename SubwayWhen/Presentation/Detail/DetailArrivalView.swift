@@ -185,22 +185,20 @@ struct DetailArrivalView: View {
         .onChange(of: self.nowLoading) {
             if self.nowLoading {
                 withAnimation(.easeInOut(duration: 0.25)) {
-                    self.borderSize = 1.2
-                    self.nextStationPostion = (200, 0)
-                    self.backStationPostion = (-200, 0)
+                    self.nextStationPostion = (100, 0)
+                    self.backStationPostion = (-100, 0)
                 }
             } else {
                 let code = self.arrivalDataList.first?.code ?? "-"
                 self.trainPostion  = 0
                 
-                withAnimation(.easeInOut(duration: 0.2)) {
+                withAnimation(.easeInOut(duration: 0)) {
                     if code == "99" {
                         self.borderPostion = 35
+                        self.borderSize = 1.2
                     } else {
                         self.borderPostion = 15
                     }
-                }
-                withAnimation(.easeInOut(duration: 0)) {
                     let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
                     self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
                     self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .back)
