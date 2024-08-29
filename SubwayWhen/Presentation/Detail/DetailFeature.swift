@@ -63,6 +63,7 @@ struct DetailFeature: Reducer {
                 
                 return .run { send in
                     let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
+                    try await Task.sleep(for: .milliseconds(350))
                     await send(.arrivalDataRequestSuccess(loadData.realtimeArrivalList))
                 }
                 
@@ -87,6 +88,8 @@ struct DetailFeature: Reducer {
                 return .none
                 
             case .refreshBtnTapped:
+                if state.nowArrivalLoading {return .none}
+                state.nowTimer = nil
                 return .merge(
                     .send(.arrivalDataRequest),
                     .cancel(id: TimerKey.refresh)
