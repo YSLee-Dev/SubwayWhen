@@ -79,7 +79,7 @@ struct DetailView: View {
                     .padding(.vertical, 15)
                     
                     DetailArrivalView(
-                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading) {
+                        arrivalDataList: self.store.nowArrivalData ?? [], stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
                             self.store.send(.refreshBtnTapped)
                         }
                 }
