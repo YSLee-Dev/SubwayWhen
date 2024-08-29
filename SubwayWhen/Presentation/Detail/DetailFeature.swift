@@ -23,6 +23,7 @@ struct DetailFeature: Reducer {
         var backStationName: String?
         var nextStationName: String?
         var nowArrivalLoading: Bool = false
+        var nowTimer: Int?
     }
     
     enum Action: Equatable {
@@ -33,26 +34,32 @@ struct DetailFeature: Reducer {
         case scheduleMoreBtnTapped
         case arrivalDataRequestSuccess([RealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
-        case arrivalDataRequest(String)
+        case arrivalDataRequest
+        case timerSettingRequest
+        case timerDecrease
+    }
+    
+    enum TimerKey: Equatable {
+        case refresh
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .viewInitialized:
-                let stationName = state.sendedStationName
                 let scheduleModel = state.sendedScheduleModel
                 
                 return .merge(
-                    .send(.arrivalDataRequest(stationName)),
+                    .send(.arrivalDataRequest),
                     .run { send in
                         let loadData = await self.totalLoad.scheduleDataFetchAsyncData(type: scheduleModel.lineScheduleType, searchModel: scheduleModel)
                         await send(.scheduleDataRequestSuccess(loadData))
                     }
                 )
                 
-            case .arrivalDataRequest(let stationName):
+            case .arrivalDataRequest:
                 state.nowArrivalLoading = true
+                let stationName = state.sendedStationName
                 
                 return .run { send in
                     let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
@@ -67,7 +74,7 @@ struct DetailFeature: Reducer {
                 state.nextStationName = backNextStationName[1]
                 state.nowArrivalLoading = false
                 
-                return .none
+                return .send(.timerSettingRequest)
                 
             case .scheduleDataRequestSuccess(let data):
                 state.nowScheduleData = data
@@ -80,7 +87,28 @@ struct DetailFeature: Reducer {
                 return .none
                 
             case .refreshBtnTapped:
-                return .send(.arrivalDataRequest(state.sendedStationName))
+                return .merge(
+                    .send(.arrivalDataRequest),
+                    .cancel(id: TimerKey.refresh)
+                )
+                
+            case .timerSettingRequest:
+                if !FixInfo.saveSetting.detailAutoReload {return .none}
+                state.nowTimer = 15
+                
+                return .run { send in
+                    for _ in 1 ... 15 {
+                        try await Task.sleep(for: .seconds(1))
+                        await send(.timerDecrease)
+                    }
+                    await send(.arrivalDataRequest)
+                }
+                .cancellable(id: TimerKey.refresh)
+                
+            case .timerDecrease:
+                if state.nowTimer == nil {return .none}
+                state.nowTimer! -= 1
+                return .none
                 
             default: return .none
             }
