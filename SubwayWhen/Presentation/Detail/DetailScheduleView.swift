@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailScheduleView: View {
     private let gridItem = [GridItem(.flexible()), GridItem(.flexible())]
     var scheduleDataList: [ResultSchdule]
-    let stationInfo: ScheduleSearch
+    let stationInfo: DetailSendModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -62,7 +62,7 @@ struct DetailScheduleView: View {
                                 .frame(height: 37.5)
                                 .background {
                                     RoundedRectangle(cornerRadius: 15)
-                                        .fill(Color("\(self.stationInfo.line)"))
+                                        .fill(Color("\(self.stationInfo.lineNumber)"))
                                 }
                                 .padding(5)
                             }
@@ -87,5 +87,5 @@ struct DetailScheduleView: View {
             .init(startTime: "05:33:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "구파발"),
             .init(startTime: "05:40:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "대화"),
             .init(startTime: "05:46:00", type: .Seoul, isFast: "", startStation: "오금", lastStation: "구파발")
-    ], stationInfo: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: ""))
+    ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", exceptionLastStation: "", korailCode: ""))
 }

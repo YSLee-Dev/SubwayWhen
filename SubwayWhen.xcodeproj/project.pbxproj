@@ -411,6 +411,7 @@
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 		FF36A36C2C80387D00387A3D /* DetailScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A36B2C80387D00387A3D /* DetailScheduleView.swift */; };
+		FF36A36E2C8055C900387A3D /* DetailSendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A36D2C8055C900387A3D /* DetailSendModel.swift */; };
 		FF7A71262C7C151E0080B72B /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */; };
 		FF7A712A2C7C41480080B72B /* PreviewTotalLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71292C7C41480080B72B /* PreviewTotalLoadModel.swift */; };
 		FF7A712C2C7C42E00080B72B /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A711C2C7C09680080B72B /* Dependency+.swift */; };
@@ -840,6 +841,7 @@
 		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 		FF36A36B2C80387D00387A3D /* DetailScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleView.swift; sourceTree = "<group>"; };
+		FF36A36D2C8055C900387A3D /* DetailSendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSendModel.swift; sourceTree = "<group>"; };
 		FF7A711C2C7C09680080B72B /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
 		FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
 		FF7A71292C7C41480080B72B /* PreviewTotalLoadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadModel.swift; sourceTree = "<group>"; };
@@ -2281,6 +2283,7 @@
 		34F5F10229642A960010A21D /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				FF36A36D2C8055C900387A3D /* DetailSendModel.swift */,
 				34F5F0FE296428FE0010A21D /* DetailTableViewCellData.swift */,
 				34F5F100296429E00010A21D /* DetailTableViewSectionData.swift */,
 				34324CAB29D13028008AE274 /* DetailLoadData.swift */,
@@ -3211,6 +3214,7 @@
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
 				34D9E9FE2A54FDC60080AD17 /* LocationModalCoordinatorProtocol.swift in Sources */,
+				FF36A36E2C8055C900387A3D /* DetailSendModel.swift in Sources */,
 				349B516129A4616700A53879 /* DetailStationId.swift in Sources */,
 				34A221C729CB1B75003F035D /* DetailTableHeaderViewModelProtocol.swift in Sources */,
 				34F5F10C296561F50010A21D /* DetailModel.swift in Sources */,

@@ -15,8 +15,7 @@ struct DetailFeature: Reducer {
     
     @ObservableState
     struct State: Equatable {
-        let sendedStationName: String
-        let sendedScheduleModel: ScheduleSearch
+        let sendedLoadModel: DetailSendModel
         var nowArrivalData: [RealtimeStationArrival] = []
         var nowScheduleData: [ResultSchdule] = []
         var nowSculeduleSortedData: [ResultSchdule] = []
@@ -48,19 +47,20 @@ struct DetailFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .viewInitialized:
-                let scheduleModel = state.sendedScheduleModel
+                let loadModel = state.sendedLoadModel
+                let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
                 
                 return .merge(
                     .send(.arrivalDataRequest),
                     .run { send in
-                        let loadData = await self.totalLoad.scheduleDataFetchAsyncData(type: scheduleModel.lineScheduleType, searchModel: scheduleModel)
+                        let loadData = await self.totalLoad.scheduleDataFetchAsyncData(type: ScheduleType.lineNumberScheduleType(line: loadModel.lineNumber), searchModel: scheduleModel)
                         await send(.scheduleDataRequestSuccess(loadData))
                     }
                 )
                 
             case .arrivalDataRequest:
                 state.nowArrivalLoading = true
-                let stationName = state.sendedStationName
+                let stationName = state.sendedLoadModel.stationName
                 
                 return .run { send in
                     let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
@@ -167,5 +167,22 @@ struct DetailFeature: Reducer {
             }
         }
         return  [backStation, nextStation]
+    }
+    
+    private func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
+        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: nil, backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
+        
+        for x in arrivalData {
+            if station.upDown == x.upDown && station.lineCode == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
+                if list.count == 1{
+                    list.insert(x, at: 0)
+                }else if list.count == 2{
+                    list.insert(x, at: 1)
+                    list.removeLast()
+                    return list
+                }
+            }
+        }
+        return list
     }
 }
