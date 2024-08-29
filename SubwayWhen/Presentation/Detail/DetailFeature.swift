@@ -53,19 +53,20 @@ struct DetailFeature: Reducer {
                 return .merge(
                     .send(.arrivalDataRequest),
                     .run { send in
-                        let loadData = await self.totalLoad.scheduleDataFetchAsyncData(type: ScheduleType.lineNumberScheduleType(line: loadModel.lineNumber), searchModel: scheduleModel)
+                        let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
                         await send(.scheduleDataRequestSuccess(loadData))
                     }
                 )
                 
             case .arrivalDataRequest:
                 state.nowArrivalLoading = true
-                let stationName = state.sendedLoadModel.stationName
+                let sendedModel = state.sendedLoadModel
+                let requestModel = DetailArrivalDataRequestModel(upDown: sendedModel.upDown, stationName: sendedModel.stationName, lineNumber: sendedModel.lineNumber, lineCode: sendedModel.lineCode, exceptionLastStation: sendedModel.exceptionLastStation)
                 
                 return .run { send in
-                    let loadData = await self.totalLoad.singleLiveAsyncData(station: stationName)
+                    let loadData = await self.totalLoad.singleLiveAsyncData(requestModel: requestModel)
                     try await Task.sleep(for: .milliseconds(350))
-                    await send(.arrivalDataRequestSuccess(loadData.realtimeArrivalList))
+                    await send(.arrivalDataRequestSuccess(loadData))
                 }
                 
             case .arrivalDataRequestSuccess(let data):
@@ -167,22 +168,5 @@ struct DetailFeature: Reducer {
             }
         }
         return  [backStation, nextStation]
-    }
-    
-    private func arrivalDataMatching(station : DetailLoadData, arrivalData : [RealtimeStationArrival]) -> [RealtimeStationArrival]{
-        var list = [RealtimeStationArrival(upDown: station.upDown, arrivalTime: "", previousStation: "현재 실시간 열차 데이터가 없어요.", subPrevious: "", code: "", subWayId: "", stationName: station.stationName, lastStation: "\(station.exceptionLastStation)행 제외", lineNumber: station.lineNumber, isFast: nil, backStationId: station.backStationId, nextStationId: station.nextStationId, trainCode: "")]
-        
-        for x in arrivalData {
-            if station.upDown == x.upDown && station.lineCode == x.subWayId && !(station.exceptionLastStation.contains(x.lastStation)){
-                if list.count == 1{
-                    list.insert(x, at: 0)
-                }else if list.count == 2{
-                    list.insert(x, at: 1)
-                    list.removeLast()
-                    return list
-                }
-            }
-        }
-        return list
     }
 }
