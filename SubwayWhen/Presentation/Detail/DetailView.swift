@@ -95,5 +95,5 @@ struct DetailView: View {
     }
 }
 #Preview {
-    DetailView(store: .init(initialState: .init(sendedLoadModel: DetailSendModel(upDown: "340", stationName: "상행", lineNumber: "", stationCode: "03호선", lineCode: "1003", exceptionLastStation: "", korailCode: "")), reducer: {DetailFeature()}))
+    DetailView(store: .init(initialState: .init(sendedLoadModel: DetailSendModel(upDown: "상행", stationName: "상행", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")), reducer: {DetailFeature()}))
 }
