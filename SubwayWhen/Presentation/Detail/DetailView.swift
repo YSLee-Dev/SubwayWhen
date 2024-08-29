@@ -18,7 +18,7 @@ struct DetailView: View {
     
     var body: some View {
         NavigationBarScrollViewInSUI(
-            title: "\(self.store.sendedScheduleModel.line.filter {$0 != "0"}) \(self.store.sendedStationName)",
+            title: "\(self.store.sendedLoadModel.lineNumber.filter {$0 != "0"}) \(self.store.sendedLoadModel.stationName)",
             isLargeTitleHidden: true,
             backBtnTapped: {
                 self.store.send(.backBtnTapped)
@@ -32,11 +32,11 @@ struct DetailView: View {
                         
                         Spacer()
                         
-                        Text(self.store.sendedStationName)
+                        Text(self.store.sendedLoadModel.stationName)
                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                             .background {
                                 Circle()
-                                    .stroke(Color.init(self.store.sendedScheduleModel.line))
+                                    .stroke(Color.init(self.store.sendedLoadModel.lineNumber))
                                     .fill(Color.white)
                                     .frame(width: 75, height: 75)
                             }
@@ -51,12 +51,12 @@ struct DetailView: View {
                     .frame(height: 50)
                     .background {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.init(self.store.sendedScheduleModel.line))
+                            .fill(Color.init(self.store.sendedLoadModel.lineNumber))
                     }
                     
                     HStack(spacing: 20) {
                         MainStyleViewInSUI {
-                            Text(self.store.sendedScheduleModel.upDown)
+                            Text(self.store.sendedLoadModel.upDown)
                                 .foregroundColor(Color.init(uiColor: .label))
                                 .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                             .frame(maxWidth: .infinity)
@@ -67,7 +67,7 @@ struct DetailView: View {
                             Button(action: {
                                 self.store.send(.exceptionLastStationBtnTapped)
                             }) {
-                                let exception =  self.store.sendedScheduleModel.exceptionLastStation.isEmpty ? "제외 행 없음" : self.store.sendedScheduleModel.exceptionLastStation
+                                let exception =  self.store.sendedLoadModel.exceptionLastStation.isEmpty ? "제외 행 없음" : self.store.sendedLoadModel.exceptionLastStation
                                 Text(exception)
                                     .foregroundColor(.red)
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
@@ -78,13 +78,13 @@ struct DetailView: View {
                     }
                     
                     DetailArrivalView(
-                        arrivalDataList: self.store.nowArrivalData, stationInfo: self.store.sendedScheduleModel, stationName: self.store.sendedStationName, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
+                        arrivalDataList: self.store.nowArrivalData, stationInfo: self.store.sendedLoadModel, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
                             self.store.send(.refreshBtnTapped)
                         }
                     
                     DetailScheduleView(
                         scheduleDataList: self.store.nowSculeduleSortedData,
-                        stationInfo: self.store.sendedScheduleModel
+                        stationInfo: self.store.sendedLoadModel
                     )
                 }
                 .padding(.top, 12.5)
@@ -95,5 +95,5 @@ struct DetailView: View {
     }
 }
 #Preview {
-    DetailView(store: .init(initialState: .init(sendedStationName: "교대", sendedScheduleModel: ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: "")), reducer: {DetailFeature()}))
+    DetailView(store: .init(initialState: .init(sendedLoadModel: DetailSendModel(upDown: "340", stationName: "상행", lineNumber: "", stationCode: "03호선", exceptionLastStation: "", korailCode: "")), reducer: {DetailFeature()}))
 }
