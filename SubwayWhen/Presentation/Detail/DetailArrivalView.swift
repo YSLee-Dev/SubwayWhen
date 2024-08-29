@@ -183,7 +183,6 @@ struct DetailArrivalView: View {
             }
         }
         .onChange(of: self.nowLoading) {
-            
             if self.nowLoading {
                 withAnimation(.easeInOut(duration: 0.25)) {
                     self.borderSize = 1.2
@@ -268,7 +267,7 @@ extension DetailArrivalView {
             if type == .next {
                 return (0, 1)
             } else {
-                return (borderSize - 125, 0)
+                return (borderSize - 127, 0)
             }
         }
         
