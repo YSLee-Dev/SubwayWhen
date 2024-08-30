@@ -1672,8 +1672,6 @@
 			children = (
 				34A3039A29AF86FD00948EDD /* NetworkManager.swift */,
 				34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */,
-				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
-				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
 				34A303AD29AF86FD00948EDD /* LoadModel */,
 				34A3039C29AF86FD00948EDD /* Entity */,
 			);
@@ -2586,6 +2584,7 @@
 		FA4CB7812BB68473003C41F6 /* SubwayWhenNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				FF36A3872C8065A800387A3D /* TCADependecy */,
 				34A3039929AF86FD00948EDD /* DataLoad */,
 				FA4CB7822BB68473003C41F6 /* SubwayWhenNetworking.h */,
 			);
@@ -2603,6 +2602,15 @@
 				FAD2F5FA2BB566A900B95B52 /* Info.plist */,
 			);
 			path = SubwayWhenHomeWidget;
+			sourceTree = "<group>";
+		};
+		FF36A3872C8065A800387A3D /* TCADependecy */ = {
+			isa = PBXGroup;
+			children = (
+				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
+				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
+			);
+			path = TCADependecy;
 			sourceTree = "<group>";
 		};
 		FF7A711E2C7C09780080B72B /* Dependency */ = {

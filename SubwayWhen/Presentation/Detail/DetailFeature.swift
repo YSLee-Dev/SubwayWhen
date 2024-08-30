@@ -96,6 +96,7 @@ struct DetailFeature: Reducer {
                 state.nowTimer = nil
                 return .merge(
                     .send(.arrivalDataRequest),
+                    .send(.scheduleDataSort),
                     .cancel(id: TimerKey.refresh)
                 )
                 
