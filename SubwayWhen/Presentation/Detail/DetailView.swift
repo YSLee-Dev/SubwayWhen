@@ -32,26 +32,34 @@ struct DetailView: View {
                         
                         Spacer()
                         
-                        Text(self.store.sendedLoadModel.stationName)
-                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
-                            .background {
-                                Circle()
-                                    .stroke(Color.init(self.store.sendedLoadModel.lineNumber))
-                                    .fill(Color.white)
-                                    .frame(width: 75, height: 75)
-                            }
-                        
-                        Spacer()
-                        
                         Text(self.store.nextStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             .foregroundColor(.init(uiColor: .systemBackground))
                             .padding(.trailing, 5)
                     }
-                    .frame(height: 50)
+                    .frame(width: UIScreen.main.bounds.width - 40 ,height: 50)
                     .background {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.init(self.store.sendedLoadModel.lineNumber))
+                    }
+                    .overlay {
+                        HStack {
+                            Spacer()
+                            Circle()
+                                .stroke(Color.init(self.store.sendedLoadModel.lineNumber))
+                                .fill(Color.white)
+                                .frame(width: 75, height: 75)
+                                .overlay {
+                                    HStack {
+                                        Spacer()
+                                        Text(self.store.sendedLoadModel.stationName)
+                                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                                            .lineLimit(3)
+                                        Spacer()
+                                    }
+                                }
+                            Spacer()
+                        }
                     }
                     
                     HStack(spacing: 20) {
