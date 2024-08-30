@@ -143,7 +143,7 @@ struct DetailArrivalView: View {
                                 .tint(Color("AppIconColor"))
                                 .padding(.bottom, 5)
                         }
-                        .frame(height: 97.5)
+                        .frame(height: 98)
                     } else {
                         ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
                             let width = (self.screenWidthSize / 2) + 35
