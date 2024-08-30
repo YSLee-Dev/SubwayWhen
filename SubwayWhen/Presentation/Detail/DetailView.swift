@@ -67,10 +67,19 @@ struct DetailView: View {
                             Button(action: {
                                 self.store.send(.exceptionLastStationBtnTapped)
                             }) {
-                                let exception =  self.store.sendedLoadModel.exceptionLastStation.isEmpty ? "제외 행 없음" : self.store.sendedLoadModel.exceptionLastStation
-                                Text(exception)
-                                    .foregroundColor(.red)
-                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                let exception =  self.store.sendedLoadModel.exceptionLastStation.isEmpty ? "제외 행 없음" : "\( self.store.sendedLoadModel.exceptionLastStation)행 제외"
+                                HStack {
+                                    Text(exception)
+                                        .foregroundColor(.red)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                    
+                                    if !self.store.sendedLoadModel.exceptionLastStation.isEmpty {
+                                        Image(systemName: "arrowtriangle.down")
+                                            .resizable()
+                                            .frame(width: 10, height: 10)
+                                            .foregroundColor(.red)
+                                    }
+                                }
                             }
                             .frame(maxWidth: .infinity)
                             .frame(height: 40)
@@ -89,11 +98,12 @@ struct DetailView: View {
                 }
                 .padding(.top, 12.5)
             }
+            .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
             .onAppear {
                 self.store.send(.viewInitialized)
             }
     }
 }
 #Preview {
-    DetailView(store: .init(initialState: .init(sendedLoadModel: DetailSendModel(upDown: "상행", stationName: "상행", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")), reducer: {DetailFeature()}))
+    DetailView(store: .init(initialState: .init(sendedLoadModel: DetailSendModel(upDown: "상행", stationName: "양재", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "구파발", korailCode: "")), reducer: {DetailFeature()}))
 }
