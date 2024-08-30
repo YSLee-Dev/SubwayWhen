@@ -11,6 +11,7 @@ struct DetailScheduleView: View {
     private let gridItem = [GridItem(.flexible()), GridItem(.flexible())]
     var scheduleDataList: [ResultSchdule]
     let stationInfo: DetailSendModel
+    let moreBtnTapped: () -> ()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -39,7 +40,7 @@ struct DetailScheduleView: View {
                         Spacer()
                         
                         Button(action: {
-                           
+                            self.moreBtnTapped()
                         }, label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.init(uiColor: .label))
@@ -87,5 +88,5 @@ struct DetailScheduleView: View {
             .init(startTime: "05:33:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "구파발"),
             .init(startTime: "05:40:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "대화"),
             .init(startTime: "05:46:00", type: .Seoul, isFast: "", startStation: "오금", lastStation: "구파발")
-    ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""))
+    ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")){}
 }
