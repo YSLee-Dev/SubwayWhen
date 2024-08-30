@@ -15,7 +15,7 @@ struct DetailFeature: Reducer {
     
     @ObservableState
     struct State: Equatable {
-        let sendedLoadModel: DetailSendModel
+        var sendedLoadModel: DetailSendModel
         var nowArrivalData: [RealtimeStationArrival] = []
         var nowScheduleData: [ResultSchdule] = []
         var nowSculeduleSortedData: [ResultSchdule] = []
@@ -23,6 +23,7 @@ struct DetailFeature: Reducer {
         var nextStationName: String?
         var nowArrivalLoading: Bool = false
         var nowTimer: Int?
+        @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
     
     enum Action: Equatable {
@@ -37,6 +38,12 @@ struct DetailFeature: Reducer {
         case arrivalDataRequest
         case timerSettingRequest
         case timerDecrease
+        case dialogAction(PresentationAction<DialogAction>)
+        
+        enum DialogAction: Equatable {
+            case cancelBtnTapped
+            case okBtnTapped
+        }
     }
     
     enum TimerKey: Equatable {
@@ -118,9 +125,36 @@ struct DetailFeature: Reducer {
                 state.nowTimer! -= 1
                 return .none
                 
+            case .exceptionLastStationBtnTapped:
+                if state.sendedLoadModel.exceptionLastStation.isEmpty {return .none}
+                let msg = "\(state.sendedLoadModel.exceptionLastStation)행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요."
+                state.dialogState = ConfirmationDialogState(title:  {
+                    TextState("")
+                }, actions: {
+                    ButtonState(action: .okBtnTapped) {
+                        TextState("재로딩")
+                    }
+                    ButtonState(role: .cancel, action: .cancelBtnTapped) {
+                        TextState("취소")
+                    }
+                }, message: {
+                    TextState(msg)
+                })
+                return .none
+                
+            case .dialogAction(.presented(.cancelBtnTapped)):
+                state.dialogState = nil
+                return .none
+                
+            case .dialogAction(.presented(.okBtnTapped)):
+                state.dialogState = nil
+                state.sendedLoadModel.exceptionLastStation = ""
+                return .send(.viewInitialized)
+                
             default: return .none
             }
         }
+        .ifLet(\.dialogState, action: \.dialogAction)
     }
     
     private func scheduleSort(_ scheduleList : [ResultSchdule]) -> [ResultSchdule] {
