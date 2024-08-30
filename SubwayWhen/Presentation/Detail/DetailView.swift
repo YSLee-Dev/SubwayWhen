@@ -94,7 +94,9 @@ struct DetailView: View {
                     DetailScheduleView(
                         scheduleDataList: self.store.nowSculeduleSortedData,
                         stationInfo: self.store.sendedLoadModel
-                    )
+                    ) {
+                        self.store.send(.scheduleMoreBtnTapped)
+                    }
                 }
                 .padding(.top, 12.5)
             }
