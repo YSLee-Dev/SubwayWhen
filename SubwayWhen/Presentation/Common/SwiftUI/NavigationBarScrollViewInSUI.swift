@@ -43,6 +43,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 Spacer()
             }
             .frame(height: 45)
+            .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
             
             OffsetScrollViewInSUI {
                 VStack(spacing: 0) {
@@ -56,6 +57,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                     }
                     self.contentsView()
                 }
+                .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
             }
             .onPreferenceChange(ScrollOffsetKey.self) { value in
                 if isFirstValue == nil {
@@ -65,7 +67,6 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 }
             }
         }
-        .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
     }
 }
 
