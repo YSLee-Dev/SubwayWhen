@@ -102,6 +102,7 @@ struct DetailArrivalView: View {
                 }
             }
             .padding(.bottom, 10)
+            .clipped()
             
             MainStyleViewInSUI {
                 VStack {
