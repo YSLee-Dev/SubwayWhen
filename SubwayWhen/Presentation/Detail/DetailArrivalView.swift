@@ -254,7 +254,7 @@ extension DetailArrivalView {
         let borderSize = UIScreen.main.bounds.width -  80
         switch code {
         case 0: // 첫번째역 바로 전
-            return (-borderSize) + 10
+            return (-borderSize) + 17.5
         case 1: // 첫번째 역
             return (-borderSize)
         case 2: // 첫번째 역 지나침
@@ -262,7 +262,7 @@ extension DetailArrivalView {
         case 3: // 이동 (애니메이션 처리):
             return (-borderSize / 2)
         case 4: //  3번째역 바로 전
-            return  0
+            return  2.5
         default: // 3번째 역
             return -15
         }
@@ -297,7 +297,7 @@ extension DetailArrivalView {
 #Preview {
     DetailArrivalView(
         arrivalDataList: [
-            .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
+            .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "1", code: "0", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
                                       .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
         ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""),
         backStationName: "남부터미널",
