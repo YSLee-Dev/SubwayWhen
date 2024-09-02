@@ -22,9 +22,11 @@ struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
 struct SubwayWhenDetailWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: SubwayWhenDetailWidgetAttributes.self) { context in
+            let filterTitle = context.attributes.line.filter {$0 != "0"}
+            let title = filterTitle.count >= 5 ? String(filterTitle[filterTitle.startIndex ..< filterTitle.index(filterTitle.startIndex, offsetBy: 4)]) : filterTitle
             VStack{
                 HStack{
-                    Text(context.attributes.line)
+                    Text(title)
                         .font(.system(size: ViewStyle.FontSize.mediumSize))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.white)
