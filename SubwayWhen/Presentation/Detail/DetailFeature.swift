@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
+import FirebaseAnalytics
 
 @Reducer
 struct DetailFeature: Reducer {
@@ -160,6 +162,11 @@ struct DetailFeature: Reducer {
             case .dialogAction(.presented(.okBtnTapped)):
                 state.dialogState = nil
                 state.sendedLoadModel.exceptionLastStation = ""
+                
+                Analytics.logEvent("DetailVC_ExceptionBtnTap", parameters: [
+                    "Exception" : "BTNTAP"
+                ])
+                
                 return .send(.viewInitialized)
                 
             case .backBtnTapped:
