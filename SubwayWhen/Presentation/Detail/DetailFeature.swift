@@ -23,6 +23,7 @@ struct DetailFeature: Reducer {
         var nextStationName: String?
         var nowArrivalLoading: Bool = false
         var nowTimer: Int?
+        var nowScheduleLoading: Bool = false
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
     
@@ -57,6 +58,7 @@ struct DetailFeature: Reducer {
                 let loadModel = state.sendedLoadModel
                 let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
                 
+                state.nowScheduleLoading = true
                 return .merge(
                     .send(.arrivalDataRequest),
                     .run { send in
@@ -88,6 +90,7 @@ struct DetailFeature: Reducer {
                 
             case .scheduleDataRequestSuccess(let data):
                 state.nowScheduleData = data
+                state.nowScheduleLoading = false
                 return .send(.scheduleDataSort)
                 
             case .scheduleDataSort:
