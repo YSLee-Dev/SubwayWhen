@@ -117,11 +117,20 @@ struct DetailFeature: Reducer {
             case .refreshBtnTapped:
                 if state.nowArrivalLoading {return .none}
                 state.nowTimer = nil
-                return .merge(
-                    .send(.arrivalDataRequest),
-                    .send(.scheduleDataSort),
-                    .cancel(id: TimerKey.refresh)
-                )
+                
+                if !((state.nowScheduleData.first?.type ?? .Unowned) == .Unowned) && state.nowScheduleData.count <= 1 { // 서울, 코레일 라인이면서, 정보없음 하나만 있는 경우 (정렬 데이터가 아닐때)
+                    return .merge(
+                        .send(.arrivalDataRequest),
+                        .send(.scheduleDataRequest),
+                        .cancel(id: TimerKey.refresh)
+                    )
+                } else {
+                    return .merge(
+                        .send(.arrivalDataRequest),
+                        .send(.scheduleDataSort),
+                        .cancel(id: TimerKey.refresh)
+                    )
+                }
                 
             case .timerSettingRequest:
                 if !FixInfo.saveSetting.detailAutoReload {return .none}
@@ -132,7 +141,7 @@ struct DetailFeature: Reducer {
                         try await Task.sleep(for: .seconds(1))
                         await send(.timerDecrease)
                     }
-                    await send(.arrivalDataRequest)
+                    await send(.refreshBtnTapped)
                 }
                 .cancellable(id: TimerKey.refresh)
                 
