@@ -91,6 +91,9 @@ class TotalLoadModel : TotalLoadProtocol {
                         if requestModel.upDown == x.upDown && requestModel.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
                             arrivalData.append(x)
                         }
+                        if arrivalData.count >= 2 {
+                            break
+                        }
                     }
                     
                     if arrivalData.count < 2 {
