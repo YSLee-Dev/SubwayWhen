@@ -110,7 +110,7 @@ extension DetailResultScheduleVC{
 }
 
 extension Reactive where Base : DetailResultScheduleVC{
-    var titleSet : Binder<DetailLoadData>{
+    var titleSet : Binder<DetailSendModel>{
         return Binder(base){base, data in
             base.viewTitle = "\(data.stationName) 시간표"
             base.detailTopView.exceptionLastStationBtn.setTitle(data.exceptionLastStation == "" ? "제외 행 없음" : "\(data.exceptionLastStation)행 제외", for: .normal)
