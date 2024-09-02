@@ -144,7 +144,7 @@ struct DetailArrivalView: View {
                                 .tint(Color("AppIconColor"))
                                 .padding(.bottom, 5)
                         }
-                        .frame(height: 98)
+                        .frame(height: 108)
                     } else {
                         ForEach(Array(zip(self.arrivalDataList.indices, self.arrivalDataList)), id: \.0) { data in
                             let width = (self.screenWidthSize / 2) + 35
@@ -167,7 +167,7 @@ struct DetailArrivalView: View {
                                         .padding(.horizontal, 5)
                                     Spacer()
                                 }
-                                .frame(width: width,  height: 40)
+                                .frame(width: width,  height: 45)
                                 .background {
                                     RoundedRectangle(cornerRadius: 15)
                                         .fill(bgColor)

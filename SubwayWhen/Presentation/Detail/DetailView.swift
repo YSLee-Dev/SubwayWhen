@@ -28,14 +28,14 @@ struct DetailView: View {
                         Text(self.store.backStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             .foregroundColor(.init(uiColor: .systemBackground))
-                            .padding(.leading, 5)
+                            .padding(.leading, 10)
                         
                         Spacer()
                         
                         Text(self.store.nextStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             .foregroundColor(.init(uiColor: .systemBackground))
-                            .padding(.trailing, 5)
+                            .padding(.trailing, 10)
                     }
                     .frame(width: UIScreen.main.bounds.width - 40 ,height: 50)
                     .background {
