@@ -10,6 +10,8 @@ import ComposableArchitecture
 
 @Reducer
 struct DetailFeature: Reducer {
+    weak var coordinatorDelegate: DetailVCDelegate?
+    
     @Dependency (\.totalLoad) private var totalLoad
     @Dependency (\.dismiss) private var dismiss
     
@@ -29,6 +31,7 @@ struct DetailFeature: Reducer {
     
     enum Action: Equatable {
         case viewInitialized
+        case viewDisappear
         case backBtnTapped
         case exceptionLastStationBtnTapped
         case refreshBtnTapped
@@ -56,16 +59,21 @@ struct DetailFeature: Reducer {
             switch action {
             case .viewInitialized:
                 let loadModel = state.sendedLoadModel
-                let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
                 
-                state.nowScheduleLoading = true
-                return .merge(
-                    .send(.arrivalDataRequest),
-                    .run { send in
-                        let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
-                        await send(.scheduleDataRequestSuccess(loadData))
-                    }
-                )
+                if state.nowScheduleData.isEmpty {
+                    let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
+                    
+                    state.nowScheduleLoading = true
+                    return .merge(
+                        .send(.arrivalDataRequest),
+                        .run { send in
+                            let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
+                            await send(.scheduleDataRequestSuccess(loadData))
+                        }
+                    )
+                } else {
+                    return .send(.arrivalDataRequest)
+                }
                 
             case .arrivalDataRequest:
                 state.nowArrivalLoading = true
@@ -153,6 +161,18 @@ struct DetailFeature: Reducer {
                 state.dialogState = nil
                 state.sendedLoadModel.exceptionLastStation = ""
                 return .send(.viewInitialized)
+                
+            case .backBtnTapped:
+                self.coordinatorDelegate?.pop()
+                return .none
+                
+            case .scheduleMoreBtnTapped:
+                self.coordinatorDelegate?.scheduleTap(schduleResultData: (state.nowScheduleData, state.sendedLoadModel))
+                return .none
+                
+            case .viewDisappear:
+                self.coordinatorDelegate?.disappear()
+                return .cancel(id: TimerKey.refresh)
                 
             default: return .none
             }

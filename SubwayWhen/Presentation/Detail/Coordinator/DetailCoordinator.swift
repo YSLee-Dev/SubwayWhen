@@ -6,17 +6,17 @@
 //
 
 import UIKit
+import SwiftUI
 
+import ComposableArchitecture
 import RxSwift
 
-class DetailCoordinator : Coordinator{
+class DetailCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     var data : MainTableViewCellData
     
     var delegate : DetailCoordinatorDelegate?
-    weak var vc : DetailVC?
-    let bag = DisposeBag()
     
     let exceptionLastStationRemoveBtnClick = PublishSubject<Void>()
     let isDisposable: Bool
@@ -36,52 +36,28 @@ class DetailCoordinator : Coordinator{
             excption.nextStationId = excption.backStationId
             excption.backStationId = next
         }
-        let detailLoadData = DetailLoadData(upDown: excption.upDown, stationName: excption.stationName, lineNumber: excption.lineNumber, lineCode: excption.subWayId, useLine: excption.useLine, stationCode: excption.stationCode, exceptionLastStation: excption.exceptionLastStation, backStationId: excption.backStationId, nextStationId: excption.nextStationId, korailCode: excption.korailCode)
+        let detailSendModel = DetailSendModel(upDown: excption.upDown, stationName: excption.stationName, lineNumber: excption.lineNumber, stationCode: excption.stationCode, lineCode: excption.subWayId, exceptionLastStation: excption.exceptionLastStation, korailCode: excption.korailCode)
+        let detailView = DetailView(store: .init(initialState: DetailFeature.State(sendedLoadModel: detailSendModel), reducer: {
+            var feature = DetailFeature()
+            feature.coordinatorDelegate = self
+            return feature
+        }))
         
-        let viewModel = DetailViewModel(isDisposable: self.isDisposable)
-        viewModel.detailViewData.accept(detailLoadData)
-        self.exceptionLastStationRemoveBtnClick
-            .bind(to: viewModel.exceptionLastStationRemoveReload)
-            .disposed(by: self.bag)
-        viewModel.delegate = self
-        
-        let vc = DetailVC(title: "\(excption.useLine) \(excption.stationName)", viewModel: viewModel)
+        let vc = UIHostingController(rootView: detailView)
         vc.hidesBottomBarWhenPushed = true
-        
-        self.vc = vc
-        
         self.navigation.pushViewController(vc, animated: true)
     }
 }
 
-private extension DetailCoordinator {
-    func exceptionLastStationRemoveAlert(station: String) {
-        let alert = UIAlertController(
-            title: "\(station)행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        alert.addAction(UIAlertAction(title: "재로딩", style: .default) { [weak self] _ in
-            self?.exceptionLastStationRemoveBtnClick.onNext(Void())
-        })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        
-        self.navigation.present(alert, animated: true)
-    }
-}
-
 extension DetailCoordinator : DetailVCDelegate{
-    func exceptionLastStationPopup(station: String) {
-        self.exceptionLastStationRemoveAlert(station: station)
-    }
-    
     func disappear() {
         if self.childCoordinator.isEmpty{
             self.delegate?.disappear(detailCoordinator: self)
         }
     }
     
-    func scheduleTap(schduleResultData: schduleResultData) {
+    func scheduleTap(schduleResultData: ([ResultSchdule], DetailSendModel)) {
+        if (schduleResultData.0.first?.type) ?? .Unowned == .Unowned || (schduleResultData.0.first?.startTime) ?? "정보없음"  == "정보없음"  {return}
         let resultScheduleCoordinator = DetailResultScheduleCoordinator(navigation: self.navigation, data: schduleResultData)
         resultScheduleCoordinator.start()
         resultScheduleCoordinator.delegate = self
@@ -94,7 +70,7 @@ extension DetailCoordinator : DetailVCDelegate{
     }
 }
 
-extension DetailCoordinator : DetailResultScheduleCoorinatorDelegate{
+extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
     func disappear(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
     }
@@ -104,8 +80,8 @@ extension DetailCoordinator : DetailResultScheduleCoorinatorDelegate{
     }
     
     func exceptionBtnTap(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
-        self.navigation.popViewController(animated: true)
-        self.vc!.detailViewModel.headerViewModel.exceptionLastStationBtnClick.accept(Void())
-        self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
+//        self.navigation.popViewController(animated: true)
+//        self.vc!.detailViewModel.headerViewModel.exceptionLastStationBtnClick.accept(Void())
+//        self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
     }
 }
