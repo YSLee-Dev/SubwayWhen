@@ -87,16 +87,16 @@ class TotalLoadModel : TotalLoadProtocol {
                     return [errorModel, errorModel]
                 } else {
                     var arrivalData: [RealtimeStationArrival] = []
-                    var errorCount = 0
                     for x in data.realtimeArrivalList {
                         if requestModel.upDown == x.upDown && requestModel.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
                             arrivalData.append(x)
-                        } else {
-                            errorCount += 1
                         }
                     }
-                    for _ in 0 ..< errorCount {
-                        arrivalData.append(errorModel)
+                    
+                    if arrivalData.count < 2 {
+                        for _ in 0 ..< arrivalData.count {
+                            arrivalData.append(errorModel)
+                        }
                     }
                     return arrivalData
                 }
