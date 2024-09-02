@@ -11,15 +11,17 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
     private let title: String
     private let contentsView:  () -> Contents
     private let backBtnTapped: (() -> ())?
+    private let backBtnIcon: String?
     private var isLargeTitleHidden: Bool = false
     @State private var isSubTitleShow: Bool = false
     @State private var isFirstValue: CGFloat? = nil
     
-    init(title: String, isLargeTitleHidden: Bool = false,  backBtnTapped: (() -> ())? = nil, @ViewBuilder content: @escaping () -> Contents) {
+    init(title: String, isLargeTitleHidden: Bool = false,  backBtnTapped: (() -> ())? = nil,  backBtnIcon: String? = nil, @ViewBuilder content: @escaping () -> Contents) {
         self.contentsView = content
         self.title = title
         self.isLargeTitleHidden = isLargeTitleHidden
         self.backBtnTapped = backBtnTapped
+        self.backBtnIcon = backBtnIcon
     }
     
     var body: some View {
@@ -29,7 +31,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                     Button(action: {
                         self.backBtnTapped!()
                     }) {
-                        Image(systemName: "arrow.left")
+                        Image(systemName: "\(self.backBtnIcon ?? "")")
                             .foregroundColor(.init(uiColor: .label))
                     }
                 }

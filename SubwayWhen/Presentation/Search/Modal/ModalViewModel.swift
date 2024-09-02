@@ -107,7 +107,7 @@ private extension ModalViewModel {
                 let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
                 let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
                 
-                return DetailLoadData(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, lineCode: data.lineCode, useLine: "", stationCode: data.stationCode, exceptionLastStation: "", backStationId: "", nextStationId: "", korailCode: korail)
+                return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.lineCode, exceptionLastStation: "", korailCode: korail)
             }
             .withUnretained(self)
             .delay(.milliseconds(250), scheduler: MainScheduler.asyncInstance)

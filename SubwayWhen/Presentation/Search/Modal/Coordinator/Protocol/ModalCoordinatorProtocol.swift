@@ -9,7 +9,7 @@ import Foundation
 
 protocol ModalCoordinatorProtocol: AnyObject {
     func stationSave()
-    func disposableDetailPush(data : DetailLoadData)
+    func disposableDetailPush(data : DetailSendModel)
     func didDisappear(modalCoordinator: Coordinator)
     func dismiss()
 }
