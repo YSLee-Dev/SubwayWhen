@@ -35,8 +35,22 @@ class DetailCoordinator: Coordinator {
         }))
         
         let vc = UIHostingController(rootView: detailView)
-        vc.hidesBottomBarWhenPushed = true
-        self.navigation.pushViewController(vc, animated: true)
+        
+        if self.isDisposable { // 임시인 경우 sheet, 기존 방식은 push
+            vc.modalPresentationStyle = .pageSheet
+            if let sheet = vc.sheetPresentationController{
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 25
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
+                self?.navigation.present(vc, animated: true)
+            }
+        } else {
+            vc.hidesBottomBarWhenPushed = true
+            self.navigation.pushViewController(vc, animated: true)
+        }
     }
 }
 
@@ -48,7 +62,7 @@ extension DetailCoordinator : DetailVCDelegate{
     }
     
     func scheduleTap(schduleResultData: ([ResultSchdule], DetailSendModel)) {
-        if (schduleResultData.0.first?.type) ?? .Unowned == .Unowned || (schduleResultData.0.first?.startTime) ?? "정보없음"  == "정보없음"  {return}
+        if (schduleResultData.0.first?.type) ?? .Unowned == .Unowned || (schduleResultData.0.first?.startTime) ?? "정보없음"  == "정보없음"  || self.isDisposable {return}
         let resultScheduleCoordinator = DetailResultScheduleCoordinator(navigation: self.navigation, data: schduleResultData)
         resultScheduleCoordinator.start()
         resultScheduleCoordinator.delegate = self

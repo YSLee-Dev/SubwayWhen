@@ -18,11 +18,11 @@ struct DetailView: View {
     
     var body: some View {
         NavigationBarScrollViewInSUI(
-            title: "\(self.store.sendedLoadModel.lineNumber.filter {$0 != "0"}) \(self.store.sendedLoadModel.stationName)",
+            title: "\(self.store.isDisposable ? "(저장안됨)" : "") \(self.store.sendedLoadModel.lineNumber.filter {$0 != "0"}) \(self.store.sendedLoadModel.stationName)",
             isLargeTitleHidden: true,
             backBtnTapped: {
                 self.store.send(.backBtnTapped)
-            }) {
+            }, backBtnIcon: self.store.isDisposable ? "arrow.down" : "arrow.left") {
                 VStack(spacing: 20) {
                     HStack {
                         Text(self.store.backStationName ?? "")
@@ -109,6 +109,7 @@ struct DetailView: View {
                 }
                 .padding(.top, 12.5)
             }
+            .padding(.top, self.store.isDisposable ? 15 : 0)
             .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
             .onAppear {
                 self.store.send(.viewInitialized)
@@ -119,5 +120,5 @@ struct DetailView: View {
     }
 }
 #Preview {
-    DetailView(store: .init(initialState: .init(isDisposable: false, sendedLoadModel: DetailSendModel(upDown: "상행", stationName: "양재", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "구파발", korailCode: "")), reducer: {DetailFeature()}))
+    DetailView(store: .init(initialState: .init(isDisposable: true, sendedLoadModel: DetailSendModel(upDown: "상행", stationName: "양재", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "구파발", korailCode: "")), reducer: {DetailFeature()}))
 }
