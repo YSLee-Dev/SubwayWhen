@@ -62,9 +62,11 @@ struct DetailScheduleView: View {
                         } else {
                             LazyVGrid(columns: self.gridItem) {
                                 ForEach(self.scheduleDataList, id: \.startTime) { data in
+                                    let isFast = data.isFast == "급행" ? "(급)" : ""
+                                    let isInfoSuccess = data.startTime != "정보없음"
+                                    let title = isInfoSuccess ? "⏱️ \(isFast)\(data.lastStation)행 \(data.useArrTime)" : "⚠️ 정보없음"
+                                    
                                     HStack {
-                                        let isFast = data.isFast == "급행" ? "(급)" : ""
-                                        let title = data.startTime == "정보없음" ? "⚠️ 정보없음" : "⏱️ \(isFast)\(data.lastStation)행 \(data.useArrTime)"
                                         Text(title)
                                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                                             .foregroundColor(.white)
@@ -74,7 +76,7 @@ struct DetailScheduleView: View {
                                     .frame(height: 40)
                                     .background {
                                         RoundedRectangle(cornerRadius: 15)
-                                            .fill(Color("\(self.stationInfo.lineNumber)"))
+                                            .fill(isInfoSuccess ? Color("\(self.stationInfo.lineNumber)") : Color.init(uiColor: .gray))
                                     }
                                     .padding(EdgeInsets(top: 6, leading: 2.5, bottom: 6, trailing: 2.5))
                                 }
