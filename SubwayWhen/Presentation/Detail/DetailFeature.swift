@@ -42,6 +42,7 @@ struct DetailFeature: Reducer {
         case scheduleDataRequestSuccess([ResultSchdule])
         case scheduleDataSort
         case arrivalDataRequest
+        case scheduleDataRequest
         case timerSettingRequest
         case timerDecrease
         case dialogAction(PresentationAction<DialogAction>)
@@ -60,18 +61,10 @@ struct DetailFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .viewInitialized:
-                let loadModel = state.sendedLoadModel
-                
                 if state.nowScheduleData.isEmpty {
-                    let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
-                    
-                    state.nowScheduleLoading = true
                     return .merge(
                         .send(.arrivalDataRequest),
-                        .run { send in
-                            let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
-                            await send(.scheduleDataRequestSuccess(loadData))
-                        }
+                        .send(.scheduleDataRequest)
                     )
                 } else {
                     return .send(.arrivalDataRequest)
@@ -86,6 +79,16 @@ struct DetailFeature: Reducer {
                     let loadData = await self.totalLoad.singleLiveAsyncData(requestModel: requestModel)
                     try await Task.sleep(for: .milliseconds(350))
                     await send(.arrivalDataRequestSuccess(loadData))
+                }
+                
+            case .scheduleDataRequest:
+                let loadModel = state.sendedLoadModel
+                let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
+                state.nowScheduleLoading = true
+                
+                return  .run { send in
+                    let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
+                    await send(.scheduleDataRequestSuccess(loadData))
                 }
                 
             case .arrivalDataRequestSuccess(let data):
@@ -167,7 +170,10 @@ struct DetailFeature: Reducer {
                     "Exception" : "BTNTAP"
                 ])
                 
-                return .send(.viewInitialized)
+                return .merge(
+                    .send(.arrivalDataRequest),
+                    .send(.scheduleDataRequest)
+                )
                 
             case .backBtnTapped:
                 self.coordinatorDelegate?.pop()
