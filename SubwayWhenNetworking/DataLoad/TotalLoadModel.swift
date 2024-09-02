@@ -94,7 +94,7 @@ class TotalLoadModel : TotalLoadProtocol {
                     }
                     
                     if arrivalData.count < 2 {
-                        for _ in 0 ..< arrivalData.count {
+                        for _ in 0 ..< 2 - arrivalData.count {
                             arrivalData.append(errorModel)
                         }
                     }
