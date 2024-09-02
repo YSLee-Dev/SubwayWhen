@@ -59,21 +59,22 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
     }
     
     func disposableDetailPush(data: DetailLoadData) {
-        let viewModel = DetailViewModel(isDisposable: true)
-        let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
-        viewModel.detailViewData.accept(data)
-        
-        detailVC.modalPresentationStyle = .pageSheet
-        
-        if let sheet = detailVC.sheetPresentationController{
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 25
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
-            self?.navigation.present(detailVC, animated: true)
-        }
+//        let detailCoordinator = DetailCoordinator(navigation: self.navigation, data: <#T##MainTableViewCellData#>, isDisposable: <#T##Bool#>)
+//        let viewModel = DetailViewModel(isDisposable: true)
+//        let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
+//        viewModel.detailViewData.accept(data)
+//        
+//        detailVC.modalPresentationStyle = .pageSheet
+//        
+//        if let sheet = detailVC.sheetPresentationController{
+//            sheet.detents = [.medium(), .large()]
+//            sheet.prefersGrabberVisible = true
+//            sheet.preferredCornerRadius = 25
+//        }
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
+//            self?.navigation.present(detailVC, animated: true)
+//        }
     }
     
     func didDisappear(modalCoordinator: Coordinator) {

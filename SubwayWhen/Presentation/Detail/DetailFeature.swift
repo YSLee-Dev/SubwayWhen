@@ -19,6 +19,7 @@ struct DetailFeature: Reducer {
     
     @ObservableState
     struct State: Equatable {
+        let isDisposable: Bool
         var sendedLoadModel: DetailSendModel
         var nowArrivalData: [RealtimeStationArrival] = []
         var nowScheduleData: [ResultSchdule] = []
@@ -92,8 +93,7 @@ struct DetailFeature: Reducer {
                 }
                 
             case .arrivalDataRequestSuccess(let data):
-                let backNextStationName = self.nextAndBackStationSearch(backId: data.first?.backStationId, nextId: data.first?.nextStationId)
-                
+                let backNextStationName = self.nextAndBackStationSearch(backId: data.first?.backStationId, nextId: data.first?.nextStationId, lineCode: state.sendedLoadModel.lineCode)
                 state.nowArrivalData = data
                 state.backStationName = backNextStationName[0]
                 state.nextStationName = backNextStationName[1]
@@ -217,7 +217,7 @@ struct DetailFeature: Reducer {
         }
     }
     
-    private func nextAndBackStationSearch(backId : String?, nextId : String?) -> [String]{
+    private func nextAndBackStationSearch(backId : String?, nextId : String?, lineCode: String) -> [String]{
         var backStation : String = ""
         var nextStation : String = ""
         
@@ -238,6 +238,10 @@ struct DetailFeature: Reducer {
                 break
             }
         }
-        return  [backStation, nextStation]
+        if lineCode == "1065" { // 공항철도는 반대
+            return  [nextStation, backStation]
+        } else {
+            return  [backStation, nextStation]
+        }
     }
 }
