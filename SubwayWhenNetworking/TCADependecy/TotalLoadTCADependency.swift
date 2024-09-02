@@ -19,11 +19,11 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func scheduleDataFetchAsyncData(searchModel: ScheduleSearch)  async -> [ResultSchdule]  {
         var scheduleResult: Observable<[ResultSchdule]>!
         if searchModel.lineScheduleType  == .Korail{
-            scheduleResult = self.totalModel.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: true, isWidget: true)
+            scheduleResult = self.totalModel.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false)
         } else if searchModel.lineScheduleType == .Seoul {
             scheduleResult = self.totalModel.seoulScheduleLoad(searchModel, isFirst: false, isNow: false, isWidget: false)
         } else {
-            return []
+            return [.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "", lastStation: "")]
         }
         
         return await withCheckedContinuation { continuation  in
