@@ -113,6 +113,9 @@ struct DetailView: View {
             .onAppear {
                 self.store.send(.viewInitialized)
             }
+            .onDisappear {
+                self.store.send(.viewDisappear)
+            }
     }
 }
 #Preview {
