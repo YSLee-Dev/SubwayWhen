@@ -14,30 +14,21 @@ import RxSwift
 class DetailCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
-    var data : MainTableViewCellData
+    var data : DetailSendModel
     
     var delegate : DetailCoordinatorDelegate?
     
     let exceptionLastStationRemoveBtnClick = PublishSubject<Void>()
     let isDisposable: Bool
     
-    init(navigation : UINavigationController, data : MainTableViewCellData, isDisposable: Bool){
+    init(navigation : UINavigationController, data : DetailSendModel, isDisposable: Bool){
         self.navigation = navigation
         self.data = data
         self.isDisposable = isDisposable
     }
     
     func start() {
-        var excption = self.data
-        
-        // 공항철도는 반대 (ID)
-        if excption.useLine == "공항철도"{
-            let next = excption.nextStationId
-            excption.nextStationId = excption.backStationId
-            excption.backStationId = next
-        }
-        let detailSendModel = DetailSendModel(upDown: excption.upDown, stationName: excption.stationName, lineNumber: excption.lineNumber, stationCode: excption.stationCode, lineCode: excption.subWayId, exceptionLastStation: excption.exceptionLastStation, korailCode: excption.korailCode)
-        let detailView = DetailView(store: .init(initialState: DetailFeature.State(sendedLoadModel: detailSendModel), reducer: {
+        let detailView = DetailView(store: .init(initialState: DetailFeature.State(isDisposable: self.isDisposable, sendedLoadModel: data), reducer: {
             var feature = DetailFeature()
             feature.coordinatorDelegate = self
             return feature
