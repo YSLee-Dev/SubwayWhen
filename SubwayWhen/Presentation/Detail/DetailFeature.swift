@@ -29,6 +29,7 @@ struct DetailFeature: Reducer {
         var nowArrivalLoading: Bool = false
         var nowTimer: Int?
         var nowScheduleLoading: Bool = false
+        var nowIsLiveActivity = false
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
     
@@ -46,6 +47,8 @@ struct DetailFeature: Reducer {
         case scheduleDataRequest
         case timerSettingRequest
         case timerDecrease
+        case liveActivityRequest
+        case liveActivityValueChange(Bool)
         case dialogAction(PresentationAction<DialogAction>)
         
         enum DialogAction: Equatable {
@@ -109,9 +112,40 @@ struct DetailFeature: Reducer {
             case .scheduleDataSort:
                 if FixInfo.saveSetting.detailScheduleAutoTime {
                     state.nowSculeduleSortedData = self.scheduleSort(state.nowScheduleData)
+                    
+                    if FixInfo.saveSetting.liveActivity {
+                        return .send(.liveActivityRequest)
+                    }
                 } else {
                     state.nowSculeduleSortedData = state.nowScheduleData
                 }
+                return .none
+                
+            case .liveActivityRequest:
+                if state.nowScheduleData.first?.startTime == "정보없음"  {return .none}
+                let activitySchedule = state.nowSculeduleSortedData.count >= 6 ? (Array(state.nowSculeduleSortedData[0...4])) : state.nowSculeduleSortedData
+                let scheduleList = activitySchedule.map {
+                    "⏱️ \($0.useArrTime)"
+                }
+                let minute = Calendar.current.component(.minute, from: Date())
+                let hour = Calendar.current.component(.hour, from: Date())
+                let lastUpdate =  "\(hour)시 \(minute)분 기준"
+                let nowIsLiveActivity = state.nowIsLiveActivity
+                let sendedModel = state.sendedLoadModel
+                
+                return .run { send in
+                    try? await Task.sleep(for: .milliseconds(100))
+                    
+                    if !nowIsLiveActivity {
+                        SubwayWhenDetailWidgetManager.shared.start(stationLine: sendedModel.lineNumber, saveStation: sendedModel.stationName, scheduleList: scheduleList, lastUpdate: lastUpdate)
+                        await send(.liveActivityValueChange(true))
+                    } else {
+                        SubwayWhenDetailWidgetManager.shared.update(scheduleList: scheduleList, lastUpdate: lastUpdate)
+                    }
+                }
+                
+            case .liveActivityValueChange(let value):
+                state.nowIsLiveActivity = value
                 return .none
                 
             case .refreshBtnTapped:
@@ -181,7 +215,8 @@ struct DetailFeature: Reducer {
                 
                 return .merge(
                     .send(.arrivalDataRequest),
-                    .send(.scheduleDataRequest)
+                    .send(.scheduleDataRequest),
+                    .cancel(id: TimerKey.refresh)
                 )
                 
             case .backBtnTapped:
@@ -194,6 +229,7 @@ struct DetailFeature: Reducer {
                 
             case .viewDisappear:
                 self.coordinatorDelegate?.disappear()
+                SubwayWhenDetailWidgetManager.shared.stop()
                 return .cancel(id: TimerKey.refresh)
                 
             default: return .none
