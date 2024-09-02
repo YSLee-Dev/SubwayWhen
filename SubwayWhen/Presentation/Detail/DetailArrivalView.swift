@@ -107,7 +107,7 @@ struct DetailArrivalView: View {
             MainStyleViewInSUI {
                 VStack {
                     HStack {
-                        let title = self.nowLoading ? "📡 열차 정보를 가져오고 있어요." : (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보없음" : self.arrivalDataList.first!.subPrevious
+                        let title = self.nowLoading ? "📡 열차 정보를 가져오고 있어요." : (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보가 없어요." : self.arrivalDataList.first!.subPrevious
                         Text(title)
                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                         
