@@ -2173,6 +2173,7 @@
 			isa = PBXGroup;
 			children = (
 				FF7ECACE2C7C041B00D4643A /* DetailView.swift */,
+				FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */,
 				34F494D229815209001599B1 /* DetailResultSchedule */,
 				34F5F10529642AE50010A21D /* Sub */,
 				34F5F10229642A960010A21D /* Entity */,
@@ -2223,7 +2224,6 @@
 		34F5F10529642AE50010A21D /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */,
 				FF7A71322C7D51360080B72B /* DetailArrivalView.swift */,
 				FF36A36B2C80387D00387A3D /* DetailScheduleView.swift */,
 			);

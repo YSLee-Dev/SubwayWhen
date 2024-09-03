@@ -9,31 +9,31 @@ import UIKit
 import SwiftUI
 
 import ComposableArchitecture
-import RxSwift
 
 class DetailCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     var data : DetailSendModel
-    
-    var delegate : DetailCoordinatorDelegate?
-    
-    let exceptionLastStationRemoveBtnClick = PublishSubject<Void>()
     let isDisposable: Bool
     
-    init(navigation : UINavigationController, data : DetailSendModel, isDisposable: Bool){
+    var delegate : DetailCoordinatorDelegate?
+    var store: StoreOf<DetailFeature>?
+    
+    init(navigation: UINavigationController, data: DetailSendModel, isDisposable: Bool) {
         self.navigation = navigation
         self.data = data
         self.isDisposable = isDisposable
     }
     
     func start() {
-        let detailView = DetailView(store: .init(initialState: DetailFeature.State(isDisposable: self.isDisposable, sendedLoadModel: data), reducer: {
+        self.store = StoreOf<DetailFeature>(initialState: DetailFeature.State(isDisposable: isDisposable, sendedLoadModel: data), reducer: {
             var feature = DetailFeature()
             feature.coordinatorDelegate = self
             return feature
-        }))
+        })
         
+        guard let store = self.store else {return}
+        let detailView = DetailView(store: store)
         let vc = UIHostingController(rootView: detailView)
         
         if self.isDisposable { // 임시인 경우 sheet, 기존 방식은 push
@@ -85,8 +85,8 @@ extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
     }
     
     func exceptionBtnTap(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
-//        self.navigation.popViewController(animated: true)
-//        self.vc!.detailViewModel.headerViewModel.exceptionLastStationBtnClick.accept(Void())
-//        self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
+        self.navigation.popViewController(animated: true)
+        self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
+        self.store?.send(.exceptionLastStationBtnTapped)
     }
 }
