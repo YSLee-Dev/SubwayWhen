@@ -49,7 +49,6 @@ class ModalViewModel{
     
     // DATA
     private let modalCloseEvent = PublishRelay<Bool>()
-    private let mainCellData = PublishRelay<DetailLoadData>()
     private let modalClose = PublishSubject<Void>()
     
     let clickCellData = PublishRelay<ResultVCCellData>()
