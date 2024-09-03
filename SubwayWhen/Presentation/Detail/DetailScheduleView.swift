@@ -28,7 +28,7 @@ struct DetailScheduleView: View {
                 VStack(spacing: 0) {
                     HStack {
                         let title = self.nowLoading ? "📡 시간표를 가져오고 있어요." :
-                        FixInfo.saveSetting.detailAutoReload ?
+                        FixInfo.saveSetting.detailScheduleAutoTime ?
                         (self.scheduleDataList.first == nil ? "⚠️ 시간표를 불러올 수 없어요." :
                             (self.scheduleDataList.first!.type == .Unowned ? "ℹ️ 시간표를 지원하지 않는 노선이에요." :
                                 (self.scheduleDataList.first!.startTime == "정보없음" ? "⚠️ 시간표를 불러올 수 없어요." :
