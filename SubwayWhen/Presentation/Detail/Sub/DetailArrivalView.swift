@@ -17,6 +17,7 @@ struct DetailArrivalView: View {
     @State private var nowAnimationHalfPlaying = false
     @State private var refreshBtnTapAnimation = false
     @State private var defaultStationWidth = 0.0
+    @State private var firstArrivalCode: String = "-"
     
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
@@ -107,7 +108,7 @@ struct DetailArrivalView: View {
                 }
             }
             .overlay {
-                if Int(self.arrivalDataList.first?.code ?? "") != nil {
+                if Int(self.firstArrivalCode) != nil {
                     HStack {
                         Spacer()
                         Text(FixInfo.saveSetting.detailVCTrainIcon)
@@ -202,7 +203,7 @@ struct DetailArrivalView: View {
         .onChange(of: self.nowSeconds) {
             guard let _ = self.nowSeconds,
                   FixInfo.saveSetting.detailAutoReload,
-                  (self.arrivalDataList.first?.code) ?? ""  == "3"
+                  self.firstArrivalCode == "3"
             else {return}
             
             withAnimation(.easeInOut(duration: 0.25)) {
@@ -210,23 +211,28 @@ struct DetailArrivalView: View {
             }
         }
         .onChange(of: self.nowLoading) {
+            if self.arrivalDataList.first?.previousStation == self.backStationName && self.arrivalDataList.first?.code == "99" {
+                self.firstArrivalCode = "4" // 간헐적으로 API에서 코드(Code)를 잘못 방출하는 경우가 있음
+            } else {
+                self.firstArrivalCode = self.arrivalDataList.first?.code ?? "-"
+            }
+            
             if self.nowLoading {
                 withAnimation(.easeInOut(duration: 0.25)) {
                     self.nextStationPostion = (100, 0)
                     self.backStationPostion = (-100, 0)
                 }
             } else {
-                let code = self.arrivalDataList.first?.code ?? "-"
                 self.trainPostion  = 0
                 
                 withAnimation(.easeInOut(duration: 0)) {
-                    if code == "99" {
+                    if self.firstArrivalCode == "99" {
                         self.borderPostion = 35
                         self.borderSize = 1.2
                     } else {
                         self.borderPostion = 12
                     }
-                    let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
+                    let oppositionCode = (self.firstArrivalCode == "99" || Int(self.firstArrivalCode) == nil) ? "0" : "99"
                     self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
                     self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .back)
                    
@@ -237,10 +243,10 @@ struct DetailArrivalView: View {
                         self.nowAnimationHalfPlaying = false
                     }
                     withAnimation(.easeInOut(duration: 0.7)) {
-                        self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .back)
-                        self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: code, type: .next)
+                        self.backStationPostion = self.stationPositionMoveAndAlphaValue(code: self.firstArrivalCode, type: .back)
+                        self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: self.firstArrivalCode, type: .next)
                         
-                        if code != "99" {
+                        if self.firstArrivalCode != "99" {
                             self.borderSize = 1.2
                             self.borderPostion = 35
                         } else {
@@ -252,7 +258,7 @@ struct DetailArrivalView: View {
                             self.borderSize = 1.0
                             self.borderPostion = 0
                             
-                            if let code = Int(self.arrivalDataList.first?.code ?? "") {
+                            if let code = Int(self.firstArrivalCode) {
                                 self.trainPostion =  self.trainIconMoveValue(code: code)
                             }
                         }
