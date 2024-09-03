@@ -16,6 +16,7 @@ struct DetailArrivalView: View {
     @State private var trainPostion = 0.0
     @State private var nowAnimationHalfPlaying = false
     @State private var refreshBtnTapAnimation = false
+    @State private var defaultStationWidth = 0.0
     
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
@@ -37,7 +38,7 @@ struct DetailArrivalView: View {
             .padding(.bottom, 15)
             
             MainStyleViewInSUI {
-                HStack(spacing: 50) {
+                HStack(spacing: 25) {
                     VStack(alignment: .leading, spacing: 5) {
                         Circle()
                             .stroke(Color.init(self.stationInfo.lineNumber))
@@ -45,7 +46,16 @@ struct DetailArrivalView: View {
                             .frame(width: 15, height: 15)
                         
                         Text(self.stationInfo.stationName)
+                            .lineLimit(1)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
+                    }
+                    .background {
+                        GeometryReader { geo in
+                            Color.clear
+                                .onAppear {
+                                    self.defaultStationWidth = geo.size.width
+                                }
+                        }
                     }
 
                     VStack(alignment: .leading, spacing: 5) {
@@ -58,6 +68,7 @@ struct DetailArrivalView: View {
                         
                         Text(self.backStationName)
                             .font(.system(size: ViewStyle.FontSize.smallSize))
+                            .lineLimit(1)
                             .opacity(self.nowAnimationPlaying ? 0 : self.backStationPostion.1)
                     }
                     
@@ -73,6 +84,7 @@ struct DetailArrivalView: View {
                         let title = self.nextStationPostion.0 == 90 ? self.backStationName : self.arrivalDataList.first?.previousStation ?? "" 
                         Text(title)
                             .font(.system(size: ViewStyle.FontSize.smallSize))
+                            .lineLimit(1)
                             .opacity(self.nowAnimationPlaying ? 0 : self.nextStationPostion.1)
                     }
                 }
@@ -280,7 +292,7 @@ extension DetailArrivalView {
         }
         
         if intCode < 6 && type  == .back {
-            return (borderSize - 125, 0) // 2개의 역만 필요
+            return (borderSize - self.defaultStationWidth - 25 - 13 - 20 - 20, 0) // 2개의 역만 필요
         } else if type == .back  {
             return (0, 1)
         }
