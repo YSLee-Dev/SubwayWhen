@@ -38,7 +38,7 @@ struct DetailArrivalView: View {
             .padding(.bottom, 15)
             
             MainStyleViewInSUI {
-                HStack(spacing: 25) {
+                HStack(alignment: .top, spacing: 30) {
                     VStack(alignment: .leading, spacing: 5) {
                         Circle()
                             .stroke(Color.init(self.stationInfo.lineNumber))
@@ -47,6 +47,7 @@ struct DetailArrivalView: View {
                         
                         Text(self.stationInfo.stationName)
                             .lineLimit(1)
+                            .layoutPriority(1)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
                     }
                     .background {
@@ -66,10 +67,13 @@ struct DetailArrivalView: View {
                             .offset(x: self.backStationPostion.0)
                             .opacity(self.nowAnimationPlaying ? 1 : self.backStationPostion.1)
                         
-                        Text(self.backStationName)
-                            .font(.system(size: ViewStyle.FontSize.smallSize))
-                            .lineLimit(1)
-                            .opacity(self.nowAnimationPlaying ? 0 : self.backStationPostion.1)
+                        if self.backStationPostion.1 == 1 {
+                            Text(self.backStationName)
+                                .font(.system(size: ViewStyle.FontSize.smallSize))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                                .opacity(self.nowAnimationPlaying ? 0 : self.backStationPostion.1)
+                        }
                     }
                     
                     Spacer()
@@ -84,6 +88,7 @@ struct DetailArrivalView: View {
                         let title = self.nextStationPostion.0 == 90 ? self.backStationName : self.arrivalDataList.first?.previousStation ?? "" 
                         Text(title)
                             .font(.system(size: ViewStyle.FontSize.smallSize))
+                            .minimumScaleFactor(0.8)
                             .lineLimit(1)
                             .opacity(self.nowAnimationPlaying ? 0 : self.nextStationPostion.1)
                     }
@@ -219,7 +224,7 @@ struct DetailArrivalView: View {
                         self.borderPostion = 35
                         self.borderSize = 1.2
                     } else {
-                        self.borderPostion = 15
+                        self.borderPostion = 12
                     }
                     let oppositionCode = (code == "99" || Int(code) == nil) ? "0" : "99"
                     self.nextStationPostion = self.stationPositionMoveAndAlphaValue(code: oppositionCode, type: .next)
@@ -287,12 +292,12 @@ extension DetailArrivalView {
             if type == .next {
                 return (0, 1)
             } else {
-                return (borderSize - 127, 0)
+                return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 20, 0)
             }
         }
         
         if intCode < 6 && type  == .back {
-            return (borderSize - self.defaultStationWidth - 25 - 13 - 20 - 20, 0) // 2개의 역만 필요
+            return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 20, 0) // 2개의 역만 필요
         } else if type == .back  {
             return (0, 1)
         }
