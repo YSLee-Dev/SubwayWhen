@@ -4814,7 +4814,7 @@
 		<key>lineId</key>
 		<string>1077</string>
 		<key>stationId</key>
-		<string>1077000690</string>
+		<string>1077000684</string>
 		<key>stationName</key>
 		<string>신사</string>
 	</dict>
@@ -4822,7 +4822,7 @@
 		<key>lineId</key>
 		<string>1077</string>
 		<key>stationId</key>
-		<string>1077000689</string>
+		<string>1077000685</string>
 		<key>stationName</key>
 		<string>논현</string>
 	</dict>
@@ -4830,7 +4830,7 @@
 		<key>lineId</key>
 		<string>1077</string>
 		<key>stationId</key>
-		<string>1077000688</string>
+		<string>1077000686</string>
 		<key>stationName</key>
 		<string>신논현</string>
 	</dict>
