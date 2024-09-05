@@ -63,16 +63,6 @@ class TotalLoadModel : TotalLoadProtocol {
             .asObservable()
     }
     
-    // live 정보만 반환 (삭제 예정)
-    func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
-        self.loadModel.stationArrivalRequest(stationName: station)
-            .map{ data -> LiveStationModel in
-                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
-                return value
-            }
-            .asObservable()
-    }
-    
     // live 정보만 반환하되, 필터링을 거침
     func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [RealtimeStationArrival]> {
         self.loadModel.stationArrivalRequest(stationName: requestModel.stationName)
