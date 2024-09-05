@@ -341,18 +341,19 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func sinbundangScheduleLoad(stationName: String) async -> [ResultSchdule] {
-        let scheduleValue =  self.loadModel.sinbundangScheduleReqeust(stationName: stationName)
-        return await withCheckedContinuation { continuation in
-            scheduleValue
-                .subscribe(onNext: { data in
-                    let resultSchduleData = data.map {
-                        ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
-                    }
-                    continuation.resume(returning: resultSchduleData)
-                })
-                .disposed(by: self.bag)
-        }
+    func sinbundangScheduleLoad(stationName: String, updown: String) -> Observable<[ResultSchdule]> {
+        let todayWeek = Calendar.current.component(.weekday, from: Date())
+        let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
+        
+        return self.loadModel.sinbundangScheduleReqeust(stationName: stationName)
+            .map { data in
+                let filterData = data.filter {
+                    $0.updown == updown && $0.week == todayWeekString
+                }
+                return filterData.map {
+                    ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startTime, lastStation: $0.endStation)
+                }
+            }
     }
     
     private func timeFormatter(date : Date) -> String {
