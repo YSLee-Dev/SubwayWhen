@@ -19,7 +19,7 @@ protocol TotalLoadProtocol{
     func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
     func importantDataLoad() -> Observable<ImportantData>
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule]
-    func sinbundangScheduleLoad(stationName: String, updown: String) -> Observable<[ResultSchdule]>
+    func sinbundangScheduleLoad(scheduleSearch: ScheduleSearch) -> Observable<[ResultSchdule]>
 }
 
 extension TotalLoadProtocol {

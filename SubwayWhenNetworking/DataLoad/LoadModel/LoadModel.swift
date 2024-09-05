@@ -159,7 +159,7 @@ final class LoadModel : LoadModelProtocol{
     }
     
     // 신분당선 시간표
-    func sinbundangScheduleReqeust(stationName: String) -> Observable<[SinbundangScheduleModel]> {
+    func sinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> Observable<[SinbundangScheduleModel]> {
         let scheduleListSubject = PublishSubject<[SinbundangScheduleModel]>()
         
         self.database.observe(.value) { dataBase, _ in
@@ -169,7 +169,7 @@ final class LoadModel : LoadModelProtocol{
             
             // 시간표 데이터가 많기 때문에 key에 맞는 데이터만 조회하기 위해 key를 먼저 조회
             guard let stationKeys = subwayWhenSinbundangRoot?["Keys"]  as? [String] else {scheduleListSubject.onNext([]); return}
-            guard let stationIndex = stationKeys.firstIndex(of: stationName) else {return}
+            guard let stationIndex = stationKeys.firstIndex(of: scheduleSearch.stationName) else {return}
             
             guard let scheduleList = subwayWhenSinbundangRoot?["ScheduleList"] as? [[Any]] else {scheduleListSubject.onNext([]); return}
             if scheduleList.count < stationIndex {return}

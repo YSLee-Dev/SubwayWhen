@@ -341,14 +341,14 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func sinbundangScheduleLoad(stationName: String, updown: String) -> Observable<[ResultSchdule]> {
+    func sinbundangScheduleLoad(scheduleSearch: ScheduleSearch) -> Observable<[ResultSchdule]> {
         let todayWeek = Calendar.current.component(.weekday, from: Date())
         let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
         
-        return self.loadModel.sinbundangScheduleReqeust(stationName: stationName)
+        return self.loadModel.sinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
             .map { data in
                 let filterData = data.filter {
-                    $0.updown == updown && $0.week == todayWeekString
+                    $0.updown == scheduleSearch.upDown && $0.week == todayWeekString && !scheduleSearch.exceptionLastStation.contains($0.endStation)
                 }
                 return filterData.map {
                     ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startTime, lastStation: $0.endStation)
