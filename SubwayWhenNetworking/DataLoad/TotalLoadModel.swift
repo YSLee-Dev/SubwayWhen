@@ -344,7 +344,7 @@ class TotalLoadModel : TotalLoadProtocol {
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]> {
         let todayWeek = Calendar.current.component(.weekday, from: Date())
         let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
-        guard let nowTime = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
+        guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
         
         return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
             .map { data in
@@ -382,9 +382,9 @@ class TotalLoadModel : TotalLoadProtocol {
             }
     }
     
-    private func timeFormatter(date : Date) -> String {
+    private func timeFormatter(date : Date, isSecondIncludes: Bool = true) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HHmmss"
+        formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
         return formatter.string(from: date)
     }
 }
