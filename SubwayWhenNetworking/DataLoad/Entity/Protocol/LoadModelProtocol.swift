@@ -18,5 +18,5 @@ protocol LoadModelProtocol : AnyObject{
     func defaultViewListRequest() -> Observable<[String]>
     func vicinityStationsLoad(x: Double, y: Double) -> Single<Result<VicinityStationsData,URLError>>
     func importantDataLoad() -> Observable<ImportantData>
-    func sinbundangScheduleReqeust(stationName: String) -> Observable<[SinbundangScheduleModel]>
+    func sinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> Observable<[SinbundangScheduleModel]>
 }
