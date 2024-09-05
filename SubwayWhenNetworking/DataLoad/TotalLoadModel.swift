@@ -341,12 +341,12 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func sinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]> {
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]> {
         let todayWeek = Calendar.current.component(.weekday, from: Date())
         let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
         guard let nowTime = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
         
-        return self.loadModel.sinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
+        return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
             .map { data in
                 let filterData = data.filter {
                     guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
@@ -362,14 +362,14 @@ class TotalLoadModel : TotalLoadProtocol {
                 }
                 
                 var resultScheduleData = filterData.map {
-                    ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
+                    ResultSchdule(startTime: $0.startTime, type: .Shinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
                 }
                 
                 if resultScheduleData.isEmpty {
                     if isWidget {
-                        resultScheduleData.append(ResultSchdule(startTime: "-", type: .Sinbundang, isFast: "", startStation: "", lastStation: ""))
+                        resultScheduleData.append(ResultSchdule(startTime: "-", type: .Shinbundang, isFast: "", startStation: "", lastStation: ""))
                     } else {
-                        resultScheduleData.append(ResultSchdule(startTime: "정보없음", type: .Sinbundang, isFast: "", startStation: "정보없음", lastStation: "정보없음"))
+                        resultScheduleData.append(ResultSchdule(startTime: "정보없음", type: .Shinbundang, isFast: "", startStation: "정보없음", lastStation: "정보없음"))
                     }
                 }
                 

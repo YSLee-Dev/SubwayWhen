@@ -1651,7 +1651,7 @@
 				34A303A129AF86FD00948EDD /* ScheduleType.swift */,
 				34A303A229AF86FD00948EDD /* ScheduleSearch.swift */,
 				34A303AC29AF86FD00948EDD /* ResultSchedule.swift */,
-				FF8CBE202C8938A500E6B4D2 /* Sinbundang */,
+				FF8CBE202C8938A500E6B4D2 /* Shinbundang */,
 				34A303A329AF86FD00948EDD /* Seoul */,
 				34A303A729AF86FD00948EDD /* Korail */,
 			);
@@ -2537,12 +2537,12 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		FF8CBE202C8938A500E6B4D2 /* Sinbundang */ = {
+		FF8CBE202C8938A500E6B4D2 /* Shinbundang */ = {
 			isa = PBXGroup;
 			children = (
 				FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */,
 			);
-			path = Sinbundang;
+			path = Shinbundang;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
