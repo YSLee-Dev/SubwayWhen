@@ -19,7 +19,7 @@ protocol TotalLoadProtocol{
     func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
     func importantDataLoad() -> Observable<ImportantData>
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule]
-    func sinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
 }
 
 extension TotalLoadProtocol {
@@ -31,7 +31,7 @@ extension TotalLoadProtocol {
         self.seoulScheduleLoad(scheduleSearch, isFirst: isFirst, isNow: isNow, isWidget: isWidget, requestDate: requestDate)
     }
     
-    func sinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date = .now) -> Observable<[ResultSchdule]> {
-        self.sinbundangScheduleLoad(scheduleSearch: scheduleSearch, isFirst: isFirst, isNow: isNow, isWidget: isWidget, requestDate: requestDate)
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date = .now) -> Observable<[ResultSchdule]> {
+        self.shinbundangScheduleLoad(scheduleSearch: scheduleSearch, isFirst: isFirst, isNow: isNow, isWidget: isWidget, requestDate: requestDate)
     }
 }

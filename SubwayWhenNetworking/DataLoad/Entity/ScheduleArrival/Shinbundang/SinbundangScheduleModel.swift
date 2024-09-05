@@ -1,5 +1,5 @@
 //
-//  SinbundangScheduleModel.swift
+//  ShinbundangScheduleModel.swift
 //  SubwayWhenNetworking
 //
 //  Created by 이윤수 on 9/5/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SinbundangScheduleModel: Equatable, Decodable {
+struct ShinbundangScheduleModel: Equatable, Decodable {
     let endStation: String
     let startStation: String
     let startTime: String
