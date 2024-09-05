@@ -114,7 +114,7 @@ struct Provider: AppIntentTimelineProvider {
     }
     
     private func scheduleLoad(saveStation: SaveStation) async -> [ResultSchdule] {
-        let scheduleRequest = ScheduleSearch(stationCode: saveStation.stationCode, upDown: saveStation.updnLine, exceptionLastStation: saveStation.exceptionLastStation, line: saveStation.line, korailCode: saveStation.korailCode)
+        let scheduleRequest = ScheduleSearch(stationCode: saveStation.stationCode, upDown: saveStation.updnLine, exceptionLastStation: saveStation.exceptionLastStation, line: saveStation.line, korailCode: saveStation.korailCode, stationName: saveStation.stationName)
         
         var scheduleResult: Observable<[ResultSchdule]>!
         if scheduleRequest.lineScheduleType  == .Korail{
