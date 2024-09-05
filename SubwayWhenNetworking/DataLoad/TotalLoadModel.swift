@@ -362,7 +362,7 @@ class TotalLoadModel : TotalLoadProtocol {
                 }
                 
                 var resultScheduleData = filterData.map {
-                    ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startTime, lastStation: $0.endStation)
+                    ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
                 }
                 
                 if resultScheduleData.isEmpty {

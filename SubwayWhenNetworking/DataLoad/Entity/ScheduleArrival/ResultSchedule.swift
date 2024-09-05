@@ -68,7 +68,14 @@ struct ResultSchdule: Equatable {
             }
           
             return String(time.dropLast(2))
-        }else{
+        } else if self.type == .Sinbundang {
+            guard let first = Int(String(self.startTime.first ?? "0")) else {return self.startTime}
+            if first > 3  { // 신분당선의 시간표는 0시를 24시로 표현하며, 25시(오전 1시) 데이터는 없음
+                return "0" + self.startTime
+            } else {
+                return self.startTime
+            }
+        } else{
             return String(self.startTime.dropLast(3))
         }
     }
