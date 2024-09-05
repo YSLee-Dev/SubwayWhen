@@ -15,17 +15,17 @@ struct ResultSchdule: Equatable {
     var lastStation : String
     
     var useTime : String{
-        if self.type == .Seoul{
+         if self.type == .Seoul || self.type == .Shinbundang{
             let nowDate = Date()
             let now = Calendar.current
             
             let timeCut = self.startTime.components(separatedBy: ":")
             
-            if timeCut.isEmpty || timeCut.count < 3{
+             if timeCut.isEmpty || (timeCut.count < 3 && self.type == .Seoul) || (timeCut.count < 2 && self.type == .Shinbundang){
                 return "정보없음"
             }
             
-            guard let time = Calendar.current.date(from: DateComponents(year: now.component(.year, from: nowDate), month: now.component(.month, from: nowDate), day: now.component(.day, from: nowDate), hour: Int(timeCut[0]), minute: Int(timeCut[1]), second: Int(timeCut[2]))) else {return ""}
+             guard let time = Calendar.current.date(from: DateComponents(year: now.component(.year, from: nowDate), month: now.component(.month, from: nowDate), day: now.component(.day, from: nowDate), hour: Int(timeCut[0]), minute: Int(timeCut[1]), second: (self.type == .Seoul ? Int(timeCut[2]) : 0))) else {return ""}
             
             let minuteToScound = Int(time.timeIntervalSinceNow)/60
             
