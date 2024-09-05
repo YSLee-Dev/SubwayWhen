@@ -830,6 +830,8 @@
 		FF7ECACE2C7C041B00D4643A /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeature.swift; sourceTree = "<group>"; };
 		FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinbundangScheduleModel.swift; sourceTree = "<group>"; };
+		FF8CBE292C8977F700E6B4D2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
+		FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -884,6 +886,8 @@
 		27B8186A1B2F499F01B3B2F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */,
+				FF8CBE292C8977F700E6B4D2 /* SwiftUI.framework */,
 				FA4CB7B82BB685EA003C41F6 /* RxAlamofire.framework */,
 				FA4CB7B92BB685EA003C41F6 /* RxSwift.framework */,
 				34BE0D9C2A08FCBE00A8E1FF /* WidgetKit.framework */,
@@ -2658,6 +2662,8 @@
 			dependencies = (
 			);
 			name = SubwayWhenHomeWidgetExtension;
+			packageProductDependencies = (
+			);
 			productName = SubwayWhenHomeWidgetExtension;
 			productReference = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
