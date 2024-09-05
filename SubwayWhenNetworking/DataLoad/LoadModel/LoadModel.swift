@@ -159,7 +159,7 @@ final class LoadModel : LoadModelProtocol{
     }
     
     // 신분당선 시간표
-    func sinbundangScheduleLoading(stationName: String) -> Observable<[SinbundangScheduleModel]> {
+    func sinbundangScheduleReqeust(stationName: String) -> Observable<[SinbundangScheduleModel]> {
         let scheduleListSubject = PublishSubject<[SinbundangScheduleModel]>()
         
         self.database.observe(.value) { dataBase, _ in

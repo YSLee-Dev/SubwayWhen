@@ -341,6 +341,20 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
+    func sinbundangScheduleLoad(stationName: String) async -> [ResultSchdule] {
+        let scheduleValue =  self.loadModel.sinbundangScheduleReqeust(stationName: stationName)
+        return await withCheckedContinuation { continuation in
+            scheduleValue
+                .subscribe(onNext: { data in
+                    let resultSchduleData = data.map {
+                        ResultSchdule(startTime: $0.startTime, type: .Sinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
+                    }
+                    continuation.resume(returning: resultSchduleData)
+                })
+                .disposed(by: self.bag)
+        }
+    }
+    
     private func timeFormatter(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HHmmss"
