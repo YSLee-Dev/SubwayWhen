@@ -146,11 +146,11 @@ class MainModel : MainModelProtocol{
     func mainCellDataToScheduleData(_ item: MainTableViewCellData) -> ScheduleSearch? {
         if item.type == .real{
             if item.korailCode == "K4" || item.korailCode == "K1" || item.korailCode == "K2"{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode, stationName: item.stationName)
             }else if item.korailCode == "UI" || item.korailCode == "D1" || item.korailCode == "A1"{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, korailCode: item.korailCode, stationName: item.stationName)
             }else{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode, stationName: item.stationName)
             }
         }else{
             return nil

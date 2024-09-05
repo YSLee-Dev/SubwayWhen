@@ -87,7 +87,7 @@ struct DetailFeature: Reducer {
                 
             case .scheduleDataRequest:
                 let loadModel = state.sendedLoadModel
-                let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode)
+                let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode, stationName: loadModel.stationName)
                 state.nowScheduleLoading = true
                 
                 return  .run { send in
