@@ -415,6 +415,9 @@
 		FF7ECACF2C7C041B00D4643A /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECACE2C7C041B00D4643A /* DetailView.swift */; };
 		FF7ECAD12C7C04A000D4643A /* DetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */; };
 		FF7ECAD32C7C054F00D4643A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */; };
+		FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
+		FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
+		FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -826,6 +829,7 @@
 		FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarScrollViewInSUI.swift; sourceTree = "<group>"; };
 		FF7ECACE2C7C041B00D4643A /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeature.swift; sourceTree = "<group>"; };
+		FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinbundangScheduleModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1647,6 +1651,7 @@
 				34A303A129AF86FD00948EDD /* ScheduleType.swift */,
 				34A303A229AF86FD00948EDD /* ScheduleSearch.swift */,
 				34A303AC29AF86FD00948EDD /* ResultSchedule.swift */,
+				FF8CBE202C8938A500E6B4D2 /* Sinbundang */,
 				34A303A329AF86FD00948EDD /* Seoul */,
 				34A303A729AF86FD00948EDD /* Korail */,
 			);
@@ -2532,6 +2537,14 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		FF8CBE202C8938A500E6B4D2 /* Sinbundang */ = {
+			isa = PBXGroup;
+			children = (
+				FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */,
+			);
+			path = Sinbundang;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3069,6 +3082,7 @@
 				34D9E9FC2A54FD810080AD17 /* LocationModalVCActionProtocol.swift in Sources */,
 				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
 				34A303B329AF86FD00948EDD /* TotalLoadModel.swift in Sources */,
+				FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 				3499DE8929D15E0A00A6E8C1 /* ReportTableViewLineCellModelProtocol.swift in Sources */,
 				349E2F5529BDC2B600C54EE9 /* SearchCoordinator.swift in Sources */,
 				349B516A29A468FA00A53879 /* ReportTableViewCellType.swift in Sources */,
@@ -3251,6 +3265,7 @@
 				FA4CB78C2BB68495003C41F6 /* NetworkManager.swift in Sources */,
 				FF36A3702C805D7B00387A3D /* TotalLoadTCADependency.swift in Sources */,
 				FA4CB78D2BB68495003C41F6 /* TotalLoadModel.swift in Sources */,
+				FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3281,6 +3296,7 @@
 				FA4CB7B32BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FA4CB7B42BB684B1003C41F6 /* ImportantData.swift in Sources */,
 				FA4CB7B52BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
+				FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 				FA4CB7B62BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
 				FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				FA4CB7B72BB684B1003C41F6 /* KorailBody.swift in Sources */,
