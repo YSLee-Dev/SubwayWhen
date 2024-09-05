@@ -57,8 +57,10 @@ struct DetailFeature: Reducer {
         }
     }
     
-    enum TimerKey: Equatable {
+    enum TimerKey: Equatable, CaseIterable {
         case refresh
+        case scheduleRequest
+        case arrivalRequest
     }
     
     var body: some Reducer<State, Action> {
@@ -84,6 +86,7 @@ struct DetailFeature: Reducer {
                     try await Task.sleep(for: .milliseconds(350))
                     await send(.arrivalDataRequestSuccess(loadData))
                 }
+                .cancellable(id: TimerKey.arrivalRequest)
                 
             case .scheduleDataRequest:
                 let loadModel = state.sendedLoadModel
@@ -94,6 +97,7 @@ struct DetailFeature: Reducer {
                     let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
                     await send(.scheduleDataRequestSuccess(loadData))
                 }
+                .cancellable(id: TimerKey.scheduleRequest)
                 
             case .arrivalDataRequestSuccess(let data):
                 let backNextStationName = self.nextAndBackStationSearch(backId: data.first?.backStationId, nextId: data.first?.nextStationId, lineCode: state.sendedLoadModel.lineCode)
@@ -230,7 +234,10 @@ struct DetailFeature: Reducer {
             case .viewDisappear:
                 self.coordinatorDelegate?.disappear()
                 SubwayWhenDetailWidgetManager.shared.stop()
-                return .cancel(id: TimerKey.refresh)
+                for key in TimerKey.allCases {
+                    return .cancel(id: key)
+                }
+                return .none
                 
             default: return .none
             }
