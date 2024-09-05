@@ -111,7 +111,7 @@ struct DetailFeature: Reducer {
                 
             case .scheduleDataSort:
                 if FixInfo.saveSetting.detailScheduleAutoTime {
-                    state.nowSculeduleSortedData = self.scheduleSort(state.nowScheduleData)
+                    state.nowSculeduleSortedData = self.scheduleSort(state.nowScheduleData, type: ScheduleType.lineNumberScheduleType(line: state.sendedLoadModel.lineNumber))
                     
                     if FixInfo.saveSetting.liveActivity {
                         return .send(.liveActivityRequest)
@@ -238,9 +238,9 @@ struct DetailFeature: Reducer {
         .ifLet(\.dialogState, action: \.dialogAction)
     }
     
-    private func scheduleSort(_ scheduleList : [ResultSchdule]) -> [ResultSchdule] {
+    private func scheduleSort(_ scheduleList : [ResultSchdule], type: ScheduleType) -> [ResultSchdule] {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HHmmss"
+        formatter.dateFormat = type == .Sinbundang ?  "HHmm" :  "HHmmss"
         
         guard let now = Int(formatter.string(from: Date())) else {return scheduleList}
         let schedule = scheduleList.filter{

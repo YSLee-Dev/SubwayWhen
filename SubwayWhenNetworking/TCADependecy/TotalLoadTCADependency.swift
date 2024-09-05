@@ -22,6 +22,8 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
             scheduleResult = self.totalModel.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false)
         } else if searchModel.lineScheduleType == .Seoul {
             scheduleResult = self.totalModel.seoulScheduleLoad(searchModel, isFirst: false, isNow: false, isWidget: false)
+        } else if searchModel.lineScheduleType == .Sinbundang {
+            scheduleResult = self.totalModel.sinbundangScheduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false)
         } else {
             return [.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "", lastStation: "")]
         }
