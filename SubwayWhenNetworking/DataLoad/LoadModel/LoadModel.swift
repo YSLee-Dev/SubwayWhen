@@ -157,4 +157,32 @@ final class LoadModel : LoadModelProtocol{
         return importantData
             .asObservable()
     }
+    
+    // 신분당선 시간표
+    func sinbundangScheduleLoading(stationName: String) -> Observable<[SinbundangScheduleModel]> {
+        let scheduleListSubject = PublishSubject<[SinbundangScheduleModel]>()
+        
+        self.database.observe(.value) { dataBase, _ in
+            guard let dataBaseRoot = dataBase.value as? [String : [String :Any]] else {scheduleListSubject.onNext([]); return}
+            // 신분당선 시간표는 기존 데이터베이스와 다른 root를 가지고 있음
+            let subwayWhenSinbundangRoot = dataBaseRoot["SubwayWhenShinbundangScheduleData"]
+            
+            // 시간표 데이터가 많기 때문에 key에 맞는 데이터만 조회하기 위해 key를 먼저 조회
+            guard let stationKeys = subwayWhenSinbundangRoot?["Keys"]  as? [String] else {scheduleListSubject.onNext([]); return}
+            guard let stationIndex = stationKeys.firstIndex(of: stationName) else {return}
+            
+            guard let scheduleList = subwayWhenSinbundangRoot?["ScheduleList"] as? [[Any]] else {scheduleListSubject.onNext([]); return}
+            if scheduleList.count < stationIndex {return}
+            
+            let matchingStationSchedule =  scheduleList[stationIndex]
+            guard let matchingStationScheduleTypeCheck = matchingStationSchedule as? [[String: String]] else {scheduleListSubject.onNext([]); return}
+            
+            guard let data = try? PropertyListEncoder().encode(matchingStationScheduleTypeCheck) else {scheduleListSubject.onNext([]); return}
+            guard let successData = try? PropertyListDecoder().decode([SinbundangScheduleModel].self, from: data) else {scheduleListSubject.onNext([]); return}
+            scheduleListSubject.onNext(successData)
+        }
+        
+        return scheduleListSubject
+            .asObservable()
+    }
 }
