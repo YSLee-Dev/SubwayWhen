@@ -27,14 +27,14 @@ struct DetailView: View {
                     HStack {
                         Text(self.store.backStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
-                            .foregroundColor(.init(uiColor: .systemBackground))
+                            .foregroundColor(.white)
                             .padding(.leading, 10)
                         
                         Spacer()
                         
                         Text(self.store.nextStationName ?? "")
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
-                            .foregroundColor(.init(uiColor: .systemBackground))
+                            .foregroundColor(.white)
                             .padding(.trailing, 10)
                     }
                     .frame(width: UIScreen.main.bounds.width - 40 ,height: 50)
@@ -53,6 +53,7 @@ struct DetailView: View {
                                     HStack {
                                         Spacer()
                                         Text(self.store.sendedLoadModel.stationName)
+                                            .foregroundColor(.black)
                                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                             .lineLimit(3)
                                         Spacer()
