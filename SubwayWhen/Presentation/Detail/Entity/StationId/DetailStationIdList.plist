@@ -5386,5 +5386,53 @@
         <key>stationId</key>
         <string>1093004001</string>
     </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>암사역사공원</string>
+        <key>stationId</key>
+        <string>1008000809</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>장자호수공원</string>
+        <key>stationId</key>
+        <string>1008000808</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>구리</string>
+        <key>stationId</key>
+        <string>1008000807</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>동구릉</string>
+        <key>stationId</key>
+        <string>1008000806</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>다산</string>
+        <key>stationId</key>
+        <string>1008000805</string>
+    </dict>
+    <dict>
+        <key>lineId</key>
+        <string>1008</string>
+        <key>stationName</key>
+        <string>별내</string>
+        <key>stationId</key>
+        <string>1008000804</string>
+    </dict>
 </array>
 </plist>
