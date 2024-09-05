@@ -75,23 +75,11 @@ struct Provider: AppIntentTimelineProvider {
         } else {
             for index in stride(from: 1, through: asyncData.count - 1, by: 2) {
                 let scheduleData = Array(asyncData[index - 1 ... min(index + 2 , asyncData.count - 1)])
-                var loadingTime = scheduleData[0].startTime
+                var loadingTime = scheduleData[0].useArrTime
                 var backLoadingTime: String?
                 
                 if index != 1 {
-                    backLoadingTime =  asyncData[ index - 2].startTime
-                }
-                
-                if scheduleData.first?.type == .Korail {
-                    loadingTime.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
-                    backLoadingTime?.insert(":", at: loadingTime.index(loadingTime.startIndex, offsetBy: 2))
-                    loadingTime = String(loadingTime.dropLast(2))
-                } else {
-                    loadingTime = String(loadingTime.dropLast(3))
-                }
-                
-                if backLoadingTime != nil {
-                    backLoadingTime = String(backLoadingTime!.dropLast(scheduleData.first?.type == .Korail ? 2 : 3))
+                    backLoadingTime =  asyncData[ index - 2].useArrTime
                 }
                 
                 let currentDateString = dateFormatter.string(from:  Date())
@@ -121,6 +109,8 @@ struct Provider: AppIntentTimelineProvider {
             scheduleResult = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true, isWidget: true)
         } else if scheduleRequest.lineScheduleType == .Seoul {
             scheduleResult = self.totalLoadModel.seoulScheduleLoad(scheduleRequest, isFirst: false, isNow: true, isWidget: true)
+        } else if scheduleRequest.lineScheduleType == .Shinbundang {
+            scheduleResult = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleRequest, isFirst: false, isNow: true, isWidget: true)
         }
         
         return await self.totalLoadModel.scheduleDataFetchAsyncData(scheduleResult)
