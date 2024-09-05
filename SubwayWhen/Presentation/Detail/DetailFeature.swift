@@ -240,7 +240,7 @@ struct DetailFeature: Reducer {
     
     private func scheduleSort(_ scheduleList : [ResultSchdule], type: ScheduleType) -> [ResultSchdule] {
         let formatter = DateFormatter()
-        formatter.dateFormat = type == .Sinbundang ?  "HHmm" :  "HHmmss"
+        formatter.dateFormat = type == .Shinbundang ?  "HHmm" :  "HHmmss"
         
         guard let now = Int(formatter.string(from: Date())) else {return scheduleList}
         let schedule = scheduleList.filter{

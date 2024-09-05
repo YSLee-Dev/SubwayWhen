@@ -159,8 +159,8 @@ final class LoadModel : LoadModelProtocol{
     }
     
     // 신분당선 시간표
-    func sinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> Observable<[SinbundangScheduleModel]> {
-        let scheduleListSubject = PublishSubject<[SinbundangScheduleModel]>()
+    func shinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> Observable<[ShinbundangScheduleModel]> {
+        let scheduleListSubject = PublishSubject<[ShinbundangScheduleModel]>()
         
         self.database.observe(.value) { dataBase, _ in
             guard let dataBaseRoot = dataBase.value as? [String : [String :Any]] else {scheduleListSubject.onNext([]); return}
@@ -178,7 +178,7 @@ final class LoadModel : LoadModelProtocol{
             guard let matchingStationScheduleTypeCheck = matchingStationSchedule as? [[String: String]] else {scheduleListSubject.onNext([]); return}
             
             guard let data = try? PropertyListEncoder().encode(matchingStationScheduleTypeCheck) else {scheduleListSubject.onNext([]); return}
-            guard let successData = try? PropertyListDecoder().decode([SinbundangScheduleModel].self, from: data) else {scheduleListSubject.onNext([]); return}
+            guard let successData = try? PropertyListDecoder().decode([ShinbundangScheduleModel].self, from: data) else {scheduleListSubject.onNext([]); return}
             scheduleListSubject.onNext(successData)
         }
         
