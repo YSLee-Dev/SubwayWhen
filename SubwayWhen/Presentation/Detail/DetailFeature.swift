@@ -95,6 +95,7 @@ struct DetailFeature: Reducer {
                 
                 return  .run { send in
                     let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
+                    try await Task.sleep(for: .milliseconds(350))
                     await send(.scheduleDataRequestSuccess(loadData))
                 }
                 .cancellable(id: TimerKey.scheduleRequest)
