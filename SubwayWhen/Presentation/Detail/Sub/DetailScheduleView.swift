@@ -26,28 +26,28 @@ struct DetailScheduleView: View {
             
             MainStyleViewInSUI {
                 VStack(spacing: 0) {
-                    HStack {
-                        let title = self.nowLoading ? "📡 시간표를 가져오고 있어요." :
-                        FixInfo.saveSetting.detailScheduleAutoTime ?
-                        (self.scheduleDataList.first == nil ? "⚠️ 시간표를 불러올 수 없어요." :
-                            (self.scheduleDataList.first!.type == .Unowned ? "ℹ️ 시간표를 지원하지 않는 노선이에요." :
-                                (self.scheduleDataList.first!.startTime == "정보없음" ? "⚠️ 시간표를 불러올 수 없어요." :
-                                    "\(self.scheduleDataList.first!.lastStation)행 \(self.scheduleDataList.first!.useArrTime)"
+                    Button(action: {
+                        self.moreBtnTapped()
+                    },label: {
+                        HStack {
+                            let title = self.nowLoading ? "📡 시간표를 가져오고 있어요." :
+                            FixInfo.saveSetting.detailScheduleAutoTime ?
+                            (self.scheduleDataList.first == nil ? "⚠️ 시간표를 불러올 수 없어요." :
+                                (self.scheduleDataList.first!.type == .Unowned ? "ℹ️ 시간표를 지원하지 않는 노선이에요." :
+                                    (self.scheduleDataList.first!.startTime == "정보없음" ? "⚠️ 시간표를 불러올 수 없어요." :
+                                        "\(self.scheduleDataList.first!.lastStation)행 \(self.scheduleDataList.first!.useArrTime)"
+                                    )
                                 )
-                            )
-                        ) : ""
-                        Text("\(title)")
-                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.moreBtnTapped()
-                        }, label: {
+                            ) : ""
+                            Text("\(title)")
+                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                            
+                            Spacer()
+                            
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.init(uiColor: .label))
-                        })
-                    }
+                        }
+                    })
                     .padding(.bottom, 20)
                     
                     ScrollView {
