@@ -85,7 +85,7 @@ struct DetailScheduleView: View {
                     }
                     .frame(height: 200)
                     .offset(y: self.nowLoading ? 50 : 0)
-                    .animation(.easeInOut(duration: 0.4), value: self.nowLoading)
+                    .animation(.easeInOut(duration: self.nowLoading ? 0 : 0.4), value: self.nowLoading)
                     .animation(.easeInOut(duration: 0.4), value: self.scheduleDataList)
                 }
                 .padding(15)
