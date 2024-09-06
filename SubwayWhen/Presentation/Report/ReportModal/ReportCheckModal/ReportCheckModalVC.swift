@@ -117,6 +117,7 @@ extension ReportCheckModalVC {
     }
     
     func msgSendSuccess(){
+        self.textView.resignFirstResponder()
         self.textView.removeFromSuperview()
         self.okBtn!.removeFromSuperview()
         self.mainTitle.text = "민원접수가 완료되었어요."
