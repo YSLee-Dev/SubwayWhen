@@ -15,7 +15,7 @@ import FirebaseAnalytics
 class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
     // INPUT
     let msgData = BehaviorSubject<ReportMSGData>(value: .init(line: .not, nowStation: "", destination: "", trainCar: "", contants: "", brand: ""))
-    let okBtnClick = PublishRelay<Void>()
+    let okBtnClick = PublishRelay<String>()
     let msgSeedDismiss = PublishRelay<Void>()
     
     // OUTPUT
