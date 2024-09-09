@@ -37,10 +37,11 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 }
                 
                 Text(self.title)
-                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))      .padding(.leading, 1)
+                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))    
+                    .padding(.leading, 1)
                     .opacity(self.isSubTitleShow ? 1 : 0)
                     .offset(y: self.isSubTitleShow ? 0 : 10)
-                    .animation(.spring(response: 0.35, dampingFraction: 0.75, blendDuration: 0), value: self.isSubTitleShow)
+                    .animation(.easeInOut(duration: 0.25), value: self.isSubTitleShow)
                 
                 Spacer()
             }
@@ -65,7 +66,9 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 if isFirstValue == nil {
                     self.isFirstValue = value
                 } else {
-                    self.isSubTitleShow =  isFirstValue! - 32 >= value
+                    if (!self.isSubTitleShow && self.isFirstValue! - 25 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 25 < value)  {
+                        self.isSubTitleShow = !self.isSubTitleShow
+                    }
                 }
             }
         }
