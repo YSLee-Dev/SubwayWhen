@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23D56" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="ShinbundangSchedule" representedClassName="ShinbundangSchedule" syncable="YES" codeGenerationType="class">
+        <attribute name="endStation" optional="YES" attributeType="String"/>
+        <attribute name="startTime" optional="YES" attributeType="String"/>
+        <attribute name="stationName" optional="YES" attributeType="String"/>
+        <attribute name="updown" optional="YES" attributeType="String"/>
+        <attribute name="week" optional="YES" attributeType="String"/>
+    </entity>
+</model>
