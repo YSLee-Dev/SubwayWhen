@@ -418,6 +418,7 @@
 		FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
+		FFABBAFE2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -832,6 +833,7 @@
 		FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinbundangScheduleModel.swift; sourceTree = "<group>"; };
 		FF8CBE292C8977F700E6B4D2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1618,6 +1620,7 @@
 		34A3039929AF86FD00948EDD /* DataLoad */ = {
 			isa = PBXGroup;
 			children = (
+				FF36A3872C8065A800387A3D /* TCADependecy */,
 				34A3039A29AF86FD00948EDD /* NetworkManager.swift */,
 				34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */,
 				34A303AD29AF86FD00948EDD /* LoadModel */,
@@ -2485,7 +2488,7 @@
 		FA4CB7812BB68473003C41F6 /* SubwayWhenNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				FF36A3872C8065A800387A3D /* TCADependecy */,
+				FFABBAFF2C927B2400CCC692 /* CoreData */,
 				34A3039929AF86FD00948EDD /* DataLoad */,
 				FA4CB7822BB68473003C41F6 /* SubwayWhenNetworking.h */,
 			);
@@ -2547,6 +2550,14 @@
 				FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */,
 			);
 			path = Shinbundang;
+			sourceTree = "<group>";
+		};
+		FFABBAFF2C927B2400CCC692 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3260,6 +3271,7 @@
 				FA4CB79D2BB684B1003C41F6 /* ScheduleStationArrival.swift in Sources */,
 				FA4CB79E2BB684B1003C41F6 /* VicinityStationsData.swift in Sources */,
 				FA4CB79F2BB684B1003C41F6 /* KorailTrainNumber.swift in Sources */,
+				FFABBAFE2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld in Sources */,
 				FA4CB7A02BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
 				FA4CB7A12BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FA4CB7A22BB684B1003C41F6 /* ImportantData.swift in Sources */,
@@ -3887,6 +3899,19 @@
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */,
+			);
+			currentVersion = FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */;
+			path = ShinbundangScheduleModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 34C6DB492936274400C4ED80 /* Project object */;
 }
