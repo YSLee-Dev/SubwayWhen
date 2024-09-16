@@ -185,4 +185,19 @@ final class LoadModel : LoadModelProtocol{
         return scheduleListSubject
             .asObservable()
     }
+    
+    // 신분당선 시간표 버전
+    func shinbundangScheduleVersionRequest() -> Observable<Double> {
+        let scheduleVersion = PublishSubject<Double>()
+        
+        self.database.observe(.value){ dataBase, _ in
+            guard let data = dataBase.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let version = subwayWhen?["ShinbundangLineScheduleVersion"] as? [String: Double]
+            scheduleVersion.onNext(version?["version"] ?? 0.0)
+        }
+        
+        return scheduleVersion
+            .asObservable()
+    }
 }
