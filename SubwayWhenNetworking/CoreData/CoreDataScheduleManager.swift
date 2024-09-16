@@ -41,7 +41,7 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         }
     }
     
-    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: Int) -> Bool {
+    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: Int) {
         for (stationName, schedules) in scheduleData {
             let insertedObject = NSEntityDescription.insertNewObject(forEntityName: "ShinbundangLineScheduleModel", into: self.context)
             if let entity = insertedObject as? ShinbundangLineScheduleModel {
@@ -53,10 +53,8 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         
         do {
             try self.context.save()
-            return true
         } catch {
-            print("CORE DATA ERROR: ", error)
-            return false
+            print("Core Data Save Error: ", error)
         }
     }
     
@@ -72,6 +70,21 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         } catch {
             print("Core Data Fetch Error: \(error)")
             return []
+        }
+    }
+    
+    func shinbundangScheduleDataRemove(stationName: String) {
+        let request: NSFetchRequest<ShinbundangLineScheduleModel> = ShinbundangLineScheduleModel.fetchRequest()
+        request.predicate = NSPredicate(format: "stationName == %@", stationName)
+        
+        do {
+            guard let result = try? self.context.fetch(request),
+                  let object = result.first else { return }
+            self.context.delete(object)
+            
+            try self.context.save()
+        } catch {
+            print("Core Data Remove Error: \(error.localizedDescription)")
         }
     }
 }
