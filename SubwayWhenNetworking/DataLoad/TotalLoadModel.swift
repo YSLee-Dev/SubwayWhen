@@ -21,6 +21,9 @@ class TotalLoadModel : TotalLoadProtocol {
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
     func totalLiveDataLoad(stations: [SaveStation]) -> Observable<(MainTableViewCellData, Int)>{
+//        print("MAMONAKU", CoreDataScheduleManager.shared.shinbundangScheduleDataSave(to: ["광교" : [.init(endStation: "123", startStation: "123", startTime: "123", stationName: "123", updown: "123", week: "123")]]))
+        CoreDataScheduleManager.shared.shinbundangScheduleDataLoad(stationName: "광교")
+        
         let saveStation = Observable.from(stations.enumerated())
         
         let liveStation = saveStation
