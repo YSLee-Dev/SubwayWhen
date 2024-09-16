@@ -9,7 +9,7 @@ import Foundation
 
 import CoreData
 
-class CoreDataScheduleManager {
+class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
     private init() {
         UserDefaults.standard.set(true, forKey: "com.apple.CoreData.SQLDebug")
     }
