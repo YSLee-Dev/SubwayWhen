@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ShinbundangScheduleModel: Equatable, Decodable {
+struct ShinbundangScheduleModel: Equatable, Codable {
     let endStation: String
     let startStation: String
     let startTime: String

@@ -388,6 +388,16 @@
 		FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD2F5F82BB566A900B95B52 /* Assets.xcassets */; };
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
+		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
+		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
+		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
+		FF24F7AE2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
+		FF24F7B12C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */; };
+		FF24F7B22C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */; };
+		FF24F7B32C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */; };
+		FF24F7B42C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */; };
+		FF24F7B52C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */; };
+		FF24F7B62C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */; };
 		FF36A36C2C80387D00387A3D /* DetailScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A36B2C80387D00387A3D /* DetailScheduleView.swift */; };
 		FF36A36E2C8055C900387A3D /* DetailSendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A36D2C8055C900387A3D /* DetailSendModel.swift */; };
 		FF36A3702C805D7B00387A3D /* TotalLoadTCADependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */; };
@@ -418,7 +428,8 @@
 		FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
-		FFABBAFE2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */; };
+		FFABBB022C92A5C300CCC692 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
+		FFABBB1A2C92C34000CCC692 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -815,6 +826,9 @@
 		FAD2F6012BB5683A00B95B52 /* SubwayWhen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhen.entitlements; sourceTree = "<group>"; };
 		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
+		FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
+		FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataClass.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		FF36A36B2C80387D00387A3D /* DetailScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleView.swift; sourceTree = "<group>"; };
 		FF36A36D2C8055C900387A3D /* DetailSendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSendModel.swift; sourceTree = "<group>"; };
 		FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadTCADependency.swift; sourceTree = "<group>"; };
@@ -833,7 +847,7 @@
 		FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinbundangScheduleModel.swift; sourceTree = "<group>"; };
 		FF8CBE292C8977F700E6B4D2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataScheduleManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2555,7 +2569,10 @@
 		FFABBAFF2C927B2400CCC692 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */,
+				FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */,
+				FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */,
+				FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */,
+				FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -3017,6 +3034,7 @@
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
 				34A58AE12AC3BAEE00C8A563 /* TutorialCollectionFirstCell.swift in Sources */,
 				34D9EA092A557E3F0080AD17 /* VicinityStationsData.swift in Sources */,
+				FF24F7B32C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */,
 				34A3F0A72AB8210B0012115F /* ImportantData.swift in Sources */,
 				B6438D3F2B667CB10099BFEF /* MainDelegate.swift in Sources */,
 				349B516629A4631B00A53879 /* ReportViewModel.swift in Sources */,
@@ -3146,6 +3164,7 @@
 				34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */,
 				344D6A102ABD84AE00ECB57D /* TutorialVC.swift in Sources */,
 				34D9EA0F2A55832C0080AD17 /* LocationModalCellData.swift in Sources */,
+				FFABBB1A2C92C34000CCC692 /* CoreDataScheduleManager.swift in Sources */,
 				34B6ADE92A4994D500D7A6DA /* SettingNotiSelectModalCell.swift in Sources */,
 				34A32E7429B88C4F00AA1C67 /* TableViewCellCustom.swift in Sources */,
 				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
@@ -3168,6 +3187,7 @@
 				3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */,
 				3498949A29CD403A00768B88 /* PopupType.swift in Sources */,
 				3499DE9C29D1B34100A6E8C1 /* ReportContentsModalTFViewModelProtocol.swift in Sources */,
+				FF24F7B62C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				B6B2257D2B90C07C00F6D669 /* SaveTrainIcon.swift in Sources */,
 				349E2F3F29BDB3B700C54EE9 /* ReportCoordinatorDelegate.swift in Sources */,
 				B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */,
@@ -3232,6 +3252,7 @@
 				344D6A122ABD8A0F00ECB57D /* TutorialCoordinator.swift in Sources */,
 				3499DEAA29D1BCE700A6E8C1 /* ReportCheckModalViewModelProtocol.swift in Sources */,
 				349B517D29A4A4E700A53879 /* ReportTableViewTextFieldCellModel.swift in Sources */,
+				FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 				34D9EA0D2A5583220080AD17 /* LocationModalSectionData.swift in Sources */,
 				FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */,
 				B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */,
@@ -3257,6 +3278,7 @@
 				FA4CB7CA2BB68882003C41F6 /* SaveStation.swift in Sources */,
 				FF36A3772C80621D00387A3D /* PreviewTotalLoadTCADependency.swift in Sources */,
 				FA4CB7902BB6849B003C41F6 /* BundleExtension.swift in Sources */,
+				FF24F7B42C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				FA4CB7942BB684B1003C41F6 /* ScheduleType.swift in Sources */,
 				FA4CB7952BB684B1003C41F6 /* SearchInfoBySubwayNameService.swift in Sources */,
 				FF36A3732C805FC900387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
@@ -3264,6 +3286,7 @@
 				FA4CB7982BB684B1003C41F6 /* KorailScdule.swift in Sources */,
 				FA4CB7992BB684B1003C41F6 /* NetworkManagerProtocol.swift in Sources */,
 				FF36A3852C80644900387A3D /* TotalLoadProtocol.swift in Sources */,
+				FF24F7AE2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 				FA4CB7C62BB687D9003C41F6 /* MainTableViewCellType.swift in Sources */,
 				FA4CB79A2BB684B1003C41F6 /* URLSessionProtocol.swift in Sources */,
 				FA4CB79B2BB684B1003C41F6 /* LoadModelProtocol.swift in Sources */,
@@ -3271,11 +3294,11 @@
 				FA4CB79D2BB684B1003C41F6 /* ScheduleStationArrival.swift in Sources */,
 				FA4CB79E2BB684B1003C41F6 /* VicinityStationsData.swift in Sources */,
 				FA4CB79F2BB684B1003C41F6 /* KorailTrainNumber.swift in Sources */,
-				FFABBAFE2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld in Sources */,
 				FA4CB7A02BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
 				FA4CB7A12BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FA4CB7A22BB684B1003C41F6 /* ImportantData.swift in Sources */,
 				FA4CB7A32BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
+				FF24F7B12C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */,
 				FA4CB7C82BB687E9003C41F6 /* SearchStaion.swift in Sources */,
 				FA4CB7A42BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
 				FA4CB7A52BB684B1003C41F6 /* KorailBody.swift in Sources */,
@@ -3283,6 +3306,7 @@
 				FA4CB78C2BB68495003C41F6 /* NetworkManager.swift in Sources */,
 				FF36A3702C805D7B00387A3D /* TotalLoadTCADependency.swift in Sources */,
 				FA4CB78D2BB68495003C41F6 /* TotalLoadModel.swift in Sources */,
+				FFABBB022C92A5C300CCC692 /* CoreDataScheduleManager.swift in Sources */,
 				FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3313,6 +3337,7 @@
 				FA4CB7B22BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
 				FA4CB7B32BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FA4CB7B42BB684B1003C41F6 /* ImportantData.swift in Sources */,
+				FF24F7B52C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				FA4CB7B52BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
 				FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 				FA4CB7B62BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
@@ -3321,13 +3346,16 @@
 				FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */,
 				FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */,
 				FA4CB7772BB64FA7003C41F6 /* SaveStationGroup.swift in Sources */,
+				FF24F7B22C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */,
 				FAD2F5F32BB566A800B95B52 /* SubwayWhenHomeWidgetBundle.swift in Sources */,
+				FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */,
 				FA4CB7922BB6849D003C41F6 /* BundleExtension.swift in Sources */,
 				FA4CB7932BB6849D003C41F6 /* LoadModel.swift in Sources */,
 				FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */,
 				FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */,
 				FF36A37C2C8062A900387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */,
+				FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3901,13 +3929,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		FFABBAFC2C927B1800CCC692 /* ShinbundangScheduleModel.xcdatamodeld */ = {
+		FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */,
+				FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */,
 			);
-			currentVersion = FFABBAFD2C927B1800CCC692 /* Model.xcdatamodel */;
-			path = ShinbundangScheduleModel.xcdatamodeld;
+			currentVersion = FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */;
+			name = CoreDataScheduleModel.xcdatamodeld;
+			path = /Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/CoreDataScheduleModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
