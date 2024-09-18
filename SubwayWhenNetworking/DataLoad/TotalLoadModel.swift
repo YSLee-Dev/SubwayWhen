@@ -348,7 +348,36 @@ class TotalLoadModel : TotalLoadProtocol {
         let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
         guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
         
-        return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
+        let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
+        let localSchedule = self.coreDataManager.shinbundangScheduleDataLoad(stationName: scheduleSearch.stationName)
+        
+        var shinbundangVersion = 0.0
+        var newSave = false
+        
+        // A-1. 저장된 신분당선 데이터가 있는지 확인합니다.
+       return Observable.zip(shinbundangVersionObserverable, Observable.just(localSchedule))
+            .map {($0, $1)}
+            .flatMap { version,  localSchedule -> Observable<[ShinbundangScheduleModel]> in
+                shinbundangVersion = version
+                
+                // A-2. 저장된 신분당선의 버전을 확인합니다.
+                if (Double(localSchedule?.scheduleVersion ?? "0")) ?? 0.0 >= version, let localScheduleData = localSchedule?.scheduleData {
+                    // A-3. 저장된 신분당선 시간표를 반환합니다.
+                    return Observable.just(localScheduleData)
+                } else {
+                    // B-1. 저장된 신분당선 데이터가 없거나 버전이 낮으면 데이터를 요청합니다.
+                    newSave = true
+                    return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
+                }
+            }
+            .do(onNext: { data in
+                if newSave {
+                    if localSchedule?.scheduleData != nil  {   // B-2. 저장된 신분당선 데이터를 삭제 후 저장합니다.
+                        self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSearch.stationName)
+                    }
+                    self.coreDataManager.shinbundangScheduleDataSave(to: [scheduleSearch.stationName: data], scheduleVersion: "\(shinbundangVersion)")
+                }
+            })
             .map { data in
                 let filterData = data.filter {
                     guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
