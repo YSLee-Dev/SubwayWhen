@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CoreDataScheduleManagerProtocol {
-    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: Int)
-    func shinbundangScheduleDataLoad(stationName: String) -> [ShinbundangLineScheduleModel]
+    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: String)
+    func shinbundangScheduleDataLoad(stationName: String) -> ShinbundangLineScheduleModel?
+    func shinbundangScheduleDataRemove(stationName: String)
 }

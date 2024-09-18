@@ -10,9 +10,7 @@ import Foundation
 import CoreData
 
 class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
-    private init() {
-        UserDefaults.standard.set(true, forKey: "com.apple.CoreData.SQLDebug")
-    }
+    private init() {}
     static let shared = CoreDataScheduleManager()
     
     private lazy var persistentContainer: NSPersistentContainer = {
@@ -41,7 +39,7 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         }
     }
     
-    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: Int) {
+    func shinbundangScheduleDataSave(to scheduleData: [String: [ShinbundangScheduleModel]], scheduleVersion: String) {
         for (stationName, schedules) in scheduleData {
             let insertedObject = NSEntityDescription.insertNewObject(forEntityName: "ShinbundangLineScheduleModel", into: self.context)
             if let entity = insertedObject as? ShinbundangLineScheduleModel {
@@ -58,18 +56,16 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         }
     }
     
-    func shinbundangScheduleDataLoad(stationName: String) -> [ShinbundangLineScheduleModel] {
+    func shinbundangScheduleDataLoad(stationName: String) -> ShinbundangLineScheduleModel? {
         let request: NSFetchRequest<ShinbundangLineScheduleModel> = ShinbundangLineScheduleModel.fetchRequest()
         request.predicate = NSPredicate(format: "stationName == %@", stationName)
         
         do {
             let results = try self.context.fetch(request)
-            print("MAMONAKU", results)
-            
-            return results
+            return results.filter {!$0.scheduleData.isEmpty}.first
         } catch {
             print("Core Data Fetch Error: \(error)")
-            return []
+            return nil
         }
     }
     

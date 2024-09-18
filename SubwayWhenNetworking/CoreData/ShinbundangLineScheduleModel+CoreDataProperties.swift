@@ -18,7 +18,7 @@ extension ShinbundangLineScheduleModel {
     
     @NSManaged public var stationName: String?
     @NSManaged public var scheduleDetailData: Data?
-    @NSManaged public var scheduleVersion: Int?
+    @NSManaged public var scheduleVersion: String?
     
     var scheduleData: [ShinbundangScheduleModel] {
         get {
