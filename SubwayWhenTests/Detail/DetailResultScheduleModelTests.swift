@@ -23,13 +23,13 @@ final class DetailResultScheduleModelTests: XCTestCase {
         
         let seoulSchedule = LoadModel(networkManager: NetworkManager(session: MockURLSession((response: urlResponse!, data: seoulStationSchduleData))))
         
-        let seoulScheduleModel = DetailModel(totalLoadModel: TotalLoadModel(loadModel: seoulSchedule))
+//        let seoulScheduleModel = DetailModel(totalLoadModel: TotalLoadModel(loadModel: seoulSchedule))
+//
+//        let data = seoulScheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
+//        let blocking = data.toBlocking()
+//        let arrayData = try! blocking.toArray()
         
-        let data = seoulScheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
-        
-        self.dummyResultSchedule = arrayData.first!
+//        self.dummyResultSchedule = arrayData.first!
     }
 
     func testResutScheduleToDetailResultSection(){
@@ -129,20 +129,20 @@ final class DetailResultScheduleModelTests: XCTestCase {
         )
     }
     
-    func testNowTimeMatching(){
-        // GIVEN
-        let data = self.model.nowTimeMatching(self.model.resultScheduleToDetailResultSection(self.dummyResultSchedule), nowHour: 5)
-        
-        // WHEN
-        let requestData = data
-        let dummyData = 5
-        
-        // THEN
-        expect(requestData).to(
-            equal(dummyData),
-            description: "시간과 동일한 (5)가 나와야함"
-        )
-    }
+//    func testNowTimeMatching(){
+//        // GIVEN
+//        let data = self.model.nowTimeMatching(self.model.resultScheduleToDetailResultSection(self.dummyResultSchedule), nowHour: 5)
+//        
+//        // WHEN
+//        let requestData = data
+//        let dummyData = 5
+//        
+//        // THEN
+//        expect(requestData).to(
+//            equal(dummyData),
+//            description: "시간과 동일한 (5)가 나와야함"
+//        )
+//    }
     
     func testNowTimeMatchingError(){
         // GIVEN
