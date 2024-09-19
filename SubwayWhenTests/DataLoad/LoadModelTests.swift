@@ -224,4 +224,54 @@ class LoadModelTests : XCTestCase{
             description: "SW8(지하철역)이 아닌 카테고리는 없어야함"
         )
     }
+    
+    // 신분당선: 테스트 객체는 외부환경에 의존하면 안되지만, FireBase에서 불러오는 데이터가 1000건이 넘으며, 시간표 데이터는 dummy 데이터와 함께 변경 예정이기 때문에 옵저버블을 대기하는 식으로 테스트 진행
+    func testShinbundangScheduleLoad() {
+        // GIVEN
+        let requestObserverableData = self.stationNameSearchModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSinsaShinbundagLine)
+       
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData : [ShinbundangScheduleModel] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                    .filter {
+                        $0.week == "평일" && $0.updown == "하행" // Dummy 데이터 기준
+                    }
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestFirstData = requestData.first?.startTime
+        let dummyFirstData = dummyData.first?.startTime
+        
+        let requestLastData = requestData.last
+        let dummyLastData = dummyData.last
+        
+        let requestStationName = requestData.first?.stationName
+        let dummyStationName = scheduleSinsaShinbundagLine.stationName
+        
+        // THEN
+        expect(requestFirstData).to(
+            equal(dummyFirstData),
+            description: "모든 데이터는 동일해야함"
+        )
+        
+        expect(requestLastData).to(
+            equal(dummyLastData),
+            description: "모든 데이터는 동일해야함"
+        )
+        
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "시간표 데이터를 요청한 지하철역명은 동일해야함"
+        )
+    }
 }
