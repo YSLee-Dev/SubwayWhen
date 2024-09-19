@@ -344,8 +344,8 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]> {
-        let todayWeek = Calendar.current.component(.weekday, from: Date())
-        let todayWeekString = (todayWeek == 1 || todayWeek == 7) ? "주말" : "평일"
+        let requestWeek = Calendar.current.component(.weekday, from: requestDate)
+        let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
         guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
         
         let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
@@ -381,7 +381,7 @@ class TotalLoadModel : TotalLoadProtocol {
             .map { data in
                 let filterData = data.filter {
                     guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
-                    if $0.updown == scheduleSearch.upDown && $0.week == todayWeekString && !scheduleSearch.exceptionLastStation.contains($0.endStation) {
+                    if $0.updown == scheduleSearch.upDown && $0.week == requestWeekString && !scheduleSearch.exceptionLastStation.contains($0.endStation) {
                         if isNow {
                             return nowTime <= scheduleTime
                         } else {
