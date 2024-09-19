@@ -21,6 +21,7 @@ final class TotalLoadModelTests: XCTestCase {
     var korailScheduleLoadModel : TotalLoadModel!
     var stationNameSearchModel : TotalLoadModel!
     var kakaoVicinityStationModel: TotalLoadModel!
+    var coreDataManager: CoreDataScheduleManagerProtocol!
     
     override func setUp(){
         let session = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -39,6 +40,12 @@ final class TotalLoadModelTests: XCTestCase {
         let vicinityMock = MockURLSession((response: urlResponse!, data: vicinityData))
         self.kakaoVicinityStationModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: vicinityMock)))
         
+        self.coreDataManager = CoreDataScheduleManager.shared
+    }
+    
+    override func tearDown() {
+        // coreData에 저장되어 있는 신분당선 시간표를 제거합니다.
+        self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSinsaShinbundagLine.stationName)
     }
     
     func testTotalLiveDataLoad(){
@@ -930,6 +937,239 @@ final class TotalLoadModelTests: XCTestCase {
         expect(requestStartStation).to(
             equal(dummyStartStation),
             description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 공백으로 표시"
+        )
+    }
+    
+    func testShinbundangScheduleLoad() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = dummyData.count
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestTypeCount = requestData.filter {$0.type == .Shinbundang}.count
+        let dummyTypeCount = dummyData.count
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "데이터가 동일하기 때문에 총 개수도 동일해야함"
+        )
+        
+        expect(requestFirstStartTime).to(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestTypeCount).to(
+            equal(dummyTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isFirst_isNow() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = 1
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestFirstStartTime).toNot(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터가 같지만, isNow가 true이기 때문에 데이터가 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isFirst() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = 1
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestFirstStartTime).to(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터 및 정렬이 같고, isNow가 false이기 때문에 데이터가 같아야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isNow() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = dummyData.count
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).toNot(
+            equal(dummyCount),
+            description: "isNow가 true이기 때문에 count는 달라야함"
+        )
+        
+        expect(requestFirstStartTime).toNot(
+            equal(dummyFirstStartTime),
+            description: "isNow가 true이기 때문에 시작하는 시간이 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_CoreData() {
+        // GIVEN
+        // 첫 요청이기 때문에 파이어베이스 데이터를 사용하는 데이터
+        let requestObserverableDataOne = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        // 두 번째 요청이기 때문에 저장된 코어데이터를 사용하는 데이터
+        let requestObserverableDataTwo = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestDataOne: [ResultSchdule] = []
+        requestObserverableDataOne
+            .subscribe(onNext: {
+                requestDataOne = $0
+            })
+            .disposed(by: bag)
+        
+        var requestDataTwo: [ResultSchdule] = []
+        requestObserverableDataTwo
+            .subscribe(onNext: {
+                requestDataTwo = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestOneCount = requestDataOne.count
+        let requestTwoCount = requestDataTwo.count
+        
+        let requestOneFirstData = requestDataOne.first
+        let requestTwoFirstData = requestDataTwo.first
+        
+        let requestOneTypeCount = requestDataOne.filter {$0.type == .Shinbundang}.count
+        let requestTwoTypeCount = requestDataTwo.filter {$0.type == .Shinbundang}.count
+        
+        // THEN
+        expect(requestOneCount).to(
+            equal(requestTwoCount),
+            description: "FireBase 데이터와 로컬 데이터는 동일해야함"
+        )
+        
+        expect(requestOneFirstData).to(
+            equal(requestTwoFirstData),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestOneTypeCount).to(
+            equal(requestTwoTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
         )
     }
 }
