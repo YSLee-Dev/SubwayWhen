@@ -115,7 +115,7 @@ struct DetailArrivalView: View {
                             .font(.system(size: ViewStyle.FontSize.mainTitleSize))
                             .offset(x: self.trainPostion, y: -15)
                             .opacity(self.nowLoading ? 0 : self.nowAnimationPlaying ? 0 : 1)
-                            .animation(.easeInOut(duration: 0.5), value: self.trainPostion)
+                            .animation(.easeInOut(duration: 0.4), value: self.trainPostion)
                     }
                 }
             }
@@ -296,22 +296,22 @@ extension DetailArrivalView {
         let borderSize = self.screenWidthSize
         guard let intCode = Int(code) else {
             if type == .next {
-                return (0, 1)
+                return (1, 1)
             } else {
-                return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 20, 0)
+                return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 21, 0)
             }
         }
         
         if intCode < 6 && type  == .back {
-            return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 20, 0) // 2개의 역만 필요
+            return (borderSize - self.defaultStationWidth - 30 - 13 - 20 - 21, 0) // 2개의 역만 필요
         } else if type == .back  {
-            return (0, 1)
+            return (1, 1)
         }
         
         if intCode < 6 && type == .next {
             return (90, 1)
         } else if type == .next {
-            return (0, 1)
+            return (1, 1)
         }
         
         return (0, 0)
