@@ -400,6 +400,7 @@
 		FF1D4AB22C9D346E00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
 		FF1D4AB32C9D346F00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
 		FF1D4AB62C9D34F700AFD709 /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */; };
+		FF1D4ABB2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */; };
 		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
 		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
@@ -876,6 +877,7 @@
 		FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
 		FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
+		FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
 		FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataClass.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -2620,6 +2622,7 @@
 		FF36A3872C8065A800387A3D /* TCADependecy */ = {
 			isa = PBXGroup;
 			children = (
+				FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */,
 				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
 				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
 				FF1D4AB82C9D355100AFD709 /* Key */,
@@ -3402,6 +3405,7 @@
 				FA4CB7CB2BB68903003C41F6 /* SaveStationGroup.swift in Sources */,
 				FF36A3792C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				FA4CB7CA2BB68882003C41F6 /* SaveStation.swift in Sources */,
+				FF1D4ABB2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift in Sources */,
 				FF36A3772C80621D00387A3D /* PreviewTotalLoadTCADependency.swift in Sources */,
 				FF24F7BA2C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
 				FA4CB7902BB6849B003C41F6 /* BundleExtension.swift in Sources */,
