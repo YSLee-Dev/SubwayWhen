@@ -11,4 +11,5 @@ import ComposableArchitecture
 enum TotalLoadModelDependencyKey: DependencyKey {
     static var liveValue: TotalLoadTCADependencyProtocol = TotalLoadTCADependency()
     static var previewValue: any TotalLoadTCADependencyProtocol = PreviewTotalLoadTCADependency()
+    static var testValue: any TotalLoadTCADependencyProtocol = TestTotalLoadTCADependency()
 }

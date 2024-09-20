@@ -29,11 +29,18 @@ var korailScheduleDummyData : [KorailScdule] = {
         ((Int(String($0.trainCode.last ?? "9")) ?? 9) % 2) == 1
     }
 }()
+let shinbundagSinsaStationScheduleDummyData = try! JSONDecoder().decode([ShinbundangScheduleModel].self, from: shinbundangSinsaStationData)
+let seoulScheduleToResultScheduleTransformDummyData = seoulScheduleDummyData.SearchSTNTimeTableByFRCodeService.row
+    .map {
+        ResultSchdule(startTime: $0.startTime , type: .Seoul, isFast: $0.isFast, startStation: $0.startStation, lastStation: $0.lastStation)
+    }
+
 let stationNameSearcDummyhData = try! JSONDecoder().decode(SearchStaion.self, from: stationNameSearchData)
 let vicinityStationsDummyData = try! JSONDecoder().decode(VicinityStationsData.self, from: vicinityData)
-let shinbundagSinsaStationScheduleDummyData = try! JSONDecoder().decode([ShinbundangScheduleModel].self, from: shinbundangSinsaStationData)
 
 let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "340", exceptionLastStation: "", type: .real, backStationId: "1003000339", nextStationId: "1003000341", korailCode: "")
+
+let detailSendModelDummyData = DetailSendModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")
 
 let detailArrivalDataRequestDummyModel = DetailArrivalDataRequestModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", lineCode: "1003", exceptionLastStation: "")
 
