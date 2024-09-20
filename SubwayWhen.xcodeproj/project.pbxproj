@@ -396,6 +396,10 @@
 		FF1D4AA92C9D32AF00AFD709 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF1D4AA82C9D32AF00AFD709 /* ComposableArchitecture */; };
 		FF1D4AAC2C9D32EC00AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF1D4AAF2C9D330800AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
+		FF1D4AB12C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
+		FF1D4AB22C9D346E00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
+		FF1D4AB32C9D346F00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
+		FF1D4AB62C9D34F700AFD709 /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */; };
 		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
 		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
@@ -426,8 +430,6 @@
 		FF36A3842C80637400387A3D /* DetailArrivalDataRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */; };
 		FF36A3852C80644900387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
-		FF7A71262C7C151E0080B72B /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */; };
-		FF7A712C2C7C42E00080B72B /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A711C2C7C09680080B72B /* Dependency+.swift */; };
 		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71322C7D51360080B72B /* DetailArrivalView.swift */; };
 		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
@@ -872,6 +874,8 @@
 		FF1D4A772C9D0F3E00AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
+		FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
+		FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
 		FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
 		FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataClass.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -882,8 +886,6 @@
 		FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalDataRequestModel.swift; sourceTree = "<group>"; };
 		FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadTCADependencyProtocol.swift; sourceTree = "<group>"; };
-		FF7A711C2C7C09680080B72B /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
-		FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
 		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
 		FF7A71322C7D51360080B72B /* DetailArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalView.swift; sourceTree = "<group>"; };
 		FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1692,9 +1694,9 @@
 		34A3039929AF86FD00948EDD /* DataLoad */ = {
 			isa = PBXGroup;
 			children = (
-				FF36A3872C8065A800387A3D /* TCADependecy */,
 				34A3039A29AF86FD00948EDD /* NetworkManager.swift */,
 				34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */,
+				FF36A3872C8065A800387A3D /* TCADependecy */,
 				34A303AD29AF86FD00948EDD /* LoadModel */,
 				34A3039C29AF86FD00948EDD /* Entity */,
 			);
@@ -1991,7 +1993,7 @@
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
-				FF7A711E2C7C09780080B72B /* Dependency */,
+				FF1D4AB92C9D359400AFD709 /* Dependency */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
 				34A906DE2A4C3157002C7655 /* Notification */,
@@ -2599,30 +2601,30 @@
 			path = SubwayWhenCommonFramework;
 			sourceTree = "<group>";
 		};
-		FF36A3872C8065A800387A3D /* TCADependecy */ = {
+		FF1D4AB82C9D355100AFD709 /* Key */ = {
 			isa = PBXGroup;
 			children = (
-				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
-				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
+				FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */,
 			);
-			path = TCADependecy;
+			path = Key;
 			sourceTree = "<group>";
 		};
-		FF7A711E2C7C09780080B72B /* Dependency */ = {
+		FF1D4AB92C9D359400AFD709 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
-				FF7A711C2C7C09680080B72B /* Dependency+.swift */,
-				FF7A71272C7C1B280080B72B /* Key */,
+				FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */,
 			);
 			path = Dependency;
 			sourceTree = "<group>";
 		};
-		FF7A71272C7C1B280080B72B /* Key */ = {
+		FF36A3872C8065A800387A3D /* TCADependecy */ = {
 			isa = PBXGroup;
 			children = (
-				FF7A711F2C7C09B00080B72B /* TotalLoadModelDependencyKey.swift */,
+				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
+				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
+				FF1D4AB82C9D355100AFD709 /* Key */,
 			);
-			path = Key;
+			path = TCADependecy;
 			sourceTree = "<group>";
 		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
@@ -3147,6 +3149,7 @@
 				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
 				B68FB34A2B75EFF80075339F /* SettingTrainIconModalViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
+				FF1D4AB22C9D346E00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */,
 				34A906E42A4C322A002C7655 /* NotificationManagerProtocol.swift in Sources */,
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
 				3427D8FE2A432020000AEEED /* SettingNotiSelectModalViewModel.swift in Sources */,
@@ -3223,6 +3226,7 @@
 				FA9AA9B22BD639F300906A5B /* UIApplication+.swift in Sources */,
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
 				3455CFA22A53DC79001ADE61 /* ModalVCActionProtocol.swift in Sources */,
+				FF1D4AB62C9D34F700AFD709 /* Dependency+.swift in Sources */,
 				3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */,
 				B6438D4B2B667CB10099BFEF /* MainModelProtocol.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
@@ -3275,7 +3279,6 @@
 				349E2F4E29BDBF7300C54EE9 /* EditVCDelegate.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34D9E9F62A54FAEE0080AD17 /* LocationModalCoordinator.swift in Sources */,
-				FF7A71262C7C151E0080B72B /* TotalLoadModelDependencyKey.swift in Sources */,
 				FF24F7B82C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
 				34D9E9FA2A54FBB70080AD17 /* LocationModalViewModel.swift in Sources */,
 				34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */,
@@ -3381,7 +3384,6 @@
 				FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */,
 				B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */,
 				34A0504C29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift in Sources */,
-				FF7A712C2C7C42E00080B72B /* Dependency+.swift in Sources */,
 				34A1F5732A0A5CA000996839 /* DetailActivityLoadData.swift in Sources */,
 				B6438D4E2B667CB10099BFEF /* MainModel.swift in Sources */,
 				34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */,
@@ -3411,6 +3413,7 @@
 				FA4CB7982BB684B1003C41F6 /* KorailScdule.swift in Sources */,
 				FA4CB7992BB684B1003C41F6 /* NetworkManagerProtocol.swift in Sources */,
 				FF36A3852C80644900387A3D /* TotalLoadProtocol.swift in Sources */,
+				FF1D4AB12C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */,
 				FF24F7AE2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 				FA4CB7C62BB687D9003C41F6 /* MainTableViewCellType.swift in Sources */,
 				FA4CB79A2BB684B1003C41F6 /* URLSessionProtocol.swift in Sources */,
@@ -3477,6 +3480,7 @@
 				FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */,
 				FA4CB7922BB6849D003C41F6 /* BundleExtension.swift in Sources */,
 				FA4CB7932BB6849D003C41F6 /* LoadModel.swift in Sources */,
+				FF1D4AB32C9D346F00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */,
 				FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */,
 				FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */,
 				FF36A37C2C8062A900387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
