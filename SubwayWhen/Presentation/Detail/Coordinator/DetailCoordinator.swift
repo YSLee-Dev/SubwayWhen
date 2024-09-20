@@ -36,20 +36,20 @@ class DetailCoordinator: Coordinator {
         let detailView = DetailView(store: store)
         let vc = UIHostingController(rootView: detailView)
         
-        if self.isDisposable { // 임시인 경우 sheet, 기존 방식은 push
-            vc.modalPresentationStyle = .pageSheet
-            if let sheet = vc.sheetPresentationController{
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 25
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {[weak self] in
+            if self?.isDisposable ?? false { // 임시인 경우 sheet, 기존 방식은 push
+                vc.modalPresentationStyle = .pageSheet
+                if let sheet = vc.sheetPresentationController{
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 25
+                }
                 self?.navigation.present(vc, animated: true)
+                
+            } else {
+                vc.hidesBottomBarWhenPushed = true
+                self?.navigation.pushViewController(vc, animated: true)
             }
-        } else {
-            vc.hidesBottomBarWhenPushed = true
-            self.navigation.pushViewController(vc, animated: true)
         }
     }
 }
