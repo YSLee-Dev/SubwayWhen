@@ -107,7 +107,6 @@
 		349D788B29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D788A29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift */; };
 		349D788D29CC3FC300CA1B52 /* DetailResultScheduleModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D788C29CC3FC300CA1B52 /* DetailResultScheduleModelProtocol.swift */; };
 		349D789029CC405900CA1B52 /* DetailResultScheduleTopViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D788F29CC405900CA1B52 /* DetailResultScheduleTopViewProtocol.swift */; };
-		349D789229CC4F4A00CA1B52 /* DetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D789129CC4F4900CA1B52 /* DetailModelTests.swift */; };
 		349D789529CC67FD00CA1B52 /* DetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D789429CC67FD00CA1B52 /* DetailViewModelTests.swift */; };
 		349D789729CC78D400CA1B52 /* DetailResultScheduleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D789629CC78D400CA1B52 /* DetailResultScheduleModelTests.swift */; };
 		349E2F3129BDA39900C54EE9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349E2F3029BDA39800C54EE9 /* Coordinator.swift */; };
@@ -322,7 +321,7 @@
 		FA4CB7792BB651C0003C41F6 /* SaveStation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */; };
 		FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB89293627AE00C4ED80 /* SaveStation.swift */; };
 		FA4CB7832BB68473003C41F6 /* SubwayWhenNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4CB7822BB68473003C41F6 /* SubwayWhenNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA4CB7862BB68473003C41F6 /* SubwayWhenNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */; };
+		FA4CB7862BB68473003C41F6 /* SubwayWhenNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		FA4CB7872BB68473003C41F6 /* SubwayWhenNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA4CB78C2BB68495003C41F6 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3039A29AF86FD00948EDD /* NetworkManager.swift */; };
 		FA4CB78D2BB68495003C41F6 /* TotalLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A3039B29AF86FD00948EDD /* TotalLoadModel.swift */; };
@@ -389,6 +388,14 @@
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 		FF1D4A552C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */; };
+		FF1D4A5E2C9D001100AFD709 /* TotalLoadTCADependencyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */; };
+		FF1D4A632C9D0AEB00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
+		FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
+		FF1D4AA42C9D32A100AFD709 /* SubwayWhenCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF1D4AA92C9D32AF00AFD709 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF1D4AA82C9D32AF00AFD709 /* ComposableArchitecture */; };
+		FF1D4AAC2C9D32EC00AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
+		FF1D4AAF2C9D330800AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
 		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
@@ -428,7 +435,6 @@
 		FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAC92C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift */; };
 		FF7ECACF2C7C041B00D4643A /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECACE2C7C041B00D4643A /* DetailView.swift */; };
 		FF7ECAD12C7C04A000D4643A /* DetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7ECAD02C7C04A000D4643A /* DetailFeature.swift */; };
-		FF7ECAD32C7C054F00D4643A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */; };
 		FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
@@ -465,6 +471,27 @@
 			remoteGlobalIDString = FAD2F5ED2BB566A800B95B52;
 			remoteInfo = SubwayWhenHomeWidgetExtension;
 		};
+		FF1D4AA12C9D32A100AFD709 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1D4A9C2C9D32A100AFD709;
+			remoteInfo = SubwayWhenCommonFramework;
+		};
+		FF1D4AAA2C9D32E400AFD709 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1D4A9C2C9D32A100AFD709;
+			remoteInfo = SubwayWhenCommonFramework;
+		};
+		FF1D4AAD2C9D330300AFD709 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1D4A9C2C9D32A100AFD709;
+			remoteInfo = SubwayWhenCommon;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -487,6 +514,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FA4CB7872BB68473003C41F6 /* SubwayWhenNetworking.framework in Embed Frameworks */,
+				FF1D4AA42C9D32A100AFD709 /* SubwayWhenCommon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1D4A932C9D11EC00AFD709 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,7 +631,6 @@
 		349D788A29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleModel.swift; sourceTree = "<group>"; };
 		349D788C29CC3FC300CA1B52 /* DetailResultScheduleModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleModelProtocol.swift; sourceTree = "<group>"; };
 		349D788F29CC405900CA1B52 /* DetailResultScheduleTopViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleTopViewProtocol.swift; sourceTree = "<group>"; };
-		349D789129CC4F4900CA1B52 /* DetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModelTests.swift; sourceTree = "<group>"; };
 		349D789429CC67FD00CA1B52 /* DetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelTests.swift; sourceTree = "<group>"; };
 		349D789629CC78D400CA1B52 /* DetailResultScheduleModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleModelTests.swift; sourceTree = "<group>"; };
 		349E2F3029BDA39800C54EE9 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -831,6 +868,10 @@
 		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 		FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShinbundangSinsaStationScheduleDummy.json; sourceTree = "<group>"; };
+		FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADepdency.swift; sourceTree = "<group>"; };
+		FF1D4A772C9D0F3E00AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
+		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
 		FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataClass.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -880,7 +921,7 @@
 			files = (
 				881417710178E8CEDE8237F5 /* Pods_SubwayWhen.framework in Frameworks */,
 				FA4CB7862BB68473003C41F6 /* SubwayWhenNetworking.framework in Frameworks */,
-				FF7ECAD32C7C054F00D4643A /* ComposableArchitecture in Frameworks */,
+				FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -888,6 +929,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1D4AAC2C9D32EC00AFD709 /* SubwayWhenCommon.framework in Frameworks */,
 				727730A3993FDEA93F3798E5 /* Pods_SubwayWhen_SubwayWhenNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,9 +938,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1D4AAF2C9D330800AFD709 /* SubwayWhenCommon.framework in Frameworks */,
 				FAD2F5F02BB566A800B95B52 /* SwiftUI.framework in Frameworks */,
 				FAD2F5EF2BB566A800B95B52 /* WidgetKit.framework in Frameworks */,
 				A0C6B9CCD130679B28C40E65 /* Pods_SubwayWhen_SubwayWhenHomeWidgetExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1D4A9A2C9D32A100AFD709 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF1D4AA92C9D32AF00AFD709 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1323,7 +1374,6 @@
 			isa = PBXGroup;
 			children = (
 				349D789429CC67FD00CA1B52 /* DetailViewModelTests.swift */,
-				349D789129CC4F4900CA1B52 /* DetailModelTests.swift */,
 				349D789629CC78D400CA1B52 /* DetailResultScheduleModelTests.swift */,
 			);
 			path = Detail;
@@ -1497,6 +1547,7 @@
 			isa = PBXGroup;
 			children = (
 				34A3038529AF362600948EDD /* DummyLoad.swift */,
+				FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */,
 				3481C4E429C1CF05003F5213 /* DummyData */,
 			);
 			path = Dummy;
@@ -1911,6 +1962,8 @@
 				349C007D2A0A1B8D008A85BF /* SubwayWhenDetailWidget */,
 				FAD2F5F12BB566A800B95B52 /* SubwayWhenHomeWidget */,
 				FA4CB7812BB68473003C41F6 /* SubwayWhenNetworking */,
+				FF1D4A762C9D0F3D00AFD709 /* SubwayWhenCommonFramework */,
+				FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */,
 				34C6DB522936274400C4ED80 /* Products */,
 				A66F780E21740540C37C8525 /* Pods */,
 				27B8186A1B2F499F01B3B2F3 /* Frameworks */,
@@ -1925,6 +1978,7 @@
 				349C007A2A0A1B8C008A85BF /* SubwayWhenDetailWidgetExtension.appex */,
 				FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */,
 				FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */,
+				FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2529,6 +2583,22 @@
 			path = SubwayWhenHomeWidget;
 			sourceTree = "<group>";
 		};
+		FF1D4A762C9D0F3D00AFD709 /* SubwayWhenCommonFramework */ = {
+			isa = PBXGroup;
+			children = (
+				FF1D4A772C9D0F3E00AFD709 /* SubwayWhenCommonFramework.h */,
+			);
+			path = SubwayWhenCommonFramework;
+			sourceTree = "<group>";
+		};
+		FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */ = {
+			isa = PBXGroup;
+			children = (
+				FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */,
+			);
+			path = SubwayWhenCommonFramework;
+			sourceTree = "<group>";
+		};
 		FF36A3872C8065A800387A3D /* TCADependecy */ = {
 			isa = PBXGroup;
 			children = (
@@ -2596,6 +2666,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF1D4A982C9D32A100AFD709 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -2651,13 +2729,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				FF1D4AA22C9D32A100AFD709 /* PBXTargetDependency */,
 				B6B658A62B5D47C40028828E /* PBXTargetDependency */,
 				FAD2F5FC2BB566A900B95B52 /* PBXTargetDependency */,
 				FA4CB7852BB68473003C41F6 /* PBXTargetDependency */,
 			);
 			name = SubwayWhen;
 			packageProductDependencies = (
-				FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */,
 			);
 			productName = SubwayWhen;
 			productReference = 34C6DB512936274400C4ED80 /* SubwayWhen.app */;
@@ -2672,10 +2750,12 @@
 				FA4CB77C2BB68473003C41F6 /* Sources */,
 				FA4CB77D2BB68473003C41F6 /* Frameworks */,
 				FA4CB77E2BB68473003C41F6 /* Resources */,
+				FF1D4A932C9D11EC00AFD709 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FF1D4AAB2C9D32E400AFD709 /* PBXTargetDependency */,
 			);
 			name = SubwayWhenNetworking;
 			packageProductDependencies = (
@@ -2696,6 +2776,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FF1D4AAE2C9D330300AFD709 /* PBXTargetDependency */,
 			);
 			name = SubwayWhenHomeWidgetExtension;
 			packageProductDependencies = (
@@ -2703,6 +2784,27 @@
 			productName = SubwayWhenHomeWidgetExtension;
 			productReference = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF1D4AA52C9D32A100AFD709 /* Build configuration list for PBXNativeTarget "SubwayWhenCommon" */;
+			buildPhases = (
+				FF1D4A982C9D32A100AFD709 /* Headers */,
+				FF1D4A992C9D32A100AFD709 /* Sources */,
+				FF1D4A9A2C9D32A100AFD709 /* Frameworks */,
+				FF1D4A9B2C9D32A100AFD709 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SubwayWhenCommon;
+			packageProductDependencies = (
+				FF1D4AA82C9D32AF00AFD709 /* ComposableArchitecture */,
+			);
+			productName = SubwayWhenCommonFramework;
+			productReference = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -2731,6 +2833,9 @@
 					FAD2F5ED2BB566A800B95B52 = {
 						CreatedOnToolsVersion = 15.3;
 					};
+					FF1D4A9C2C9D32A100AFD709 = {
+						CreatedOnToolsVersion = 15.4;
+					};
 				};
 			};
 			buildConfigurationList = 34C6DB4C2936274400C4ED80 /* Build configuration list for PBXProject "SubwayWhen" */;
@@ -2755,6 +2860,7 @@
 				349C00792A0A1B8C008A85BF /* SubwayWhenDetailWidgetExtension */,
 				FAD2F5ED2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension */,
 				FA4CB77F2BB68473003C41F6 /* SubwayWhenNetworking */,
+				FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */,
 			);
 		};
 /* End PBXProject section */
@@ -2818,6 +2924,13 @@
 				FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */,
 				FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */,
 				FA4CB7F52BB6C2A5003C41F6 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1D4A9B2C9D32A100AFD709 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2971,13 +3084,13 @@
 				3497DC9129D2EDE200D2ABB9 /* SearchViewModalTests.swift in Sources */,
 				34C655732A5C07720039C16B /* LocationModalModelTests.swift in Sources */,
 				349D789729CC78D400CA1B52 /* DetailResultScheduleModelTests.swift in Sources */,
-				349D789229CC4F4A00CA1B52 /* DetailModelTests.swift in Sources */,
 				34A221C229CAC1D1003F035D /* MainModelTests.swift in Sources */,
 				34BA0B2E29C039010044E2C2 /* TotalLoadModelTests.swift in Sources */,
 				3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */,
 				34C655752A5CF8210039C16B /* SettingNotiSelectModalModelTests.swift in Sources */,
 				3499DE9829D17BE600A6E8C1 /* ReportModelTests.swift in Sources */,
 				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
+				FF1D4A632C9D0AEB00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				3499DEAC29D1BEBB00A6E8C1 /* ReportContentsModalModelTests.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
@@ -2986,6 +3099,7 @@
 				349D789529CC67FD00CA1B52 /* DetailViewModelTests.swift in Sources */,
 				3499DE9129D17B9C00A6E8C1 /* EditViewModelTests.swift in Sources */,
 				3499DE9A29D1955900A6E8C1 /* ReportViewModelTests.swift in Sources */,
+				FF1D4A5E2C9D001100AFD709 /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */,
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
@@ -3371,6 +3485,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF1D4A992C9D32A100AFD709 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3393,6 +3514,21 @@
 			isa = PBXTargetDependency;
 			target = FAD2F5ED2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension */;
 			targetProxy = FAD2F5FB2BB566A900B95B52 /* PBXContainerItemProxy */;
+		};
+		FF1D4AA22C9D32A100AFD709 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
+			targetProxy = FF1D4AA12C9D32A100AFD709 /* PBXContainerItemProxy */;
+		};
+		FF1D4AAB2C9D32E400AFD709 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
+			targetProxy = FF1D4AAA2C9D32E400AFD709 /* PBXContainerItemProxy */;
+		};
+		FF1D4AAE2C9D330300AFD709 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
+			targetProxy = FF1D4AAD2C9D330300AFD709 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3428,7 +3564,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenDetailWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenDetailWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -3456,7 +3592,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenDetailWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenDetailWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -3666,6 +3802,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3704,6 +3841,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3742,11 +3880,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3784,10 +3926,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3862,6 +4008,95 @@
 			};
 			name = Release;
 		};
+		FF1D4AA62C9D32A100AFD709 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6V8879W55Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenCommonFramework;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FF1D4AA72C9D32A100AFD709 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6V8879W55Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenCommonFramework;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3919,6 +4154,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		FF1D4AA52C9D32A100AFD709 /* Build configuration list for PBXNativeTarget "SubwayWhenCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1D4AA62C9D32A100AFD709 /* Debug */,
+				FF1D4AA72C9D32A100AFD709 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -3933,7 +4177,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FF7ECAD22C7C054F00D4643A /* ComposableArchitecture */ = {
+		FF1D4AA82C9D32AF00AFD709 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FF7ECACB2C7C040D00D4643A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
