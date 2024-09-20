@@ -388,8 +388,6 @@
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 		FF1D4A552C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */; };
-		FF1D4A5E2C9D001100AFD709 /* TotalLoadTCADependencyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */; };
-		FF1D4A632C9D0AEB00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
 		FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF1D4AA42C9D32A100AFD709 /* SubwayWhenCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -400,7 +398,10 @@
 		FF1D4AB22C9D346E00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
 		FF1D4AB32C9D346F00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */; };
 		FF1D4AB62C9D34F700AFD709 /* Dependency+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */; };
-		FF1D4ABB2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */; };
+		FF1D4AC22C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
+		FF1D4AC32C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
+		FF1D4AC42C9D3D4C00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
+		FF1D4ACB2C9D42A400AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
 		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
@@ -489,6 +490,13 @@
 			remoteInfo = SubwayWhenCommonFramework;
 		};
 		FF1D4AAD2C9D330300AFD709 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1D4A9C2C9D32A100AFD709;
+			remoteInfo = SubwayWhenCommon;
+		};
+		FF1D4AC92C9D429A00AFD709 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
 			proxyType = 1;
@@ -877,7 +885,6 @@
 		FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
 		FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependency+.swift"; sourceTree = "<group>"; };
-		FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF24F7AB2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
 		FF24F7AF2C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FF24F7B02C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ShinbundangLineScheduleModel+CoreDataClass.swift"; path = "/Users/yslee_dev/Desktop/MyProject/SubwayWhen/SubwayWhenNetworking/CoreData/ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -915,6 +922,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1D4ACB2C9D42A400AFD709 /* SubwayWhenCommon.framework in Frameworks */,
 				6DD0D393633E6FFCFAC49B35 /* Pods_SubwayWhenTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1551,7 +1559,6 @@
 			isa = PBXGroup;
 			children = (
 				34A3038529AF362600948EDD /* DummyLoad.swift */,
-				FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */,
 				3481C4E429C1CF05003F5213 /* DummyData */,
 			);
 			path = Dummy;
@@ -2622,9 +2629,9 @@
 		FF36A3872C8065A800387A3D /* TCADependecy */ = {
 			isa = PBXGroup;
 			children = (
-				FF1D4ABA2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift */,
 				FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */,
 				FF36A36F2C805D7A00387A3D /* TotalLoadTCADependency.swift */,
+				FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */,
 				FF1D4AB82C9D355100AFD709 /* Key */,
 			);
 			path = TCADependecy;
@@ -2712,6 +2719,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FF1D4ACA2C9D429A00AFD709 /* PBXTargetDependency */,
 				34A3037329AF239300948EDD /* PBXTargetDependency */,
 			);
 			name = SubwayWhenTests;
@@ -3095,7 +3103,6 @@
 				34C655752A5CF8210039C16B /* SettingNotiSelectModalModelTests.swift in Sources */,
 				3499DE9829D17BE600A6E8C1 /* ReportModelTests.swift in Sources */,
 				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
-				FF1D4A632C9D0AEB00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				3499DEAC29D1BEBB00A6E8C1 /* ReportContentsModalModelTests.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
@@ -3104,7 +3111,6 @@
 				349D789529CC67FD00CA1B52 /* DetailViewModelTests.swift in Sources */,
 				3499DE9129D17B9C00A6E8C1 /* EditViewModelTests.swift in Sources */,
 				3499DE9A29D1955900A6E8C1 /* ReportViewModelTests.swift in Sources */,
-				FF1D4A5E2C9D001100AFD709 /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */,
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
@@ -3280,6 +3286,7 @@
 				349FF290299E04EA007A98F4 /* SettingTableViewCellData.swift in Sources */,
 				3499DE8F29D1601200A6E8C1 /* ReportTableViewDefaultLineViewModelProtocol.swift in Sources */,
 				349E2F4E29BDBF7300C54EE9 /* EditVCDelegate.swift in Sources */,
+				FF1D4AC22C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34D9E9F62A54FAEE0080AD17 /* LocationModalCoordinator.swift in Sources */,
 				FF24F7B82C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
@@ -3405,7 +3412,6 @@
 				FA4CB7CB2BB68903003C41F6 /* SaveStationGroup.swift in Sources */,
 				FF36A3792C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				FA4CB7CA2BB68882003C41F6 /* SaveStation.swift in Sources */,
-				FF1D4ABB2C9D362E00AFD709 /* TestTotalLoadTCADependency.swift in Sources */,
 				FF36A3772C80621D00387A3D /* PreviewTotalLoadTCADependency.swift in Sources */,
 				FF24F7BA2C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
 				FA4CB7902BB6849B003C41F6 /* BundleExtension.swift in Sources */,
@@ -3413,6 +3419,7 @@
 				FA4CB7942BB684B1003C41F6 /* ScheduleType.swift in Sources */,
 				FA4CB7952BB684B1003C41F6 /* SearchInfoBySubwayNameService.swift in Sources */,
 				FF36A3732C805FC900387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
+				FF1D4AC42C9D3D4C00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				FA4CB7972BB684B1003C41F6 /* LiveStationModel.swift in Sources */,
 				FA4CB7982BB684B1003C41F6 /* KorailScdule.swift in Sources */,
 				FA4CB7992BB684B1003C41F6 /* NetworkManagerProtocol.swift in Sources */,
@@ -3472,6 +3479,7 @@
 				FF24F7B52C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				FA4CB7B52BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
 				FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
+				FF1D4AC32C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				FA4CB7B62BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
 				FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				FA4CB7B72BB684B1003C41F6 /* KorailBody.swift in Sources */,
@@ -3537,6 +3545,11 @@
 			isa = PBXTargetDependency;
 			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
 			targetProxy = FF1D4AAD2C9D330300AFD709 /* PBXContainerItemProxy */;
+		};
+		FF1D4ACA2C9D429A00AFD709 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
+			targetProxy = FF1D4AC92C9D429A00AFD709 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3628,10 +3641,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SubwayWhen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SubwayWhen";
 			};
 			name = Debug;
@@ -3655,9 +3672,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen.SubwayWhenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SubwayWhen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SubwayWhen";
 			};
 			name = Release;
