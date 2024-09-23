@@ -895,6 +895,7 @@
 		FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalDataRequestModel.swift; sourceTree = "<group>"; };
 		FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadTCADependencyProtocol.swift; sourceTree = "<group>"; };
+		FF68CFC82CA1343A0054BF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
 		FF7A71322C7D51360080B72B /* DetailArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalView.swift; sourceTree = "<group>"; };
 		FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1967,6 +1968,7 @@
 		34C6DB482936274400C4ED80 = {
 			isa = PBXGroup;
 			children = (
+				FF68CFC82CA1343A0054BF69 /* PrivacyInfo.xcprivacy */,
 				FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */,
 				34C6DB532936274400C4ED80 /* SubwayWhen */,
 				34A3036F29AF239300948EDD /* SubwayWhenTests */,
