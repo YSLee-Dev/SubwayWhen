@@ -1,5 +1,5 @@
 //
-//  DetailViewModelTests.swift
+//  DetailFeatureTests.swift
 //  SubwayWhenTests
 //
 //  Created by 이윤수 on 2023/03/23.
@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 @testable import SubwayWhen
 
-final class DetailViewModelTests: XCTestCase {
+final class DetailFeatureTests: XCTestCase {
     let testDependency = TestTotalLoadTCADependency()
 
     override func setUp()  {
@@ -109,7 +109,7 @@ final class DetailViewModelTests: XCTestCase {
     }
 }
 
-private extension DetailViewModelTests {
+private extension DetailFeatureTests {
     func createStore(isDisposable: Bool = false, sendedLoadModel: DetailSendModel = detailSendModelDummyData, exhaustivity: Bool = false) -> TestStore<DetailFeature.State,  DetailFeature.Action> {
         let store =  TestStore(initialState: DetailFeature.State(isDisposable: isDisposable, sendedLoadModel: sendedLoadModel)) {
             DetailFeature()
