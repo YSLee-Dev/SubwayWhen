@@ -83,6 +83,9 @@ extension SettingCoordinator: SettingVCAction {
         vc.headerText = "지하철 민실씨 오픈 라이선스"
         vc.footerText = "YoonSu Lee"
         
+        // v1.5추가 (SPM으로 추가한 TCA)
+        vc.acknowledgements.append(.init(title: "swift-composable-architecture", repository: URL(string: "https://github.com/pointfreeco/swift-composable-architecture")))
+       
         self.naviagation.present(UINavigationController(rootViewController: vc), animated: true)
     }
 }
