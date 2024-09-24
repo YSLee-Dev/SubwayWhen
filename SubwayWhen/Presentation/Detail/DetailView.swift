@@ -122,11 +122,11 @@ struct DetailView: View {
                                 Button(action: {
                                     self.store.send(.reportBtnTapped(lineBarnd))
                                 }) {
-                                    Text("\(self.store.sendedLoadModel.lineNumber.filter{$0 != "0"}) 민원접수 바로 가기")
+                                    Text("\(self.store.sendedLoadModel.lineNumber.filter{$0 != "0"}) 민원접수")
                                         .foregroundColor(.red)
                                         .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                                         .frame(maxWidth: .infinity)
-                                        .frame(height: 40)
+                                        .frame(height: 50)
                                 }
                             }
                         }
