@@ -117,7 +117,7 @@ class ReportViewModel : ReportViewModelProtocol{
         
         // Detail에서 바로 접근한 경우
         if let defaultLine = defaultLine {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
                 self.lineCellModel.lineSeleted.accept(defaultLine)
                 self.lineCellModel.lineFix.accept(Void())
             }
