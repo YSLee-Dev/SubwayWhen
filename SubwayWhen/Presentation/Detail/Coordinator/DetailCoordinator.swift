@@ -73,6 +73,11 @@ extension DetailCoordinator : DetailVCDelegate{
     func pop() {
         self.delegate?.pop()
     }
+    
+    func reportBtnTap(reportLine: ReportBrandData) {
+        self.pop()
+        self.delegate?.reportBtnTap(reportLine: reportLine)
+    }
 }
 
 extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
