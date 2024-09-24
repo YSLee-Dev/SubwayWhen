@@ -107,6 +107,30 @@ struct DetailView: View {
                     ) {
                         self.store.send(.scheduleMoreBtnTapped)
                     }
+                    
+                    if let lineBarnd = ReportBrandData(rawValue: self.store.sendedLoadModel.lineNumber) {
+                        VStack(spacing: 0) {
+                            HStack {
+                                Text("기타")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                                Spacer()
+                            }
+                            .padding(.bottom, 15)
+                            
+                            MainStyleViewInSUI {
+                                Button(action: {
+                                    self.store.send(.reportBtnTapped(lineBarnd))
+                                }) {
+                                    Text("\(self.store.sendedLoadModel.lineNumber.filter{$0 != "0"}) 민원접수 바로 가기")
+                                        .foregroundColor(.red)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 40)
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding(.top, 12.5)
             }
