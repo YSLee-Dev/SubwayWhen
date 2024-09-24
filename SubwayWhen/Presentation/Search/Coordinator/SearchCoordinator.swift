@@ -11,6 +11,7 @@ class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     var viewModel: SearchViewModelProtocol?
+    weak var delegate: SearchCoordinatorDelegate?
     
     init(){
         self.navigation = .init()
@@ -73,6 +74,11 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
 }
 
 extension SearchCoordinator: DetailCoordinatorDelegate {
+    func reportBtnTap(reportLine: ReportBrandData) {
+        self.pop()
+        self.delegate?.tempDetailViewToReportBtnTap(reportLine: reportLine)
+    }
+    
     func pop() {
         self.navigation.dismiss(animated: true)
     }
