@@ -36,7 +36,7 @@ class DetailCoordinator: Coordinator {
         let detailView = DetailView(store: store)
         let vc = UIHostingController(rootView: detailView)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {[weak self] in
             if self?.isDisposable ?? false { // 임시인 경우 sheet, 기존 방식은 push
                 vc.modalPresentationStyle = .pageSheet
                 if let sheet = vc.sheetPresentationController{
