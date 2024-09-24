@@ -53,8 +53,9 @@ extension MainCoordinator : MainDelegate{
     
     func pushTap(action : MainCoordinatorAction) {
         switch action{
-        case .Report:
+        case .Report(let seletedLine):
             let report = ReportCoordinator(navigation: self.navigation)
+            report.seletedLine = seletedLine
             self.childCoordinator.append(report)
             report.delegate = self
           
@@ -95,6 +96,12 @@ extension MainCoordinator : EditCoordinatorDelegate{
 }
 
 extension MainCoordinator : DetailCoordinatorDelegate{
+    func reportBtnTap(reportLine: ReportBrandData) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            self.pushTap(action: .Report(reportLine))
+        }
+    }
+    
     func disappear(detailCoordinator: DetailCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailCoordinator}
     }
