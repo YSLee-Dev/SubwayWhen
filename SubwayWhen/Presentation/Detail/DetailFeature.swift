@@ -73,7 +73,10 @@ struct DetailFeature: Reducer {
                         .send(.scheduleDataRequest)
                     )
                 } else {
-                    return .send(.arrivalDataRequest)
+                    return .merge(
+                        .send(.arrivalDataRequest),
+                        .send(.scheduleDataSort)
+                    )
                 }
                 
             case .arrivalDataRequest:
@@ -127,7 +130,7 @@ struct DetailFeature: Reducer {
                 return .none
                 
             case .liveActivityRequest:
-                if state.nowScheduleData.first?.startTime == "정보없음"  {return .none}
+                if state.nowScheduleData.first?.startTime == "정보없음" || state.isDisposable  {return .none}
                 let activitySchedule = state.nowSculeduleSortedData.count >= 6 ? (Array(state.nowSculeduleSortedData[0...4])) : state.nowSculeduleSortedData
                 let scheduleList = activitySchedule.map {
                     "⏱️ \($0.useArrTime)"
@@ -235,10 +238,13 @@ struct DetailFeature: Reducer {
             case .viewDisappear:
                 self.coordinatorDelegate?.disappear()
                 SubwayWhenDetailWidgetManager.shared.stop()
-                for key in TimerKey.allCases {
-                    return .cancel(id: key)
-                }
-                return .none
+                
+                return .merge(
+                    .send(.liveActivityValueChange(false)),
+                    .cancel(id: TimerKey.arrivalRequest),
+                    .cancel(id: TimerKey.scheduleRequest),
+                    .cancel(id: TimerKey.refresh)
+                )
                 
             default: return .none
             }
