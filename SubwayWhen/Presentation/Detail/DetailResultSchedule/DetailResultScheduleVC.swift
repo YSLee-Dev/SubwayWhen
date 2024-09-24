@@ -23,6 +23,8 @@ class DetailResultScheduleVC : TableVCCustom{
     
     var delegate : DetailResultScheduleDelegate?
     
+    var isAnimationRequest = true
+    
     init(title: String, titleViewHeight: CGFloat, viewModel : DetailResultScheduleViewModelProtocol) {
         self.detailResultScheduleViewModel = viewModel
         super.init(title: title, titleViewHeight: titleViewHeight)
@@ -91,20 +93,26 @@ extension DetailResultScheduleVC{
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         
-        if scrollView.contentOffset.y > 25{
-            self.detailTopView.scrollMoreInfoIsHidden(false)
-            self.topView.snp.updateConstraints{
-                $0.height.equalTo(89.5)
-            }
-        }else{
+        if scrollView.contentOffset.y <= 25 {
+            self.isAnimationRequest = true
             self.detailTopView.scrollMoreInfoIsHidden(true)
             self.topView.snp.updateConstraints{
                 $0.height.equalTo(45)
             }
-            
+        } else if self.detailTopView.frame.height <= 45 {
+            self.isAnimationRequest = true
+            self.detailTopView.scrollMoreInfoIsHidden(false)
+            self.topView.snp.updateConstraints{
+                $0.height.equalTo(89.5)
+            }
         }
-        UIView.animate(withDuration: 0.25, delay: 0){
-            self.view.layoutIfNeeded()
+        
+        if self.isAnimationRequest {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.layoutIfNeeded()
+            }) { _ in
+                self.isAnimationRequest = false
+            }
         }
     }
 }
