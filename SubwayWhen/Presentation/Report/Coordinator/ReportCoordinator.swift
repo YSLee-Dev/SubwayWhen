@@ -12,13 +12,14 @@ class ReportCoordinator : Coordinator{
     var navigation : UINavigationController
     
     var delegate : ReportCoordinatorDelegate?
+    var seletedLine: ReportBrandData? = nil
     
     init(navigation : UINavigationController){
         self.navigation = navigation
     }
     
     func start() {
-        let reportVC = ReportVC(viewModel: ReportViewModel())
+        let reportVC = ReportVC(viewModel: ReportViewModel(defaultLine: self.seletedLine))
         reportVC.hidesBottomBarWhenPushed = true
         reportVC.delegate = self
         navigation.pushViewController(reportVC, animated: true)
