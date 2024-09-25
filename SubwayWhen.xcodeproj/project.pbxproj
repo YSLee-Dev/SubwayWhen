@@ -881,7 +881,6 @@
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 		FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShinbundangSinsaStationScheduleDummy.json; sourceTree = "<group>"; };
 		FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADepdency.swift; sourceTree = "<group>"; };
-		FF1D4A772C9D0F3E00AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubwayWhenCommonFramework.h; sourceTree = "<group>"; };
 		FF1D4AB02C9D346B00AFD709 /* TotalLoadModelDependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadModelDependencyKey.swift; sourceTree = "<group>"; };
@@ -1978,7 +1977,6 @@
 				349C007D2A0A1B8D008A85BF /* SubwayWhenDetailWidget */,
 				FAD2F5F12BB566A800B95B52 /* SubwayWhenHomeWidget */,
 				FA4CB7812BB68473003C41F6 /* SubwayWhenNetworking */,
-				FF1D4A762C9D0F3D00AFD709 /* SubwayWhenCommonFramework */,
 				FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */,
 				34C6DB522936274400C4ED80 /* Products */,
 				A66F780E21740540C37C8525 /* Pods */,
@@ -2599,14 +2597,6 @@
 			path = SubwayWhenHomeWidget;
 			sourceTree = "<group>";
 		};
-		FF1D4A762C9D0F3D00AFD709 /* SubwayWhenCommonFramework */ = {
-			isa = PBXGroup;
-			children = (
-				FF1D4A772C9D0F3E00AFD709 /* SubwayWhenCommonFramework.h */,
-			);
-			path = SubwayWhenCommonFramework;
-			sourceTree = "<group>";
-		};
 		FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -2853,6 +2843,7 @@
 					};
 					FF1D4A9C2C9D32A100AFD709 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -4048,6 +4039,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4081,6 +4073,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -4093,6 +4086,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
