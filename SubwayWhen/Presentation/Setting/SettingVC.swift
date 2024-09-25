@@ -49,10 +49,6 @@ extension SettingVC{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
-        
-        self.titleView.mainTitleLabel.snp.updateConstraints{
-            $0.centerY.equalToSuperview().offset(-5)
-        }
     }
     
     private func bind(_ viewModel : SettingViewModelProtocol){
