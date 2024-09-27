@@ -14,7 +14,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     
     init() {}
     
-    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch) async -> [ResultSchdule] {
+    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool) async -> [ResultSchdule]  {
         return self.resultSchdule
     }
     

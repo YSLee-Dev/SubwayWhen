@@ -343,7 +343,7 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]> {
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
         let requestWeek = Calendar.current.component(.weekday, from: requestDate)
         let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
         guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
@@ -366,13 +366,13 @@ class TotalLoadModel : TotalLoadProtocol {
                     return Observable.just(localScheduleData)
                 } else {
                     // B-1. 저장된 신분당선 데이터가 없거나 버전이 낮으면 데이터를 요청합니다.
-                    newSave = true
+                    newSave = !isDisposable
                     return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
                 }
             }
             .do(onNext: { data in
-                if newSave {
-                    if localSchedule?.scheduleData != nil  {   // B-2. 저장된 신분당선 데이터를 삭제 후 저장합니다.
+                if newSave  {
+                    if localSchedule?.scheduleData != nil  {   // B-2. 저장된 신분당선 데이터를 삭제 후 저장합니다. (일회성 보기가 아닐 때만 저장)
                         self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSearch.stationName)
                     }
                     self.coreDataManager.shinbundangScheduleDataSave(to: [scheduleSearch.stationName: data], scheduleVersion: "\(shinbundangVersion)")
