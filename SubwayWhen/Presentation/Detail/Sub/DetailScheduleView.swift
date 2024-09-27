@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailScheduleView: View {
-    private let gridItem = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
+    private let gridItem = [GridItem(.flexible(), spacing: 0), GridItem(.flexible(), spacing: 0)]
     var scheduleDataList: [ResultSchdule]
     let stationInfo: DetailSendModel
     var nowLoading: Bool
@@ -48,7 +48,7 @@ struct DetailScheduleView: View {
                                 .foregroundColor(.init(uiColor: .label))
                         }
                     })
-                    .padding(.bottom, 20)
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 20, trailing: 15))
                     
                     ScrollView {
                         if self.nowLoading {
@@ -61,7 +61,7 @@ struct DetailScheduleView: View {
                             .position(x: (UIScreen.main.bounds.width / 2) - 40, y: 50)
                         } else {
                             LazyVGrid(columns: self.gridItem) {
-                                ForEach(self.scheduleDataList, id: \.startTime) { data in
+                                ForEach(Array(zip(self.scheduleDataList.indices, self.scheduleDataList)), id: \.0) { (index, data) in
                                     let isFast = data.isFast == "급행" ? "(급)" : ""
                                     let isInfoSuccess = data.startTime != "정보없음"
                                     let title = isInfoSuccess ? "⏱️ \(isFast)\(data.lastStation)행 \(data.useArrTime)" : "⚠️ 정보없음"
@@ -78,7 +78,7 @@ struct DetailScheduleView: View {
                                         RoundedRectangle(cornerRadius: 15)
                                             .fill(isInfoSuccess ? Color("\(self.stationInfo.lineNumber)") : Color.init(uiColor: .gray))
                                     }
-                                    .padding(EdgeInsets(top: 6, leading: 2.5, bottom: 6, trailing: 2.5))
+                                    .padding(EdgeInsets(top: 6, leading: index % 2 == 0 ? 15 : 7.5, bottom: 6, trailing:  index % 2 == 1 ? 15 : 7.5))
                                 }
                             }
                         }
@@ -88,7 +88,7 @@ struct DetailScheduleView: View {
                     .animation(.easeInOut(duration: self.nowLoading ? 0 : 0.4), value: self.nowLoading)
                     .animation(.easeInOut(duration: 0.4), value: self.scheduleDataList)
                 }
-                .padding(15)
+                .padding(.vertical, 15)
             }
         }
     }
