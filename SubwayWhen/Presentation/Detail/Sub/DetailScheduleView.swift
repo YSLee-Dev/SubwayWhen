@@ -12,6 +12,7 @@ struct DetailScheduleView: View {
     var scheduleDataList: [ResultSchdule]
     let stationInfo: DetailSendModel
     var nowLoading: Bool
+    var isDisposable: Bool
     let moreBtnTapped: () -> ()
     
     var body: some View {
@@ -44,8 +45,10 @@ struct DetailScheduleView: View {
                             
                             Spacer()
                             
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(.init(uiColor: .label))
+                            if !self.isDisposable {
+                                Image(systemName: "ellipsis")
+                                    .foregroundColor(.init(uiColor: .label))
+                            }
                         }
                     })
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 20, trailing: 15))
@@ -105,5 +108,5 @@ struct DetailScheduleView: View {
             .init(startTime: "05:33:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "구파발"),
             .init(startTime: "05:40:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "대화"),
             .init(startTime: "05:46:00", type: .Seoul, isFast: "", startStation: "오금", lastStation: "구파발")
-    ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""), nowLoading: false){}
+    ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""), nowLoading: false, isDisposable: false){}
 }
