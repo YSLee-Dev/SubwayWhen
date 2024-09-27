@@ -8,7 +8,7 @@
 import Foundation
 
 class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
-    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch)  async -> [ResultSchdule] {
+    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool) async -> [ResultSchdule]  {
         [
             .init(startTime: "05:00:00", type: .Seoul, isFast: "", startStation: "수서", lastStation: "독립문"),
             .init(startTime: "05:09:00", type: .Seoul, isFast: "", startStation: "오금", lastStation: "구파발"),
