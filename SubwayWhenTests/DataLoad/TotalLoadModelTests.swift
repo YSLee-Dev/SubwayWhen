@@ -1120,7 +1120,7 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testShinbundangScheduleLoad_CoreData() {
+    func testShinbundangScheduleLoad_CoreData() { // 브레이크 포인트 추가 이용 테스트
         // GIVEN
         // 첫 요청이기 때문에 파이어베이스 데이터를 사용하는 데이터
         let requestObserverableDataOne = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
@@ -1160,6 +1160,59 @@ final class TotalLoadModelTests: XCTestCase {
         expect(requestOneCount).to(
             equal(requestTwoCount),
             description: "FireBase 데이터와 로컬 데이터는 동일해야함"
+        )
+        
+        expect(requestOneFirstData).to(
+            equal(requestTwoFirstData),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestOneTypeCount).to(
+            equal(requestTwoTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_Disposable() { // 브레이크 포인트 추가 이용 테스트
+        // GIVEN
+        // 첫 요청이기 때문에 파이어베이스 데이터를 사용하는 데이터
+        let requestObserverableDataOne = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, isDisposable: true)
+        // 두 번째 요청이여도 isDisposable 상태가 true이기때문에 파어어베이스 데이터를 사용해야함
+        let requestObserverableDataTwo = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, isDisposable: true)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestDataOne: [ResultSchdule] = []
+        requestObserverableDataOne
+            .subscribe(onNext: {
+                requestDataOne = $0
+            })
+            .disposed(by: bag)
+        
+        var requestDataTwo: [ResultSchdule] = []
+        requestObserverableDataTwo
+            .subscribe(onNext: {
+                requestDataTwo = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestOneCount = requestDataOne.count
+        let requestTwoCount = requestDataTwo.count
+        
+        let requestOneFirstData = requestDataOne.first
+        let requestTwoFirstData = requestDataTwo.first
+        
+        let requestOneTypeCount = requestDataOne.filter {$0.type == .Shinbundang}.count
+        let requestTwoTypeCount = requestDataTwo.filter {$0.type == .Shinbundang}.count
+        
+        // THEN
+        expect(requestOneCount).to(
+            equal(requestTwoCount),
+            description: "둘 다 파이어베이스를 기반으로 한 데이터이기 때문에 동일해야함"
         )
         
         expect(requestOneFirstData).to(
