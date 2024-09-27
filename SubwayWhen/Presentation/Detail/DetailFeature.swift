@@ -97,8 +97,8 @@ struct DetailFeature: Reducer {
                 let scheduleModel = ScheduleSearch(stationCode: loadModel.stationCode, upDown: loadModel.upDown, exceptionLastStation: loadModel.exceptionLastStation, line: loadModel.lineNumber, korailCode: loadModel.korailCode, stationName: loadModel.stationName)
                 state.nowScheduleLoading = true
                 
-                return  .run { send in
-                    let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel)
+                return  .run { [isDisposable = state.isDisposable] send in
+                    let loadData = await self.totalLoad.scheduleDataFetchAsyncData(searchModel: scheduleModel, isDisposable: isDisposable)
                     try await Task.sleep(for: .milliseconds(350))
                     await send(.scheduleDataRequestSuccess(loadData))
                 }

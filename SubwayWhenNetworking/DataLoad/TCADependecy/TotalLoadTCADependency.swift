@@ -16,14 +16,14 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         self.totalModel = totalModel
     }
     
-    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch)  async -> [ResultSchdule]  {
+    func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool = false)  async -> [ResultSchdule]  {
         var scheduleResult: Observable<[ResultSchdule]>!
         if searchModel.lineScheduleType  == .Korail{
             scheduleResult = self.totalModel.korailSchduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false)
         } else if searchModel.lineScheduleType == .Seoul {
             scheduleResult = self.totalModel.seoulScheduleLoad(searchModel, isFirst: false, isNow: false, isWidget: false)
         } else if searchModel.lineScheduleType == .Shinbundang {
-            scheduleResult = self.totalModel.shinbundangScheduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false)
+            scheduleResult = self.totalModel.shinbundangScheduleLoad(scheduleSearch: searchModel, isFirst: false, isNow: false, isWidget: false, isDisposable: isDisposable)
         } else {
             return [.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "", lastStation: "")]
         }
