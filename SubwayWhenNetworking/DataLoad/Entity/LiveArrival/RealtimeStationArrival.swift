@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RealtimeStationArrival : Decodable{
+struct RealtimeStationArrival : Decodable, Equatable {
     let upDown : String
     let arrivalTime : String
     let previousStation : String?
@@ -36,5 +36,9 @@ struct RealtimeStationArrival : Decodable{
         case backStationId = "statnFid"
         case nextStationId = "statnTid"
         case trainCode = "btrainNo"
+    }
+    
+    var detailArraivalViewText: String {
+        (self.subPrevious != "" && self.code != "") ? "🚇 \(self.trainCode) 열차(\(self.lastStation)행) \n \(self.subPrevious)" : "⚠️ 실시간 정보없음"
     }
 }

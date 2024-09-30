@@ -8,6 +8,6 @@
 import Foundation
 
 enum MainCoordinatorAction {
-    case Report
+    case Report(ReportBrandData?)
     case Edit
 }
