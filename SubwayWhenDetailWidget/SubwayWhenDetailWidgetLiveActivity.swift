@@ -17,6 +17,11 @@ struct SubwayWhenDetailWidgetAttributes: ActivityAttributes {
     
     var line: String
     var saveStation : String
+    
+    var useLine: String {
+        let filterTitle = line.filter {$0 != "0"}
+        return filterTitle.count >= 5 ? String(filterTitle[filterTitle.startIndex ..< filterTitle.index(filterTitle.startIndex, offsetBy: 4)]) : filterTitle
+    }
 }
 
 struct SubwayWhenDetailWidgetLiveActivity: Widget {
@@ -24,7 +29,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
         ActivityConfiguration(for: SubwayWhenDetailWidgetAttributes.self) { context in
             VStack{
                 HStack{
-                    Text(context.attributes.line)
+                    Text(context.attributes.useLine)
                         .font(.system(size: ViewStyle.FontSize.mediumSize))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.white)
@@ -78,10 +83,8 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
             
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    Text(context.attributes.line)
+                    Text(context.attributes.useLine)
                         .font(.system(size: ViewStyle.FontSize.mediumSize))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.white)
@@ -124,7 +127,7 @@ struct SubwayWhenDetailWidgetLiveActivity: Widget {
                     }
                 }
             } compactLeading: {
-                Text(context.attributes.line)
+                Text(context.attributes.useLine)
                     .font(.system(size: ViewStyle.FontSize.smallSize))
                     .fontWeight(.semibold)
                     .foregroundColor(Color(context.attributes.line))

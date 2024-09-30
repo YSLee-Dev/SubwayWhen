@@ -12,7 +12,7 @@ import RxCocoa
 
 protocol ReportCheckModalViewModelProtocol{
     var msgData : BehaviorSubject<ReportMSGData>{get}
-    var okBtnClick : PublishRelay<Void>{get}
+    var okBtnClick: PublishRelay<String>{get}
     var msgSeedDismiss : PublishRelay<Void>{get}
     
     // OUTPUT

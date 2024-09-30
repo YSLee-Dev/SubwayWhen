@@ -21,11 +21,11 @@ final class DetailResultScheduleModelTests: XCTestCase {
     override func setUp() {
         self.model = DetailResultScheduleModel()
         
-        let seoulSchedule = LoadModel(networkManager: NetworkManager(session: MockURLSession((response: urlResponse!, data: seoulStationSchduleData))))
+        let loadModel = LoadModel(networkManager: NetworkManager(session: MockURLSession((response: urlResponse!, data: seoulStationSchduleData))))
+        let totalModel = TotalLoadModel(loadModel: loadModel)
         
-        let seoulScheduleModel = DetailModel(totalLoadModel: TotalLoadModel(loadModel: seoulSchedule))
-        
-        let data = seoulScheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
+        // 실제 Detail에서는 isNow를 사용하지 않고, 자체적으로 정렬하기 때문에 false로 설정합니다.
+        let data = totalModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         
@@ -129,7 +129,7 @@ final class DetailResultScheduleModelTests: XCTestCase {
         )
     }
     
-    func testNowTimeMatching(){
+    func testNowTimeMatching() {
         // GIVEN
         let data = self.model.nowTimeMatching(self.model.resultScheduleToDetailResultSection(self.dummyResultSchedule), nowHour: 5)
         

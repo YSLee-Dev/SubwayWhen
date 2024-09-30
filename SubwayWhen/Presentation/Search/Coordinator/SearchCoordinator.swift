@@ -11,6 +11,7 @@ class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     var viewModel: SearchViewModelProtocol?
+    weak var delegate: SearchCoordinatorDelegate?
     
     init(){
         self.navigation = .init()
@@ -58,27 +59,33 @@ extension SearchCoordinator: ModalCoordinatorProtocol {
         }
     }
     
-    func disposableDetailPush(data: DetailLoadData) {
-        let viewModel = DetailViewModel(isDisposable: true)
-        let detailVC = DetailVC(title: "\(data.stationName)(저장안됨)", viewModel: viewModel)
-        viewModel.detailViewData.accept(data)
-        
-        detailVC.modalPresentationStyle = .pageSheet
-        
-        if let sheet = detailVC.sheetPresentationController{
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 25
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){[weak self] in
-            self?.navigation.present(detailVC, animated: true)
-        }
+    func disposableDetailPush(data: DetailSendModel) {
+        let detailCoordinator = DetailCoordinator(navigation: self.navigation, data: data, isDisposable: true)
+        detailCoordinator.start()
+        detailCoordinator.delegate = self
+        self.childCoordinator.append(detailCoordinator)
     }
     
     func didDisappear(modalCoordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter {
             $0 !== modalCoordinator
+        }
+    }
+}
+
+extension SearchCoordinator: DetailCoordinatorDelegate {
+    func reportBtnTap(reportLine: ReportBrandData) {
+        self.pop()
+        self.delegate?.tempDetailViewToReportBtnTap(reportLine: reportLine)
+    }
+    
+    func pop() {
+        self.navigation.dismiss(animated: true)
+    }
+    
+    func disappear(detailCoordinator: DetailCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter {
+            $0 !== detailCoordinator
         }
     }
 }

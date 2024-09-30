@@ -105,7 +105,7 @@ private extension MainViewModel {
             self.delegate?.pushTap(action: .Edit)
             
         case .reportBtnTap:
-            self.delegate?.pushTap(action: .Report)
+            self.delegate?.pushTap(action: .Report(nil))
             
         case .cellTap(let index):
             if index.section != 2 {return}

@@ -36,7 +36,9 @@ class MainCoordinator : Coordinator{
         
         let data = MainTableViewCellData(upDown: saveStation.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: saveStation.lineCode, stationName: saveStation.stationName, lastStation: "", lineNumber: saveStation.line, isFast: "", useLine: saveStation.useLine, group: saveStation.group.rawValue, id: saveStation.id, stationCode: saveStation.stationCode, exceptionLastStation: saveStation.exceptionLastStation, type: .real, backStationId: "", nextStationId: "", korailCode: saveStation.korailCode)
         
-        let detail = DetailCoordinator(navigation: self.navigation, data: data, isDisposable: false)
+        let detailSendModel = DetailSendModel(upDown: data.upDown, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.subWayId, exceptionLastStation: data.exceptionLastStation, korailCode: data.korailCode)
+        
+        let detail = DetailCoordinator(navigation: self.navigation, data: detailSendModel, isDisposable: false)
         self.childCoordinator.append(detail)
         detail.delegate = self
         
@@ -51,12 +53,16 @@ extension MainCoordinator : MainDelegate{
     
     func pushTap(action : MainCoordinatorAction) {
         switch action{
-        case .Report:
-            let report = ReportCoordinator(navigation: self.navigation)
-            self.childCoordinator.append(report)
-            report.delegate = self
-          
-            report.start()
+        case .Report(let seletedLine):
+            DispatchQueue.main.asyncAfter(deadline: .now() + (seletedLine == nil ? 0 :  0.35)) {
+                let report = ReportCoordinator(navigation: self.navigation)
+                report.seletedLine = seletedLine
+                self.childCoordinator.append(report)
+                report.delegate = self
+              
+                report.start()
+            }
+           
         case .Edit:
             let edit = EditCoordinator(navigation: self.navigation)
             self.childCoordinator.append(edit)
@@ -67,7 +73,8 @@ extension MainCoordinator : MainDelegate{
     }
     
     func pushDetailTap(data: MainTableViewCellData) {
-        let detail = DetailCoordinator(navigation: self.navigation, data: data, isDisposable: false)
+        let detailSendModel = DetailSendModel(upDown: data.upDown, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.subWayId, exceptionLastStation: data.exceptionLastStation, korailCode: data.korailCode)
+        let detail = DetailCoordinator(navigation: self.navigation, data: detailSendModel, isDisposable: false)
         self.childCoordinator.append(detail)
         detail.delegate = self
         
@@ -92,6 +99,10 @@ extension MainCoordinator : EditCoordinatorDelegate{
 }
 
 extension MainCoordinator : DetailCoordinatorDelegate{
+    func reportBtnTap(reportLine: ReportBrandData) {
+        self.pushTap(action: .Report(reportLine))
+    }
+    
     func disappear(detailCoordinator: DetailCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailCoordinator}
     }

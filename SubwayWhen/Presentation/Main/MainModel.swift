@@ -146,11 +146,11 @@ class MainModel : MainModelProtocol{
     func mainCellDataToScheduleData(_ item: MainTableViewCellData) -> ScheduleSearch? {
         if item.type == .real{
             if item.korailCode == "K4" || item.korailCode == "K1" || item.korailCode == "K2"{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode, stationName: item.stationName)
             }else if item.korailCode == "UI" || item.korailCode == "D1" || item.korailCode == "A1"{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber, korailCode: item.korailCode, stationName: item.stationName)
             }else{
-                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode)
+                return ScheduleSearch(stationCode: item.stationCode, upDown: item.upDown, exceptionLastStation: item.exceptionLastStation, line: item.lineNumber,  korailCode: item.korailCode, stationName: item.stationName)
             }
         }else{
             return nil
@@ -160,9 +160,11 @@ class MainModel : MainModelProtocol{
     func scheduleLoad(_ data: ScheduleSearch) ->  Observable<[ResultSchdule]>{
         if data.lineScheduleType == .Korail{
             return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false)
-        }else if data.lineScheduleType == .Seoul{
+        } else if data.lineScheduleType == .Seoul {
             return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true, isWidget: false)
-        }else {
+        } else if data.lineScheduleType == .Shinbundang {
+            return self.model.shinbundangScheduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false)
+        } else {
             return .just([.init(startTime: "정보없음", type: .Unowned, isFast: "", startStation: "정보없음", lastStation: "정보없음")])
         }
     }

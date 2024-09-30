@@ -35,11 +35,11 @@ struct SaveStation: Codable, Equatable {
     }
     
     var allowScheduleLoad: Bool {
-        return !(line == "신분당선" || line == "공항철도" || line == "우이신설경전철" || line == ""  || line == "경강선" || line == "서해선" || line == "GTX-A" )
+        return !( line == "공항철도" || line == "우이신설경전철" || line == ""  || line == "경강선" || line == "서해선" || line == "GTX-A" )
     }
     
     var allowReport: Bool {
-        return !(line == "우이신설경전철" || line == "GTX-A" || line == "신분당선" || line == "서해선")
+        return !(line == "우이신설경전철" || line == "GTX-A" || line == "서해선")
     }
 }
 

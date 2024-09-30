@@ -75,6 +75,7 @@ class AppCoordinator : Coordinator{
         self.mainCoordinator = mainC
         
         let searchC = SearchCoordinator()
+        searchC.delegate = self
         self.childCoordinator.append(searchC)
         
         searchC.start()
@@ -138,5 +139,14 @@ extension AppCoordinator: TutorialVCCoordinatorProtocol {
     
     func lastBtnTap() {
         self.mainLoad()
+    }
+}
+
+extension AppCoordinator: SearchCoordinatorDelegate {
+    func tempDetailViewToReportBtnTap(reportLine: ReportBrandData) {
+        guard let mainC = self.childCoordinator.first as? MainCoordinator else {return}
+        
+        self.tabbar.selectedIndex = 0
+        mainC.pushTap(action: .Report(reportLine))
     }
 }

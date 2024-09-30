@@ -24,12 +24,14 @@ class EditViewModel {
     // MODEL
     private let editModel: EditModelProtocol
     private let notiManager: NotificationManagerProtocol
+    private let coreDataManager: CoreDataScheduleManagerProtocol
     
     // VALUE
     private let nowData = BehaviorRelay<[EditViewCellSection]>(value: [])
     private let lastSaveData = BehaviorRelay<[SaveStation]>(value: [])
     private let nowSaveBtnIsEnabled = BehaviorRelay<Bool>(value: false)
     private var removeAlertList: [String] = []
+    private var removeShinbundagLine: [String] = []
     
     // Coordinator -> ViewModel
     /// Coordinator가 ViewModel에게 지하철역 저장을 요청할 때 사용
@@ -90,10 +92,12 @@ class EditViewModel {
     
     init(
         model : EditModel = .init(),
-        noti: NotificationManagerProtocol = NotificationManager.shared
+        noti: NotificationManagerProtocol = NotificationManager.shared,
+        coreDataManager: CoreDataScheduleManagerProtocol = CoreDataScheduleManager.shared
     ){
         self.editModel = model
         self.notiManager = noti
+        self.coreDataManager = coreDataManager
     }
 }
 
@@ -113,6 +117,9 @@ private extension EditViewModel {
         switch type {
         case .deleteCell(let item):
             removeAlertList.append(item.id)
+            if item.line == "신분당선" {
+                self.removeShinbundagLine.append(item.stationName)
+            }
             
             var nowValue = self.nowData.value
             var groupOne = nowValue[0].items
@@ -175,10 +182,18 @@ private extension EditViewModel {
         self.lastSaveData.accept(newValue)
         self.nowSaveBtnIsEnabled.accept(false)
         
+        // 알림 삭제
         self.removeAlertList.forEach {
             self.removeAlertID(id: $0)
         }
         self.removeAlertList = []
+        
+        // 신분당선 지하철 시간표 삭제
+        for removeStation in self.removeShinbundagLine {
+            self.coreDataManager.shinbundangScheduleDataRemove(stationName: removeStation)
+        }
+        self.removeShinbundagLine = []
+        
         WidgetCenter.shared.reloadTimelines(ofKind: "SubwayWhenHomeWidget")
     }
 }

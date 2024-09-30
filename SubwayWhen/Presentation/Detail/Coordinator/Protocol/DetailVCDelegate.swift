@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol DetailVCDelegate{
-    func scheduleTap(schduleResultData : schduleResultData)
+protocol DetailVCDelegate: AnyObject {
+    func scheduleTap(schduleResultData : ([ResultSchdule], DetailSendModel))
+    func reportBtnTap(reportLine: ReportBrandData)
     func pop()
     func disappear()
-    func exceptionLastStationPopup(station: String)
 }

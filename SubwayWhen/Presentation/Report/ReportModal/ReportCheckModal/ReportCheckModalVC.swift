@@ -19,7 +19,6 @@ class ReportCheckModalVC : ModalVCCustom{
         $0.layer.cornerRadius = 15
         $0.backgroundColor = UIColor(named: "MainColor")
         $0.textColor = .label
-        $0.isEditable = false
     }
     
     lazy var successIcon =  LottieAnimationView(name: "CheckMark")
@@ -33,7 +32,7 @@ class ReportCheckModalVC : ModalVCCustom{
     
     init(modalHeight: CGFloat, viewModel : ReportCheckModalViewModel) {
         self.checkModalViewModel = viewModel
-        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 접수 버튼을 누른 후 수정할 수 있어요.")
+        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 화면을 눌러 수정할 수 있어요.")
         self.bind(self.checkModalViewModel)
     }
     
@@ -76,9 +75,25 @@ extension ReportCheckModalVC {
             .drive(self.rx.msgVCPresent)
             .disposed(by: self.bag)
         
+        viewModel.msg
+            .filter {$0.count >= 70}
+            .map {($0, true)}
+            .drive(self.rx.msgLengthCheck)
+            .disposed(by: self.bag)
+        
         // VIEW - > VIEWMODEL
         self.okBtn!.rx.tap
+            .withLatestFrom(self.textView.rx.text)
+            .filter {$0 != nil}
+            .map {$0!}
             .bind(to: viewModel.okBtnClick)
+            .disposed(by: self.bag)
+        
+        self.textView.rx.text
+            .skip(1) // 초기 기본 값
+            .filter {$0 != nil}
+            .map {($0!, false)}
+            .bind(to: self.rx.msgLengthCheck)
             .disposed(by: self.bag)
     }
     
@@ -102,6 +117,7 @@ extension ReportCheckModalVC {
     }
     
     func msgSendSuccess(){
+        self.textView.resignFirstResponder()
         self.textView.removeFromSuperview()
         self.okBtn!.removeFromSuperview()
         self.mainTitle.text = "민원접수가 완료되었어요."
@@ -159,6 +175,21 @@ extension Reactive where Base : ReportCheckModalVC{
             #else
             base.present(base.msgVC, animated: true)
             #endif
+        }
+    }
+    
+    var msgLengthCheck: Binder<(String, Bool)> {
+        return Binder(base) { base, value in
+            if value.0.count >= 70 {
+                base.subTitle.text = "현재 글자 수(\(value.0.count))가 길어 해당 기관에 메세지가 전달되지 않을 수 있어요.\n메세지를 편집하여 메세지를 보내주세요."
+                base.textView.isEditable = true
+                
+                if value.1 {
+                    base.textView.becomeFirstResponder()
+                }
+            } else {
+                base.subTitle.text = "하단의 내용으로 민원을 접수할까요?"
+            }
         }
     }
 }

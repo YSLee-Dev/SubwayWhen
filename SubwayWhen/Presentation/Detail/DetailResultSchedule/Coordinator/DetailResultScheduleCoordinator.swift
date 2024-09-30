@@ -10,19 +10,19 @@ import UIKit
 class DetailResultScheduleCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
-    var data : schduleResultData
+    var data : ([ResultSchdule], DetailSendModel)
     
     var delegate : DetailResultScheduleCoorinatorDelegate?
     
-    init(navigation : UINavigationController, data : schduleResultData){
+    init(navigation : UINavigationController, data : ([ResultSchdule], DetailSendModel)){
         self.navigation = navigation
         self.data = data
     }
     
     func start() {
         let viewModel = DetailResultScheduleViewModel()
-        viewModel.scheduleData.accept(self.data.scheduleData)
-        viewModel.cellData.accept(self.data.cellData)
+        viewModel.scheduleData.accept(self.data.0)
+        viewModel.cellData.accept(self.data.1)
         
         let vc = DetailResultScheduleVC(title: "역 시간표", titleViewHeight: 30, viewModel: viewModel)
         vc.delegate = self

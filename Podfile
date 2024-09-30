@@ -23,7 +23,7 @@ end
 requisite
 
 pod 'Then'
-pod 'SnapKit', '~> 5.6.0'
+pod 'SnapKit', '~> 5.7.0'
 pod 'lottie-ios'
 pod 'AcknowList'
  

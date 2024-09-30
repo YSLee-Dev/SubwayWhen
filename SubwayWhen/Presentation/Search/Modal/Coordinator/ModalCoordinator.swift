@@ -60,7 +60,7 @@ extension ModalCoordinator: ModalVCActionProtocol {
         self.delegate?.stationSave()
     }
     
-    func disposableDetailPush(data: DetailLoadData) {
+    func disposableDetailPush(data: DetailSendModel) {
         self.delegate?.disposableDetailPush(data: data)
     }
 }

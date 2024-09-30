@@ -23,4 +23,5 @@ enum ReportBrandData : String, CaseIterable{
    case gyeongchun = "경춘선"
    case suinbundang = "수인분당선"
     case gyeonggang = "경강선"
+    case shinbundang = "신분당선"
 }

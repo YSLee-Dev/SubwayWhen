@@ -6,82 +6,63 @@
 //
 
 import UIKit
+import SwiftUI
 
-import RxSwift
+import ComposableArchitecture
 
-class DetailCoordinator : Coordinator{
+class DetailCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
-    var data : MainTableViewCellData
-    
-    var delegate : DetailCoordinatorDelegate?
-    weak var vc : DetailVC?
-    let bag = DisposeBag()
-    
-    let exceptionLastStationRemoveBtnClick = PublishSubject<Void>()
+    var data : DetailSendModel
     let isDisposable: Bool
     
-    init(navigation : UINavigationController, data : MainTableViewCellData, isDisposable: Bool){
+    var delegate : DetailCoordinatorDelegate?
+    var store: StoreOf<DetailFeature>?
+    
+    init(navigation: UINavigationController, data: DetailSendModel, isDisposable: Bool) {
         self.navigation = navigation
         self.data = data
         self.isDisposable = isDisposable
     }
     
     func start() {
-        var excption = self.data
-        
-        // 공항철도는 반대 (ID)
-        if excption.useLine == "공항철도"{
-            let next = excption.nextStationId
-            excption.nextStationId = excption.backStationId
-            excption.backStationId = next
-        }
-        let detailLoadData = DetailLoadData(upDown: excption.upDown, stationName: excption.stationName, lineNumber: excption.lineNumber, lineCode: excption.subWayId, useLine: excption.useLine, stationCode: excption.stationCode, exceptionLastStation: excption.exceptionLastStation, backStationId: excption.backStationId, nextStationId: excption.nextStationId, korailCode: excption.korailCode)
-        
-        let viewModel = DetailViewModel(isDisposable: self.isDisposable)
-        viewModel.detailViewData.accept(detailLoadData)
-        self.exceptionLastStationRemoveBtnClick
-            .bind(to: viewModel.exceptionLastStationRemoveReload)
-            .disposed(by: self.bag)
-        viewModel.delegate = self
-        
-        let vc = DetailVC(title: "\(excption.useLine) \(excption.stationName)", viewModel: viewModel)
-        vc.hidesBottomBarWhenPushed = true
-        
-        self.vc = vc
-        
-        self.navigation.pushViewController(vc, animated: true)
-    }
-}
-
-private extension DetailCoordinator {
-    func exceptionLastStationRemoveAlert(station: String) {
-        let alert = UIAlertController(
-            title: "\(station)행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        alert.addAction(UIAlertAction(title: "재로딩", style: .default) { [weak self] _ in
-            self?.exceptionLastStationRemoveBtnClick.onNext(Void())
+        self.store = StoreOf<DetailFeature>(initialState: DetailFeature.State(isDisposable: isDisposable, sendedLoadModel: data), reducer: {
+            var feature = DetailFeature()
+            feature.coordinatorDelegate = self
+            return feature
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         
-        self.navigation.present(alert, animated: true)
+        guard let store = self.store else {return}
+        let detailView = DetailView(store: store)
+        let vc = UIHostingController(rootView: detailView)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {[weak self] in
+            if self?.isDisposable ?? false { // 임시인 경우 sheet, 기존 방식은 push
+                vc.modalPresentationStyle = .pageSheet
+                if let sheet = vc.sheetPresentationController{
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                    sheet.preferredCornerRadius = 25
+                }
+                self?.navigation.present(vc, animated: true)
+                
+            } else {
+                vc.hidesBottomBarWhenPushed = true
+                self?.navigation.pushViewController(vc, animated: true)
+            }
+        }
     }
 }
 
 extension DetailCoordinator : DetailVCDelegate{
-    func exceptionLastStationPopup(station: String) {
-        self.exceptionLastStationRemoveAlert(station: station)
-    }
-    
     func disappear() {
         if self.childCoordinator.isEmpty{
             self.delegate?.disappear(detailCoordinator: self)
         }
     }
     
-    func scheduleTap(schduleResultData: schduleResultData) {
+    func scheduleTap(schduleResultData: ([ResultSchdule], DetailSendModel)) {
+        if (schduleResultData.0.first?.type) ?? .Unowned == .Unowned || (schduleResultData.0.first?.startTime) ?? "정보없음"  == "정보없음"  || self.isDisposable {return}
         let resultScheduleCoordinator = DetailResultScheduleCoordinator(navigation: self.navigation, data: schduleResultData)
         resultScheduleCoordinator.start()
         resultScheduleCoordinator.delegate = self
@@ -92,9 +73,14 @@ extension DetailCoordinator : DetailVCDelegate{
     func pop() {
         self.delegate?.pop()
     }
+    
+    func reportBtnTap(reportLine: ReportBrandData) {
+        self.pop()
+        self.delegate?.reportBtnTap(reportLine: reportLine)
+    }
 }
 
-extension DetailCoordinator : DetailResultScheduleCoorinatorDelegate{
+extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
     func disappear(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
     }
@@ -105,7 +91,7 @@ extension DetailCoordinator : DetailResultScheduleCoorinatorDelegate{
     
     func exceptionBtnTap(detailResultScheduleCoordinator: DetailResultScheduleCoordinator) {
         self.navigation.popViewController(animated: true)
-        self.vc!.detailViewModel.headerViewModel.exceptionLastStationBtnClick.accept(Void())
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
+        self.store?.send(.exceptionLastStationBtnTapped)
     }
 }

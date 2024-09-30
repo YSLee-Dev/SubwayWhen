@@ -39,8 +39,8 @@ class ReportViewModel : ReportViewModelProtocol{
         textField : ReportTableViewTextFieldCellModel = .init(),
         twoBtn : ReportTableViewTwoBtnCellModel = .init(),
         lineCell : ReportTableViewLineCellModel = .init(),
-        contentsModelViewModel : ReportContentsModalViewModel = .init()
-        
+        contentsModelViewModel : ReportContentsModalViewModel = .init(),
+        defaultLine: ReportBrandData? = nil
     ){
         self.model = model
         self.textFieldCellModel = textField
@@ -114,6 +114,14 @@ class ReportViewModel : ReportViewModelProtocol{
             self.lineCellModel.lineFix.asObservable(),
             shareDefaultLine.map{_ in Void()}
         )
+        
+        // Detail에서 바로 접근한 경우
+        if let defaultLine = defaultLine {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
+                self.lineCellModel.lineSeleted.accept(defaultLine)
+                self.lineCellModel.lineFix.accept(Void())
+            }
+        }
         
         // 두 번째 행 출력
         let twoStep = lineSeleted
