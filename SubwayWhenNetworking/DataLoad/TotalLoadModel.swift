@@ -13,10 +13,12 @@ import RxCocoa
 
 class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
+    private var coreDataManager: CoreDataScheduleManagerProtocol
     private let bag = DisposeBag()
     
-    init(loadModel : LoadModel = .init()){
+    init(loadModel : LoadModel = .init(), coreDataManager: CoreDataScheduleManager = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
+        self.coreDataManager = coreDataManager
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
@@ -63,12 +65,36 @@ class TotalLoadModel : TotalLoadProtocol {
             .asObservable()
     }
     
-    // live 정보만 반환
-    func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
-        self.loadModel.stationArrivalRequest(stationName: station)
+    // live 정보만 반환하되, 필터링을 거침
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [RealtimeStationArrival]> {
+        self.loadModel.stationArrivalRequest(stationName: requestModel.stationName)
             .map{ data -> LiveStationModel in
-                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [])}
                 return value
+            }
+            .map { data -> [RealtimeStationArrival] in
+                let errorModel = RealtimeStationArrival(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.lineNumber, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: "")
+                
+                if data.realtimeArrivalList.isEmpty {
+                    return [errorModel, errorModel]
+                } else {
+                    var arrivalData: [RealtimeStationArrival] = []
+                    for x in data.realtimeArrivalList {
+                        if requestModel.upDown == x.upDown && requestModel.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
+                            arrivalData.append(x)
+                        }
+                        if arrivalData.count >= 2 {
+                            break
+                        }
+                    }
+                    
+                    if arrivalData.count < 2 {
+                        for _ in 0 ..< 2 - arrivalData.count {
+                            arrivalData.append(errorModel)
+                        }
+                    }
+                    return arrivalData
+                }
             }
             .asObservable()
     }
@@ -317,9 +343,79 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    private func timeFormatter(date : Date) -> String {
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
+        let requestWeek = Calendar.current.component(.weekday, from: requestDate)
+        let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
+        guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
+        
+        let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
+        let localSchedule = self.coreDataManager.shinbundangScheduleDataLoad(stationName: scheduleSearch.stationName)
+        
+        var shinbundangVersion = 0.0
+        var newSave = false
+        
+        // A-1. 저장된 신분당선 데이터가 있는지 확인합니다.
+       return Observable.zip(shinbundangVersionObserverable, Observable.just(localSchedule))
+            .map {($0, $1)}
+            .flatMap { version,  localSchedule -> Observable<[ShinbundangScheduleModel]> in
+                shinbundangVersion = version
+                
+                // A-2. 저장된 신분당선의 버전을 확인합니다.
+                if (Double(localSchedule?.scheduleVersion ?? "0")) ?? 0.0 >= version, let localScheduleData = localSchedule?.scheduleData {
+                    // A-3. 저장된 신분당선 시간표를 반환합니다.
+                    return Observable.just(localScheduleData)
+                } else {
+                    // B-1. 저장된 신분당선 데이터가 없거나 버전이 낮으면 데이터를 요청합니다.
+                    newSave = !isDisposable
+                    return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
+                }
+            }
+            .do(onNext: { data in
+                if newSave  {
+                    if localSchedule?.scheduleData != nil  {   // B-2. 저장된 신분당선 데이터를 삭제 후 저장합니다. (일회성 보기가 아닐 때만 저장)
+                        self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSearch.stationName)
+                    }
+                    self.coreDataManager.shinbundangScheduleDataSave(to: [scheduleSearch.stationName: data], scheduleVersion: "\(shinbundangVersion)")
+                }
+            })
+            .map { data in
+                let filterData = data.filter {
+                    guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
+                    if $0.updown == scheduleSearch.upDown && $0.week == requestWeekString && !scheduleSearch.exceptionLastStation.contains($0.endStation) {
+                        if isNow {
+                            return nowTime <= scheduleTime
+                        } else {
+                            return true
+                        }
+                    } else {
+                        return false
+                    }
+                }
+                
+                var resultScheduleData = filterData.map {
+                    ResultSchdule(startTime: $0.startTime, type: .Shinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
+                }
+                
+                if resultScheduleData.isEmpty {
+                    if isWidget {
+                        resultScheduleData.append(ResultSchdule(startTime: "-", type: .Shinbundang, isFast: "", startStation: "", lastStation: ""))
+                    } else {
+                        resultScheduleData.append(ResultSchdule(startTime: "정보없음", type: .Shinbundang, isFast: "", startStation: "정보없음", lastStation: "정보없음"))
+                    }
+                }
+                
+                if isFirst {
+                    guard let first = resultScheduleData.first else {return []}
+                    return [first]
+                } else {
+                    return resultScheduleData
+                }
+            }
+    }
+    
+    private func timeFormatter(date : Date, isSecondIncludes: Bool = true) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HHmmss"
+        formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
         return formatter.string(from: date)
     }
 }

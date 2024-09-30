@@ -1,0 +1,1306 @@
+[
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "5:30",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "5:42",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "5:55",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "6:06",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "6:18",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "6:30",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "6:42",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "6:54",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:04",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:14",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:21",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:27",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:32",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "7:58",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:13",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:18",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:23",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:33",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "8:58",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:13",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:18",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:23",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:33",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:49",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "9:55",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:02",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "정자",
+        "startStation": "신사",
+        "startTime": "10:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:14",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:21",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:29",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:37",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:45",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "10:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:01",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:16",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:24",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:32",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:40",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "11:56",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:04",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:12",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:20",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:36",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:44",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "12:52",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:16",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:24",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:32",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:40",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "13:56",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:04",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:12",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:20",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:36",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:44",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "14:52",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:16",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:24",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:32",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:40",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "15:56",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:04",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:12",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:20",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:36",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:44",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "16:52",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:16",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:24",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:31",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:37",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "17:58",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:13",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:18",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:23",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:33",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "18:58",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:13",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:18",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:23",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:33",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:43",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:48",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "19:58",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:08",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:14",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:20",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:26",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:33",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:39",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:46",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "20:53",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:07",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:14",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:21",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:28",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:35",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:42",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:49",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "21:56",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:03",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:10",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:17",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:24",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:31",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:38",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:45",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "22:52",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "23:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "23:10",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "23:20",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "정자",
+        "startStation": "신사",
+        "startTime": "23:30",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "23:40",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "23:50",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "광교",
+        "startStation": "신사",
+        "startTime": "24:00",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "정자",
+        "startStation": "신사",
+        "startTime": "24:10",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    },
+    {
+        "endStation": "정자",
+        "startStation": "신사",
+        "startTime": "24:21",
+        "stationName": "신사",
+        "updown": "하행",
+        "week": "평일"
+    }
+]

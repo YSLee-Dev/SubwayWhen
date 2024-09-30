@@ -42,7 +42,7 @@ final class NetworkManager : NetworkManagerProtocol{
                     return .failure(.init(.cannotParseResponse))
                 }
             }
-            .timeout(.seconds(5), scheduler: MainScheduler.asyncInstance)
+            .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch{error in
                 print(error)
                 return .just(.failure(.init(.notConnectedToInternet)))
@@ -85,7 +85,7 @@ final class NetworkManager : NetworkManagerProtocol{
                     return .failure(.init(.cannotParseResponse))
                 }
             }
-            .timeout(.seconds(5), scheduler: MainScheduler.asyncInstance)
+            .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
                 print(error)
                 return .just(.failure(.init(.notConnectedToInternet)))

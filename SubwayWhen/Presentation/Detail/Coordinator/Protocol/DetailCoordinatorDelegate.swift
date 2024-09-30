@@ -10,4 +10,5 @@ import Foundation
 protocol DetailCoordinatorDelegate{
     func pop()
     func disappear(detailCoordinator : DetailCoordinator)
+    func reportBtnTap(reportLine: ReportBrandData)
 }
