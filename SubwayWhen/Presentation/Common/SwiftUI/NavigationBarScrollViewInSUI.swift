@@ -41,7 +41,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                     .padding(.leading, 1)
                     .opacity(self.isSubTitleShow ? 1 : 0)
                     .offset(y: self.isSubTitleShow ? 0 : 10)
-                    .animation(.easeInOut(duration: 0.25), value: self.isSubTitleShow)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2), value: self.isSubTitleShow)
                 
                 Spacer()
             }
@@ -66,7 +66,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 if isFirstValue == nil {
                     self.isFirstValue = value
                 } else {
-                    if (!self.isSubTitleShow && self.isFirstValue! - 25 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 25 < value)  {
+                    if (!self.isSubTitleShow && self.isFirstValue! - 32.5 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 32.5 < value)  {
                         self.isSubTitleShow = !self.isSubTitleShow
                     }
                 }
