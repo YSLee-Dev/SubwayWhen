@@ -46,7 +46,7 @@ struct DetailView: View {
                         HStack {
                             Spacer()
                             StationTitleViewInSUI(
-                                stationName: self.store.sendedLoadModel.stationName,
+                                title: self.store.sendedLoadModel.stationName,
                                 lineColor: self.store.sendedLoadModel.lineNumber,
                                 size: 75,
                                 isFill: false
