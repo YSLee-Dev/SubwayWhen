@@ -24,6 +24,7 @@ struct StationTitleViewInSUI: View {
                     Spacer()
                     Text(self.title)
                         .foregroundColor(self.isFill ? .white : .black)
+                        .multilineTextAlignment(.center)
                         .font(.system(size: self.fontSize, weight: .bold))
                         .lineLimit(3)
                     Spacer()
