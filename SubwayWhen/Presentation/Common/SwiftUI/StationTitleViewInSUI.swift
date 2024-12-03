@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct StationTitleViewInSUI: View {
-    let stationName: String
+    let title: String
     let lineColor: String
     let size: CGFloat
     let isFill: Bool
+    var fontSize: CGFloat = ViewStyle.FontSize.mediumSize
     
     var body: some View {
         Circle()
@@ -21,9 +22,9 @@ struct StationTitleViewInSUI: View {
             .overlay {
                 HStack {
                     Spacer()
-                    Text(self.stationName)
+                    Text(self.title)
                         .foregroundColor(self.isFill ? .white : .black)
-                        .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                        .font(.system(size: self.fontSize, weight: .bold))
                         .lineLimit(3)
                     Spacer()
                 }
@@ -33,5 +34,5 @@ struct StationTitleViewInSUI: View {
 
 
 #Preview {
-    StationTitleViewInSUI(stationName: "교대", lineColor: "03호선", size: 75, isFill: false)
+    StationTitleViewInSUI(title: "교대", lineColor: "03호선", size: 75, isFill: false)
 }
