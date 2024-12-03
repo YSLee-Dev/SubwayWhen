@@ -23,36 +23,38 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
     @State private var isTapped = false
     
     var body: some View {
-        HStack {
-            if self.buttonViewAlignment != .leading {
-                Spacer()
+        Button(action: {
+            self.tappedAction()
+            self.isTapped = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.isTapped = false
             }
-            self.buttonView()
-            if self.buttonViewAlignment != .trailing {
-                Spacer()
+        }, label: {
+            HStack {
+                if self.buttonViewAlignment != .leading {
+                    Spacer()
+                }
+                self.buttonView()
+                if self.buttonViewAlignment != .trailing {
+                    Spacer()
+                }
             }
-        }
+        })
+        .buttonStyle(.plain)
         .padding(.vertical, 10)
         .contentShape(Rectangle())
         .onLongPressGesture(
-            pressing: {
-                    if !self.isTapped && $0  {
-                        self.isTapped.toggle()
-                    } else if self.isTapped && !$0 {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            self.isTapped.toggle()
-                            self.tappedAction()
-                        }
-                    }
-                },
-                perform: {}
-            )
-            .background(
-                RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
-                    .fill(self.isTapped ? self.tappedBGColor : self.bgColor)
-            )
-            .scaleEffect(self.isTapped ? ViewStyle.AnimateView.size : 1)
-            .animation(.easeInOut(duration: ViewStyle.AnimateView.speed), value: self.isTapped)
+            pressing: { isPressing in
+                self.isTapped = isPressing
+            },
+            perform: {}
+        )
+        .background(
+            RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
+                .fill(self.isTapped ? self.tappedBGColor : self.bgColor)
+        )
+        .scaleEffect(self.isTapped ? ViewStyle.AnimateView.size : 1)
+        .animation(.easeInOut(duration: ViewStyle.AnimateView.speed), value: self.isTapped)
     }
 }
 
