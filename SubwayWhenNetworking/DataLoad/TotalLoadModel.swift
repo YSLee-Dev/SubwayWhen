@@ -73,14 +73,14 @@ class TotalLoadModel : TotalLoadProtocol {
                 return value
             }
             .map { data -> [RealtimeStationArrival] in
-                let errorModel = RealtimeStationArrival(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.lineNumber, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: "")
+                let errorModel = RealtimeStationArrival(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.line.rawValue, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: "")
                 
                 if data.realtimeArrivalList.isEmpty {
                     return [errorModel, errorModel]
                 } else {
                     var arrivalData: [RealtimeStationArrival] = []
                     for x in data.realtimeArrivalList {
-                        if requestModel.upDown == x.upDown && requestModel.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
+                        if requestModel.upDown == x.upDown && requestModel.line.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
                             arrivalData.append(x)
                         }
                         if arrivalData.count >= 2 {
