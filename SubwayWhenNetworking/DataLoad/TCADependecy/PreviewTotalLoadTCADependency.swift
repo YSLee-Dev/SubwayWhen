@@ -28,4 +28,13 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
             .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
         ]
     }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        [
+            .init(id: "1", name: "교대", line: "03호선", distance: "1000m"),
+            .init(id: "2", name: "강남", line: "02호선", distance: "1500m"),
+            .init(id: "3", name: "고속터미널", line: "09호선", distance: "2000m"),
+            .init(id: "4", name: "사당", line: "04호선", distance: "3000m")
+        ]
+    }
 }

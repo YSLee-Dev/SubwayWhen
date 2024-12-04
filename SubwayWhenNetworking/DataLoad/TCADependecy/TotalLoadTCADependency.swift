@@ -46,4 +46,8 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
                 .disposed(by: self.bag)
         }
     }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        await self.totalModel.vicinityStationsDataLoad(x: x, y: y)
+    }
 }
