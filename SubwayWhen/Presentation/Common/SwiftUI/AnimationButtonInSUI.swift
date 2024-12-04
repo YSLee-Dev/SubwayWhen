@@ -24,9 +24,9 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
     
     var body: some View {
         Button(action: {
-            self.tappedAction()
             self.isTapped = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.tappedAction()
                 self.isTapped = false
             }
         }, label: {
@@ -40,9 +40,9 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
                 }
             }
         })
+        .contentShape(Rectangle())
         .buttonStyle(.plain)
         .padding(.vertical, 10)
-        .contentShape(Rectangle())
         .onLongPressGesture(
             pressing: { isPressing in
                 self.isTapped = isPressing
@@ -59,5 +59,5 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
 }
 
 #Preview {
-    AnimationButtonInSUI(bgColor: Color("MainColor"), tappedBGColor: Color("ButtonTappedColor"), buttonView: {Text("버튼").foregroundStyle(.black)}) {}
+    AnimationButtonInSUI(bgColor: Color("MainColor"), tappedBGColor: Color("ButtonTappedColor"), buttonViewAlignment: .leading, buttonView: {Text("버튼").foregroundStyle(.black)}) {}
 }
