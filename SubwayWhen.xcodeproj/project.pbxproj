@@ -392,6 +392,13 @@
 		FF0365322D00129800EF325D /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365312D00129800EF325D /* LocationManagerProtocol.swift */; };
 		FF0365342D0015FF00EF325D /* LocationManagerTCADependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */; };
 		FF0365372D00171100EF325D /* PreviewLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365362D00171100EF325D /* PreviewLocationManager.swift */; };
+		FF0365392D001FEC00EF325D /* VicinityTransformData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365382D001FEC00EF325D /* VicinityTransformData.swift */; };
+		FF03653A2D001FEC00EF325D /* VicinityTransformData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365382D001FEC00EF325D /* VicinityTransformData.swift */; };
+		FF03653B2D001FEC00EF325D /* VicinityTransformData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365382D001FEC00EF325D /* VicinityTransformData.swift */; };
+		FF03653E2D011CFD00EF325D /* SubwayLineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03653D2D011CFD00EF325D /* SubwayLineData.swift */; };
+		FF03653F2D011CFD00EF325D /* SubwayLineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03653D2D011CFD00EF325D /* SubwayLineData.swift */; };
+		FF0365402D011CFD00EF325D /* SubwayLineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03653D2D011CFD00EF325D /* SubwayLineData.swift */; };
+		FF0365412D011F6700EF325D /* SubwayLineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03653D2D011CFD00EF325D /* SubwayLineData.swift */; };
 		FF1D4A552C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */; };
 		FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
@@ -892,6 +899,8 @@
 		FF0365312D00129800EF325D /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
 		FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerTCADependencyKey.swift; sourceTree = "<group>"; };
 		FF0365362D00171100EF325D /* PreviewLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewLocationManager.swift; sourceTree = "<group>"; };
+		FF0365382D001FEC00EF325D /* VicinityTransformData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VicinityTransformData.swift; sourceTree = "<group>"; };
+		FF03653D2D011CFD00EF325D /* SubwayLineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayLineData.swift; sourceTree = "<group>"; };
 		FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShinbundangSinsaStationScheduleDummy.json; sourceTree = "<group>"; };
 		FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADepdency.swift; sourceTree = "<group>"; };
 		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1735,6 +1744,7 @@
 		34A3039C29AF86FD00948EDD /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				FF03653C2D011CF300EF325D /* SubwayLine */,
 				34A3F0A52AB820FE0012115F /* ImportantData */,
 				34D9EA072A557DBE0080AD17 /* VcinityStation */,
 				349E2F7229BF105900C54EE9 /* Protocol */,
@@ -2192,6 +2202,7 @@
 			children = (
 				34D9EA082A557E3F0080AD17 /* VicinityStationsData.swift */,
 				34D9EA0A2A557E780080AD17 /* VicinityDocumentData.swift */,
+				FF0365382D001FEC00EF325D /* VicinityTransformData.swift */,
 			);
 			path = VcinityStation;
 			sourceTree = "<group>";
@@ -2641,6 +2652,14 @@
 				FF0365362D00171100EF325D /* PreviewLocationManager.swift */,
 			);
 			path = TCADependency;
+			sourceTree = "<group>";
+		};
+		FF03653C2D011CF300EF325D /* SubwayLine */ = {
+			isa = PBXGroup;
+			children = (
+				FF03653D2D011CFD00EF325D /* SubwayLineData.swift */,
+			);
+			path = SubwayLine;
 			sourceTree = "<group>";
 		};
 		FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */ = {
@@ -3126,6 +3145,7 @@
 				349C00882A0A1B92008A85BF /* SubwayWhenDetailWidget.intentdefinition in Sources */,
 				349C00812A0A1B8D008A85BF /* SubwayWhenDetailWidgetLiveActivity.swift in Sources */,
 				349C00922A0A1BE8008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
+				FF0365412D011F6700EF325D /* SubwayLineData.swift in Sources */,
 				FF36A3842C80637400387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
 				FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				349C007F2A0A1B8D008A85BF /* SubwayWhenDetailWidgetBundle.swift in Sources */,
@@ -3194,6 +3214,7 @@
 				34EEDC602A41B4A8006A1364 /* SettingVCAction.swift in Sources */,
 				FF36A37A2C8062A800387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
 				34D9EA122A5662290080AD17 /* LocationModalCell.swift in Sources */,
+				FF0365392D001FEC00EF325D /* VicinityTransformData.swift in Sources */,
 				34A58AE32AC3BAFC00C8A563 /* TutorialCollectionViewCellModelProtocol.swift in Sources */,
 				34324CAE29D15740008AE274 /* ReportModel.swift in Sources */,
 				B68302BE2AC0501000E010B7 /* TutorialCellData.swift in Sources */,
@@ -3402,6 +3423,7 @@
 				FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */,
 				349C00892A0A1B92008A85BF /* SubwayWhenDetailWidget.intentdefinition in Sources */,
 				349B517729A4A2F200A53879 /* ReportTableViewTwoBtnCellModel.swift in Sources */,
+				FF0365402D011CFD00EF325D /* SubwayLineData.swift in Sources */,
 				3497DC8A29D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift in Sources */,
 				34A303B629AF86FD00948EDD /* ScheduleType.swift in Sources */,
 				3455CFA72A53E74E001ADE61 /* SearchVCActionProtocol.swift in Sources */,
@@ -3488,10 +3510,12 @@
 				FA4CB79F2BB684B1003C41F6 /* KorailTrainNumber.swift in Sources */,
 				FA4CB7A02BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
 				FA4CB7A12BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
+				FF03653A2D001FEC00EF325D /* VicinityTransformData.swift in Sources */,
 				FA4CB7A22BB684B1003C41F6 /* ImportantData.swift in Sources */,
 				FA4CB7A32BB684B1003C41F6 /* VicinityDocumentData.swift in Sources */,
 				FF24F7B12C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */,
 				FA4CB7C82BB687E9003C41F6 /* SearchStaion.swift in Sources */,
+				FF03653E2D011CFD00EF325D /* SubwayLineData.swift in Sources */,
 				FA4CB7A42BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
 				FA4CB7A52BB684B1003C41F6 /* KorailBody.swift in Sources */,
 				FA4CB7912BB6849B003C41F6 /* LoadModel.swift in Sources */,
@@ -3534,9 +3558,11 @@
 				FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 				FF1D4AC32C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				FA4CB7B62BB684B1003C41F6 /* ScheduleSearch.swift in Sources */,
+				FF03653B2D001FEC00EF325D /* VicinityTransformData.swift in Sources */,
 				FA4CB7F92BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				FA4CB7B72BB684B1003C41F6 /* KorailBody.swift in Sources */,
 				FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */,
+				FF03653F2D011CFD00EF325D /* SubwayLineData.swift in Sources */,
 				FF24F7B92C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
 				FA4CB77A2BB651C9003C41F6 /* SaveStation.swift in Sources */,
 				FA4CB7772BB64FA7003C41F6 /* SaveStationGroup.swift in Sources */,
