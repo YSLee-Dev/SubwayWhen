@@ -390,6 +390,8 @@
 		FF03652C2CFFEDC700EF325D /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03652B2CFFEDC700EF325D /* SearchFeature.swift */; };
 		FF03652F2D00126600EF325D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03652E2D00126600EF325D /* LocationManager.swift */; };
 		FF0365322D00129800EF325D /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365312D00129800EF325D /* LocationManagerProtocol.swift */; };
+		FF0365342D0015FF00EF325D /* LocationManagerTCADependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */; };
+		FF0365372D00171100EF325D /* PreviewLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365362D00171100EF325D /* PreviewLocationManager.swift */; };
 		FF1D4A552C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */; };
 		FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
@@ -888,6 +890,8 @@
 		FF03652B2CFFEDC700EF325D /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		FF03652E2D00126600EF325D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF0365312D00129800EF325D /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
+		FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerTCADependencyKey.swift; sourceTree = "<group>"; };
+		FF0365362D00171100EF325D /* PreviewLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewLocationManager.swift; sourceTree = "<group>"; };
 		FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShinbundangSinsaStationScheduleDummy.json; sourceTree = "<group>"; };
 		FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADepdency.swift; sourceTree = "<group>"; };
 		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2169,7 +2173,6 @@
 			isa = PBXGroup;
 			children = (
 				34D9EA022A556EDF0080AD17 /* Protocol */,
-				34D9EA052A5571BA0080AD17 /* LocationData.swift */,
 				34D9EA0C2A5583220080AD17 /* LocationModalSectionData.swift */,
 				34D9EA0E2A55832C0080AD17 /* LocationModalCellData.swift */,
 			);
@@ -2616,6 +2619,7 @@
 			isa = PBXGroup;
 			children = (
 				FF03652E2D00126600EF325D /* LocationManager.swift */,
+				FF0365352D0016FC00EF325D /* TCADependency */,
 				FF0365302D00126D00EF325D /* Entity */,
 			);
 			path = Location;
@@ -2624,9 +2628,19 @@
 		FF0365302D00126D00EF325D /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				34D9EA052A5571BA0080AD17 /* LocationData.swift */,
 				FF0365312D00129800EF325D /* LocationManagerProtocol.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		FF0365352D0016FC00EF325D /* TCADependency */ = {
+			isa = PBXGroup;
+			children = (
+				FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */,
+				FF0365362D00171100EF325D /* PreviewLocationManager.swift */,
+			);
+			path = TCADependency;
 			sourceTree = "<group>";
 		};
 		FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */ = {
@@ -3160,6 +3174,7 @@
 				B68FB3482B75EFB70075339F /* SettingTrainIconModalVC.swift in Sources */,
 				349E2F5929BDD0ED00C54EE9 /* DetailResultScheduleDelegate.swift in Sources */,
 				349E2F3729BDAF2200C54EE9 /* ReportCoordinator.swift in Sources */,
+				FF0365372D00171100EF325D /* PreviewLocationManager.swift in Sources */,
 				34D9EA062A5571BA0080AD17 /* LocationData.swift in Sources */,
 				349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */,
 				3497DCB229D30B1700D2ABB9 /* SettingTableViewCellModelProtocol.swift in Sources */,
@@ -3223,6 +3238,7 @@
 				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
 				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
 				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
+				FF0365342D0015FF00EF325D /* LocationManagerTCADependencyKey.swift in Sources */,
 				349894AD29CD994800768B88 /* BundleExtension.swift in Sources */,
 				FF7ECAC72C7BF82D00D4643A /* OffsetScrollViewInSUI.swift in Sources */,
 				34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */,
