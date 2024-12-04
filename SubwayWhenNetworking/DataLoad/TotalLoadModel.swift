@@ -305,6 +305,7 @@ class TotalLoadModel : TotalLoadProtocol {
         self.loadModel.defaultViewListRequest()
     }
     
+    // Rx 버전은 삭제 예정
     func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]> {
         self.loadModel.vicinityStationsLoad(x: x, y: y)
             .map { data -> VicinityStationsData? in
@@ -327,6 +328,44 @@ class TotalLoadModel : TotalLoadProtocol {
                     return first < second
                 }
             }
+    }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        return await withCheckedContinuation { continuation in
+            let loadModelData = self.loadModel.vicinityStationsLoad(x: x, y: y)
+                .map { data -> [VicinityDocumentData] in
+                    guard case .success(let value) = data else {return []}
+                    return value.documents
+                }
+                .map { data in
+                    // SW8 = 지하철이 아닌 정보는 filter해요.
+                    return data.filter {$0.category == "SW8" || $0.category == "정보없음"}
+                }
+                .map { data in
+                    data.sorted {
+                        // 가장 가까운 지하철 순서로 정렬해요.
+                        let first = Int($0.distance) ?? 0
+                        let second = Int($1.distance) ?? 1
+                        return first < second
+                    }
+                }
+                .map { data in
+                    data.map {
+                        VicinityTransformData(
+                            id: $0.distance + $0.name,
+                            name: self.stationNameSeparation(oldValue: $0.name),
+                            line: self.lineSeparation(oldValue: $0.name),
+                            distance: self.distanceTransform(oldValue: $0.distance)
+                        )
+                    }
+                }
+                .asObservable()
+               
+            loadModelData.subscribe(onNext: { data in
+                continuation.resume(returning: data)
+            })
+            .disposed(by: self.bag)
+        }
     }
     
     func importantDataLoad() -> RxSwift.Observable<ImportantData> {
@@ -417,5 +456,24 @@ class TotalLoadModel : TotalLoadProtocol {
         let formatter = DateFormatter()
         formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
         return formatter.string(from: date)
+    }
+    
+    private func distanceTransform(oldValue: String) -> String {
+        guard let doubleValue = Int(oldValue) else {return "정보없음"}
+        let numberFomatter = NumberFormatter()
+        numberFomatter.numberStyle = .decimal
+        
+        guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+        return "\(newValue)m"
+    }
+    
+    private func stationNameSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.startIndex ..< wordIndex])
+    }
+    
+    private func lineSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex]).replacingOccurrences(of: " ", with: "")
     }
 }

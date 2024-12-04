@@ -15,10 +15,14 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     init() {}
     
     func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool) async -> [ResultSchdule]  {
-        return self.resultSchdule
+        self.resultSchdule
     }
     
     func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async -> [RealtimeStationArrival] {
-        return self.realtimeStationArrival
+        self.realtimeStationArrival
+    }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        []
     }
 }
