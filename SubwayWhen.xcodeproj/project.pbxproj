@@ -388,6 +388,8 @@
 		FAD2F5FD2BB566A900B95B52 /* SubwayWhenHomeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAD2F5EE2BB566A800B95B52 /* SubwayWhenHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAD2F6042BB568B000B95B52 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 		FF03652C2CFFEDC700EF325D /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03652B2CFFEDC700EF325D /* SearchFeature.swift */; };
+		FF03652F2D00126600EF325D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF03652E2D00126600EF325D /* LocationManager.swift */; };
+		FF0365322D00129800EF325D /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0365312D00129800EF325D /* LocationManagerProtocol.swift */; };
 		FF1D4A552C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */; };
 		FF1D4AA02C9D32A100AFD709 /* SubwayWhenCommonFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1D4A9F2C9D32A100AFD709 /* SubwayWhenCommonFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1D4AA32C9D32A100AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
@@ -884,6 +886,8 @@
 		FAD2F6022BB5685100B95B52 /* SubwayWhenHomeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayWhenHomeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FAD2F6032BB568B000B95B52 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 		FF03652B2CFFEDC700EF325D /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
+		FF03652E2D00126600EF325D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		FF0365312D00129800EF325D /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
 		FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShinbundangSinsaStationScheduleDummy.json; sourceTree = "<group>"; };
 		FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTotalLoadTCADepdency.swift; sourceTree = "<group>"; };
 		FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2016,6 +2020,7 @@
 				FF1D4AB92C9D359400AFD709 /* Dependency */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
+				FF03652D2D00125100EF325D /* Location */,
 				34A906DE2A4C3157002C7655 /* Notification */,
 				34C6DB87293627AE00C4ED80 /* Save */,
 			);
@@ -2605,6 +2610,23 @@
 				FAD2F5FA2BB566A900B95B52 /* Info.plist */,
 			);
 			path = SubwayWhenHomeWidget;
+			sourceTree = "<group>";
+		};
+		FF03652D2D00125100EF325D /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				FF03652E2D00126600EF325D /* LocationManager.swift */,
+				FF0365302D00126D00EF325D /* Entity */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		FF0365302D00126D00EF325D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FF0365312D00129800EF325D /* LocationManagerProtocol.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		FF1D4A9E2C9D32A100AFD709 /* SubwayWhenCommonFramework */ = {
@@ -3250,6 +3272,7 @@
 				B6438D4B2B667CB10099BFEF /* MainModelProtocol.swift in Sources */,
 				34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */,
 				341EEA742ACD572F00E8F1EF /* TutorialVCCoordinatorProtocol.swift in Sources */,
+				FF0365322D00129800EF325D /* LocationManagerProtocol.swift in Sources */,
 				34A32E6F29B828C600AA1C67 /* ReportContentsModalSection.swift in Sources */,
 				349FF2A1299F2161007A98F4 /* SettingGroupModalViewModel.swift in Sources */,
 				34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */,
@@ -3259,6 +3282,7 @@
 				3497DC8829D2DED200D2ABB9 /* ModalModelProtocol.swift in Sources */,
 				3455CFA42A53DCF6001ADE61 /* ModalCoordinatorProtocol.swift in Sources */,
 				34A303B729AF86FD00948EDD /* ScheduleSearch.swift in Sources */,
+				FF03652F2D00126600EF325D /* LocationManager.swift in Sources */,
 				349E2F5329BDC11900C54EE9 /* DetailCoordinatorDelegate.swift in Sources */,
 				34D9E9FC2A54FD810080AD17 /* LocationModalVCActionProtocol.swift in Sources */,
 				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
