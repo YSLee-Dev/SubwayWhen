@@ -13,4 +13,9 @@ extension DependencyValues {
         get {self[TotalLoadModelDependencyKey.self]}
         set {self[TotalLoadModelDependencyKey.self] = newValue}
     }
+    
+    var locationManager: LocationManagerProtocol {
+        get{self[LocationManagerTCADependencyKey.self]}
+        set{self[LocationManagerTCADependencyKey.self] = newValue}
+    }
 }
