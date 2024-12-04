@@ -10,4 +10,5 @@ import Foundation
 protocol TotalLoadTCADependencyProtocol {
     func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool)  async -> [ResultSchdule]  
     func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel)  async -> [RealtimeStationArrival]
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] 
 }
