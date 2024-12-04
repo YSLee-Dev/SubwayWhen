@@ -8,5 +8,7 @@
 import Foundation
 
 protocol LocationManagerProtocol {
-    
+    func locationAuthCheck()  -> Bool
+    func locationAuthRequest() async -> Bool
+    func locationRequest() async -> LocationData?
 }
