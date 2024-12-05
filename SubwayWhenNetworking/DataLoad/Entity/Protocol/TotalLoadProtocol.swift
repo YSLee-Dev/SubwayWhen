@@ -16,6 +16,7 @@ protocol TotalLoadProtocol{
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
     func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion>
     func defaultViewListLoad() -> Observable<[String]>
+    func defaultViewListLoad() async -> [String] 
     func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] 
     func importantDataLoad() -> Observable<ImportantData>

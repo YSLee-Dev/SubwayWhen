@@ -301,6 +301,7 @@ class TotalLoadModel : TotalLoadProtocol {
             .filterNil()
     }
     
+    // Rx 버전은 삭제 예정
     func defaultViewListLoad() -> Observable<[String]>{
         self.loadModel.defaultViewListRequest()
     }
@@ -365,6 +366,16 @@ class TotalLoadModel : TotalLoadProtocol {
                 continuation.resume(returning: data)
             })
             .disposed(by: self.bag)
+        }
+    }
+    
+    func defaultViewListLoad() async -> [String] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.defaultViewListRequest()
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
         }
     }
     
