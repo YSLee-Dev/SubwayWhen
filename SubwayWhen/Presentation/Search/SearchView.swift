@@ -6,18 +6,14 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct SearchView: View {
-    // 비지니스 로직 구현 전 임시 temp
-    let tempArrivalData: [RealtimeStationArrival] = [
-        .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "전전역 도착", code: "3", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "03호선", isFast: nil, backStationId: "교대 전역", nextStationId: "교대 다음역", trainCode: "99"),
-        .init(upDown: "내선순환", arrivalTime: "9분", previousStation: "사당", subPrevious: "4전역 ", code: "99", subWayId: "1002", stationName: "강남", lastStation: "구파발", lineNumber: "02호선", isFast: nil, backStationId: "강남 전역", nextStationId: "강남 다음역", trainCode: "1"),
-        .init(upDown: "하행", arrivalTime: "4분", previousStation: "구반포", subPrevious: "3전역 ", code: "99", subWayId: "1009", stationName: "고속터미널", lastStation: "김포공항", lineNumber: "09호선", isFast: nil, backStationId: "고속터미널 전역", nextStationId: "고속터미널 다음역", trainCode: "99"),
-        .init(upDown: "하행", arrivalTime: "곧 도착", previousStation: "사당", subPrevious: "전역출발 ", code: "5", subWayId: "1007", stationName: "반포", lastStation: "온수", lineNumber: "07호선", isFast: nil, backStationId: "사당 전역", nextStationId: "사당 다음역", trainCode: "1"),
-    ]
+    @State private var store: StoreOf<SearchFeature>
     
-    // 비지니스 로직 구현 전 임시
-    @State private var tempTappedIndex: Int? = nil
+    init(store: StoreOf<SearchFeature>) {
+        self.store = store
+    }
     
     var body: some View {
         NavigationBarScrollViewInSUI(title: "검색") {
@@ -38,7 +34,7 @@ struct SearchView: View {
                 MainStyleViewInSUI {
                     VStack(spacing: 0) {
                         HStack {
-                            if self.tempTappedIndex == nil {
+                            if self.store.state.nowTappedStationIndex == nil {
                                 Text("현재 위치와 가까운 지하철역을 확인할 수 있어요.")
                                     .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                             }
@@ -48,77 +44,139 @@ struct SearchView: View {
                         
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 0) {
-                                ForEach(Array(zip(self.tempArrivalData, self.tempArrivalData.indices)), id: \.1) { data, index in
-                                    if self.tempTappedIndex == nil {
+                                ForEach(Array(zip(self.store.state.nowVicinityStations, self.store.state.nowVicinityStations.indices)), id: \.1) { data, index in
+                                    if self.store.state.nowTappedStationIndex  == nil {
                                         AnimationButtonInSUI(buttonView: {
-                                            StationTitleViewInSUI(title: data.stationName, lineColor: data.lineNumber ?? "", size: 50, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
+                                            StationTitleViewInSUI(title: data.name, lineColor: data.lineColorName, size: 50, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
                                         }) {
-                                            self.tempTappedIndex = index
+                                            self.store.send(.stationTapped(index))
                                         }
-                                    } else if self.tempTappedIndex != nil && self.tempTappedIndex != index {
+                                    } else if self.store.state.nowTappedStationIndex  != nil && self.store.state.nowTappedStationIndex  != index {
                                         AnimationButtonInSUI(buttonView: {
                                             VStack(spacing: 3) {
                                                 RoundedRectangle(cornerRadius: 3)
-                                                    .fill(Color(data.lineNumber ?? ""))
+                                                    .fill(Color(data.lineColorName))
                                                     .frame(minWidth: 50)
                                                     .frame(height: 7.5)
                                                 
-                                                Text(data.stationName)
+                                                Text(data.name)
                                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                                             }
                                         }) {
-                                            self.tempTappedIndex = index
+                                            self.store.send(.stationTapped(index))
                                         }
                                     }
                                 }
                             }
                         }
-                        .offset(y: self.tempTappedIndex == nil ? 0 : -10)
+                        .padding(.bottom, self.store.nowTappedStationIndex == nil ? 15 : 0)
+                        .offset(y: self.store.nowTappedStationIndex == nil ? 0 : -10)
                         
-                        if let index = self.tempTappedIndex {
-                            let data = self.tempArrivalData[index]
-                            ZStack {
-                                RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
-                                    .fill(Color(data.lineNumber ?? ""))
-                                    .frame(height: 5)
-                                
-                                StationTitleViewInSUI(title: data.stationName, lineColor: data.lineNumber ?? "", size: 50, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
-                                
-                                HStack {
-                                    Text(data.previousStation ?? "")
-                                        .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                        if let index = self.store.nowTappedStationIndex {
+                            let tappedData = self.store.nowVicinityStations[index]
+                            
+                            HStack(spacing: 0) {
+                                VStack(alignment: .leading) {
                                     Spacer()
-                                    Text(data.previousStation ?? "")
-                                        .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
-                                }
-                                .padding(.top, 30)
-                                
-                                HStack {
-                                    StationTitleViewInSUI(title: "", lineColor: data.lineNumber ?? "", size: 12.5, isFill: false)
+                                        .frame(height: 10)
+                                    
+                                    ZStack(alignment: .leading){
+                                        RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
+                                            .fill(Color(tappedData.lineColorName))
+                                            .frame(height: 5)
+                                            .scaleEffect(y: self.store.state.nowLiveDataLoading[0] ? 0.2 : 1)
+                                        
+                                        StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
+                                            .opacity(self.store.state.nowLiveDataLoading[0] ? 0 : 1)
+                                    }
+                                    .overlay {
+                                        if !self.store.state.nowLiveDataLoading[0] {
+                                            let code = self.store.nowUpLiveData?.trainCode ?? "99"
+                                            HStack {
+                                                if code == "0" || code == "1" || code == "2" {
+                                                    Spacer()
+                                                }
+                                                Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                                    .padding(.bottom, 20)
+                                                    .padding(.trailing, code == "0" ? 10 : 0)
+                                                    .padding(.leading, code == "4" ? -15 : -5)
+                                                
+                                                if code == "4" || code == "5" || code == "99" {
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    let backStation = self.store.state.nowLiveDataLoading[0] ? "🔄" : self.store.nowUpLiveData?.previousStation ?? ""
+                                    Text(backStation)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize))
+                                    
                                     Spacer()
-                                    StationTitleViewInSUI(title: "", lineColor: data.lineNumber ?? "", size: 12.5, isFill: false)
                                 }
+                                .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[0])
+                                .offset(x: 7.5)
                                 
-                                HStack {
-                                    Text(FixInfo.saveSetting.detailVCTrainIcon)
-                                        .scaleEffect(x: -1, y: 1)
+                                StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 50, isFill: true, fontSize: ViewStyle.FontSize.smallSize) 
+                                    .onTapGesture {
+                                        self.store.send(.stationTapped(nil)) 
+                                    }
+                                
+                                VStack(alignment: .trailing) {
                                     Spacer()
-                                    Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                    
+                                    ZStack(alignment: .trailing){
+                                        RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
+                                            .fill(Color(tappedData.lineColorName))
+                                            .frame(height: 5)
+                                            .scaleEffect(y: self.store.state.nowLiveDataLoading[1] ? 0.2 : 1)
+                                        
+                                        StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
+                                            .opacity(self.store.state.nowLiveDataLoading[1] ? 0 : 1)
+                                    }
+                                    .overlay {
+                                        if !self.store.state.nowLiveDataLoading[1] {
+                                            let code = self.store.nowDownLiveData?.trainCode ?? "99"
+                                            HStack {
+                                                if code == "4" || code == "5" || code == "99" {
+                                                    Spacer()
+                                                }
+                                               
+                                                Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                                    .padding(.bottom, 20)
+                                                    .padding(.trailing, code == "4" ? -15 : 0)
+                                                    .padding(.leading, code == "0" ? 10 : 0)
+                                                
+                                                if code == "0" || code == "1" || code == "2" {
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                    let backStation = self.store.state.nowLiveDataLoading[1] ? "🔄" : self.store.nowDownLiveData?.previousStation ?? ""
+                                    Text(backStation)
+                                        .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
                                 }
-                                .padding(.bottom, 25)
+                                .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[1])
+                                .offset(x: -7.5, y: 10)
                             }
-                            .padding(.bottom, 15)
+                            .padding(.bottom, 20)
                         }
                     }
-                    .animation(.easeInOut(duration: 0.3), value: self.tempTappedIndex)
+                    .animation(.easeInOut(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                     .padding(.horizontal, 15)
                 }
             }
             .padding(.top, 12.5)
+            .onAppear {
+                self.store.send(.onAppear)
+            }
         }
     }
 }
 
 #Preview {
-    SearchView()
+    SearchView(store: .init(initialState: .init(), reducer: {SearchFeature()}))
 }
