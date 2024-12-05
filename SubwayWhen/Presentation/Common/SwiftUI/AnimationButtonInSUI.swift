@@ -30,7 +30,7 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
                 self.isTapped = false
             }
         }, label: {
-            HStack {
+            HStack(spacing: 0) {
                 if self.buttonViewAlignment != .leading {
                     Spacer()
                 }
