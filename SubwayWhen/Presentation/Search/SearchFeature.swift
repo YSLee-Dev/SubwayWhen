@@ -19,13 +19,18 @@ class SearchFeature: NSObject {
     
     @ObservableState
     struct State: Equatable {
+        var isFirst = false
         var locationAuth = false
         var nowLocation: LocationData?
-        var nowVicinityStations: [VicinityTransformData] = []
+        var nowVicinityStationList: [VicinityTransformData] = []
         var nowLiveDataLoading = [false, false]
         var nowTappedStationIndex: Int? = nil
         var nowUpLiveData: RealtimeStationArrival?
         var nowDownLiveData: RealtimeStationArrival?
+        var recommendStationList: [String] = [
+            // 통신 전 임시 값
+            "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
+        ]
     }
     
     enum Action: Equatable {
@@ -38,14 +43,23 @@ class SearchFeature: NSObject {
         case liveDataRequest
         case liveDataResult([RealtimeStationArrival])
         case stationTapped(Int?)
+        case recommendStationRequest
+        case recommendStationResult([String])
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .send(.locationAuthResult(self.locationManager.locationAuthCheck()))
-                
+                if state.isFirst {
+                    state.isFirst = false
+                    return .merge([
+                        .send(.locationAuthResult(self.locationManager.locationAuthCheck())),
+                        .send(.recommendStationRequest)
+                    ])
+                } else {
+                    return .send(.locationAuthResult(self.locationManager.locationAuthCheck()))
+                }
             case .locationAuthResult(let isOn):
                 state.locationAuth = isOn
                 if isOn {
@@ -72,12 +86,12 @@ class SearchFeature: NSObject {
                 }
                 
             case .locationToVicinityStationResult(let data):
-                state.nowVicinityStations = data
+                state.nowVicinityStationList = data
                 return .none
                 
             case .liveDataRequest:
                 if state.nowTappedStationIndex == nil {return .none}
-                let tappedData = state.nowVicinityStations[state.nowTappedStationIndex!]
+                let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
                 guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
                 state.nowLiveDataLoading = [true, true]
                 return .merge([
@@ -107,6 +121,16 @@ class SearchFeature: NSObject {
             case .stationTapped(let index):
                 state.nowTappedStationIndex = index
                 return .send(.liveDataRequest)
+                
+            case .recommendStationRequest:
+                return .run { send in
+                    let data = await self.totalLoad.defaultViewListLoad()
+                    await send(.recommendStationResult(data))
+                }
+                
+            case .recommendStationResult(let data):
+                state.recommendStationList = data
+                return .none
                 
             default: return .none
             }
