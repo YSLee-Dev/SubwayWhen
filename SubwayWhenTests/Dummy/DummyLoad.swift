@@ -42,7 +42,7 @@ let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "10
 
 let detailSendModelDummyData = DetailSendModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")
 
-let detailArrivalDataRequestDummyModel = DetailArrivalDataRequestModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", lineCode: "1003", exceptionLastStation: "")
+let detailArrivalDataRequestDummyModel = DetailArrivalDataRequestModel(upDown: "상행", stationName: "교대", line: SubwayLineData(rawValue: "03호선")!, exceptionLastStation: "")
 
 let url = "Test.url"
 let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "340", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
