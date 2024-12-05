@@ -81,9 +81,10 @@ struct DetailFeature: Reducer {
                 }
                 
             case .arrivalDataRequest:
+                guard let line = SubwayLineData(rawValue: state.sendedLoadModel.lineNumber) else {return .none}
                 state.nowArrivalLoading = true
                 let sendedModel = state.sendedLoadModel
-                let requestModel = DetailArrivalDataRequestModel(upDown: sendedModel.upDown, stationName: sendedModel.stationName, lineNumber: sendedModel.lineNumber, lineCode: sendedModel.lineCode, exceptionLastStation: sendedModel.exceptionLastStation)
+                let requestModel = DetailArrivalDataRequestModel(upDown: sendedModel.upDown, stationName: sendedModel.stationName, line: line ,exceptionLastStation: sendedModel.exceptionLastStation)
                 
                 return .run { send in
                     let loadData = await self.totalLoad.singleLiveAsyncData(requestModel: requestModel)
