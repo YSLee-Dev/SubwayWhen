@@ -31,9 +31,33 @@ struct SearchView: View {
                     print("SearchBar Tapped")
                 }
                 
-                MainStyleViewInSUI {
+                if self.store.state.locationAuth {
                     SearchVicinityView(store: self.$store)
+                } else {
+                    MainStyleViewInSUI {
+                        VStack(spacing: 15) {
+                            HStack {
+                                Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
+                                    .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .heavy))
+                                Spacer()
+                            }
+                            
+                            AnimationButtonInSUI(
+                                bgColor: Color("AppIconColor"), tappedBGColor: Color("AppIconColor"), buttonView: {
+                                    Text("확인하기")
+                                        .foregroundStyle(.white)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize))
+                                }) {
+                                    
+                                }
+                                .frame(width: 150)
+                        }
+                        .padding(.init(top: 20, leading: 15, bottom: 20, trailing: 15))
+                    }
                 }
+                
+                SearchWordRecommendView(store: self.$store)
+                
             }
             .padding(.top, 12.5)
             .onAppear {
