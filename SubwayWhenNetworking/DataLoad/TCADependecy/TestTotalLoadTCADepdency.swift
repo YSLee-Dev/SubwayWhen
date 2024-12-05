@@ -25,4 +25,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
         []
     }
+    func defaultViewListLoad() async -> [String] {
+        []
+    }
 }

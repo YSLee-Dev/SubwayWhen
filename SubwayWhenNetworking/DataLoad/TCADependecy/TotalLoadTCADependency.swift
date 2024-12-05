@@ -50,4 +50,8 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
         await self.totalModel.vicinityStationsDataLoad(x: x, y: y)
     }
+    
+    func defaultViewListLoad() async -> [String] {
+        await self.totalModel.defaultViewListLoad()
+    }
 }
