@@ -444,6 +444,7 @@
 		FF36A3842C80637400387A3D /* DetailArrivalDataRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */; };
 		FF36A3852C80644900387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
+		FF3A5EB02D01609000BC7716 /* SearchVicinityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */; };
 		FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */; };
 		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71322C7D51360080B72B /* DetailArrivalView.swift */; };
@@ -917,6 +918,7 @@
 		FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalDataRequestModel.swift; sourceTree = "<group>"; };
 		FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadTCADependencyProtocol.swift; sourceTree = "<group>"; };
+		FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVicinityView.swift; sourceTree = "<group>"; };
 		FF68CFC82CA1343A0054BF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
@@ -2044,6 +2046,7 @@
 		34C6DB6E293627AE00C4ED80 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				FF3A5EAE2D01606300BC7716 /* Sub */,
 				FF8298FE2CFD9C53008ED530 /* SearchView.swift */,
 				FF03652B2CFFEDC700EF325D /* SearchFeature.swift */,
 				34C6DB7F293627AE00C4ED80 /* SearchVC.swift */,
@@ -2697,6 +2700,14 @@
 			path = TCADependecy;
 			sourceTree = "<group>";
 		};
+		FF3A5EAE2D01606300BC7716 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3324,6 +3335,7 @@
 				34D9E9FC2A54FD810080AD17 /* LocationModalVCActionProtocol.swift in Sources */,
 				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
 				34A303B329AF86FD00948EDD /* TotalLoadModel.swift in Sources */,
+				FF3A5EB02D01609000BC7716 /* SearchVicinityView.swift in Sources */,
 				FF8CBE232C89391700E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
 				3499DE8929D15E0A00A6E8C1 /* ReportTableViewLineCellModelProtocol.swift in Sources */,
 				349E2F5529BDC2B600C54EE9 /* SearchCoordinator.swift in Sources */,
