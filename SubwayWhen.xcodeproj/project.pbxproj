@@ -445,6 +445,7 @@
 		FF36A3852C80644900387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68A8CCA29C1E00E0076D7AE /* TotalLoadProtocol.swift */; };
 		FF3A5EB02D01609000BC7716 /* SearchVicinityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */; };
+		FF3A5EB22D016FDA00BC7716 /* SearchWordRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A5EB12D016FDA00BC7716 /* SearchWordRecommendView.swift */; };
 		FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */; };
 		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71322C7D51360080B72B /* DetailArrivalView.swift */; };
@@ -919,6 +920,7 @@
 		FF36A3762C80621D00387A3D /* PreviewTotalLoadTCADependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTotalLoadTCADependency.swift; sourceTree = "<group>"; };
 		FF36A3782C8062A000387A3D /* TotalLoadTCADependencyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalLoadTCADependencyProtocol.swift; sourceTree = "<group>"; };
 		FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVicinityView.swift; sourceTree = "<group>"; };
+		FF3A5EB12D016FDA00BC7716 /* SearchWordRecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordRecommendView.swift; sourceTree = "<group>"; };
 		FF68CFC82CA1343A0054BF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
@@ -2704,6 +2706,7 @@
 			isa = PBXGroup;
 			children = (
 				FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */,
+				FF3A5EB12D016FDA00BC7716 /* SearchWordRecommendView.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -3384,6 +3387,7 @@
 				349E2F3129BDA39900C54EE9 /* Coordinator.swift in Sources */,
 				34A303C129AF86FD00948EDD /* LoadModelProtocol.swift in Sources */,
 				344D6A102ABD84AE00ECB57D /* TutorialVC.swift in Sources */,
+				FF3A5EB22D016FDA00BC7716 /* SearchWordRecommendView.swift in Sources */,
 				34D9EA0F2A55832C0080AD17 /* LocationModalCellData.swift in Sources */,
 				FFABBB1A2C92C34000CCC692 /* CoreDataScheduleManager.swift in Sources */,
 				34B6ADE92A4994D500D7A6DA /* SettingNotiSelectModalCell.swift in Sources */,

@@ -16,8 +16,13 @@ struct SearchVicinityView: View {
             VStack(spacing: 0) {
                 HStack {
                     if self.store.state.nowTappedStationIndex == nil {
-                        Text("현재 위치와 가장 가까운 역")
-                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                        VStack(alignment: .leading) {
+                            Text("현재 위치와 가장 가까운 역")
+                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                            Text("역을 누르면 실시간 정보를 확인할 수 있어요")
+                                .foregroundStyle(.gray)
+                                .font(.system(size: ViewStyle.FontSize.smallSize))
+                        }
                     }
                     Spacer()
                 }
