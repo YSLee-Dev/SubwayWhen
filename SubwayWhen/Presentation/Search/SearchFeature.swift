@@ -81,7 +81,7 @@ class SearchFeature: NSObject {
             case .locationToVicinityStationRequest:
                 if state.nowLocation == nil {return .none}
                 return .run { [location = state.nowLocation]send in
-                    let data = await self.totalLoad.vicinityStationsDataLoad(x: location!.lat, y: location!.lon)
+                    let data = await self.totalLoad.vicinityStationsDataLoad(x: location!.lon, y: location!.lat)
                     return await send(.locationToVicinityStationResult(data))
                 }
                 
