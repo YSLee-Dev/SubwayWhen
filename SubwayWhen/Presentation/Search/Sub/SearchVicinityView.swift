@@ -18,7 +18,7 @@ struct SearchVicinityView: View {
                     if self.store.state.nowTappedStationIndex == nil {
                         VStack(alignment: .leading) {
                             Text("현재 위치와 가장 가까운 역")
-                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))
                             Text("역을 누르면 실시간 정보를 확인할 수 있어요")
                                 .foregroundStyle(.gray)
                                 .font(.system(size: ViewStyle.FontSize.smallSize))
@@ -33,7 +33,7 @@ struct SearchVicinityView: View {
                         ForEach(Array(zip(self.store.state.nowVicinityStationList, self.store.state.nowVicinityStationList.indices)), id: \.1) { data, index in
                             if self.store.state.nowTappedStationIndex  == nil {
                                 AnimationButtonInSUI(buttonView: {
-                                    StationTitleViewInSUI(title: data.name, lineColor: data.lineColorName, size: 50, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
+                                    StationTitleViewInSUI(title: data.name, lineColor: data.lineColorName, size: 45, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
                                 }) {
                                     self.store.send(.stationTapped(index))
                                 }
@@ -55,6 +55,7 @@ struct SearchVicinityView: View {
                         }
                     }
                 }
+                .scrollIndicators(.hidden)
                 .padding(.bottom, self.store.nowTappedStationIndex == nil ? 15 : 0)
                 .offset(y: self.store.nowTappedStationIndex == nil ? 0 : -10)
                 
