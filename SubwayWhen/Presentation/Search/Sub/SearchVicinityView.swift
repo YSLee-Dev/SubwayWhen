@@ -81,7 +81,7 @@ struct SearchVicinityView: View {
                                             if code == "0" || code == "1" || code == "2" {
                                                 Spacer()
                                             }
-                                            Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                            Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
                                                 .scaleEffect(x: -1, y: 1)
                                                 .padding(.bottom, 20)
                                                 .padding(.trailing, code == "0" ? 10 : 0)
@@ -95,7 +95,7 @@ struct SearchVicinityView: View {
                                 }
                                 
                                 let backStation = self.store.state.nowLiveDataLoading[0] ? "🔄 로딩 중" : self.store.state.nowUpLiveData?.previousStation ?? "⚠️ 정보없음"
-                                Text(backStation)
+                                Text(backStation.isEmpty ? "-" : backStation)
                                     .font(.system(size: ViewStyle.FontSize.smallSize))
                                 
                                 Spacer()
@@ -128,7 +128,7 @@ struct SearchVicinityView: View {
                                                 Spacer()
                                             }
                                             
-                                            Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                            Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
                                                 .padding(.bottom, 20)
                                                 .padding(.trailing, code == "4" ? -15 : -5)
                                                 .padding(.leading, code == "0" ? 10 : 0)
@@ -141,7 +141,7 @@ struct SearchVicinityView: View {
                                 }
                                 
                                 let backStation = self.store.state.nowLiveDataLoading[1] ? "🔄 로딩 중" : self.store.state.nowDownLiveData?.previousStation ?? "⚠️ 정보없음"
-                                Text(backStation)
+                                Text(backStation.isEmpty ? "-" : backStation)
                                     .font(.system(size: ViewStyle.FontSize.smallSize))
                             }
                             .offset(x: -10, y: 10)
@@ -190,7 +190,7 @@ struct SearchVicinityView: View {
                         }
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
                     }
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 10)
                 }
             }
             .padding(.horizontal, 15)
