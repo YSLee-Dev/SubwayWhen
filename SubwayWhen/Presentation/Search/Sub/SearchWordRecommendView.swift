@@ -22,18 +22,18 @@ struct SearchWordRecommendView: View {
             
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)]) {
                     ForEach(self.store.state.recommendStationList, id: \.self) { data in
-                        HStack {
-                            Spacer()
-                            Text(data)
-                                .foregroundStyle(.black.opacity(0.8))
-                                .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
-                            Spacer()
-                        }
-                        .padding(15)
-                        .background {
-                            RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
-                                .fill(Color.gray.opacity(0.2))
-                        }
+                        AnimationButtonInSUI(bgColor: Color.gray.opacity(0.2), tappedBGColor: Color.gray.opacity(0.1), buttonView: {
+                            HStack {
+                                Spacer()
+                                Text(data)
+                                    .foregroundStyle(.black.opacity(0.8))
+                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                                Spacer()
+                            }
+                            .padding(5)
+                        }, tappedAction: {
+                            
+                        })
                         .padding(.vertical, 5)
                     }
                 }
