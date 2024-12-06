@@ -54,6 +54,7 @@ struct SearchVicinityView: View {
                 }
                 .scrollIndicators(.hidden)
                 .padding(.bottom, 15)
+                .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                 
                 if let index = self.store.nowTappedStationIndex {
                     let tappedData = self.store.nowVicinityStationList[index]
@@ -136,7 +137,6 @@ struct SearchVicinityView: View {
                                                 Spacer()
                                             }
                                         }
-                                        
                                     }
                                 }
                                 
@@ -146,6 +146,7 @@ struct SearchVicinityView: View {
                             }
                             .offset(x: -10, y: 10)
                         }
+                        .animation(.smooth(duration: 0.4), value: self.store.state.nowTappedStationIndex)
                         .padding(.top, 10)
                         .padding(.bottom, 25)
                         
@@ -192,7 +193,6 @@ struct SearchVicinityView: View {
                     .padding(.bottom, 15)
                 }
             }
-            .animation(.easeInOut(duration: 0.3), value: self.store.state.nowTappedStationIndex)
             .padding(.horizontal, 15)
         }
     }
