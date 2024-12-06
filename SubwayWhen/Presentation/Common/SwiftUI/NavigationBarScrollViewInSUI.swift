@@ -57,6 +57,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                             
                             Spacer()
                         }
+                        .offset(y: -7.5)
                     }
                     self.contentsView()
                 }
