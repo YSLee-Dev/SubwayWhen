@@ -19,7 +19,7 @@ class SearchFeature: NSObject {
     
     @ObservableState
     struct State: Equatable {
-        var isFirst = false
+        var isFirst = true
         var locationAuth = false
         var nowLocation: LocationData?
         var nowVicinityStationList: [VicinityTransformData] = []
@@ -62,7 +62,7 @@ class SearchFeature: NSObject {
                 }
             case .locationAuthResult(let isOn):
                 state.locationAuth = isOn
-                if isOn {
+                if isOn && state.nowVicinityStationList.isEmpty {
                     return .send(.locationDataRequest)
                 } else {
                     return .none
@@ -96,20 +96,18 @@ class SearchFeature: NSObject {
                 state.nowLiveDataLoading = [true, true]
                 return .merge([
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "02호선" ? "외선순환" : "상행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
-                        try? await Task.sleep(for: .milliseconds(1000))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "외선" : "상행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                    },
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line != "02호선" ? "내선순환" : "하행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
-                        try? await Task.sleep(for: .milliseconds(100))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "내선" : "하행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                    }
                 ])
                 
             case .liveDataResult(let data):
                 if data.first == nil {return .none}
-                if data.first!.upDown == "상행" || data.first!.upDown == "외선순환" {
+                if data.first!.upDown == "상행" || data.first!.upDown == "외선" {
                     state.nowUpLiveData = data.first!
                     state.nowLiveDataLoading[0] = false
                 } else {
