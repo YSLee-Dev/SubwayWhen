@@ -110,10 +110,6 @@ struct SearchVicinityView: View {
                                 .offset(x: 10)
                                 
                                 StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 65, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
-                                    .onTapGesture {
-                                        self.store.send(.stationTapped(nil))
-                                        proxy.scrollTo("SCROLL_TO_TOP", anchor: .top)
-                                    }
                                 
                                 VStack(alignment: .trailing) {
                                     Spacer()
@@ -195,7 +191,36 @@ struct SearchVicinityView: View {
                                     }
                                 }
                             }
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10))
+                            
+                            ExpandedViewInSUI(alignment: .trailing) {
+                                HStack(spacing: 15) {
+                                    Image(systemName: "arrow.up.to.line")
+                                        .resizable()
+                                        .frame(width: 22, height: 22)
+                                        .foregroundColor(.init(uiColor: .gray))
+                                        .onTapGesture {
+                                            self.store.send(.stationTapped(nil))
+                                            proxy.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                        }
+                                    
+                                    Image(systemName: "arrow.triangle.2.circlepath")
+                                        .resizable()
+                                        .frame(width: 27, height: 22)
+                                        .foregroundColor(.init(uiColor: .gray))
+                                        .rotationEffect(.init(degrees: self.store.nowLiveDataLoading.filter {$0}.isEmpty ? 0 :180))
+                                        .animation(.easeInOut(duration: 0.5), value: self.store.nowLiveDataLoading.map {$0}.isEmpty)
+                                        .onTapGesture {
+                                            self.store.send(.refreshBtnTapped)
+                                        }
+                                    
+                                    Image(systemName: "arrow.up.left.and.arrow.down.right.circle")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.init(uiColor: .gray))
+                                }
+                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
+                            }
                         }
                         .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading)
                         .padding(.bottom, 10)

@@ -45,6 +45,7 @@ class SearchFeature: NSObject {
         case stationTapped(Int?)
         case recommendStationRequest
         case recommendStationResult([String])
+        case refreshBtnTapped
     }
     
     var body: some Reducer<State, Action> {
@@ -129,6 +130,9 @@ class SearchFeature: NSObject {
             case .recommendStationResult(let data):
                 state.recommendStationList = data
                 return .none
+                
+            case .refreshBtnTapped:
+                return .send(.liveDataRequest)
                 
             default: return .none
             }
