@@ -62,93 +62,141 @@ struct SearchVicinityView: View {
                 if let index = self.store.nowTappedStationIndex {
                     let tappedData = self.store.nowVicinityStationList[index]
                     
-                    HStack(spacing: 0) {
-                        VStack(alignment: .leading) {
-                            Spacer()
-                                .frame(height: 10)
-                            
-                            ZStack(alignment: .leading){
-                                RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
-                                    .fill(Color(tappedData.lineColorName))
-                                    .frame(height: 5)
-                                    .scaleEffect(y: self.store.state.nowLiveDataLoading[0] ? 0.2 : 1)
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                    .frame(height: 10)
                                 
-                                StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
-                                    .opacity(self.store.state.nowLiveDataLoading[0] ? 0 : 1)
-                            }
-                            .overlay {
-                                if !self.store.state.nowLiveDataLoading[0] {
-                                    let code = self.store.nowUpLiveData?.trainCode ?? "99"
-                                    HStack {
-                                        if code == "0" || code == "1" || code == "2" {
-                                            Spacer()
-                                        }
-                                        Text(FixInfo.saveSetting.detailVCTrainIcon)
-                                            .padding(.bottom, 20)
-                                            .padding(.trailing, code == "0" ? 10 : 0)
-                                            .padding(.leading, code == "4" ? -15 : -5)
-                                        
-                                        if code == "4" || code == "5" || code == "99" {
-                                            Spacer()
+                                ZStack(alignment: .leading){
+                                    RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
+                                        .fill(Color(tappedData.lineColorName))
+                                        .frame(height: 5)
+                                        .scaleEffect(y: self.store.state.nowLiveDataLoading[0] ? 0.2 : 1)
+                                    
+                                    StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
+                                        .opacity(self.store.state.nowLiveDataLoading[0] ? 0 : 1)
+                                }
+                                .overlay {
+                                    if !self.store.state.nowLiveDataLoading[0] {
+                                        let code = self.store.nowUpLiveData?.code ?? "99"
+                                        HStack {
+                                            if code == "0" || code == "1" || code == "2" {
+                                                Spacer()
+                                            }
+                                            Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                                .scaleEffect(x: -1, y: 1)
+                                                .padding(.bottom, 20)
+                                                .padding(.trailing, code == "0" ? 10 : 0)
+                                                .padding(.leading, code == "4" ? -15 : -5)
+                                            
+                                            if code == "4" || code == "5" || code == "99" {
+                                                Spacer()
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            
-                            let backStation = self.store.state.nowLiveDataLoading[0] ? "🔄" : self.store.nowUpLiveData?.previousStation ?? ""
-                            Text(backStation)
-                                .font(.system(size: ViewStyle.FontSize.smallSize))
-                            
-                            Spacer()
-                        }
-                        .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[0])
-                        .offset(x: 7.5)
-                        
-                        StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 45, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
-                            .onTapGesture {
-                                self.store.send(.stationTapped(nil))
-                            }
-                        
-                        VStack(alignment: .trailing) {
-                            Spacer()
-                            
-                            ZStack(alignment: .trailing){
-                                RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
-                                    .fill(Color(tappedData.lineColorName))
-                                    .frame(height: 5)
-                                    .scaleEffect(y: self.store.state.nowLiveDataLoading[1] ? 0.2 : 1)
                                 
-                                StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
-                                    .opacity(self.store.state.nowLiveDataLoading[1] ? 0 : 1)
+                                let backStation = self.store.state.nowLiveDataLoading[0] ? "🔄 로딩 중" : self.store.state.nowUpLiveData?.previousStation ?? "⚠️ 정보없음"
+                                Text(backStation)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize))
+                                
+                                Spacer()
                             }
-                            .overlay {
-                                if !self.store.state.nowLiveDataLoading[1] {
-                                    let code = self.store.nowDownLiveData?.trainCode ?? "99"
-                                    HStack {
-                                        if code == "4" || code == "5" || code == "99" {
-                                            Spacer()
+                            .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[0])
+                            .offset(x: 10)
+                            
+                            StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 65, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
+                                .onTapGesture {
+                                    self.store.send(.stationTapped(nil))
+                                }
+                            
+                            VStack(alignment: .trailing) {
+                                Spacer()
+                                
+                                ZStack(alignment: .trailing){
+                                    RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
+                                        .fill(Color(tappedData.lineColorName))
+                                        .frame(height: 5)
+                                        .scaleEffect(y: self.store.state.nowLiveDataLoading[1] ? 0.2 : 1)
+                                    
+                                    StationTitleViewInSUI(title: "", lineColor: tappedData.lineColorName, size: 12.5, isFill: false)
+                                        .opacity(self.store.state.nowLiveDataLoading[1] ? 0 : 1)
+                                }
+                                .overlay {
+                                    if !self.store.state.nowLiveDataLoading[1] {
+                                        let code = self.store.nowDownLiveData?.code ?? "99"
+                                        HStack {
+                                            if code == "4" || code == "5" || code == "99" {
+                                                Spacer()
+                                            }
+                                            
+                                            Text(FixInfo.saveSetting.detailVCTrainIcon)
+                                                .padding(.bottom, 20)
+                                                .padding(.trailing, code == "4" ? -15 : -5)
+                                                .padding(.leading, code == "0" ? 10 : 0)
+                                            
+                                            if code == "0" || code == "1" || code == "2" {
+                                                Spacer()
+                                            }
                                         }
                                         
-                                        Text(FixInfo.saveSetting.detailVCTrainIcon)
-                                            .padding(.bottom, 20)
-                                            .padding(.trailing, code == "4" ? -15 : 0)
-                                            .padding(.leading, code == "0" ? 10 : 0)
-                                        
-                                        if code == "0" || code == "1" || code == "2" {
-                                            Spacer()
-                                        }
                                     }
                                 }
+                                
+                                let backStation = self.store.state.nowLiveDataLoading[1] ? "🔄 로딩 중" : self.store.state.nowDownLiveData?.previousStation ?? "⚠️ 정보없음"
+                                Text(backStation)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize))
+                            }
+                            .offset(x: -10, y: 10)
+                        }
+                        .padding(.top, 15)
+                        .padding(.bottom, 25)
+                        
+                        HStack {
+                            if let upData = self.store.nowUpLiveData {
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(upData.upDown)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize))
+                                    Text(upData.userStateMSG)
+                                        .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                                }
+                                .padding(.bottom, 10)
+                                
+                            } else {
+                                Spacer()
                             }
                             
-                            let backStation = self.store.state.nowLiveDataLoading[1] ? "🔄" : self.store.nowDownLiveData?.previousStation ?? ""
-                            Text(backStation)
-                                .font(.system(size: ViewStyle.FontSize.mediumSmallSize))
+                            Spacer()
+                            
+                            if let downData = self.store.nowDownLiveData {
+                                VStack(alignment: .trailing, spacing: 5){
+                                    Text(downData.upDown)
+                                        .font(.system(size: ViewStyle.FontSize.smallSize))
+                                    Text(downData.userStateMSG)
+                                        .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
+                                }
+                                .padding(.bottom, 10)
+                            } else {
+                                Spacer()
+                            }
                         }
-                        .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[1])
-                        .offset(x: -7.5, y: 10)
+                        .overlay {
+                            HStack {
+                                Spacer()
+                                if self.store.nowUpLiveData != nil || self.store.nowDownLiveData == nil {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(tappedData.lineColorName))
+                                        .frame(width: 1.5)
+                                        .frame(maxHeight: .infinity)
+                                }
+                                Spacer()
+                            }
+                        }
+                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
                     }
-                    .padding(.bottom, 20)
+                    .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[1])
+                    .padding(.bottom, 15)
                 }
             }
             .animation(.easeInOut(duration: 0.3), value: self.store.state.nowTappedStationIndex)
