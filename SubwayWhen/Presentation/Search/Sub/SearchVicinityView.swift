@@ -14,17 +14,14 @@ struct SearchVicinityView: View {
     var body: some View {
         MainStyleViewInSUI {
             VStack(spacing: 0) {
-                HStack {
-                    if self.store.state.nowTappedStationIndex == nil {
-                        VStack(alignment: .leading) {
-                            Text("현재 위치와 가장 가까운 역")
-                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))
-                            Text("역을 누르면 실시간 정보를 확인할 수 있어요")
-                                .foregroundStyle(.gray)
-                                .font(.system(size: ViewStyle.FontSize.smallSize))
-                        }
+                ExpandedViewInSUI(alignment: .leading)  {
+                    VStack(alignment: .leading) {
+                        Text("현재 위치와 가장 가까운 역")
+                            .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))
+                        Text("역을 누르면 실시간 정보를 확인할 수 있어요")
+                            .foregroundStyle(.gray)
+                            .font(.system(size: ViewStyle.FontSize.smallSize))
                     }
-                    Spacer()
                 }
                 .padding(.init(top: 20, leading: 0, bottom: 10, trailing: 0))
                 
@@ -56,8 +53,7 @@ struct SearchVicinityView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .padding(.bottom, self.store.nowTappedStationIndex == nil ? 15 : 0)
-                .offset(y: self.store.nowTappedStationIndex == nil ? 0 : -10)
+                .padding(.bottom, 15)
                 
                 if let index = self.store.nowTappedStationIndex {
                     let tappedData = self.store.nowVicinityStationList[index]
@@ -150,7 +146,7 @@ struct SearchVicinityView: View {
                             }
                             .offset(x: -10, y: 10)
                         }
-                        .padding(.top, 15)
+                        .padding(.top, 10)
                         .padding(.bottom, 25)
                         
                         HStack {
@@ -182,20 +178,17 @@ struct SearchVicinityView: View {
                             }
                         }
                         .overlay {
-                            HStack {
-                                Spacer()
+                            ExpandedViewInSUI(alignment: .center) {
                                 if self.store.nowUpLiveData != nil || self.store.nowDownLiveData == nil {
                                     RoundedRectangle(cornerRadius: 15)
                                         .fill(Color(tappedData.lineColorName))
                                         .frame(width: 1.5)
                                         .frame(maxHeight: .infinity)
                                 }
-                                Spacer()
                             }
                         }
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
                     }
-                    .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading[1])
                     .padding(.bottom, 15)
                 }
             }
