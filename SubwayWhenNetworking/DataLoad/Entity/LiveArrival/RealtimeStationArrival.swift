@@ -41,4 +41,25 @@ struct RealtimeStationArrival : Decodable, Equatable, Hashable {
     var detailArraivalViewText: String {
         (self.subPrevious != "" && self.code != "") ? "🚇 \(self.trainCode) 열차(\(self.lastStation)행) \n \(self.subPrevious)" : "⚠️ 실시간 정보없음"
     }
+    
+    var userStateMSG : String{
+        switch self.code{
+        case "0":
+            return "\(self.stationName) 진입"
+        case "1":
+            return "\(self.stationName) 도착"
+        case "2":
+            return "\(self.stationName) 출발"
+        case "3":
+            return "전역 출발"
+        case "4":
+            return "전역 진입"
+        case "5":
+            return "전역 도착"
+        case "99":
+            return self.previousStation == nil ? "\(self.subPrevious)" : "\(self.previousStation!) 부근"
+        default:
+            return self.code
+        }
+    }
 }
