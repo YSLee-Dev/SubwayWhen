@@ -46,7 +46,7 @@ class LocationManager: NSObject, LocationManagerProtocol {
         self.locationManager.startUpdatingLocation()
         
         return await withCheckedContinuation { continuation in
-            self.locationData.subscribe(onNext: {
+            self.locationData.take(1).subscribe(onNext: {
                 continuation.resume(returning: $0)
                 self.locationManager.stopUpdatingLocation()
             })
