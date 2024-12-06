@@ -67,7 +67,7 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 if isFirstValue == nil {
                     self.isFirstValue = value
                 } else {
-                    if (!self.isSubTitleShow && self.isFirstValue! - 32.5 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 32.5 < value)  {
+                    if (!self.isSubTitleShow && self.isFirstValue! - 25 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 25 < value)  {
                         self.isSubTitleShow = !self.isSubTitleShow
                     }
                 }
