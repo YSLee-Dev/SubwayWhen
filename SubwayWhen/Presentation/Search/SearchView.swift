@@ -36,10 +36,9 @@ struct SearchView: View {
                 } else {
                     MainStyleViewInSUI {
                         VStack(spacing: 15) {
-                            HStack {
+                            ExpandedViewInSUI(alignment: .leading) {
                                 Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
                                     .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .heavy))
-                                Spacer()
                             }
                             
                             AnimationButtonInSUI(

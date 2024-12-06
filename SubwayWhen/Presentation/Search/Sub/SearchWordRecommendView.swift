@@ -14,21 +14,18 @@ struct SearchWordRecommendView: View {
     var body: some View {
         MainStyleViewInSUI {
             VStack(spacing: 15) {
-                HStack {
+                ExpandedViewInSUI(alignment: .leading) {
                     Text("자주 검색되는 지하철역")
                         .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
-                    Spacer()
                 }
             
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)]) {
                     ForEach(self.store.state.recommendStationList, id: \.self) { data in
                         AnimationButtonInSUI(bgColor: Color.gray.opacity(0.2), tappedBGColor: Color.gray.opacity(0.1), buttonView: {
-                            HStack {
-                                Spacer()
+                            ExpandedViewInSUI(alignment: .center) {
                                 Text(data)
                                     .foregroundStyle(.black.opacity(0.8))
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
-                                Spacer()
                             }
                             .padding(5)
                         }, tappedAction: {
