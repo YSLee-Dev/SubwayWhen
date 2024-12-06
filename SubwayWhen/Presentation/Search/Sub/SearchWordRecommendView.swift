@@ -16,7 +16,7 @@ struct SearchWordRecommendView: View {
             VStack(spacing: 15) {
                 HStack {
                     Text("자주 검색되는 지하철역")
-                        .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .heavy))
+                        .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
                     Spacer()
                 }
             
