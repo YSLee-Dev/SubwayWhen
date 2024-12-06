@@ -23,7 +23,7 @@ struct SearchView: View {
                     buttonView: {
                         Text("🔍 지하철역을 검색하세요.")
                             .foregroundColor(.gray)
-                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
+                            .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
                             .frame(height: 25)
                             .padding(.horizontal, 15)
                     }
@@ -38,7 +38,7 @@ struct SearchView: View {
                         VStack(spacing: 15) {
                             ExpandedViewInSUI(alignment: .leading) {
                                 Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
-                                    .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .heavy))
+                                    .font(.system(size: ViewStyle.FontSize.mainTitleMediumSize, weight: .heavy))
                             }
                             
                             AnimationButtonInSUI(
@@ -53,6 +53,7 @@ struct SearchView: View {
                         }
                         .padding(.init(top: 20, leading: 15, bottom: 20, trailing: 15))
                     }
+                    .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                 }
                 
                 SearchWordRecommendView(store: self.$store)
