@@ -39,8 +39,8 @@ struct AnimationButtonInSUI<Contents>: View where Contents: View {
                     Spacer()
                 }
             }
+            .contentShape(Rectangle())
         })
-        .contentShape(Rectangle())
         .buttonStyle(.plain)
         .padding(.vertical, 10)
         .onLongPressGesture(
