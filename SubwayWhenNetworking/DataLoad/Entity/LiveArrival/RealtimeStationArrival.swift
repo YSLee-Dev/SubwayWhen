@@ -42,7 +42,7 @@ struct RealtimeStationArrival : Decodable, Equatable, Hashable {
         (self.subPrevious != "" && self.code != "") ? "🚇 \(self.trainCode) 열차(\(self.lastStation)행) \n \(self.subPrevious)" : "⚠️ 실시간 정보없음"
     }
     
-    var userStateMSG : String{
+    var useState : String{
         switch self.code{
         case "0":
             return "\(self.stationName) 진입"

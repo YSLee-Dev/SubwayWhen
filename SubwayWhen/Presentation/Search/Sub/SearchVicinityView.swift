@@ -23,7 +23,7 @@ struct SearchVicinityView: View {
                             .font(.system(size: ViewStyle.FontSize.smallSize))
                     }
                 }
-                .padding(.init(top: 20, leading: 0, bottom: 10, trailing: 0))
+                .padding(.init(top: 15, leading: 0, bottom: 10, trailing: 0))
                 
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
@@ -159,7 +159,7 @@ struct SearchVicinityView: View {
                                         VStack(alignment: .leading, spacing: 5){
                                             Text(upData.upDown)
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
-                                            Text(upData.userStateMSG)
+                                            Text(upData.useState)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                         }
                                     } else {
@@ -172,7 +172,7 @@ struct SearchVicinityView: View {
                                         VStack(alignment: .trailing, spacing: 5){
                                             Text(downData.upDown)
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
-                                            Text(downData.userStateMSG)
+                                            Text(downData.useState)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                         }
                                     } else {
