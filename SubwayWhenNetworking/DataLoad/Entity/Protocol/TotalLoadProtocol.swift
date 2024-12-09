@@ -11,7 +11,7 @@ import RxSwift
 
 protocol TotalLoadProtocol{
     func totalLiveDataLoad(stations : [SaveStation]) -> Observable<(MainTableViewCellData, Int)>
-    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [RealtimeStationArrival]>
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [TotalRealtimeStationArrival]>
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
     func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion>

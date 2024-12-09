@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     var resultSchdule: [ResultSchdule] = []
-    var realtimeStationArrival: [RealtimeStationArrival] = []
+    var realtimeStationArrival: [TotalRealtimeStationArrival] = []
     
     init() {}
     
@@ -18,7 +18,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         self.resultSchdule
     }
     
-    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async -> [RealtimeStationArrival] {
+    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async ->[TotalRealtimeStationArrival] {
         self.realtimeStationArrival
     }
     
