@@ -48,6 +48,10 @@ class SearchFeature: NSObject {
         case refreshBtnTapped
     }
     
+    enum Key: Equatable, CaseIterable {
+        case liveDataRequest
+    }
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -105,6 +109,7 @@ class SearchFeature: NSObject {
                         await send(.liveDataResult(data))
                    }
                 ])
+                .cancellable(id: Key.liveDataRequest)
                 
             case .liveDataResult(let data):
                 if data.first == nil {return .none}
@@ -119,7 +124,10 @@ class SearchFeature: NSObject {
                 
             case .stationTapped(let index):
                 state.nowTappedStationIndex = index
-                return .send(.liveDataRequest)
+                return .concatenate([
+                    .cancel(id: Key.liveDataRequest),
+                    .send(.liveDataRequest)
+                ])
                 
             case .recommendStationRequest:
                 return .run { send in

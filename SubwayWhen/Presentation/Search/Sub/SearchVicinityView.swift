@@ -102,8 +102,8 @@ struct SearchVicinityView: View {
                                             }
                                         }
                                         
-                                        let backStation = self.store.state.nowLiveDataLoading[0] ? "🔄 로딩 중" : self.store.state.nowUpLiveData?.previousStation ?? "⚠️ 정보없음"
-                                        Text(backStation.isEmpty ? "-" : backStation)
+                                        let backStation = self.store.state.nowLiveDataLoading[0] ? "" : self.store.state.nowUpLiveData?.previousStation ?? "-"
+                                        Text(backStation)
                                             .font(.system(size: ViewStyle.FontSize.smallSize))
                                         
                                         Spacer()
@@ -144,8 +144,8 @@ struct SearchVicinityView: View {
                                             }
                                         }
                                         
-                                        let backStation = self.store.state.nowLiveDataLoading[1] ? "🔄 로딩 중" : self.store.state.nowDownLiveData?.previousStation ?? "⚠️ 정보없음"
-                                        Text(backStation.isEmpty ? "-" : backStation)
+                                        let backStation = self.store.state.nowLiveDataLoading[1] ? "-" : self.store.state.nowDownLiveData?.previousStation ?? "-"
+                                        Text(backStation)
                                             .font(.system(size: ViewStyle.FontSize.smallSize))
                                     }
                                     .offset(x: -10, y: 10)
@@ -155,28 +155,23 @@ struct SearchVicinityView: View {
                                 .padding(.bottom, 25)
                                 
                                 HStack {
-                                    if let upData = self.store.nowUpLiveData {
-                                        VStack(alignment: .leading, spacing: 5){
-                                            Text(upData.upDown)
-                                                .font(.system(size: ViewStyle.FontSize.smallSize))
-                                            Text(upData.useState)
-                                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
-                                        }
-                                    } else {
-                                        Spacer()
+                                    let upData = self.store.nowUpLiveData
+                                    let downData = self.store.nowDownLiveData
+                                    
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(tappedData.line == "2호선" ? "외선" : "상행")
+                                            .font(.system(size: ViewStyle.FontSize.smallSize))
+                                        Text((upData == nil || self.store.nowLiveDataLoading[0]) ? "🔄 로딩 중"  : upData!.useState.isEmpty ? "⚠️ 정보없음" : upData!.useState)
+                                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                     }
                                     
                                     Spacer()
                                     
-                                    if let downData = self.store.nowDownLiveData {
-                                        VStack(alignment: .trailing, spacing: 5){
-                                            Text(downData.upDown)
-                                                .font(.system(size: ViewStyle.FontSize.smallSize))
-                                            Text(downData.useState)
-                                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
-                                        }
-                                    } else {
-                                        Spacer()
+                                    VStack(alignment: .trailing, spacing: 5){
+                                        Text(tappedData.line == "2호선" ? "내선" : "하행")
+                                            .font(.system(size: ViewStyle.FontSize.smallSize))
+                                        Text((downData == nil || self.store.nowLiveDataLoading[1]) ?  "🔄 로딩 중"  : downData!.useState.isEmpty ? "⚠️ 정보없음" : downData!.useState)
+                                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                     }
                                 }
                                 .overlay {
