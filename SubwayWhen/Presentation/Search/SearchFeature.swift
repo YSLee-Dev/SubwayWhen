@@ -25,8 +25,8 @@ class SearchFeature: NSObject {
         var nowVicinityStationList: [VicinityTransformData] = []
         var nowLiveDataLoading = [false, false]
         var nowTappedStationIndex: Int? = nil
-        var nowUpLiveData: RealtimeStationArrival?
-        var nowDownLiveData: RealtimeStationArrival?
+        var nowUpLiveData: TotalRealtimeStationArrival?
+        var nowDownLiveData: TotalRealtimeStationArrival?
         var recommendStationList: [String] = [
             // 통신 전 임시 값
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
@@ -41,7 +41,7 @@ class SearchFeature: NSObject {
         case locationToVicinityStationRequest
         case locationToVicinityStationResult([VicinityTransformData])
         case liveDataRequest
-        case liveDataResult([RealtimeStationArrival])
+        case liveDataResult([TotalRealtimeStationArrival])
         case stationTapped(Int?)
         case recommendStationRequest
         case recommendStationResult([String])
