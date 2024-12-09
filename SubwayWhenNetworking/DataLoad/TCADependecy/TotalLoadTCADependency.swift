@@ -37,7 +37,7 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         }
     }
     
-    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel)  async -> [RealtimeStationArrival] {
+    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async ->[TotalRealtimeStationArrival] {
         await withCheckedContinuation { continuation  in
             self.totalModel.singleLiveDataLoad(requestModel: requestModel)
                 .subscribe(onNext: { data in

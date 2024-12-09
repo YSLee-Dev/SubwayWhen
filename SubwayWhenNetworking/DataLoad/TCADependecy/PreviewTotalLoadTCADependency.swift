@@ -22,9 +22,10 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         ]
     }
     
-    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel)  async -> [RealtimeStationArrival]{
-        [
-            .init(upDown: "하행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "전전역 도착", code: "3", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "1")
+    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async ->[TotalRealtimeStationArrival] {
+        let realTime = RealtimeStationArrival(upDown: "하행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "전전역 도착", code: "3", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "1")
+        return [
+            .init(realTimeStationArrival:  realTime, backStationName: "고속터미널", nextStationName: "남부터미널", nowStateMSG: realTime.useState)
         ]
     }
     

@@ -15,6 +15,12 @@ class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
     private var coreDataManager: CoreDataScheduleManagerProtocol
     private let bag = DisposeBag()
+    private var stationIDList: [DetailStationId] {
+        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return  []}
+        guard let data = try? Data(contentsOf: fileUrl) else {return  []}
+        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return  []}
+        return decodingData
+    }
     
     init(loadModel : LoadModel = .init(), coreDataManager: CoreDataScheduleManager = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
@@ -66,22 +72,23 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     // live 정보만 반환하되, 필터링을 거침
-    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [RealtimeStationArrival]> {
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [TotalRealtimeStationArrival]> {
         self.loadModel.stationArrivalRequest(stationName: requestModel.stationName)
             .map{ data -> LiveStationModel in
                 guard case .success(let value) = data else {return .init(realtimeArrivalList: [])}
                 return value
             }
-            .map { data -> [RealtimeStationArrival] in
-                let errorModel = RealtimeStationArrival(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.line.rawValue, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: "")
+            .map { data -> [TotalRealtimeStationArrival] in
+                let errorModel = TotalRealtimeStationArrival(realTimeStationArrival: .init(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.line.rawValue, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: ""), backStationName: "", nextStationName: "", nowStateMSG: "")
                 
                 if data.realtimeArrivalList.isEmpty {
                     return [errorModel, errorModel]
                 } else {
-                    var arrivalData: [RealtimeStationArrival] = []
+                    var arrivalData: [TotalRealtimeStationArrival] = []
                     for x in data.realtimeArrivalList {
                         if requestModel.upDown == x.upDown && requestModel.line.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
-                            arrivalData.append(x)
+                            let backNextStation = self.nextAndBackStationSearch(backId: x.backStationId, nextId: x.nextStationId, lineCode: requestModel.line.lineCode)
+                            arrivalData.append(.init(realTimeStationArrival: x, backStationName: backNextStation.first ?? "", nextStationName: backNextStation.last ?? "", nowStateMSG: x.useState))
                         }
                         if arrivalData.count >= 2 {
                             break
@@ -486,5 +493,30 @@ class TotalLoadModel : TotalLoadProtocol {
     private func lineSeparation(oldValue: String) -> String {
         guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
         return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex]).replacingOccurrences(of: " ", with: "")
+    }
+    
+    private func nextAndBackStationSearch(backId : String?, nextId : String?, lineCode: String) -> [String]{
+        var backStation : String = ""
+        var nextStation : String = ""
+        let decodingData = self.stationIDList
+        
+        for x in decodingData{
+            if x.stationId == backId{
+                backStation = x.stationName
+            }
+            
+            if x.stationId == nextId{
+                nextStation = x.stationName
+            }
+            
+            if backStation != "" && nextStation != ""{
+                break
+            }
+        }
+        if lineCode == "1065" { // 공항철도는 반대
+            return  [nextStation, backStation]
+        } else {
+            return  [backStation, nextStation]
+        }
     }
 }

@@ -463,6 +463,13 @@
 		FF8CBE242C89393300E6B4D2 /* SinbundangScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8CBE212C8938BF00E6B4D2 /* SinbundangScheduleModel.swift */; };
 		FFABBB022C92A5C300CCC692 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FFABBB1A2C92C34000CCC692 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
+		FFE826202D06B1300070BFED /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
+		FFE826212D06B1300070BFED /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
+		FFE826222D06B1370070BFED /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
+		FFE826232D06B1370070BFED /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
+		FFE826252D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
+		FFE826262D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
+		FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -939,6 +946,7 @@
 		FF8CBE292C8977F700E6B4D2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataScheduleManager.swift; sourceTree = "<group>"; };
+		FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRealtimeStationArrival.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1750,6 +1758,7 @@
 		34A3039C29AF86FD00948EDD /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				34F5F11129657B060010A21D /* StationId */,
 				FF03653C2D011CF300EF325D /* SubwayLine */,
 				34A3F0A52AB820FE0012115F /* ImportantData */,
 				34D9EA072A557DBE0080AD17 /* VcinityStation */,
@@ -1766,6 +1775,7 @@
 				34A3039E29AF86FD00948EDD /* RealtimeStationArrival.swift */,
 				34A3039F29AF86FD00948EDD /* LiveStationModel.swift */,
 				FF36A3712C805EAF00387A3D /* DetailArrivalDataRequestModel.swift */,
+				FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */,
 			);
 			path = LiveArrival;
 			sourceTree = "<group>";
@@ -2353,7 +2363,6 @@
 			children = (
 				FF36A36D2C8055C900387A3D /* DetailSendModel.swift */,
 				34A1F5722A0A5CA000996839 /* DetailActivityLoadData.swift */,
-				34F5F11129657B060010A21D /* StationId */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -3007,6 +3016,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA4CB7F62BB92149003C41F6 /* RequestToken.plist in Resources */,
+				FFE826232D06B1370070BFED /* DetailStationIdList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3015,6 +3025,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA4CB7F72BB92149003C41F6 /* RequestToken.plist in Resources */,
+				FFE826222D06B1370070BFED /* DetailStationIdList.plist in Resources */,
 				FAD2F5F92BB566A900B95B52 /* Assets.xcassets in Resources */,
 				FA4CB7F52BB6C2A5003C41F6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -3419,6 +3430,7 @@
 				FF24F7B62C981F49001B0457 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				B6B2257D2B90C07C00F6D669 /* SaveTrainIcon.swift in Sources */,
 				349E2F3F29BDB3B700C54EE9 /* ReportCoordinatorDelegate.swift in Sources */,
+				FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */,
 				B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */,
 				3499DE8629D15D4E00A6E8C1 /* ReportModelProtocol.swift in Sources */,
 				34A303B229AF86FD00948EDD /* NetworkManager.swift in Sources */,
@@ -3529,6 +3541,7 @@
 				FA4CB79E2BB684B1003C41F6 /* VicinityStationsData.swift in Sources */,
 				FA4CB79F2BB684B1003C41F6 /* KorailTrainNumber.swift in Sources */,
 				FA4CB7A02BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
+				FFE826212D06B1300070BFED /* DetailStationId.swift in Sources */,
 				FA4CB7A12BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FF03653A2D001FEC00EF325D /* VicinityTransformData.swift in Sources */,
 				FA4CB7A22BB684B1003C41F6 /* ImportantData.swift in Sources */,
@@ -3544,6 +3557,7 @@
 				FA4CB78D2BB68495003C41F6 /* TotalLoadModel.swift in Sources */,
 				FFABBB022C92A5C300CCC692 /* CoreDataScheduleManager.swift in Sources */,
 				FF8CBE222C8938BF00E6B4D2 /* SinbundangScheduleModel.swift in Sources */,
+				FFE826252D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3553,7 +3567,9 @@
 			files = (
 				FF36A37F2C80633800387A3D /* TotalLoadTCADependency.swift in Sources */,
 				FA4CB7C52BB687D2003C41F6 /* MainTableViewCellData.swift in Sources */,
+				FFE826262D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */,
 				FA4CB78E2BB68497003C41F6 /* NetworkManager.swift in Sources */,
+				FFE826202D06B1300070BFED /* DetailStationId.swift in Sources */,
 				FA4CB7C72BB687DA003C41F6 /* MainTableViewCellType.swift in Sources */,
 				FA4CB78F2BB68497003C41F6 /* TotalLoadModel.swift in Sources */,
 				FA4CB7A62BB684B1003C41F6 /* ScheduleType.swift in Sources */,
