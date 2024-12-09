@@ -35,7 +35,7 @@ struct SearchWordRecommendView: View {
                     }
                 }
             }
-            .padding(.init(top: 20, leading: 15, bottom: 20, trailing: 15))
+            .padding(15)
         }
         .padding(.bottom, 20)
     }
