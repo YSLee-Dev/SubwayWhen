@@ -24,7 +24,7 @@ struct SearchWordRecommendView: View {
                         AnimationButtonInSUI(bgColor: Color.gray.opacity(0.2), tappedBGColor: Color.gray.opacity(0.1), buttonView: {
                             ExpandedViewInSUI(alignment: .center) {
                                 Text(data)
-                                    .foregroundStyle(.black.opacity(0.8))
+                                    .foregroundStyle(Color(uiColor: UIColor.label).opacity(0.8))
                                     .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
                             }
                             .padding(5)
