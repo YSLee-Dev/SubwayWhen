@@ -29,7 +29,7 @@ struct MainTableViewCellData: Decodable, Hashable {
     var backStationId : String
     var nextStationId : String
     let korailCode : String
-    var state: String
+    var stateMSG: String
     
     var useTime : String{
         if self.type == .real{
