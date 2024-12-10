@@ -37,9 +37,19 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
             .init(id: "4", name: "사당", line: "4호선", distance: "3000m")
         ]
     }
+    
     func defaultViewListLoad() async -> [String] {
         [
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
+        ]
+    }
+    
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
+        return [
+            .init(stationName: "논현", lineNumber: .seven, stationCode: "732"),
+            .init(stationName: "논현", lineNumber: .shinbundang, stationCode: "D05"),
+            .init(stationName: "신논현", lineNumber: .nine, stationCode: "925"),
+            .init(stationName: "신논현", lineNumber: .shinbundang, stationCode: "D06"),
         ]
     }
 }
