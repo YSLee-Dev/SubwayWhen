@@ -298,6 +298,7 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
+    // Rx 버전은 삭제 예정
     func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion> {
         self.loadModel.stationSearch(station: stationName)
             .map{ data -> SearchStaion? in
@@ -306,6 +307,22 @@ class TotalLoadModel : TotalLoadProtocol {
             }
             .asObservable()
             .filterNil()
+    }
+    
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.stationSearch(station: stationName)
+                .map{ data -> SearchStaion? in
+                    guard case .success(let value) = data else {return nil}
+                    return value
+                }
+                .asObservable()
+                .filterNil()
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0.SearchInfoBySubwayNameService.row)
+                })
+                .disposed(by: self.bag)
+        }
     }
     
     // Rx 버전은 삭제 예정
