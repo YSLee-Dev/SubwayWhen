@@ -38,7 +38,7 @@ struct SearchView: View {
                         VStack(spacing: 15) {
                             ExpandedViewInSUI(alignment: .leading) {
                                 Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
-                                    .font(.system(size: ViewStyle.FontSize.mainTitleMediumSize, weight: .heavy))
+                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
                             }
                             
                             AnimationButtonInSUI(
@@ -47,11 +47,11 @@ struct SearchView: View {
                                         .foregroundStyle(.white)
                                         .font(.system(size: ViewStyle.FontSize.smallSize))
                                 }) {
-                                    
+                                    self.store.send(.locationAuthRequest)
                                 }
                                 .frame(width: 150)
                         }
-                        .padding(.init(top: 20, leading: 15, bottom: 20, trailing: 15))
+                        .padding(15)
                     }
                     .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                 }
