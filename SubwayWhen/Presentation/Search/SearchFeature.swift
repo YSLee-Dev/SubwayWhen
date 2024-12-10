@@ -19,28 +19,32 @@ class SearchFeature: NSObject {
     
     @ObservableState
     struct State: Equatable {
-        var isFirst = true
-        var locationAuth = false
-        var nowLocation: LocationData?
         var nowVicinityStationList: [VicinityTransformData] = []
         var nowLiveDataLoading = [false, false]
         var nowTappedStationIndex: Int? = nil
         var nowUpLiveData: TotalRealtimeStationArrival?
         var nowDownLiveData: TotalRealtimeStationArrival?
+        var nowStationSearchList: [searchStationInfo] = []
         var recommendStationList: [String] = [
             // 통신 전 임시 값
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
         ]
+        var isSearchMode = false
+        var isFirst = true
+        var searchQuery = ""
+        var locationAuth = false
+        
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
     
-    enum Action: Equatable {
+    enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
         case onAppear
         case locationAuthRequest
         case locationAuthResult([Bool]) // index0 : 자동 여부 (버튼클릭 -> 수동), index1: result
         case locationDataRequest
         case locationDataResult(LocationData?)
-        case locationToVicinityStationRequest
+        case locationToVicinityStationRequest(LocationData)
         case locationToVicinityStationResult([VicinityTransformData])
         case liveDataRequest
         case liveDataResult([TotalRealtimeStationArrival])
@@ -51,6 +55,9 @@ class SearchFeature: NSObject {
         case vicinityListOpenBtnTapped
         case disposableDetailBtnTapped
         case dialogAction(PresentationAction<DialogAction>)
+        case isSearchMode(Bool)
+        case stationSearchRequest
+        case stationSearchResult([searchStationInfo])
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -60,11 +67,14 @@ class SearchFeature: NSObject {
     
     enum Key: Equatable, CaseIterable {
         case liveDataRequest
+        case searchDelay
     }
     
     weak var delegate: SearchVCActionProtocol?
     
     var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -101,13 +111,12 @@ class SearchFeature: NSObject {
                 }
                 
             case .locationDataResult(let data):
-                state.nowLocation = data
-                return .send(.locationToVicinityStationRequest)
+                guard let location = data else {return .none}
+                return .send(.locationToVicinityStationRequest(location))
                 
-            case .locationToVicinityStationRequest:
-                if state.nowLocation == nil {return .none}
-                return .run { [location = state.nowLocation]send in
-                    let data = await self.totalLoad.vicinityStationsDataLoad(x: location!.lon, y: location!.lat)
+            case .locationToVicinityStationRequest(let location):
+                return .run { send in
+                    let data = await self.totalLoad.vicinityStationsDataLoad(x: location.lon, y: location.lat)
                     return await send(.locationToVicinityStationResult(data))
                 }
                 
@@ -198,6 +207,33 @@ class SearchFeature: NSObject {
                 }
                 state.dialogState = nil
                 return .none
+                
+            case .isSearchMode(let isOn):
+                state.isSearchMode = isOn
+                return .none
+                
+            case .binding(\.searchQuery):
+                return .concatenate([
+                    .cancel(id: Key.searchDelay),
+                    .run { send in
+                        try await Task.sleep(for: .milliseconds(500))
+                        await send(.stationSearchRequest)
+                    }
+                ])
+                .cancellable(id: Key.searchDelay)
+                
+            case .stationSearchRequest:
+                if state.searchQuery.isEmpty {return .none}
+                return .run { [name = state.searchQuery] send in
+                    let result = await self.totalLoad.stationNameSearchReponse(name)
+                    await send(.stationSearchResult(result))
+                }
+                
+            case .stationSearchResult(let result):
+                state.nowStationSearchList = result
+                return .none
+                
+            default: return .none
             }
         }
     }

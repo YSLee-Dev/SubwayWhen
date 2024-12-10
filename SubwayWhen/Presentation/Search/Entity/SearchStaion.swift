@@ -15,7 +15,7 @@ struct SearchInfoBySubwayNameService : Decodable{
     let row : [searchStationInfo]
 }
 
-struct searchStationInfo : Decodable{
+struct searchStationInfo : Decodable, Equatable{
     let stationName : String
     let lineNumber : line
     let stationCode : String
