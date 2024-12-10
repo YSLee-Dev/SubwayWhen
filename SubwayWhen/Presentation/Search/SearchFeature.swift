@@ -31,6 +31,7 @@ class SearchFeature: NSObject {
             // 통신 전 임시 값
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
         ]
+        @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
     
     enum Action: Equatable {
@@ -48,6 +49,13 @@ class SearchFeature: NSObject {
         case recommendStationResult([String])
         case refreshBtnTapped
         case vicinityListOpenBtnTapped
+        case disposableDetailBtnTapped
+        case dialogAction(PresentationAction<DialogAction>)
+        
+        enum DialogAction: Equatable {
+            case cancelBtnTapped
+            case upDownBtnTapped(Bool) // 상행/외선이 true, 하행/내선이 false
+        }
     }
     
     enum Key: Equatable, CaseIterable {
@@ -116,11 +124,11 @@ class SearchFeature: NSObject {
                     .run { send in
                         let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "외선" : "상행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
-                   },
+                    },
                     .run { send in
                         let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "내선" : "하행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
-                   }
+                    }
                 ])
                 .cancellable(id: Key.liveDataRequest)
                 
@@ -157,6 +165,38 @@ class SearchFeature: NSObject {
                 
             case .vicinityListOpenBtnTapped:
                 self.delegate?.locationPresent()
+                return .none
+                
+            case .disposableDetailBtnTapped:
+                let upDown = state.nowUpLiveData?.upDown ?? "" == "상행" ? "상/하행" : "외/내선"
+                state.dialogState = .init(title: {
+                    TextState("")
+                }, actions: {
+                    ButtonState(action: .upDownBtnTapped(true)) {
+                        TextState(state.nowUpLiveData?.upDown ?? "")
+                    }
+                    ButtonState(action: .upDownBtnTapped(false)) {
+                        TextState(state.nowDownLiveData?.upDown ?? "")
+                    }
+                    ButtonState(role: .cancel, action: .cancelBtnTapped) {
+                        TextState("취소")
+                    }
+                }, message: {
+                    TextState("\(upDown) 정보를 확인해주세요.")
+                })
+                return .none
+                
+            case .dialogAction(let action):
+                switch action {
+                case .presented(.upDownBtnTapped(let isUp)):
+                    guard let data = isUp ? state.nowUpLiveData : state.nowDownLiveData else {return .none}
+                    
+                    // 임시로직
+                    self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: data.lineNumber ?? "", stationCode: data.code, lineCode: "", exceptionLastStation: "", korailCode: ""))
+                    
+                default: break
+                }
+                state.dialogState = nil
                 return .none
             }
         }
