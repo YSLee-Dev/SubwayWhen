@@ -16,7 +16,7 @@ struct SearchVicinityView: View {
             VStack(spacing: 0) {
                 ExpandedViewInSUI(alignment: .leading)  {
                     VStack(alignment: .leading) {
-                        Text("현재 위치와 가장 가까운 역")
+                        Text("가까운 지하철역 찾기")
                             .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))
                         Text("역을 누르면 실시간 정보를 확인할 수 있어요")
                             .foregroundStyle(.gray)
@@ -60,7 +60,7 @@ struct SearchVicinityView: View {
                         }
                     }
                     .scrollIndicators(.hidden)
-                    .padding(.bottom, self.store.nowTappedStationIndex == nil ? 15 : 0)
+                    .padding(.bottom, self.store.nowTappedStationIndex == nil ? 10 : 0)
                     .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                     
                     if let index = self.store.nowTappedStationIndex {
@@ -231,6 +231,17 @@ struct SearchVicinityView: View {
                         }
                         .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading)
                         .padding(.bottom, 10)
+                    } else {
+                        AnimationButtonInSUI(
+                            bgColor: Color("AppIconColor"), tappedBGColor: Color("AppIconColor"), buttonView: {
+                                Text("목록으로 확인하기")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize))
+                            }) {
+                                self.store.send(.vicinityListOpenBtnTapped)
+                            }
+                            .frame(width: 200)
+                            .padding(.bottom, 15)
                     }
                 }
             }

@@ -6,25 +6,33 @@
 //
 
 import UIKit
+import ComposableArchitecture
+import SwiftUI
 
 class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
     var viewModel: SearchViewModelProtocol?
     weak var delegate: SearchCoordinatorDelegate?
+    var store: StoreOf<SearchFeature>?
     
     init(){
         self.navigation = .init()
     }
     
     func start() {
-        let viewModel = SearchViewModel()
-        viewModel.delegate = self
-        self.viewModel = viewModel
+        self.store = StoreOf<SearchFeature>(initialState: .init(), reducer: {
+            let feature = SearchFeature()
+            feature.delegate = self
+            return feature
+        })
+        guard let store = self.store else { return }
+        let searchView = SearchView(store: store)
+        let vc = UIHostingController(rootView: searchView)
+        vc.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
         
-        let search = SearchVC(viewModel: viewModel)
-        search.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        self.navigation.pushViewController(search, animated: true)
+        self.navigation.setNavigationBarHidden(true, animated: false)
+        self.navigation.pushViewController(vc, animated: true)
     }
 }
 
