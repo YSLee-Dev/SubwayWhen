@@ -71,7 +71,7 @@ struct SearchVicinityView: View {
                                 HStack(spacing: 0) {
                                     VStack(alignment: .leading) {
                                         Spacer()
-                                            .frame(height: 10)
+                                            .frame(height: 15)
                                         
                                         ZStack(alignment: .leading){
                                             RoundedRectangle(cornerRadius: ViewStyle.Layer.radius)
@@ -85,25 +85,27 @@ struct SearchVicinityView: View {
                                         .overlay {
                                             if !self.store.state.nowLiveDataLoading[0] {
                                                 let code = self.store.nowUpLiveData?.code ?? "99"
-                                                HStack {
-                                                    if code == "0" || code == "1" || code == "2" {
-                                                        Spacer()
-                                                    }
-                                                    Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
-                                                        .scaleEffect(x: -1, y: 1)
-                                                        .padding(.bottom, 20)
-                                                        .padding(.trailing, code == "0" ? 10 : 0)
-                                                        .padding(.leading, code == "4" ? -15 : -5)
-                                                    
-                                                    if code == "4" || code == "5" || code == "99" {
-                                                        Spacer()
+                                                if code != "99" {
+                                                    HStack {
+                                                        if code == "0" || code == "1" || code == "2" {
+                                                            Spacer()
+                                                        }
+                                                        Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
+                                                            .scaleEffect(x: -1, y: 1)
+                                                            .padding(.bottom, 20)
+                                                            .padding(.trailing, code == "0" ? 10 : 0)
+                                                            .padding(.leading, code == "4" ? -15 : -5)
+                                                        
+                                                        if code == "4" || code == "5" {
+                                                            Spacer()
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                         
-                                        let backStation = self.store.state.nowLiveDataLoading[0] ? "" : self.store.state.nowUpLiveData?.previousStation ?? "-"
-                                        Text(backStation)
+                                        let backStation = self.store.state.nowLiveDataLoading[0] ? "-" : self.store.nowUpLiveData?.backStationName ?? "-"
+                                        Text(backStation.isEmpty ? "-" : backStation)
                                             .font(.system(size: ViewStyle.FontSize.smallSize))
                                         
                                         Spacer()
@@ -127,28 +129,31 @@ struct SearchVicinityView: View {
                                         .overlay {
                                             if !self.store.state.nowLiveDataLoading[1] {
                                                 let code = self.store.nowDownLiveData?.code ?? "99"
-                                                HStack {
-                                                    if code == "4" || code == "5" || code == "99" {
-                                                        Spacer()
-                                                    }
-                                                    
-                                                    Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
-                                                        .padding(.bottom, 20)
-                                                        .padding(.trailing, code == "4" ? -15 : -5)
-                                                        .padding(.leading, code == "0" ? 10 : 0)
-                                                    
-                                                    if code == "0" || code == "1" || code == "2" {
-                                                        Spacer()
+                                                if code != "99" {
+                                                    HStack {
+                                                        if code == "4" || code == "5" {
+                                                            Spacer()
+                                                        }
+                                                        
+                                                        Text(code == "" ? "" : FixInfo.saveSetting.detailVCTrainIcon)
+                                                            .padding(.bottom, 20)
+                                                            .padding(.trailing, code == "4" ? -15 : -5)
+                                                            .padding(.leading, code == "0" ? 10 : 0)
+                                                        
+                                                        if code == "0" || code == "1" || code == "2" {
+                                                            Spacer()
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                         
-                                        let backStation = self.store.state.nowLiveDataLoading[1] ? "-" : self.store.state.nowDownLiveData?.previousStation ?? "-"
-                                        Text(backStation)
+                                        let backStation = self.store.state.nowLiveDataLoading[1] ? "-" :
+                                        self.store.nowDownLiveData?.backStationName ?? "-"
+                                        Text(backStation.isEmpty ? "-" : backStation)
                                             .font(.system(size: ViewStyle.FontSize.smallSize))
                                     }
-                                    .offset(x: -10, y: 10)
+                                    .offset(x: -10, y: 5)
                                 }
                                 .animation(.smooth(duration: 0.4), value: self.store.state.nowTappedStationIndex)
                                 .padding(.top, 10)
