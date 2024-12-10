@@ -24,13 +24,17 @@ class LocationManager: NSObject, LocationManagerProtocol {
     
     /// 위치권한을 요청할 때 사용해요.
     func locationAuthRequest() async -> Bool {
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        return await withCheckedContinuation { continuation in
-            self.auth.subscribe(onNext: {
-                continuation.resume(returning: $0)
-            })
-            .disposed(by: self.bag)
+        if self.locationManager.authorizationStatus == .notDetermined {
+            self.locationManager.requestWhenInUseAuthorization()
+            
+            return await withCheckedContinuation { continuation in
+                self.auth.take(1).subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
+            }
+        } else {
+            return self.locationAuthCheck()
         }
     }
     

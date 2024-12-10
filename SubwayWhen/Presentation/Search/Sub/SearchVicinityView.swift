@@ -225,6 +225,9 @@ struct SearchVicinityView: View {
                                         .resizable()
                                         .frame(width: 22, height: 22)
                                         .foregroundColor(.init(uiColor: .gray))
+                                        .onTapGesture {
+                                            self.store.send(.disposableDetailBtnTapped)
+                                        }
                                 }
                                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
                             }
