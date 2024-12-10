@@ -63,6 +63,7 @@ struct SearchView: View {
             .onAppear {
                 self.store.send(.onAppear)
             }
+            .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
         }
     }
 }
