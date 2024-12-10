@@ -54,4 +54,8 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func defaultViewListLoad() async -> [String] {
         await self.totalModel.defaultViewListLoad()
     }
+    
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
+        await self.totalModel.stationNameSearchReponse(stationName)
+    }
 }
