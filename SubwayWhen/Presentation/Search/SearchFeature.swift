@@ -35,7 +35,8 @@ class SearchFeature: NSObject {
     
     enum Action: Equatable {
         case onAppear
-        case locationAuthResult(Bool)
+        case locationAuthRequest
+        case locationAuthResult([Bool]) // index0 : 자동 여부 (버튼클릭 -> 수동), index1: result
         case locationDataRequest
         case locationDataResult(LocationData?)
         case locationToVicinityStationRequest
@@ -46,11 +47,14 @@ class SearchFeature: NSObject {
         case recommendStationRequest
         case recommendStationResult([String])
         case refreshBtnTapped
+        case vicinityListOpenBtnTapped
     }
     
     enum Key: Equatable, CaseIterable {
         case liveDataRequest
     }
+    
+    weak var delegate: SearchVCActionProtocol?
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -59,15 +63,24 @@ class SearchFeature: NSObject {
                 if state.isFirst {
                     state.isFirst = false
                     return .merge([
-                        .send(.locationAuthResult(self.locationManager.locationAuthCheck())),
+                        .send(.locationAuthResult([true, self.locationManager.locationAuthCheck()])),
                         .send(.recommendStationRequest)
                     ])
                 } else {
-                    return .send(.locationAuthResult(self.locationManager.locationAuthCheck()))
+                    return .send(.locationAuthResult([true, self.locationManager.locationAuthCheck()]))
                 }
+                
+            case .locationAuthRequest:
+                return .run { send in
+                    let isOn = await self.locationManager.locationAuthRequest()
+                    await send(.locationAuthResult([false, isOn]))
+                }
+                
             case .locationAuthResult(let isOn):
-                state.locationAuth = isOn
-                if isOn && state.nowVicinityStationList.isEmpty {
+                state.locationAuth = isOn[1]
+                if !isOn[0] && !isOn[1]  {
+                    return .send(.vicinityListOpenBtnTapped) // 해당 모달 내부에서 안내멘트를 전달해요.
+                } else if isOn[1] && state.nowVicinityStationList.isEmpty {
                     return .send(.locationDataRequest)
                 } else {
                     return .none
@@ -142,7 +155,9 @@ class SearchFeature: NSObject {
             case .refreshBtnTapped:
                 return .send(.liveDataRequest)
                 
-            default: return .none
+            case .vicinityListOpenBtnTapped:
+                self.delegate?.locationPresent()
+                return .none
             }
         }
     }
