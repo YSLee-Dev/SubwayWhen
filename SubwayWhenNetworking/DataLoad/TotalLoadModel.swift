@@ -312,14 +312,14 @@ class TotalLoadModel : TotalLoadProtocol {
     func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
         return await withCheckedContinuation { continuation in
             self.loadModel.stationSearch(station: stationName)
-                .map{ data -> SearchStaion? in
-                    guard case .success(let value) = data else {return nil}
-                    return value
-                }
                 .asObservable()
-                .filterNil()
+                .take(1)
+                .map{ data -> [searchStationInfo] in
+                    guard case .success(let value) = data else {return []}
+                    return value.SearchInfoBySubwayNameService.row
+                }
                 .subscribe(onNext: {
-                    continuation.resume(returning: $0.SearchInfoBySubwayNameService.row)
+                    continuation.resume(returning: $0)
                 })
                 .disposed(by: self.bag)
         }
