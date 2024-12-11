@@ -45,6 +45,7 @@ struct SearchView: View {
                 
                 if self.store.state.isSearchMode {
                     SearchStationResultView(store: self.$store)
+                        .animation(.easeInOut(duration: 0.3), value: self.store.nowStationSearchList)
                 } else {
                     if self.store.state.locationAuth {
                         SearchVicinityView(store: self.$store)
@@ -73,6 +74,7 @@ struct SearchView: View {
                 }
                 
                 SearchWordRecommendView(store: self.$store)
+                    .animation(.easeInOut(duration: 0.3), value: self.store.nowStationSearchList)
             }
             .animation(.easeInOut(duration: 0.3), value: self.store.isSearchMode)
             .padding(.top, 12.5)
