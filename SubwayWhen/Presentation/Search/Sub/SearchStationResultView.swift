@@ -33,7 +33,7 @@ struct SearchStationResultView: View {
                                 .padding(.vertical, 15)
                         }
                     } else {
-                        ForEach(self.store.nowStationSearchList, id: \.lineNumber) { data in
+                        ForEach(Array(zip(self.store.nowStationSearchList, self.store.nowStationSearchList.indices)), id: \.1) { data, index in
                             AnimationButtonInSUI(buttonView: {
                                 HStack(spacing: 10) {
                                     StationTitleViewInSUI(title: data.useLine, lineColor: data.lineNumber.rawValue, size: 60, isFill: true)
@@ -44,7 +44,7 @@ struct SearchStationResultView: View {
                                     Spacer()
                                 }
                             }, tappedAction: {
-                                
+                                self.store.send(.searchResultTapped(index))
                             })
                         }
                         .animation(.easeInOut(duration: 0.3) ,value: self.store.nowVicinityStationList)
