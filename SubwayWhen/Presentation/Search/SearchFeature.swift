@@ -213,6 +213,9 @@ class SearchFeature: NSObject {
                 
             case .isSearchMode(let isOn):
                 state.isSearchMode = isOn
+                if !isOn {
+                    state.searchQuery = ""
+                }
                 return .none
                 
             case .binding(\.searchQuery):
