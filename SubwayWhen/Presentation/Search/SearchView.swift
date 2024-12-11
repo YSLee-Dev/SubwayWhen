@@ -19,18 +19,28 @@ struct SearchView: View {
     var body: some View {
         NavigationBarScrollViewInSUI(title: "검색") {
             VStack(spacing: 20) {
-                MainStyleViewInSUI {
-                    TextField(text: self.$store.searchQuery) {
-                        Text("🔍 지하철역을 검색하세요.")
-                            .foregroundColor(.gray)
-                            .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                HStack(spacing: 10) {
+                    MainStyleViewInSUI {
+                        TextField(text: self.$store.searchQuery) {
+                            Text("🔍 지하철역을 검색하세요.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                        }
+                        .padding(15)
+                        .focused(self.$tfFocus)
+                        .onChange(of: self.tfFocus) { _, new in
+                            self.store.send(.isSearchMode(new))
+                        }
                     }
-                    .focused(self.$tfFocus)
-                    .onChange(of: self.tfFocus) { _, new in
-                        self.store.send(.isSearchMode(new))
+                    if self.store.isSearchMode {
+                        Button {
+                            self.store.send(.isSearchMode(false))
+                            self.tfFocus = false
+                        } label: {
+                            Text("닫기")
+                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
+                        }
                     }
-                    .frame(height: 50)
-                    .padding(.horizontal, 15)
                 }
                 
                 if self.store.state.isSearchMode {
