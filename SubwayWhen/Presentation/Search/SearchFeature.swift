@@ -60,6 +60,7 @@ class SearchFeature: NSObject {
         case stationSearchRequest
         case stationSearchResult([searchStationInfo])
         case searchResultTapped(Int)
+        case recommendStationTapped(Int)
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -246,6 +247,12 @@ class SearchFeature: NSObject {
             case .searchResultTapped(let index):
                 self.delegate?.modalPresent(data: state.nowStationSearchList[index])
                 return .none
+                
+            case .recommendStationTapped(let index):
+                state.nowSearchLoading = true
+                state.isSearchMode = true
+                state.searchQuery = state.recommendStationList[index]
+                return .send(.stationSearchRequest)
                 
             default: return .none
             }
