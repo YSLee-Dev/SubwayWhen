@@ -28,7 +28,6 @@
 		3481C4E329C1C7C2003F5213 /* KorailStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 3481C4E229C1C7C2003F5213 /* KorailStationScheduleDummy.json */; };
 		3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559329A777A100530EB6 /* SettingContentsModalVC.swift */; };
 		3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */; };
-		3497DC7629D28B0500D2ABB9 /* SearchModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7529D28B0500D2ABB9 /* SearchModelProtocol.swift */; };
 		3497DC7929D2907300D2ABB9 /* StationNameSearchDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 3497DC7829D2907300D2ABB9 /* StationNameSearchDummy.json */; };
 		3497DC7B29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7A29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift */; };
 		3497DC7D29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7C29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift */; };
@@ -41,7 +40,6 @@
 		3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */; };
 		3497DC9729D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */; };
 		3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */; };
-		3497DC9F29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */; };
 		3497DCA329D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DCA229D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift */; };
 		3497DCA729D301D000D2ABB9 /* SettingContentsModalViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DCA629D301D000D2ABB9 /* SettingContentsModalViewModelProtocol.swift */; };
 		3497DCAB29D3027000D2ABB9 /* SettingContentsModalModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DCAA29D3027000D2ABB9 /* SettingContentsModalModelProtocol.swift */; };
@@ -470,6 +468,9 @@
 		FFE826252D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826262D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
+		FFE826292D081DE60070BFED /* SearchStationResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826282D081DE60070BFED /* SearchStationResultView.swift */; };
+		FFE8262D2D0820ED0070BFED /* SearchModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */; };
+		FFE8262E2D0820ED0070BFED /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -593,7 +594,6 @@
 		3481C4E229C1C7C2003F5213 /* KorailStationScheduleDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = KorailStationScheduleDummy.json; sourceTree = "<group>"; };
 		3496559329A777A100530EB6 /* SettingContentsModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalVC.swift; sourceTree = "<group>"; };
 		3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalViewModel.swift; sourceTree = "<group>"; };
-		3497DC7529D28B0500D2ABB9 /* SearchModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC7829D2907300D2ABB9 /* StationNameSearchDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StationNameSearchDummy.json; sourceTree = "<group>"; };
 		3497DC7A29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC7C29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -606,7 +606,6 @@
 		3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelTests.swift; sourceTree = "<group>"; };
 		3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DCA229D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroupModalViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DCA629D301D000D2ABB9 /* SettingContentsModalViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DCAA29D3027000D2ABB9 /* SettingContentsModalModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalModelProtocol.swift; sourceTree = "<group>"; };
@@ -947,6 +946,9 @@
 		FF8CBE2B2C89781600E6B4D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataScheduleManager.swift; sourceTree = "<group>"; };
 		FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRealtimeStationArrival.swift; sourceTree = "<group>"; };
+		FFE826282D081DE60070BFED /* SearchStationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStationResultView.swift; sourceTree = "<group>"; };
+		FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelProtocol.swift; sourceTree = "<group>"; };
+		FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1116,15 +1118,6 @@
 				3497DCA829D301D900D2ABB9 /* Entity */,
 			);
 			path = SettingContentsModal;
-			sourceTree = "<group>";
-		};
-		3497DC7729D28B1A00D2ABB9 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC7529D28B0500D2ABB9 /* SearchModelProtocol.swift */,
-				3497DC9E29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		3497DC8029D2B26500D2ABB9 /* Protocol */ = {
@@ -2109,11 +2102,11 @@
 		34C6DB77293627AE00C4ED80 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				FFE8262A2D0820E10070BFED /* Protocol */,
 				34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */,
 				34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */,
 				34C6DB78293627AE00C4ED80 /* SearchStaion.swift */,
 				34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */,
-				3497DC7729D28B1A00D2ABB9 /* Protocol */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -2718,6 +2711,7 @@
 			children = (
 				FF3A5EAF2D01609000BC7716 /* SearchVicinityView.swift */,
 				FF3A5EB12D016FDA00BC7716 /* SearchWordRecommendView.swift */,
+				FFE826282D081DE60070BFED /* SearchStationResultView.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -2753,6 +2747,15 @@
 				FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		FFE8262A2D0820E10070BFED /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */,
+				FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3258,7 +3261,6 @@
 				34A906E42A4C322A002C7655 /* NotificationManagerProtocol.swift in Sources */,
 				34F494D42981521D001599B1 /* DetailResultScheduleViewModel.swift in Sources */,
 				3427D8FE2A432020000AEEED /* SettingNotiSelectModalViewModel.swift in Sources */,
-				3497DC9F29D2FD4800D2ABB9 /* SearchViewModelProtocol.swift in Sources */,
 				349B516F29A46B3C00A53879 /* ReportTableViewLineCell.swift in Sources */,
 				B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */,
 				34A303B929AF86FD00948EDD /* SearchInfoBySubwayNameService.swift in Sources */,
@@ -3272,6 +3274,8 @@
 				34A906E02A4C3178002C7655 /* NotificationManager.swift in Sources */,
 				34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */,
 				34A0504729B58546007F97AD /* ReportTableViewDefaultLineView.swift in Sources */,
+				FFE8262D2D0820ED0070BFED /* SearchModelProtocol.swift in Sources */,
+				FFE8262E2D0820ED0070BFED /* SearchViewModelProtocol.swift in Sources */,
 				349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */,
 				FF36A37D2C80633700387A3D /* TotalLoadTCADependency.swift in Sources */,
 				34B6ADE32A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift in Sources */,
@@ -3315,6 +3319,7 @@
 				349CEFB02991E18300CC69E5 /* DetailResultScheduleViewSectionData.swift in Sources */,
 				349FF28E299DFD2B007A98F4 /* SettingTableViewCell.swift in Sources */,
 				349D788429CC1A5B00CA1B52 /* AppDefaultManager.swift in Sources */,
+				FFE826292D081DE60070BFED /* SearchStationResultView.swift in Sources */,
 				34B6ADE12A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift in Sources */,
 				349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */,
 				34E47A092A430C56006BF6AA /* SettingNotiModalVCAction.swift in Sources */,
@@ -3487,7 +3492,6 @@
 				349E2F5729BDC44D00C54EE9 /* DetailResultScheduleCoordinator.swift in Sources */,
 				B6B225782B8B04AB00F6D669 /* SettingTrainIconModalSubViewModel.swift in Sources */,
 				B6438D412B667CB10099BFEF /* MainTableView.swift in Sources */,
-				3497DC7629D28B0500D2ABB9 /* SearchModelProtocol.swift in Sources */,
 				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
 				349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */,
 				3497DC7F29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift in Sources */,
