@@ -29,7 +29,7 @@ class ModalViewModel{
     }
     
     struct Output {
-        let modalData : Driver<ResultVCCellData>
+        let modalData : Driver<searchStationInfo>
         let modalClose: Driver<Void>
     }
     
@@ -51,7 +51,7 @@ class ModalViewModel{
     private let modalCloseEvent = PublishRelay<Bool>()
     private let modalClose = PublishSubject<Void>()
     
-    let clickCellData = PublishRelay<ResultVCCellData>()
+    let clickCellData = PublishRelay<searchStationInfo>()
     let overlapOkBtnTap = PublishSubject<Void>()
     
     // MODEL
@@ -83,7 +83,7 @@ private extension ModalViewModel {
                     }
                 }
                 
-                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
+                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber.rawValue, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 return true
             }
             .bind(to: self.modalCloseEvent)
@@ -106,7 +106,7 @@ private extension ModalViewModel {
                 let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
                 let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
                 
-                return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.lineCode, exceptionLastStation: "", korailCode: korail)
+                return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber.rawValue, stationCode: data.stationCode, lineCode: data.lineCode, exceptionLastStation: "", korailCode: korail)
             }
             .withUnretained(self)
             .delay(.milliseconds(250), scheduler: MainScheduler.asyncInstance)

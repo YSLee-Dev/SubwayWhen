@@ -243,6 +243,10 @@ class SearchFeature: NSObject {
                 state.nowSearchLoading = false
                 return .none
                 
+            case .searchResultTapped(let index):
+                
+                return .none
+                
             default: return .none
             }
         }
