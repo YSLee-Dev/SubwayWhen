@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchVCActionProtocol: AnyObject {
-    func modalPresent(data: ResultVCCellData)
+    func modalPresent(data: searchStationInfo)
     func locationPresent()
     func disposableDetailPush(data: DetailSendModel) 
 }

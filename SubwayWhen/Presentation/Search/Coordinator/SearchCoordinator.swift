@@ -45,7 +45,7 @@ extension SearchCoordinator: SearchVCActionProtocol {
         self.childCoordinator.append(locationCoordinator)
     }
     
-    func modalPresent(data: ResultVCCellData) {
+    func modalPresent(data: searchStationInfo) {
         let modalCoordinator = ModalCoordinator(navigation: self.navigation, data: data)
         modalCoordinator.delegate = self
         modalCoordinator.start()

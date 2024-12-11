@@ -55,7 +55,7 @@ class SearchViewModel : SearchViewModelProtocol{
         }
             .withUnretained(self)
             .subscribe(onNext: { viewModel, data in
-                viewModel.delegate?.modalPresent(data: data)
+//                viewModel.delegate?.modalPresent(data: data)
             })
             .disposed(by: self.bag)
         
