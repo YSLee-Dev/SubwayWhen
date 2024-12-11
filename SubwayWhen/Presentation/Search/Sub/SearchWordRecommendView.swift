@@ -20,7 +20,7 @@ struct SearchWordRecommendView: View {
                 }
             
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)]) {
-                    ForEach(self.store.state.recommendStationList, id: \.self) { data in
+                    ForEach(Array(zip(self.store.state.recommendStationList, self.store.state.recommendStationList.indices)), id: \.1) { data, index in
                         AnimationButtonInSUI(bgColor: Color.gray.opacity(0.2), tappedBGColor: Color.gray.opacity(0.1), buttonView: {
                             ExpandedViewInSUI(alignment: .center) {
                                 Text(data)
@@ -29,7 +29,7 @@ struct SearchWordRecommendView: View {
                             }
                             .padding(5)
                         }, tappedAction: {
-                            
+                            self.store.send(.recommendStationTapped(index))
                         })
                         .padding(.vertical, 5)
                     }
