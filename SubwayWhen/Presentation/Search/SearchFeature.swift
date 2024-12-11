@@ -244,7 +244,7 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .searchResultTapped(let index):
-                
+                self.delegate?.modalPresent(data: state.nowStationSearchList[index])
                 return .none
                 
             default: return .none
