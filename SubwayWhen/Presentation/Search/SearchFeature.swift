@@ -34,6 +34,7 @@ class SearchFeature: NSObject {
         var isFirst = true
         var searchQuery = ""
         var locationAuth = false
+        var isDisposableSearchUpdown: Bool?
         
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
@@ -61,6 +62,7 @@ class SearchFeature: NSObject {
         case stationSearchResult([searchStationInfo])
         case searchResultTapped(Int)
         case recommendStationTapped(Int)
+        case disposableDetailPushRequest
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -202,9 +204,11 @@ class SearchFeature: NSObject {
                 switch action {
                 case .presented(.upDownBtnTapped(let isUp)):
                     guard let data = isUp ? state.nowUpLiveData : state.nowDownLiveData else {return .none}
-                    
-                    // 임시로직
-                    self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: data.lineNumber ?? "", stationCode: data.code, lineCode: "", exceptionLastStation: "", korailCode: ""))
+                    state.searchQuery = data.stationName
+                    state.isSearchMode = true
+                    state.isDisposableSearchUpdown = isUp
+                    state.nowSearchLoading = true
+                    return .send(.stationSearchRequest)
                     
                 default: break
                 }
@@ -245,8 +249,12 @@ class SearchFeature: NSObject {
             case .stationSearchResult(let result):
                 state.nowStationSearchList = result
                 state.nowSearchLoading = false
-                return .none
-                
+                if state.isDisposableSearchUpdown != nil {
+                    return .send(.disposableDetailPushRequest)
+                } else {
+                    return .none
+                }
+               
             case .searchResultTapped(let index):
                 self.delegate?.modalPresent(data: state.nowStationSearchList[index])
                 return .none
@@ -256,6 +264,19 @@ class SearchFeature: NSObject {
                 state.isSearchMode = true
                 state.searchQuery = state.recommendStationList[index]
                 return .send(.stationSearchRequest)
+                
+            case .disposableDetailPushRequest:
+                guard let isUp = state.isDisposableSearchUpdown,
+                      let data = isUp ? state.nowUpLiveData : state.nowDownLiveData,
+                      let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.lineCode == data.subWayId})
+                else {
+                    state.isDisposableSearchUpdown = nil
+                    return .none
+                }
+                let searchData = state.nowStationSearchList[searchIndex]
+                state.isDisposableSearchUpdown = nil
+                self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: searchData.lineNumber.rawValue, stationCode: searchData.stationCode, lineCode: searchData.lineCode, exceptionLastStation: "", korailCode: ""))
+                return .none
                 
             default: return .none
             }
