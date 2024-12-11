@@ -25,6 +25,7 @@ class SearchFeature: NSObject {
         var nowUpLiveData: TotalRealtimeStationArrival?
         var nowDownLiveData: TotalRealtimeStationArrival?
         var nowStationSearchList: [searchStationInfo] = []
+        var nowSearchLoading = false
         var recommendStationList: [String] = [
             // 통신 전 임시 값
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
@@ -58,6 +59,7 @@ class SearchFeature: NSObject {
         case isSearchMode(Bool)
         case stationSearchRequest
         case stationSearchResult([searchStationInfo])
+        case searchResultTapped(Int)
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -213,6 +215,13 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .binding(\.searchQuery):
+                if state.searchQuery.isEmpty {
+                    state.nowStationSearchList = []
+                    state.nowSearchLoading = false
+                    return .cancel(id: Key.searchDelay)
+                }
+                
+                state.nowSearchLoading = true
                 return .concatenate([
                     .cancel(id: Key.searchDelay),
                     .run { send in
@@ -223,14 +232,15 @@ class SearchFeature: NSObject {
                 .cancellable(id: Key.searchDelay)
                 
             case .stationSearchRequest:
-                if state.searchQuery.isEmpty {return .none}
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
+                    try await Task.sleep(for: .milliseconds(500))
                     await send(.stationSearchResult(result))
                 }
                 
             case .stationSearchResult(let result):
                 state.nowStationSearchList = result
+                state.nowSearchLoading = false
                 return .none
                 
             default: return .none
