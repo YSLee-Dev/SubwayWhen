@@ -241,8 +241,6 @@
 		34D9E9FA2A54FBB70080AD17 /* LocationModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9E9F92A54FBB70080AD17 /* LocationModalViewModel.swift */; };
 		34D9E9FC2A54FD810080AD17 /* LocationModalVCActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9E9FB2A54FD810080AD17 /* LocationModalVCActionProtocol.swift */; };
 		34D9E9FE2A54FDC60080AD17 /* LocationModalCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9E9FD2A54FDC60080AD17 /* LocationModalCoordinatorProtocol.swift */; };
-		34D9EA002A556C4C0080AD17 /* LocationModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9E9FF2A556C4C0080AD17 /* LocationModalModel.swift */; };
-		34D9EA042A556EEA0080AD17 /* LocationModalModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9EA032A556EEA0080AD17 /* LocationModalModelProtocol.swift */; };
 		34D9EA062A5571BA0080AD17 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9EA052A5571BA0080AD17 /* LocationData.swift */; };
 		34D9EA092A557E3F0080AD17 /* VicinityStationsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9EA082A557E3F0080AD17 /* VicinityStationsData.swift */; };
 		34D9EA0B2A557E780080AD17 /* VicinityDocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D9EA0A2A557E780080AD17 /* VicinityDocumentData.swift */; };
@@ -809,8 +807,6 @@
 		34D9E9F92A54FBB70080AD17 /* LocationModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalViewModel.swift; sourceTree = "<group>"; };
 		34D9E9FB2A54FD810080AD17 /* LocationModalVCActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalVCActionProtocol.swift; sourceTree = "<group>"; };
 		34D9E9FD2A54FDC60080AD17 /* LocationModalCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalCoordinatorProtocol.swift; sourceTree = "<group>"; };
-		34D9E9FF2A556C4C0080AD17 /* LocationModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalModel.swift; sourceTree = "<group>"; };
-		34D9EA032A556EEA0080AD17 /* LocationModalModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalModelProtocol.swift; sourceTree = "<group>"; };
 		34D9EA052A5571BA0080AD17 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		34D9EA082A557E3F0080AD17 /* VicinityStationsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VicinityStationsData.swift; sourceTree = "<group>"; };
 		34D9EA0A2A557E780080AD17 /* VicinityDocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VicinityDocumentData.swift; sourceTree = "<group>"; };
@@ -2163,7 +2159,6 @@
 			children = (
 				34D9E9F32A54FAE60080AD17 /* LocationModalVC.swift */,
 				34D9E9F92A54FBB70080AD17 /* LocationModalViewModel.swift */,
-				34D9E9FF2A556C4C0080AD17 /* LocationModalModel.swift */,
 				34D9EA102A56620D0080AD17 /* Sub */,
 				34D9EA012A556ED40080AD17 /* Entity */,
 				34D9E9F72A54FAF20080AD17 /* Coordinator */,
@@ -2192,19 +2187,10 @@
 		34D9EA012A556ED40080AD17 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				34D9EA022A556EDF0080AD17 /* Protocol */,
 				34D9EA0C2A5583220080AD17 /* LocationModalSectionData.swift */,
 				34D9EA0E2A55832C0080AD17 /* LocationModalCellData.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		34D9EA022A556EDF0080AD17 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				34D9EA032A556EEA0080AD17 /* LocationModalModelProtocol.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		34D9EA072A557DBE0080AD17 /* VcinityStation */ = {
@@ -3237,7 +3223,6 @@
 				B6438D452B667CB10099BFEF /* MainTableViewGroupCell.swift in Sources */,
 				34A4F2742A527132002CA564 /* ModalSubCustomButton.swift in Sources */,
 				34A4F2722A5263FB002CA564 /* CollectionViewCellCustom.swift in Sources */,
-				34D9EA042A556EEA0080AD17 /* LocationModalModelProtocol.swift in Sources */,
 				FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */,
 				B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */,
 				3499DE8D29D15EE700A6E8C1 /* ReportTableViewTwoBtnCellModelProtocol.swift in Sources */,
@@ -3285,7 +3270,6 @@
 				3497DC7D29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift in Sources */,
 				3455CF962A5298FE001ADE61 /* LocationView.swift in Sources */,
 				349C00912A0A1BAB008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
-				34D9EA002A556C4C0080AD17 /* LocationModalModel.swift in Sources */,
 				34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */,
 				B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */,
 				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
