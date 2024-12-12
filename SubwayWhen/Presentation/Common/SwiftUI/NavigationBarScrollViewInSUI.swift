@@ -40,8 +40,8 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                     .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))    
                     .padding(.leading, 1)
                     .opacity(self.isSubTitleShow ? 1 : 0)
-                    .offset(y: self.isSubTitleShow ? 0 : 10)
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2), value: self.isSubTitleShow)
+                    .offset(y: self.isSubTitleShow ? 0 : 7.5)
+                    .animation(.spring(response: 0.35, dampingFraction: 0.7, blendDuration: 0.2), value: self.isSubTitleShow)
                 
                 Spacer()
             }
