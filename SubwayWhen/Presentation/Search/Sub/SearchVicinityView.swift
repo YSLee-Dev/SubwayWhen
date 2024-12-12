@@ -118,6 +118,7 @@ struct SearchVicinityView: View {
                                             Spacer()
                                         }
                                         .offset(x: 10)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         
                                         StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 65, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
                                         
@@ -161,12 +162,13 @@ struct SearchVicinityView: View {
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                         }
                                         .offset(x: -10, y: 5)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
                                     }
                                     .animation(.smooth(duration: 0.4), value: self.store.state.nowTappedStationIndex)
                                     .padding(.top, 10)
                                     .padding(.bottom, 25)
                                     
-                                    HStack {
+                                    HStack(spacing: 0) {
                                         let upData = self.store.nowUpLiveData
                                         let downData = self.store.nowDownLiveData
                                         
@@ -176,8 +178,10 @@ struct SearchVicinityView: View {
                                             Text((upData == nil || self.store.nowLiveDataLoading[0]) ? "🔄 로딩 중"  : upData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : upData!.nowStateMSG)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                         }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         
                                         Spacer()
+                                            .frame(width: 1.5)
                                         
                                         VStack(alignment: .trailing, spacing: 5){
                                             Text(tappedData.line == "2호선" ? "내선" : "하행")
@@ -185,6 +189,7 @@ struct SearchVicinityView: View {
                                             Text((downData == nil || self.store.nowLiveDataLoading[1]) ?  "🔄 로딩 중"  : downData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : downData!.nowStateMSG)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                         }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
                                     }
                                     .overlay {
                                         ExpandedViewInSUI(alignment: .center) {
