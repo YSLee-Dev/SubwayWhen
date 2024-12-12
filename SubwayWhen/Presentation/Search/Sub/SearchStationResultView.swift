@@ -43,6 +43,7 @@ struct SearchStationResultView: View {
                                     
                                     Spacer()
                                 }
+                                .padding(.horizontal, 5)
                             }, tappedAction: {
                                 self.store.send(.searchResultTapped(index))
                             })
