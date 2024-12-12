@@ -23,7 +23,7 @@ struct SearchStationResultView: View {
                         ProgressView()
                             .tint(Color("AppIconColor"))
                             .frame(height: 33)
-                            .padding(.bottom, 15)
+                            .padding(.vertical, 7.5)
                     }
                 } else {
                     if self.store.nowStationSearchList.isEmpty {
