@@ -21,7 +21,7 @@ struct SearchWordRecommendView: View {
             
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)]) {
                     ForEach(Array(zip(self.store.state.nowRecommendStationList, self.store.state.nowRecommendStationList.indices)), id: \.1) { data, index in
-                        AnimationButtonInSUI(bgColor: Color.gray.opacity(0.2), tappedBGColor: Color.gray.opacity(0.1), buttonView: {
+                        AnimationButtonInSUI(bgColor: Color.gray.opacity(0.1), tappedBGColor: Color.gray.opacity(0.01), buttonView: {
                             ExpandedViewInSUI(alignment: .center) {
                                 Text(data)
                                     .foregroundStyle(Color(uiColor: UIColor.label).opacity(0.8))
