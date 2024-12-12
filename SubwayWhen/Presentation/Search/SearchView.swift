@@ -22,15 +22,20 @@ struct SearchView: View {
                 HStack(spacing: 10) {
                     MainStyleViewInSUI {
                         TextField(text: self.$store.searchQuery) {
-                            Text("🔍 지하철역을 검색하세요.")
-                                .foregroundColor(.gray)
-                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                            VStack(spacing: 0) {
+                                Text("🔍 지하철역을 검색하세요.")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                            }
                         }
-                        .padding(15)
                         .focused(self.$tfFocus)
                         .onChange(of: self.tfFocus) { _, new in
                             self.store.send(.isSearchMode(new))
                         }
+                        .padding(15)
+                    }
+                    .onTapGesture {
+                        self.tfFocus = true
                     }
                     if self.store.isSearchMode {
                         Button {
