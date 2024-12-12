@@ -12,9 +12,9 @@ import SwiftUI
 class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
-    var viewModel: SearchViewModelProtocol?
     weak var delegate: SearchCoordinatorDelegate?
-    var store: StoreOf<SearchFeature>?
+    
+    fileprivate var store: StoreOf<SearchFeature>?
     
     init(){
         self.navigation = .init()
@@ -37,8 +37,8 @@ class SearchCoordinator : Coordinator{
 }
 
 extension SearchCoordinator: SearchVCActionProtocol {
-    func locationPresent() {
-        let locationCoordinator = LocationModalCoordinator(navigation: self.navigation)
+    func locationPresent(data: [VicinityTransformData]) {
+        let locationCoordinator = LocationModalCoordinator(navigation: self.navigation, vicinityList: data)
         locationCoordinator.delegate = self
         locationCoordinator.start()
         
@@ -99,11 +99,11 @@ extension SearchCoordinator: DetailCoordinatorDelegate {
 }
 
 extension SearchCoordinator: LocationModalCoordinatorProtocol {
-    func stationTap(stationName: String) {
+    func stationTap(index: Int) {
         self.dismiss()
         
-        guard let viewModel = self.viewModel else {return}
-        viewModel.locationModalTap.onNext(stationName)
+        guard let store = self.store else { return }
+        store.send(.stationTapped(.init(index: index, type: .location)))
     }
     
     func didDisappear(locationModalCoordinator: Coordinator) {
