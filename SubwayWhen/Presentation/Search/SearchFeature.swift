@@ -212,8 +212,8 @@ class SearchFeature: NSObject {
             case .dialogAction(let action):
                 switch action {
                 case .presented(.upDownBtnTapped(let isUp)):
-                    guard let data = isUp ? state.nowUpLiveData : state.nowDownLiveData else {return .none}
-                    state.searchQuery = data.stationName
+                    guard let index = state.nowTappedStationIndex else {return .none}
+                    state.searchQuery = state.nowVicinityStationList[index].name
                     state.isDisposableSearchUpdown = isUp
                     state.isSearchMode = true
                     state.nowSearchLoading = true
