@@ -12,6 +12,15 @@ import FirebaseAnalytics
 import CoreLocation
 import Combine
 
+struct SearchFeatureStationTapSendModel: Equatable {
+    let index: Int
+    let type: StationTapSendModelType
+    
+    enum StationTapSendModelType {
+        case recommend, location
+    }
+}
+
 @Reducer
 class SearchFeature: NSObject {
     @Dependency(\.locationManager) private var locationManager
@@ -26,7 +35,7 @@ class SearchFeature: NSObject {
         var nowDownLiveData: TotalRealtimeStationArrival?
         var nowStationSearchList: [searchStationInfo] = []
         var nowSearchLoading = false
-        var recommendStationList: [String] = [
+        var nowRecommendStationList: [String] = [
             // 통신 전 임시 값
             "강남", "교대", "선릉", "삼성", "을지로3가", "종각", "홍대입구", "잠실", "명동", "여의도", "가산디지털단지", "판교"
         ]
@@ -48,9 +57,9 @@ class SearchFeature: NSObject {
         case locationDataResult(LocationData?)
         case locationToVicinityStationRequest(LocationData)
         case locationToVicinityStationResult([VicinityTransformData])
+        case locationStationTapped(Int?)
         case liveDataRequest
         case liveDataResult([TotalRealtimeStationArrival])
-        case stationTapped(Int?)
         case recommendStationRequest
         case recommendStationResult([String])
         case refreshBtnTapped
@@ -61,7 +70,7 @@ class SearchFeature: NSObject {
         case stationSearchRequest
         case stationSearchResult([searchStationInfo])
         case searchResultTapped(Int)
-        case recommendStationTapped(Int)
+        case stationTapped(SearchFeatureStationTapSendModel)
         case disposableDetailPushRequest
         
         enum DialogAction: Equatable {
@@ -157,7 +166,7 @@ class SearchFeature: NSObject {
                 }
                 return .none
                 
-            case .stationTapped(let index):
+            case .locationStationTapped(let index):
                 state.nowTappedStationIndex = index
                 return .concatenate([
                     .cancel(id: Key.liveDataRequest),
@@ -171,14 +180,14 @@ class SearchFeature: NSObject {
                 }
                 
             case .recommendStationResult(let data):
-                state.recommendStationList = data
+                state.nowRecommendStationList = data
                 return .none
                 
             case .refreshBtnTapped:
                 return .send(.liveDataRequest)
                 
             case .vicinityListOpenBtnTapped:
-                self.delegate?.locationPresent()
+                self.delegate?.locationPresent(data: state.nowVicinityStationList)
                 return .none
                 
             case .disposableDetailBtnTapped:
@@ -205,8 +214,8 @@ class SearchFeature: NSObject {
                 case .presented(.upDownBtnTapped(let isUp)):
                     guard let data = isUp ? state.nowUpLiveData : state.nowDownLiveData else {return .none}
                     state.searchQuery = data.stationName
-                    state.isSearchMode = true
                     state.isDisposableSearchUpdown = isUp
+                    state.isSearchMode = true
                     state.nowSearchLoading = true
                     return .send(.stationSearchRequest)
                     
@@ -259,10 +268,10 @@ class SearchFeature: NSObject {
                 self.delegate?.modalPresent(data: state.nowStationSearchList[index])
                 return .none
                 
-            case .recommendStationTapped(let index):
+            case .stationTapped(let model):
                 state.nowSearchLoading = true
                 state.isSearchMode = true
-                state.searchQuery = state.recommendStationList[index]
+                state.searchQuery = model.type == .recommend ?  state.nowRecommendStationList[model.index] : state.nowVicinityStationList[model.index].name
                 return .send(.stationSearchRequest)
                 
             case .disposableDetailPushRequest:

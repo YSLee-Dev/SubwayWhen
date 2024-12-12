@@ -45,7 +45,7 @@ struct SearchVicinityView: View {
                                             AnimationButtonInSUI(buttonView: {
                                                 StationTitleViewInSUI(title: data.name, lineColor: data.lineColorName, size: 45, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
                                             }) {
-                                                self.store.send(.stationTapped(index))
+                                                self.store.send(.locationStationTapped(index))
                                             }
                                         } else if self.store.state.nowTappedStationIndex  != nil && self.store.state.nowTappedStationIndex  != index {
                                             AnimationButtonInSUI(buttonView: {
@@ -59,7 +59,7 @@ struct SearchVicinityView: View {
                                                         .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                                                 }
                                             }) {
-                                                self.store.send(.stationTapped(index))
+                                                self.store.send(.locationStationTapped(index))
                                             }
                                         }
                                     }
@@ -214,7 +214,7 @@ struct SearchVicinityView: View {
                                             .frame(width: 20, height: 20)
                                             .foregroundColor(.init(uiColor: .gray))
                                             .onTapGesture {
-                                                self.store.send(.stationTapped(nil))
+                                                self.store.send(.locationStationTapped(nil))
                                                 proxy.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                             }
                                         

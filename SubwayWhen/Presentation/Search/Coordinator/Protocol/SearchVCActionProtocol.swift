@@ -9,6 +9,6 @@ import Foundation
 
 protocol SearchVCActionProtocol: AnyObject {
     func modalPresent(data: searchStationInfo)
-    func locationPresent()
-    func disposableDetailPush(data: DetailSendModel) 
+    func locationPresent(data: [VicinityTransformData])
+    func disposableDetailPush(data: DetailSendModel)
 }
