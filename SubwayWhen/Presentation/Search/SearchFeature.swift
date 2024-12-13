@@ -157,7 +157,11 @@ class SearchFeature: NSObject {
                 
             case .liveDataResult(let data):
                 if data.first == nil {return .none}
-                if data.first!.upDown == "상행" || data.first!.upDown == "외선" {
+                let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
+                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
+                
+                // 9호선은 상하행이 반대이기 때문에 아래와 같이 개발
+                if (line != .nine && data.first!.upDown == "상행") || (line == .nine && data.first!.upDown == "하행")  || data.first!.upDown == "외선" {
                     state.nowUpLiveData = data.first!
                     state.nowLiveDataLoading[0] = false
                 } else {
