@@ -41,13 +41,11 @@ struct SearchView: View {
                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
                         }
                     } else {
-                        AnimationButtonInSUI(buttonView: {
-                            ExpandedViewInSUI(alignment: .leading) {
-                                Text("🔍 지하철역을 검색하세요.")
-                                    .foregroundColor(.gray)
-                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                            }
-                            .padding(EdgeInsets(top: 5.5, leading: 6.5, bottom: 6, trailing: 5))
+                        AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
+                            Text("🔍 지하철역을 검색하세요.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                                .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
                         }, tappedAction: {
                             self.tfFocus = true
                             self.store.send(.isSearchMode(true))
