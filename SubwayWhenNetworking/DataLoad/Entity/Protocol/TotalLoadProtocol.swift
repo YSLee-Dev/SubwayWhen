@@ -14,11 +14,8 @@ protocol TotalLoadProtocol{
     func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [TotalRealtimeStationArrival]>
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
-    func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion>
     func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo]
-    func defaultViewListLoad() -> Observable<[String]>
     func defaultViewListLoad() async -> [String] 
-    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] 
     func importantDataLoad() -> Observable<ImportantData>
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule]
