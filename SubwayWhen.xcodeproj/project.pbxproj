@@ -17,7 +17,6 @@
 		34324CAE29D15740008AE274 /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34324CAD29D15740008AE274 /* ReportModel.swift */; };
 		344D6A102ABD84AE00ECB57D /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344D6A0F2ABD84AE00ECB57D /* TutorialVC.swift */; };
 		344D6A122ABD8A0F00ECB57D /* TutorialCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344D6A112ABD8A0F00ECB57D /* TutorialCoordinator.swift */; };
-		3455CF962A5298FE001ADE61 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455CF952A5298FE001ADE61 /* LocationView.swift */; };
 		3455CF9F2A53DB26001ADE61 /* ModalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455CF9E2A53DB26001ADE61 /* ModalCoordinator.swift */; };
 		3455CFA22A53DC79001ADE61 /* ModalVCActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455CFA12A53DC79001ADE61 /* ModalVCActionProtocol.swift */; };
 		3455CFA42A53DCF6001ADE61 /* ModalCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455CFA32A53DCF6001ADE61 /* ModalCoordinatorProtocol.swift */; };
@@ -29,9 +28,6 @@
 		3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559329A777A100530EB6 /* SettingContentsModalVC.swift */; };
 		3496559729A7780200530EB6 /* SettingContentsModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */; };
 		3497DC7929D2907300D2ABB9 /* StationNameSearchDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 3497DC7829D2907300D2ABB9 /* StationNameSearchDummy.json */; };
-		3497DC7B29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7A29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift */; };
-		3497DC7D29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7C29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift */; };
-		3497DC7F29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC7E29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift */; };
 		3497DC8629D2DEBF00D2ABB9 /* ModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8529D2DEBF00D2ABB9 /* ModalModel.swift */; };
 		3497DC8829D2DED200D2ABB9 /* ModalModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8729D2DED200D2ABB9 /* ModalModelProtocol.swift */; };
 		3497DC8A29D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8929D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift */; };
@@ -141,7 +137,6 @@
 		34A0504729B58546007F97AD /* ReportTableViewDefaultLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0504629B58546007F97AD /* ReportTableViewDefaultLineView.swift */; };
 		34A0504A29B58559007F97AD /* ReportTableViewDefaultLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0504929B58559007F97AD /* ReportTableViewDefaultLineViewModel.swift */; };
 		34A0504C29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0504B29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift */; };
-		34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */; };
 		34A0AA5729A87A0D00A865A4 /* SettingContentsModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A0AA5629A87A0D00A865A4 /* SettingContentsModalModel.swift */; };
 		34A1F5732A0A5CA000996839 /* DetailActivityLoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1F5722A0A5CA000996839 /* DetailActivityLoadData.swift */; };
 		34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A1FA8F29824B6200537B02 /* ViewStyle.swift */; };
@@ -175,8 +170,6 @@
 		34A32E7429B88C4F00AA1C67 /* TableViewCellCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */; };
 		34A32E7729B893E100AA1C67 /* SettingGroupModalTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A32E7629B893E100AA1C67 /* SettingGroupModalTF.swift */; };
 		34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */; };
-		34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */; };
-		34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */; };
 		34A36BDE2950289900FB0DDB /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BDD2950289900FB0DDB /* EditVC.swift */; };
 		34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BDF295028A700FB0DDB /* EditViewModel.swift */; };
 		34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A36BE429502BE100FB0DDB /* EditViewCell.swift */; };
@@ -216,18 +209,7 @@
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
 		34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB562936274400C4ED80 /* SceneDelegate.swift */; };
 		34C6DB612936274600C4ED80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C6DB5F2936274600C4ED80 /* LaunchScreen.storyboard */; };
-		34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB70293627AE00C4ED80 /* SearchBarViewModel.swift */; };
-		34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB71293627AE00C4ED80 /* SearchBarVC.swift */; };
-		34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB74293627AE00C4ED80 /* ResultVCCell.swift */; };
-		34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB75293627AE00C4ED80 /* ResultViewModel.swift */; };
-		34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB76293627AE00C4ED80 /* ResultVC.swift */; };
 		34C6DB91293627AF00C4ED80 /* SearchStaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB78293627AE00C4ED80 /* SearchStaion.swift */; };
-		34C6DB92293627AF00C4ED80 /* DefaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB7A293627AE00C4ED80 /* DefaultViewModel.swift */; };
-		34C6DB93293627AF00C4ED80 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB7B293627AE00C4ED80 /* DefaultView.swift */; };
-		34C6DB94293627AF00C4ED80 /* DefaultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB7D293627AE00C4ED80 /* DefaultViewCell.swift */; };
-		34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB7E293627AE00C4ED80 /* SearchViewModel.swift */; };
-		34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB7F293627AE00C4ED80 /* SearchVC.swift */; };
-		34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB80293627AE00C4ED80 /* SearchModel.swift */; };
 		34C6DB98293627AF00C4ED80 /* ModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB82293627AE00C4ED80 /* ModalViewModel.swift */; };
 		34C6DB99293627AF00C4ED80 /* ModalCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB84293627AE00C4ED80 /* ModalCustomButton.swift */; };
 		34C6DB9A293627AF00C4ED80 /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB85293627AE00C4ED80 /* ModalVC.swift */; };
@@ -310,8 +292,6 @@
 		B6F781202B6FBC6600FE8E7B /* Plus.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811C2B6FBC6600FE8E7B /* Plus.json */; };
 		B6F781212B6FBC6600FE8E7B /* Report.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811D2B6FBC6600FE8E7B /* Report.json */; };
 		B6F781232B6FBC6600FE8E7B /* List.json in Resources */ = {isa = PBXBuildFile; fileRef = B6F7811F2B6FBC6600FE8E7B /* List.json */; };
-		B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */; };
-		B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */; };
 		FA4CB7732BB64D7A003C41F6 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2F6032BB568B000B95B52 /* UserDefault+.swift */; };
 		FA4CB7772BB64FA7003C41F6 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
 		FA4CB7792BB651C0003C41F6 /* SaveStation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */; };
@@ -467,8 +447,6 @@
 		FFE826262D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826292D081DE60070BFED /* SearchStationResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826282D081DE60070BFED /* SearchStationResultView.swift */; };
-		FFE8262D2D0820ED0070BFED /* SearchModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */; };
-		FFE8262E2D0820ED0070BFED /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -581,7 +559,6 @@
 		34324CAD29D15740008AE274 /* ReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
 		344D6A0F2ABD84AE00ECB57D /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		344D6A112ABD8A0F00ECB57D /* TutorialCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCoordinator.swift; sourceTree = "<group>"; };
-		3455CF952A5298FE001ADE61 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		3455CF9E2A53DB26001ADE61 /* ModalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalCoordinator.swift; sourceTree = "<group>"; };
 		3455CFA12A53DC79001ADE61 /* ModalVCActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalVCActionProtocol.swift; sourceTree = "<group>"; };
 		3455CFA32A53DCF6001ADE61 /* ModalCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalCoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -593,9 +570,6 @@
 		3496559329A777A100530EB6 /* SettingContentsModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalVC.swift; sourceTree = "<group>"; };
 		3496559629A7780100530EB6 /* SettingContentsModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalViewModel.swift; sourceTree = "<group>"; };
 		3497DC7829D2907300D2ABB9 /* StationNameSearchDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StationNameSearchDummy.json; sourceTree = "<group>"; };
-		3497DC7A29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC7C29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC7E29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC8529D2DEBF00D2ABB9 /* ModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModel.swift; sourceTree = "<group>"; };
 		3497DC8729D2DED200D2ABB9 /* ModalModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC8929D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -701,7 +675,6 @@
 		34A0504629B58546007F97AD /* ReportTableViewDefaultLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewDefaultLineView.swift; sourceTree = "<group>"; };
 		34A0504929B58559007F97AD /* ReportTableViewDefaultLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewDefaultLineViewModel.swift; sourceTree = "<group>"; };
 		34A0504B29B58F46007F97AD /* ReportTableViewDefaultLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewDefaultLineCell.swift; sourceTree = "<group>"; };
-		34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStationSearch.swift; sourceTree = "<group>"; };
 		34A0AA5629A87A0D00A865A4 /* SettingContentsModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalModel.swift; sourceTree = "<group>"; };
 		34A1F5722A0A5CA000996839 /* DetailActivityLoadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityLoadData.swift; sourceTree = "<group>"; };
 		34A1FA8F29824B6200537B02 /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
@@ -736,8 +709,6 @@
 		34A32E7329B88C4F00AA1C67 /* TableViewCellCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellCustom.swift; sourceTree = "<group>"; };
 		34A32E7629B893E100AA1C67 /* SettingGroupModalTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroupModalTF.swift; sourceTree = "<group>"; };
 		34A339AC296D6D2E000FA6A4 /* UILabelCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelCustom.swift; sourceTree = "<group>"; };
-		34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCCellData.swift; sourceTree = "<group>"; };
-		34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVCSection.swift; sourceTree = "<group>"; };
 		34A36BDD2950289900FB0DDB /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		34A36BDF295028A700FB0DDB /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
 		34A36BE429502BE100FB0DDB /* EditViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewCell.swift; sourceTree = "<group>"; };
@@ -782,18 +753,7 @@
 		34C6DB562936274400C4ED80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		34C6DB602936274600C4ED80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34C6DB622936274600C4ED80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		34C6DB70293627AE00C4ED80 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
-		34C6DB71293627AE00C4ED80 /* SearchBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarVC.swift; sourceTree = "<group>"; };
-		34C6DB74293627AE00C4ED80 /* ResultVCCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultVCCell.swift; sourceTree = "<group>"; };
-		34C6DB75293627AE00C4ED80 /* ResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
-		34C6DB76293627AE00C4ED80 /* ResultVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultVC.swift; sourceTree = "<group>"; };
 		34C6DB78293627AE00C4ED80 /* SearchStaion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStaion.swift; sourceTree = "<group>"; };
-		34C6DB7A293627AE00C4ED80 /* DefaultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultViewModel.swift; sourceTree = "<group>"; };
-		34C6DB7B293627AE00C4ED80 /* DefaultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
-		34C6DB7D293627AE00C4ED80 /* DefaultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultViewCell.swift; sourceTree = "<group>"; };
-		34C6DB7E293627AE00C4ED80 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		34C6DB7F293627AE00C4ED80 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		34C6DB80293627AE00C4ED80 /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		34C6DB82293627AE00C4ED80 /* ModalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewModel.swift; sourceTree = "<group>"; };
 		34C6DB84293627AE00C4ED80 /* ModalCustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalCustomButton.swift; sourceTree = "<group>"; };
 		34C6DB85293627AE00C4ED80 /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
@@ -877,8 +837,6 @@
 		B6F7811C2B6FBC6600FE8E7B /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B6F7811D2B6FBC6600FE8E7B /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		B6F7811F2B6FBC6600FE8E7B /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
-		B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionData.swift; sourceTree = "<group>"; };
-		B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellData.swift; sourceTree = "<group>"; };
 		D303B2C8C4C34170CE5CE8DC /* Pods-SubwayWhen-SubwayWhenNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen-SubwayWhenNetworking.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen-SubwayWhenNetworking/Pods-SubwayWhen-SubwayWhenNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		D657AFBA7317F3D5FDE04FCD /* Pods-SubwayWhen-SubwayWhenNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen-SubwayWhenNetworking.release.xcconfig"; path = "Target Support Files/Pods-SubwayWhen-SubwayWhenNetworking/Pods-SubwayWhen-SubwayWhenNetworking.release.xcconfig"; sourceTree = "<group>"; };
 		DCCC4FF584735363F6439B19 /* Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -943,8 +901,6 @@
 		FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataScheduleManager.swift; sourceTree = "<group>"; };
 		FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRealtimeStationArrival.swift; sourceTree = "<group>"; };
 		FFE826282D081DE60070BFED /* SearchStationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStationResultView.swift; sourceTree = "<group>"; };
-		FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelProtocol.swift; sourceTree = "<group>"; };
-		FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1120,38 +1076,6 @@
 			isa = PBXGroup;
 			children = (
 				3497DC8729D2DED200D2ABB9 /* ModalModelProtocol.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		3497DC8129D2D52400D2ABB9 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC7E29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		3497DC8229D2D52F00D2ABB9 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC7C29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		3497DC8329D2D54000D2ABB9 /* Sub */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC8429D2D54900D2ABB9 /* Protocol */,
-			);
-			path = Sub;
-			sourceTree = "<group>";
-		};
-		3497DC8429D2D54900D2ABB9 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC7A29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1747,6 +1671,7 @@
 		34A3039C29AF86FD00948EDD /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				FFA67B732D0BFC5C006EFAB7 /* StationSearch */,
 				34F5F11129657B060010A21D /* StationId */,
 				FF03653C2D011CF300EF325D /* SubwayLine */,
 				34A3F0A52AB820FE0012115F /* ImportantData */,
@@ -1866,16 +1791,6 @@
 				34A3F0A62AB8210B0012115F /* ImportantData.swift */,
 			);
 			path = ImportantData;
-			sourceTree = "<group>";
-		};
-		34A4F2702A5263CD002CA564 /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC8129D2D52400D2ABB9 /* Protocol */,
-				B6FF4A382A5455AB0091997A /* DefaultSectionData.swift */,
-				B6FF4A3A2A5455C40091997A /* DefaultCellData.swift */,
-			);
-			path = Entity;
 			sourceTree = "<group>";
 		};
 		34A58ADB2AC3BAEE00C8A563 /* Sub */ = {
@@ -2049,82 +1964,14 @@
 		34C6DB6E293627AE00C4ED80 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				FF3A5EAE2D01606300BC7716 /* Sub */,
 				FF8298FE2CFD9C53008ED530 /* SearchView.swift */,
 				FF03652B2CFFEDC700EF325D /* SearchFeature.swift */,
-				34C6DB7F293627AE00C4ED80 /* SearchVC.swift */,
-				34C6DB7E293627AE00C4ED80 /* SearchViewModel.swift */,
-				34C6DB80293627AE00C4ED80 /* SearchModel.swift */,
+				FF3A5EAE2D01606300BC7716 /* Sub */,
 				34D9E9F22A54FAD50080AD17 /* Location */,
 				34C6DB81293627AE00C4ED80 /* Modal */,
-				34C6DB6F293627AE00C4ED80 /* SearchBar */,
-				34C6DB72293627AE00C4ED80 /* Result */,
-				34C6DB79293627AE00C4ED80 /* Default */,
-				34C6DB77293627AE00C4ED80 /* Entity */,
 				349E2F6329BDF7A400C54EE9 /* Coordinator */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		34C6DB6F293627AE00C4ED80 /* SearchBar */ = {
-			isa = PBXGroup;
-			children = (
-				34C6DB71293627AE00C4ED80 /* SearchBarVC.swift */,
-				34C6DB70293627AE00C4ED80 /* SearchBarViewModel.swift */,
-				3497DC8329D2D54000D2ABB9 /* Sub */,
-			);
-			path = SearchBar;
-			sourceTree = "<group>";
-		};
-		34C6DB72293627AE00C4ED80 /* Result */ = {
-			isa = PBXGroup;
-			children = (
-				34C6DB76293627AE00C4ED80 /* ResultVC.swift */,
-				34C6DB75293627AE00C4ED80 /* ResultViewModel.swift */,
-				34C6DB73293627AE00C4ED80 /* Sub */,
-			);
-			path = Result;
-			sourceTree = "<group>";
-		};
-		34C6DB73293627AE00C4ED80 /* Sub */ = {
-			isa = PBXGroup;
-			children = (
-				3497DC8229D2D52F00D2ABB9 /* Protocol */,
-				34C6DB74293627AE00C4ED80 /* ResultVCCell.swift */,
-			);
-			path = Sub;
-			sourceTree = "<group>";
-		};
-		34C6DB77293627AE00C4ED80 /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				FFE8262A2D0820E10070BFED /* Protocol */,
-				34A36BD72949D61A00FB0DDB /* ResultVCSection.swift */,
-				34A36BD52949D5B000FB0DDB /* ResultVCCellData.swift */,
-				34C6DB78293627AE00C4ED80 /* SearchStaion.swift */,
-				34A05A84296E5A1D0044CD36 /* TotalStationSearch.swift */,
-			);
-			path = Entity;
-			sourceTree = "<group>";
-		};
-		34C6DB79293627AE00C4ED80 /* Default */ = {
-			isa = PBXGroup;
-			children = (
-				34C6DB7B293627AE00C4ED80 /* DefaultView.swift */,
-				34C6DB7A293627AE00C4ED80 /* DefaultViewModel.swift */,
-				34A4F2702A5263CD002CA564 /* Entity */,
-				34C6DB7C293627AE00C4ED80 /* Sub */,
-			);
-			path = Default;
-			sourceTree = "<group>";
-		};
-		34C6DB7C293627AE00C4ED80 /* Sub */ = {
-			isa = PBXGroup;
-			children = (
-				34C6DB7D293627AE00C4ED80 /* DefaultViewCell.swift */,
-				3455CF952A5298FE001ADE61 /* LocationView.swift */,
-			);
-			path = Sub;
 			sourceTree = "<group>";
 		};
 		34C6DB81293627AE00C4ED80 /* Modal */ = {
@@ -2723,6 +2570,14 @@
 			path = Shinbundang;
 			sourceTree = "<group>";
 		};
+		FFA67B732D0BFC5C006EFAB7 /* StationSearch */ = {
+			isa = PBXGroup;
+			children = (
+				34C6DB78293627AE00C4ED80 /* SearchStaion.swift */,
+			);
+			path = StationSearch;
+			sourceTree = "<group>";
+		};
 		FFABBAFF2C927B2400CCC692 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -2733,15 +2588,6 @@
 				FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		FFE8262A2D0820E10070BFED /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				FFE8262B2D0820ED0070BFED /* SearchModelProtocol.swift */,
-				FFE8262C2D0820ED0070BFED /* SearchViewModelProtocol.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3224,7 +3070,6 @@
 				34A4F2742A527132002CA564 /* ModalSubCustomButton.swift in Sources */,
 				34A4F2722A5263FB002CA564 /* CollectionViewCellCustom.swift in Sources */,
 				FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */,
-				B6FF4A3B2A5455C40091997A /* DefaultCellData.swift in Sources */,
 				3499DE8D29D15EE700A6E8C1 /* ReportTableViewTwoBtnCellModelProtocol.swift in Sources */,
 				FA4CB7792BB651C0003C41F6 /* SaveStation+.swift in Sources */,
 				34EEDC602A41B4A8006A1364 /* SettingVCAction.swift in Sources */,
@@ -3236,10 +3081,8 @@
 				B68302BE2AC0501000E010B7 /* TutorialCellData.swift in Sources */,
 				B68302C22AC0506400E010B7 /* TutorialViewModel.swift in Sources */,
 				34B6ADE72A49930200D7A6DA /* SettingNotiSelectModalModelProtocol.swift in Sources */,
-				34C6DB90293627AF00C4ED80 /* ResultVC.swift in Sources */,
 				34A2563829AC57E9008CC885 /* PopupModal.swift in Sources */,
 				34C94B0A2A41BC6E006339FF /* SettingNotiModalViewModel.swift in Sources */,
-				34C6DB8F293627AF00C4ED80 /* ResultViewModel.swift in Sources */,
 				B68FB34A2B75EFF80075339F /* SettingTrainIconModalViewModel.swift in Sources */,
 				34F5F0ED2962DCE80010A21D /* TopView.swift in Sources */,
 				FF1D4AB22C9D346E00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */,
@@ -3259,22 +3102,17 @@
 				34A906E02A4C3178002C7655 /* NotificationManager.swift in Sources */,
 				34A32E7129B82B3D00AA1C67 /* ReportContentsModalTFViewModel.swift in Sources */,
 				34A0504729B58546007F97AD /* ReportTableViewDefaultLineView.swift in Sources */,
-				FFE8262D2D0820ED0070BFED /* SearchModelProtocol.swift in Sources */,
-				FFE8262E2D0820ED0070BFED /* SearchViewModelProtocol.swift in Sources */,
 				349FF28C299DEE00007A98F4 /* SaveSetting.swift in Sources */,
 				FF36A37D2C80633700387A3D /* TotalLoadTCADependency.swift in Sources */,
 				34B6ADE32A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift in Sources */,
 				34A221B529C9918F003F035D /* NetworkMonitor.swift in Sources */,
 				3497DCA729D301D000D2ABB9 /* SettingContentsModalViewModelProtocol.swift in Sources */,
 				34A32E7729B893E100AA1C67 /* SettingGroupModalTF.swift in Sources */,
-				3497DC7D29D2B04D00D2ABB9 /* ResultViewModelProtocol.swift in Sources */,
-				3455CF962A5298FE001ADE61 /* LocationView.swift in Sources */,
 				349C00912A0A1BAB008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
 				34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */,
 				B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */,
 				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
 				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
-				34C6DB97293627AF00C4ED80 /* SearchModel.swift in Sources */,
 				FF0365342D0015FF00EF325D /* LocationManagerTCADependencyKey.swift in Sources */,
 				349894AD29CD994800768B88 /* BundleExtension.swift in Sources */,
 				FF7ECAC72C7BF82D00D4643A /* OffsetScrollViewInSUI.swift in Sources */,
@@ -3313,10 +3151,8 @@
 				B6B2257B2B8B069900F6D669 /* SettingTrainIconModalSubView.swift in Sources */,
 				349B516829A467FB00A53879 /* ReportTableViewCellData.swift in Sources */,
 				341EEA6F2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift in Sources */,
-				34A36BD82949D61A00FB0DDB /* ResultVCSection.swift in Sources */,
 				349B517A29A4A4C600A53879 /* ReportTableViewTextFieldCell.swift in Sources */,
 				3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */,
-				3497DC7B29D2B00500D2ABB9 /* SearchBarViewModelProtocol.swift in Sources */,
 				FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */,
 				FA9AA9B22BD639F300906A5B /* UIApplication+.swift in Sources */,
 				349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */,
@@ -3351,20 +3187,16 @@
 				34C4EBB12A49A41A00BCE881 /* SettingNotiModalData.swift in Sources */,
 				34EEDC632A41B628006A1364 /* SettingNewVCType.swift in Sources */,
 				349E2F5B29BDD23800C54EE9 /* DetailResultScheduleCoorinatorDelegate.swift in Sources */,
-				34C6DB8C293627AF00C4ED80 /* SearchBarViewModel.swift in Sources */,
 				349FF294299E089E007A98F4 /* SettingTableViewCellGroupType.swift in Sources */,
 				3427D9002A43202E000AEEED /* SettingNotiSelectModalVCAction.swift in Sources */,
 				34A303BC29AF86FD00948EDD /* KorailBody.swift in Sources */,
 				34E47A062A430AC8006BF6AA /* SettingNotiCoordinator.swift in Sources */,
 				3497DCA329D3002200D2ABB9 /* SettingGroupModalViewModelProtocol.swift in Sources */,
 				B68302CB2AC0670000E010B7 /* TutorialSectionData.swift in Sources */,
-				34A36BD62949D5B000FB0DDB /* ResultVCCellData.swift in Sources */,
 				34A339AD296D6D2E000FA6A4 /* UILabelCustom.swift in Sources */,
 				3497DCAD29D3040E00D2ABB9 /* SettingModel.swift in Sources */,
 				349F1A58299A1CFA005E07CA /* DetailResultScheduleTopView.swift in Sources */,
 				349D788D29CC3FC300CA1B52 /* DetailResultScheduleModelProtocol.swift in Sources */,
-				34C6DB95293627AF00C4ED80 /* SearchViewModel.swift in Sources */,
-				34A05A85296E5A1D0044CD36 /* TotalStationSearch.swift in Sources */,
 				3497DCB029D3053B00D2ABB9 /* SettingModelProtocol.swift in Sources */,
 				34A303BA29AF86FD00948EDD /* ScheduleStationArrival.swift in Sources */,
 				B6438D3D2B667CB10099BFEF /* MainCoordinatorAction.swift in Sources */,
@@ -3376,7 +3208,6 @@
 				3499DE8F29D1601200A6E8C1 /* ReportTableViewDefaultLineViewModelProtocol.swift in Sources */,
 				349E2F4E29BDBF7300C54EE9 /* EditVCDelegate.swift in Sources */,
 				FF1D4AC22C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
-				34C6DB96293627AF00C4ED80 /* SearchVC.swift in Sources */,
 				34D9E9F62A54FAEE0080AD17 /* LocationModalCoordinator.swift in Sources */,
 				FF24F7B82C98284B001B0457 /* CoreDataScheduleManagerProtocol.swift in Sources */,
 				34D9E9FA2A54FBB70080AD17 /* LocationModalViewModel.swift in Sources */,
@@ -3395,7 +3226,6 @@
 				FFABBB1A2C92C34000CCC692 /* CoreDataScheduleManager.swift in Sources */,
 				34B6ADE92A4994D500D7A6DA /* SettingNotiSelectModalCell.swift in Sources */,
 				34A32E7429B88C4F00AA1C67 /* TableViewCellCustom.swift in Sources */,
-				34C6DB8E293627AF00C4ED80 /* ResultVCCell.swift in Sources */,
 				FF36A3802C80633900387A3D /* PreviewTotalLoadTCADependency.swift in Sources */,
 				34A36BE529502BE100FB0DDB /* EditViewCell.swift in Sources */,
 				34D9E9FE2A54FDC60080AD17 /* LocationModalCoordinatorProtocol.swift in Sources */,
@@ -3404,7 +3234,6 @@
 				3497DC8629D2DEBF00D2ABB9 /* ModalModel.swift in Sources */,
 				349FF292299E0557007A98F4 /* SettingTableViewCellType.swift in Sources */,
 				B64200DF29D05EEF00D64A3A /* EditModelProtocol.swift in Sources */,
-				34C6DB8D293627AF00C4ED80 /* SearchBarVC.swift in Sources */,
 				349C00932A0A1C34008A85BF /* SubwayWhenDetailWidgetLiveActivity.swift in Sources */,
 				FF3A5EB42D02C31A00BC7716 /* ExpandedViewInSUI.swift in Sources */,
 				B68A8CCB29C1E00E0076D7AE /* TotalLoadProtocol.swift in Sources */,
@@ -3429,7 +3258,6 @@
 				34C1D83A29530B5A00FB6624 /* EditModel.swift in Sources */,
 				349FF29E299F214F007A98F4 /* SettingGroupModalVC.swift in Sources */,
 				34A303B529AF86FD00948EDD /* LiveStationModel.swift in Sources */,
-				B6FF4A392A5455AB0091997A /* DefaultSectionData.swift in Sources */,
 				349FF287299DBC95007A98F4 /* SettingVC.swift in Sources */,
 				34C4EBB62A49AEEE00BCE881 /* SettingNotiModalModelProtocol.swift in Sources */,
 				3481C4E129C0693E003F5213 /* KorailTrainNumber.swift in Sources */,
@@ -3437,9 +3265,7 @@
 				34C6DB91293627AF00C4ED80 /* SearchStaion.swift in Sources */,
 				341EEA722ACD56E600E8F1EF /* TutorialVCAction.swift in Sources */,
 				FF8298FF2CFD9C53008ED530 /* SearchView.swift in Sources */,
-				34C6DB94293627AF00C4ED80 /* DefaultViewCell.swift in Sources */,
 				34E47A032A42FFBC006BF6AA /* SettingNotiStationView.swift in Sources */,
-				34C6DB93293627AF00C4ED80 /* DefaultView.swift in Sources */,
 				349E2F6E29BDF89D00C54EE9 /* SettingCoordinator.swift in Sources */,
 				FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */,
 				349C00892A0A1B92008A85BF /* SubwayWhenDetailWidget.intentdefinition in Sources */,
@@ -3452,7 +3278,6 @@
 				34C4EBB32A49AC8900BCE881 /* SettingNotiModalModel.swift in Sources */,
 				B6438D4A2B667CB10099BFEF /* MainTableViewSection.swift in Sources */,
 				34D9EA0B2A557E780080AD17 /* VicinityDocumentData.swift in Sources */,
-				34C6DB92293627AF00C4ED80 /* DefaultViewModel.swift in Sources */,
 				34E47A112A431319006BF6AA /* SettingNotiSelectModalVC.swift in Sources */,
 				34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */,
 				34A303B429AF86FD00948EDD /* RealtimeStationArrival.swift in Sources */,
@@ -3478,7 +3303,6 @@
 				B6438D412B667CB10099BFEF /* MainTableView.swift in Sources */,
 				349CEFAB2990FE1B00CC69E5 /* DetailResultScheduleViewCell.swift in Sources */,
 				349FF28A299DEDE1007A98F4 /* SettingViewModel.swift in Sources */,
-				3497DC7F29D2B0A200D2ABB9 /* DefaultViewModelProtocol.swift in Sources */,
 				B6438D482B667CB10099BFEF /* MainTableViewHeaderCell.swift in Sources */,
 				34C1D8382953036400FB6624 /* EditViewCellSection.swift in Sources */,
 				344D6A122ABD8A0F00ECB57D /* TutorialCoordinator.swift in Sources */,

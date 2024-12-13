@@ -298,17 +298,6 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    // Rx 버전은 삭제 예정
-    func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion> {
-        self.loadModel.stationSearch(station: stationName)
-            .map{ data -> SearchStaion? in
-                guard case .success(let value) = data else {return nil}
-                return value
-            }
-            .asObservable()
-            .filterNil()
-    }
-    
     func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
         return await withCheckedContinuation { continuation in
             self.loadModel.stationSearch(station: stationName)
@@ -323,36 +312,6 @@ class TotalLoadModel : TotalLoadProtocol {
                 })
                 .disposed(by: self.bag)
         }
-    }
-    
-    // Rx 버전은 삭제 예정
-    func defaultViewListLoad() -> Observable<[String]>{
-        self.loadModel.defaultViewListRequest()
-    }
-    
-    // Rx 버전은 삭제 예정
-    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]> {
-        self.loadModel.vicinityStationsLoad(x: x, y: y)
-            .map { data -> VicinityStationsData? in
-                guard case .success(let value) = data else {return nil}
-                return value
-            }
-            .asObservable()
-            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음", category: "정보없음")]))
-            .map {
-                $0.documents
-            }
-            .map { data in
-                let filter = data.filter {
-                    $0.category == "SW8" || $0.category == "정보없음"
-                }
-                
-                return filter.sorted {
-                    let first = Int($0.distance) ?? 0
-                    let second = Int($1.distance) ?? 1
-                    return first < second
-                }
-            }
     }
     
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
