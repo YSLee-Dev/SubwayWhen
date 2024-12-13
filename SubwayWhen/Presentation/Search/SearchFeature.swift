@@ -216,21 +216,22 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .disposableDetailBtnTapped:
-                let upDown = state.nowUpLiveData?.upDown ?? "" == "상행" ? "상/하행" : "외/내선"
+                let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
+                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
                 state.dialogState = .init(title: {
                     TextState("")
                 }, actions: {
-                    ButtonState(action: .upDownBtnTapped(true)) {
-                        TextState(state.nowUpLiveData?.upDown ?? "")
+                    ButtonState(action: .upDownBtnTapped(line != .nine)) {
+                        TextState(line == .two ? "외선" : "상행")
                     }
-                    ButtonState(action: .upDownBtnTapped(false)) {
-                        TextState(state.nowDownLiveData?.upDown ?? "")
+                    ButtonState(action: .upDownBtnTapped(line == .nine)) {
+                        TextState(line == .two ? "내선" : "하행")
                     }
                     ButtonState(role: .cancel, action: .cancelBtnTapped) {
                         TextState("취소")
                     }
                 }, message: {
-                    TextState("\(upDown) 정보를 확인해주세요.")
+                    TextState("\(line == .two ? "외/내선" : "상/하행") 정보를 확인해주세요.")
                 })
                 return .none
                 
