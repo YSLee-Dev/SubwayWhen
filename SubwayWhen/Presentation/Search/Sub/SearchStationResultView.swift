@@ -37,7 +37,7 @@ struct SearchStationResultView: View {
                         ForEach(Array(zip(self.store.nowStationSearchList, self.store.nowStationSearchList.indices)), id: \.1) { data, index in
                             AnimationButtonInSUI(bgColor: Color.gray.opacity(0.1), tappedBGColor: Color.gray.opacity(0.01), buttonView: {
                                 HStack(spacing: 10) {
-                                    StationTitleViewInSUI(title: data.useLine, lineColor: data.lineNumber.rawValue, size: 60, isFill: true)
+                                    StationTitleViewInSUI(title: data.line.useLine, lineColor: data.line.rawValue, size: 60, isFill: true)
                                     
                                     Text(data.stationName)
                                         .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
