@@ -135,7 +135,9 @@ class SearchFeature: NSObject {
                 }
                 
             case .locationToVicinityStationResult(let data):
-                state.nowVicinityStationList = data
+                var test = data
+                test.append(VicinityTransformData(id: "0", name: "테스트", line: "에버라인", distance: "0"))
+                state.nowVicinityStationList = test
                 return .none
                 
             case .liveDataRequest:
@@ -167,9 +169,14 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .locationStationTapped(let index):
-                guard let index = index else {return .none}
+                guard let index = index else {
+                    // 선택을 취소한 경우
+                    state.nowTappedStationIndex = index
+                    return .none
+                }
                 let tappedData = state.nowVicinityStationList[index]
                 guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
+                // 지원되지 않는 노선을 선택한 경우
                 if line.lineCode == "" {
                     state.dialogState = .init(title: {
                         TextState("")
