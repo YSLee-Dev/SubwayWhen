@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SubwayLineData : String, Equatable {
+enum SubwayLineData : String, Decodable, Equatable {
     case one = "01호선"
     case two = "02호선"
     case three = "03호선"
@@ -88,6 +88,7 @@ enum SubwayLineData : String, Equatable {
             return "NOT"
         }
     }
+    
     var lineCode: String{
         switch self {
         case .one:

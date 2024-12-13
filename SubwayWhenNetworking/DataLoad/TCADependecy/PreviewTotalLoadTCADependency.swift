@@ -46,10 +46,10 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     
     func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
         return [
-            .init(stationName: "논현", lineNumber: .seven, stationCode: "732"),
-            .init(stationName: "논현", lineNumber: .shinbundang, stationCode: "D05"),
-            .init(stationName: "신논현", lineNumber: .nine, stationCode: "925"),
-            .init(stationName: "신논현", lineNumber: .shinbundang, stationCode: "D06"),
+            .init(stationName: "논현", line:.seven, stationCode: "732"),
+            .init(stationName: "논현", line: .shinbundang, stationCode: "D05"),
+            .init(stationName: "신논현", line: .nine, stationCode: "925"),
+            .init(stationName: "신논현", line: .shinbundang, stationCode: "D06"),
         ]
     }
 }
