@@ -20,24 +20,19 @@ struct SearchView: View {
         NavigationBarScrollViewInSUI(title: "검색") {
             VStack(spacing: 20) {
                 HStack(spacing: 10) {
-                    MainStyleViewInSUI {
-                        TextField(text: self.$store.searchQuery) {
-                            VStack(spacing: 0) {
-                                Text("🔍 지하철역을 검색하세요.")
-                                    .foregroundColor(.gray)
-                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                            }
-                        }
-                        .focused(self.$tfFocus)
-                        .onChange(of: self.tfFocus) { _, new in
-                            self.store.send(.isSearchMode(new))
-                        }
-                        .padding(15)
-                    }
-                    .onTapGesture {
-                        self.tfFocus = true
-                    }
                     if self.store.isSearchMode {
+                        MainStyleViewInSUI {
+                            TextField(text: self.$store.searchQuery) {
+                                VStack(spacing: 0) {
+                                    Text("🔍 지하철역을 검색하세요.")
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                                }
+                            }
+                            .textFieldStyle(.plain)
+                            .focused(self.$tfFocus)
+                            .padding(15)
+                        }
                         Button {
                             self.store.send(.isSearchMode(false))
                             self.tfFocus = false
@@ -45,11 +40,23 @@ struct SearchView: View {
                             Text("닫기")
                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
                         }
+                    } else {
+                        AnimationButtonInSUI(buttonView: {
+                            ExpandedViewInSUI(alignment: .leading) {
+                                Text("🔍 지하철역을 검색하세요.")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                            }
+                            .padding(EdgeInsets(top: 5.5, leading: 6.5, bottom: 6, trailing: 5))
+                        }, tappedAction: {
+                            self.tfFocus = true
+                            self.store.send(.isSearchMode(true))
+                        })
                     }
                 }
                 
                 if self.store.state.isSearchMode {
-                    SearchStationResultView(store: self.$store)
+                    SearchStationResultView(store: self.$store, tfFocus: self.$tfFocus)
                         .animation(.easeInOut(duration: 0.3), value: self.store.nowStationSearchList)
                 } else {
                     if self.store.state.locationAuth {

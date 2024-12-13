@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct SearchStationResultView: View {
     @Binding var store: StoreOf<SearchFeature>
+    var tfFocus: FocusState<Bool>.Binding
     
     var body: some View {
         MainStyleViewInSUI {
@@ -45,7 +46,10 @@ struct SearchStationResultView: View {
                                 }
                                 .padding(.horizontal, 5)
                             }, tappedAction: {
-                                self.store.send(.searchResultTapped(index))
+                                self.tfFocus.wrappedValue = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                    self.store.send(.searchResultTapped(index))
+                                }
                             })
                         }
                         .padding(.vertical, 5)
@@ -58,7 +62,7 @@ struct SearchStationResultView: View {
         }
     }
 }
-
-#Preview {
-    SearchStationResultView(store: .constant(.init(initialState: .init(), reducer: {SearchFeature()})))
-}
+//
+//#Preview {
+//    SearchStationResultView(store: .constant(.init(initialState: .init(), reducer: {SearchFeature()})), tfFocus: .constant(false))
+//}
