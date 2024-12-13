@@ -251,6 +251,9 @@ class SearchFeature: NSObject {
                 .cancellable(id: Key.searchDelay)
                 
             case .stationSearchRequest:
+                Analytics.logEvent("SerachVC_Search", parameters: [
+                    "Search_Station" : state.searchQuery
+                ])
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
                     try await Task.sleep(for: .milliseconds(500))
