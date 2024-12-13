@@ -45,7 +45,7 @@ class TotalLoadModel : TotalLoadProtocol {
                 let station = saveStation.element
                 var backId = ""
                 var nextId = ""
-                let upDown = saveStation.element.line == "09호선" ? (saveStation.element.updnLine == "상행" ? "하행" : "상행") : saveStation.element.updnLine
+                let upDown = station.line == "09호선" ? (station.updnLine == "상행" ? "하행" : "상행") : station.updnLine
                 
                 for x in data.realtimeArrivalList{
                     let spaceRemoveStationName = x.stationName.replacingOccurrences(of: " ", with: "")
@@ -55,7 +55,7 @@ class TotalLoadModel : TotalLoadProtocol {
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
-                        return (.init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode, stateMSG: x.useState), saveStation.offset)
+                        return (.init(upDown: station.updnLine, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode, stateMSG: x.useState), saveStation.offset)
                     }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
