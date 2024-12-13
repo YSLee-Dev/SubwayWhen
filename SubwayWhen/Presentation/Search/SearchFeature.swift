@@ -236,6 +236,8 @@ class SearchFeature: NSObject {
                     state.nowStationSearchList = []
                     state.nowSearchLoading = false
                     return .cancel(id: Key.searchDelay)
+                } else if state.nowStationSearchList.firstIndex(where: {$0.stationName == state.searchQuery}) != nil {
+                    return .none
                 }
                 
                 state.nowSearchLoading = true
