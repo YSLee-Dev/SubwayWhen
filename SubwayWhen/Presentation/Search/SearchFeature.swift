@@ -236,28 +236,26 @@ class SearchFeature: NSObject {
                     state.nowStationSearchList = []
                     state.nowSearchLoading = false
                     return .cancel(id: Key.searchDelay)
+                } else if state.nowStationSearchList.firstIndex(where: {$0.stationName == state.searchQuery}) != nil {
+                    return .none
                 }
-                
                 state.nowSearchLoading = true
                 return .concatenate([
                     .cancel(id: Key.searchDelay),
                     .run { send in
-                        try await Task.sleep(for: .milliseconds(500))
+                        try await Task.sleep(for: .milliseconds(800))
                         await send(.stationSearchRequest)
                     }
                 ])
                 .cancellable(id: Key.searchDelay)
                 
             case .stationSearchRequest:
-                if state.nowStationSearchList.firstIndex(where: {$0.stationName == state.searchQuery}) != nil {
-                    return .none
-                }
                 Analytics.logEvent("SerachVC_Search", parameters: [
                     "Search_Station" : state.searchQuery
                 ])
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
-                    try await Task.sleep(for: .milliseconds(500))
+                    try await Task.sleep(for: .milliseconds(200))
                     await send(.stationSearchResult(result))
                 }
                 
