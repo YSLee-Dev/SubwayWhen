@@ -45,11 +45,12 @@ class TotalLoadModel : TotalLoadProtocol {
                 let station = saveStation.element
                 var backId = ""
                 var nextId = ""
+                let upDown = saveStation.element.line == "09호선" ? (saveStation.element.updnLine == "상행" ? "하행" : "상행") : saveStation.element.updnLine
                 
                 for x in data.realtimeArrivalList{
                     let spaceRemoveStationName = x.stationName.replacingOccurrences(of: " ", with: "")
-                    
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                    // 9호선은 상하행이 반대
+                    if station.lineCode == x.subWayId && upDown == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         let code = x.previousStation != nil ? x.code : ""
                         backId = x.backStationId
                         nextId = x.nextStationId
@@ -84,9 +85,11 @@ class TotalLoadModel : TotalLoadProtocol {
                 if data.realtimeArrivalList.isEmpty {
                     return [errorModel, errorModel]
                 } else {
+                    // 9호선은 상하행이 반대
+                    let upDown = requestModel.line == .nine ? (requestModel.upDown == "상행" ? "하행" : "상행") : requestModel.upDown
                     var arrivalData: [TotalRealtimeStationArrival] = []
                     for x in data.realtimeArrivalList {
-                        if requestModel.upDown == x.upDown && requestModel.line.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
+                        if upDown == x.upDown && requestModel.line.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
                             let backNextStation = self.nextAndBackStationSearch(backId: x.backStationId, nextId: x.nextStationId, lineCode: requestModel.line.lineCode)
                             arrivalData.append(.init(realTimeStationArrival: x, backStationName: backNextStation.first ?? "", nextStationName: backNextStation.last ?? "", nowStateMSG: x.useState))
                         }
