@@ -167,11 +167,27 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .locationStationTapped(let index):
-                state.nowTappedStationIndex = index
-                return .concatenate([
-                    .cancel(id: Key.liveDataRequest),
-                    .send(.liveDataRequest)
-                ])
+                guard let index = index else {return .none}
+                let tappedData = state.nowVicinityStationList[index]
+                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
+                if line.lineCode == "" {
+                    state.dialogState = .init(title: {
+                        TextState("")
+                    }, actions: {
+                        ButtonState(role: .cancel, action: .cancelBtnTapped) {
+                            TextState("확인")
+                        }
+                    }, message: {
+                        TextState("해당 노선은 서비스를 지원하지 않아요.\n더 많은 노선을 지원하기 위해 노력하겠습니다.")
+                    })
+                    return .none
+                } else {
+                    state.nowTappedStationIndex = index
+                    return .concatenate([
+                        .cancel(id: Key.liveDataRequest),
+                        .send(.liveDataRequest)
+                    ])
+                }
                 
             case .recommendStationRequest:
                 return .run { send in
