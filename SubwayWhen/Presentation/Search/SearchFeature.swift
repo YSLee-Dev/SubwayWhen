@@ -135,9 +135,7 @@ class SearchFeature: NSObject {
                 }
                 
             case .locationToVicinityStationResult(let data):
-                var test = data
-                test.append(VicinityTransformData(id: "0", name: "테스트", line: "에버라인", distance: "0"))
-                state.nowVicinityStationList = test
+                state.nowVicinityStationList = data
                 return .none
                 
             case .liveDataRequest:
