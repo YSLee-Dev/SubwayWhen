@@ -236,8 +236,6 @@ class SearchFeature: NSObject {
                     state.nowStationSearchList = []
                     state.nowSearchLoading = false
                     return .cancel(id: Key.searchDelay)
-                } else if state.nowStationSearchList.firstIndex(where: {$0.stationName == state.searchQuery}) != nil {
-                    return .none
                 }
                 
                 state.nowSearchLoading = true
@@ -251,6 +249,9 @@ class SearchFeature: NSObject {
                 .cancellable(id: Key.searchDelay)
                 
             case .stationSearchRequest:
+                if state.nowStationSearchList.firstIndex(where: {$0.stationName == state.searchQuery}) != nil {
+                    return .none
+                }
                 Analytics.logEvent("SerachVC_Search", parameters: [
                     "Search_Station" : state.searchQuery
                 ])
@@ -282,14 +283,14 @@ class SearchFeature: NSObject {
             case .disposableDetailPushRequest:
                 guard let isUp = state.isDisposableSearchUpdown,
                       let data = isUp ? state.nowUpLiveData : state.nowDownLiveData,
-                      let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.lineCode == data.subWayId})
+                      let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.line.lineCode == data.subWayId})
                 else {
                     state.isDisposableSearchUpdown = nil
                     return .none
                 }
                 let searchData = state.nowStationSearchList[searchIndex]
                 state.isDisposableSearchUpdown = nil
-                self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: searchData.lineNumber.rawValue, stationCode: searchData.stationCode, lineCode: searchData.lineCode, exceptionLastStation: "", korailCode: ""))
+                self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: searchData.line.rawValue, stationCode: searchData.stationCode, lineCode: searchData.line.lineCode, exceptionLastStation: "", korailCode: ""))
                 return .none
                 
             default: return .none
