@@ -41,6 +41,6 @@ struct TotalRealtimeStationArrival:  Equatable, Hashable {
     }
     
     var detailArraivalViewText: String {
-        (self.subPrevious != "" && self.code != "") ? "🚇 \(self.trainCode) 열차(\(self.lastStation)행) \n \(self.subPrevious)" : "⚠️ 실시간 정보없음"
+        (self.subPrevious != "" && self.code != "") ? "🚇 \(self.trainCode) 열차(\(self.isFast == "급행" ? "(급)" : "")\(self.lastStation)행) \n \(self.subPrevious)" : "⚠️ 실시간 정보없음"
     }
 }
