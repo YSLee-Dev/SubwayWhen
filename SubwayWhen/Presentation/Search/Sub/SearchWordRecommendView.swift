@@ -29,7 +29,9 @@ struct SearchWordRecommendView: View {
                             }
                             .padding(5)
                         }, tappedAction: {
-                            self.store.send(.stationTapped(.init(index: index, type: .recommend)))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                self.store.send(.stationTapped(.init(index: index, type: .recommend)))
+                            }
                         })
                         .padding(.vertical, 5)
                     }
