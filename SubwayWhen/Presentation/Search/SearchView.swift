@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct SearchView: View {
     @State private var store: StoreOf<SearchFeature>
     @FocusState private var tfFocus: Bool
+    @Namespace private var searchAnimation
     private let scrollToTopID = "SCROLL_TO_TOP"
     
     init(store: StoreOf<SearchFeature>) {
@@ -25,11 +26,11 @@ struct SearchView: View {
                     .id(self.scrollToTopID)
                 
                 VStack(spacing: 20) {
-                    HStack(spacing: 10) {
-                        if self.store.isSearchMode {
+                    if self.store.isSearchMode {
+                        HStack(spacing: 10) {
                             MainStyleViewInSUI {
                                 TextField(text: self.$store.searchQuery) {
-                                    Text("🔍 지하철역을 검색하세요.")
+                                    Text("지하철역을 검색하세요.")
                                         .foregroundColor(.gray)
                                         .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
                                 }
@@ -44,17 +45,19 @@ struct SearchView: View {
                                 Text("닫기")
                                     .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
                             }
-                        } else {
-                            AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
-                                Text("🔍 지하철역을 검색하세요.")
-                                    .foregroundColor(.gray)
-                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                                    .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
-                            }, tappedAction: {
-                                self.tfFocus = true
-                                self.store.send(.isSearchMode(true))
-                            })
                         }
+                        .matchedGeometryEffect(id: "ON", in: self.searchAnimation)
+                    } else {
+                        AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
+                            Text("🔍 지하철역을 검색하세요.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                                .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
+                        }, tappedAction: {
+                            self.tfFocus = true
+                            self.store.send(.isSearchMode(true))
+                        })
+                        .matchedGeometryEffect(id: "OFF", in: self.searchAnimation)
                     }
                     
                     if self.store.state.isSearchMode {
