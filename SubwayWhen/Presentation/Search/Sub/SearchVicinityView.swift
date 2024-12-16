@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct SearchVicinityView: View {
     @Namespace private var vicinityAnimation
     @Binding var store: StoreOf<SearchFeature>
+    private let scrollToLeft = "SCROLL_TO_LEFT"
     
     var body: some View {
         MainStyleViewInSUI {
@@ -55,7 +56,7 @@ struct SearchVicinityView: View {
                             HStack(spacing: 0) {
                                 Color.clear
                                     .frame(width: 0, height: 0)
-                                    .id("SCROLL_TO_TOP")
+                                    .id(self.scrollToLeft)
                                 
                                 LazyHStack(spacing: 0) {
                                     ForEach(Array(zip(self.store.state.nowVicinityStationList, self.store.state.nowVicinityStationList.indices)), id: \.1) { data, index in
@@ -240,7 +241,7 @@ struct SearchVicinityView: View {
                                             .foregroundColor(.init(uiColor: .gray))
                                             .onTapGesture {
                                                 self.store.send(.locationStationTapped(nil))
-                                                proxy.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                                proxy.scrollTo(self.scrollToLeft, anchor: .top)
                                             }
                                         
                                         Image(systemName: "arrow.triangle.2.circlepath.circle")
