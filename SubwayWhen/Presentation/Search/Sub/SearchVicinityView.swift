@@ -214,18 +214,18 @@ struct SearchVicinityView: View {
                                 
                                 ExpandedViewInSUI(alignment: .trailing) {
                                     HStack(spacing: 15) {
-                                        Image(systemName: "arrow.up.to.line")
+                                        Image(systemName: "arrow.up.to.line.circle")
                                             .resizable()
-                                            .frame(width: 20, height: 20)
+                                            .frame(width: 22, height: 22)
                                             .foregroundColor(.init(uiColor: .gray))
                                             .onTapGesture {
                                                 self.store.send(.locationStationTapped(nil))
                                                 proxy.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                             }
                                         
-                                        Image(systemName: "arrow.triangle.2.circlepath")
+                                        Image(systemName: "arrow.triangle.2.circlepath.circle")
                                             .resizable()
-                                            .frame(width: 25, height: 20)
+                                            .frame(width: 22, height: 22)
                                             .foregroundColor(.init(uiColor: .gray))
                                             .rotationEffect(.init(degrees: self.store.nowLiveDataLoading.filter {$0}.isEmpty ? 0 :180))
                                             .animation(.easeInOut(duration: 0.5), value: self.store.nowLiveDataLoading.map {$0}.isEmpty)
@@ -239,6 +239,14 @@ struct SearchVicinityView: View {
                                             .foregroundColor(.init(uiColor: .gray))
                                             .onTapGesture {
                                                 self.store.send(.disposableDetailBtnTapped)
+                                            }
+                                        
+                                        Image(systemName: "plus.circle")
+                                            .resizable()
+                                            .frame(width: 22, height: 22)
+                                            .foregroundColor(.init(uiColor: .gray))
+                                            .onTapGesture {
+                                                self.store.send(.stationAddBtnTapped)
                                             }
                                     }
                                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
