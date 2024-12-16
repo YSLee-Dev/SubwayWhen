@@ -310,6 +310,7 @@ class SearchFeature: NSObject {
                 }
                
             case .searchResultTapped(let index):
+                state.isAutoDelegateAction = nil
                 self.delegate?.modalPresent(data: state.nowStationSearchList[index])
                 return .none
                 
