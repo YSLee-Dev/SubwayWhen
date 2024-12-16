@@ -9,12 +9,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SearchVicinityView: View {
+    @Namespace private var vicinityAnimation
     @Binding var store: StoreOf<SearchFeature>
     
     var body: some View {
         MainStyleViewInSUI {
-            VStack(spacing: 0) {
-                ExpandedViewInSUI(alignment: .leading)  {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack  {
                     VStack(alignment: .leading) {
                         Text("가까운 지하철역 찾기")
                             .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))
@@ -22,15 +23,32 @@ struct SearchVicinityView: View {
                             .foregroundStyle(.gray)
                             .font(.system(size: ViewStyle.FontSize.smallSize))
                     }
+                    Spacer()
+                    if self.store.nowTappedStationIndex == nil {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .foregroundStyle(.gray)
+                            .rotationEffect(.init(degrees: self.store.nowVicintyStationLoading ? 0 :180)) .animation(.easeInOut(duration: 0.5), value: self.store.nowVicintyStationLoading)
+                            .onTapGesture {
+                                self.store.send(.locationToVicinityRefreshBtnTapped)
+                            }
+                    }
                 }
                 .padding(.init(top: 15, leading: 0, bottom: 10, trailing: 0))
                 
-                if self.store.nowVicinityStationList.isEmpty {
+                if self.store.nowVicinityStationList.isEmpty && !self.store.nowVicintyStationLoading {
                     ExpandedViewInSUI(alignment: .center) {
                         Text("현재 가까운 지하철역이 없어요.")
                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                             .padding(.vertical, 15)
                     }
+                } else if self.store.nowVicintyStationLoading {
+                    ExpandedViewInSUI(alignment: .center) {
+                        ProgressView()
+                            .tint(Color("AppIconColor"))
+                            .padding(.vertical, 30)
+                    }
+                    .matchedGeometryEffect(id: "progressView", in: self.vicinityAnimation)
+                    .animation(.smooth(duration: 0.3), value: self.store.nowVicintyStationLoading)
                 } else {
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal) {
@@ -68,7 +86,9 @@ struct SearchVicinityView: View {
                         }
                         .scrollIndicators(.hidden)
                         .padding(.bottom, self.store.nowTappedStationIndex == nil ? 10 : 0)
+                        .matchedGeometryEffect(id: "scrollView", in: self.vicinityAnimation)
                         .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
+                        .animation(.smooth(duration: 0.3), value: self.store.nowVicintyStationLoading)
                         
                         if let index = self.store.nowTappedStationIndex {
                             let tappedData = self.store.nowVicinityStationList[index]
@@ -254,7 +274,7 @@ struct SearchVicinityView: View {
                             }
                             .animation(.easeInOut(duration: 0.3), value: self.store.state.nowLiveDataLoading)
                             .padding(.bottom, 10)
-                        } else {
+                        } else if !self.store.nowVicinityStationList.isEmpty {
                             AnimationButtonInSUI(
                                 bgColor: Color("AppIconColor"), tappedBGColor: Color("AppIconColor"), buttonView: {
                                     Text("목록으로 확인하기")

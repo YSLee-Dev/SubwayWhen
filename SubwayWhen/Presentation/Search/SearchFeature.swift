@@ -29,6 +29,7 @@ class SearchFeature: NSObject {
     @ObservableState
     struct State: Equatable {
         var nowVicinityStationList: [VicinityTransformData] = []
+        var nowVicintyStationLoading = false
         var nowLiveDataLoading = [false, false]
         var nowTappedStationIndex: Int? = nil
         var nowUpLiveData: TotalRealtimeStationArrival?
@@ -44,6 +45,7 @@ class SearchFeature: NSObject {
         var searchQuery = ""
         var locationAuth = false
         var isAutoDelegateAction: AutoDelegateAction?
+        var lastVicintySearchTime: Date?
         
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
@@ -55,6 +57,7 @@ class SearchFeature: NSObject {
         case locationAuthResult([Bool]) // index0 : 자동 여부 (버튼클릭 -> 수동), index1: result
         case locationDataRequest
         case locationDataResult(LocationData?)
+        case locationToVicinityRefreshBtnTapped
         case locationToVicinityStationRequest(LocationData)
         case locationToVicinityStationResult([VicinityTransformData])
         case locationStationTapped(Int?)
@@ -124,24 +127,51 @@ class SearchFeature: NSObject {
                     return .none
                 }
                 
+            case .locationToVicinityRefreshBtnTapped:
+                if let lastTime = state.lastVicintySearchTime,
+                   lastTime.addingTimeInterval(300) > Date.now {
+                    state.dialogState = .init(title: {
+                        TextState("")
+                    }, actions: {
+                        ButtonState(action: .cancelBtnTapped) {
+                            TextState("확인")
+                        }
+                    }, message: {
+                        TextState(
+                            "가까운 지하철역 찾기 기능은 5분에 한번씩 조회할 수 있어요.\n\(Int(abs(Date.now.timeIntervalSince(lastTime.addingTimeInterval(300)))))초 후에 다시 시도해주세요."
+                        )
+                    })
+                    return .none
+                }
+                state.nowTappedStationIndex = nil
+                state.nowVicinityStationList = []
+                return .send(.locationAuthResult([true, self.locationManager.locationAuthCheck()]))
+                
             case .locationDataRequest:
+                state.nowVicintyStationLoading = true
                 return .run { send in
                     let data = await self.locationManager.locationRequest()
                     await send(.locationDataResult(data))
                 }
                 
             case .locationDataResult(let data):
-                guard let location = data else {return .none}
+                guard let location = data else {
+                    state.nowVicintyStationLoading = false
+                    return .none
+                }
                 return .send(.locationToVicinityStationRequest(location))
                 
             case .locationToVicinityStationRequest(let location):
                 return .run { send in
+                    try? await Task.sleep(for: .milliseconds(200))
                     let data = await self.totalLoad.vicinityStationsDataLoad(x: location.lon, y: location.lat)
                     return await send(.locationToVicinityStationResult(data))
                 }
                 
             case .locationToVicinityStationResult(let data):
+                state.nowVicintyStationLoading = false
                 state.nowVicinityStationList = data
+                state.lastVicintySearchTime = .now
                 return .none
                 
             case .liveDataRequest:
@@ -189,8 +219,8 @@ class SearchFeature: NSObject {
                     state.dialogState = .init(title: {
                         TextState("")
                     }, actions: {
-                        ButtonState(role: .cancel, action: .cancelBtnTapped) {
-                            TextState("확인")
+                        ButtonState( action: .cancelBtnTapped) {
+                            TextState("")
                         }
                     }, message: {
                         TextState("해당 노선은 서비스를 지원하지 않아요.\n더 많은 노선을 지원하기 위해 노력하겠습니다.")
@@ -298,8 +328,7 @@ class SearchFeature: NSObject {
                     return .none
                 } else if state.isAutoDelegateAction == .plusModal {
                     let comparisonData = state.nowUpLiveData?.code == "" ? state.nowDownLiveData : state.nowUpLiveData
-                    guard let tappedIndex = state.nowTappedStationIndex,
-                          let index = result.firstIndex(where: {$0.line.lineCode == comparisonData?.subWayId})
+                    guard let index = result.firstIndex(where: {$0.line.lineCode == comparisonData?.subWayId})
                     else {
                         state.isAutoDelegateAction = nil
                         return .none
