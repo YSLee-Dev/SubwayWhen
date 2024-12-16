@@ -113,6 +113,11 @@ struct DetailArrivalView: View {
                         Spacer()
                         Text(FixInfo.saveSetting.detailVCTrainIcon)
                             .font(.system(size: ViewStyle.FontSize.mainTitleSize))
+                            .background {
+                                Text(self.arrivalDataList.first?.isFast == "급행" ? "💨" : "")
+                                    .font(.system(size: ViewStyle.FontSize.mediumSize))
+                                    .offset(x: 15)
+                            }
                             .offset(x: self.trainPostion, y: -15)
                             .opacity(self.nowLoading ? 0 : self.nowAnimationPlaying ? 0 : 1)
                             .animation(.easeInOut(duration: 0.4), value: self.trainPostion)
