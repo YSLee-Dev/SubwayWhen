@@ -305,7 +305,7 @@ class SearchFeature: NSObject {
                 return .concatenate([
                     .cancel(id: Key.searchDelay),
                     .run { send in
-                        try await Task.sleep(for: .milliseconds(700))
+                        try await Task.sleep(for: .milliseconds(650))
                         await send(.stationSearchRequest)
                     }
                 ])
@@ -317,7 +317,7 @@ class SearchFeature: NSObject {
                 ])
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
-                    try await Task.sleep(for: .milliseconds(400))
+                    try await Task.sleep(for: .milliseconds(350))
                     await send(.stationSearchResult(result))
                 }
                 
