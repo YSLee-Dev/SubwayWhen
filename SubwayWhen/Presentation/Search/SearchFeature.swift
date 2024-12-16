@@ -43,7 +43,7 @@ class SearchFeature: NSObject {
         var isFirst = true
         var searchQuery = ""
         var locationAuth = false
-        var isDisposableSearchUpdown: Bool?
+        var isAutoDelegateAction: AutoDelegateAction?
         
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
@@ -72,11 +72,17 @@ class SearchFeature: NSObject {
         case searchResultTapped(Int)
         case stationTapped(SearchFeatureStationTapSendModel)
         case disposableDetailPushRequest
+        case stationAddBtnTapped
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
             case upDownBtnTapped(Bool) // 상행/외선이 true, 하행/내선이 false
         }
+    }
+    
+    enum AutoDelegateAction: Equatable {
+        case disposableDetail(Bool)
+        case plusModal
     }
     
     enum Key: Equatable, CaseIterable {
@@ -240,7 +246,7 @@ class SearchFeature: NSObject {
                 case .presented(.upDownBtnTapped(let isUp)):
                     guard let index = state.nowTappedStationIndex else {return .none}
                     state.searchQuery = state.nowVicinityStationList[index].name
-                    state.isDisposableSearchUpdown = isUp
+                    state.isAutoDelegateAction = .disposableDetail(isUp)
                     state.isSearchMode = true
                     state.nowSearchLoading = true
                     return .send(.stationSearchRequest)
@@ -288,10 +294,19 @@ class SearchFeature: NSObject {
             case .stationSearchResult(let result):
                 state.nowStationSearchList = result
                 state.nowSearchLoading = false
-                if state.isDisposableSearchUpdown != nil {
-                    return .send(.disposableDetailPushRequest)
-                } else {
+                if state.isAutoDelegateAction == nil {
                     return .none
+                } else if state.isAutoDelegateAction == .plusModal {
+                    let comparisonData = state.nowUpLiveData?.code == "" ? state.nowDownLiveData : state.nowUpLiveData
+                    guard let tappedIndex = state.nowTappedStationIndex,
+                          let index = result.firstIndex(where: {$0.line.lineCode == comparisonData?.subWayId})
+                    else {
+                        state.isAutoDelegateAction = nil
+                        return .none
+                    }
+                    return .send(.searchResultTapped(index))
+                } else {
+                    return .send(.disposableDetailPushRequest)
                 }
                
             case .searchResultTapped(let index):
@@ -305,17 +320,25 @@ class SearchFeature: NSObject {
                 return .send(.stationSearchRequest)
                 
             case .disposableDetailPushRequest:
-                guard let isUp = state.isDisposableSearchUpdown,
+                guard  case let .disposableDetail(isUp) = state.isAutoDelegateAction,
                       let data = isUp ? state.nowUpLiveData : state.nowDownLiveData,
                       let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.line.lineCode == data.subWayId})
                 else {
-                    state.isDisposableSearchUpdown = nil
+                    state.isAutoDelegateAction = nil
                     return .none
                 }
                 let searchData = state.nowStationSearchList[searchIndex]
-                state.isDisposableSearchUpdown = nil
+                state.isAutoDelegateAction = nil
                 self.delegate?.disposableDetailPush(data: .init(upDown: data.upDown, stationName: data.stationName, lineNumber: searchData.line.rawValue, stationCode: searchData.stationCode, lineCode: searchData.line.lineCode, exceptionLastStation: "", korailCode: ""))
                 return .none
+                
+            case .stationAddBtnTapped:
+                guard let index = state.nowTappedStationIndex else {return .none}
+                state.searchQuery = state.nowVicinityStationList[index].name
+                state.isAutoDelegateAction = .plusModal
+                state.isSearchMode = true
+                state.nowSearchLoading = true
+                return .send(.stationSearchRequest)
                 
             default: return .none
             }
