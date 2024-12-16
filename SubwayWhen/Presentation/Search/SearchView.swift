@@ -23,11 +23,9 @@ struct SearchView: View {
                     if self.store.isSearchMode {
                         MainStyleViewInSUI {
                             TextField(text: self.$store.searchQuery) {
-                                VStack(spacing: 0) {
-                                    Text("🔍 지하철역을 검색하세요.")
-                                        .foregroundColor(.gray)
-                                        .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                                }
+                                Text("🔍 지하철역을 검색하세요.")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
                             }
                             .textFieldStyle(.plain)
                             .focused(self.$tfFocus)
