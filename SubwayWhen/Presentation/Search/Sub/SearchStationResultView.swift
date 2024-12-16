@@ -47,7 +47,7 @@ struct SearchStationResultView: View {
                                 .padding(.horizontal, 5)
                             }, tappedAction: {
                                 self.tfFocus.wrappedValue = false
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                                     self.store.send(.searchResultTapped(index))
                                 }
                             })
