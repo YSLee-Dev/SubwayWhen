@@ -53,12 +53,11 @@ struct SearchStationResultView: View {
                             })
                         }
                         .padding(.vertical, 5)
-                        .animation(.easeInOut(duration: 0.3) ,value: self.store.nowVicinityStationList)
                     }
                 }
             }
             .padding(15)
-            .animation(.easeInOut(duration: 0.3) ,value: self.store.nowSearchLoading)
+            .animation(.smooth(duration: 0.2) ,value: self.store.nowSearchLoading)
         }
     }
 }

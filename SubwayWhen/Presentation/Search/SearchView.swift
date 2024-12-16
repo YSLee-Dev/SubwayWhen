@@ -85,9 +85,9 @@ struct SearchView: View {
                     }
                     
                     SearchWordRecommendView(store: self.$store)
-                        .animation(.easeInOut(duration: 0.3), value: self.store.nowStationSearchList)
+                        .animation(.smooth(duration: 0.3), value: self.store.nowStationSearchList)
                 }
-                .animation(.easeInOut(duration: 0.3), value: self.store.isSearchMode)
+                .animation(.smooth(duration: 0.3), value: self.store.isSearchMode)
                 .padding(.top, 12.5)
                 .onAppear {
                     self.store.send(.onAppear)
