@@ -12,7 +12,6 @@ struct SearchView: View {
     @State private var store: StoreOf<SearchFeature>
     @FocusState private var tfFocus: Bool
     @Namespace private var searchAnimation
-    private let scrollToTopID = "SCROLL_TO_TOP"
     
     init(store: StoreOf<SearchFeature>) {
         self.store = store
@@ -21,10 +20,6 @@ struct SearchView: View {
     var body: some View {
         ScrollViewReader { proxy in
             NavigationBarScrollViewInSUI(title: "검색") {
-                Color.clear
-                    .frame(width: 0, height: 0)
-                    .id(self.scrollToTopID)
-                
                 VStack(spacing: 20) {
                     if self.store.isSearchMode {
                         HStack(spacing: 10) {
@@ -37,6 +32,7 @@ struct SearchView: View {
                                 .textFieldStyle(.plain)
                                 .focused(self.$tfFocus)
                                 .padding(15)
+                                .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
                             }
                             Button {
                                 self.store.send(.isSearchMode(false))
@@ -46,7 +42,6 @@ struct SearchView: View {
                                     .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
                             }
                         }
-                        .matchedGeometryEffect(id: "ON", in: self.searchAnimation)
                     } else {
                         AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
                             Text("🔍 지하철역을 검색하세요.")
@@ -57,12 +52,11 @@ struct SearchView: View {
                             self.tfFocus = true
                             self.store.send(.isSearchMode(true))
                         })
-                        .matchedGeometryEffect(id: "OFF", in: self.searchAnimation)
+                        .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
                     }
                     
                     if self.store.state.isSearchMode {
                         SearchStationResultView(store: self.$store, tfFocus: self.$tfFocus)
-                            .animation(.easeInOut(duration: 0.3), value: self.store.nowStationSearchList)
                     } else {
                         if self.store.state.locationAuth {
                             SearchVicinityView(store: self.$store)
@@ -98,9 +92,9 @@ struct SearchView: View {
                 .onAppear {
                     self.store.send(.onAppear)
                 }
-                .onChange(of: self.store.nowStationSearchList) { old, new in
-                    if old != new {
-                        proxy.scrollTo(self.scrollToTopID, anchor: .top)
+                .onChange(of: self.store.nowSearchLoading) { _, new in
+                    if new {
+                        proxy.scrollTo("TOPVIEW", anchor: .top)
                     }
                 }
                 .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
