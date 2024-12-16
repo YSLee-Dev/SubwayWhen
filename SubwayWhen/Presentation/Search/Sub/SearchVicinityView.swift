@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SearchVicinityView: View {
-    @Namespace private var vicinityAnimation
     @Binding var store: StoreOf<SearchFeature>
     private let scrollToLeft = "SCROLL_TO_LEFT"
     
@@ -48,7 +47,6 @@ struct SearchVicinityView: View {
                             .tint(Color("AppIconColor"))
                             .padding(.vertical, 30)
                     }
-                    .matchedGeometryEffect(id: "progressView", in: self.vicinityAnimation)
                     .animation(.smooth(duration: 0.3), value: self.store.nowVicintyStationLoading)
                 } else {
                     ScrollViewReader { proxy in
@@ -87,7 +85,6 @@ struct SearchVicinityView: View {
                         }
                         .scrollIndicators(.hidden)
                         .padding(.bottom, self.store.nowTappedStationIndex == nil ? 10 : 0)
-                        .matchedGeometryEffect(id: "scrollView", in: self.vicinityAnimation)
                         .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                         .animation(.smooth(duration: 0.3), value: self.store.nowVicintyStationLoading)
                         

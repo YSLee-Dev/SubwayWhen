@@ -317,7 +317,7 @@ class SearchFeature: NSObject {
                 ])
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
-                    try await Task.sleep(for: .milliseconds(350))
+                    try await Task.sleep(for: .milliseconds(400))
                     await send(.stationSearchResult(result))
                 }
                 
