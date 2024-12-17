@@ -123,6 +123,8 @@ class SearchFeature: NSObject {
                     return .send(.vicinityListOpenBtnTapped) // 해당 모달 내부에서 안내멘트를 전달해요.
                 } else if isOn[1] && state.nowVicinityStationList.isEmpty {
                     return .send(.locationDataRequest)
+                } else if isOn[1] && state.nowTappedStationIndex != nil { // 선택된 지하철역이 있는 상태에서 재진입 했을 때
+                    return .send(.refreshBtnTapped)
                 } else {
                     return .none
                 }
