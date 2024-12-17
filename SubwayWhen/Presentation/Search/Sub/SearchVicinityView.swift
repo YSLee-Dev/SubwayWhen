@@ -135,8 +135,8 @@ struct SearchVicinityView: View {
                                             
                                             Spacer()
                                         }
-                                        .offset(x: 10)
                                         .frame(maxWidth: .infinity, alignment: .leading)
+                                        .offset(x: 10)
                                         
                                         StationTitleViewInSUI(title: tappedData.name, lineColor: tappedData.lineColorName,  size: 65, isFill: true, fontSize: ViewStyle.FontSize.smallSize)
                                         
@@ -179,8 +179,8 @@ struct SearchVicinityView: View {
                                             Text(backStation.isEmpty ? "-" : backStation)
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                         }
-                                        .offset(x: -10, y: 5)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .offset(x: -10, y: 5)
                                     }
                                     .animation(.smooth(duration: 0.4), value: self.store.state.nowTappedStationIndex)
                                     .padding(.top, 10)
@@ -222,12 +222,12 @@ struct SearchVicinityView: View {
                                             if self.store.nowUpLiveData != nil || self.store.nowDownLiveData == nil {
                                                 RoundedRectangle(cornerRadius: 15)
                                                     .fill(Color(tappedData.lineColorName))
-                                                    .frame(width: 1.5)
+                                                    .frame(width: 1.5, alignment: .center)
                                                     .frame(maxHeight: .infinity)
                                             }
                                         }
                                     }
-                                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 15, trailing: 15))
+                                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 15, trailing: 10))
                                 }
                                 .padding(.vertical, 15)
                                 .padding(.horizontal, 7.5)
