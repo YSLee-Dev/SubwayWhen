@@ -389,7 +389,6 @@
 		FF1D4AC22C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
 		FF1D4AC32C9D3D4B00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
 		FF1D4AC42C9D3D4C00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4A582C9CFFAE00AFD709 /* TestTotalLoadTCADepdency.swift */; };
-		FF1D4ACB2C9D42A400AFD709 /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF24F7512C92C3FD001B0457 /* CoreDataScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABBB012C92A5C300CCC692 /* CoreDataScheduleManager.swift */; };
 		FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
 		FF24F7AD2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF24F7AA2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld */; };
@@ -424,6 +423,8 @@
 		FF3A5EB22D016FDA00BC7716 /* SearchWordRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A5EB12D016FDA00BC7716 /* SearchWordRecommendView.swift */; };
 		FF3A5EB42D02C31A00BC7716 /* ExpandedViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A5EB32D02C31A00BC7716 /* ExpandedViewInSUI.swift */; };
 		FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */; };
+		FF6CB2132D1111AA00DF562B /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
+		FF6CB2142D1111AA00DF562B /* SubwayWhenCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71322C7D51360080B72B /* DetailArrivalView.swift */; };
 		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
@@ -500,7 +501,7 @@
 			remoteGlobalIDString = FF1D4A9C2C9D32A100AFD709;
 			remoteInfo = SubwayWhenCommon;
 		};
-		FF1D4AC92C9D429A00AFD709 /* PBXContainerItemProxy */ = {
+		FF6CB2152D1111AA00DF562B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 34C6DB492936274400C4ED80 /* Project object */;
 			proxyType = 1;
@@ -540,6 +541,17 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CB2172D1111AA00DF562B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FF6CB2142D1111AA00DF562B /* SubwayWhenCommon.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -918,7 +930,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF1D4ACB2C9D42A400AFD709 /* SubwayWhenCommon.framework in Frameworks */,
+				FF6CB2132D1111AA00DF562B /* SubwayWhenCommon.framework in Frameworks */,
 				6DD0D393633E6FFCFAC49B35 /* Pods_SubwayWhenTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2639,12 +2651,13 @@
 				34A3036B29AF239300948EDD /* Frameworks */,
 				34A3036C29AF239300948EDD /* Resources */,
 				088E6E81D826B0540922F472 /* [CP] Embed Pods Frameworks */,
+				FF6CB2172D1111AA00DF562B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FF1D4ACA2C9D429A00AFD709 /* PBXTargetDependency */,
 				34A3037329AF239300948EDD /* PBXTargetDependency */,
+				FF6CB2162D1111AA00DF562B /* PBXTargetDependency */,
 			);
 			name = SubwayWhenTests;
 			productName = SubwayWhenTests;
@@ -3475,10 +3488,10 @@
 			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
 			targetProxy = FF1D4AAD2C9D330300AFD709 /* PBXContainerItemProxy */;
 		};
-		FF1D4ACA2C9D429A00AFD709 /* PBXTargetDependency */ = {
+		FF6CB2162D1111AA00DF562B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FF1D4A9C2C9D32A100AFD709 /* SubwayWhenCommon */;
-			targetProxy = FF1D4AC92C9D429A00AFD709 /* PBXContainerItemProxy */;
+			targetProxy = FF6CB2152D1111AA00DF562B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

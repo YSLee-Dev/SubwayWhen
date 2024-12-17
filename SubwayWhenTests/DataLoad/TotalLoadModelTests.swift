@@ -130,14 +130,12 @@ final class TotalLoadModelTests: XCTestCase {
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first
         
-        let dummyData = arrivalDummyData
-        
         // WHEN
         let requestStationName = requestData?.first?.stationName
         let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
         let requestNextName = requestData?.first?.nextStationName
-        let dummyNextName = ""
+        let dummyNextName = "고속터미널" // dummy 데이터 기반 고정 값
         
         let requestCode = requestData?.first?.code
         let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
