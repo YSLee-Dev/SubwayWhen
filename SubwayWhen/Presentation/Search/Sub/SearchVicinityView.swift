@@ -191,7 +191,11 @@ struct SearchVicinityView: View {
                                         let downData = self.store.nowDownLiveData
                                         
                                         VStack(alignment: .leading, spacing: 5){
-                                            Text("\(upData?.isFast  == "급행" ? "(급)" : "")\(upData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "외선" : "상행"))")
+                                            Text(
+                                                upData?.code == ""
+                                                ? "-"
+                                                : "\(upData?.isFast  == "급행" ? "(급)" : "")\(upData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "외선" : "상행"))"
+                                            )
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                             Text((upData == nil || self.store.nowLiveDataLoading[0]) ? "🔄 로딩 중"  : upData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : upData!.nowStateMSG)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
@@ -202,7 +206,11 @@ struct SearchVicinityView: View {
                                             .frame(width: 1.5)
                                         
                                         VStack(alignment: .trailing, spacing: 5){
-                                            Text("\(downData?.isFast  == "급행" ? "(급)" : "")\(downData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "내선" : "하행"))")
+                                            Text(
+                                                downData?.code == ""
+                                                ? "-"
+                                                : "\(downData?.isFast  == "급행" ? "(급)" : "")\(downData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "내선" : "하행"))"
+                                            )
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                             Text((downData == nil || self.store.nowLiveDataLoading[1]) ?  "🔄 로딩 중"  : downData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : downData!.nowStateMSG)
                                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
