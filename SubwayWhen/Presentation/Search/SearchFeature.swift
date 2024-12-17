@@ -317,6 +317,7 @@ class SearchFeature: NSObject {
                 Analytics.logEvent("SerachVC_Search", parameters: [
                     "Search_Station" : state.searchQuery
                 ])
+                state.nowStationSearchList = []
                 return .run { [name = state.searchQuery] send in
                     let result = await self.totalLoad.stationNameSearchReponse(name)
                     try await Task.sleep(for: .milliseconds(350))
