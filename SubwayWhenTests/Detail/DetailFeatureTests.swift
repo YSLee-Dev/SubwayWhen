@@ -16,7 +16,7 @@ final class DetailFeatureTests: XCTestCase {
 
     override func setUp()  {
         self.testDependency.resultSchdule = seoulScheduleToResultScheduleTransformDummyData
-        self.testDependency.realtimeStationArrival = arrivalDummyData.realtimeArrivalList
+        self.testDependency.realtimeStationArrival = totalArrivalDummyData
         
         FixInfo.saveSetting.detailAutoReload = true
         FixInfo.saveSetting.detailScheduleAutoTime = false
