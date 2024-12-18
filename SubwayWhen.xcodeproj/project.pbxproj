@@ -31,8 +31,7 @@
 		3497DC8629D2DEBF00D2ABB9 /* ModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8529D2DEBF00D2ABB9 /* ModalModel.swift */; };
 		3497DC8829D2DED200D2ABB9 /* ModalModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8729D2DED200D2ABB9 /* ModalModelProtocol.swift */; };
 		3497DC8A29D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8929D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift */; };
-		3497DC8E29D2E7BA00D2ABB9 /* SearchModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC8D29D2E7BA00D2ABB9 /* SearchModelTests.swift */; };
-		3497DC9129D2EDE200D2ABB9 /* SearchViewModalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9029D2EDE200D2ABB9 /* SearchViewModalTests.swift */; };
+		3497DC9129D2EDE200D2ABB9 /* SearchFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9029D2EDE200D2ABB9 /* SearchFeatureTests.swift */; };
 		3497DC9329D2F53900D2ABB9 /* ModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */; };
 		3497DC9729D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */; };
 		3497DC9D29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */; };
@@ -203,7 +202,6 @@
 		34C4EBB12A49A41A00BCE881 /* SettingNotiModalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C4EBB02A49A41A00BCE881 /* SettingNotiModalData.swift */; };
 		34C4EBB32A49AC8900BCE881 /* SettingNotiModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C4EBB22A49AC8900BCE881 /* SettingNotiModalModel.swift */; };
 		34C4EBB62A49AEEE00BCE881 /* SettingNotiModalModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C4EBB52A49AEEE00BCE881 /* SettingNotiModalModelProtocol.swift */; };
-		34C655732A5C07720039C16B /* LocationModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C655722A5C07720039C16B /* LocationModalModelTests.swift */; };
 		34C655752A5CF8210039C16B /* SettingNotiSelectModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C655742A5CF8200039C16B /* SettingNotiSelectModalModelTests.swift */; };
 		34C655772A5D010E0039C16B /* SettingNotiModalViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C655762A5D010E0039C16B /* SettingNotiModalViewModelTests.swift */; };
 		34C6DB552936274400C4ED80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6DB542936274400C4ED80 /* AppDelegate.swift */; };
@@ -425,6 +423,7 @@
 		FF68CFCA2CA27A630054BF69 /* SearchCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */; };
 		FF6CB2132D1111AA00DF562B /* SubwayWhenCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; };
 		FF6CB2142D1111AA00DF562B /* SubwayWhenCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D4A9D2C9D32A100AFD709 /* SubwayWhenCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF6CB2192D12991200DF562B /* TestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB2182D12991200DF562B /* TestLocationManager.swift */; };
 		FF7A71312C7C5B160080B72B /* MainStyleViewInSUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */; };
 		FF7A71332C7D51360080B72B /* DetailArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A71322C7D51360080B72B /* DetailArrivalView.swift */; };
 		FF7ECAC52C7BF62B00D4643A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */; };
@@ -586,8 +585,7 @@
 		3497DC8529D2DEBF00D2ABB9 /* ModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModel.swift; sourceTree = "<group>"; };
 		3497DC8729D2DED200D2ABB9 /* ModalModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC8929D2E40F00D2ABB9 /* ReportContentsModalViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContentsModalViewModelProtocol.swift; sourceTree = "<group>"; };
-		3497DC8D29D2E7BA00D2ABB9 /* SearchModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelTests.swift; sourceTree = "<group>"; };
-		3497DC9029D2EDE200D2ABB9 /* SearchViewModalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModalTests.swift; sourceTree = "<group>"; };
+		3497DC9029D2EDE200D2ABB9 /* SearchFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeatureTests.swift; sourceTree = "<group>"; };
 		3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelTests.swift; sourceTree = "<group>"; };
 		3497DC9629D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailResultScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		3497DC9C29D2FC9200D2ABB9 /* ReportViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -758,7 +756,6 @@
 		34C4EBB02A49A41A00BCE881 /* SettingNotiModalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiModalData.swift; sourceTree = "<group>"; };
 		34C4EBB22A49AC8900BCE881 /* SettingNotiModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiModalModel.swift; sourceTree = "<group>"; };
 		34C4EBB52A49AEEE00BCE881 /* SettingNotiModalModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiModalModelProtocol.swift; sourceTree = "<group>"; };
-		34C655722A5C07720039C16B /* LocationModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModalModelTests.swift; sourceTree = "<group>"; };
 		34C655742A5CF8200039C16B /* SettingNotiSelectModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalModelTests.swift; sourceTree = "<group>"; };
 		34C655762A5D010E0039C16B /* SettingNotiModalViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiModalViewModelTests.swift; sourceTree = "<group>"; };
 		34C6DB512936274400C4ED80 /* SubwayWhen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayWhen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -898,6 +895,7 @@
 		FF3A5EB32D02C31A00BC7716 /* ExpandedViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedViewInSUI.swift; sourceTree = "<group>"; };
 		FF68CFC82CA1343A0054BF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FF68CFC92CA27A630054BF69 /* SearchCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		FF6CB2182D12991200DF562B /* TestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLocationManager.swift; sourceTree = "<group>"; };
 		FF7A71302C7C5B160080B72B /* MainStyleViewInSUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStyleViewInSUI.swift; sourceTree = "<group>"; };
 		FF7A71322C7D51360080B72B /* DetailArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArrivalView.swift; sourceTree = "<group>"; };
 		FF7ECAC42C7BF62B00D4643A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1104,10 +1102,8 @@
 		3497DC8F29D2E7BE00D2ABB9 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				3497DC8D29D2E7BA00D2ABB9 /* SearchModelTests.swift */,
-				3497DC9029D2EDE200D2ABB9 /* SearchViewModalTests.swift */,
+				3497DC9029D2EDE200D2ABB9 /* SearchFeatureTests.swift */,
 				3497DC9229D2F53900D2ABB9 /* ModalModelTests.swift */,
-				34C655722A5C07720039C16B /* LocationModalModelTests.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -2505,6 +2501,7 @@
 			children = (
 				FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */,
 				FF0365362D00171100EF325D /* PreviewLocationManager.swift */,
+				FF6CB2182D12991200DF562B /* TestLocationManager.swift */,
 			);
 			path = TCADependency;
 			sourceTree = "<group>";
@@ -3036,8 +3033,7 @@
 			files = (
 				3497DCC429D43D3E00D2ABB9 /* SettingModelTests.swift in Sources */,
 				34C655772A5D010E0039C16B /* SettingNotiModalViewModelTests.swift in Sources */,
-				3497DC9129D2EDE200D2ABB9 /* SearchViewModalTests.swift in Sources */,
-				34C655732A5C07720039C16B /* LocationModalModelTests.swift in Sources */,
+				3497DC9129D2EDE200D2ABB9 /* SearchFeatureTests.swift in Sources */,
 				349D789729CC78D400CA1B52 /* DetailResultScheduleModelTests.swift in Sources */,
 				34A221C229CAC1D1003F035D /* MainModelTests.swift in Sources */,
 				34BA0B2E29C039010044E2C2 /* TotalLoadModelTests.swift in Sources */,
@@ -3057,7 +3053,6 @@
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
 				34BA0B2629BF246E0044E2C2 /* LoadModelTests.swift in Sources */,
-				3497DC8E29D2E7BA00D2ABB9 /* SearchModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3127,6 +3122,7 @@
 				34A906E82A4D9C7A002C7655 /* SettingNotiModalExplanationView.swift in Sources */,
 				B68FB3522B75F2140075339F /* SettingTrainIconCoordinatorProtocol.swift in Sources */,
 				B68302C92AC05B8B00E010B7 /* MainStyleLabelView.swift in Sources */,
+				FF6CB2192D12991200DF562B /* TestLocationManager.swift in Sources */,
 				349B516C29A4695500A53879 /* ReportTableViewCellSection.swift in Sources */,
 				FF0365342D0015FF00EF325D /* LocationManagerTCADependencyKey.swift in Sources */,
 				349894AD29CD994800768B88 /* BundleExtension.swift in Sources */,
