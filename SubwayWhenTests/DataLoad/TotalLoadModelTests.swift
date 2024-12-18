@@ -554,141 +554,132 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-//    func testStationNameSearchReponse(){
-//        // GIVEN
-//        let data = self.stationNameSearchModel.stationNameSearchReponse("교대")
-//        let blocking = data.toBlocking()
-//        let arrayData = try! blocking.toArray()
-//        
-//        // WHEN
-//        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
-//        let dummyCount = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.count
-//        
-//        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
-//        let dummyStationName = "교대"
-//        
-//        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
-//        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.lineNumber
-//        
-//        // THEN
-//        expect(requestCount).to(
-//            equal(dummyCount),
-//            description: "같은 데이터이기 때문에 count도 같아야함"
-//        )
-//        
-//        expect(requestStationName).to(
-//            equal(dummyStationName),
-//            description: "StationName은 검색한 역이 나와야함"
-//        )
-//        
-//        expect(requestFirstLine).to(
-//            equal(dummyFirstLine),
-//            description: "같은 데이터이기 때문에 첫 번째의 라인도 같아야함"
-//        )
-//    }
-//    
-//    func testStationNameSearchReponseError(){
-//        // GIVEN
-//        let data = self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
-//        let blocking = data.toBlocking()
-//        let arrayData = try! blocking.toArray()
-//        
-//        // WHEN
-//        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
-//        
-//        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
-//        
-//        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
-//        
-//        // THEN
-//        expect(requestCount).to(
-//            beNil(),
-//            description: "데이터가 없을 때는 Nil이 나와야함"
-//        )
-//        
-//        expect(requestStationName).to(
-//            beNil(),
-//            description: "데이터가 없을 때는 Nil이 나와야함"
-//        )
-//        
-//        expect(requestFirstLine).to(
-//            beNil(),
-//            description: "데이터가 없을 때는 Nil이 나와야함"
-//        )
-//    }
-//    
-//    func testVicinityStationsDataLoad() {
-//        // GIVEN
-//        let data = self.kakaoVicinityStationModel.vicinityStationsDataLoad(
-//            x: 37.49388026940836, y: 127.01360357128935
-//        )
-//        let blocking = data.toBlocking()
-//        let requestData = try! blocking.toArray()
-//        
-//        let dummyData = vicinityStationsDummyData.documents
-//        
-//        // WHEN
-//        let requestFirstDataName = requestData.first?.first?.name
-//        let dummyFirstDataName = dummyData.first?.name
-//        
-//        let requestCategoryCount = requestData.first?.filter {
-//            $0.category != "SW8"
-//        }
-//            .count
-//        
-//        let dummyCategoryCount = 0
-//        
-//        let requestSortData = requestData.first
-//        let dummySortData = dummyData.sorted {
-//            let first = Int($0.distance) ?? 0
-//            let second = Int($1.distance) ?? 1
-//            return first < second
-//        }
-//        
-//        // THEN
-//        expect(requestFirstDataName).toNot(
-//            equal(dummyFirstDataName),
-//            description: "정렬이 적용되어 있지 않은 dummy하고는 첫번째 값은 달라야함"
-//        )
-//        
-//        expect(requestCategoryCount).to(
-//            equal(dummyCategoryCount),
-//            description: "SW8(지하철역)이 아닌 카테고리는 없어야함"
-//        )
-//        
-//        expect(requestSortData).to(
-//            equal(dummySortData),
-//            description: "정렬된 데이터는 값이 동일해야함"
-//        )
-//    }
-//    
-//    func testVicinityStationDataLoadError() {
-//        // GIVEN
-//        let data = self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
-//            x: 37.49388026940836, y: 127.01360357128935
-//        )
-//        let blocking = data.toBlocking()
-//        let arrayData = try! blocking.toArray()
-//        
-//        // WHEN
-//        let requestCount = arrayData.first?.count
-//        let dummyCount = 1
-//        
-//        let requestFirstData = arrayData.first?.first
-//        let dummyFirstData: VicinityDocumentData? = VicinityDocumentData(name: "정보없음", distance: "정보없음", category: "정보없음")
-//        
-//        // THEN
-//        expect(requestCount).to(
-//            equal(dummyCount),
-//            description: "데이터 오류 발생 시 데이터는 하나만 존재해야함"
-//        )
-//        
-//        expect(requestFirstData).to(
-//            equal(dummyFirstData),
-//            description: "데이터 오류 발생 시 모든 데이터는 정보없음으로 표기되어야 함"
-//        )
-//    }
-//    
+    func testStationNameSearchResponse() async {
+        // GIVEN
+        let data = await self.stationNameSearchModel.stationNameSearchReponse("교대")
+        
+        // WHEN
+        let requestCount = data.count
+        let dummyCount = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.count
+        
+        let requestStationName = data.first?.stationName
+        let dummyStationName = "교대"
+        
+        let requestFirstLine = data.first?.line
+        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.line
+        
+        //THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "같은 데이터이기 때문에 count도 같아야함"
+        )
+        
+        expect(requestStationName).to(
+            equal(dummyStationName),
+            description: "StationName은 검색한 역이 나와야함"
+        )
+        
+        expect(requestFirstLine).to(
+            equal(dummyFirstLine),
+            description: "같은 데이터이기 때문에 첫 번째의 라인도 같아야함"
+        )
+    }
+    
+    func testStationNameSearchReponseError() async {
+        // GIVEN
+        let data = await self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
+        
+        // WHEN
+        let requestCount = data.count
+        let requestStationName = data.first?.stationName
+        let requestFirstLine = data.first?.line
+        
+        // THEN
+        expect(requestCount).to(
+            equal(0),
+            description: "데이터가 없을 때는 빈 배열 (개수가 0)이 나와야함"
+        )
+        
+        expect(requestStationName).to(
+            beNil(),
+            description: "데이터가 없을 때는 Nil이 나와야함"
+        )
+        
+        expect(requestFirstLine).to(
+            beNil(),
+            description: "데이터가 없을 때는 Nil이 나와야함"
+        )
+    }
+    
+    func testVicinityStationsDataLoad() async {
+        // GIVEN
+        let data = await self.kakaoVicinityStationModel.vicinityStationsDataLoad(
+            x: 37.49388026940836, y: 127.01360357128935
+        )
+        let dummyData = vicinityStationsDummyData.documents
+        
+        // WHEN
+        let requestFirstDataName = data.first?.name
+        let dummyFirstDataName = dummyData.first?.name
+        
+        let requestCategoryCount = data.count
+        let dummyCategoryCount = dummyData.filter {$0.category == "SW8"}.count
+        
+        let requestSortData = data.map {$0.distance}
+        let dummySortData = dummyData.filter {$0.category == "SW8"} .sorted {
+            let first = Int($0.distance) ?? 0
+            let second = Int($1.distance) ?? 1
+            return first < second
+        }.map {data in
+            guard let doubleValue = Int(data.distance) else {return "정보없음"}
+            let numberFomatter = NumberFormatter()
+            numberFomatter.numberStyle = .decimal
+            
+            guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+            return "\(newValue)m"
+        }
+        
+        // THEN
+        expect(requestFirstDataName).toNot(
+            equal(dummyFirstDataName),
+            description: "정렬이 적용되어 있지 않은 dummy하고는 첫번째 값은 달라야함"
+        )
+        
+        expect(requestCategoryCount).to(
+            equal(dummyCategoryCount),
+            description: "SW8(지하철역)이 아닌 카테고리는 없어야함"
+        )
+        
+        expect(requestSortData).to(
+            equal(dummySortData),
+            description: "정렬된 데이터의 거리는 동일해야함"
+        )
+    }
+    
+    func testVicinityStationDataLoadError() async {
+        // GIVEN
+        let data = await self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
+            x: 37.49388026940836, y: 127.01360357128935
+        )
+        
+        // WHEN
+        let requestCount = data.count
+        let dummyCount = 0
+        
+        let requestFirstData = data.first
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "데이터 오류 발생 시 빈 배열을 return 해야함"
+        )
+        
+        expect(requestFirstData).to(
+            beNil(),
+            description: "데이터 오류 발생 시 빈 배열을 return 하기 때문에 값은 nil 이여야 함"
+        )
+    }
+    
     func testWidgetSeoulScheduleLoad() {
         // GIVEN
         let data = self.seoulScheduleLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true)
