@@ -51,6 +51,13 @@ let scheduleGyodaeStation3Line = ScheduleSearch(stationCode: "340", upDown: "상
 let scheduleK215K1Line = ScheduleSearch(stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1", stationName: "선릉")
 let scheduleSinsaShinbundagLine = ScheduleSearch(stationCode: "D04", upDown: "하행", exceptionLastStation: "", line: "신분당선", korailCode: "", stationName: "신사")
 let searchDeafultList = ["123", "456", "789"]
+let locationData = LocationData(lat: 37.49388026940836, lon: 127.01360357128935)
+let vicinityTransformData: [VicinityTransformData] =  [
+    .init(id: "1", name: "교대", line: "3호선", distance: "1000m"),
+    .init(id: "2", name: "강남", line: "2호선", distance: "1500m"),
+    .init(id: "3", name: "고속터미널", line: "9호선", distance: "2000m"),
+    .init(id: "4", name: "사당", line: "4호선", distance: "3000m")
+]
 
 let urlResponse = HTTPURLResponse(url: URL(string: url)!,
                                   statusCode: 200,
