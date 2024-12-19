@@ -22,7 +22,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     }
     
     func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async ->[TotalRealtimeStationArrival] {
-        self.realtimeStationArrival
+        self.realtimeStationArrival.filter {$0.upDown == requestModel.upDown && requestModel.line.lineCode == $0.subWayId && !(requestModel.exceptionLastStation.contains($0.lastStation))}
     }
     
     func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
