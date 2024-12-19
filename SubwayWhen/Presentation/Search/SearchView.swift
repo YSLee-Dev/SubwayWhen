@@ -18,87 +18,86 @@ struct SearchView: View {
     }
     
     var body: some View {
-        ScrollViewReader { proxy in
-            NavigationBarScrollViewInSUI(title: "검색") {
-                VStack(spacing: 20) {
-                    if self.store.isSearchMode {
-                        HStack(spacing: 10) {
-                            MainStyleViewInSUI {
-                                TextField(text: self.$store.searchQuery) {
-                                    Text("지하철역을 검색하세요.")
-                                        .foregroundColor(.gray)
-                                        .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                                }
-                                .textFieldStyle(.plain)
-                                .focused(self.$tfFocus)
-                                .padding(15)
-                                .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
+        NavigationBarScrollViewInSUI(title: "검색") {
+            VStack(spacing: 20) {
+                if self.store.isSearchMode {
+                    HStack(spacing: 10) {
+                        MainStyleViewInSUI {
+                            TextField(text: self.$store.searchQuery) {
+                                Text("지하철역을 검색하세요.")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
                             }
-                            Button {
-                                self.store.send(.isSearchMode(false))
-                                self.tfFocus = false
-                            } label: {
-                                Text("닫기")
-                                    .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
-                            }
+                            .textFieldStyle(.plain)
+                            .focused(self.$tfFocus)
+                            .padding(15)
+                            .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
                         }
-                    } else {
-                        AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
-                            Text("🔍 지하철역을 검색하세요.")
-                                .foregroundColor(.gray)
-                                .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
-                                .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
-                        }, tappedAction: {
-                            self.tfFocus = true
-                            self.store.send(.isSearchMode(true))
-                        })
-                        .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
+                        Button {
+                            self.store.send(.isSearchMode(false))
+                            self.tfFocus = false
+                        } label: {
+                            Text("닫기")
+                                .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .light))
+                        }
                     }
-                    
-                    if self.store.state.isSearchMode {
-                        SearchStationResultView(store: self.$store, tfFocus: self.$tfFocus)
+                } else {
+                    AnimationButtonInSUI(buttonViewAlignment: .leading, buttonView: {
+                        Text("🔍 지하철역을 검색하세요.")
+                            .foregroundColor(.gray)
+                            .font(.system(size: ViewStyle.FontSize.largeSize, weight: .light))
+                            .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
+                    }, tappedAction: {
+                        self.tfFocus = true
+                        self.store.send(.isSearchMode(true))
+                    })
+                    .matchedGeometryEffect(id: "TF", in: self.searchAnimation)
+                }
+                
+                if self.store.state.isSearchMode {
+                    SearchStationResultView(store: self.$store, tfFocus: self.$tfFocus)
+                } else {
+                    if self.store.state.locationAuth {
+                        SearchVicinityView(store: self.$store)
                     } else {
-                        if self.store.state.locationAuth {
-                            SearchVicinityView(store: self.$store)
-                        } else {
-                            MainStyleViewInSUI {
-                                VStack(spacing: 15) {
-                                    ExpandedViewInSUI(alignment: .leading) {
-                                        Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
-                                            .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
+                        MainStyleViewInSUI {
+                            VStack(spacing: 15) {
+                                ExpandedViewInSUI(alignment: .leading) {
+                                    Text("현재 위치와 가장 가까운 지하철역의\n정보를 확인할 수 있어요.")
+                                        .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
+                                }
+                                
+                                AnimationButtonInSUI(
+                                    bgColor: Color("AppIconColor"), tappedBGColor: Color("AppIconColor"), buttonView: {
+                                        Text("확인하기")
+                                            .foregroundStyle(.white)
+                                            .font(.system(size: ViewStyle.FontSize.smallSize))
+                                    }) {
+                                        self.store.send(.locationAuthRequest)
                                     }
-                                    
-                                    AnimationButtonInSUI(
-                                        bgColor: Color("AppIconColor"), tappedBGColor: Color("AppIconColor"), buttonView: {
-                                            Text("확인하기")
-                                                .foregroundStyle(.white)
-                                                .font(.system(size: ViewStyle.FontSize.smallSize))
-                                        }) {
-                                            self.store.send(.locationAuthRequest)
-                                        }
-                                        .frame(width: 150)
-                                }
-                                .padding(15)
+                                    .frame(width: 150)
                             }
-                            .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
+                            .padding(15)
                         }
-                    }
-                    
-                    SearchWordRecommendView(store: self.$store)
-                        .animation(.smooth(duration: 0.3), value: self.store.nowStationSearchList)
-                }
-                .animation(.smooth(duration: 0.3), value: self.store.isSearchMode)
-                .padding(.top, 12.5)
-                .onAppear {
-                    self.store.send(.onAppear)
-                }
-                .onChange(of: self.store.nowSearchLoading) { _, new in
-                    if new {
-                        proxy.scrollTo("TOPVIEW", anchor: .top)
+                        .animation(.smooth(duration: 0.3), value: self.store.state.nowTappedStationIndex)
                     }
                 }
-                .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
+                
+                Group {
+                    if self.store.searchQuery.isEmpty {
+                        SearchWordRecommendView(store: self.$store)
+                            .transition(.move(edge: .bottom))
+                    }
+                }
+                .animation(.smooth, value: self.store.searchQuery.isEmpty)
             }
+            .animation(.smooth(duration: 0.3), value: self.store.nowTappedStationIndex == nil)
+            .animation(.smooth(duration: 0.3), value: self.store.isSearchMode)
+            .padding(.top, 12.5)
+            .onAppear {
+                self.store.send(.onAppear)
+            }
+            .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
         }
     }
 }

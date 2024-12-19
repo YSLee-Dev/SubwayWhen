@@ -47,7 +47,6 @@ struct SearchVicinityView: View {
                             .tint(Color("AppIconColor"))
                             .padding(.vertical, 30)
                     }
-                    .animation(.smooth(duration: 0.3), value: self.store.nowVicintyStationLoading)
                 } else {
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal) {
