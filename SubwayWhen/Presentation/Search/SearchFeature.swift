@@ -292,6 +292,7 @@ class SearchFeature: NSObject {
                 state.isSearchMode = isOn
                 if !isOn {
                     state.searchQuery = ""
+                    state.nowStationSearchList = []
                 }
                 return .none
                 
