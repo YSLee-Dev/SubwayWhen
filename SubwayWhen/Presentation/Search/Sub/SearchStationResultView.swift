@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct SearchStationResultView: View {
     @Binding var store: StoreOf<SearchFeature>
     var tfFocus: FocusState<Bool>.Binding
+    @Namespace private var searchAnimation
     
     var body: some View {
         MainStyleViewInSUI {
@@ -18,6 +19,7 @@ struct SearchStationResultView: View {
                 Text(self.store.nowSearchLoading ? "지하철역을 찾는 중이에요 🔍" : self.store.searchQuery.isEmpty ? "지하철역을 입력해주세요." : "총 \(self.store.nowStationSearchList.count)개의 검색 결과")
                     .font(.system(size: ViewStyle.FontSize.largeSize, weight: .heavy))
                     .padding(.bottom, 10)
+                    .animation(.smooth(duration: 0.3) ,value: self.store.nowSearchLoading)
                 
                 if self.store.nowSearchLoading {
                     ExpandedViewInSUI(alignment: .center) {
@@ -25,6 +27,8 @@ struct SearchStationResultView: View {
                             .tint(Color("AppIconColor"))
                             .frame(height: 33)
                             .padding(.vertical, 7.5)
+                            .matchedGeometryEffect(id: "TOP", in: self.searchAnimation)
+                            .animation(.smooth(duration: 0.3) ,value: self.store.nowSearchLoading)
                     }
                 } else {
                     if self.store.nowStationSearchList.isEmpty {
@@ -32,6 +36,8 @@ struct SearchStationResultView: View {
                             Text(self.store.searchQuery.isEmpty ? "💬" : "검색된 지하철역이 없어요.")
                                 .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
                                 .padding(.vertical, 15)
+                                .matchedGeometryEffect(id: "TOP", in: self.searchAnimation)
+                                .animation(.smooth(duration: 0.3) ,value: self.store.nowSearchLoading)
                         }
                     } else {
                         ForEach(Array(zip(self.store.nowStationSearchList, self.store.nowStationSearchList.indices)), id: \.1) { data, index in
@@ -52,12 +58,13 @@ struct SearchStationResultView: View {
                                 }
                             })
                         }
+                        .transition(.move(edge: .bottom))
                         .padding(.vertical, 5)
                     }
                 }
             }
             .padding(15)
-            .animation(.smooth(duration: 0.2) ,value: self.store.nowSearchLoading)
+            .animation(.smooth(duration: 0.3) ,value: self.store.nowStationSearchList)
         }
     }
 }
