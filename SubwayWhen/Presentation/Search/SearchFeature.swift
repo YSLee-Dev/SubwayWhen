@@ -334,6 +334,15 @@ class SearchFeature: NSObject {
                     let comparisonData = state.nowUpLiveData?.code == "" ? state.nowDownLiveData : state.nowUpLiveData
                     guard let index = result.firstIndex(where: {$0.line.lineCode == comparisonData?.subWayId})
                     else {
+                        state.dialogState = .init(title: {
+                            TextState("")
+                        }, actions: {
+                            ButtonState( action: .cancelBtnTapped) {
+                                TextState("")
+                            }
+                        }, message: {
+                            TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
+                        })
                         state.isAutoDelegateAction = nil
                         return .none
                     }
@@ -364,6 +373,15 @@ class SearchFeature: NSObject {
                       let data = isUp ? state.nowUpLiveData : state.nowDownLiveData,
                       let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.line.lineCode == data.subWayId})
                 else {
+                    state.dialogState = .init(title: {
+                        TextState("")
+                    }, actions: {
+                        ButtonState( action: .cancelBtnTapped) {
+                            TextState("")
+                        }
+                    }, message: {
+                        TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
+                    })
                     state.isAutoDelegateAction = nil
                     return .none
                 }
