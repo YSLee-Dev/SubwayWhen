@@ -218,15 +218,7 @@ class SearchFeature: NSObject {
                 guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
                 // 지원되지 않는 노선을 선택한 경우
                 if line.lineCode == "" {
-                    state.dialogState = .init(title: {
-                        TextState("")
-                    }, actions: {
-                        ButtonState( action: .cancelBtnTapped) {
-                            TextState("")
-                        }
-                    }, message: {
-                        TextState("해당 노선은 서비스를 지원하지 않아요.\n더 많은 노선을 지원하기 위해 노력하겠습니다.")
-                    })
+                    state.dialogState = self.errorPopup(msg: "해당 노선은 서비스를 지원하지 않아요.\n더 많은 노선을 지원하기 위해 노력하겠습니다.")
                     return .none
                 } else {
                     state.nowTappedStationIndex = index
@@ -255,7 +247,12 @@ class SearchFeature: NSObject {
                 
             case .disposableDetailBtnTapped:
                 let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
-                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
+                guard let line = SubwayLineData(rawValue: tappedData.lineColorName),
+                      (state.nowUpLiveData?.code != "" && state.nowDownLiveData?.code != "")
+                else {
+                    state.dialogState =  self.errorPopup(msg: "실시간 데이터가 확인되지 않았어요.\n새로고침 버튼을 통해 실시간 데이터를 확인해주세요.")
+                    return .none
+                }
                 state.dialogState = .init(title: {
                     TextState("")
                 }, actions: {
@@ -334,15 +331,7 @@ class SearchFeature: NSObject {
                     let comparisonData = state.nowUpLiveData?.code == "" ? state.nowDownLiveData : state.nowUpLiveData
                     guard let index = result.firstIndex(where: {$0.line.lineCode == comparisonData?.subWayId})
                     else {
-                        state.dialogState = .init(title: {
-                            TextState("")
-                        }, actions: {
-                            ButtonState( action: .cancelBtnTapped) {
-                                TextState("확인")
-                            }
-                        }, message: {
-                            TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
-                        })
+                        state.dialogState = self.errorPopup(msg: "오류가 발생했어요.\n나중에 다시 시도해주세요.")
                         state.isAutoDelegateAction = nil
                         return .none
                     }
@@ -373,15 +362,7 @@ class SearchFeature: NSObject {
                       let data = isUp ? state.nowUpLiveData : state.nowDownLiveData,
                       let searchIndex = state.nowStationSearchList.firstIndex(where: {$0.line.lineCode == data.subWayId})
                 else {
-                    state.dialogState = .init(title: {
-                        TextState("")
-                    }, actions: {
-                        ButtonState( action: .cancelBtnTapped) {
-                            TextState("확인")
-                        }
-                    }, message: {
-                        TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
-                    })
+                    state.dialogState = self.errorPopup(msg: "오류가 발생했어요.\n나중에 다시 시도해주세요.")
                     state.isAutoDelegateAction = nil
                     return .none
                 }
@@ -391,7 +372,12 @@ class SearchFeature: NSObject {
                 return .none
                 
             case .stationAddBtnTapped:
-                guard let index = state.nowTappedStationIndex else {return .none}
+                guard let index = state.nowTappedStationIndex,
+                      (state.nowUpLiveData?.code != "" && state.nowDownLiveData?.code != "")
+                else {
+                    state.dialogState =  self.errorPopup(msg: "실시간 데이터가 확인되지 않았어요.\n새로고침 버튼을 통해 실시간 데이터를 확인해주세요.")
+                    return .none
+                }
                 state.searchQuery = state.nowVicinityStationList[index].name
                 state.isAutoDelegateAction = .plusModal
                 state.isSearchMode = true
@@ -401,5 +387,19 @@ class SearchFeature: NSObject {
             default: return .none
             }
         }
+    }
+}
+
+private extension SearchFeature {
+    func errorPopup(msg: String) -> ConfirmationDialogState<Action.DialogAction> {
+        .init(title: {
+            TextState("")
+        }, actions: {
+            ButtonState( action: .cancelBtnTapped) {
+                TextState("확인")
+            }
+        }, message: {
+            TextState(msg)
+        })
     }
 }
