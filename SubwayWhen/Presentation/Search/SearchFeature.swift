@@ -337,9 +337,15 @@ class SearchFeature: NSObject {
                         state.isAutoDelegateAction = nil
                         return .none
                     }
-                    return .send(.searchResultTapped(index))
+                    return .run { send in
+                        try? await Task.sleep(for: .milliseconds(100))
+                        await send(.searchResultTapped(index))
+                    }
                 } else {
-                    return .send(.disposableDetailPushRequest)
+                    return .run { send in
+                        try? await Task.sleep(for: .milliseconds(100))
+                        await send(.disposableDetailPushRequest)
+                    }
                 }
                
             case .searchResultTapped(let index):
