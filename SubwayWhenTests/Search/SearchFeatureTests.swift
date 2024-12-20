@@ -261,10 +261,36 @@ class SearchFeatureTests : XCTestCase {
             $0.searchQuery = $0.nowVicinityStationList[$0.nowTappedStationIndex!].name // 선택된 지하철역 이름 (0번 교대)
         }
         
+        // THEN
         await testStore.receive(.stationSearchRequest) // 지하철역 통신 요청
         await testStore.receive(.stationSearchResult(stationNameSearcDummyhData.SearchInfoBySubwayNameService.row)) // 지하철역 검색 결과
         await testStore.receive(.searchResultTapped(0)) { // 선택된 지하철역 index 전달 (0)
             $0.isAutoDelegateAction = nil // modal present 후 action 값을 nil로 변경
+        }
+    }
+    
+    func testPlusModalBtnTappedWithError() async {
+        // GIVEN
+        self.testTotalDependency.searchStationName = []
+        let testStore = await self.createStore()
+        
+        // WHEN
+        await testStore.send(.locationToVicinityStationResult(vicinityTransformData)) // 가장 가까운 지하철 정보 주입
+        await testStore.send(.locationStationTapped(0))// 0번째 (교대) 선택
+        await testStore.send(.liveDataResult(totalArrivalDummyData.filter{$0.upDown == "상행" && $0.subWayId == "1003"} )) // 실시간 정보 주입
+        await testStore.send(.stationAddBtnTapped) { // 지하철역 추가 모달 버튼 클릭
+            // THEN
+            $0.isAutoDelegateAction = .plusModal // 검색을 요청하기 때문에 mode, loading도 true
+            $0.isSearchMode = true
+            $0.nowSearchLoading = true
+            $0.searchQuery = $0.nowVicinityStationList[$0.nowTappedStationIndex!].name // 선택된 지하철역 이름 (0번 교대)
+        }
+        
+        // THEN
+        await testStore.receive(.stationSearchRequest) // 지하철역 통신 요청
+        await testStore.receive(.stationSearchResult([])) { // 지하철역 검색 결과 (빈 배열)
+            $0.isAutoDelegateAction = nil // 검색결과에 따라 modal을 열 수 없을 때는 nil
+            XCTAssertNotNil($0.dialogState) // 오류 안내 팝업 표출
         }
     }
 }
