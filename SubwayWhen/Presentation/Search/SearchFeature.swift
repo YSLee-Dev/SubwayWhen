@@ -338,7 +338,7 @@ class SearchFeature: NSObject {
                             TextState("")
                         }, actions: {
                             ButtonState( action: .cancelBtnTapped) {
-                                TextState("")
+                                TextState("확인")
                             }
                         }, message: {
                             TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
@@ -377,7 +377,7 @@ class SearchFeature: NSObject {
                         TextState("")
                     }, actions: {
                         ButtonState( action: .cancelBtnTapped) {
-                            TextState("")
+                            TextState("확인")
                         }
                     }, message: {
                         TextState("오류가 발생했어요.\n나중에 다시 시도해주세요.")
