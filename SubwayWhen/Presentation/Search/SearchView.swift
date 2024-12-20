@@ -92,6 +92,7 @@ struct SearchView: View {
                 .animation(.smooth, value: self.store.searchQuery.isEmpty)
             }
             .animation(.smooth(duration: 0.3), value: self.store.nowTappedStationIndex == nil)
+            .animation(.smooth(duration: 0.3), value: self.store.locationAuth)
             .animation(.smooth(duration: 0.3), value: self.store.isSearchMode)
             .padding(.top, 12.5)
             .onAppear {
