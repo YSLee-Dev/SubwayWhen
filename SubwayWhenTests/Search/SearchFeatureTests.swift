@@ -96,6 +96,25 @@ class SearchFeatureTests : XCTestCase {
         await testStore.receive(.locationDataRequest) // 권한 획득 후 Location 데이터 요청
     }
     
+    
+    func testLocationRefreshBtnTapped() async {
+        // GIVEN
+        let testStore = await self.createStore()
+        
+        // WHEN
+        await testStore.send(.locationAuthResult([true, true])) // [자동 권한 확인 true, 권한 승인 true]
+        await testStore.receive(.locationToVicinityStationResult(vicinityTransformData)) { // 가까운 지하철역 정보 획득
+            // THEN
+            XCTAssertNotNil($0.lastVicintySearchTime) // 마지막 시간 기록
+        }
+        
+        // WHEN
+        await testStore.send(.locationToVicinityRefreshBtnTapped) {  // 300초가 지나지 않은 경우 팝업 표출
+            // THEN
+            XCTAssertNotNil($0.dialogState) // 팝업 표출
+        }
+    }
+    
     func testLocationDataTapped() async {
         // GIVEN
         let testStore = await self.createStore()
@@ -116,6 +135,19 @@ class SearchFeatureTests : XCTestCase {
         }
         await testStore.receive(.liveDataResult(totalArrivalDummyData.filter{$0.upDown == "하행" && $0.subWayId == "1003"} )) {
             $0.nowLiveDataLoading = [false, false]
+        }
+    }
+    
+    func testNoServiceLocationDataTapped() async {
+        // GIVEN
+        let testStore = await self.createStore()
+        
+        // WHEN
+        await testStore.send(.locationToVicinityStationResult([.init(id: "테스트", name: "테스트", line: "에버라인", distance: "테스트")])) // 임시 데이터 주입
+        await testStore.send(.locationStationTapped(0)){ // 0번째 선택
+            // THEN
+            $0.nowTappedStationIndex = nil // 지원되지 않는 노선은 저장하지 않음
+            XCTAssertNotNil($0.dialogState) // 팝업 표출
         }
     }
 }
