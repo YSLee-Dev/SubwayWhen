@@ -248,7 +248,7 @@ class SearchFeature: NSObject {
             case .disposableDetailBtnTapped:
                 let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
                 guard let line = SubwayLineData(rawValue: tappedData.lineColorName),
-                      (state.nowUpLiveData?.code != "" && state.nowDownLiveData?.code != "")
+                      (state.nowUpLiveData?.code != "" || state.nowDownLiveData?.code != "")
                 else {
                     state.dialogState =  self.errorPopup(msg: "실시간 데이터가 확인되지 않았어요.\n새로고침 버튼을 통해 실시간 데이터를 확인해주세요.")
                     return .none
@@ -373,7 +373,7 @@ class SearchFeature: NSObject {
                 
             case .stationAddBtnTapped:
                 guard let index = state.nowTappedStationIndex,
-                      (state.nowUpLiveData?.code != "" && state.nowDownLiveData?.code != "")
+                      (state.nowUpLiveData?.code != "" || state.nowDownLiveData?.code != "")
                 else {
                     state.dialogState =  self.errorPopup(msg: "실시간 데이터가 확인되지 않았어요.\n새로고침 버튼을 통해 실시간 데이터를 확인해주세요.")
                     return .none
