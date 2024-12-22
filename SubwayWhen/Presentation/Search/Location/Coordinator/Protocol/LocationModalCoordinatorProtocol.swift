@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LocationModalCoordinatorProtocol: AnyObject {
-    func dismiss()
+    func dismiss(auth: Bool)
     func didDisappear(locationModalCoordinator: Coordinator)
     func stationTap(index: Int)
 }

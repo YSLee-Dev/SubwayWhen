@@ -15,7 +15,7 @@ class LocationModalViewModel {
     weak var delegate: LocationModalVCActionProtocol?
     
     private let modalDismissAction = PublishSubject<Void>()
-    private let auth = PublishSubject<Bool>()
+    private let auth = BehaviorRelay<Bool>(value:  false)
     private let vcinitySectionList = BehaviorSubject<[LocationModalSectionData]>(value: [])
     
     private let bag = DisposeBag()
@@ -42,6 +42,7 @@ class LocationModalViewModel {
             modalDismissAnimation: self.modalDismissAction
                 .asDriver(onErrorDriveWith: .empty()),
             locationAuthStatus: self.auth
+                .skip(1) //BehaviorRelay의 초기값 무시
                 .asDriver(onErrorDriveWith: .empty()),
             vcinityStations: self.vcinitySectionList
                 .asDriver(onErrorDriveWith: .empty())
@@ -64,7 +65,7 @@ extension LocationModalViewModel {
         input.modalCompletion
             .withUnretained(self)
             .subscribe(onNext: { viewModel, _ in
-                viewModel.delegate?.dismiss()
+                viewModel.delegate?.dismiss(auth: self.auth.value)
             })
             .disposed(by: self.bag)
         
