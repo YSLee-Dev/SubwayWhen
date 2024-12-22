@@ -37,8 +37,8 @@ extension LocationModalCoordinator: LocationModalVCActionProtocol {
         self.delegate?.stationTap(index: index)
     }
     
-    func dismiss() {
-        self.delegate?.dismiss()
+    func dismiss(auth: Bool) {
+        self.delegate?.dismiss(auth: auth)
     }
     
     func didDisappear() {

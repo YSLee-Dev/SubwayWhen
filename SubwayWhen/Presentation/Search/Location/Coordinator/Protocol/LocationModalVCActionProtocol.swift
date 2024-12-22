@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LocationModalVCActionProtocol: AnyObject {
-    func dismiss()
+    func dismiss(auth: Bool)
     func didDisappear()
     func stationTap(index: Int)
 }

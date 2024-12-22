@@ -111,4 +111,12 @@ extension SearchCoordinator: LocationModalCoordinatorProtocol {
             $0 !== locationModalCoordinator
         }
     }
+    
+    func dismiss(auth: Bool) {
+        self.navigation.dismiss(animated: true)
+        if !auth {
+            guard let store = self.store else { return }
+            store.send(.onAppear)
+        }
+    }
 }
