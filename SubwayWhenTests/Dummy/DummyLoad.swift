@@ -38,18 +38,26 @@ let seoulScheduleToResultScheduleTransformDummyData = seoulScheduleDummyData.Sea
 let stationNameSearcDummyhData = try! JSONDecoder().decode(SearchStaion.self, from: stationNameSearchData)
 let vicinityStationsDummyData = try! JSONDecoder().decode(VicinityStationsData.self, from: vicinityData)
 
-let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "340", exceptionLastStation: "", type: .real, backStationId: "1003000339", nextStationId: "1003000341", korailCode: "")
+let totalArrivalDummyData = arrivalDummyData.realtimeArrivalList.map {TotalRealtimeStationArrival(realTimeStationArrival: $0, backStationName: "", nextStationName: "", nowStateMSG: $0.useState)}
+let mainCellDummyData = MainTableViewCellData(upDown: "상행", arrivalTime: "100분뒤", previousStation: "", subPrevious: "", code: "1", subWayId: "1003", stationName: "교대", lastStation: "", lineNumber: "1003", isFast: "", useLine: "", group: "", id: "-", stationCode: "340", exceptionLastStation: "", type: .real, backStationId: "1003000339", nextStationId: "1003000341", korailCode: "",  stateMSG: "도착")
 
 let detailSendModelDummyData = DetailSendModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: "")
 
-let detailArrivalDataRequestDummyModel = DetailArrivalDataRequestModel(upDown: "상행", stationName: "교대", lineNumber: "03호선", lineCode: "1003", exceptionLastStation: "")
+let detailArrivalDataRequestDummyModel = DetailArrivalDataRequestModel(upDown: "상행", stationName: "교대", line: SubwayLineData(rawValue: "03호선")!, exceptionLastStation: "")
 
 let url = "Test.url"
 let arrivalGyodaeStation3Line = SaveStation(id: "-", stationName: "교대", stationCode: "340", updnLine: "상행", line: "03호선", lineCode: "1003", group: .one, exceptionLastStation: "", korailCode: "")
 let scheduleGyodaeStation3Line = ScheduleSearch(stationCode: "340", upDown: "상행", exceptionLastStation: "", line: "03호선", korailCode: "", stationName: "교대")
 let scheduleK215K1Line = ScheduleSearch(stationCode: "K215", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1", stationName: "선릉")
 let scheduleSinsaShinbundagLine = ScheduleSearch(stationCode: "D04", upDown: "하행", exceptionLastStation: "", line: "신분당선", korailCode: "", stationName: "신사")
-let searchDeafultList = ["123", "456", "789"]
+let searchDeafultList = ["교대", "강남", "서초"]
+let locationData = LocationData(lat: 37.49388026940836, lon: 127.01360357128935)
+let vicinityTransformData: [VicinityTransformData] =  [
+    .init(id: "1", name: "교대", line: "3호선", distance: "1000m"),
+    .init(id: "2", name: "강남", line: "2호선", distance: "1500m"),
+    .init(id: "3", name: "고속터미널", line: "9호선", distance: "2000m"),
+    .init(id: "4", name: "사당", line: "4호선", distance: "3000m")
+]
 
 let urlResponse = HTTPURLResponse(url: URL(string: url)!,
                                   statusCode: 200,

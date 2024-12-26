@@ -21,7 +21,7 @@ struct DetailArrivalView: View {
     
     private let screenWidthSize = UIScreen.main.bounds.width -  40
     
-    var arrivalDataList: [RealtimeStationArrival]
+    var arrivalDataList: [TotalRealtimeStationArrival]
     let stationInfo: DetailSendModel
     let backStationName: String
     var nowLoading: Bool
@@ -113,6 +113,11 @@ struct DetailArrivalView: View {
                         Spacer()
                         Text(FixInfo.saveSetting.detailVCTrainIcon)
                             .font(.system(size: ViewStyle.FontSize.mainTitleSize))
+                            .background {
+                                Text(self.arrivalDataList.first?.isFast == "급행" ? "💨" : "")
+                                    .font(.system(size: ViewStyle.FontSize.mediumSize))
+                                    .offset(x: 15)
+                            }
                             .offset(x: self.trainPostion, y: -15)
                             .opacity(self.nowLoading ? 0 : self.nowAnimationPlaying ? 0 : 1)
                             .animation(.easeInOut(duration: 0.4), value: self.trainPostion)
@@ -319,10 +324,12 @@ extension DetailArrivalView {
 }
 
 #Preview {
+    let realOne = RealtimeStationArrival(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "1", code: "0", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
+    let realTwo = RealtimeStationArrival(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
     DetailArrivalView(
         arrivalDataList: [
-            .init(upDown: "상행", arrivalTime: "3분", previousStation: "고속터미널", subPrevious: "1", code: "0", subWayId: "1003", stationName: "교대", lastStation: "구파발", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99"),
-                                      .init(upDown: "상행", arrivalTime: "10분", previousStation: "매봉", subPrevious: "", code: "99", subWayId: "1003", stationName: "교대", lastStation: "오금", lineNumber: "3", isFast: nil, backStationId: "1003000339", nextStationId: "1003000341", trainCode: "99")
+            .init(realTimeStationArrival: realOne, backStationName: "남부터미널", nextStationName: "고속터미널", nowStateMSG: realOne.useState),
+            .init(realTimeStationArrival: realTwo, backStationName: "남부터미널", nextStationName: "고속터미널", nowStateMSG: realTwo.useState),
         ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""),
         backStationName: "남부터미널",
         nowLoading: false,

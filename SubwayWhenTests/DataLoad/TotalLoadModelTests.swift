@@ -130,14 +130,12 @@ final class TotalLoadModelTests: XCTestCase {
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first
         
-        let dummyData = arrivalDummyData
-        
         // WHEN
         let requestStationName = requestData?.first?.stationName
         let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
-        let requestNextId = requestData?.first?.nextStationId
-        let dummyNextId = arrivalDummyData.realtimeArrivalList.first?.nextStationId
+        let requestNextName = requestData?.first?.nextStationName
+        let dummyNextName = "고속터미널" // dummy 데이터 기반 고정 값
         
         let requestCode = requestData?.first?.code
         let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
@@ -148,9 +146,9 @@ final class TotalLoadModelTests: XCTestCase {
             description: "지하철 역명은 동일해야함"
         )
         
-        expect(requestNextId).to(
-            equal(dummyNextId),
-            description: "기본 데이터가 같으므로, NextID도 동일해야함"
+        expect(requestNextName).to(
+            equal(dummyNextName),
+            description: "기본 데이터가 같으므로, 지하철 역 이름도 동일해야함"
         )
         
         expect(requestCode).to(
@@ -171,8 +169,8 @@ final class TotalLoadModelTests: XCTestCase {
         let requestStationName = requestData?.first?.stationName
         let dummyStationName = detailArrivalDataRequestDummyModel.stationName
         
-        let requestNextId = requestData?.first?.nextStationId
-        let dummyNextId = ""
+        let requestNextName = requestData?.first?.nextStationName
+        let dummyNextName = ""
         
         let requestCode = requestData?.first?.code
         let dummyCode = ""
@@ -183,9 +181,9 @@ final class TotalLoadModelTests: XCTestCase {
             description: "열차 데이터를 받아오지 못해도 역 이름은 동일해야함"
         )
         
-        expect(requestNextId).to(
-            equal(dummyNextId),
-            description: "열차 데이터를 받아오지 못할 때는 nextID가 없어야함"
+        expect(requestNextName).to(
+            equal(dummyNextName),
+            description: "열차 데이터를 받아오지 못할 때는 다음 지하철역 이름이 없어야함"
         )
         
         expect(requestCode).to(
@@ -556,23 +554,21 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testStationNameSearchReponse(){
+    func testStationNameSearchResponse() async {
         // GIVEN
-        let data = self.stationNameSearchModel.stationNameSearchReponse("교대")
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let data = await self.stationNameSearchModel.stationNameSearchReponse("교대")
         
         // WHEN
-        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
+        let requestCount = data.count
         let dummyCount = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.count
         
-        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
+        let requestStationName = data.first?.stationName
         let dummyStationName = "교대"
         
-        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
-        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.lineNumber
+        let requestFirstLine = data.first?.line
+        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.line
         
-        // THEN
+        //THEN
         expect(requestCount).to(
             equal(dummyCount),
             description: "같은 데이터이기 때문에 count도 같아야함"
@@ -589,23 +585,19 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testStationNameSearchReponseError(){
+    func testStationNameSearchReponseError() async {
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let data = await self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
         
         // WHEN
-        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
-        
-        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
-        
-        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
+        let requestCount = data.count
+        let requestStationName = data.first?.stationName
+        let requestFirstLine = data.first?.line
         
         // THEN
         expect(requestCount).to(
-            beNil(),
-            description: "데이터가 없을 때는 Nil이 나와야함"
+            equal(0),
+            description: "데이터가 없을 때는 빈 배열 (개수가 0)이 나와야함"
         )
         
         expect(requestStationName).to(
@@ -619,32 +611,32 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testVicinityStationsDataLoad() {
+    func testVicinityStationsDataLoad() async {
         // GIVEN
-        let data = self.kakaoVicinityStationModel.vicinityStationsDataLoad(
+        let data = await self.kakaoVicinityStationModel.vicinityStationsDataLoad(
             x: 37.49388026940836, y: 127.01360357128935
         )
-        let blocking = data.toBlocking()
-        let requestData = try! blocking.toArray()
-        
         let dummyData = vicinityStationsDummyData.documents
         
         // WHEN
-        let requestFirstDataName = requestData.first?.first?.name
+        let requestFirstDataName = data.first?.name
         let dummyFirstDataName = dummyData.first?.name
         
-        let requestCategoryCount = requestData.first?.filter {
-            $0.category != "SW8"
-        }
-            .count
+        let requestCategoryCount = data.count
+        let dummyCategoryCount = dummyData.filter {$0.category == "SW8"}.count
         
-        let dummyCategoryCount = 0
-        
-        let requestSortData = requestData.first
-        let dummySortData = dummyData.sorted {
+        let requestSortData = data.map {$0.distance}
+        let dummySortData = dummyData.filter {$0.category == "SW8"} .sorted {
             let first = Int($0.distance) ?? 0
             let second = Int($1.distance) ?? 1
             return first < second
+        }.map {data in
+            guard let doubleValue = Int(data.distance) else {return "정보없음"}
+            let numberFomatter = NumberFormatter()
+            numberFomatter.numberStyle = .decimal
+            
+            guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+            return "\(newValue)m"
         }
         
         // THEN
@@ -660,34 +652,31 @@ final class TotalLoadModelTests: XCTestCase {
         
         expect(requestSortData).to(
             equal(dummySortData),
-            description: "정렬된 데이터는 값이 동일해야함"
+            description: "정렬된 데이터의 거리는 동일해야함"
         )
     }
     
-    func testVicinityStationDataLoadError() {
+    func testVicinityStationDataLoadError() async {
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
+        let data = await self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
             x: 37.49388026940836, y: 127.01360357128935
         )
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
         
         // WHEN
-        let requestCount = arrayData.first?.count
-        let dummyCount = 1
+        let requestCount = data.count
+        let dummyCount = 0
         
-        let requestFirstData = arrayData.first?.first
-        let dummyFirstData: VicinityDocumentData? = VicinityDocumentData(name: "정보없음", distance: "정보없음", category: "정보없음")
+        let requestFirstData = data.first
         
         // THEN
         expect(requestCount).to(
             equal(dummyCount),
-            description: "데이터 오류 발생 시 데이터는 하나만 존재해야함"
+            description: "데이터 오류 발생 시 빈 배열을 return 해야함"
         )
         
         expect(requestFirstData).to(
-            equal(dummyFirstData),
-            description: "데이터 오류 발생 시 모든 데이터는 정보없음으로 표기되어야 함"
+            beNil(),
+            description: "데이터 오류 발생 시 빈 배열을 return 하기 때문에 값은 nil 이여야 함"
         )
     }
     

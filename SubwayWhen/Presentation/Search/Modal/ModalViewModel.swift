@@ -29,7 +29,7 @@ class ModalViewModel{
     }
     
     struct Output {
-        let modalData : Driver<ResultVCCellData>
+        let modalData : Driver<searchStationInfo>
         let modalClose: Driver<Void>
     }
     
@@ -51,7 +51,7 @@ class ModalViewModel{
     private let modalCloseEvent = PublishRelay<Bool>()
     private let modalClose = PublishSubject<Void>()
     
-    let clickCellData = PublishRelay<ResultVCCellData>()
+    let clickCellData = PublishRelay<searchStationInfo>()
     let overlapOkBtnTap = PublishSubject<Void>()
     
     // MODEL
@@ -71,19 +71,19 @@ private extension ModalViewModel {
         Observable
             .combineLatest(self.clickCellData, input.groupClick, input.exceptionLastStationText, input.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
                 
-                let updownLine = self?.model.updownFix(updown: updown, line: cellData.useLine) ?? ""
-                let brand = self?.model.useLineTokorailCode(cellData.useLine) ?? ""
+                let updownLine = self?.model.updownFix(updown: updown, line: cellData.line.useLine) ?? ""
+                let brand = self?.model.useLineTokorailCode(cellData.line.useLine) ?? ""
                 
                 if FixInfo.saveSetting.searchOverlapAlert{
                     // 중복 지하철은 저장 X
                     for x in FixInfo.saveStation{
-                        if x.stationName == cellData.stationName && x.updnLine == updownLine && x.lineCode == cellData.lineCode{
+                        if x.stationName == cellData.stationName && x.updnLine == updownLine && x.lineCode == cellData.line.lineCode{
                             return false
                         }
                     }
                 }
                 
-                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.useStationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.lineNumber, lineCode: cellData.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
+                FixInfo.saveStation.append(SaveStation(id: UUID().uuidString, stationName: cellData.stationName, stationCode: cellData.stationCode, updnLine: updownLine, line: cellData.line.rawValue, lineCode: cellData.line.lineCode, group: group, exceptionLastStation: exception ?? "", korailCode: brand))
                 return true
             }
             .bind(to: self.modalCloseEvent)
@@ -103,10 +103,10 @@ private extension ModalViewModel {
     func present(input: Input) {
         input.disposableBtnTap
             .withLatestFrom(self.clickCellData){[weak self] updown, data in
-                let updownFix = self?.model.updownFix(updown: updown, line: data.useLine) ?? ""
-                let korail = self?.model.useLineTokorailCode(data.useLine) ?? ""
+                let updownFix = self?.model.updownFix(updown: updown, line: data.line.useLine) ?? ""
+                let korail = self?.model.useLineTokorailCode(data.line.useLine) ?? ""
                 
-                return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.lineCode, exceptionLastStation: "", korailCode: korail)
+                return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.line.rawValue, stationCode: data.stationCode, lineCode: data.line.lineCode, exceptionLastStation: "", korailCode: korail)
             }
             .withUnretained(self)
             .delay(.milliseconds(250), scheduler: MainScheduler.asyncInstance)

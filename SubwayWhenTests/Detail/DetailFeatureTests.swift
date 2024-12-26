@@ -16,7 +16,7 @@ final class DetailFeatureTests: XCTestCase {
 
     override func setUp()  {
         self.testDependency.resultSchdule = seoulScheduleToResultScheduleTransformDummyData
-        self.testDependency.realtimeStationArrival = arrivalDummyData.realtimeArrivalList
+        self.testDependency.realtimeStationArrival = totalArrivalDummyData
         
         FixInfo.saveSetting.detailAutoReload = true
         FixInfo.saveSetting.detailScheduleAutoTime = false
@@ -25,7 +25,7 @@ final class DetailFeatureTests: XCTestCase {
     
     func testDetailViewInit() async throws {
         // GIVEN
-        let testStore = self.createStore()
+        let testStore = await self.createStore()
         
         // WHEN -> View가 처음 로딩 되었을 때 상태
         await testStore.send(.viewInitialized) // arrival, schedule 데이터 요청
@@ -40,10 +40,10 @@ final class DetailFeatureTests: XCTestCase {
             $0.nowScheduleLoading = true
         }
         
-        await testStore.receive(.arrivalDataRequestSuccess(self.testDependency.realtimeStationArrival)) {
+        await testStore.receive(.arrivalDataRequestSuccess(totalArrivalDummyData.filter {$0.upDown == detailSendModelDummyData.upDown && $0.subWayId == detailSendModelDummyData.lineCode})) {
             // THEN
             $0.nowArrivalLoading = false
-            $0.nowArrivalData = self.testDependency.realtimeStationArrival
+            $0.nowArrivalData = totalArrivalDummyData.filter {$0.upDown == detailSendModelDummyData.upDown && $0.subWayId == detailSendModelDummyData.lineCode}
         }
         
         await testStore.receive(.timerSettingRequest) {
@@ -67,7 +67,7 @@ final class DetailFeatureTests: XCTestCase {
         // GIVEN
         var model = detailSendModelDummyData
         model.exceptionLastStation = "구파발"
-        let testStore = self.createStore(sendedLoadModel: model)
+        let testStore = await self.createStore(sendedLoadModel: model)
         
         // WHEN
         await testStore.send(.viewInitialized)
@@ -92,7 +92,7 @@ final class DetailFeatureTests: XCTestCase {
     
     func testRefreshBtnTapped() async throws {
         // GIVEN
-        let testStore = self.createStore()
+        let testStore = await self.createStore()
         
         // WHEN
         await testStore.send(.viewInitialized)
@@ -110,8 +110,8 @@ final class DetailFeatureTests: XCTestCase {
 }
 
 private extension DetailFeatureTests {
-    func createStore(isDisposable: Bool = false, sendedLoadModel: DetailSendModel = detailSendModelDummyData, exhaustivity: Bool = false) -> TestStore<DetailFeature.State,  DetailFeature.Action> {
-        let store =  TestStore(initialState: DetailFeature.State(isDisposable: isDisposable, sendedLoadModel: sendedLoadModel)) {
+    func createStore(isDisposable: Bool = false, sendedLoadModel: DetailSendModel = detailSendModelDummyData, exhaustivity: Bool = false) async -> TestStore<DetailFeature.State,  DetailFeature.Action> {
+        let store = await TestStore(initialState: DetailFeature.State(isDisposable: isDisposable, sendedLoadModel: sendedLoadModel)) {
             DetailFeature()
         } withDependencies: { dependency in
             dependency.totalLoad = self.testDependency
