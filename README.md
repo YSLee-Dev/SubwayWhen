@@ -9,13 +9,15 @@
 > v1.3 개발기간: 2023.09.18 ~ 2023.10.11<br/>
 > v1.3.1 개발기간: 2024.01.09 ~ 2024.03.07<br/>
 > v1.4 개발기간: 2024.03.28 ~ 2024.04.30<br/>
+> v1.5 개발기간: 2024.08.26 ~ 2024.09.30<br/>
+> v1.6 개발기간: 2024.11.26 ~ 2024.12.25<br/>
  
 ## 📋 지하철 민실씨 소개, 기능
 <div align=left>
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/ed1d2dfc-9a21-4923-b312-e726387b206b.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/c25f2cc5-0530-40c1-859a-848626946f6a.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/1613caae-15ad-42b7-9271-6b2e51dd3d4b.png" height="350" />
-<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/f809acc6-8e18-4b8b-b697-4ce480fc22ce.png" height="350" />
+<img src="https://github.com/user-attachments/assets/f715b21d-5d7a-492d-8571-eae6b68763e9" height="350" />
  <br>
  
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/ed1d2dfc-9a21-4923-b312-e726387b206b.png" height="350" />
@@ -44,15 +46,16 @@
 
 ## 🛠 지하철 민실씨에 사용된 라이브러리 / 프레임워크
 - UIKit, SwiftUI, WidgetKit, ActivityKit
-- RxSwift, RxCocoa, RxDataSources, RxOptional, RxAlamofire
+- RxSwift, RxCocoa, RxDataSources, RxOptional, RxAlamofire, TCA(ComposableArchitecture)
 - Alamofire, Then, SnapKit, lottie-ios, AcknowList, Firebase/Analytics, Firebase/Database
-- Nimble, RxBlocking, RxTest 
+- Nimble, RxBlocking, RxTest
 
 <br/>
 
 ## 💡 지하철 민실씨에 사용된 아키텍쳐
 ### ✅ MVVM-C + input/output 패턴 (일부 미적용)
-<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/a20d9cfc-6803-4d42-aae8-297e11563d9c.png" height="400" />
+### 🔄 TCA(ComposableArchitecture) (일부 적용)
+<img src="https://github.com/user-attachments/assets/d6b6f9f1-473e-417b-940d-8e7d7fab23b0" height="400" />
 
 > MVVM 
 - View(VC)는 View를 그리는데 집중하고, ViewModel과 Model가 데이터 처리를 하도록 분리하였습니다.
@@ -72,11 +75,20 @@
 비효율적이라 생각이 들어 AppCoordinator가 TabbarController도 선언하도록 하였습니다.
 ``` 
 > Singleton
-- Live Activity, UNUserNotificationCenter를 관리하는 Manager를 싱글톤 객체로 생성하여 관리하였습니다.
+- Live Activity, UNUserNotificationCenter, CoreData를 관리하는 Manager를 싱글톤 객체로 생성하여 관리하였습니다.
 ``` 
 - UIKit에서 Live Activity를 사용하기 위해 Manager을 두 개의 Target에서 빌드되도록 했습니다.
 - Manager 객체는 유일성 위해 싱글톤으로 생성하고, 만든 인스턴스를 static으로 선언하여
 어디서든 접근할 수 있게 하였습니다.
+```
+> TCA (ComposableArchitecture)
+- 단방향 데이터 흐름을 통해 데이터 출처를 명확하게 하고, 다양한 Effects(Action)로 State와 Error를 처리하게 하였습니다.
+- UIKit + MVVM-C로 개발된 화면을 리팩토링 중입니다. (v1.5 ~ )
+```
+- 비동기 작업 중 화면을 나간 경우 .cancel()을 통해 즉시 작업이 중단되도록 설계했습니다.
+- TCA의 Dependency 관리는 Networking 프레임워크에서 진행하게 설계했습니다.
+이에 따라 각 프레임워크에서 TCA를 사용할 수 있게 Common 프레임워크를 제작 후 Target Dependencies를
+채택하여 사용할 수 있게 했습니다.
 ``` 
 <br/>
 

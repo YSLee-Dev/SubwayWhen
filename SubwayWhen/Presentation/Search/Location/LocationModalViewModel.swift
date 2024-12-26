@@ -11,12 +11,12 @@ import RxSwift
 import RxCocoa
 
 class LocationModalViewModel {
+    private let vicinityList: [VicinityTransformData]
     weak var delegate: LocationModalVCActionProtocol?
-    let model: LocationModalModelProtocol
     
     private let modalDismissAction = PublishSubject<Void>()
-    private let auth = PublishSubject<Bool>()
-    private let vcinityStationList = BehaviorSubject<[LocationModalSectionData]>(value: [])
+    private let auth = BehaviorRelay<Bool>(value:  false)
+    private let vcinitySectionList = BehaviorSubject<[LocationModalSectionData]>(value: [])
     
     private let bag = DisposeBag()
     
@@ -24,14 +24,13 @@ class LocationModalViewModel {
         let modalCompletion: Observable<Void>
         let okBtnTap: Observable<Void>
         let didDisappear: Observable<Void>
-        let stationTap: Observable<LocationModalCellData>
+        let stationTap: Observable<Int>
     }
     
     struct Output {
         let modalDismissAnimation: Driver<Void>
         let locationAuthStatus: Driver<Bool>
         let vcinityStations: Driver<[LocationModalSectionData]>
-        let loadingStop: Driver<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -43,20 +42,17 @@ class LocationModalViewModel {
             modalDismissAnimation: self.modalDismissAction
                 .asDriver(onErrorDriveWith: .empty()),
             locationAuthStatus: self.auth
+                .skip(1) //BehaviorRelay의 초기값 무시
                 .asDriver(onErrorDriveWith: .empty()),
-            vcinityStations: self.vcinityStationList
-                .asDriver(onErrorDriveWith: .empty()),
-            loadingStop: self.vcinityStationList
-                .filter { !$0.isEmpty }
-                .map {_ in Void()}
+            vcinityStations: self.vcinitySectionList
                 .asDriver(onErrorDriveWith: .empty())
         )
     }
     
     init(
-        model: LocationModalModelProtocol = LocationModalModel()
+        vicinityList: [VicinityTransformData]
     ) {
-        self.model = model
+        self.vicinityList = vicinityList
     }
 }
 
@@ -69,7 +65,7 @@ extension LocationModalViewModel {
         input.modalCompletion
             .withUnretained(self)
             .subscribe(onNext: { viewModel, _ in
-                viewModel.delegate?.dismiss()
+                viewModel.delegate?.dismiss(auth: self.auth.value)
             })
             .disposed(by: self.bag)
         
@@ -81,16 +77,18 @@ extension LocationModalViewModel {
             .disposed(by: self.bag)
         
         input.stationTap
-            .filter {$0.name != "정보없음"}
             .withUnretained(self)
-            .subscribe(onNext: { viewModel, data in
-                viewModel.delegate?.stationTap(stationName: data.name)
+            .filter { viewModel, index in
+                viewModel.vicinityList[index].name != "정보없음"
+            }
+            .subscribe(onNext: { viewModel, index in
+                viewModel.delegate?.stationTap(index: index)
             })
             .disposed(by: self.bag)
     }
     
     func authCheck() {
-        self.model.locationAuthCheck()
+        Observable<Bool>.of(LocationManager.shared.locationAuthCheck())
             .delay(.microseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind(to: self.auth)
             .disposed(by: self.bag)
@@ -100,15 +98,21 @@ extension LocationModalViewModel {
         self.auth
             .filter {$0}
             .withUnretained(self)
-            .flatMapLatest{ viewModel, _ in
-                viewModel.model.locationRequest()
+            .map { viewModel, _ in
+                let cellData = viewModel.vicinityList.map {
+                    LocationModalCellData(
+                        id: $0.distance + $0.name,
+                        name: $0.name,
+                        line: $0.line,
+                        distance: $0.distance,
+                        lineColorName: $0.lineColorName,
+                        lineName: $0.lineName
+                    )
+                }
+                
+                return [LocationModalSectionData(id: UUID().uuidString, items: cellData)]
             }
-            .distinctUntilChanged()
-            .flatMapLatest{ [weak self] data in
-                self?.model.locationToVicinityStationRequest(locationData: data) ?? .empty()
-            }
-            .bind(to: self.vcinityStationList)
+            .bind(to: self.vcinitySectionList)
             .disposed(by: self.bag)
-            
     }
 }

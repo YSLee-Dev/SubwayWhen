@@ -13,10 +13,18 @@ import RxCocoa
 
 class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
+    private var coreDataManager: CoreDataScheduleManagerProtocol
     private let bag = DisposeBag()
+    private var stationIDList: [DetailStationId] {
+        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return  []}
+        guard let data = try? Data(contentsOf: fileUrl) else {return  []}
+        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return  []}
+        return decodingData
+    }
     
-    init(loadModel : LoadModel = .init()){
+    init(loadModel : LoadModel = .init(), coreDataManager: CoreDataScheduleManager = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
+        self.coreDataManager = coreDataManager
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
@@ -37,16 +45,17 @@ class TotalLoadModel : TotalLoadProtocol {
                 let station = saveStation.element
                 var backId = ""
                 var nextId = ""
+                let upDown = station.line == "09호선" ? (station.updnLine == "상행" ? "하행" : "상행") : station.updnLine
                 
                 for x in data.realtimeArrivalList{
                     let spaceRemoveStationName = x.stationName.replacingOccurrences(of: " ", with: "")
-                    
-                    if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
+                    // 9호선은 상하행이 반대
+                    if station.lineCode == x.subWayId && upDown == x.upDown && spaceRemoveStationName == x.stationName && !(station.exceptionLastStation.contains(x.lastStation)){
                         let code = x.previousStation != nil ? x.code : ""
                         backId = x.backStationId
                         nextId = x.nextStationId
                         
-                        return (.init(upDown: x.upDown, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode), saveStation.offset)
+                        return (.init(upDown: station.updnLine, arrivalTime: x.arrivalTime, previousStation: x.previousStation ?? "", subPrevious: x.subPrevious, code: code, subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(x.lastStation)행", lineNumber: station.line, isFast: x.isFast ?? "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: x.backStationId, nextStationId: x.nextStationId,  korailCode: station.korailCode, stateMSG: x.useState), saveStation.offset)
                     }else if station.lineCode == x.subWayId && station.updnLine == x.upDown && spaceRemoveStationName == x.stationName{
                         backId = x.backStationId
                         nextId = x.nextStationId
@@ -55,20 +64,47 @@ class TotalLoadModel : TotalLoadProtocol {
                 
                 if station.lineCode != ""{
                     let exceptionLastStation = station.exceptionLastStation == "" ? "" : "\(station.exceptionLastStation)행 제외"
-                    return (.init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(exceptionLastStation)", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode), saveStation.offset)
+                    return (.init(upDown: station.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "\(exceptionLastStation)", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: backId, nextStationId: nextId, korailCode: station.korailCode, stateMSG: "현재 실시간 열차 데이터가 없어요."), saveStation.offset)
                 }else{
-                    return (.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode), saveStation.offset)
+                    return (.init(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "지원하지 않는 호선이에요.", subWayId: station.lineCode, stationName: station.stationName, lastStation: "", lineNumber: station.line, isFast: "", useLine: station.useLine, group: station.group.rawValue, id: station.id, stationCode: station.stationCode, exceptionLastStation: station.exceptionLastStation, type: .real, backStationId: "", nextStationId: "",  korailCode: station.korailCode, stateMSG: "지원하지 않는 호선이에요."), saveStation.offset)
                 }
             }
             .asObservable()
     }
     
-    // live 정보만 반환
-    func singleLiveDataLoad(station: String) -> Observable<LiveStationModel> {
-        self.loadModel.stationArrivalRequest(stationName: station)
+    // live 정보만 반환하되, 필터링을 거침
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [TotalRealtimeStationArrival]> {
+        self.loadModel.stationArrivalRequest(stationName: requestModel.stationName)
             .map{ data -> LiveStationModel in
-                guard case .success(let value) = data else {return .init(realtimeArrivalList: [RealtimeStationArrival(upDown: "", arrivalTime: "", previousStation: "", subPrevious: "", code: "현재 실시간 열차 데이터가 없어요.", subWayId: "", stationName: "\(station)", lastStation: "", lineNumber: "", isFast: "", backStationId: "", nextStationId: "", trainCode: "")])}
+                guard case .success(let value) = data else {return .init(realtimeArrivalList: [])}
                 return value
+            }
+            .map { data -> [TotalRealtimeStationArrival] in
+                let errorModel = TotalRealtimeStationArrival(realTimeStationArrival: .init(upDown: requestModel.upDown, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: "", stationName: requestModel.stationName, lastStation: "\(requestModel.exceptionLastStation)행 제외", lineNumber: requestModel.line.rawValue, isFast: nil, backStationId: requestModel.backStationId ?? "", nextStationId: requestModel.nextStationId ?? "", trainCode: ""), backStationName: "", nextStationName: "", nowStateMSG: "")
+                
+                if data.realtimeArrivalList.isEmpty {
+                    return [errorModel, errorModel]
+                } else {
+                    // 9호선은 상하행이 반대
+                    let upDown = requestModel.line == .nine ? (requestModel.upDown == "상행" ? "하행" : "상행") : requestModel.upDown
+                    var arrivalData: [TotalRealtimeStationArrival] = []
+                    for x in data.realtimeArrivalList {
+                        if upDown == x.upDown && requestModel.line.lineCode == x.subWayId && !(requestModel.exceptionLastStation.contains(x.lastStation)){
+                            let backNextStation = self.nextAndBackStationSearch(backId: x.backStationId, nextId: x.nextStationId, lineCode: requestModel.line.lineCode)
+                            arrivalData.append(.init(realTimeStationArrival: x, backStationName: backNextStation.first ?? "", nextStationName: backNextStation.last ?? "", nowStateMSG: x.useState))
+                        }
+                        if arrivalData.count >= 2 {
+                            break
+                        }
+                    }
+                    
+                    if arrivalData.count < 2 {
+                        for _ in 0 ..< 2 - arrivalData.count {
+                            arrivalData.append(errorModel)
+                        }
+                    }
+                    return arrivalData
+                }
             }
             .asObservable()
     }
@@ -265,42 +301,68 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion> {
-        self.loadModel.stationSearch(station: stationName)
-            .map{ data -> SearchStaion? in
-                guard case .success(let value) = data else {return nil}
-                return value
-            }
-            .asObservable()
-            .filterNil()
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.stationSearch(station: stationName)
+                .asObservable()
+                .take(1)
+                .map{ data -> [searchStationInfo] in
+                    guard case .success(let value) = data else {return []}
+                    return value.SearchInfoBySubwayNameService.row
+                }
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
+        }
     }
     
-    func defaultViewListLoad() -> Observable<[String]>{
-        self.loadModel.defaultViewListRequest()
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        return await withCheckedContinuation { continuation in
+            let loadModelData = self.loadModel.vicinityStationsLoad(x: x, y: y)
+                .map { data -> [VicinityDocumentData] in
+                    guard case .success(let value) = data else {return []}
+                    return value.documents
+                }
+                .map { data in
+                    // SW8 = 지하철이 아닌 정보는 filter해요.
+                    return data.filter {$0.category == "SW8" || $0.category == "정보없음"}
+                }
+                .map { data in
+                    data.sorted {
+                        // 가장 가까운 지하철 순서로 정렬해요.
+                        let first = Int($0.distance) ?? 0
+                        let second = Int($1.distance) ?? 1
+                        return first < second
+                    }
+                }
+                .map { data in
+                    data.map {
+                        VicinityTransformData(
+                            id: $0.distance + $0.name,
+                            name: self.stationNameSeparation(oldValue: $0.name),
+                            line: self.lineSeparation(oldValue: $0.name),
+                            distance: self.distanceTransform(oldValue: $0.distance)
+                        )
+                    }
+                }
+                .asObservable()
+               
+            loadModelData.subscribe(onNext: { data in
+                continuation.resume(returning: data)
+            })
+            .disposed(by: self.bag)
+        }
     }
     
-    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]> {
-        self.loadModel.vicinityStationsLoad(x: x, y: y)
-            .map { data -> VicinityStationsData? in
-                guard case .success(let value) = data else {return nil}
-                return value
-            }
-            .asObservable()
-            .replaceNilWith(.init(documents: [.init(name: "정보없음", distance: "정보없음", category: "정보없음")]))
-            .map {
-                $0.documents
-            }
-            .map { data in
-                let filter = data.filter {
-                    $0.category == "SW8" || $0.category == "정보없음"
-                }
-                
-                return filter.sorted {
-                    let first = Int($0.distance) ?? 0
-                    let second = Int($1.distance) ?? 1
-                    return first < second
-                }
-            }
+    func defaultViewListLoad() async -> [String] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.defaultViewListRequest()
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
+        }
     }
     
     func importantDataLoad() -> RxSwift.Observable<ImportantData> {
@@ -317,9 +379,123 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    private func timeFormatter(date : Date) -> String {
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
+        let requestWeek = Calendar.current.component(.weekday, from: requestDate)
+        let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
+        guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
+        
+        let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
+        let localSchedule = self.coreDataManager.shinbundangScheduleDataLoad(stationName: scheduleSearch.stationName)
+        
+        var shinbundangVersion = 0.0
+        var newSave = false
+        
+        // A-1. 저장된 신분당선 데이터가 있는지 확인합니다.
+       return Observable.zip(shinbundangVersionObserverable, Observable.just(localSchedule))
+            .map {($0, $1)}
+            .flatMap { version,  localSchedule -> Observable<[ShinbundangScheduleModel]> in
+                shinbundangVersion = version
+                
+                // A-2. 저장된 신분당선의 버전을 확인합니다.
+                if (Double(localSchedule?.scheduleVersion ?? "0")) ?? 0.0 >= version, let localScheduleData = localSchedule?.scheduleData {
+                    // A-3. 저장된 신분당선 시간표를 반환합니다.
+                    return Observable.just(localScheduleData)
+                } else {
+                    // B-1. 저장된 신분당선 데이터가 없거나 버전이 낮으면 데이터를 요청합니다.
+                    newSave = !isDisposable
+                    return self.loadModel.shinbundangScheduleReqeust(scheduleSearch: scheduleSearch)
+                }
+            }
+            .do(onNext: { data in
+                if newSave  {
+                    if localSchedule?.scheduleData != nil  {   // B-2. 저장된 신분당선 데이터를 삭제 후 저장합니다. (일회성 보기가 아닐 때만 저장)
+                        self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSearch.stationName)
+                    }
+                    self.coreDataManager.shinbundangScheduleDataSave(to: [scheduleSearch.stationName: data], scheduleVersion: "\(shinbundangVersion)")
+                }
+            })
+            .map { data in
+                let filterData = data.filter {
+                    guard let scheduleTime = Int($0.startTime.components(separatedBy: ":").joined()) else {return false}
+                    if $0.updown == scheduleSearch.upDown && $0.week == requestWeekString && !scheduleSearch.exceptionLastStation.contains($0.endStation) {
+                        if isNow {
+                            return nowTime <= scheduleTime
+                        } else {
+                            return true
+                        }
+                    } else {
+                        return false
+                    }
+                }
+                
+                var resultScheduleData = filterData.map {
+                    ResultSchdule(startTime: $0.startTime, type: .Shinbundang, isFast: "", startStation: $0.startStation, lastStation: $0.endStation)
+                }
+                
+                if resultScheduleData.isEmpty {
+                    if isWidget {
+                        resultScheduleData.append(ResultSchdule(startTime: "-", type: .Shinbundang, isFast: "", startStation: "", lastStation: ""))
+                    } else {
+                        resultScheduleData.append(ResultSchdule(startTime: "정보없음", type: .Shinbundang, isFast: "", startStation: "정보없음", lastStation: "정보없음"))
+                    }
+                }
+                
+                if isFirst {
+                    guard let first = resultScheduleData.first else {return []}
+                    return [first]
+                } else {
+                    return resultScheduleData
+                }
+            }
+    }
+    
+    private func timeFormatter(date : Date, isSecondIncludes: Bool = true) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HHmmss"
+        formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
         return formatter.string(from: date)
+    }
+    
+    private func distanceTransform(oldValue: String) -> String {
+        guard let doubleValue = Int(oldValue) else {return "정보없음"}
+        let numberFomatter = NumberFormatter()
+        numberFomatter.numberStyle = .decimal
+        
+        guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+        return "\(newValue)m"
+    }
+    
+    private func stationNameSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.startIndex ..< wordIndex])
+    }
+    
+    private func lineSeparation(oldValue: String) -> String {
+        guard let wordIndex = oldValue.lastIndex(of: "역") else {return "정보없음"}
+        return String(oldValue[oldValue.index(after: wordIndex) ..< oldValue.endIndex]).replacingOccurrences(of: " ", with: "")
+    }
+    
+    private func nextAndBackStationSearch(backId : String?, nextId : String?, lineCode: String) -> [String]{
+        var backStation : String = ""
+        var nextStation : String = ""
+        let decodingData = self.stationIDList
+        
+        for x in decodingData{
+            if x.stationId == backId{
+                backStation = x.stationName
+            }
+            
+            if x.stationId == nextId{
+                nextStation = x.stationName
+            }
+            
+            if backStation != "" && nextStation != ""{
+                break
+            }
+        }
+        if lineCode == "1065" { // 공항철도는 반대
+            return  [nextStation, backStation]
+        } else {
+            return  [backStation, nextStation]
+        }
     }
 }
