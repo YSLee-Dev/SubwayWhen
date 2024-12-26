@@ -61,7 +61,7 @@ struct DetailScheduleView: View {
                                     .tint(Color("AppIconColor"))
                                 Spacer()
                             }
-                            .position(x: (UIScreen.main.bounds.width / 2) - 40, y: 50)
+                            .position(x: (UIScreen.main.bounds.width / 2) - 20, y: 50)
                         } else {
                             LazyVGrid(columns: self.gridItem) {
                                 ForEach(Array(zip(self.scheduleDataList.indices, self.scheduleDataList)), id: \.0) { (index, data) in

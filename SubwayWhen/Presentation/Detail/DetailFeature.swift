@@ -21,7 +21,7 @@ struct DetailFeature: Reducer {
     struct State: Equatable {
         let isDisposable: Bool
         var sendedLoadModel: DetailSendModel
-        var nowArrivalData: [RealtimeStationArrival] = []
+        var nowArrivalData: [TotalRealtimeStationArrival] = []
         var nowScheduleData: [ResultSchdule] = []
         var nowSculeduleSortedData: [ResultSchdule] = []
         var backStationName: String?
@@ -41,7 +41,7 @@ struct DetailFeature: Reducer {
         case refreshBtnTapped
         case scheduleMoreBtnTapped
         case reportBtnTapped(ReportBrandData)
-        case arrivalDataRequestSuccess([RealtimeStationArrival])
+        case arrivalDataRequestSuccess([TotalRealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
         case scheduleDataSort
         case arrivalDataRequest
@@ -81,9 +81,10 @@ struct DetailFeature: Reducer {
                 }
                 
             case .arrivalDataRequest:
+                guard let line = SubwayLineData(rawValue: state.sendedLoadModel.lineNumber) else {return .none}
                 state.nowArrivalLoading = true
                 let sendedModel = state.sendedLoadModel
-                let requestModel = DetailArrivalDataRequestModel(upDown: sendedModel.upDown, stationName: sendedModel.stationName, lineNumber: sendedModel.lineNumber, lineCode: sendedModel.lineCode, exceptionLastStation: sendedModel.exceptionLastStation)
+                let requestModel = DetailArrivalDataRequestModel(upDown: sendedModel.upDown, stationName: sendedModel.stationName, line: line ,exceptionLastStation: sendedModel.exceptionLastStation)
                 
                 return .run { send in
                     let loadData = await self.totalLoad.singleLiveAsyncData(requestModel: requestModel)
@@ -105,10 +106,9 @@ struct DetailFeature: Reducer {
                 .cancellable(id: TimerKey.scheduleRequest)
                 
             case .arrivalDataRequestSuccess(let data):
-                let backNextStationName = self.nextAndBackStationSearch(backId: data.first?.backStationId, nextId: data.first?.nextStationId, lineCode: state.sendedLoadModel.lineCode)
                 state.nowArrivalData = data
-                state.backStationName = backNextStationName[0]
-                state.nextStationName = backNextStationName[1]
+                state.backStationName = data.first?.backStationName ?? ""
+                state.nextStationName = data.first?.nextStationName ?? ""
                 state.nowArrivalLoading = false
                 
                 return .send(.timerSettingRequest)
@@ -278,34 +278,6 @@ struct DetailFeature: Reducer {
             return [first]
         } else {
             return schedule
-        }
-    }
-    
-    private func nextAndBackStationSearch(backId : String?, nextId : String?, lineCode: String) -> [String]{
-        var backStation : String = ""
-        var nextStation : String = ""
-        
-        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return  [backStation, nextStation]}
-        guard let data = try? Data(contentsOf: fileUrl) else {return  [backStation, nextStation]}
-        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return  [backStation, nextStation]}
-        
-        for x in decodingData{
-            if x.stationId == backId{
-                backStation = x.stationName
-            }
-            
-            if x.stationId == nextId{
-                nextStation = x.stationName
-            }
-            
-            if backStation != "" && nextStation != ""{
-                break
-            }
-        }
-        if lineCode == "1065" { // 공항철도는 반대
-            return  [nextStation, backStation]
-        } else {
-            return  [backStation, nextStation]
         }
     }
 }

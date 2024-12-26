@@ -37,7 +37,7 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         }
     }
     
-    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel)  async -> [RealtimeStationArrival] {
+    func singleLiveAsyncData(requestModel: DetailArrivalDataRequestModel) async ->[TotalRealtimeStationArrival] {
         await withCheckedContinuation { continuation  in
             self.totalModel.singleLiveDataLoad(requestModel: requestModel)
                 .subscribe(onNext: { data in
@@ -45,5 +45,17 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
                 })
                 .disposed(by: self.bag)
         }
+    }
+    
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] {
+        await self.totalModel.vicinityStationsDataLoad(x: x, y: y)
+    }
+    
+    func defaultViewListLoad() async -> [String] {
+        await self.totalModel.defaultViewListLoad()
+    }
+    
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo] {
+        await self.totalModel.stationNameSearchReponse(stationName)
     }
 }

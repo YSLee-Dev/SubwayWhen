@@ -45,20 +45,12 @@ struct DetailView: View {
                     .overlay {
                         HStack {
                             Spacer()
-                            Circle()
-                                .stroke(Color.init(self.store.sendedLoadModel.lineNumber))
-                                .fill(Color.white)
-                                .frame(width: 75, height: 75)
-                                .overlay {
-                                    HStack {
-                                        Spacer()
-                                        Text(self.store.sendedLoadModel.stationName)
-                                            .foregroundColor(.black)
-                                            .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
-                                            .lineLimit(3)
-                                        Spacer()
-                                    }
-                                }
+                            StationTitleViewInSUI(
+                                title: self.store.sendedLoadModel.stationName,
+                                lineColor: self.store.sendedLoadModel.lineNumber,
+                                size: 75,
+                                isFill: false
+                            )
                             Spacer()
                         }
                     }

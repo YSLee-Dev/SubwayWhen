@@ -26,6 +26,7 @@ struct OffsetScrollViewInSUI<Contents>: View where Contents: View {
             let offsetY = geo.frame(in: .global).origin.y
             Color.clear
                 .preference(key: ScrollOffsetKey.self, value: offsetY)
+                .id("TOPVIEW")
         }
         .frame(height: 0)
     }

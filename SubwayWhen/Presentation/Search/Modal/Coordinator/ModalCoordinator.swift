@@ -10,7 +10,7 @@ import UIKit
 class ModalCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigation: UINavigationController
-    var data: ResultVCCellData
+    var data: searchStationInfo
     var viewModel: ModalViewModel
     var modalVC: ModalVC?
     
@@ -18,7 +18,7 @@ class ModalCoordinator: Coordinator {
     
     init(
         navigation: UINavigationController,
-        data: ResultVCCellData,
+        data: searchStationInfo,
         viewModel: ModalViewModel = ModalViewModel()
     ){
         self.navigation = navigation

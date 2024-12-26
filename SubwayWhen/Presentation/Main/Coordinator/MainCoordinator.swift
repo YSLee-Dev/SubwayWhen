@@ -34,7 +34,7 @@ class MainCoordinator : Coordinator{
         self.navigation.popToRootViewController(animated: true)
         self.navigation.dismiss(animated: true)
         
-        let data = MainTableViewCellData(upDown: saveStation.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: saveStation.lineCode, stationName: saveStation.stationName, lastStation: "", lineNumber: saveStation.line, isFast: "", useLine: saveStation.useLine, group: saveStation.group.rawValue, id: saveStation.id, stationCode: saveStation.stationCode, exceptionLastStation: saveStation.exceptionLastStation, type: .real, backStationId: "", nextStationId: "", korailCode: saveStation.korailCode)
+        let data = MainTableViewCellData(upDown: saveStation.updnLine, arrivalTime: "", previousStation: "", subPrevious: "", code: "", subWayId: saveStation.lineCode, stationName: saveStation.stationName, lastStation: "", lineNumber: saveStation.line, isFast: "", useLine: saveStation.useLine, group: saveStation.group.rawValue, id: saveStation.id, stationCode: saveStation.stationCode, exceptionLastStation: saveStation.exceptionLastStation, type: .real, backStationId: "", nextStationId: "", korailCode: saveStation.korailCode, stateMSG: "")
         
         let detailSendModel = DetailSendModel(upDown: data.upDown, stationName: data.stationName, lineNumber: data.lineNumber, stationCode: data.stationCode, lineCode: data.subWayId, exceptionLastStation: data.exceptionLastStation, korailCode: data.korailCode)
         

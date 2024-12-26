@@ -6,38 +6,46 @@
 //
 
 import UIKit
+import ComposableArchitecture
+import SwiftUI
 
 class SearchCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []
     var navigation : UINavigationController
-    var viewModel: SearchViewModelProtocol?
     weak var delegate: SearchCoordinatorDelegate?
+    
+    fileprivate var store: StoreOf<SearchFeature>?
     
     init(){
         self.navigation = .init()
     }
     
     func start() {
-        let viewModel = SearchViewModel()
-        viewModel.delegate = self
-        self.viewModel = viewModel
+        self.store = StoreOf<SearchFeature>(initialState: .init(), reducer: {
+            let feature = SearchFeature()
+            feature.delegate = self
+            return feature
+        })
+        guard let store = self.store else { return }
+        let searchView = SearchView(store: store)
+        let vc = UIHostingController(rootView: searchView)
+        vc.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
         
-        let search = SearchVC(viewModel: viewModel)
-        search.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        self.navigation.pushViewController(search, animated: true)
+        self.navigation.setNavigationBarHidden(true, animated: false)
+        self.navigation.pushViewController(vc, animated: true)
     }
 }
 
 extension SearchCoordinator: SearchVCActionProtocol {
-    func locationPresent() {
-        let locationCoordinator = LocationModalCoordinator(navigation: self.navigation)
+    func locationPresent(data: [VicinityTransformData]) {
+        let locationCoordinator = LocationModalCoordinator(navigation: self.navigation, vicinityList: data)
         locationCoordinator.delegate = self
         locationCoordinator.start()
         
         self.childCoordinator.append(locationCoordinator)
     }
     
-    func modalPresent(data: ResultVCCellData) {
+    func modalPresent(data: searchStationInfo) {
         let modalCoordinator = ModalCoordinator(navigation: self.navigation, data: data)
         modalCoordinator.delegate = self
         modalCoordinator.start()
@@ -91,16 +99,24 @@ extension SearchCoordinator: DetailCoordinatorDelegate {
 }
 
 extension SearchCoordinator: LocationModalCoordinatorProtocol {
-    func stationTap(stationName: String) {
+    func stationTap(index: Int) {
         self.dismiss()
         
-        guard let viewModel = self.viewModel else {return}
-        viewModel.locationModalTap.onNext(stationName)
+        guard let store = self.store else { return }
+        store.send(.stationTapped(.init(index: index, type: .location)))
     }
     
     func didDisappear(locationModalCoordinator: Coordinator) {
         self.childCoordinator = self.childCoordinator.filter {
             $0 !== locationModalCoordinator
+        }
+    }
+    
+    func dismiss(auth: Bool) {
+        self.navigation.dismiss(animated: true)
+        if !auth {
+            guard let store = self.store else { return }
+            store.send(.onAppear)
         }
     }
 }

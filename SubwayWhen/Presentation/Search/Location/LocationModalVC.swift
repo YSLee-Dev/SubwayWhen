@@ -18,10 +18,6 @@ import Lottie
 class LocationModalVC: ModalVCCustom {
     var animationIcon : LottieAnimationView?
     
-    let refreshIcon = UIActivityIndicatorView().then{
-        $0.color = UIColor(named: "AppIconColor")
-    }
-    
     let viewModel: LocationModalViewModel
     
     private let modalCompletion =  PublishSubject<Void>()
@@ -68,10 +64,6 @@ class LocationModalVC: ModalVCCustom {
 }
 
 private extension LocationModalVC {
-    func attribute() {
-        self.refreshIcon.startAnimating()
-    }
-    
     func layout() {
         guard let okBtn = self.okBtn else {return}
         
@@ -80,11 +72,6 @@ private extension LocationModalVC {
             $0.top.equalTo(self.subTitle.snp.bottom).offset(10)
             $0.bottom.equalTo(okBtn.snp.top).offset(-10)
             $0.leading.trailing.equalToSuperview()
-        }
-        
-        self.tableView.addSubview(self.refreshIcon)
-        self.refreshIcon.snp.makeConstraints {
-            $0.center.equalToSuperview()
         }
     }
     
@@ -95,7 +82,7 @@ private extension LocationModalVC {
             modalCompletion: self.modalCompletion.asObservable(),
             okBtnTap: okBtn.rx.tap.asObservable(),
             didDisappear: self.didDisappear.asObservable(),
-            stationTap: self.tableView.rx.modelSelected(LocationModalCellData.self).asObservable()
+            stationTap: self.tableView.rx.itemSelected.map{$0.row}.asObservable()
         )
         
         let output = self.viewModel.transform(input: input)
@@ -120,11 +107,6 @@ private extension LocationModalVC {
         output.vcinityStations
             .drive(self.tableView.rx.items(dataSource: dataSources))
             .disposed(by: self.bag)
-        
-        output.loadingStop
-            .drive(self.rx.refreshIconStop)
-            .disposed(by: self.bag)
-        
     }
     
     func iconLayout(){
@@ -158,19 +140,12 @@ extension Reactive where Base: LocationModalVC {
         return Binder(base){ base, bool in
             if bool{
                 base.layout()
-                base.refreshIcon.startAnimating()
             }else{
                 base.iconLayout()
                 base.animationStart()
                 base.subTitle.text = "위치 권한이 설정되어 있지 않아요."
                 base.okBtn?.titleLabel?.text = "닫기"
             }
-        }
-    }
-    
-    var refreshIconStop: Binder<Void> {
-        return Binder(base) { base, _ in
-            base.refreshIcon.stopAnimating()
         }
     }
 }
