@@ -10,13 +10,14 @@
 > v1.3.1 개발기간: 2024.01.09 ~ 2024.03.07<br/>
 > v1.4 개발기간: 2024.03.28 ~ 2024.04.30<br/>
 > v1.5 개발기간: 2024.08.26 ~ 2024.09.30<br/>
+> v1.6 개발기간: 2024.11.26 ~ 2024.12.25<br/>
  
 ## 📋 지하철 민실씨 소개, 기능
 <div align=left>
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/ed1d2dfc-9a21-4923-b312-e726387b206b.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/c25f2cc5-0530-40c1-859a-848626946f6a.png" height="350" />
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/1613caae-15ad-42b7-9271-6b2e51dd3d4b.png" height="350" />
-<img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/f809acc6-8e18-4b8b-b697-4ce480fc22ce.png" height="350" />
+<img src="https://github.com/user-attachments/assets/f715b21d-5d7a-492d-8571-eae6b68763e9" height="350" />
  <br>
  
 <img src="https://github.com/YSLee-Dev/SubwayWhen/assets/94354145/ed1d2dfc-9a21-4923-b312-e726387b206b.png" height="350" />
@@ -54,7 +55,7 @@
 ## 💡 지하철 민실씨에 사용된 아키텍쳐
 ### ✅ MVVM-C + input/output 패턴 (일부 미적용)
 ### 🔄 TCA(ComposableArchitecture) (일부 적용)
-<img src="https://github.com/user-attachments/assets/eb09e82c-111a-481f-8c56-c0b7a2aac090" height="400" />
+<img src="https://github.com/user-attachments/assets/d6b6f9f1-473e-417b-940d-8e7d7fab23b0" height="400" />
 
 > MVVM 
 - View(VC)는 View를 그리는데 집중하고, ViewModel과 Model가 데이터 처리를 하도록 분리하였습니다.
