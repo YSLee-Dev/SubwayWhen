@@ -29,6 +29,7 @@ struct MainTableViewCellData: Decodable, Hashable {
     var backStationId : String
     var nextStationId : String
     let korailCode : String
+    var stateMSG: String
     
     var useTime : String{
         if self.type == .real{
@@ -65,27 +66,6 @@ struct MainTableViewCellData: Decodable, Hashable {
             return "(ITX)"
         }else{
             return ""
-        }
-    }
-    
-    var state : String{
-        switch self.code{
-        case "0":
-            return "\(self.stationName) 진입"
-        case "1":
-            return "\(self.stationName) 도착"
-        case "2":
-            return "\(self.stationName) 출발"
-        case "3":
-            return "전역 출발"
-        case "4":
-            return "전역 진입"
-        case "5":
-            return "전역 도착"
-        case "99":
-            return "\(self.previousStation) 부근"
-        default:
-            return self.code
         }
     }
     

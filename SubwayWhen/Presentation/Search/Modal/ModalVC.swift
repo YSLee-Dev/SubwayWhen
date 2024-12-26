@@ -235,13 +235,13 @@ extension ModalVC{
 }
 
 extension Reactive where Base : ModalVC{
-    var modalLabelSet : Binder<ResultVCCellData>{
+    var modalLabelSet : Binder<searchStationInfo>{
         return Binder(base){ base, info in
-            base.line.text = info.useLine
-            base.line.backgroundColor = UIColor(named: info.lineNumber)
+            base.line.text = info.line.useLine
+            base.line.backgroundColor = UIColor(named: info.line.rawValue)
             base.titleLabel.text = info.stationName
             
-            if info.lineCode == ""{
+            if info.line.lineCode == ""{
                 [base.upBtn, base.downBtn, base.groupBtn, base.disposableView]
                     .forEach{
                         $0.isHidden = true
@@ -250,7 +250,7 @@ extension Reactive where Base : ModalVC{
                 base.notServiceBtn.isHidden = false
                 
             }else{
-                if info.lineNumber == "02호선"{
+                if info.line.rawValue == "02호선"{
                     base.upBtn.setTitle("내선", for: .normal)
                     base.downBtn.setTitle("외선", for: .normal)
                 }else{

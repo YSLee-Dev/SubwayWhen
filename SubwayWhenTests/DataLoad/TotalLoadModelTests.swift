@@ -21,6 +21,7 @@ final class TotalLoadModelTests: XCTestCase {
     var korailScheduleLoadModel : TotalLoadModel!
     var stationNameSearchModel : TotalLoadModel!
     var kakaoVicinityStationModel: TotalLoadModel!
+    var coreDataManager: CoreDataScheduleManagerProtocol!
     
     override func setUp(){
         let session = MockURLSession((response: urlResponse!, data: arrivalData))
@@ -39,6 +40,12 @@ final class TotalLoadModelTests: XCTestCase {
         let vicinityMock = MockURLSession((response: urlResponse!, data: vicinityData))
         self.kakaoVicinityStationModel = TotalLoadModel(loadModel: LoadModel(networkManager: NetworkManager(session: vicinityMock)))
         
+        self.coreDataManager = CoreDataScheduleManager.shared
+    }
+    
+    override func tearDown() {
+        // coreData에 저장되어 있는 신분당선 시간표를 제거합니다.
+        self.coreDataManager.shinbundangScheduleDataRemove(stationName: scheduleSinsaShinbundagLine.stationName)
     }
     
     func testTotalLiveDataLoad(){
@@ -117,20 +124,20 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testSingleLiveDataLoad(){
+    func testSingleLiveDataLoad() {
         // GIVEN
-        let data = self.arrivalTotalLoadModel.singleLiveDataLoad(station: "교대")
+        let data = self.arrivalTotalLoadModel.singleLiveDataLoad(requestModel: detailArrivalDataRequestDummyModel)
         let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let requestData = try! blocking.toArray().first
         
         // WHEN
-        let requestStationName = arrayData.first?.realtimeArrivalList.first?.stationName
+        let requestStationName = requestData?.first?.stationName
         let dummyStationName = arrivalDummyData.realtimeArrivalList.first?.stationName
         
-        let requestNextId = arrayData.first?.realtimeArrivalList.first?.nextStationId
-        let dummyNextId = arrivalDummyData.realtimeArrivalList.first?.nextStationId
+        let requestNextName = requestData?.first?.nextStationName
+        let dummyNextName = "고속터미널" // dummy 데이터 기반 고정 값
         
-        let requestCode = arrayData.first?.realtimeArrivalList.first?.code
+        let requestCode = requestData?.first?.code
         let dummyCode = arrivalDummyData.realtimeArrivalList.first?.code
         
         // THEN
@@ -139,9 +146,9 @@ final class TotalLoadModelTests: XCTestCase {
             description: "지하철 역명은 동일해야함"
         )
         
-        expect(requestNextId).to(
-            equal(dummyNextId),
-            description: "기본 데이터가 같으므로, NextID도 동일해야함"
+        expect(requestNextName).to(
+            equal(dummyNextName),
+            description: "기본 데이터가 같으므로, 지하철 역 이름도 동일해야함"
         )
         
         expect(requestCode).to(
@@ -150,18 +157,23 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testSingleLiveDataLoadError(){
+    func testSingleLiveDataLoadError() {
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.singleLiveDataLoad(station: "교대")
+        let data = self.arrivalErrorTotalLoadModel.singleLiveDataLoad(requestModel: detailArrivalDataRequestDummyModel)
         let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let requestData = try! blocking.toArray().first
+        
+        let dummyData = arrivalDummyData
         
         // WHEN
-        let requestStationName = arrayData.first?.realtimeArrivalList.first?.stationName
-        let dummyStationName = "교대"
+        let requestStationName = requestData?.first?.stationName
+        let dummyStationName = detailArrivalDataRequestDummyModel.stationName
         
-        let requestCode = arrayData.first?.realtimeArrivalList.first?.code
-        let dummyStationCode = "현재 실시간 열차 데이터가 없어요."
+        let requestNextName = requestData?.first?.nextStationName
+        let dummyNextName = ""
+        
+        let requestCode = requestData?.first?.code
+        let dummyCode = ""
         
         // THEN
         expect(requestStationName).to(
@@ -169,9 +181,14 @@ final class TotalLoadModelTests: XCTestCase {
             description: "열차 데이터를 받아오지 못해도 역 이름은 동일해야함"
         )
         
+        expect(requestNextName).to(
+            equal(dummyNextName),
+            description: "열차 데이터를 받아오지 못할 때는 다음 지하철역 이름이 없어야함"
+        )
+        
         expect(requestCode).to(
-            equal(dummyStationCode),
-            description: "열차 데이터를 받아오지 못할 때는 (현재 실시간 열차 데이터가 없어요.)가 나와야함"
+            equal(dummyCode),
+            description: "열차 데이터를 받아오지 못할 때는 빈 code 값이 나와야함"
         )
     }
     
@@ -316,7 +333,7 @@ final class TotalLoadModelTests: XCTestCase {
     func testSeoulScheduleLoadInputError(){
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
-            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "", stationName: "")
             , isFirst: false, isNow: false, isWidget: false)
         
         let blocking = data.toBlocking()
@@ -505,7 +522,7 @@ final class TotalLoadModelTests: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1", stationName: ""),
             isFirst: false, isNow: false, isWidget: false)
         data
             .subscribe(onNext: {
@@ -537,23 +554,21 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testStationNameSearchReponse(){
+    func testStationNameSearchResponse() async {
         // GIVEN
-        let data = self.stationNameSearchModel.stationNameSearchReponse("교대")
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let data = await self.stationNameSearchModel.stationNameSearchReponse("교대")
         
         // WHEN
-        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
+        let requestCount = data.count
         let dummyCount = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.count
         
-        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
+        let requestStationName = data.first?.stationName
         let dummyStationName = "교대"
         
-        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
-        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.lineNumber
+        let requestFirstLine = data.first?.line
+        let dummyFirstLine = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.first?.line
         
-        // THEN
+        //THEN
         expect(requestCount).to(
             equal(dummyCount),
             description: "같은 데이터이기 때문에 count도 같아야함"
@@ -570,23 +585,19 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testStationNameSearchReponseError(){
+    func testStationNameSearchReponseError() async {
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
+        let data = await self.arrivalErrorTotalLoadModel.stationNameSearchReponse("교대")
         
         // WHEN
-        let requestCount = arrayData.first?.SearchInfoBySubwayNameService.row.count
-        
-        let requestStationName = arrayData.first?.SearchInfoBySubwayNameService.row.first?.stationName
-        
-        let requestFirstLine = arrayData.first?.SearchInfoBySubwayNameService.row.first?.lineNumber
+        let requestCount = data.count
+        let requestStationName = data.first?.stationName
+        let requestFirstLine = data.first?.line
         
         // THEN
         expect(requestCount).to(
-            beNil(),
-            description: "데이터가 없을 때는 Nil이 나와야함"
+            equal(0),
+            description: "데이터가 없을 때는 빈 배열 (개수가 0)이 나와야함"
         )
         
         expect(requestStationName).to(
@@ -600,32 +611,32 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
-    func testVicinityStationsDataLoad() {
+    func testVicinityStationsDataLoad() async {
         // GIVEN
-        let data = self.kakaoVicinityStationModel.vicinityStationsDataLoad(
+        let data = await self.kakaoVicinityStationModel.vicinityStationsDataLoad(
             x: 37.49388026940836, y: 127.01360357128935
         )
-        let blocking = data.toBlocking()
-        let requestData = try! blocking.toArray()
-        
         let dummyData = vicinityStationsDummyData.documents
         
         // WHEN
-        let requestFirstDataName = requestData.first?.first?.name
+        let requestFirstDataName = data.first?.name
         let dummyFirstDataName = dummyData.first?.name
         
-        let requestCategoryCount = requestData.first?.filter {
-            $0.category != "SW8"
-        }
-            .count
+        let requestCategoryCount = data.count
+        let dummyCategoryCount = dummyData.filter {$0.category == "SW8"}.count
         
-        let dummyCategoryCount = 0
-        
-        let requestSortData = requestData.first
-        let dummySortData = dummyData.sorted {
+        let requestSortData = data.map {$0.distance}
+        let dummySortData = dummyData.filter {$0.category == "SW8"} .sorted {
             let first = Int($0.distance) ?? 0
             let second = Int($1.distance) ?? 1
             return first < second
+        }.map {data in
+            guard let doubleValue = Int(data.distance) else {return "정보없음"}
+            let numberFomatter = NumberFormatter()
+            numberFomatter.numberStyle = .decimal
+            
+            guard let newValue = numberFomatter.string(for: doubleValue) else {return "정보없음"}
+            return "\(newValue)m"
         }
         
         // THEN
@@ -641,34 +652,31 @@ final class TotalLoadModelTests: XCTestCase {
         
         expect(requestSortData).to(
             equal(dummySortData),
-            description: "정렬된 데이터는 값이 동일해야함"
+            description: "정렬된 데이터의 거리는 동일해야함"
         )
     }
     
-    func testVicinityStationDataLoadError() {
+    func testVicinityStationDataLoadError() async {
         // GIVEN
-        let data = self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
+        let data = await self.arrivalErrorTotalLoadModel.vicinityStationsDataLoad(
             x: 37.49388026940836, y: 127.01360357128935
         )
-        let blocking = data.toBlocking()
-        let arrayData = try! blocking.toArray()
         
         // WHEN
-        let requestCount = arrayData.first?.count
-        let dummyCount = 1
+        let requestCount = data.count
+        let dummyCount = 0
         
-        let requestFirstData = arrayData.first?.first
-        let dummyFirstData: VicinityDocumentData? = VicinityDocumentData(name: "정보없음", distance: "정보없음", category: "정보없음")
+        let requestFirstData = data.first
         
         // THEN
         expect(requestCount).to(
             equal(dummyCount),
-            description: "데이터 오류 발생 시 데이터는 하나만 존재해야함"
+            description: "데이터 오류 발생 시 빈 배열을 return 해야함"
         )
         
         expect(requestFirstData).to(
-            equal(dummyFirstData),
-            description: "데이터 오류 발생 시 모든 데이터는 정보없음으로 표기되어야 함"
+            beNil(),
+            description: "데이터 오류 발생 시 빈 배열을 return 하기 때문에 값은 nil 이여야 함"
         )
     }
     
@@ -709,7 +717,7 @@ final class TotalLoadModelTests: XCTestCase {
     func testWidgetSeoulScheduleLoad_ErrorOne() {
         // GIVEN
         let data = self.arrivalErrorTotalLoadModel.seoulScheduleLoad(
-            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "")
+            .init(stationCode: "0", upDown: "행", exceptionLastStation: "", line: "03호선", korailCode: "", stationName: "")
             , isFirst: false, isNow: true, isWidget: true)
         
         let blocking = data.toBlocking()
@@ -833,7 +841,7 @@ final class TotalLoadModelTests: XCTestCase {
         var arrayData : [ResultSchdule] = []
         let data = self.korailScheduleLoadModel.korailSchduleLoad(
             scheduleSearch: .init(
-                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1"),
+                stationCode: "0", upDown: "하행", exceptionLastStation: "", line: "", korailCode: "K1", stationName: ""),
             isFirst: false, isNow: true, isWidget: true)
         data
             .subscribe(onNext: {
@@ -918,6 +926,292 @@ final class TotalLoadModelTests: XCTestCase {
         expect(requestStartStation).to(
             equal(dummyStartStation),
             description: "위젯 데이터는 isNow로 인해 데이터가 없는 경우 공백으로 표시"
+        )
+    }
+    
+    func testShinbundangScheduleLoad() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = dummyData.count
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestTypeCount = requestData.filter {$0.type == .Shinbundang}.count
+        let dummyTypeCount = dummyData.count
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "데이터가 동일하기 때문에 총 개수도 동일해야함"
+        )
+        
+        expect(requestFirstStartTime).to(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestTypeCount).to(
+            equal(dummyTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isFirst_isNow() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = 1
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestFirstStartTime).toNot(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터가 같지만, isNow가 true이기 때문에 데이터가 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isFirst() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = 1
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "isFirst가 true이기 때문에 하나의 데이터만 가져와야 함"
+        )
+        
+        expect(requestFirstStartTime).to(
+            equal(dummyFirstStartTime),
+            description: "기본 데이터 및 정렬이 같고, isNow가 false이기 때문에 데이터가 같아야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_isNow() {
+        // GIVEN
+        let requestObserverableData = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestData: [ResultSchdule] = []
+        requestObserverableData
+            .subscribe(onNext: {
+                requestData = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        let dummyData = shinbundagSinsaStationScheduleDummyData
+        
+        // WHEN
+        let requestCount = requestData.count
+        let dummyCount = dummyData.count
+        
+        let requestFirstStartTime = requestData.first?.startTime
+        let dummyFirstStartTime = dummyData.first?.startTime
+        
+        let requestType = requestData.first?.type
+        let dummyType = ScheduleType.Shinbundang
+        
+        // THEN
+        expect(requestCount).toNot(
+            equal(dummyCount),
+            description: "isNow가 true이기 때문에 count는 달라야함"
+        )
+        
+        expect(requestFirstStartTime).toNot(
+            equal(dummyFirstStartTime),
+            description: "isNow가 true이기 때문에 시작하는 시간이 달라야함"
+        )
+        
+        expect(requestType).to(
+            equal(dummyType),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_CoreData() { // 브레이크 포인트 추가 이용 테스트
+        // GIVEN
+        // 첫 요청이기 때문에 파이어베이스 데이터를 사용하는 데이터
+        let requestObserverableDataOne = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        // 두 번째 요청이기 때문에 저장된 코어데이터를 사용하는 데이터
+        let requestObserverableDataTwo = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, requestDate: .now)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestDataOne: [ResultSchdule] = []
+        requestObserverableDataOne
+            .subscribe(onNext: {
+                requestDataOne = $0
+            })
+            .disposed(by: bag)
+        
+        var requestDataTwo: [ResultSchdule] = []
+        requestObserverableDataTwo
+            .subscribe(onNext: {
+                requestDataTwo = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestOneCount = requestDataOne.count
+        let requestTwoCount = requestDataTwo.count
+        
+        let requestOneFirstData = requestDataOne.first
+        let requestTwoFirstData = requestDataTwo.first
+        
+        let requestOneTypeCount = requestDataOne.filter {$0.type == .Shinbundang}.count
+        let requestTwoTypeCount = requestDataTwo.filter {$0.type == .Shinbundang}.count
+        
+        // THEN
+        expect(requestOneCount).to(
+            equal(requestTwoCount),
+            description: "FireBase 데이터와 로컬 데이터는 동일해야함"
+        )
+        
+        expect(requestOneFirstData).to(
+            equal(requestTwoFirstData),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestOneTypeCount).to(
+            equal(requestTwoTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
+        )
+    }
+    
+    func testShinbundangScheduleLoad_Disposable() { // 브레이크 포인트 추가 이용 테스트
+        // GIVEN
+        // 첫 요청이기 때문에 파이어베이스 데이터를 사용하는 데이터
+        let requestObserverableDataOne = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, isDisposable: true)
+        // 두 번째 요청이여도 isDisposable 상태가 true이기때문에 파어어베이스 데이터를 사용해야함
+        let requestObserverableDataTwo = self.seoulScheduleLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: false, isWidget: false, isDisposable: true)
+        let bag = DisposeBag()
+        let testException = XCTestExpectation(description: "옵저버블 대기")
+        
+        var requestDataOne: [ResultSchdule] = []
+        requestObserverableDataOne
+            .subscribe(onNext: {
+                requestDataOne = $0
+            })
+            .disposed(by: bag)
+        
+        var requestDataTwo: [ResultSchdule] = []
+        requestObserverableDataTwo
+            .subscribe(onNext: {
+                requestDataTwo = $0
+                testException.fulfill()
+            })
+            .disposed(by: bag)
+        
+        wait(for: [testException], timeout: 3)
+        
+        // WHEN
+        let requestOneCount = requestDataOne.count
+        let requestTwoCount = requestDataTwo.count
+        
+        let requestOneFirstData = requestDataOne.first
+        let requestTwoFirstData = requestDataTwo.first
+        
+        let requestOneTypeCount = requestDataOne.filter {$0.type == .Shinbundang}.count
+        let requestTwoTypeCount = requestDataTwo.filter {$0.type == .Shinbundang}.count
+        
+        // THEN
+        expect(requestOneCount).to(
+            equal(requestTwoCount),
+            description: "둘 다 파이어베이스를 기반으로 한 데이터이기 때문에 동일해야함"
+        )
+        
+        expect(requestOneFirstData).to(
+            equal(requestTwoFirstData),
+            description: "기본 데이터가 동일하고, isNow가 false이기 때문에 데이터가 동일해야함"
+        )
+        
+        expect(requestOneTypeCount).to(
+            equal(requestTwoTypeCount),
+            description: "신분당선 시간표의 모든 데이터의 타입은 신분당선으로 동일해야함"
         )
     }
 }

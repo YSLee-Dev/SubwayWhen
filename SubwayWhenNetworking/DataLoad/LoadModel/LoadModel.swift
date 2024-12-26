@@ -23,7 +23,7 @@ final class LoadModel : LoadModelProtocol{
     
     // live 지하철 통신
     internal func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>{
-        let url = "http://swopenapi.seoul.go.kr/api/subway/\(Bundle.main.tokenLoad("LIVE_TOKEN"))/json/realtimeStationArrival/0/50/\(stationName)"
+        let url = "http://swopenapi.seoul.go.kr/api/subway/\(Bundle.main.tokenLoad("LIVE_TOKEN"))/json/realtimeStationArrival/0/50/\(self.arrivalStationNameChack(stationName: stationName))"
         
         return self.networkManager.requestData(url, dataType: LiveStationModel.self)
     }
@@ -156,5 +156,102 @@ final class LoadModel : LoadModelProtocol{
         
         return importantData
             .asObservable()
+    }
+    
+    // 신분당선 시간표
+    func shinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> Observable<[ShinbundangScheduleModel]> {
+        let scheduleListSubject = PublishSubject<[ShinbundangScheduleModel]>()
+        
+        self.database.observe(.value) { dataBase, _ in
+            guard let dataBaseRoot = dataBase.value as? [String : [String :Any]] else {scheduleListSubject.onNext([]); return}
+            // 신분당선 시간표는 기존 데이터베이스와 다른 root를 가지고 있음
+            let subwayWhenSinbundangRoot = dataBaseRoot["SubwayWhenShinbundangScheduleData"]
+            
+            // 시간표 데이터가 많기 때문에 key에 맞는 데이터만 조회하기 위해 key를 먼저 조회
+            guard let stationKeys = subwayWhenSinbundangRoot?["Keys"]  as? [String] else {scheduleListSubject.onNext([]); return}
+            guard let stationIndex = stationKeys.firstIndex(of: scheduleSearch.stationName) else {return}
+            
+            guard let scheduleList = subwayWhenSinbundangRoot?["ScheduleList"] as? [[Any]] else {scheduleListSubject.onNext([]); return}
+            if scheduleList.count < stationIndex {return}
+            
+            let matchingStationSchedule =  scheduleList[stationIndex]
+            guard let matchingStationScheduleTypeCheck = matchingStationSchedule as? [[String: String]] else {scheduleListSubject.onNext([]); return}
+            
+            guard let data = try? PropertyListEncoder().encode(matchingStationScheduleTypeCheck) else {scheduleListSubject.onNext([]); return}
+            guard let successData = try? PropertyListDecoder().decode([ShinbundangScheduleModel].self, from: data) else {scheduleListSubject.onNext([]); return}
+            scheduleListSubject.onNext(successData)
+        }
+        
+        return scheduleListSubject
+            .asObservable()
+    }
+    
+    // 신분당선 시간표 버전
+    func shinbundangScheduleVersionRequest() -> Observable<Double> {
+        let scheduleVersion = PublishSubject<Double>()
+        
+        self.database.observe(.value){ dataBase, _ in
+            guard let data = dataBase.value as? [String : [String :Any]] else {return}
+            let subwayWhen = data["SubwayWhen"]
+            let version = subwayWhen?["ShinbundangLineScheduleVersion"] as? [String: Double]
+            scheduleVersion.onNext(version?["version"] ?? 0.0)
+        }
+        
+        return scheduleVersion
+            .asObservable()
+    }
+    
+    private func arrivalStationNameChack(stationName: String) -> String {
+        // 부역명 필수 지하철역
+        switch stationName{
+        case "쌍용":
+            return "쌍용(나사렛대)"
+        case "총신대입구":
+            return "총신대입구(이수)"
+        case "신정":
+            return "신정(은행정)"
+        case "오목교":
+            return "오목교(목동운동장앞)"
+        case "군자":
+            return "군자(능동)"
+        case "아차산":
+            return "아차산(어린이대공원후문)"
+        case "광나루":
+            return "광나루(장신대)"
+        case "천호":
+            return "천호(풍납토성)"
+        case "굽은다리":
+            return "굽은다리(강동구민회관앞)"
+        case "새절":
+            return "새절(신사)"
+        case "증산":
+            return "증산(명지대앞)"
+        case "월드컵경기장":
+            return "월드컵경기장(성산)"
+        case "대흥":
+            return "대흥(서강대앞)"
+        case "안암":
+            return "안암(고대병원앞)"
+        case "월곡":
+            return "월곡(동덕여대)"
+        case "상월곡":
+            return "상월곡(한국과학기술연구원)"
+        case "화랑대":
+            return "화랑대(서울여대입구)"
+        case "공릉":
+            return "공릉(서울산업대입구)"
+        case "어린이대공원":
+            return "어린이대공원(세종대)"
+        case "이수":
+            return "총신대입구(이수)"
+        case "숭실대입구":
+            return "숭실대입구(살피재)"
+        case "몽촌토성":
+            return "몽촌토성(평화의문)"
+        case "남한산성입구":
+            return "남한산성입구(성남법원, 검찰청)"
+        default:
+            return stationName
+        }
     }
 }

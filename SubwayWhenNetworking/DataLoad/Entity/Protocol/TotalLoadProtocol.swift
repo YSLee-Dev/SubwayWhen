@@ -11,14 +11,15 @@ import RxSwift
 
 protocol TotalLoadProtocol{
     func totalLiveDataLoad(stations : [SaveStation]) -> Observable<(MainTableViewCellData, Int)>
-    func singleLiveDataLoad(station : String) -> Observable<LiveStationModel>
+    func singleLiveDataLoad(requestModel: DetailArrivalDataRequestModel) -> Observable< [TotalRealtimeStationArrival]>
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) -> Observable<[ResultSchdule]>
-    func stationNameSearchReponse(_ stationName : String) -> Observable<SearchStaion>
-    func defaultViewListLoad() -> Observable<[String]>
-    func vicinityStationsDataLoad(x: Double, y: Double) -> Observable<[VicinityDocumentData]>
+    func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo]
+    func defaultViewListLoad() async -> [String] 
+    func vicinityStationsDataLoad(x: Double, y: Double) async -> [VicinityTransformData] 
     func importantDataLoad() -> Observable<ImportantData>
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule]
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]>
 }
 
 extension TotalLoadProtocol {
@@ -28,5 +29,9 @@ extension TotalLoadProtocol {
     
     func seoulScheduleLoad(_ scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date = .now) -> Observable<[ResultSchdule]> {
         self.seoulScheduleLoad(scheduleSearch, isFirst: isFirst, isNow: isNow, isWidget: isWidget, requestDate: requestDate)
+    }
+    
+    func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date = .now, isDisposable: Bool = false) -> Observable<[ResultSchdule]> {
+        self.shinbundangScheduleLoad(scheduleSearch: scheduleSearch, isFirst: isFirst, isNow: isNow, isWidget: isWidget, requestDate: requestDate, isDisposable: isDisposable)
     }
 }
