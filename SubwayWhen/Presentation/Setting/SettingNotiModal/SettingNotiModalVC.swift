@@ -110,6 +110,7 @@ extension SettingNotiModalVC {
         let output =  self.viewModel.transform(input: input)
         
         output.authSuccess
+            .delay(.milliseconds(100))
             .drive(self.rx.authSwitch)
             .disposed(by: self.bag)
         
