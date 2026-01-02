@@ -8,8 +8,6 @@
 import UIKit
 
 class ModalVCCustom : UIViewController{
-    let modalHeight : CGFloat
-    let isBtn : Bool
     
     let mainBGContainer = UIView().then{
         $0.layer.masksToBounds = true
@@ -46,9 +44,14 @@ class ModalVCCustom : UIViewController{
     private var moveTranslation : CGPoint = CGPoint(x: 0, y: 0)
     private var moveVelocity : CGPoint = CGPoint(x: 0, y: 0)
     
-    init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String){
-        self.modalHeight = modalHeight - 45 // 레이아웃 변경에 따른 현실화
+    let modalHeight : CGFloat
+    private let isBtn : Bool
+    private let hidesTabBar: Bool
+    
+    init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String, hidesTabBar: Bool = true){
+        self.modalHeight = modalHeight - 35 // 레이아웃 변경에 따른 현실화
         self.isBtn = btnTitle != ""
+        self.hidesTabBar = hidesTabBar
         super.init(nibName: nil, bundle: nil)
         
         self.mainTitle.text = mainTitle
@@ -71,11 +74,17 @@ class ModalVCCustom : UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.viewAnimation()
+        self.tabbarHidden(true)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         NotificationCenter.default.removeObserver(self)
+        self.tabbarHidden(false)
     }
 }
 
@@ -103,7 +112,7 @@ extension ModalVCCustom{
         self.mainBGContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(modalHeight)
-            $0.bottom.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-30)
         }
         
         self.mainBGContainer.addSubview(self.handBar)
@@ -137,7 +146,7 @@ extension ModalVCCustom{
             self.okBtn!.snp.makeConstraints{
                 $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
                 $0.height.equalTo(50)
-                $0.bottom.equalTo(self.grayBG).inset(42.5)
+                $0.bottom.equalTo(self.mainBGContainer).inset(20)
             }
         }
     }
@@ -239,6 +248,18 @@ extension ModalVCCustom{
             }
         default:
             break
+        }
+    }
+    
+    private func tabbarHidden(_ isHidden: Bool) {
+        if !self.hidesTabBar {return}
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
+            
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) {
+                tabBarController.tabBar.transform = isHidden ? CGAffineTransform(translationX: 0, y: tabBarController.tabBar.frame.height) : .identity
+                tabBarController.tabBar.alpha = isHidden ? 0 : 1
+            }
         }
     }
 }
