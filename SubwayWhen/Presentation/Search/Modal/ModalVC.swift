@@ -119,14 +119,14 @@ extension ModalVC{
         
         self.upBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
-            $0.bottom.equalTo(self.grayBG).inset(35)
+            $0.bottom.equalTo(self.mainBGContainer).inset(20)
             $0.height.equalTo(50)
             $0.trailing.equalTo(self.view.snp.centerX).offset(-5)
         }
         self.downBtn.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(self.grayBG).inset(35)
+            $0.bottom.equalTo(self.mainBGContainer).inset(20)
             $0.leading.equalTo(self.view.snp.centerX).offset(5)
         }
         self.line.snp.makeConstraints{
@@ -153,7 +153,7 @@ extension ModalVC{
         self.notServiceBtn.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(self.grayBG).inset(35)
+            $0.bottom.equalTo(self.mainBGContainer).inset(20)
         }
         
         self.view.addSubview(self.disposableView)
