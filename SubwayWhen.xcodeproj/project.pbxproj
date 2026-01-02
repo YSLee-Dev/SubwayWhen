@@ -3551,7 +3551,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8.1;
+				CURRENT_PROJECT_VERSION = 1.9.0;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3567,7 +3567,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3591,7 +3591,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = SubwayWhen/SubwayWhen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8.1;
+				CURRENT_PROJECT_VERSION = 1.9.0;
 				DEVELOPMENT_TEAM = 6V8879W55Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayWhen/Info.plist;
@@ -3607,7 +3607,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yslee.subwaywhen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
