@@ -9,6 +9,8 @@ import UIKit
 
 class ModalVCCustom : UIViewController{
     
+    // MARK: - Properties
+    
     let mainBGContainer = UIView().then{
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 25
@@ -22,7 +24,7 @@ class ModalVCCustom : UIViewController{
         $0.addTarget(self, action: #selector(self.grayBGClickModalDismiss(_:)), for: .touchUpInside)
     }
     
-    var handBar = UIView().then{
+    private let handBar = UIView().then{
         $0.backgroundColor = .gray.withAlphaComponent(0.5)
         $0.layer.cornerRadius = 2.5
     }
@@ -47,6 +49,8 @@ class ModalVCCustom : UIViewController{
     let modalHeight : CGFloat
     private let isBtn : Bool
     private let hidesTabBar: Bool
+    
+    // MARK: - LifeCycle
     
     init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String, hidesTabBar: Bool = true){
         self.modalHeight = modalHeight - 35 // 레이아웃 변경에 따른 현실화
@@ -87,6 +91,8 @@ class ModalVCCustom : UIViewController{
         self.tabbarHidden(false)
     }
 }
+
+// MARK: - Methods
 
 extension ModalVCCustom{
     private func attribute(){
