@@ -50,6 +50,10 @@ class ModalVCCustom : UIViewController{
     private let isBtn : Bool
     private let hidesTabBar: Bool
     
+    var onWillPresent: (() -> Void)?
+    var onWillDismiss: (() -> Bool)?
+    var onDidDismiss: (() -> Void)?
+    
     // MARK: - LifeCycle
     
     init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String, hidesTabBar: Bool = true){
@@ -80,6 +84,7 @@ class ModalVCCustom : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.onWillPresent?()
         self.viewAnimation()
         self.tabbarHidden(true)
     }
@@ -158,7 +163,7 @@ extension ModalVCCustom{
     }
     
     @objc
-    func viewAnimation(){
+    private func viewAnimation(){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.88, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBGContainer.transform = .identity
             self?.grayBG.backgroundColor = UIColor(named: "GrayBGColor")
@@ -171,13 +176,26 @@ extension ModalVCCustom{
     }
     
     @objc
-    func modalDismiss(){
+    func modalDismiss() {
+        self.performDismissAnimation()
+    }
+    
+    @objc
+    private func performDismissAnimation(){
+        let result = self.onWillDismiss?() ?? true
+    
+        if !result {return}
+        
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
             self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
             self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
             self.grayBG.backgroundColor = .clear
         }, completion: {_ in
-            self.dismiss(animated: false)
+            if let onDidDismiss = self.onDidDismiss {
+                onDidDismiss()
+            } else {
+                self.dismiss(animated: false)
+            }
         })
     }
     

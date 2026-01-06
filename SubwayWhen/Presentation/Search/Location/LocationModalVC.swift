@@ -18,6 +18,15 @@ import Lottie
 class LocationModalVC: ModalVCCustom {
     var animationIcon : LottieAnimationView?
     
+    lazy var tableView = UITableView().then {
+        $0.rowHeight = 90
+        $0.backgroundColor = .systemBackground
+        $0.register(LocationModalCell.self, forCellReuseIdentifier: "LocationModalCell")
+        $0.dataSource = nil
+        $0.delegate = nil
+        $0.separatorStyle = .none
+    }
+    
     let viewModel: LocationModalViewModel
     
     private let modalCompletion =  PublishSubject<Void>()
@@ -27,16 +36,11 @@ class LocationModalVC: ModalVCCustom {
     init(modalHeight: CGFloat, btnTitle: String, mainTitle: String, subTitle: String, viewModel: LocationModalViewModel) {
         self.viewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
+        
         self.bind()
-    }
-    
-    lazy var tableView = UITableView().then {
-        $0.rowHeight = 90
-        $0.backgroundColor = .systemBackground
-        $0.register(LocationModalCell.self, forCellReuseIdentifier: "LocationModalCell")
-        $0.dataSource = nil
-        $0.delegate = nil
-        $0.separatorStyle = .none
+        self.onDidDismiss = { [weak self] in
+            self?.modalCompletion.onNext(Void())
+        }
     }
     
     deinit {
@@ -50,16 +54,6 @@ class LocationModalVC: ModalVCCustom {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.didDisappear.onNext(Void())
-    }
-    
-    override func modalDismiss() {
-        UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.grayBG.backgroundColor = .clear
-        }, completion: { _ in
-            self.modalCompletion.onNext(Void())
-        })
     }
 }
 

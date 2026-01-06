@@ -72,6 +72,19 @@ class ModalVC : ModalVCCustom{
         self.modalViewModel = viewModel
         super.init(modalHeight: modalHeight, btnTitle: "", mainTitle: "지하철 역 추가", subTitle: "그룹, 제외 행을 선택 후 상/하행 버튼을 누르면 저장할 수 있어요.")
         self.bind()
+        
+        self.onDidDismiss = { [weak self] in
+            self?.modalGesture.onNext(Void())
+        }
+        
+        self.onWillDismiss = { [weak self] in
+            self?.disposableView.hiddenAnimation()
+            return true
+        }
+        
+        self.onWillPresent = { [weak self] in
+            self?.disposableView.showAnimation()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -84,26 +97,9 @@ class ModalVC : ModalVCCustom{
         self.atiribute()
     }
     
-    override func viewAnimation() {
-        super.viewAnimation()
-        self.disposableView.showAnimation()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.didDisappear.onNext(Void())
-    }
-    
-    override func modalDismiss() {
-        self.disposableView.hiddenAnimation()
-        
-        UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.grayBG.backgroundColor = .clear
-        }, completion: { _ in
-            self.modalGesture.onNext(Void())
-        })
     }
 }
 
@@ -111,6 +107,7 @@ extension ModalVC{
     private func atiribute(){
         self.disposableView.upDownLabelSet(up: self.upBtn.title(for: .normal) ?? "상행", down: self.downBtn.title(for: .normal) ?? "하행")
     }
+    
     private func layout(){
         [self.titleLabel, self.line, self.upBtn, self.downBtn, self.groupBtn, self.exceptionLastStationTF, self.notServiceBtn]
             .forEach{

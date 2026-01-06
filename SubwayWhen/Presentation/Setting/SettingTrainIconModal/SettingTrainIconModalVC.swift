@@ -26,6 +26,9 @@ class SettingTrainIconModalVC: ModalVCCustom {
         self.settingModalView = modalView
         
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
+        self.onDidDismiss = { [weak self] in
+            self?.viewAction.accept(.closeBtnTap)
+        }
     }
     
     deinit {
@@ -46,16 +49,6 @@ class SettingTrainIconModalVC: ModalVCCustom {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.viewAction.accept(.viewDidDisappear)
-    }
-    
-    override func modalDismiss() {
-        UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.grayBG.backgroundColor = .clear
-        }, completion: { [weak self] _ in
-            self?.viewAction.accept(.closeBtnTap)
-        })
     }
 }
 

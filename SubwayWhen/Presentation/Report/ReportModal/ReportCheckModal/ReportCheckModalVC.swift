@@ -39,7 +39,15 @@ class ReportCheckModalVC : ModalVCCustom{
             subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 화면을 눌러 수정할 수 있어요.",
             hidesTabBar: false
         )
+        
         self.bind(self.checkModalViewModel)
+        self.onDidDismiss = { [ weak self ] in
+            guard let self = self else {return}
+            if self.status {
+                self.checkModalViewModel.msgSeedDismiss.accept(Void())
+            }
+            self.dismiss(animated: false)
+        }
     }
     
     deinit{
@@ -101,13 +109,6 @@ extension ReportCheckModalVC {
             .map {($0!, false)}
             .bind(to: self.rx.msgLengthCheck)
             .disposed(by: self.bag)
-    }
-    
-    override func modalDismiss() {
-        if self.status {
-            self.checkModalViewModel.msgSeedDismiss.accept(Void())
-        }
-        super.modalDismiss()
     }
     
     private func successIconSet(){

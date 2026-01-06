@@ -45,6 +45,16 @@ class PopupModal : ModalVCCustom{
         self.isUpdate = false
         super.init(modalHeight: modalHeight, btnTitle: "확인", mainTitle: popupTitle, subTitle: subTitle)
         self.animationIcon = LottieAnimationView(name: iconName)
+        
+        self.onDidDismiss = { [weak self] in
+            if (self?.isUpdate ?? true) {
+                self?.modalDismiss()
+            } else {
+                self?.appstoreLink()
+            }
+        }
+        
+        self.onWillDismiss = {return false}
     }
     
     required init?(coder: NSCoder) {
@@ -74,14 +84,6 @@ class PopupModal : ModalVCCustom{
         case .Update:
             self.iconLayout()
             self.iconAnimationPlay()
-        }
-    }
-    
-    override func modalDismiss() {
-        if self.isUpdate{
-            super.modalDismiss()
-        }else{
-            self.appstoreLink()
         }
     }
 }

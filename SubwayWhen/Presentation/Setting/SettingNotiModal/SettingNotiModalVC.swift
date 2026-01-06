@@ -32,6 +32,19 @@ class SettingNotiModalVC: ModalVCCustom {
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
         self.attribute()
         self.bind()
+        
+        self.onDidDismiss = { [weak self] in
+            self?.dismissAction.onNext(Void())
+        }
+        
+        self.onWillDismiss = { [weak self] in
+            self?.settingNotiExplanationView.hiddenAnimation()
+            return true
+        }
+        
+        self.onWillPresent = { [weak self] in
+            self?.settingNotiExplanationView.showAnimation()
+        }
     }
     
     deinit {
@@ -48,22 +61,6 @@ class SettingNotiModalVC: ModalVCCustom {
     
     override func viewDidDisappear(_ animated: Bool) {
         self.didDisappearAction.onNext(Void())
-    }
-    
-    override func viewAnimation() {
-        super.viewAnimation()
-        self.settingNotiExplanationView.showAnimation()
-    }
-    
-    override func modalDismiss() {
-        UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.grayBG.backgroundColor = .clear
-            self.settingNotiExplanationView.hiddenAnimation()
-        }, completion: {_ in
-            self.dismissAction.onNext(Void())
-        })
     }
 }
 
