@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ModalVCCustom : UIViewController{
+class ModalVCCustom : UIViewController {
     
     // MARK: - Properties
     
@@ -21,7 +21,7 @@ class ModalVCCustom : UIViewController{
     
     lazy var grayBG = UIButton().then{
         $0.backgroundColor = .clear
-        $0.addTarget(self, action: #selector(self.grayBGClickModalDismiss(_:)), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
     }
     
     private let handBar = UIView().then{
@@ -46,17 +46,26 @@ class ModalVCCustom : UIViewController{
     private var moveTranslation : CGPoint = CGPoint(x: 0, y: 0)
     private var moveVelocity : CGPoint = CGPoint(x: 0, y: 0)
     
-    let modalHeight : CGFloat
+    private let modalHeight : CGFloat
     private let isBtn : Bool
     private let hidesTabBar: Bool
     
+    /// modal이 표시되기 직전에 호출
     var onWillPresent: (() -> Void)?
+    /// modal이 곧 닫힐 때 호출 (Bool 값에 따라 modal close 여부 조절)
     var onWillDismiss: (() -> Bool)?
+    /// modal이 닫힌 후 호출
     var onDidDismiss: (() -> Void)?
     
     // MARK: - LifeCycle
     
-    init(modalHeight: CGFloat, btnTitle : String, mainTitle : String, subTitle : String, hidesTabBar: Bool = true){
+    init(
+        modalHeight: CGFloat,
+        btnTitle : String,
+        mainTitle : String,
+        subTitle : String,
+        hidesTabBar: Bool = true
+    ) {
         self.modalHeight = modalHeight - 35 // 레이아웃 변경에 따른 현실화
         self.isBtn = btnTitle != ""
         self.hidesTabBar = hidesTabBar
@@ -65,7 +74,7 @@ class ModalVCCustom : UIViewController{
         self.mainTitle.text = mainTitle
         self.subTitle.text = subTitle
         
-        if self.isBtn{
+        if self.isBtn {
             self.okBtn = ModalCustomButton(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
             self.okBtn!.setTitle(btnTitle, for: .normal)
             self.okBtn!.setTitleColor(.label, for: .normal)
@@ -97,10 +106,10 @@ class ModalVCCustom : UIViewController{
     }
 }
 
-// MARK: - Methods
+// MARK: - Methods (기본)
 
-extension ModalVCCustom{
-    private func attribute(){
+extension ModalVCCustom {
+    private func attribute() {
         self.view.backgroundColor = .clear
         
         self.mainBG.transform = CGAffineTransform(translationX: 0, y: 45)
@@ -113,7 +122,7 @@ extension ModalVCCustom{
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func layout(modalHeight: CGFloat, isBtn : Bool){
+    private func layout(modalHeight: CGFloat, isBtn : Bool) {
         self.view.addSubview(self.grayBG)
         self.grayBG.snp.makeConstraints{
             $0.edges.equalToSuperview()
@@ -152,7 +161,7 @@ extension ModalVCCustom{
             $0.edges.equalToSuperview()
         }
         
-        if isBtn{
+        if isBtn {
             self.mainBG.addSubview(self.okBtn!)
             self.okBtn!.snp.makeConstraints{
                 $0.leading.trailing.equalToSuperview().inset(ViewStyle.padding.mainStyleViewLR)
@@ -163,7 +172,49 @@ extension ModalVCCustom{
     }
     
     @objc
-    private func viewAnimation(){
+    private func keyboardWillShow(_ sender: Notification) {
+        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height - 15
+        
+        self.grayBG.snp.updateConstraints{
+            $0.bottom.equalToSuperview().inset(keyboardHeight)
+        }
+        
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(_ sender: Notification) {
+        self.grayBG.snp.updateConstraints{
+            $0.bottom.equalToSuperview().inset(0)
+        }
+        UIView.animate(withDuration: 0.25){[weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+    
+    private func tabbarHidden(_ isHidden: Bool) {
+        if !self.hidesTabBar {return}
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
+            
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) {
+                tabBarController.tabBar.transform = isHidden ? CGAffineTransform(translationX: 0, y: tabBarController.tabBar.frame.height) : .identity
+                tabBarController.tabBar.alpha = isHidden ? 0 : 1
+            }
+        }
+    }
+}
+
+// MARK: - Methods (modal present, dismiss 관련)
+
+extension ModalVCCustom {
+    @objc
+    private func viewAnimation() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.88, initialSpringVelocity: 0.75){[weak self] in
             self?.mainBGContainer.transform = .identity
             self?.grayBG.backgroundColor = UIColor(named: "GrayBGColor")
@@ -176,14 +227,8 @@ extension ModalVCCustom{
     }
     
     @objc
-    func modalDismiss() {
-        self.performDismissAnimation()
-    }
-    
-    @objc
     private func performDismissAnimation(){
         let result = self.onWillDismiss?() ?? true
-    
         if !result {return}
         
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
@@ -199,39 +244,8 @@ extension ModalVCCustom{
         })
     }
     
-    
     @objc
-    private func keyboardWillShow(_ sender: Notification) {
-        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height - 15
-        
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(keyboardHeight)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    @objc
-    private func keyboardWillHide(_ sender: Notification) {
-        self.grayBG.snp.updateConstraints{
-            $0.bottom.equalToSuperview().inset(0)
-        }
-        UIView.animate(withDuration: 0.25){[weak self] in
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    @objc
-    private func grayBGClickModalDismiss(_ sender:Any){
-        self.modalDismiss()
-    }
-    
-    @objc
-    private func gestureAction(_ sender : UIPanGestureRecognizer){
+    private func gestureAction(_ sender : UIPanGestureRecognizer) {
         self.moveTranslation = sender.translation(in: self.mainBG)
         self.moveVelocity = sender.velocity(in: self.mainBG)
         
@@ -275,15 +289,8 @@ extension ModalVCCustom{
         }
     }
     
-    private func tabbarHidden(_ isHidden: Bool) {
-        if !self.hidesTabBar {return}
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
-            
-            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) {
-                tabBarController.tabBar.transform = isHidden ? CGAffineTransform(translationX: 0, y: tabBarController.tabBar.frame.height) : .identity
-                tabBarController.tabBar.alpha = isHidden ? 0 : 1
-            }
-        }
+    @objc
+    func modalDismiss() {
+        self.performDismissAnimation()
     }
 }
