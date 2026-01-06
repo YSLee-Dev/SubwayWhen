@@ -50,6 +50,8 @@ class ModalVCCustom : UIViewController {
     private let isBtn : Bool
     private let hidesTabBar: Bool
     
+    private var dismissing = false
+    
     /// modal이 표시되기 직전에 호출
     var onWillPresent: (() -> Void)?
     /// modal이 곧 닫힐 때 호출 (Bool 값에 따라 modal close 여부 조절)
@@ -227,9 +229,11 @@ extension ModalVCCustom {
     }
     
     @objc
-    private func performDismissAnimation(){
+    private func performDismissAnimation() {
         let result = self.onWillDismiss?() ?? true
-        if !result {return}
+        if !result || self.dismissing {return}
+        
+        self.dismissing = true
         
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
             self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight + 30)
@@ -253,7 +257,7 @@ extension ModalVCCustom {
         case .ended:
             if self.moveTranslation.y > 75 {
                 self.modalDismiss()
-            }else{
+            } else {
                 self.mainBGContainer.snp.updateConstraints{
                     $0.height.equalTo(self.modalHeight)
                 }
@@ -262,28 +266,32 @@ extension ModalVCCustom {
                     self.view.layoutIfNeeded()
                 }
             }
+            
         case .changed:
-            if self.moveTranslation.y > 0 || self.moveVelocity.y > 0{
-                self.mainBGContainer.snp.updateConstraints{
-                    $0.height.equalTo(self.modalHeight - self.moveTranslation.y)
-                }
-            }else{
-                self.mainBGContainer.snp.updateConstraints{
-                    $0.height.equalTo(self.modalHeight + -(self.moveTranslation.y))
-                }
+            var changeHeight: CGFloat = 0
+            if self.moveTranslation.y > 0 || self.moveVelocity.y > 0 {
+                changeHeight = self.modalHeight - self.moveTranslation.y
+            } else {
+                changeHeight = self.modalHeight + -(self.moveTranslation.y)
             }
             
-            UIView.animate(withDuration: 0.125){
+            self.mainBGContainer.snp.updateConstraints {
+                $0.height.equalTo(min(changeHeight, self.modalHeight + 30))
+            }
+            
+            UIView.animate(withDuration: 0.125, delay: 0, options: [.allowUserInteraction]) {
                 self.view.layoutIfNeeded()
             }
+            
         case .cancelled:
-            self.mainBGContainer.snp.updateConstraints{
+            self.mainBGContainer.snp.updateConstraints {
                 $0.height.equalTo(self.modalHeight)
             }
             
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.75){
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.75) {
                 self.view.layoutIfNeeded()
             }
+            
         default:
             break
         }
