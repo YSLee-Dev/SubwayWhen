@@ -232,8 +232,8 @@ extension ModalVCCustom {
         if !result {return}
         
         UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
+            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight + 30)
+            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight + 30)
             self.grayBG.backgroundColor = .clear
         }, completion: {_ in
             if let onDidDismiss = self.onDidDismiss {
