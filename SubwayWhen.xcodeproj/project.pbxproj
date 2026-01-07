@@ -1774,12 +1774,9 @@
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
-				FF738DAC2F0E2F3A003CCE66 /* Congestion */,
-				FF1D4AB92C9D359400AFD709 /* Dependency */,
+				FF738DAF2F0E302C003CCE66 /* Service */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
-				FF03652D2D00125100EF325D /* Location */,
-				34A906DE2A4C3157002C7655 /* Notification */,
 				34C6DB87293627AE00C4ED80 /* Save */,
 			);
 			path = SubwayWhen;
@@ -2332,14 +2329,6 @@
 			path = Key;
 			sourceTree = "<group>";
 		};
-		FF1D4AB92C9D359400AFD709 /* Dependency */ = {
-			isa = PBXGroup;
-			children = (
-				FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */,
-			);
-			path = Dependency;
-			sourceTree = "<group>";
-		};
 		FF20D8752EBC5CE100B280D9 /* SubwayNotice */ = {
 			isa = PBXGroup;
 			children = (
@@ -2416,6 +2405,17 @@
 				FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */,
 			);
 			path = Congestion;
+			sourceTree = "<group>";
+		};
+		FF738DAF2F0E302C003CCE66 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				FF738DAC2F0E2F3A003CCE66 /* Congestion */,
+				FF03652D2D00125100EF325D /* Location */,
+				34A906DE2A4C3157002C7655 /* Notification */,
+				FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
