@@ -113,7 +113,11 @@ extension MainCoordinator : MainDelegate {
     }
     
     func congestionTap() {
-        print("congestionTap()")
+        let congestion = CongestionModalCoordinator(navigation: self.navigation)
+        self.childCoordinator.append(congestion)
+        congestion.delegate = self
+      
+        congestion.start()
     }
 }
 
@@ -140,5 +144,15 @@ extension MainCoordinator : DetailCoordinatorDelegate{
     
     func disappear(detailCoordinator: DetailCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailCoordinator}
+    }
+}
+
+extension MainCoordinator: CongestionCoordinatorProtocol {
+    func didDisappear(coordinator: any Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== coordinator}
+    }
+    
+    func dismiss() {
+        self.navigation.dismiss(animated: false)
     }
 }
