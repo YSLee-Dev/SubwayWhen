@@ -400,6 +400,7 @@
 		FF738DB72F0E3706003CCE66 /* StationCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DB62F0E3706003CCE66 /* StationCongestion.swift */; };
 		FF738DB92F0E3724003CCE66 /* CongestionLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */; };
 		FF738DBD2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DBC2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift */; };
+		FF738DC02F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DBF2F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift */; };
 		FF7837E32E29CF5B004E6BFF /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E22E29CF5B004E6BFF /* ReportView.swift */; };
 		FF7837E52E29D0B5004E6BFF /* ReportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */; };
 		FF7837E72E29D5AA004E6BFF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
@@ -866,6 +867,7 @@
 		FF738DB62F0E3706003CCE66 /* StationCongestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCongestion.swift; sourceTree = "<group>"; };
 		FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionLevel.swift; sourceTree = "<group>"; };
 		FF738DBC2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionManagerProtocol.swift; sourceTree = "<group>"; };
+		FF738DBF2F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionTCADependencyKey.swift; sourceTree = "<group>"; };
 		FF7837E22E29CF5B004E6BFF /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportFeature.swift; sourceTree = "<group>"; };
 		FF7837E62E29D5AA004E6BFF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2413,6 +2415,7 @@
 		FF738DAC2F0E2F3A003CCE66 /* Congestion */ = {
 			isa = PBXGroup;
 			children = (
+				FF738DBE2F0E3A8D003CCE66 /* TCADependency */,
 				FF738DB32F0E3675003CCE66 /* Entity */,
 				FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */,
 			);
@@ -2455,6 +2458,14 @@
 				FF738DBC2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		FF738DBE2F0E3A8D003CCE66 /* TCADependency */ = {
+			isa = PBXGroup;
+			children = (
+				FF738DBF2F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift */,
+			);
+			path = TCADependency;
 			sourceTree = "<group>";
 		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
@@ -3094,6 +3105,7 @@
 				349E2F5329BDC11900C54EE9 /* DetailCoordinatorDelegate.swift in Sources */,
 				34D9E9FC2A54FD810080AD17 /* LocationModalVCActionProtocol.swift in Sources */,
 				349FF29C299F1AF9007A98F4 /* ModalVCCustom.swift in Sources */,
+				FF738DC02F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift in Sources */,
 				34A303B329AF86FD00948EDD /* TotalLoadModel.swift in Sources */,
 				FF20D8722EBC5CDD00B280D9 /* SubwayNoticeResponse.swift in Sources */,
 				FF3A5EB02D01609000BC7716 /* SearchVicinityView.swift in Sources */,

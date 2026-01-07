@@ -21,6 +21,11 @@ final class CongestionManager: CongestionManagerProtocol {
         return decoded
     }
     
+    // MARK: - Singleton
+    
+    private init() {}
+    static let shared: CongestionManagerProtocol = CongestionManager()
+    
     // MARK: - Methods
     
     func getCongestion(station: String, hour: Int) -> CongestionLevel? {
