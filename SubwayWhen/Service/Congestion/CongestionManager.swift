@@ -29,10 +29,29 @@ final class CongestionManager: CongestionManagerProtocol {
     // MARK: - Methods
     
     func getCongestion(station: String, hour: Int) -> CongestionLevel? {
-        self.congestionDataSet.stations[station]?.hourlyCongestion["\(hour)"]
+        guard let stationData = self.congestionDataSet.stations[station]?.hourlyCongestion else {
+            return nil
+        }
+        
+        let dayData: [String: CongestionLevel]
+        switch self.getCurrentWeekday() {
+        case "weekday": dayData = stationData.weekday
+        case "saturday": dayData = stationData.saturday
+        default: dayData = stationData.sunday
+        }
+        return dayData["\(hour)"]
     }
     
     func getLevel(station: String, hour: Int) -> Int? {
         self.getCongestion(station: station, hour: hour)?.level
+    }
+    
+    private func getCurrentWeekday() -> String {
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        return switch weekday {
+        case 1: "sunday"
+        case 7: "saturday"
+        default: "weekday"
+        }
     }
 }

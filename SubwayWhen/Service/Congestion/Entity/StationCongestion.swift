@@ -8,7 +8,7 @@
 import Foundation
 
 struct StationCongestion: Decodable {
-    let hourlyCongestion: [String: CongestionLevel]
+    let hourlyCongestion: DayCongestion
     
     enum CodingKeys: String, CodingKey {
         case hourlyCongestion = "hourly_congestion"
