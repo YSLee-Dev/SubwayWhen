@@ -7,6 +7,27 @@
 
 import Foundation
 
-final class CongestionManager {
+final class CongestionManager: CongestionManagerProtocol {
     
+    // MARK: - Properties
+    
+    private var congestionDataSet: CongestionDataSet {
+        guard let url = Bundle.main.url(forResource: "CongestionData", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let decoded = try? JSONDecoder().decode(CongestionDataSet.self, from: data) else {
+            print("혼잡도 데이터를 로드하지 못함")
+            return CongestionDataSet(stations: [:])
+        }
+        return decoded
+    }
+    
+    // MARK: - Methods
+    
+    func getCongestion(station: String, hour: Int) -> CongestionLevel? {
+        self.congestionDataSet.stations[station]?.hourlyCongestion["\(hour)"]
+    }
+    
+    func getLevel(station: String, hour: Int) -> Int? {
+        self.getCongestion(station: station, hour: hour)?.level
+    }
 }
