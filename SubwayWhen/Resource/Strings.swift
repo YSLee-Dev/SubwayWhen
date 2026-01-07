@@ -217,4 +217,7 @@ extension Strings.Main {
     static let timetableLoding = "시간표 로드 중"
     /// 민원 접수
     static let reportIssue = "민원 접수"
+    
+    /// 선택된 지하철역의 예상 혼잡도를 확인할 수 있어요.
+    static let congestionModalSubTitle = "선택된 지하철역의 예상 혼잡도를 확인할 수 있어요."
 }

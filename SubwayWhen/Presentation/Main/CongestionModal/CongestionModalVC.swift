@@ -23,7 +23,7 @@ class CongestionModalVC : ModalVCCustom {
     init(store: StoreOf<CongestionModalFeature>) {
         self.store = store
         self.modalView = CongestionModalView(store: store)
-        super.init(modalHeight: 500, btnTitle: Strings.Common.close, mainTitle: "mainTitle", subTitle: "subTitle")
+        super.init(modalHeight: 500, btnTitle: Strings.Common.close, mainTitle: Strings.Main.currentTraffic, subTitle: Strings.Main.congestionModalSubTitle)
         
         self.onDidDismiss = { [weak self] in
             self?.store.send(.closeBtnTapped)
