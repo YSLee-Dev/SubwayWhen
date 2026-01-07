@@ -23,6 +23,7 @@ struct CongestionModalFeature {
     
     enum Action: Equatable {
         case onDisappear
+        case closeBtnTapped
     }
     
     // MARK: - Properties
@@ -36,6 +37,10 @@ struct CongestionModalFeature {
             switch action {
             case .onDisappear:
                 self.delegate?.didDisappear()
+                return .none
+                
+            case .closeBtnTapped:
+                self.delegate?.dismiss()
                 return .none
                 
             default: return .none

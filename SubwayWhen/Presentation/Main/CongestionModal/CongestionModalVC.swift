@@ -16,12 +16,18 @@ class CongestionModalVC : ModalVCCustom {
     // MARK: - Properties
     
     private let modalView: CongestionModalView
+    private let store: StoreOf<CongestionModalFeature>
     
     // MARK: - LifeCycle
     
     init(store: StoreOf<CongestionModalFeature>) {
+        self.store = store
         self.modalView = CongestionModalView(store: store)
         super.init(modalHeight: 500, btnTitle: Strings.Common.close, mainTitle: "mainTitle", subTitle: "subTitle")
+        
+        self.onDidDismiss = { [weak self] in
+            self?.store.send(.closeBtnTapped)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -31,6 +37,7 @@ class CongestionModalVC : ModalVCCustom {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        self.attribute()
         self.layout()
     }
 }
@@ -38,6 +45,10 @@ class CongestionModalVC : ModalVCCustom {
 // MARK: - Methods
 
 private extension CongestionModalVC {
+    func attribute() {
+        self.okBtn?.addTarget(self, action: #selector(self.modalDismiss), for: .touchUpInside)
+    }
+    
     func layout() {
         let modalSwiftUIView = UIHostingController(rootView: self.modalView)
         let modalView = modalSwiftUIView.view!
