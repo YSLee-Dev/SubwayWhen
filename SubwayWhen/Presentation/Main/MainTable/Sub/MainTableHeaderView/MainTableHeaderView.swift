@@ -110,6 +110,11 @@ extension MainTableHeaderView {
             .map {_ in .editBtnTap}
             .bind(to: self.mainTableViewAction)
             .disposed(by: self.bag)
+        
+        self.congestionLabelBG.rx.tap
+            .map {_ in .congestionBtnTap}
+            .bind(to: self.mainTableViewAction)
+            .disposed(by: self.bag)
     }
     
     private func setupImportantView(subTitle: String) {

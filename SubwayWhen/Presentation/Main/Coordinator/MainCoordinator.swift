@@ -105,12 +105,15 @@ extension MainCoordinator : MainDelegate {
         detail.start()
     }
     
-    
     func importantTap(data: ImportantData) {
         let modal = PopupModal(modalHeight: 400, popupTitle: Strings.Main.importantAlarm, subTitle: data.title, popupValue: data.contents)
         modal.modalPresentationStyle = .overFullScreen
         
         self.navigation.present(modal, animated: false)
+    }
+    
+    func congestionTap() {
+        print("congestionTap()")
     }
 }
 

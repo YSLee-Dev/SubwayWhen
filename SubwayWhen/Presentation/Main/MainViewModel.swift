@@ -22,6 +22,7 @@ enum MainViewAction {
     case editBtnTap
     case importantBtnTap
     case contextMenuReportBtnTap(IndexPath)
+    case congestionBtnTap
 }
 
 class MainViewModel {
@@ -179,6 +180,9 @@ extension MainViewModel {
         case .contextMenuReportBtnTap(let indexPath):
             let data = self.nowTableViewCellData.value.0[0].items[indexPath.row]
             self.delegate?.pushTap(action: .Report(data.subwayLineData, data.stationName))
+            
+        case .congestionBtnTap:
+            self.delegate?.congestionTap()
         }
     }
     
