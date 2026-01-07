@@ -395,6 +395,10 @@
 		FF738DA92F0DF901003CCE66 /* CongestionModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DA82F0DF901003CCE66 /* CongestionModalView.swift */; };
 		FF738DAB2F0DF914003CCE66 /* CongestionModalFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DAA2F0DF914003CCE66 /* CongestionModalFeature.swift */; };
 		FF738DAE2F0E2F88003CCE66 /* CongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */; };
+		FF738DB22F0E3639003CCE66 /* CongestionData.json in Resources */ = {isa = PBXBuildFile; fileRef = FF738DB12F0E3639003CCE66 /* CongestionData.json */; };
+		FF738DB52F0E367F003CCE66 /* CongestionDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DB42F0E367F003CCE66 /* CongestionDataSet.swift */; };
+		FF738DB72F0E3706003CCE66 /* StationCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DB62F0E3706003CCE66 /* StationCongestion.swift */; };
+		FF738DB92F0E3724003CCE66 /* CongestionLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */; };
 		FF7837E32E29CF5B004E6BFF /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E22E29CF5B004E6BFF /* ReportView.swift */; };
 		FF7837E52E29D0B5004E6BFF /* ReportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */; };
 		FF7837E72E29D5AA004E6BFF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
@@ -856,6 +860,10 @@
 		FF738DA82F0DF901003CCE66 /* CongestionModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalView.swift; sourceTree = "<group>"; };
 		FF738DAA2F0DF914003CCE66 /* CongestionModalFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalFeature.swift; sourceTree = "<group>"; };
 		FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionManager.swift; sourceTree = "<group>"; };
+		FF738DB12F0E3639003CCE66 /* CongestionData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CongestionData.json; sourceTree = "<group>"; };
+		FF738DB42F0E367F003CCE66 /* CongestionDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionDataSet.swift; sourceTree = "<group>"; };
+		FF738DB62F0E3706003CCE66 /* StationCongestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCongestion.swift; sourceTree = "<group>"; };
+		FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionLevel.swift; sourceTree = "<group>"; };
 		FF7837E22E29CF5B004E6BFF /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportFeature.swift; sourceTree = "<group>"; };
 		FF7837E62E29D5AA004E6BFF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -1402,6 +1410,7 @@
 		349E2F6F29BDFABE00C54EE9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FF738DB02F0E3110003CCE66 /* Json */,
 				B6F7811B2B6FBC6600FE8E7B /* Lottie */,
 				347AF805293629F1001FB813 /* Assets.xcassets */,
 				34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */,
@@ -2402,6 +2411,7 @@
 		FF738DAC2F0E2F3A003CCE66 /* Congestion */ = {
 			isa = PBXGroup;
 			children = (
+				FF738DB32F0E3675003CCE66 /* Entity */,
 				FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */,
 			);
 			path = Congestion;
@@ -2416,6 +2426,24 @@
 				FF1D4AB42C9D34DF00AFD709 /* Dependency+.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		FF738DB02F0E3110003CCE66 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				FF738DB12F0E3639003CCE66 /* CongestionData.json */,
+			);
+			path = Json;
+			sourceTree = "<group>";
+		};
+		FF738DB32F0E3675003CCE66 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FF738DB42F0E367F003CCE66 /* CongestionDataSet.swift */,
+				FF738DB62F0E3706003CCE66 /* StationCongestion.swift */,
+				FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
@@ -2713,6 +2741,7 @@
 				B68FB3442B7128FB0075339F /* Congratulations.json in Resources */,
 				B68FB3432B7128FB0075339F /* Location.json in Resources */,
 				B68FB33C2B6FCA430075339F /* CheckMark.json in Resources */,
+				FF738DB22F0E3639003CCE66 /* CongestionData.json in Resources */,
 				B61A6F882B6E0D710070F74C /* RequestToken.plist in Resources */,
 				B6F781232B6FBC6600FE8E7B /* List.json in Resources */,
 				347AF806293629F1001FB813 /* Assets.xcassets in Resources */,
@@ -3006,6 +3035,7 @@
 				B6438D462B667CB10099BFEF /* MainTableHeaderViewBtn.swift in Sources */,
 				FF6B35FA2E8A47B000814E32 /* UIDevice+.swift in Sources */,
 				34A221B329C98A47003F035D /* NoNetworkView.swift in Sources */,
+				FF738DB72F0E3706003CCE66 /* StationCongestion.swift in Sources */,
 				B6438D4F2B667CB10099BFEF /* MainVC.swift in Sources */,
 				34A58ADF2AC3BAEE00C8A563 /* TutorialCollectionCell.swift in Sources */,
 				B6438D4C2B667CB10099BFEF /* MainTableViewCellType.swift in Sources */,
@@ -3064,6 +3094,7 @@
 				34EEDC632A41B628006A1364 /* SettingNewVCType.swift in Sources */,
 				349E2F5B29BDD23800C54EE9 /* DetailResultScheduleCoorinatorDelegate.swift in Sources */,
 				3427D9002A43202E000AEEED /* SettingNotiSelectModalVCAction.swift in Sources */,
+				FF738DB92F0E3724003CCE66 /* CongestionLevel.swift in Sources */,
 				34A303BC29AF86FD00948EDD /* KorailBody.swift in Sources */,
 				34E47A062A430AC8006BF6AA /* SettingNotiCoordinator.swift in Sources */,
 				B68302CB2AC0670000E010B7 /* TutorialSectionData.swift in Sources */,
@@ -3118,6 +3149,7 @@
 				B68302C52AC050F000E010B7 /* TutorialModelProtocol.swift in Sources */,
 				34A303B229AF86FD00948EDD /* NetworkManager.swift in Sources */,
 				34A303C229AF86FD00948EDD /* URLSessionProtocol.swift in Sources */,
+				FF738DB52F0E367F003CCE66 /* CongestionDataSet.swift in Sources */,
 				FF738DA22F0DF797003CCE66 /* CongestionCoordinator.swift in Sources */,
 				34EEDC5E2A41B42C006A1364 /* SettingNotiModalVC.swift in Sources */,
 				B6438D432B667CB10099BFEF /* MainTableViewArrivalCell.swift in Sources */,

@@ -1,0 +1,424 @@
+{
+  "stations": {
+    "강남": {
+      "hourly_congestion": {
+        "5": {
+          "percent": 59,
+          "level": 4
+        },
+        "6": {
+          "percent": 46,
+          "level": 3
+        },
+        "7": {
+          "percent": 87,
+          "level": 7
+        },
+        "8": {
+          "percent": 101,
+          "level": 8
+        },
+        "9": {
+          "percent": 97,
+          "level": 7
+        },
+        "10": {
+          "percent": 59,
+          "level": 4
+        },
+        "11": {
+          "percent": 43,
+          "level": 3
+        },
+        "12": {
+          "percent": 49,
+          "level": 4
+        },
+        "13": {
+          "percent": 55,
+          "level": 4
+        },
+        "14": {
+          "percent": 51,
+          "level": 4
+        },
+        "15": {
+          "percent": 72,
+          "level": 5
+        },
+        "16": {
+          "percent": 86,
+          "level": 7
+        },
+        "17": {
+          "percent": 120,
+          "level": 9
+        },
+        "18": {
+          "percent": 132,
+          "level": 10
+        },
+        "19": {
+          "percent": 90,
+          "level": 7
+        },
+        "20": {
+          "percent": 66,
+          "level": 5
+        },
+        "21": {
+          "percent": 94,
+          "level": 7
+        },
+        "22": {
+          "percent": 85,
+          "level": 6
+        },
+        "23": {
+          "percent": 49,
+          "level": 4
+        },
+        "0": {
+          "percent": 22,
+          "level": 2
+        }
+      }
+    },
+    "잠실": {
+      "hourly_congestion": {
+        "5": {
+          "percent": 32,
+          "level": 2
+        },
+        "6": {
+          "percent": 57,
+          "level": 4
+        },
+        "7": {
+          "percent": 92,
+          "level": 7
+        },
+        "8": {
+          "percent": 104,
+          "level": 8
+        },
+        "9": {
+          "percent": 84,
+          "level": 6
+        },
+        "10": {
+          "percent": 46,
+          "level": 3
+        },
+        "11": {
+          "percent": 38,
+          "level": 3
+        },
+        "12": {
+          "percent": 42,
+          "level": 3
+        },
+        "13": {
+          "percent": 43,
+          "level": 3
+        },
+        "14": {
+          "percent": 44,
+          "level": 3
+        },
+        "15": {
+          "percent": 60,
+          "level": 4
+        },
+        "16": {
+          "percent": 68,
+          "level": 5
+        },
+        "17": {
+          "percent": 99,
+          "level": 7
+        },
+        "18": {
+          "percent": 136,
+          "level": 10
+        },
+        "19": {
+          "percent": 106,
+          "level": 8
+        },
+        "20": {
+          "percent": 74,
+          "level": 5
+        },
+        "21": {
+          "percent": 81,
+          "level": 6
+        },
+        "22": {
+          "percent": 90,
+          "level": 7
+        },
+        "23": {
+          "percent": 66,
+          "level": 5
+        },
+        "0": {
+          "percent": 32,
+          "level": 2
+        }
+      }
+    },
+    "홍대입구": {
+      "hourly_congestion": {
+        "5": {
+          "percent": 20,
+          "level": 2
+        },
+        "6": {
+          "percent": 34,
+          "level": 3
+        },
+        "7": {
+          "percent": 75,
+          "level": 6
+        },
+        "8": {
+          "percent": 120,
+          "level": 10
+        },
+        "9": {
+          "percent": 70,
+          "level": 6
+        },
+        "10": {
+          "percent": 52,
+          "level": 4
+        },
+        "11": {
+          "percent": 45,
+          "level": 4
+        },
+        "12": {
+          "percent": 46,
+          "level": 4
+        },
+        "13": {
+          "percent": 44,
+          "level": 4
+        },
+        "14": {
+          "percent": 38,
+          "level": 3
+        },
+        "15": {
+          "percent": 42,
+          "level": 3
+        },
+        "16": {
+          "percent": 53,
+          "level": 4
+        },
+        "17": {
+          "percent": 66,
+          "level": 5
+        },
+        "18": {
+          "percent": 93,
+          "level": 8
+        },
+        "19": {
+          "percent": 61,
+          "level": 5
+        },
+        "20": {
+          "percent": 73,
+          "level": 6
+        },
+        "21": {
+          "percent": 57,
+          "level": 5
+        },
+        "22": {
+          "percent": 81,
+          "level": 7
+        },
+        "23": {
+          "percent": 47,
+          "level": 4
+        },
+        "0": {
+          "percent": 14,
+          "level": 1
+        }
+      }
+    },
+    "고속터미널": {
+      "hourly_congestion": {
+        "5": {
+          "percent": 26,
+          "level": 2
+        },
+        "6": {
+          "percent": 53,
+          "level": 5
+        },
+        "7": {
+          "percent": 83,
+          "level": 8
+        },
+        "8": {
+          "percent": 98,
+          "level": 9
+        },
+        "9": {
+          "percent": 76,
+          "level": 7
+        },
+        "10": {
+          "percent": 45,
+          "level": 4
+        },
+        "11": {
+          "percent": 44,
+          "level": 4
+        },
+        "12": {
+          "percent": 50,
+          "level": 5
+        },
+        "13": {
+          "percent": 60,
+          "level": 6
+        },
+        "14": {
+          "percent": 52,
+          "level": 5
+        },
+        "15": {
+          "percent": 57,
+          "level": 5
+        },
+        "16": {
+          "percent": 72,
+          "level": 7
+        },
+        "17": {
+          "percent": 92,
+          "level": 8
+        },
+        "18": {
+          "percent": 108,
+          "level": 10
+        },
+        "19": {
+          "percent": 91,
+          "level": 8
+        },
+        "20": {
+          "percent": 61,
+          "level": 6
+        },
+        "21": {
+          "percent": 60,
+          "level": 6
+        },
+        "22": {
+          "percent": 71,
+          "level": 7
+        },
+        "23": {
+          "percent": 45,
+          "level": 4
+        },
+        "0": {
+          "percent": 11,
+          "level": 1
+        }
+      }
+    },
+    "시청": {
+      "hourly_congestion": {
+        "5": {
+          "percent": 20,
+          "level": 2
+        },
+        "6": {
+          "percent": 30,
+          "level": 3
+        },
+        "7": {
+          "percent": 64,
+          "level": 6
+        },
+        "8": {
+          "percent": 99,
+          "level": 9
+        },
+        "9": {
+          "percent": 53,
+          "level": 5
+        },
+        "10": {
+          "percent": 43,
+          "level": 4
+        },
+        "11": {
+          "percent": 40,
+          "level": 4
+        },
+        "12": {
+          "percent": 43,
+          "level": 4
+        },
+        "13": {
+          "percent": 42,
+          "level": 4
+        },
+        "14": {
+          "percent": 40,
+          "level": 4
+        },
+        "15": {
+          "percent": 54,
+          "level": 5
+        },
+        "16": {
+          "percent": 54,
+          "level": 5
+        },
+        "17": {
+          "percent": 73,
+          "level": 7
+        },
+        "18": {
+          "percent": 112,
+          "level": 10
+        },
+        "19": {
+          "percent": 64,
+          "level": 6
+        },
+        "20": {
+          "percent": 64,
+          "level": 6
+        },
+        "21": {
+          "percent": 53,
+          "level": 5
+        },
+        "22": {
+          "percent": 68,
+          "level": 6
+        },
+        "23": {
+          "percent": 32,
+          "level": 3
+        },
+        "0": {
+          "percent": 14,
+          "level": 1
+        }
+      }
+    }
+  }
+}
