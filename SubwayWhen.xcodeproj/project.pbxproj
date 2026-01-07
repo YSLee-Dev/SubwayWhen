@@ -394,6 +394,7 @@
 		FF738DA72F0DF8AB003CCE66 /* CongestionViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DA62F0DF8AB003CCE66 /* CongestionViewAction.swift */; };
 		FF738DA92F0DF901003CCE66 /* CongestionModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DA82F0DF901003CCE66 /* CongestionModalView.swift */; };
 		FF738DAB2F0DF914003CCE66 /* CongestionModalFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DAA2F0DF914003CCE66 /* CongestionModalFeature.swift */; };
+		FF738DAE2F0E2F88003CCE66 /* CongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */; };
 		FF7837E32E29CF5B004E6BFF /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E22E29CF5B004E6BFF /* ReportView.swift */; };
 		FF7837E52E29D0B5004E6BFF /* ReportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */; };
 		FF7837E72E29D5AA004E6BFF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
@@ -854,6 +855,7 @@
 		FF738DA62F0DF8AB003CCE66 /* CongestionViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionViewAction.swift; sourceTree = "<group>"; };
 		FF738DA82F0DF901003CCE66 /* CongestionModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalView.swift; sourceTree = "<group>"; };
 		FF738DAA2F0DF914003CCE66 /* CongestionModalFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalFeature.swift; sourceTree = "<group>"; };
+		FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionManager.swift; sourceTree = "<group>"; };
 		FF7837E22E29CF5B004E6BFF /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportFeature.swift; sourceTree = "<group>"; };
 		FF7837E62E29D5AA004E6BFF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -1772,6 +1774,7 @@
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
+				FF738DAC2F0E2F3A003CCE66 /* Congestion */,
 				FF1D4AB92C9D359400AFD709 /* Dependency */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
@@ -2405,6 +2408,14 @@
 				FF738DA62F0DF8AB003CCE66 /* CongestionViewAction.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		FF738DAC2F0E2F3A003CCE66 /* Congestion */ = {
+			isa = PBXGroup;
+			children = (
+				FF738DAD2F0E2F88003CCE66 /* CongestionManager.swift */,
+			);
+			path = Congestion;
 			sourceTree = "<group>";
 		};
 		FF7ECAC82C7BF83300D4643A /* SwiftUI */ = {
@@ -3163,6 +3174,7 @@
 				344D6A122ABD8A0F00ECB57D /* TutorialCoordinator.swift in Sources */,
 				3499DEAA29D1BCE700A6E8C1 /* ReportCheckModalViewModelProtocol.swift in Sources */,
 				FF5F010E2E2E10B600486A0B /* ReportThreeQuestionView.swift in Sources */,
+				FF738DAE2F0E2F88003CCE66 /* CongestionManager.swift in Sources */,
 				FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 				34D9EA0D2A5583220080AD17 /* LocationModalSectionData.swift in Sources */,
 				FFC40B412E7A4A3200E5A41C /* SettingArrowView.swift in Sources */,
