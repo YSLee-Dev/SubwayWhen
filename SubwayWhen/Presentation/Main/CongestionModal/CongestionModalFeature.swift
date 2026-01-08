@@ -26,6 +26,7 @@ struct CongestionModalFeature {
         case onAppear
         case onDisappear
         case closeBtnTapped
+        case stationBtnTapped(station: String)
     }
     
     // MARK: - Properties
@@ -48,6 +49,11 @@ struct CongestionModalFeature {
                 
             case .closeBtnTapped:
                 self.delegate?.dismiss()
+                return .none
+                
+            case .stationBtnTapped(let station):
+                state.selectedStation = station
+                FixInfo.saveSetting.mainCongestionBaseStaton = station
                 return .none
                 
             default: return .none

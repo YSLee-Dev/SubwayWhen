@@ -35,7 +35,7 @@ struct CongestionModalView: View {
                                 .font(.system(size: ViewStyle.FontSize.smallSize, weight: isSelected ? .bold : .medium))
                                 .padding(.horizontal, 10)
                         }, tappedAction: {
-                            
+                            self.store.send(.stationBtnTapped(station: station))
                         })
                         .overlay {
                             RoundedRectangle(cornerRadius:  ViewStyle.Layer.radius)
