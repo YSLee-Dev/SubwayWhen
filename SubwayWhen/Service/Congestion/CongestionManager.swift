@@ -28,6 +28,10 @@ final class CongestionManager: CongestionManagerProtocol {
     
     // MARK: - Methods
     
+    func getAvailableStations() -> [String] {
+        return self.congestionDataSet.stations.map {$0.key}.sorted {$0 < $1}
+    }
+    
     func getCongestion(station: String, hour: Int) -> CongestionLevel? {
         guard let stationData = self.congestionDataSet.stations[station]?.hourlyCongestion else {
             return nil
