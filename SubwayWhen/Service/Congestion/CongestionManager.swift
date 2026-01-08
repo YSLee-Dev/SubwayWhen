@@ -52,10 +52,18 @@ final class CongestionManager: CongestionManagerProtocol {
             return nil
         }
         
+        var dayData: [String: CongestionLevel]
         switch Calendar.current.component(.weekday, from: Date()) {
-        case 1: return stationData.sunday
-        case 7: return stationData.saturday
-        default: return stationData.weekday
+        case 1: dayData = stationData.sunday
+        case 7: dayData = stationData.saturday
+        default: dayData = stationData.weekday
         }
+        
+        for hour in 1...4 {
+            if dayData["\(hour)"] == nil {
+                dayData["\(hour)"] = CongestionLevel(percent: 0, level: 0)
+            }
+        }
+        return dayData
     }
 }
