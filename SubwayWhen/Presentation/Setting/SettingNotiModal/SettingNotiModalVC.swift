@@ -127,8 +127,7 @@ extension SettingNotiModalVC {
         self.mainBG.addSubview(animationIcon)
         animationIcon.snp.makeConstraints{
             $0.size.equalTo(100)
-            $0.top.equalTo(self.subTitle.snp.bottom).offset(50)
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     
