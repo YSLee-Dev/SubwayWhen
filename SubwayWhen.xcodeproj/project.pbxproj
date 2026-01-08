@@ -402,6 +402,7 @@
 		FF738DBD2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DBC2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift */; };
 		FF738DC02F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DBF2F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift */; };
 		FF738DC42F0E3C6A003CCE66 /* DayCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DC32F0E3C6A003CCE66 /* DayCongestion.swift */; };
+		FF738DC62F0F9C96003CCE66 /* HourlyCongestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF738DC52F0F9C96003CCE66 /* HourlyCongestionData.swift */; };
 		FF7837E32E29CF5B004E6BFF /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E22E29CF5B004E6BFF /* ReportView.swift */; };
 		FF7837E52E29D0B5004E6BFF /* ReportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */; };
 		FF7837E72E29D5AA004E6BFF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
@@ -870,6 +871,7 @@
 		FF738DBC2F0E3A0B003CCE66 /* CongestionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionManagerProtocol.swift; sourceTree = "<group>"; };
 		FF738DBF2F0E3AC7003CCE66 /* CongestionTCADependencyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionTCADependencyKey.swift; sourceTree = "<group>"; };
 		FF738DC32F0E3C6A003CCE66 /* DayCongestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCongestion.swift; sourceTree = "<group>"; };
+		FF738DC52F0F9C96003CCE66 /* HourlyCongestionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCongestionData.swift; sourceTree = "<group>"; };
 		FF7837E22E29CF5B004E6BFF /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		FF7837E42E29D0B5004E6BFF /* ReportFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportFeature.swift; sourceTree = "<group>"; };
 		FF7837E62E29D5AA004E6BFF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2451,6 +2453,7 @@
 				FF738DB62F0E3706003CCE66 /* StationCongestion.swift */,
 				FF738DB82F0E3724003CCE66 /* CongestionLevel.swift */,
 				FF738DC32F0E3C6A003CCE66 /* DayCongestion.swift */,
+				FF738DC52F0F9C96003CCE66 /* HourlyCongestionData.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -3069,6 +3072,7 @@
 				B6438D402B667CB10099BFEF /* MainCoordinator.swift in Sources */,
 				349D788B29CC3EDF00CA1B52 /* DetailResultScheduleModel.swift in Sources */,
 				FF7ECAD12C7C04A000D4643A /* DetailFeature.swift in Sources */,
+				FF738DC62F0F9C96003CCE66 /* HourlyCongestionData.swift in Sources */,
 				349F15D7299B6FD100007420 /* DetailResultScheduleTopViewModel.swift in Sources */,
 				B68FB34C2B75F1CA0075339F /* SettingTrainIconCoordinator.swift in Sources */,
 				34A36BE0295028A700FB0DDB /* EditViewModel.swift in Sources */,

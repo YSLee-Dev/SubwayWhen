@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CongestionLevel: Decodable {
+struct CongestionLevel: Decodable, Equatable {
     let percent: Int
     let level: Int
 }
