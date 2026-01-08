@@ -24,9 +24,38 @@ struct CongestionModalView: View {
     // MARK: - View
     
     var body: some View {
-        Text("CongestionModalView")
-            .onDisappear {
-                self.store.send(.onDisappear)
+        VStack {
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 10) {
+                    ForEach(self.store.availableStationList, id: \.self) { station in
+                        let isSelected = station == self.store.selectedStation
+                        
+                        AnimationButtonInSUI(buttonView: {
+                            Text(station)
+                                .font(.system(size: ViewStyle.FontSize.smallSize, weight: isSelected ? .bold : .medium))
+                                .padding(.horizontal, 10)
+                        }, tappedAction: {
+                            
+                        })
+                        .overlay {
+                            RoundedRectangle(cornerRadius:  ViewStyle.Layer.radius)
+                                .strokeBorder(Color("AppIconColor"), lineWidth: isSelected ? 1 : 0)
+                        }
+                    }
+                }
             }
+            .scrollIndicators(.hidden)
+            .frame(height: 40)
+            
+            Spacer()
+            Text("그래프")
+            Spacer()
+        }
+        .onAppear {
+            self.store.send(.onAppear)
+        }
+        .onDisappear {
+            self.store.send(.onDisappear)
+        }
     }
 }

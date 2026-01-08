@@ -16,18 +16,21 @@ struct CongestionModalFeature {
     
     @ObservableState
     struct State: Equatable {
-        
+        var selectedStation = FixInfo.saveSetting.mainCongestionBaseStaton
+        var availableStationList: [String] = []
     }
     
     // MARK: - Action
     
     enum Action: Equatable {
+        case onAppear
         case onDisappear
         case closeBtnTapped
     }
     
     // MARK: - Properties
     
+    @Dependency(\.congestionManager) private var congestionManager
     weak var delegate: CongestionViewAction?
     
     // MARK: - Reducer
@@ -35,6 +38,10 @@ struct CongestionModalFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                state.availableStationList = self.congestionManager.getAvailableStations()
+                return .none
+                
             case .onDisappear:
                 self.delegate?.didDisappear()
                 return .none
