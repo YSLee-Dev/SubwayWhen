@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import Charts
 
 struct CongestionModalView: View {
     
@@ -24,7 +25,7 @@ struct CongestionModalView: View {
     // MARK: - View
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 10) {
                     ForEach(self.store.availableStationList, id: \.self) { station in
@@ -47,10 +48,39 @@ struct CongestionModalView: View {
             .scrollIndicators(.hidden)
             .frame(height: 40)
             
-            Spacer()
-            Text("그래프")
-            Spacer()
+            Chart {
+                ForEach(self.store.congestionData, id: \.hour) { data in
+                    LineMark(
+                        x: .value("hour", data.hour),
+                        y: .value("congestion", data.congestion.percent)
+                    )
+                    .foregroundStyle(Color("AppIconColor"))
+                    .interpolationMethod(.catmullRom)
+                }
+            }
+            .animation(.smooth, value: self.store.selectedStation)
+            .chartXAxis {
+                AxisMarks(values: .stride(by: 3)) { value in
+                    if let hour = value.as(Int.self) {
+                        AxisValueLabel {
+                            Text("\(hour)시")
+                        }
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .stride(by: 30)) { value in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel {
+                        if let percent = value.as(Int.self) {
+                            Text("\(percent)%")
+                        }
+                    }
+                }
+            }
         }
+        .padding(.bottom, 20)
         .onAppear {
             self.store.send(.onAppear)
         }

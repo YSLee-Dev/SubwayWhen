@@ -18,6 +18,7 @@ struct CongestionModalFeature {
     struct State: Equatable {
         var selectedStation = FixInfo.saveSetting.mainCongestionBaseStaton
         var availableStationList: [String] = []
+        var congestionData: [HourlyCongestionData] = []
     }
     
     // MARK: - Action
@@ -27,6 +28,7 @@ struct CongestionModalFeature {
         case onDisappear
         case closeBtnTapped
         case stationBtnTapped(station: String)
+        case congestionDataReuqest
     }
     
     // MARK: - Properties
@@ -41,7 +43,7 @@ struct CongestionModalFeature {
             switch action {
             case .onAppear:
                 state.availableStationList = self.congestionManager.getAvailableStations()
-                return .none
+                return .send(.congestionDataReuqest)
                 
             case .onDisappear:
                 self.delegate?.didDisappear()
@@ -54,9 +56,11 @@ struct CongestionModalFeature {
             case .stationBtnTapped(let station):
                 state.selectedStation = station
                 FixInfo.saveSetting.mainCongestionBaseStaton = station
-                return .none
+                return .send(.congestionDataReuqest)
                 
-            default: return .none
+            case .congestionDataReuqest:
+                state.congestionData = self.congestionManager.getCongestions(station: state.selectedStation) ?? []
+                return .none
             }
         }
     }
