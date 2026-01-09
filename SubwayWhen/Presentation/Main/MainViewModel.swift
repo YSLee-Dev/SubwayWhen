@@ -147,17 +147,7 @@ extension MainViewModel {
                 .disposed(by: self.bag)
             
             // 혼잡도 세팅
-            self.mainModel.congestionDataLoad()
-                .map { count in
-                    let emoji = count == 0 ? "🫥" : FixInfo.saveSetting.mainCongestionLabel
-                    let filledCount = count == 0 ? 10 : count
-                    let emptyCount = max(0, 10 - filledCount)
-                    
-                    return String(repeating: emoji, count: filledCount)
-                    + String(repeating: "🫥", count: emptyCount)
-                }
-                .bind(to: self.nowPeopleData)
-                .disposed(by: self.bag)
+            self.setCongestion()
             
             // 데이터 로드
             self.tableViewDataSet()
@@ -278,6 +268,20 @@ extension MainViewModel {
             .disposed(by: self.bag)
     }
     
+    private func setCongestion() {
+        self.mainModel.congestionDataLoad()
+            .map { count in
+                let emoji = count == 0 ? "🫥" : FixInfo.saveSetting.mainCongestionLabel
+                let filledCount = count == 0 ? 10 : count
+                let emptyCount = max(0, 10 - filledCount)
+                
+                return String(repeating: emoji, count: filledCount)
+                + String(repeating: "🫥", count: emptyCount)
+            }
+            .bind(to: self.nowPeopleData)
+            .disposed(by: self.bag)
+    }
+    
     func getDetailVC(at indexPath: IndexPath) -> UIViewController? {
         let data = self.nowTableViewCellData.value.0[0].items[indexPath.row]
         return self.delegate?.detailLongPress(data: data)
@@ -286,5 +290,9 @@ extension MainViewModel {
     func getAllowReport(at indexPath: IndexPath) -> Bool {
         let data = self.nowTableViewCellData.value.0[0].items[indexPath.row]
         return data.subwayLineData.allowReport
+    }
+    
+    func congestionUpdate() {
+        self.setCongestion()
     }
 }

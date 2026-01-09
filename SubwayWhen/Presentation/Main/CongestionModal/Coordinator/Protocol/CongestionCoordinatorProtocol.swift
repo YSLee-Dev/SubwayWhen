@@ -10,4 +10,5 @@ import Foundation
 protocol CongestionCoordinatorProtocol: AnyObject {
     func didDisappear(coordinator: Coordinator)
     func dismiss()
+    func congestionStationChanged()
 }

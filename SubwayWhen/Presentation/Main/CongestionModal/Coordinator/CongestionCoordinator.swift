@@ -47,6 +47,10 @@ class CongestionModalCoordinator: Coordinator {
 // MARK: - Extension CongestionViewAction
 
 extension CongestionModalCoordinator: CongestionViewAction {
+    func congestionStationChanged() {
+        self.delegate?.congestionStationChanged()
+    }
+    
     func didDisappear() {
         self.delegate?.didDisappear(coordinator: self)
     }

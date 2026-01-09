@@ -10,4 +10,5 @@ import Foundation
 protocol CongestionViewAction: AnyObject {
     func didDisappear()
     func dismiss()
+    func congestionStationChanged()
 }

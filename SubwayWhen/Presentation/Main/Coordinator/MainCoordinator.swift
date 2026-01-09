@@ -16,16 +16,17 @@ class MainCoordinator : Coordinator{
     var navigation : UINavigationController
     var delegate : MainCoordinatorDelegate?
     private var nowNotiTapped = false
+    private let viewModel: MainViewModel
     
     init(){
         self.navigation = UINavigationController()
+        self.viewModel = MainViewModel()
     }
     
     func start() {
-        let viewModel = MainViewModel()
-        viewModel.delegate = self
+        self.viewModel.delegate = self
         
-        let main = MainVC(viewModel: viewModel)
+        let main = MainVC(viewModel: self.viewModel)
         main.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
         
         if #available(iOS 26.0, *) {
@@ -148,6 +149,10 @@ extension MainCoordinator : DetailCoordinatorDelegate{
 }
 
 extension MainCoordinator: CongestionCoordinatorProtocol {
+    func congestionStationChanged() {
+        self.viewModel.congestionUpdate()
+    }
+    
     func didDisappear(coordinator: any Coordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== coordinator}
     }

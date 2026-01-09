@@ -19,6 +19,7 @@ struct CongestionModalFeature {
         var selectedStation = FixInfo.saveSetting.mainCongestionBaseStaton
         var availableStationList: [String] = []
         var congestionData: [HourlyCongestionData] = []
+        var nowHour = 0
     }
     
     // MARK: - Action
@@ -56,9 +57,11 @@ struct CongestionModalFeature {
             case .stationBtnTapped(let station):
                 state.selectedStation = station
                 FixInfo.saveSetting.mainCongestionBaseStaton = station
+                self.delegate?.congestionStationChanged()
                 return .send(.congestionDataReuqest)
                 
             case .congestionDataReuqest:
+                state.nowHour = Calendar.current.component(.hour, from: .now)
                 state.congestionData = self.congestionManager.getCongestions(station: state.selectedStation) ?? []
                 return .none
             }
