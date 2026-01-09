@@ -38,6 +38,7 @@ struct CongestionModalView: View {
                                 .padding(.horizontal, 10)
                         }, tappedAction: {
                             self.store.send(.stationBtnTapped(station: station))
+                            self.selectedHour = nil
                         })
                         .overlay {
                             RoundedRectangle(cornerRadius:  ViewStyle.Layer.radius)
@@ -119,7 +120,7 @@ struct CongestionModalView: View {
                         let xPosition = value.location.x
                         guard let selectedHour: Int = chart.value(atX: xPosition) else { return }
                         
-                        if self.selectedHour == selectedHour {
+                        if selectedHour == self.store.nowHour {
                             self.selectedHour = nil
                         } else {
                             self.selectedHour = selectedHour
