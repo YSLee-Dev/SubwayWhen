@@ -67,6 +67,15 @@ struct CongestionModalView: View {
                     .foregroundStyle(.red)
                     .shadow(color: Color.black.opacity(0.4), radius: 5)
                     .symbolSize(100)
+                    .annotation(
+                        position: .top,
+                        spacing: 5,
+                        overflowResolution: .init(x: .disabled, y: .padScale)
+                    ) {
+                        if self.selectedHour == nil {
+                            self.congestionAnnotation(percent: currentData.congestion.percent)
+                        }
+                    }
                 }
                 
                 if let selectedHour = self.selectedHour,
@@ -78,14 +87,7 @@ struct CongestionModalView: View {
                             spacing: 0,
                             overflowResolution: .init(x: .disabled, y: .fit(to: .chart))
                         ) {
-                            Text("\(selectedHour)\(Strings.Common.hour): \(Int(currentData.congestion.percent))%")
-                                .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
-                                .padding(7.5)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color("MainColor"))
-                                        .strokeBorder(Color("AppIconColor"), lineWidth: 1)
-                                }
+                            self.congestionAnnotation(percent: currentData.congestion.percent)
                         }
                 }
             }
@@ -132,5 +134,20 @@ struct CongestionModalView: View {
         .onDisappear {
             self.store.send(.onDisappear)
         }
+    }
+}
+
+// MARK: - Methods
+
+private extension CongestionModalView {
+    @ViewBuilder
+    func congestionAnnotation(percent: Int) -> some View {
+        Text("\(Int(percent))%")
+            .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
+            .padding(5)
+            .background {
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(Color("MainColor"))
+            }
     }
 }
