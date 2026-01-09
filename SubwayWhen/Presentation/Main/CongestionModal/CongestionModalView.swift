@@ -15,6 +15,7 @@ struct CongestionModalView: View {
     // MARK: - Properties
     
     @State private var store: StoreOf<CongestionModalFeature>
+    @State private var selectedHour: Int?
     
     // MARK: - LifeCycle
     
@@ -67,8 +68,29 @@ struct CongestionModalView: View {
                     .shadow(color: Color.black.opacity(0.4), radius: 5)
                     .symbolSize(100)
                 }
+                
+                if let selectedHour = self.selectedHour,
+                   let currentData = self.store.congestionData.first(where: { $0.hour == selectedHour }) {
+                    RuleMark(x: .value("selectedHour", selectedHour))
+                        .foregroundStyle(.gray.opacity(0.5))
+                        .annotation(
+                            position: .top,
+                            spacing: 0,
+                            overflowResolution: .init(x: .disabled, y: .fit(to: .chart))
+                        ) {
+                            Text("\(selectedHour)\(Strings.Common.hour): \(Int(currentData.congestion.percent))%")
+                                .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
+                                .padding(7.5)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color("MainColor"))
+                                        .strokeBorder(Color("AppIconColor"), lineWidth: 1)
+                                }
+                        }
+                }
             }
             .animation(.smooth, value: self.store.selectedStation)
+            .animation(.smooth, value: self.selectedHour)
             .chartXAxis {
                 AxisMarks(values: .stride(by: 3)) { value in
                     if let hour = value.as(Int.self) {
@@ -88,6 +110,19 @@ struct CongestionModalView: View {
                         }
                     }
                 }
+            }
+            .chartGesture { chart in
+                SpatialTapGesture()
+                    .onEnded { value in
+                        let xPosition = value.location.x
+                        guard let selectedHour: Int = chart.value(atX: xPosition) else { return }
+                        
+                        if self.selectedHour == selectedHour {
+                            self.selectedHour = nil
+                        } else {
+                            self.selectedHour = selectedHour
+                        }
+                    }
             }
         }
         .padding(.bottom, 20)
