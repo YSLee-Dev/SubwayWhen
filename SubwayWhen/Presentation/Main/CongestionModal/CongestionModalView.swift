@@ -57,13 +57,23 @@ struct CongestionModalView: View {
                     .foregroundStyle(Color("AppIconColor"))
                     .interpolationMethod(.catmullRom)
                 }
+                
+                if let currentData = self.store.congestionData.first(where: { $0.hour == self.store.nowHour }) {
+                    PointMark(
+                        x: .value("hour", currentData.hour),
+                        y: .value("congestion", currentData.congestion.percent)
+                    )
+                    .foregroundStyle(.red)
+                    .shadow(color: Color.black.opacity(0.4), radius: 5)
+                    .symbolSize(100)
+                }
             }
             .animation(.smooth, value: self.store.selectedStation)
             .chartXAxis {
                 AxisMarks(values: .stride(by: 3)) { value in
                     if let hour = value.as(Int.self) {
                         AxisValueLabel {
-                            Text("\(hour)시")
+                            Text("\(hour)\(Strings.Common.hour)")
                         }
                     }
                 }
