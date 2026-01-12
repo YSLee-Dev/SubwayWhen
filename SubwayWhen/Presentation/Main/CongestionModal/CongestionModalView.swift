@@ -93,7 +93,7 @@ struct CongestionModalView: View {
                 }
             }
             .animation(.smooth, value: self.store.selectedStation)
-            .animation(.smooth, value: self.selectedHour)
+            .animation(.smooth(duration: 0.2), value: self.selectedHour)
             .chartXAxis {
                 AxisMarks(values: .stride(by: 3)) { value in
                     if let hour = value.as(Int.self) {
