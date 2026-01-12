@@ -93,9 +93,9 @@ struct CongestionModalView: View {
                 }
             }
             .animation(.smooth, value: self.store.selectedStation)
-            .animation(.smooth(duration: 0.2), value: self.selectedHour)
+            .animation(.smooth, value: self.selectedHour)
             .chartXAxis {
-                AxisMarks(values: .stride(by: 3)) { value in
+                AxisMarks(values: [0, 3, 6, 9, 12, 15, 18, 21, 23]) { value in
                     if let hour = value.as(Int.self) {
                         AxisValueLabel {
                             Text("\(hour)\(Strings.Common.hour)")
@@ -150,5 +150,6 @@ private extension CongestionModalView {
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color("MainColor"))
             }
+            .frame(minWidth: 60)
     }
 }
