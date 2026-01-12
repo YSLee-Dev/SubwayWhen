@@ -74,7 +74,8 @@ struct CongestionModalView: View {
                         overflowResolution: .init(x: .disabled, y: .padScale)
                     ) {
                         if self.selectedHour == nil {
-                            self.congestionAnnotation(percent: currentData.congestion.percent)
+                            self.congestionAnnotation(value: "\(currentData.congestion.percent)%")
+                                .frame(minWidth: 60)
                         }
                     }
                 }
@@ -88,7 +89,8 @@ struct CongestionModalView: View {
                             spacing: 0,
                             overflowResolution: .init(x: .disabled, y: .fit(to: .chart))
                         ) {
-                            self.congestionAnnotation(percent: currentData.congestion.percent)
+                            self.congestionAnnotation(value: "\(selectedHour)\(Strings.Common.hour) · \(currentData.congestion.percent)%")
+                                .frame(minWidth: 120)
                         }
                 }
             }
@@ -142,14 +144,13 @@ struct CongestionModalView: View {
 
 private extension CongestionModalView {
     @ViewBuilder
-    func congestionAnnotation(percent: Int) -> some View {
-        Text("\(Int(percent))%")
+    func congestionAnnotation(value: String) -> some View {
+        Text(value)
             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
             .padding(5)
             .background {
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color("MainColor"))
             }
-            .frame(minWidth: 60)
     }
 }
