@@ -55,6 +55,8 @@ struct CongestionModalFeature {
                 return .none
                 
             case .stationBtnTapped(let station):
+                if state.selectedStation == station {return .none}
+                
                 state.selectedStation = station
                 FixInfo.saveSetting.mainCongestionBaseStaton = station
                 self.delegate?.congestionStationChanged()
