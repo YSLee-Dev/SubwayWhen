@@ -134,7 +134,7 @@ extension MainTableHeaderView {
             $0.height.equalTo(90)
         }
         
-        importantLabelBG.rx.viewTap
+        importantLabelBG.rx.tap
             .map {_ in .importantBtnTap}
             .bind(to: self.mainTableViewAction)
             .disposed(by: self.bag)
