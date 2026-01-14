@@ -449,6 +449,7 @@
 		FFE826262D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826292D081DE60070BFED /* SearchStationResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826282D081DE60070BFED /* SearchStationResultView.swift */; };
+		FFFE84EF2F17358900A29742 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84EE2F17358900A29742 /* AppLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -907,6 +908,7 @@
 		FFC40B422E7A72E000E5A41C /* SettingTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTextFieldView.swift; sourceTree = "<group>"; };
 		FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRealtimeStationArrival.swift; sourceTree = "<group>"; };
 		FFE826282D081DE60070BFED /* SearchStationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStationResultView.swift; sourceTree = "<group>"; };
+		FFFE84EE2F17358900A29742 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1795,6 +1797,7 @@
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
 				34C6DB87293627AE00C4ED80 /* Save */,
+				FFFE843B2F17352300A29742 /* Util */,
 			);
 			path = SubwayWhen;
 			sourceTree = "<group>";
@@ -2525,6 +2528,22 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		FFFE843B2F17352300A29742 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				FFFE84ED2F17357F00A29742 /* Logger */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		FFFE84ED2F17357F00A29742 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				FFFE84EE2F17358900A29742 /* AppLogger.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3242,6 +3261,7 @@
 				FF24F7AC2C981E5B001B0457 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
 				34D9EA0D2A5583220080AD17 /* LocationModalSectionData.swift in Sources */,
 				FFC40B412E7A4A3200E5A41C /* SettingArrowView.swift in Sources */,
+				FFFE84EF2F17358900A29742 /* AppLogger.swift in Sources */,
 				FF7ECACA2C7BF93900D4643A /* NavigationBarScrollViewInSUI.swift in Sources */,
 				B68302C02AC0505C00E010B7 /* TurorialModel.swift in Sources */,
 				FF5F01142E3061EA00486A0B /* ReportContentData.swift in Sources */,
