@@ -1795,7 +1795,6 @@
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
-				34C6DB87293627AE00C4ED80 /* Save */,
 				FFFE84F02F17386100A29742 /* Configuration */,
 				FF738DAF2F0E302C003CCE66 /* Service */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
@@ -1834,13 +1833,9 @@
 		34C6DB87293627AE00C4ED80 /* Save */ = {
 			isa = PBXGroup;
 			children = (
+				FFFE84F32F1738E400A29742 /* Entity */,
 				FAD2F6032BB568B000B95B52 /* UserDefault+.swift */,
 				34C6DB88293627AE00C4ED80 /* FixInfo.swift */,
-				34C6DB89293627AE00C4ED80 /* SaveStation.swift */,
-				FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */,
-				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
-				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
-				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
 			);
 			path = Save;
 			sourceTree = "<group>";
@@ -2551,8 +2546,21 @@
 			isa = PBXGroup;
 			children = (
 				FFFE84F12F17387100A29742 /* AppConfig.swift */,
+				34C6DB87293627AE00C4ED80 /* Save */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		FFFE84F32F1738E400A29742 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				34C6DB89293627AE00C4ED80 /* SaveStation.swift */,
+				FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */,
+				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
+				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
+				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
