@@ -450,6 +450,7 @@
 		FFE826272D06B8910070BFED /* TotalRealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */; };
 		FFE826292D081DE60070BFED /* SearchStationResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE826282D081DE60070BFED /* SearchStationResultView.swift */; };
 		FFFE84EF2F17358900A29742 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84EE2F17358900A29742 /* AppLogger.swift */; };
+		FFFE84F22F17387100A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -909,6 +910,7 @@
 		FFE826242D06B8910070BFED /* TotalRealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRealtimeStationArrival.swift; sourceTree = "<group>"; };
 		FFE826282D081DE60070BFED /* SearchStationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStationResultView.swift; sourceTree = "<group>"; };
 		FFFE84EE2F17358900A29742 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		FFFE84F12F17387100A29742 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1793,10 +1795,11 @@
 				3497DCBE29D3CA7100D2ABB9 /* Pods-SubwayWhen-acknowledgements.plist */,
 				34C6DB622936274600C4ED80 /* Info.plist */,
 				349E2F6929BDF84B00C54EE9 /* Application */,
+				34C6DB87293627AE00C4ED80 /* Save */,
+				FFFE84F02F17386100A29742 /* Configuration */,
 				FF738DAF2F0E302C003CCE66 /* Service */,
 				349E2F5C29BDF68700C54EE9 /* Presentation */,
 				349E2F6F29BDFABE00C54EE9 /* Resource */,
-				34C6DB87293627AE00C4ED80 /* Save */,
 				FFFE843B2F17352300A29742 /* Util */,
 			);
 			path = SubwayWhen;
@@ -2544,6 +2547,14 @@
 			path = Logger;
 			sourceTree = "<group>";
 		};
+		FFFE84F02F17386100A29742 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				FFFE84F12F17387100A29742 /* AppConfig.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3221,6 +3232,7 @@
 				FF0365402D011CFD00EF325D /* SubwayLineData.swift in Sources */,
 				34A303B629AF86FD00948EDD /* ScheduleType.swift in Sources */,
 				3455CFA72A53E74E001ADE61 /* SearchVCActionProtocol.swift in Sources */,
+				FFFE84F22F17387100A29742 /* AppConfig.swift in Sources */,
 				349E2F4729BDBD0C00C54EE9 /* DetailCoordinator.swift in Sources */,
 				34C4EBB32A49AC8900BCE881 /* SettingNotiModalModel.swift in Sources */,
 				B6438D4A2B667CB10099BFEF /* MainTableViewSection.swift in Sources */,
