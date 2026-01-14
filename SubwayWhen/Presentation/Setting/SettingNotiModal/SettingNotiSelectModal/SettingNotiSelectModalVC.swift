@@ -40,7 +40,7 @@ class SettingNotiSelectModalVC: TableVCCustom {
     }
     
     deinit {
-        print("SettingNotiSelectModalVC DEINIT")
+        AppLogger.view.log(.debug, "SettingNotiSelectModalVC DEINIT")
     }
     
     override func viewDidLoad() {

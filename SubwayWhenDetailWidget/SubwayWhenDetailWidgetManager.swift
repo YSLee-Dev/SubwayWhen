@@ -30,7 +30,7 @@ class SubwayWhenDetailWidgetManager{
                 )
                 self.live = activity
             } catch {
-                print(error)
+                AppLogger.liveActivity.log(.error, error.localizedDescription)
             }
         }else{
             do {
@@ -40,7 +40,7 @@ class SubwayWhenDetailWidgetManager{
                 )
                 self.live = activity
             } catch {
-                print(error)
+                AppLogger.liveActivity.log(.error, error.localizedDescription)
             }
         }
     }
@@ -60,10 +60,10 @@ class SubwayWhenDetailWidgetManager{
         Task{
             if #available(iOS 16.2, *){
                 await self.live?.end(.none, dismissalPolicy: .immediate)
-                print("END")
+                AppLogger.liveActivity.log(.debug, "liveActivity 정지")
             }else{
                 await self.live?.end(dismissalPolicy: .immediate)
-                print("END")
+                AppLogger.liveActivity.log(.debug, "liveActivity 정지")
             }
             self.live = nil
         }
@@ -74,10 +74,10 @@ class SubwayWhenDetailWidgetManager{
             for x in Activity<SubwayWhenDetailWidgetAttributes>.activities{
                 if #available(iOS 16.2, *){
                     await x.end(.none, dismissalPolicy: .immediate)
-                    print("END")
+                    AppLogger.liveActivity.log(.debug, "liveActivity 정지")
                 }else{
                     await x.end(dismissalPolicy: .immediate)
-                    print("END")
+                    AppLogger.liveActivity.log(.debug, "liveActivity 정지")
                 }
             }
         }

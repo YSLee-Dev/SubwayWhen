@@ -24,4 +24,13 @@ final class AppConfig {
     
     /// 네트워크와 관련된 로그 표출 여부를 관리해요.
     let enableTotalNetworkLog = true
+    
+    /// 코어 로직과 관련된 로그 표출 여부를 관리해요.
+    let enableCoreLog = true
+    
+    /// liveActivity과 관련된 로그 표출 여부를 관리해요.
+    let enableLiveActivityLog = true
+    
+    /// 코어 데이터 로직과 관련된 로그 표출 여부를 관리해요.
+    let enableCoreDataLog = true
 }

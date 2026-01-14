@@ -65,7 +65,7 @@ class ModalVC : ModalVCCustom{
     let modalGesture = PublishSubject<Void>()
     
     deinit{
-        print("DEINIT MODAL")
+        AppLogger.view.log(.debug, "MODAL DEINIT")
     }
     
     init(_ viewModel : ModalViewModel, modalHeight : CGFloat){

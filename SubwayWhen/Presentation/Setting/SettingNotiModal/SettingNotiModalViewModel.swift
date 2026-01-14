@@ -125,7 +125,7 @@ class SettingNotiModalViewModel {
     }
     
     deinit {
-        print("SettingNotiModalViewModel DEINIT")
+        AppLogger.view.log(.debug, "SettingNotiModalViewModel DEINIT")
     }
 }
 

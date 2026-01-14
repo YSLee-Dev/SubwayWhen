@@ -20,7 +20,7 @@ class TutorialCoordinator: Coordinator {
     }
     
     deinit {
-        print("TutorialCoordinator DEINIT")
+        AppLogger.coordinator.log(.debug, "TutorialCoordinator DEINIT")
     }
     
     func start() {

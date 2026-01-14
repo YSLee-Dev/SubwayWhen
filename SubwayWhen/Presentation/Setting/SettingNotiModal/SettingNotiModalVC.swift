@@ -48,7 +48,7 @@ class SettingNotiModalVC: ModalVCCustom {
     }
     
     deinit {
-        print("SettingNotiModalVC DEINIT")
+        AppLogger.view.log(.debug, "SettingNotiModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {

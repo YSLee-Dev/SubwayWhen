@@ -32,7 +32,7 @@ class SettingTrainIconModalVC: ModalVCCustom {
     }
     
     deinit {
-        print("SettingTrainIconModalVC DEINIT")
+        AppLogger.view.log(.debug, "SettingTrainIconModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {

@@ -44,7 +44,7 @@ class LocationModalVC: ModalVCCustom {
     }
     
     deinit {
-        print("LocationModalVC DEINIT")
+        AppLogger.view.log(.debug, "LocationModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {

@@ -51,7 +51,7 @@ class ReportCheckModalVC : ModalVCCustom{
     }
     
     deinit{
-        print("ReportCheckModalVC DEINIT")
+        AppLogger.view.log(.debug, "ReportCheckModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -157,7 +157,7 @@ extension ReportCheckModalVC : MFMessageComposeViewControllerDelegate{
                 self?.msgVC.messageComposeDelegate = self
             }
         default:
-            print("Error")
+            AppLogger.view.log(.error, "메세지 발생 중 에러 발생")
             break
         }
     }
@@ -175,9 +175,8 @@ extension Reactive where Base : ReportCheckModalVC{
             base.msgVC.recipients = [number]
             base.msgVC.body = base.textView.text
             
-            print(number)
-            
             #if DEBUG
+            AppLogger.view.log(.debug, "메세지 전송 번호: \(number)")
             base.msgSendSuccess()
             #else
             base.present(base.msgVC, animated: true)

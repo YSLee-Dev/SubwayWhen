@@ -10,7 +10,7 @@ import UIKit
 class MainCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []{
         didSet{
-            print(self.childCoordinator)
+            AppLogger.coordinator.log(.debug, "MainCoordinator 자식: \(self.childCoordinator)")
         }
     }
     var navigation : UINavigationController

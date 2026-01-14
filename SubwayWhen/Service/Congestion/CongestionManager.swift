@@ -15,7 +15,7 @@ final class CongestionManager: CongestionManagerProtocol {
         guard let url = Bundle.main.url(forResource: "CongestionData", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let decoded = try? JSONDecoder().decode(CongestionDataSet.self, from: data) else {
-            print("혼잡도 데이터를 로드하지 못함")
+            AppLogger.core.log(.error, "혼잡도 데이터를 로드하지 못함")
             return CongestionDataSet(stations: [:])
         }
         return decoded

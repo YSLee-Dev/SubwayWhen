@@ -29,5 +29,41 @@ struct AppLogger {
 }
 
 extension AppLogger {
-    private static let subsystem = Bundle.main.bundleIdentifier ?? "com.yslee.subwayWhen"
+    private static let subsystem = Bundle.main.bundleIdentifier ?? "com.yslee.subwaywhen"
+    
+    static let network = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "Network"),
+        categoryName: "🛜 Network",
+        totalLogEnabled: AppConfig.shared.enableTotalNetworkLog
+    )
+    
+    static let core = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "Core"),
+        categoryName: "💪 Core",
+        totalLogEnabled: AppConfig.shared.enableCoreLog
+    )
+    
+    static let view = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "View"),
+        categoryName: "💬 View",
+        totalLogEnabled: AppConfig.shared.enableViewLog
+    )
+    
+    static let coordinator = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "Coordinator"),
+        categoryName: "🧑‍🧑‍🧒‍🧒 Coordinator",
+        totalLogEnabled: AppConfig.shared.enableCoordinatorLog
+    )
+    
+    static let liveActivity = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "LiveActivity"),
+        categoryName: "⭐️ LiveActivity",
+        totalLogEnabled: AppConfig.shared.enableLiveActivityLog
+    )
+    
+    static let coreData = AppLogger(
+        logger: Logger(subsystem: subsystem, category: "CoreData"),
+        categoryName: "💽 CoreData",
+        totalLogEnabled: AppConfig.shared.enableCoreDataLog
+    )
 }

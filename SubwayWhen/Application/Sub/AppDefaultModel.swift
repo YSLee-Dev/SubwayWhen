@@ -17,7 +17,7 @@ class AppDefaultModel : AppDefaultModelProtocol{
     }
     
     deinit{
-        print("AppDefaultModel DEINIT")
+        AppLogger.core.log(.debug, "AppDefaultModel DEINIT")
     }
     
     // 팝업 불러오기

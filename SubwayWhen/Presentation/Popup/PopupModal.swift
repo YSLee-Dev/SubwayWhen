@@ -62,7 +62,7 @@ class PopupModal : ModalVCCustom{
     }
     
     deinit{
-        print("PopupModal DEINIT")
+        AppLogger.view.log(.debug, "PopupModal DEINIT")
     }
     
     override func viewDidLoad() {

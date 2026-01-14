@@ -29,7 +29,7 @@ class TutorialViewModel {
     }
     
     deinit {
-        print("TutorialViewModel DEINIT")
+        AppLogger.view.log(.debug, "TutorialViewModel DEINIT")
     }
     
     struct Input {

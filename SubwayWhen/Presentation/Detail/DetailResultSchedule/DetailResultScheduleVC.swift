@@ -13,7 +13,7 @@ import RxDataSources
 
 class DetailResultScheduleVC : TableVCCustom{
     deinit{
-        print("DetailResultScheduleVC DEINIT")
+        AppLogger.view.log(.debug, "DetailResultScheduleVC DEINIT")
     }
     
     var bag = DisposeBag()

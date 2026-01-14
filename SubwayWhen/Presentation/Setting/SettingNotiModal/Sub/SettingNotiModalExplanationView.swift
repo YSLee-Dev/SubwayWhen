@@ -26,7 +26,7 @@ class SettingNotiModalExplanationView : UIView{
     }
     
     deinit {
-        print("SettingNotiModalExplanationView DEINIT")
+        AppLogger.view.log(.debug, "SettingNotiModalExplanationView DEINIT")
     }
     
     required init?(coder: NSCoder) {

@@ -69,10 +69,10 @@ extension AppDefaultManager{
         switch settingResult{
         case .success(let setting):
             FixInfo.saveSetting = setting
-            print("setting load success")
+            AppLogger.core.log(.debug, "설정 값 로딩 완료")
         case .failure(let error):
             FixInfo.saveSetting = SaveSetting()
-            print("setting not load, 초기 값 세팅 완료\n", error)
+            AppLogger.core.log(.error, "설정 값을 가져오지 못함 (초기 값 세팅), 오류: \(error)")
         }
     }
     
@@ -82,9 +82,9 @@ extension AppDefaultManager{
         switch stationResult{
         case .success(let list):
             FixInfo.saveStation = list
-            print("station load success")
+            AppLogger.core.log(.debug, "지하철 역 로딩 완료")
         case .failure(let error):
-            print("station not load, 초기 값 없음", error)
+            AppLogger.core.log(.error, "지하철 역을 가져오지 못함, 오류: \(error)")
         }
     }
 }

@@ -79,6 +79,5 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.locationData.onNext(.init(lat: 0.0, lon: 0.0))
-        print(error)
     }
 }

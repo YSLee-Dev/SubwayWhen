@@ -78,6 +78,6 @@ class ReportCheckModalViewModel : ReportCheckModalViewModelProtocol{
     }
     
     deinit{
-        print("ReportCheckModalViewModel DEINIT")
+        AppLogger.view.log(.debug, "ReportCheckModalViewModel DEINIT")
     }
 }
