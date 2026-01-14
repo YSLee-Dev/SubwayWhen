@@ -1830,16 +1830,6 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
-		34C6DB87293627AE00C4ED80 /* Save */ = {
-			isa = PBXGroup;
-			children = (
-				FFFE84F32F1738E400A29742 /* Entity */,
-				FAD2F6032BB568B000B95B52 /* UserDefault+.swift */,
-				34C6DB88293627AE00C4ED80 /* FixInfo.swift */,
-			);
-			path = Save;
-			sourceTree = "<group>";
-		};
 		34D9E9F22A54FAD50080AD17 /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -2001,9 +1991,6 @@
 				34A4F2732A527132002CA564 /* ModalSubCustomButton.swift */,
 				34F5F0EC2962DCE80010A21D /* TopView.swift */,
 				34F5F0FC29641AC10010A21D /* TitleView.swift */,
-				FA9AA9B12BD639F300906A5B /* UIApplication+.swift */,
-				FF6B35F92E8A47B000814E32 /* UIDevice+.swift */,
-				FF9B79792EB9BBC5009393C7 /* UIView+.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -2529,6 +2516,7 @@
 		FFFE843B2F17352300A29742 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				FFFE84F42F17393600A29742 /* Extension */,
 				FFFE84ED2F17357F00A29742 /* Logger */,
 			);
 			path = Util;
@@ -2545,8 +2533,9 @@
 		FFFE84F02F17386100A29742 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				34C6DB88293627AE00C4ED80 /* FixInfo.swift */,
 				FFFE84F12F17387100A29742 /* AppConfig.swift */,
-				34C6DB87293627AE00C4ED80 /* Save */,
+				FFFE84F32F1738E400A29742 /* Entity */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -2561,6 +2550,17 @@
 				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		FFFE84F42F17393600A29742 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FAD2F6032BB568B000B95B52 /* UserDefault+.swift */,
+				FA9AA9B12BD639F300906A5B /* UIApplication+.swift */,
+				FF6B35F92E8A47B000814E32 /* UIDevice+.swift */,
+				FF9B79792EB9BBC5009393C7 /* UIView+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
