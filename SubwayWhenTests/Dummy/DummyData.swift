@@ -86,9 +86,13 @@ let urlResponse = HTTPURLResponse(
     headerFields: nil
 )
 
-let congestionStation = ["강남"]
+let congestionStations = ["강남", "시청"]
 let weakDayCongestionData: [String: CongestionLevel] = [
     "0": CongestionLevel(percent: 20, level: 2),
+    "1": CongestionLevel(percent: 0, level: 0),
+    "2": CongestionLevel(percent: 0, level: 0),
+    "3": CongestionLevel(percent: 0, level: 0),
+    "4": CongestionLevel(percent: 0, level: 0),
     "5": CongestionLevel(percent: 30, level: 3),
     "6": CongestionLevel(percent: 60, level: 6),
     "7": CongestionLevel(percent: 90, level: 9),
@@ -112,6 +116,10 @@ let weakDayCongestionData: [String: CongestionLevel] = [
 
 let weekendCongestionData: [String: CongestionLevel] = [
     "0": CongestionLevel(percent: 20, level: 2),
+    "1": CongestionLevel(percent: 0, level: 0),
+    "2": CongestionLevel(percent: 0, level: 0),
+    "3": CongestionLevel(percent: 0, level: 0),
+    "4": CongestionLevel(percent: 0, level: 0),
     "5": CongestionLevel(percent: 15, level: 2),
     "6": CongestionLevel(percent: 20, level: 2),
     "7": CongestionLevel(percent: 25, level: 3),
@@ -138,5 +146,10 @@ let congestionData = CongestionDataSet(stations: [
         weekday: weakDayCongestionData,
         saturday: weekendCongestionData,
         sunday: weekendCongestionData
+    )),
+    "시청" : .init(hourlyCongestion: .init(
+        weekday: [:],
+        saturday: [:],
+        sunday: [:]
     ))
 ])
