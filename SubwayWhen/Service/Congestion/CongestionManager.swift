@@ -59,6 +59,10 @@ final class CongestionManager: CongestionManagerProtocol {
         default: dayData = stationData.weekday
         }
         
+        if dayData.isEmpty {
+            return dayData
+        }
+        
         for hour in 1...4 {
             if dayData["\(hour)"] == nil {
                 dayData["\(hour)"] = CongestionLevel(percent: 0, level: 0)
