@@ -460,6 +460,9 @@
 		FFFE84FB2F17582500A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
 		FFFE84FC2F17582500A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
 		FFFE84FF2F18A8B700A29742 /* TestCongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */; };
+		FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */; };
+		FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB2182D12991200DF562B /* TestLocationManager.swift */; };
+		FFFE85042F18B8F300A29742 /* TestCongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -921,6 +924,7 @@
 		FFFE84EE2F17358900A29742 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		FFFE84F12F17387100A29742 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCongestionManager.swift; sourceTree = "<group>"; };
+		FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalFeatureTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1534,6 +1538,7 @@
 			children = (
 				34A221BA29C9B64C003F035D /* MainViewModelTests.swift */,
 				34A221C129CAC1D1003F035D /* MainModelTests.swift */,
+				FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -3032,6 +3037,7 @@
 			files = (
 				34C655772A5D010E0039C16B /* SettingNotiModalViewModelTests.swift in Sources */,
 				FF6790E72E49AF8A00E9DB60 /* ReportFeatureTests.swift in Sources */,
+				FFFE85042F18B8F300A29742 /* TestCongestionManager.swift in Sources */,
 				3497DC9129D2EDE200D2ABB9 /* SearchFeatureTests.swift in Sources */,
 				349D789729CC78D400CA1B52 /* DetailResultScheduleModelTests.swift in Sources */,
 				34A221C229CAC1D1003F035D /* MainModelTests.swift in Sources */,
@@ -3041,6 +3047,7 @@
 				34C655752A5CF8210039C16B /* SettingNotiSelectModalModelTests.swift in Sources */,
 				FF5777972E841DAD00FE2CC8 /* SettingFeatureTests.swift in Sources */,
 				FF7196542ECAF1D300C3F3C1 /* MockLoadModel.swift in Sources */,
+				FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */,
 				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
@@ -3049,6 +3056,7 @@
 				FF7197122ECC082000C3F3C1 /* DummyData.swift in Sources */,
 				3499DE9129D17B9C00A6E8C1 /* EditViewModelTests.swift in Sources */,
 				3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */,
+				FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */,
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
 				34BA0B2629BF246E0044E2C2 /* LoadModelTests.swift in Sources */,

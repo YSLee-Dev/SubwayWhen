@@ -7,6 +7,8 @@
 
 import Foundation
 
+@testable import SubwayWhen
+
 class TestLocationManager: LocationManagerProtocol {
     var locationData: LocationData? = nil
     var authRequest: Bool? = nil

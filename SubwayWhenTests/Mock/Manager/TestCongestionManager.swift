@@ -7,15 +7,17 @@
 
 import Foundation
 
+@testable import SubwayWhen
+
 final class TestCongestionManager: CongestionManagerProtocol {
     
-    var congestionDataSet: CongestionDataSet = congestionData
+    var congestionDataSet: CongestionDataSet!
     var weakDay: Int = 2
     
     // MARK: - Methods
     
     func getAvailableStations() -> [String] {
-        return self.congestionDataSet.stations
+        return self.congestionDataSet.stations.map {$0.key}.sorted {$0 < $1}
     }
     
     func getCongestions(station: String) -> [HourlyCongestionData]? {
