@@ -459,6 +459,7 @@
 		FFFE84FA2F17582500A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
 		FFFE84FB2F17582500A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
 		FFFE84FC2F17582500A29742 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84F12F17387100A29742 /* AppConfig.swift */; };
+		FFFE84FF2F18A8B700A29742 /* TestCongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -919,6 +920,7 @@
 		FFE826282D081DE60070BFED /* SearchStationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStationResultView.swift; sourceTree = "<group>"; };
 		FFFE84EE2F17358900A29742 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		FFFE84F12F17387100A29742 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCongestionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1430,11 +1432,11 @@
 		349E2F6F29BDFABE00C54EE9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FF7837E62E29D5AA004E6BFF /* Strings.swift */,
+				34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */,
+				347AF805293629F1001FB813 /* Assets.xcassets */,
 				FF738DB02F0E3110003CCE66 /* Json */,
 				B6F7811B2B6FBC6600FE8E7B /* Lottie */,
-				347AF805293629F1001FB813 /* Assets.xcassets */,
-				34C7113D29BABF6400160694 /* SubwayWhen_Icon.png */,
-				FF7837E62E29D5AA004E6BFF /* Strings.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -2006,9 +2008,9 @@
 		34F5F0FB2962E66A0010A21D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
 				FF7ECAC82C7BF83300D4643A /* SwiftUI */,
 				FFFE84FD2F17597100A29742 /* UIKit */,
-				34A1FA8F29824B6200537B02 /* ViewStyle.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2083,13 +2085,13 @@
 		B6438D1D2B667CB10099BFEF /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B6438D3C2B667CB10099BFEF /* MainVC.swift */,
+				B6438D3B2B667CB10099BFEF /* MainModel.swift */,
+				B6438D3A2B667CB10099BFEF /* MainViewModel.swift */,
 				FF738D9D2F0CD100003CCE66 /* CongestionModal */,
 				B6438D1E2B667CB10099BFEF /* Coordinator */,
 				B6438D242B667CB10099BFEF /* MainTable */,
 				B6438D342B667CB10099BFEF /* Entity */,
-				B6438D3A2B667CB10099BFEF /* MainViewModel.swift */,
-				B6438D3B2B667CB10099BFEF /* MainModel.swift */,
-				B6438D3C2B667CB10099BFEF /* MainVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2306,7 +2308,6 @@
 			children = (
 				FF0365332D0015FF00EF325D /* LocationManagerTCADependencyKey.swift */,
 				FF0365362D00171100EF325D /* PreviewLocationManager.swift */,
-				FF6CB2182D12991200DF562B /* TestLocationManager.swift */,
 			);
 			path = TCADependency;
 			sourceTree = "<group>";
@@ -2369,6 +2370,7 @@
 		FF71970E2ECBF8FF00C3F3C1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				FFFE85002F18A8EF00A29742 /* Service */,
 				FF71970C2ECBF20E00C3F3C1 /* MockCoreDataScheduleManager.swift */,
 				FF7196532ECAF1D300C3F3C1 /* MockLoadModel.swift */,
 				34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */,
@@ -2577,6 +2579,15 @@
 				B68302C82AC05B8B00E010B7 /* MainStyleLabelView.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		FFFE85002F18A8EF00A29742 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */,
+				FF6CB2182D12991200DF562B /* TestLocationManager.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3059,6 +3070,7 @@
 				34D9EA062A5571BA0080AD17 /* LocationData.swift in Sources */,
 				349CEFB32991E3CB00CC69E5 /* DetailResultScheduleViewCellData.swift in Sources */,
 				FF8299012CFDA601008ED530 /* StationTitleViewInSUI.swift in Sources */,
+				FFFE84FF2F18A8B700A29742 /* TestCongestionManager.swift in Sources */,
 				349E2F4529BDBA6200C54EE9 /* EditCoordinatorDelegate.swift in Sources */,
 				34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */,
 				FF8299032CFDAC08008ED530 /* AnimationButtonInSUI.swift in Sources */,
