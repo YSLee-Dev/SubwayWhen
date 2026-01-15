@@ -2370,8 +2370,7 @@
 		FF71970E2ECBF8FF00C3F3C1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
-				FFFE85002F18A8EF00A29742 /* Service */,
-				FF71970C2ECBF20E00C3F3C1 /* MockCoreDataScheduleManager.swift */,
+				FFFE85002F18A8EF00A29742 /* Manager */,
 				FF7196532ECAF1D300C3F3C1 /* MockLoadModel.swift */,
 				34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */,
 			);
@@ -2581,13 +2580,14 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
-		FFFE85002F18A8EF00A29742 /* Service */ = {
+		FFFE85002F18A8EF00A29742 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */,
 				FF6CB2182D12991200DF562B /* TestLocationManager.swift */,
+				FF71970C2ECBF20E00C3F3C1 /* MockCoreDataScheduleManager.swift */,
 			);
-			path = Service;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

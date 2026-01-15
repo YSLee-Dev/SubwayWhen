@@ -85,3 +85,58 @@ let urlResponse = HTTPURLResponse(
     httpVersion: nil,
     headerFields: nil
 )
+
+let congestionStation = ["강남"]
+let weakDayCongestionData: [String: CongestionLevel] = [
+    "0": CongestionLevel(percent: 20, level: 2),
+    "5": CongestionLevel(percent: 30, level: 3),
+    "6": CongestionLevel(percent: 60, level: 6),
+    "7": CongestionLevel(percent: 90, level: 9),
+    "8": CongestionLevel(percent: 100, level: 10),
+    "9": CongestionLevel(percent: 85, level: 9),
+    "10": CongestionLevel(percent: 65, level: 7),
+    "11": CongestionLevel(percent: 70, level: 7),
+    "12": CongestionLevel(percent: 80, level: 8),
+    "13": CongestionLevel(percent: 75, level: 8),
+    "14": CongestionLevel(percent: 60, level: 6),
+    "15": CongestionLevel(percent: 65, level: 7),
+    "16": CongestionLevel(percent: 70, level: 7),
+    "17": CongestionLevel(percent: 85, level: 9),
+    "18": CongestionLevel(percent: 100, level: 10),
+    "19": CongestionLevel(percent: 95, level: 10),
+    "20": CongestionLevel(percent: 80, level: 8),
+    "21": CongestionLevel(percent: 65, level: 7),
+    "22": CongestionLevel(percent: 50, level: 5),
+    "23": CongestionLevel(percent: 35, level: 4)
+]
+
+let weekendCongestionData: [String: CongestionLevel] = [
+    "0": CongestionLevel(percent: 20, level: 2),
+    "5": CongestionLevel(percent: 15, level: 2),
+    "6": CongestionLevel(percent: 20, level: 2),
+    "7": CongestionLevel(percent: 25, level: 3),
+    "8": CongestionLevel(percent: 30, level: 3),
+    "9": CongestionLevel(percent: 35, level: 4),
+    "10": CongestionLevel(percent: 45, level: 5),
+    "11": CongestionLevel(percent: 55, level: 6),
+    "12": CongestionLevel(percent: 60, level: 6),
+    "13": CongestionLevel(percent: 65, level: 7),
+    "14": CongestionLevel(percent: 70, level: 7),
+    "15": CongestionLevel(percent: 70, level: 7),
+    "16": CongestionLevel(percent: 65, level: 7),
+    "17": CongestionLevel(percent: 65, level: 7),
+    "18": CongestionLevel(percent: 70, level: 7),
+    "19": CongestionLevel(percent: 65, level: 7),
+    "20": CongestionLevel(percent: 60, level: 6),
+    "21": CongestionLevel(percent: 50, level: 5),
+    "22": CongestionLevel(percent: 40, level: 4),
+    "23": CongestionLevel(percent: 30, level: 3)
+]
+
+let congestionData = CongestionDataSet(stations: [
+    "강남" : .init(hourlyCongestion: .init(
+        weekday: weakDayCongestionData,
+        saturday: weekendCongestionData,
+        sunday: weekendCongestionData
+    ))
+])
