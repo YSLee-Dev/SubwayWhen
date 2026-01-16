@@ -67,7 +67,7 @@ struct CongestionModalView: View {
                     )
                     .foregroundStyle(.red)
                     .shadow(color: Color.black.opacity(0.4), radius: 5)
-                    .symbolSize(100)
+                    .symbolSize(75)
                     .annotation(
                         position: .top,
                         spacing: 5,
