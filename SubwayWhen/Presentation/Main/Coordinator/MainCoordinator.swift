@@ -107,18 +107,39 @@ extension MainCoordinator : MainDelegate {
     }
     
     func importantTap(data: ImportantData) {
-        let modal = PopupModal(modalHeight: 400, popupTitle: Strings.Main.importantAlarm, subTitle: data.title, popupValue: data.contents)
-        modal.modalPresentationStyle = .overFullScreen
-        
-        self.navigation.present(modal, animated: false)
+        self.executeAfterTransition { [weak self] in
+            let modal = PopupModal(
+                modalHeight: 400,
+                popupTitle: Strings.Main.importantAlarm,
+                subTitle: data.title,
+                popupValue: data.contents
+            )
+            
+            modal.modalPresentationStyle = .overFullScreen
+            self?.navigation.present(modal, animated: false)
+        }
     }
     
     func congestionTap() {
-        let congestion = CongestionModalCoordinator(navigation: self.navigation)
-        self.childCoordinator.append(congestion)
-        congestion.delegate = self
-      
-        congestion.start()
+        self.executeAfterTransition { [weak self] in
+            let congestion = CongestionModalCoordinator(navigation: self?.navigation ?? .init())
+            self?.childCoordinator.append(congestion)
+            congestion.delegate = self
+            
+            congestion.start()
+        }
+    }
+    
+    private func executeAfterTransition(_ action: @escaping () -> Void) {
+        if let coordinator = self.navigation.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { context in
+                if !context.isCancelled {
+                    action()
+                }
+            }
+        } else {
+            action()
+        }
     }
 }
 
