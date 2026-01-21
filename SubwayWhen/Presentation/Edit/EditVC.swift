@@ -62,7 +62,7 @@ class EditVC: TableVCCustom{
     }
     
     deinit{
-        print("DEINIT EDITVC")
+        AppLogger.view.log(.debug, "EDITVC DEINIT")
     }
     
     override func viewDidLoad() {

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainTableHeaderSubView: MainStyleUIView {
+class MainTableHeaderSubView: ModalCustomButton {
     
     // MARK: - Properties
     
@@ -35,7 +35,7 @@ class MainTableHeaderSubView: MainStyleUIView {
     // MARK: - LifeCycle
     
     init(title: String, subTitle: String, isImportantMode: Bool = false){
-        super.init(frame: .zero)
+        super.init(bgColor: UIColor(named: "MainColor") ?? .gray, customTappedBG: nil)
         
         self.attribute(title: title, subTitle: subTitle, isImportantMode: isImportantMode)
         self.layout(isImportantMode: isImportantMode)
@@ -60,38 +60,24 @@ extension MainTableHeaderSubView {
     }
     
     private func layout(isImportantMode: Bool) {
-        self.addSubviews(self.mainTitle, self.subTitle)
-        
-        if isImportantMode {
-            self.addSubview(self.arrowView)
-            self.arrowView.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.trailing.equalToSuperview().inset(15)
-                $0.width.equalTo(12)
-                $0.height.equalTo(18)
-            }
+        self.addSubviews(self.mainTitle, self.subTitle, self.arrowView)
+        self.arrowView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(15)
+            $0.width.equalTo(12)
+            $0.height.equalTo(18)
         }
         
         self.mainTitle.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.bottom.equalTo(self.snp.centerY).offset(isImportantMode ? 0 : -5)
-            
-            if isImportantMode {
-                $0.trailing.equalTo(self.arrowView.snp.leading).offset(-5)
-            } else {
-                $0.trailing.equalToSuperview().inset(15)
-            }
+            $0.trailing.equalTo(self.arrowView.snp.leading).offset(-5)
         }
         
         self.subTitle.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalTo(self.snp.centerY).offset(isImportantMode ? 5 : 0)
-            
-            if isImportantMode {
-                $0.trailing.equalTo(self.arrowView.snp.leading).offset(-5)
-            } else {
-                $0.trailing.equalToSuperview().inset(15)
-            }
+            $0.trailing.equalTo(self.arrowView.snp.leading).offset(-5)
         }
     }
 }

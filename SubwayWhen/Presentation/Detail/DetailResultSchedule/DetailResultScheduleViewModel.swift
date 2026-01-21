@@ -32,7 +32,7 @@ class DetailResultScheduleViewModel : DetailResultScheduleViewModelProtocol{
     let bag = DisposeBag()
     
     deinit{
-        print("DetailResultScheduleViewModel DEINIT")
+        AppLogger.view.log(.debug, "DetailResultScheduleViewModel DEINIT")
     }
     
     init(

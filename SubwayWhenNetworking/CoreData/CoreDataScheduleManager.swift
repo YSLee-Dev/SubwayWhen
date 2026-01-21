@@ -52,7 +52,7 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
         do {
             try self.context.save()
         } catch {
-            print("Core Data Save Error: ", error)
+            AppLogger.coreData.log(.error, "코어 데이터 저장 에러: \(error.localizedDescription)")
         }
     }
     
@@ -64,7 +64,7 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
             let results = try self.context.fetch(request)
             return results.filter {!$0.scheduleData.isEmpty}.first
         } catch {
-            print("Core Data Fetch Error: \(error)")
+            AppLogger.coreData.log(.error, "코어 데이터 로딩 에러: \(error.localizedDescription)")
             return nil
         }
     }
@@ -80,7 +80,7 @@ class CoreDataScheduleManager: CoreDataScheduleManagerProtocol {
             
             try self.context.save()
         } catch {
-            print("Core Data Remove Error: \(error.localizedDescription)")
+            AppLogger.coreData.log(.error, "코어 데이터 삭제 에러: \(error.localizedDescription)")
         }
     }
 }

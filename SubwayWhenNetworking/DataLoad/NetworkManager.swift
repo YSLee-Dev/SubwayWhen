@@ -44,7 +44,7 @@ final class NetworkManager : NetworkManagerProtocol{
             }
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch{error in
-                print(error)
+                AppLogger.network.log(.error, "네트워크 에러: \(error.localizedDescription)")
                 return .just(.failure(.init(.notConnectedToInternet)))
             }
             .asSingle()
@@ -87,7 +87,7 @@ final class NetworkManager : NetworkManagerProtocol{
             }
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
-                print(error)
+                AppLogger.network.log(.error, "네트워크 에러: \(error.localizedDescription)")
                 return .just(.failure(.init(.notConnectedToInternet)))
             }
             .asSingle()

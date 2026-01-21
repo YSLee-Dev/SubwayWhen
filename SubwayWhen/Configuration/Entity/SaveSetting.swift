@@ -20,6 +20,7 @@ struct SaveSetting : Codable, Equatable {
     var tutorialSuccess: Bool
     var detailVCTrainIcon: String
     var isWeekendNotificationEnabled: Bool
+    var mainCongestionBaseStaton: String
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -35,10 +36,17 @@ struct SaveSetting : Codable, Equatable {
         self.alertGroupTwoID = try container.decode(String.self, forKey: .alertGroupTwoID)
         self.tutorialSuccess = try container.decode(Bool.self, forKey: .tutorialSuccess)
         self.detailVCTrainIcon = try container.decode(String.self, forKey: .detailVCTrainIcon)
+        
         do {
             self.isWeekendNotificationEnabled = try container.decode(Bool.self, forKey: .isWeekendNotificationEnabled)
         } catch {
             self.isWeekendNotificationEnabled =  true
+        }
+        
+        do {
+            self.mainCongestionBaseStaton = try container.decode(String.self, forKey: .mainCongestionBaseStaton)
+        } catch {
+            self.mainCongestionBaseStaton =  "강남"
         }
     }
     
@@ -55,5 +63,6 @@ struct SaveSetting : Codable, Equatable {
         self.tutorialSuccess = false
         self.detailVCTrainIcon = "🚃"
         self.isWeekendNotificationEnabled =  true
+        self.mainCongestionBaseStaton = "강남"
     }
 }

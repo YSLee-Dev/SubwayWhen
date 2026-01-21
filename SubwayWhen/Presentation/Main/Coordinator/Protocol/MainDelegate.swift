@@ -13,4 +13,5 @@ protocol MainDelegate : AnyObject {
     func plusStationTap()
     func importantTap(data: ImportantData)
     func detailLongPress(data: MainTableViewCellData) -> UIViewController?
+    func congestionTap()
 }

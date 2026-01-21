@@ -10,22 +10,23 @@ import UIKit
 class MainCoordinator : Coordinator{
     var childCoordinator: [Coordinator] = []{
         didSet{
-            print(self.childCoordinator)
+            AppLogger.coordinator.log(.debug, "MainCoordinator 자식: \(self.childCoordinator)")
         }
     }
     var navigation : UINavigationController
     var delegate : MainCoordinatorDelegate?
     private var nowNotiTapped = false
+    private let viewModel: MainViewModel
     
     init(){
         self.navigation = UINavigationController()
+        self.viewModel = MainViewModel()
     }
     
     func start() {
-        let viewModel = MainViewModel()
-        viewModel.delegate = self
+        self.viewModel.delegate = self
         
-        let main = MainVC(viewModel: viewModel)
+        let main = MainVC(viewModel: self.viewModel)
         main.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), tag: 0)
         
         if #available(iOS 26.0, *) {
@@ -105,12 +106,40 @@ extension MainCoordinator : MainDelegate {
         detail.start()
     }
     
-    
     func importantTap(data: ImportantData) {
-        let modal = PopupModal(modalHeight: 400, popupTitle: Strings.Main.importantAlarm, subTitle: data.title, popupValue: data.contents)
-        modal.modalPresentationStyle = .overFullScreen
-        
-        self.navigation.present(modal, animated: false)
+        self.executeAfterTransition { [weak self] in
+            let modal = PopupModal(
+                modalHeight: 400,
+                popupTitle: Strings.Main.importantAlarm,
+                subTitle: data.title,
+                popupValue: data.contents
+            )
+            
+            modal.modalPresentationStyle = .overFullScreen
+            self?.navigation.present(modal, animated: false)
+        }
+    }
+    
+    func congestionTap() {
+        self.executeAfterTransition { [weak self] in
+            let congestion = CongestionModalCoordinator(navigation: self?.navigation ?? .init())
+            self?.childCoordinator.append(congestion)
+            congestion.delegate = self
+            
+            congestion.start()
+        }
+    }
+    
+    private func executeAfterTransition(_ action: @escaping () -> Void) {
+        if let coordinator = self.navigation.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { context in
+                if !context.isCancelled {
+                    action()
+                }
+            }
+        } else {
+            action()
+        }
     }
 }
 
@@ -137,5 +166,19 @@ extension MainCoordinator : DetailCoordinatorDelegate{
     
     func disappear(detailCoordinator: DetailCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailCoordinator}
+    }
+}
+
+extension MainCoordinator: CongestionCoordinatorProtocol {
+    func congestionStationChanged() {
+        self.viewModel.congestionUpdate()
+    }
+    
+    func didDisappear(coordinator: any Coordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== coordinator}
+    }
+    
+    func dismiss() {
+        self.navigation.dismiss(animated: false)
     }
 }

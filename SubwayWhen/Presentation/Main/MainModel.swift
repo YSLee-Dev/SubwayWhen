@@ -12,9 +12,14 @@ import RxCocoa
 
 class MainModel : MainModelProtocol{
     let model : TotalLoadProtocol
+    let congestionManager: CongestionManagerProtocol
     
-    init(totalLoadModel : TotalLoadModel = .init()){
+    init(
+        totalLoadModel : TotalLoadModel = .init(),
+        congestionManager: CongestionManagerProtocol = CongestionManager.shared
+    ){
         self.model = totalLoadModel
+        self.congestionManager = congestionManager
     }
     
     func mainTitleLoad() -> Observable<String> {
@@ -48,33 +53,10 @@ class MainModel : MainModelProtocol{
     
     func congestionDataLoad() -> Observable<Int>{
         // 혼잡도 set
-        return Observable<Int>.create { observer in
-            let nowHour = Calendar.current.component(.hour, from: Date())
-            let week =  Calendar.current.component(.weekday, from: Date())
-            var congestion = 0
-            
-            if week == 1 || week == 7 {
-                congestion = switch nowHour {
-                case 1...4: 0
-                default: 5
-                }
-            } else {
-                congestion = switch nowHour {
-                case 1...4: 0
-                case 5: 3
-                case 6: 5
-                case 7: 7
-                case 8...9: 10
-                case 10...11: 4
-                case 12...14: 5
-                case 15...16: 6
-                case 17...18: 10
-                case 19: 9
-                case 20...22: 5
-                case 23: 3
-                default: 2
-                }
-            }
+        return Observable<Int>.create { [weak self] observer in
+            let congestion = self?.congestionManager.getLevel(
+                station: FixInfo.saveSetting.mainCongestionBaseStaton, hour: Calendar.current.component(.hour, from: Date())
+            ) ?? 0
             
             observer.onNext(congestion)
             observer.onCompleted()

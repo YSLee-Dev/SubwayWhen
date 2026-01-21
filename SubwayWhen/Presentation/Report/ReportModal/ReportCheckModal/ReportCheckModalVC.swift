@@ -32,12 +32,26 @@ class ReportCheckModalVC : ModalVCCustom{
     
     init(modalHeight: CGFloat, viewModel : ReportCheckModalViewModel) {
         self.checkModalViewModel = viewModel
-        super.init(modalHeight: modalHeight, btnTitle: "접수", mainTitle: "지하철 민원", subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 화면을 눌러 수정할 수 있어요.")
+        super.init(
+            modalHeight: modalHeight,
+            btnTitle: "접수",
+            mainTitle: "지하철 민원",
+            subTitle: "하단의 내용으로 민원을 접수할까요?\n민원내용은 화면을 눌러 수정할 수 있어요.",
+            hidesTabBar: false
+        )
+        
         self.bind(self.checkModalViewModel)
+        self.onDidDismiss = { [ weak self ] in
+            guard let self = self else {return}
+            if self.status {
+                self.checkModalViewModel.msgSeedDismiss.accept(Void())
+            }
+            self.dismiss(animated: false)
+        }
     }
     
     deinit{
-        print("ReportCheckModalVC DEINIT")
+        AppLogger.view.log(.debug, "ReportCheckModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -97,13 +111,6 @@ extension ReportCheckModalVC {
             .disposed(by: self.bag)
     }
     
-    override func modalDismiss() {
-        if self.status {
-            self.checkModalViewModel.msgSeedDismiss.accept(Void())
-        }
-        super.modalDismiss()
-    }
-    
     private func successIconSet(){
         self.mainBG.addSubview(self.successIcon)
         self.successIcon.snp.makeConstraints{
@@ -150,7 +157,7 @@ extension ReportCheckModalVC : MFMessageComposeViewControllerDelegate{
                 self?.msgVC.messageComposeDelegate = self
             }
         default:
-            print("Error")
+            AppLogger.view.log(.error, "메세지 발생 중 에러 발생")
             break
         }
     }
@@ -168,9 +175,8 @@ extension Reactive where Base : ReportCheckModalVC{
             base.msgVC.recipients = [number]
             base.msgVC.body = base.textView.text
             
-            print(number)
-            
             #if DEBUG
+            AppLogger.view.log(.debug, "메세지 전송 번호: \(number)")
             base.msgSendSuccess()
             #else
             base.present(base.msgVC, animated: true)

@@ -32,10 +32,23 @@ class SettingNotiModalVC: ModalVCCustom {
         super.init(modalHeight: modalHeight, btnTitle: btnTitle, mainTitle: mainTitle, subTitle: subTitle)
         self.attribute()
         self.bind()
+        
+        self.onDidDismiss = { [weak self] in
+            self?.dismissAction.onNext(Void())
+        }
+        
+        self.onWillDismiss = { [weak self] in
+            self?.settingNotiExplanationView.hiddenAnimation()
+            return true
+        }
+        
+        self.onWillPresent = { [weak self] in
+            self?.settingNotiExplanationView.showAnimation()
+        }
     }
     
     deinit {
-        print("SettingNotiModalVC DEINIT")
+        AppLogger.view.log(.debug, "SettingNotiModalVC DEINIT")
     }
     
     required init?(coder: NSCoder) {
@@ -48,22 +61,6 @@ class SettingNotiModalVC: ModalVCCustom {
     
     override func viewDidDisappear(_ animated: Bool) {
         self.didDisappearAction.onNext(Void())
-    }
-    
-    override func viewAnimation() {
-        super.viewAnimation()
-        self.settingNotiExplanationView.showAnimation()
-    }
-    
-    override func modalDismiss() {
-        UIView.animate(withDuration: 0.25, delay: 0, animations: {
-            self.mainBG.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.mainBGContainer.transform = CGAffineTransform(translationX: 0, y: self.modalHeight)
-            self.grayBG.backgroundColor = .clear
-            self.settingNotiExplanationView.hiddenAnimation()
-        }, completion: {_ in
-            self.dismissAction.onNext(Void())
-        })
     }
 }
 
@@ -110,6 +107,7 @@ extension SettingNotiModalVC {
         let output =  self.viewModel.transform(input: input)
         
         output.authSuccess
+            .delay(.milliseconds(100))
             .drive(self.rx.authSwitch)
             .disposed(by: self.bag)
         
@@ -129,8 +127,7 @@ extension SettingNotiModalVC {
         self.mainBG.addSubview(animationIcon)
         animationIcon.snp.makeConstraints{
             $0.size.equalTo(100)
-            $0.top.equalTo(self.subTitle.snp.bottom).offset(50)
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     

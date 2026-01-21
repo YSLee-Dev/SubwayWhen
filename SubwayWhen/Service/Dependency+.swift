@@ -23,4 +23,9 @@ extension DependencyValues {
         get{self[NotificationTCADependencyKey.self]}
         set{self[NotificationTCADependencyKey.self] = newValue}
     }
+    
+    var congestionManager: CongestionManagerProtocol {
+        get{self[CongestionTCADependencyKey.self]}
+        set{self[CongestionTCADependencyKey.self] = newValue}
+    }
 }

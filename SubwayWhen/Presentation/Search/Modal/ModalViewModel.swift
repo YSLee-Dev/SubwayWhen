@@ -15,7 +15,7 @@ import FirebaseAnalytics
 
 class ModalViewModel{
     deinit{
-        print("ModalViewModel DEINIT")
+        AppLogger.view.log(.debug, "ModalViewModel DEINIT")
     }
     
     struct Input {
