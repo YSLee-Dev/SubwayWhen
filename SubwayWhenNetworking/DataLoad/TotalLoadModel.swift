@@ -15,12 +15,12 @@ class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
     private var coreDataManager: CoreDataScheduleManagerProtocol
     private let bag = DisposeBag()
-    private var stationIDList: [DetailStationId] {
-        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return  []}
-        guard let data = try? Data(contentsOf: fileUrl) else {return  []}
-        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return  []}
+    private lazy var stationIDList: [DetailStationId] = {
+        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return []}
+        guard let data = try? Data(contentsOf: fileUrl) else {return []}
+        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return []}
         return decodingData
-    }
+    }()
     
     init(loadModel : LoadModelProtocol = LoadModel(), coreDataManager: CoreDataScheduleManagerProtocol = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
