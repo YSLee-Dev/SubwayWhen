@@ -60,5 +60,26 @@ class AppDefaultModel : AppDefaultModelProtocol{
         
         return .success(list)
     }
+    
+    // 공휴일 데이터 불러오기
+    func holidayDataLoad(result: @escaping (_ holidayData: HolidayData) -> ()) {
+        self.database.observe(.value) { snapshot, _ in
+            guard let data = snapshot.value as? [String: [String: Any]] else { result(.init(version: 0, list: [])); return }
+            let subwayWhen = data["SubwayWhen"]
+            let holidayList = subwayWhen?["HolidayList"] as? [String: Any]
+            let version = holidayList?["version"] as? Int ?? 0
+            let list = holidayList?["value"] as? [String] ?? []
+            
+            result(HolidayData(version: version, list: list))
+        }
+    }
+    
+    // 저장된 공휴일 데이터 불러오기
+    func savedHolidayDataLoad() -> HolidayData {
+        guard let data = UserDefaults.shared.data(forKey: "holidayData"),
+              let holidayData = try? PropertyListDecoder().decode(HolidayData.self, from: data) else {
+            return .init(version: 0, list: [])
+        }
+        return holidayData
+    }
 }
-
