@@ -87,4 +87,16 @@ extension AppDefaultManager{
             AppLogger.core.log(.error, "지하철 역을 가져오지 못함, 오류: \(error)")
         }
     }
+    
+    func holidayLoad() {
+        // 캐시된 데이터를 먼저 로드
+        let cachedData = self.model.savedHolidayDataLoad()
+        FixInfo.holidayData = cachedData
+        
+        // Firebase에서 최신 데이터 로드 후 버전 비교
+        self.model.holidayDataLoad { remoteData in
+            guard remoteData.version > cachedData.version else { return }
+            FixInfo.holidayData = remoteData
+        }
+    }
 }

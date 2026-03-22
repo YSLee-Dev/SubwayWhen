@@ -37,6 +37,9 @@ class AppCoordinator : Coordinator{
         
         // 저장된 지하철 로드
         self.appDefaultManager?.stationLoad()
+        
+        // 공휴일 로드
+        self.appDefaultManager?.holidayLoad()
     }
     
     func start() {
