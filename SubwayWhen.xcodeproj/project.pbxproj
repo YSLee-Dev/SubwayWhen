@@ -144,6 +144,7 @@
 		34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB13362ACFB04F008D04B0 /* TutorialViewModelTests.swift */; };
 		34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */; };
 		34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */; };
+		34B4A8552F6FE2CF008730BB /* HolidayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8542F6FE2CF008730BB /* HolidayData.swift */; };
 		34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */; };
 		34B6ADE12A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */; };
 		34B6ADE32A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE22A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift */; };
@@ -705,6 +706,7 @@
 		34AB13362ACFB04F008D04B0 /* TutorialViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModelTests.swift; sourceTree = "<group>"; };
 		34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		34B4A8542F6FE2CF008730BB /* HolidayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayData.swift; sourceTree = "<group>"; };
 		34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalModel.swift; sourceTree = "<group>"; };
 		34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalCellData.swift; sourceTree = "<group>"; };
 		34B6ADE22A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalSectionData.swift; sourceTree = "<group>"; };
@@ -2555,6 +2557,7 @@
 				349FF28B299DEE00007A98F4 /* SaveSetting.swift */,
 				341200EC293745AE00C77050 /* SaveStationGroup.swift */,
 				B6B2257C2B90C07C00F6D669 /* SaveTrainIcon.swift */,
+				34B4A8542F6FE2CF008730BB /* HolidayData.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -3070,6 +3073,7 @@
 			files = (
 				34A1FA9029824B6200537B02 /* ViewStyle.swift in Sources */,
 				34A303B829AF86FD00948EDD /* ScheduleStationModel.swift in Sources */,
+				34B4A8552F6FE2CF008730BB /* HolidayData.swift in Sources */,
 				34C6DB9C293627AF00C4ED80 /* FixInfo.swift in Sources */,
 				B68FB3482B75EFB70075339F /* SettingTrainIconModalVC.swift in Sources */,
 				349E2F5929BDD0ED00C54EE9 /* DetailResultScheduleDelegate.swift in Sources */,
