@@ -7,15 +7,6 @@
 
 import Foundation
 
-enum DayType {
-    /// 평일
-    case weekday
-    /// 토요일
-    case saturday
-    /// 일요일 + 공휴일
-    case holiday
-}
-
 extension Calendar {
     func dayType(_ date: Date = Date()) -> DayType {
         let weekday = self.component(.weekday, from: date)

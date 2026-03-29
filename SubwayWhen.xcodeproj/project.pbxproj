@@ -146,6 +146,9 @@
 		34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */; };
 		34B4A8552F6FE2CF008730BB /* HolidayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8542F6FE2CF008730BB /* HolidayData.swift */; };
 		34B4A8572F6FEA38008730BB /* Calendar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8562F6FEA38008730BB /* Calendar+.swift */; };
+		34B4A8592F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
+		34B4A85A2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
+		34B4A85B2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */; };
 		34B6ADE12A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */; };
 		34B6ADE32A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE22A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift */; };
@@ -709,6 +712,7 @@
 		34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		34B4A8542F6FE2CF008730BB /* HolidayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayData.swift; sourceTree = "<group>"; };
 		34B4A8562F6FEA38008730BB /* Calendar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+.swift"; sourceTree = "<group>"; };
+		34B4A8582F794DCC008730BB /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
 		34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalModel.swift; sourceTree = "<group>"; };
 		34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalCellData.swift; sourceTree = "<group>"; };
 		34B6ADE22A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalSectionData.swift; sourceTree = "<group>"; };
@@ -1616,6 +1620,7 @@
 		34A303A029AF86FD00948EDD /* ScheduleArrival */ = {
 			isa = PBXGroup;
 			children = (
+				34B4A8582F794DCC008730BB /* DayType.swift */,
 				34A303A129AF86FD00948EDD /* ScheduleType.swift */,
 				34A303A229AF86FD00948EDD /* ScheduleSearch.swift */,
 				34A303AC29AF86FD00948EDD /* ResultSchedule.swift */,
@@ -3118,6 +3123,7 @@
 				B64200D129D00C7F00D64A3A /* DisposableView.swift in Sources */,
 				34A303B929AF86FD00948EDD /* SearchInfoBySubwayNameService.swift in Sources */,
 				34F494D129815200001599B1 /* DetailResultScheduleVC.swift in Sources */,
+				34B4A85B2F794DCC008730BB /* DayType.swift in Sources */,
 				34A58AE12AC3BAEE00C8A563 /* TutorialCollectionFirstCell.swift in Sources */,
 				34D9EA092A557E3F0080AD17 /* VicinityStationsData.swift in Sources */,
 				34A3F0A72AB8210B0012115F /* ImportantData.swift in Sources */,
@@ -3376,6 +3382,7 @@
 				FA4CB79F2BB684B1003C41F6 /* KorailTrainNumber.swift in Sources */,
 				FA4CB7A02BB684B1003C41F6 /* RealtimeStationArrival.swift in Sources */,
 				FFE826212D06B1300070BFED /* DetailStationId.swift in Sources */,
+				34B4A85A2F794DCC008730BB /* DayType.swift in Sources */,
 				FA4CB7A12BB684B1003C41F6 /* ScheduleStationModel.swift in Sources */,
 				FF03653A2D001FEC00EF325D /* VicinityTransformData.swift in Sources */,
 				FF20D8742EBC5CDD00B280D9 /* SubwayNoticeResponse.swift in Sources */,
@@ -3415,6 +3422,7 @@
 				FF36A3822C80633A00387A3D /* PreviewTotalLoadTCADependency.swift in Sources */,
 				FA4CB7A92BB684B1003C41F6 /* LiveStationModel.swift in Sources */,
 				FA4CB7AA2BB684B1003C41F6 /* KorailScdule.swift in Sources */,
+				34B4A8592F794DCC008730BB /* DayType.swift in Sources */,
 				FA4CB7AB2BB684B1003C41F6 /* NetworkManagerProtocol.swift in Sources */,
 				FFFE84FA2F17582500A29742 /* AppConfig.swift in Sources */,
 				FFC07F6C2D34D63D0001B1CD /* SearchQueryRecommendData.swift in Sources */,
