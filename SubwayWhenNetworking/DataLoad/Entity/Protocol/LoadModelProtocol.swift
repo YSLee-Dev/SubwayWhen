@@ -11,9 +11,9 @@ import RxSwift
 
 protocol LoadModelProtocol : AnyObject{
     func stationArrivalRequest(stationName : String) -> Single<Result<LiveStationModel, URLError>>
-    func seoulStationScheduleLoad(scheduleSearch : ScheduleSearch) -> Single<Result<ScheduleStationModel, URLError>>
+    func seoulStationScheduleLoad(scheduleSearch : ScheduleSearch, dayType: DayType) -> Single<Result<ScheduleStationModel, URLError>>
     func korailTrainNumberLoad() -> Observable<[KorailTrainNumber]>
-    func korailSchduleLoad(scheduleSearch : ScheduleSearch) -> Single<Result<KorailHeader, URLError>>
+    func korailSchduleLoad(scheduleSearch : ScheduleSearch, dayType: DayType) -> Single<Result<KorailHeader, URLError>>
     func stationSearch(station: String) -> Single<Result<SearchStaion,URLError>>
     func defaultViewListRequest() -> Observable<[String]>
     func vicinityStationsLoad(x: Double, y: Double) -> Single<Result<VicinityStationsData,URLError>>

@@ -21,13 +21,12 @@ class TotalLoadModel : TotalLoadProtocol {
         guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return []}
         return decodingData
     }()
-    private let nowDayType: DayType
+    private let holidayList: [String]
 
     init(loadModel : LoadModelProtocol = LoadModel(), coreDataManager: CoreDataScheduleManagerProtocol = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
         self.coreDataManager = coreDataManager
-        let holidayList = UserDefaults(suiteName: "group.com.yslee.subwaywhen")?.stringArray(forKey: "holidayList") ?? []
-        self.nowDayType = Self.calculateDayType(holidayList: holidayList)
+        self.holidayList = UserDefaults(suiteName: "group.com.yslee.subwaywhen")?.stringArray(forKey: "holidayList") ?? []
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
@@ -115,7 +114,7 @@ class TotalLoadModel : TotalLoadProtocol {
     // 코레일 시간표 계산
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>{
         guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
-        let weekDay = Calendar.current.component(.weekday, from: Date())
+        let dayType = self.calculateDayType(holidayList: self.holidayList, date: requestDate)
         var retry = false
         
         let requestRry = BehaviorSubject<Void>(value: Void())
@@ -124,7 +123,7 @@ class TotalLoadModel : TotalLoadProtocol {
         let number = self.loadModel.korailTrainNumberLoad()
         let request = requestRry
             .flatMap{[weak self] _ in
-                self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo) ?? .never()
+                self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo, dayType: dayType) ?? .never()
             }
             .asObservable()
         
@@ -148,9 +147,9 @@ class TotalLoadModel : TotalLoadProtocol {
         
         let numberCheck = number.map{ data in
             data.filter{
-                if weekDay == 1 || weekDay == 7{
+                if dayType != .weekday {
                     return $0.week == "주말" ? true : false
-                }else{
+                } else {
                     return $0.week == "평일" ? true : false
                 }
             }
@@ -251,7 +250,8 @@ class TotalLoadModel : TotalLoadProtocol {
             inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
         }
         
-        let schedule = self.loadModel.seoulStationScheduleLoad(scheduleSearch: scheduleSearch)
+        let dayType = self.calculateDayType(holidayList: self.holidayList, date: requestDate)
+        let schedule = self.loadModel.seoulStationScheduleLoad(scheduleSearch: scheduleSearch, dayType: dayType)
             .map{ data -> [ScheduleStationArrival] in
                 // success 되지 않으면 > 오류 발생 시
                 guard case .success(let value) = data else {return []}
@@ -419,8 +419,7 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
-        let requestWeek = Calendar.current.component(.weekday, from: requestDate)
-        let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
+        let requestWeekString = self.calculateDayType(holidayList: self.holidayList, date: requestDate) == .weekday ? "평일" : "주말"
         guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
         
         let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
@@ -488,7 +487,7 @@ class TotalLoadModel : TotalLoadProtocol {
             }
     }
     
-    private static func calculateDayType(holidayList: [String], date: Date = Date()) -> DayType {
+    private func calculateDayType(holidayList: [String], date: Date) -> DayType {
         let weekday = Calendar.current.component(.weekday, from: date)
         if weekday == 1 { return .holiday }
         if weekday == 7 { return .saturday }

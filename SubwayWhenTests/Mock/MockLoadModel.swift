@@ -29,7 +29,7 @@ class MockLoadModel: LoadModelProtocol {
             .asSingle()
     }
     
-    func seoulStationScheduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch) -> RxSwift.Single<Result<SubwayWhen.ScheduleStationModel, URLError>> {
+    func seoulStationScheduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch, dayType: DayType) -> RxSwift.Single<Result<SubwayWhen.ScheduleStationModel, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
@@ -38,7 +38,7 @@ class MockLoadModel: LoadModelProtocol {
         return .just(self.korailTrainNumber)
     }
     
-    func korailSchduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch) -> RxSwift.Single<Result<SubwayWhen.KorailHeader, URLError>> {
+    func korailSchduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch, dayType: DayType) -> RxSwift.Single<Result<SubwayWhen.KorailHeader, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }

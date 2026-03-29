@@ -29,7 +29,7 @@ final class LoadModel : LoadModelProtocol{
     }
     
     // 서울 지하철 시간표 데이터 통신
-    internal func seoulStationScheduleLoad(scheduleSearch : ScheduleSearch) -> Single<Result<ScheduleStationModel, URLError>>{
+    internal func seoulStationScheduleLoad(scheduleSearch : ScheduleSearch, dayType: DayType) -> Single<Result<ScheduleStationModel, URLError>>{
         // 코레일/신분당선 시간표 지원하지 않음
         if scheduleSearch.stationCode.contains("K") || scheduleSearch.stationCode.contains("D"){
             return .just(.failure(.init(.badURL)))
@@ -46,15 +46,10 @@ final class LoadModel : LoadModelProtocol{
         }
         
         // 평일, 주말, 공휴일 여부
-        var weekday = 0
-        let today = Calendar.current.component(.weekday, from: Date())
-        
-        if today == 1{
-            weekday = 3
-        }else if today == 7{
-            weekday = 2
-        }else{
-            weekday = 1
+        let weekday = switch dayType {
+        case .weekday: 1
+        case .saturday: 2
+        case .holiday: 3
         }
         
         let url =  "http://openapi.seoul.go.kr:8088/\(Bundle.main.tokenLoad("SEOUL_TOKEN"))/json/SearchSTNTimeTableByFRCodeService/1/500/\(scheduleSearch.stationCode)/\(weekday)/\(inOut)"
@@ -85,15 +80,10 @@ final class LoadModel : LoadModelProtocol{
     }
     
     // 코레일 지하철 통신
-    internal func korailSchduleLoad(scheduleSearch: ScheduleSearch) -> Single<Result<KorailHeader, URLError>> {
+    internal func korailSchduleLoad(scheduleSearch: ScheduleSearch, dayType: DayType) -> Single<Result<KorailHeader, URLError>> {
         // 평일, 주말, 공휴일 여부
-        var weekday = 8
-        let today = Calendar.current.component(.weekday, from: Date())
-        
-        if today == 1 || today == 7{
-            weekday = 9
-        }
-        
+        let weekday = dayType == .weekday ? 8 : 9
+
         let url = "https://openapi.kric.go.kr/openapi/trainUseInfo/subwayTimetable?serviceKey=\(Bundle.main.tokenLoad("KORAIL_TOKEN"))&format=JSON&railOprIsttCd=KR&dayCd=\(weekday)&lnCd=\(scheduleSearch.korailCode)&stinCd=\(scheduleSearch.stationCode)"
         
         return self.networkManager.requestData(url, dataType: KorailHeader.self)
