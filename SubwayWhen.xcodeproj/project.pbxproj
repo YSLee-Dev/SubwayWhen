@@ -145,10 +145,12 @@
 		34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */; };
 		34B3105229B1BEA900EA3A19 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */; };
 		34B4A8552F6FE2CF008730BB /* HolidayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8542F6FE2CF008730BB /* HolidayData.swift */; };
-		34B4A8572F6FEA38008730BB /* Calendar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8562F6FEA38008730BB /* Calendar+.swift */; };
 		34B4A8592F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85A2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85B2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
+		34B4A85C2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
+		34B4A85D2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
+		34B4A85E2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */; };
 		34B6ADE12A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */; };
 		34B6ADE32A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADE22A49916600D7A6DA /* SettingNotiSelectModalSectionData.swift */; };
@@ -711,7 +713,6 @@
 		34B3104F29B0DAE500EA3A19 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		34B3105129B1BEA900EA3A19 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		34B4A8542F6FE2CF008730BB /* HolidayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayData.swift; sourceTree = "<group>"; };
-		34B4A8562F6FEA38008730BB /* Calendar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+.swift"; sourceTree = "<group>"; };
 		34B4A8582F794DCC008730BB /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
 		34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalModel.swift; sourceTree = "<group>"; };
 		34B6ADE02A4990F800D7A6DA /* SettingNotiSelectModalCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalCellData.swift; sourceTree = "<group>"; };
@@ -2576,7 +2577,6 @@
 				FA9AA9B12BD639F300906A5B /* UIApplication+.swift */,
 				FF6B35F92E8A47B000814E32 /* UIDevice+.swift */,
 				FF9B79792EB9BBC5009393C7 /* UIView+.swift */,
-				34B4A8562F6FEA38008730BB /* Calendar+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -3036,6 +3036,7 @@
 				349C00812A0A1B8D008A85BF /* SubwayWhenDetailWidgetLiveActivity.swift in Sources */,
 				349C00922A0A1BE8008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
 				FF0365412D011F6700EF325D /* SubwayLineData.swift in Sources */,
+				34B4A85D2F794E96008730BB /* DayType.swift in Sources */,
 				FF36A3842C80637400387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
 				FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				349C007F2A0A1B8D008A85BF /* SubwayWhenDetailWidgetBundle.swift in Sources */,
@@ -3060,6 +3061,7 @@
 				FF7196542ECAF1D300C3F3C1 /* MockLoadModel.swift in Sources */,
 				FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */,
 				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
+				34B4A85C2F794E96008730BB /* DayType.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
 				34A3038629AF362700948EDD /* DummyLoad.swift in Sources */,
@@ -3084,7 +3086,6 @@
 				34B4A8552F6FE2CF008730BB /* HolidayData.swift in Sources */,
 				34C6DB9C293627AF00C4ED80 /* FixInfo.swift in Sources */,
 				B68FB3482B75EFB70075339F /* SettingTrainIconModalVC.swift in Sources */,
-				34B4A8572F6FEA38008730BB /* Calendar+.swift in Sources */,
 				349E2F5929BDD0ED00C54EE9 /* DetailResultScheduleDelegate.swift in Sources */,
 				349E2F3729BDAF2200C54EE9 /* ReportCoordinator.swift in Sources */,
 				FF0365372D00171100EF325D /* PreviewLocationManager.swift in Sources */,
@@ -3471,6 +3472,7 @@
 			files = (
 				FFFE84F82F17572000A29742 /* AppLogger.swift in Sources */,
 				FFFE84FC2F17582500A29742 /* AppConfig.swift in Sources */,
+				34B4A85E2F794E96008730BB /* DayType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

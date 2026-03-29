@@ -21,11 +21,4 @@ struct FixInfo: Codable{
             UserDefaults.shared.set(data, forKey: "saveSetting")
         }
     }
-
-    static var holidayData: HolidayData = .init(version: 0, list: []) {
-        didSet {
-            let data = try? PropertyListEncoder().encode(self.holidayData)
-            UserDefaults.shared.set(data, forKey: "holidayData")
-        }
-    }
 }

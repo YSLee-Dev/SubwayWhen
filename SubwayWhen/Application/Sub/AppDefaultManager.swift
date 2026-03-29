@@ -89,14 +89,12 @@ extension AppDefaultManager{
     }
     
     func holidayLoad() {
-        // 캐시된 데이터를 먼저 로드
         let cachedData = self.model.savedHolidayDataLoad()
-        FixInfo.holidayData = cachedData
-        
-        // Firebase에서 최신 데이터 로드 후 버전 비교
+
         self.model.holidayDataLoad { remoteData in
             guard remoteData.version > cachedData.version else { return }
-            FixInfo.holidayData = remoteData
+            UserDefaults.shared.set(remoteData.list, forKey: "holidayList")
+            UserDefaults.shared.set(remoteData.version, forKey: "holidayVersion")
         }
     }
 }

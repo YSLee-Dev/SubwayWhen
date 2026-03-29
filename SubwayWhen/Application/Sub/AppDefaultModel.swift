@@ -76,10 +76,8 @@ class AppDefaultModel : AppDefaultModelProtocol{
     
     // 저장된 공휴일 데이터 불러오기
     func savedHolidayDataLoad() -> HolidayData {
-        guard let data = UserDefaults.shared.data(forKey: "holidayData"),
-              let holidayData = try? PropertyListDecoder().decode(HolidayData.self, from: data) else {
-            return .init(version: 0, list: [])
-        }
-        return holidayData
+        let version = UserDefaults.shared.integer(forKey: "holidayVersion")
+        let list = UserDefaults.shared.stringArray(forKey: "holidayList") ?? []
+        return .init(version: version, list: list)
     }
 }

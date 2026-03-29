@@ -21,10 +21,13 @@ class TotalLoadModel : TotalLoadProtocol {
         guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return []}
         return decodingData
     }()
-    
+    private let nowDayType: DayType
+
     init(loadModel : LoadModelProtocol = LoadModel(), coreDataManager: CoreDataScheduleManagerProtocol = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
         self.coreDataManager = coreDataManager
+        let holidayList = UserDefaults(suiteName: "group.com.yslee.subwaywhen")?.stringArray(forKey: "holidayList") ?? []
+        self.nowDayType = Self.calculateDayType(holidayList: holidayList)
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
@@ -485,6 +488,15 @@ class TotalLoadModel : TotalLoadProtocol {
             }
     }
     
+    private static func calculateDayType(holidayList: [String], date: Date = Date()) -> DayType {
+        let weekday = Calendar.current.component(.weekday, from: date)
+        if weekday == 1 { return .holiday }
+        if weekday == 7 { return .saturday }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        return holidayList.contains(formatter.string(from: date)) ? .holiday : .weekday
+    }
+
     private func timeFormatter(date : Date, isSecondIncludes: Bool = true) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
