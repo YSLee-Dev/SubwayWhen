@@ -51,12 +51,12 @@ struct SettingTrainIconModalView: View {
                     .padding(.horizontal, 10)
                     
                     HStack(alignment: .center) {
-                        Text("도착역")
+                        Text(Strings.Setting.currentStation)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                         
                         Spacer()
                         
-                        Text("전역")
+                        Text(Strings.Setting.backStation)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                     }
                     .padding(.horizontal, 10)

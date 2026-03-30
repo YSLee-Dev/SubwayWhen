@@ -28,7 +28,7 @@ extension Strings.Common {
     /// 확인
     static let check = "확인"
     /// 저장하기
-    static let save = "저장하기"
+    static let save = "저장"
     /// 시
     static let hour = "시"
     /// 닫기
@@ -141,6 +141,13 @@ extension Strings.Setting {
     static let liveActivity = "Live Activity"
     /// 열차 아이콘
     static let trainIcon = "열차 아이콘"
+    
+    /// 상세화면의 열차 아이콘을 변경하는 기능이에요.
+    static let trainIconDescription = "상세화면의 열차 아이콘을 변경하는 기능이에요."
+    /// 현재역
+    static let currentStation = "현재역"
+    /// 전역
+    static let backStation = "전역"
     
     /// 오픈 라이선스
     static let openLicense = "오픈 라이선스"
