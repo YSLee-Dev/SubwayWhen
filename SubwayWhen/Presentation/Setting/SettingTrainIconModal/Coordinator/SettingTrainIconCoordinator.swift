@@ -25,7 +25,7 @@ class SettingTrainIconModalCoordinator: Coordinator {
         viewModel.delegate = self
         
         let vc = SettingTrainIconModalVC(
-            modalHeight: 380,
+            modalHeight: 440,
             btnTitle: "저장",
             mainTitle: "열차 아이콘",
             subTitle: "상세화면의 열차 아이콘을 변경하는 기능이에요.",
