@@ -78,6 +78,11 @@ class MockLoadModel: LoadModelProtocol {
         return self.toObservableResult()
             .asSingle()
     }
+
+    func realtimePositionRequest(subwayLine: SubwayWhen.SubwayLineData) -> RxSwift.Single<Result<SubwayWhen.RealtimeTrainPositionResponse, URLError>> {
+        return self.toObservableResult()
+            .asSingle()
+    }
 }
 
 // MARK: - Methods

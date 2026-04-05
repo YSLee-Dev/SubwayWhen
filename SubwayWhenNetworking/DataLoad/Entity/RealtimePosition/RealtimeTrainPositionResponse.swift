@@ -8,13 +8,14 @@
 import Foundation
 
 struct RealtimeTrainPositionResponse: Decodable {
-    let errorMessage: ErrorMessage
     let realtimePositionList: [RealtimeTrainPosition]
 
-    struct ErrorMessage: Decodable {
-        let status: Int
-        let code: String
-        let message: String
-        let total: Int
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.realtimePositionList = (try? container.decode([RealtimeTrainPosition].self, forKey: .realtimePositionList)) ?? []
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case realtimePositionList
     }
 }

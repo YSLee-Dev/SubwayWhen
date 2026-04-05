@@ -22,4 +22,5 @@ protocol LoadModelProtocol : AnyObject{
     func shinbundangScheduleVersionRequest() -> Observable<Double>
     func searchQueryRecommendListRequest() -> Observable<[SearchQueryRecommendData]>
     func subwayNoticeRequest() -> Single<Result<SubwayNoticeResponse, URLError>>
+    func realtimePositionRequest(subwayLine: SubwayLineData) -> Single<Result<RealtimeTrainPositionResponse, URLError>>
 }
