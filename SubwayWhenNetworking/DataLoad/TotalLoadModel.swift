@@ -417,6 +417,21 @@ class TotalLoadModel : TotalLoadProtocol {
                 .disposed(by: self.bag)
         }
     }
+
+    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.realtimePositionRequest(subwayLine: subwayLine)
+                .asObservable()
+                .map { data -> [RealtimeTrainPosition] in
+                    guard case .success(let value) = data else { return [] }
+                    return value.realtimePositionList
+                }
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
+        }
+    }
     
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
         let requestWeekString = self.calculateDayType(holidayList: self.holidayList, date: requestDate) == .weekday ? "평일" : "주말"

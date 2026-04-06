@@ -15,7 +15,8 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     var defaultViewListdata: [String] = []
     var searchStationName: [searchStationInfo] = []
     var queryRecoomendList: [SearchQueryRecommendData] = []
-    
+    var realtimePositionList: [RealtimeTrainPosition] = []
+
     init() {}
     
     func scheduleDataFetchAsyncData(searchModel: ScheduleSearch, isDisposable: Bool) async -> [ResultSchdule]  {
@@ -40,5 +41,9 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     
     func searchQueryRecommendListLoad() async -> [SearchQueryRecommendData] {
         self.queryRecoomendList
+    }
+
+    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+        self.realtimePositionList
     }
 }
