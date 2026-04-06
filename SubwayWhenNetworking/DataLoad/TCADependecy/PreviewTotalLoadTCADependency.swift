@@ -60,4 +60,9 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
             .init(queryName: "디엠시", stationName: "디지털미디어시티", line: "1, 7")
         ]
     }
+
+    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+        return [
+        ]
+    }
 }
