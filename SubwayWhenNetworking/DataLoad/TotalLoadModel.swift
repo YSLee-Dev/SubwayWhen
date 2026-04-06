@@ -418,6 +418,10 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
 
+    func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId] {
+        self.stationIDList.filter { $0.lineId == subwayLine.lineCode }.sorted {$0.stationId > $1.stationId}
+    }
+
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
         return await withCheckedContinuation { continuation in
             self.loadModel.realtimePositionRequest(subwayLine: subwayLine)
