@@ -1,6 +1,6 @@
-## folder-structure
-프로젝트 폴더 구조 규칙을 정의한 문서
-
+---
+name: folder-structure
+description: 프로젝트 폴더 구조 규칙을 정의한 문서
 ---
 
 ## 타겟 구성

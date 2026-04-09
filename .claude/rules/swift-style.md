@@ -1,7 +1,8 @@
-## swift-style
-Swift 코딩 컨벤션을 정의한 문서
-
 ---
+name: swift-style
+description: Swift 코딩 컨벤션을 정의한 문서
+---
+
 
 ## 1. 네이밍 (Naming)
 
