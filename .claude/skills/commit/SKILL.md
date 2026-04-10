@@ -21,7 +21,7 @@ description: 스테이징된 변경사항을 분석하여 커밋 메시지 초�
 ## 출력 형식
 
 ```
-<type>(변경된 부분 > 상세): 제목
+<type>(변경된 부분 > 상세): 제목 (CC)
 ```
 
 ---
@@ -29,7 +29,7 @@ description: 스테이징된 변경사항을 분석하여 커밋 메시지 초�
 ## 출력 예시
 
 ```
-Design(Main > CongestionModal): Padding 값 조정
+Design(Main > CongestionModal): Padding 값 조정 (CC)
 ```
 
 ---
