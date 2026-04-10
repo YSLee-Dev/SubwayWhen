@@ -6,5 +6,5 @@
 //
 
 protocol RealtimeCoordinatorProtocol: AnyObject {
-
+    func showBundleErrorPopupAndDismiss()
 }

@@ -12,11 +12,19 @@ struct RealtimeFeature {
 
     // MARK: - Dependency
 
+    weak var coordinatorDelegate: RealtimeCoordinatorProtocol?
+
+    @Dependency(\.totalLoad) private var totalLoad
+
     // MARK: - State
 
     @ObservableState
     struct State: Equatable {
-
+        let subwayLine: SubwayLineData
+        let stationName: String
+        var stationList: [DetailStationId] = []
+        var trainPositions: [RealtimeTrainPosition] = []
+        var isLoading: Bool = false
     }
 
     // MARK: - Action
@@ -24,6 +32,10 @@ struct RealtimeFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case stationListLoaded([DetailStationId])
+        case trainPositionLoaded([RealtimeTrainPosition])
+        case refreshBtnTapped
+        case bundleLoadFailed
     }
 
     // MARK: - Reducer
@@ -36,8 +48,47 @@ struct RealtimeFeature {
                 return .none
 
             case .onAppear:
+                state.isLoading = true
+                let subwayLine = state.subwayLine
+                return .merge(
+                    .run { [totalLoad] send in
+                        let list = totalLoad.stationIdList(subwayLine: subwayLine)
+                        await send(.stationListLoaded(list))
+                    },
+                    self.trainPositionRequest(subwayLine: subwayLine)
+                )
+
+            case .stationListLoaded(let list):
+                if list.isEmpty {
+                    return .send(.bundleLoadFailed)
+                }
+                state.stationList = list
+                return .none
+
+            case .trainPositionLoaded(let positions):
+                state.trainPositions = positions
+                state.isLoading = false
+                return .none
+
+            case .refreshBtnTapped:
+                state.isLoading = true
+                return self.trainPositionRequest(subwayLine: state.subwayLine)
+
+            case .bundleLoadFailed:
+                self.coordinatorDelegate?.showBundleErrorPopupAndDismiss()
                 return .none
             }
+        }
+    }
+}
+
+// MARK: - Method
+
+private extension RealtimeFeature {
+    func trainPositionRequest(subwayLine: SubwayLineData) -> Effect<Action> {
+        .run { [totalLoad] send in
+            let positions = await totalLoad.realtimePositionLoad(subwayLine: subwayLine)
+            await send(.trainPositionLoaded(positions))
         }
     }
 }

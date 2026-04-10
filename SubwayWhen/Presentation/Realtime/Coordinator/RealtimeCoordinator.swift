@@ -25,8 +25,12 @@ class RealtimeCoordinator: Coordinator {
 
     func start() {
         let store = StoreOf<RealtimeFeature>(
-            initialState: RealtimeFeature.State(),
-            reducer: { RealtimeFeature() }
+            initialState: RealtimeFeature.State(subwayLine: self.subwayLine, stationName: self.stationName),
+            reducer: {
+                var feature = RealtimeFeature()
+                feature.coordinatorDelegate = self
+                return feature
+            }
         )
         let view = RealtimeView(store: store)
         let vc = UIHostingController(rootView: view)
