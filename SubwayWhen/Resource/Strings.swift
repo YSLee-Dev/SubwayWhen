@@ -12,6 +12,7 @@ struct Strings {
     struct Report {}
     struct Setting {}
     struct Main {}
+    struct Realtime {}
 }
 
 extension Strings.Common {
@@ -227,4 +228,11 @@ extension Strings.Main {
     
     /// 선택된 지하철역의 예상 혼잡도를 확인할 수 있어요.
     static let congestionModalSubTitle = "선택된 지하철역의 예상 혼잡도를 확인할 수 있어요."
+}
+
+extension Strings.Realtime {
+    /// 오류
+    static let bundleErrorTitle = "오류"
+    /// 역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요.
+    static let bundleErrorMessage = "역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요."
 }

@@ -36,6 +36,7 @@
 		347F3B762F87D2030043314F /* RealtimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F3B742F87D2030043314F /* RealtimeView.swift */; };
 		347F3B772F87D2030043314F /* RealtimeCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F3B702F87D2030043314F /* RealtimeCoordinatorProtocol.swift */; };
 		347F3B782F87D2030043314F /* RealtimeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F3B732F87D2030043314F /* RealtimeFeature.swift */; };
+		347F3B792F87D2030043314F /* RealtimeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347F3B7A2F87D2030043314F /* RealtimeCoordinator.swift */; };
 		3481C4E129C0693E003F5213 /* KorailTrainNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481C4E029C0693E003F5213 /* KorailTrainNumber.swift */; };
 		3481C4E329C1C7C2003F5213 /* KorailStationScheduleDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 3481C4E229C1C7C2003F5213 /* KorailStationScheduleDummy.json */; };
 		3496559429A777A100530EB6 /* SettingContentsModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3496559329A777A100530EB6 /* SettingContentsModalVC.swift */; };
@@ -614,6 +615,7 @@
 		347F3B702F87D2030043314F /* RealtimeCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		347F3B732F87D2030043314F /* RealtimeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeFeature.swift; sourceTree = "<group>"; };
 		347F3B742F87D2030043314F /* RealtimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeView.swift; sourceTree = "<group>"; };
+		347F3B7A2F87D2030043314F /* RealtimeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeCoordinator.swift; sourceTree = "<group>"; };
 		3481C4E029C0693E003F5213 /* KorailTrainNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KorailTrainNumber.swift; sourceTree = "<group>"; };
 		3481C4E229C1C7C2003F5213 /* KorailStationScheduleDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = KorailStationScheduleDummy.json; sourceTree = "<group>"; };
 		3496559329A777A100530EB6 /* SettingContentsModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContentsModalVC.swift; sourceTree = "<group>"; };
@@ -1106,6 +1108,7 @@
 			isa = PBXGroup;
 			children = (
 				347F3B712F87D2030043314F /* Protocol */,
+				347F3B7A2F87D2030043314F /* RealtimeCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -3336,6 +3339,7 @@
 				347F3B762F87D2030043314F /* RealtimeView.swift in Sources */,
 				347F3B772F87D2030043314F /* RealtimeCoordinatorProtocol.swift in Sources */,
 				347F3B782F87D2030043314F /* RealtimeFeature.swift in Sources */,
+				347F3B792F87D2030043314F /* RealtimeCoordinator.swift in Sources */,
 				FF9B1E352E7D29C100FA298B /* NotificationTCADependencyKey.swift in Sources */,
 				3481C4E129C0693E003F5213 /* KorailTrainNumber.swift in Sources */,
 				3497DC9729D2F9E400D2ABB9 /* DetailResultScheduleViewModelProtocol.swift in Sources */,
