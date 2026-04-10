@@ -42,6 +42,7 @@ struct DetailFeature: Reducer {
         case refreshBtnTapped
         case scheduleMoreBtnTapped
         case reportBtnTapped(SubwayLineData)
+        case realtimeBtnTapped
         case arrivalDataRequestSuccess([TotalRealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
         case scheduleDataSort
@@ -244,6 +245,11 @@ struct DetailFeature: Reducer {
                 
             case .reportBtnTapped(let data):
                 self.coordinatorDelegate?.reportBtnTap(reportLine: data, stationName: state.sendedLoadModel.stationName)
+                return .none
+
+            case .realtimeBtnTapped:
+                let subwayLine = SubwayLineData(rawValue: state.sendedLoadModel.lineNumber) ?? .not
+                self.coordinatorDelegate?.pushRealtime(subwayLine: subwayLine, stationName: state.sendedLoadModel.stationName)
                 return .none
                 
             case .viewDisappear:

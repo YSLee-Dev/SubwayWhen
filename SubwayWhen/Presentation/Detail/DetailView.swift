@@ -89,9 +89,11 @@ struct DetailView: View {
                     }
                     
                     DetailArrivalView(
-                        arrivalDataList: self.store.nowArrivalData, stationInfo: self.store.sendedLoadModel, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer) {
+                        arrivalDataList: self.store.nowArrivalData, stationInfo: self.store.sendedLoadModel, backStationName: self.store.backStationName ?? "", nowLoading: self.store.nowArrivalLoading, nowSeconds: self.store.nowTimer, refreshBtnTapped: {
                             self.store.send(.refreshBtnTapped)
-                        }
+                        }, realtimeBtnTapped: {
+                            self.store.send(.realtimeBtnTapped)
+                        })
                     
                     DetailScheduleView(
                         scheduleDataList: self.store.nowSculeduleSortedData,

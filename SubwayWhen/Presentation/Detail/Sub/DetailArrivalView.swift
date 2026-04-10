@@ -28,6 +28,7 @@ struct DetailArrivalView: View {
     var nowLoading: Bool
     var nowSeconds: Int?
     let refreshBtnTapped: () -> ()
+    var realtimeBtnTapped: (() -> ())?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -127,6 +128,7 @@ struct DetailArrivalView: View {
             }
             .padding(.bottom, 10)
             .clipped()
+            .onTapGesture { self.realtimeBtnTapped?() }
             
             MainStyleViewInSUI {
                 VStack {
