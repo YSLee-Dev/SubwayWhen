@@ -181,6 +181,7 @@ override func viewDidLoad() {
 
 - String은 코드에 정의하지 않고, Resource/Strings에 있는지 검사 후 참조해서 사용
     - 만약 없을 경우 해당 기능에 맞는 Extension 내부에 String을 정의 후 사용
+    - String 정의는 Resource/Strings 내부에서 진행
 - View는 바로 만들지 않고, Presentation > Common에 있는지 검사 후 있는 경우 재사용
     - 없는 경우에만 제작
 - Font 사이즈, radius, Padding, Animation 등은 ViewStyle에 정의된 문서를 확인 후 있는 경우 재사용
