@@ -66,4 +66,8 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
         await self.totalModel.realtimePositionLoad(subwayLine: subwayLine)
     }
+
+    func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId] {
+        self.totalModel.stationIdList(subwayLine: subwayLine)
+    }
 }
