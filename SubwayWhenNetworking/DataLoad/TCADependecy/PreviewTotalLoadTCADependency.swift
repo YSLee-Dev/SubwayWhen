@@ -62,10 +62,29 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     }
 
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
-        return []
+        switch subwayLine {
+        case .two:
+            return [
+                .init(subwayId: "1002", subwayNm: "2호선", statnId: "1002000216", statnNm: "강남", trainNo: "2001", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "1", directAt: "0", lstcarAt: "0"),
+                .init(subwayId: "1002", subwayNm: "2호선", statnId: "1002000222", statnNm: "삼성", trainNo: "2002", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "2", directAt: "0", lstcarAt: "0")
+            ]
+        default:
+            return []
+        }
     }
 
     func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId] {
-        return []
+        switch subwayLine {
+        case .two:
+            return [
+                .init(lineId: "1002", stationId: "1002000214", stationName: "교대"),
+                .init(lineId: "1002", stationId: "1002000216", stationName: "강남"),
+                .init(lineId: "1002", stationId: "1002000218", stationName: "역삼"),
+                .init(lineId: "1002", stationId: "1002000220", stationName: "선릉"),
+                .init(lineId: "1002", stationId: "1002000222", stationName: "삼성"),
+            ]
+        default:
+            return []
+        }
     }
 }
