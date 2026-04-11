@@ -53,7 +53,7 @@ struct RealtimeFeature {
                 let subwayLine = state.subwayLine
                 let isUp = state.isUp
                 return .merge(
-                    .run { [totalLoad] send in
+                    .run { [totalLoad = self.totalLoad] send in
                         let list = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
                         await send(.stationListLoaded(list))
                     },
@@ -88,7 +88,7 @@ struct RealtimeFeature {
 
 private extension RealtimeFeature {
     func trainPositionRequest(subwayLine: SubwayLineData) -> Effect<Action> {
-        .run { [totalLoad] send in
+        .run { [totalLoad = self.totalLoad] send in
             let positions = await totalLoad.realtimePositionLoad(subwayLine: subwayLine)
             await send(.trainPositionLoaded(positions))
         }

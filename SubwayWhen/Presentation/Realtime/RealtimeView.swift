@@ -19,34 +19,34 @@ struct RealtimeView: View {
     var body: some View {
         VStack(spacing: 0) {
             StationTitleViewInSUI(
-                title: store.subwayLine.useLine,
-                lineColor: store.subwayLine.rawValue,
+                title: self.store.subwayLine.useLine,
+                lineColor: self.store.subwayLine.rawValue,
                 size: 75,
                 isFill: true
             )
             .padding(.vertical, ViewStyle.padding.mainStyleViewTB)
 
-            if store.isLoading {
+            if self.store.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                List(store.stationList, id: \.stationId) { station in
-                    let position = store.trainPositions.first { $0.statnId == station.stationId }
+                List(self.store.stationList, id: \.stationId) { station in
+                    let position = self.store.trainPositions.first { $0.statnId == station.stationId }
                     RealtimeStationRowView(
                         stationName: station.stationName,
-                        isSelected: station.stationName == store.stationName,
+                        isSelected: station.stationName == self.store.stationName,
                         position: position,
-                        subwayLine: store.subwayLine
+                        subwayLine: self.store.subwayLine
                     )
                 }
                 .listStyle(.plain)
             }
         }
-        .navigationTitle(store.subwayLine.useLine)
+        .navigationTitle(self.store.subwayLine.useLine)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    store.send(.refreshBtnTapped)
+                    self.store.send(.refreshBtnTapped)
                 } label: {
                     Image(systemName: "arrow.clockwise")
                         .foregroundStyle(Color(uiColor: .label))
@@ -54,7 +54,7 @@ struct RealtimeView: View {
             }
         }
         .onAppear {
-            store.send(.onAppear)
+            self.store.send(.onAppear)
         }
     }
 }

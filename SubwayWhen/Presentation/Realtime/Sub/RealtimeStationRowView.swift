@@ -21,14 +21,14 @@ struct RealtimeStationRowView: View {
     private let circleSize: CGFloat = 15
 
     private var trainIconStatus: RealtimeTrainPosition.TrainIconStatus? {
-        position?.trainIconStatus
+        self.position?.trainIconStatus
     }
 
     // MARK: - View
 
     var body: some View {
         HStack(spacing: 0) {
-            Text(position?.trainDirectionInfo ?? "")
+            Text(self.position?.trainDirectionInfo ?? "")
                 .font(.system(size: ViewStyle.FontSize.smallSize))
                 .foregroundStyle(Color.secondary)
                 .frame(width: 70, alignment: .trailing)
@@ -36,17 +36,17 @@ struct RealtimeStationRowView: View {
 
             Spacer().frame(width: 8)
 
-            trackView
+            self.trackView
 
             Spacer().frame(width: 8)
 
-            Text(stationName)
+            Text(self.stationName)
                 .font(
-                    isSelected
+                    self.isSelected
                     ? .system(size: ViewStyle.FontSize.mediumSize, weight: .bold)
                     : .system(size: ViewStyle.FontSize.mediumSize)
                 )
-                .foregroundStyle(isSelected ? Color.accentColor : Color.primary)
+                .foregroundStyle(self.isSelected ? Color.accentColor : Color.primary)
                 .padding(.vertical, ViewStyle.padding.mainStyleViewTB)
 
             Spacer()
@@ -68,18 +68,18 @@ private extension RealtimeStationRowView {
     var trackView: some View {
         ZStack {
             Rectangle()
-                .fill(Color(subwayLine.rawValue))
-                .frame(width: lineWidth)
+                .fill(Color(self.subwayLine.rawValue))
+                .frame(width: self.lineWidth)
 
             Circle()
-                .stroke(Color(subwayLine.rawValue))
+                .stroke(Color(self.subwayLine.rawValue))
                 .fill(Color.white)
-                .frame(width: circleSize, height: circleSize)
+                .frame(width: self.circleSize, height: self.circleSize)
         }
-        .frame(width: trackWidth)
+        .frame(width: self.trackWidth)
         .frame(maxHeight: .infinity)
-        .overlay(alignment: trainIconAlignment) {
-            if trainIconStatus != nil {
+        .overlay(alignment: self.trainIconAlignment) {
+            if self.trainIconStatus != nil {
                 Text(FixInfo.saveSetting.detailVCTrainIcon)
                     .font(.system(size: ViewStyle.FontSize.largeSize))
             }
@@ -87,7 +87,7 @@ private extension RealtimeStationRowView {
     }
 
     var trainIconAlignment: Alignment {
-        switch trainIconStatus {
+        switch self.trainIconStatus {
         case .departing: return .top
         case .arriving:  return .center
         case .passing:   return .bottom
