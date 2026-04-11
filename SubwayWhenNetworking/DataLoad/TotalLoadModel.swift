@@ -417,9 +417,13 @@ class TotalLoadModel : TotalLoadProtocol {
                 .disposed(by: self.bag)
         }
     }
-
-    func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId] {
-        self.stationIDList.filter { $0.lineId == subwayLine.lineCode }.sorted {$0.stationId > $1.stationId}
+    
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId] {
+        self.stationIDList.filter {
+            $0.lineId == subwayLine.lineCode
+        }.sorted {
+            isUp ? $0.stationId < $1.stationId : $0.stationId > $1.stationId
+        }
     }
 
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {

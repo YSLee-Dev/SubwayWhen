@@ -22,6 +22,7 @@ struct RealtimeFeature {
     struct State: Equatable {
         let subwayLine: SubwayLineData
         let stationName: String
+        let isUp: Bool
         var stationList: [DetailStationId] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
@@ -50,9 +51,10 @@ struct RealtimeFeature {
             case .onAppear:
                 state.isLoading = true
                 let subwayLine = state.subwayLine
+                let isUp = state.isUp
                 return .merge(
                     .run { [totalLoad] send in
-                        let list = totalLoad.stationIdList(subwayLine: subwayLine)
+                        let list = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
                         await send(.stationListLoaded(list))
                     },
                     self.trainPositionRequest(subwayLine: subwayLine)

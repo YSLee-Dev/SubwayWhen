@@ -16,16 +16,18 @@ class RealtimeCoordinator: Coordinator {
 
     private let subwayLine: SubwayLineData
     private let stationName: String
+    private let isUp: Bool
 
-    init(navigation: UINavigationController, subwayLine: SubwayLineData, stationName: String) {
+    init(navigation: UINavigationController, subwayLine: SubwayLineData, stationName: String, isUp: Bool) {
         self.navigation = navigation
         self.subwayLine = subwayLine
         self.stationName = stationName
+        self.isUp = isUp
     }
 
     func start() {
         let store = StoreOf<RealtimeFeature>(
-            initialState: RealtimeFeature.State(subwayLine: self.subwayLine, stationName: self.stationName),
+            initialState: RealtimeFeature.State(subwayLine: self.subwayLine, stationName: self.stationName, isUp: self.isUp),
             reducer: {
                 var feature = RealtimeFeature()
                 feature.coordinatorDelegate = self

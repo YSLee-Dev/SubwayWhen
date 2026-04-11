@@ -15,5 +15,5 @@ protocol TotalLoadTCADependencyProtocol {
     func stationNameSearchReponse(_ stationName : String) async -> [searchStationInfo]
     func searchQueryRecommendListLoad() async -> [SearchQueryRecommendData]
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition]
-    func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId]
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId]
 }

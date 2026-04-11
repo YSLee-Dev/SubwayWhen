@@ -62,7 +62,7 @@ struct RealtimeView: View {
 #Preview {
     RealtimeView(
         store: .init(
-            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남"),
+            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남", isUp: false),
             reducer: { RealtimeFeature() }
         )
     )

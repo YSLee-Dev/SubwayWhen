@@ -22,7 +22,7 @@ protocol TotalLoadProtocol{
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]>
     func searchQueryRecommendListLoad() async -> [SearchQueryRecommendData]
     func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition]
-    func stationIdList(subwayLine: SubwayLineData) -> [DetailStationId]
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId]
 }
 
 extension TotalLoadProtocol {
