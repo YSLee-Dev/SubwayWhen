@@ -21,26 +21,33 @@ struct RealtimeTrainPosition: Decodable, Equatable, Hashable {
     let trainSttus: String
     let directAt: String
     let lstcarAt: String
-
-    var subwayLineData: SubwayLineData {
-        SubwayLineData(subwayId: subwayId)
-    }
-
-    var isUpward: Bool {
-        self.updnLine == "0"
+    
+    enum TrainIconStatus {
+        case arriving
+        case departing
+        case passing
     }
 
     var isFast: Bool {
         self.directAt == "1" || self.directAt == "7"
     }
-    
-    var trainStatus: String {
+
+    var trainDirectionInfo: String {
+        let statusText: String
         switch self.trainSttus {
-        case "0": return "\(self.statnNm) 진입"
-        case "1": return "\(self.statnNm) 도착"
-        case "2": return "\(self.statnNm) 출발"
-        case "3": return "전역 출발"
-        default:  return "운행 중"
+        case "0": statusText = "진입"
+        case "1": statusText = "도착"
+        case "2": statusText = "출발"
+        default:  statusText = "운행중"
+        }
+        return "\(self.statnTnm)행 \(statusText)"
+    }
+
+    var trainIconStatus: TrainIconStatus {
+        switch self.trainSttus {
+        case "1": return .arriving
+        case "2": return .departing
+        default:  return .passing
         }
     }
 }

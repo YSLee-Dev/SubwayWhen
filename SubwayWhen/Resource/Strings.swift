@@ -235,14 +235,4 @@ extension Strings.Realtime {
     static let bundleErrorTitle = "오류"
     /// 역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요.
     static let bundleErrorMessage = "역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요."
-    /// 진입
-    static let trainStatusEntering = "진입"
-    /// 도착
-    static let trainStatusArrived = "도착"
-    /// 출발
-    static let trainStatusDeparted = "출발"
-    /// 운행중
-    static let trainStatusRunning = "운행중"
-    /// 행
-    static let directionSuffix = "행"
 }

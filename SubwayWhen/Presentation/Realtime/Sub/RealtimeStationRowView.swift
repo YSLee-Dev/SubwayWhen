@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum TrainIconStatus {
-    case arriving
-    case departing
-    case passing
-}
-
 struct RealtimeStationRowView: View {
 
     // MARK: - Properties
@@ -25,33 +19,16 @@ struct RealtimeStationRowView: View {
     private let trackWidth: CGFloat = 28
     private let lineWidth: CGFloat = 4
     private let circleSize: CGFloat = 15
-    
-    private var trainInfo: String {
-        guard let position else { return "" }
-        let statusText: String
-        switch position.trainSttus {
-        case "0": statusText = Strings.Realtime.trainStatusEntering
-        case "1": statusText = Strings.Realtime.trainStatusArrived
-        case "2": statusText = Strings.Realtime.trainStatusDeparted
-        default:  statusText = Strings.Realtime.trainStatusRunning
-        }
-        return "\(position.statnTnm)\(Strings.Realtime.directionSuffix) \(statusText)"
-    }
 
-    private var trainStatus: TrainIconStatus? {
-        guard let position else { return nil }
-        switch position.trainSttus {
-        case "2": return .departing
-        case "1": return .arriving
-        default:  return .passing
-        }
+    private var trainIconStatus: RealtimeTrainPosition.TrainIconStatus? {
+        position?.trainIconStatus
     }
 
     // MARK: - View
 
     var body: some View {
         HStack(spacing: 0) {
-            Text(trainInfo)
+            Text(position?.trainDirectionInfo ?? "")
                 .font(.system(size: ViewStyle.FontSize.smallSize))
                 .foregroundStyle(Color.secondary)
                 .frame(width: 70, alignment: .trailing)
@@ -102,7 +79,7 @@ private extension RealtimeStationRowView {
         .frame(width: trackWidth)
         .frame(maxHeight: .infinity)
         .overlay(alignment: trainIconAlignment) {
-            if trainStatus != nil {
+            if trainIconStatus != nil {
                 Text(FixInfo.saveSetting.detailVCTrainIcon)
                     .font(.system(size: ViewStyle.FontSize.largeSize))
             }
@@ -110,7 +87,7 @@ private extension RealtimeStationRowView {
     }
 
     var trainIconAlignment: Alignment {
-        switch trainStatus {
+        switch trainIconStatus {
         case .departing: return .top
         case .arriving:  return .center
         case .passing:   return .bottom
