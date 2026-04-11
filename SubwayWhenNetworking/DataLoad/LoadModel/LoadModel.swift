@@ -232,7 +232,7 @@ final class LoadModel : LoadModelProtocol{
 
     // 노선별 실시간 열차 위치
     func realtimePositionRequest(subwayLine: SubwayLineData) -> Single<Result<RealtimeTrainPositionResponse, URLError>> {
-        let url = "http://swopenapi.seoul.go.kr/api/subway/\(Bundle.main.tokenLoad("REALTIME_TOKEN"))/json/realtimePosition/0/100/\(subwayLine.useLine)"
+        let url = "http://swopenapi.seoul.go.kr/api/subway/\(Bundle.main.tokenLoad("REALTIME_TOKEN"))/json/realtimePosition/0/100/\(subwayLine.realtimeLineName)"
         return self.networkManager.requestData(url, dataType: RealtimeTrainPositionResponse.self)
     }
     
