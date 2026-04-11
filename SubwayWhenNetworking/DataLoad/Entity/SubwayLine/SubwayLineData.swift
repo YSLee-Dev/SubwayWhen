@@ -161,23 +161,46 @@ enum SubwayLineData : String, Decodable, Equatable, CaseIterable {
     
     var realtimeLineName: String {
         switch self {
-        case .one:          return "1호선"
-        case .two:          return "2호선"
-        case .three:        return "3호선"
-        case .four:         return "4호선"
-        case .five:         return "5호선"
-        case .six:          return "6호선"
-        case .seven:        return "7호선"
-        case .eight:        return "8호선"
-        case .nine:         return "9호선"
-        case .gyeongui:     return "경의중앙선"
-        case .airport:      return "공항철도"
-        case .gyeongchun:   return "경춘선"
-        case .suinbundang:  return "수인분당선"
-        case .shinbundang:  return "신분당선"
-        case .ui:           return "우이신설선"
-        case .gtxA:         return "GTX-A"
-        default:            return ""
+        case .one:         
+            return "1호선"
+        case .two:          
+            return "2호선"
+        case .three:        
+            return "3호선"
+        case .four:         
+            return "4호선"
+        case .five:         
+            return "5호선"
+        case .six:          
+            return "6호선"
+        case .seven:        
+            return "7호선"
+        case .eight:      
+            return "8호선"
+        case .nine:
+            return "9호선"
+        case .gyeongui:     
+            return "경의중앙선"
+        case .airport:     
+            return "공항철도"
+        case .gyeongchun:
+            return "경춘선"
+        case .suinbundang:
+            return "수인분당선"
+        case .shinbundang:  
+            return "신분당선"
+        case .gyeonggang: 
+            return "경강선"
+        case .ui:           
+            return "우이신설선"
+        case .seohae:
+            return "서해선"
+        case .gtxA:
+            return "GTX-A"
+        case .sillim:
+            return "신림선"
+        default:
+            return ""
         }
     }
 
