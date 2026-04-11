@@ -37,6 +37,8 @@ description: Swift 코딩 컨벤션을 정의한 문서
 - 비동기 결과 수신: `dataLoaded`, `dataResult`, `fetchCompleted`
 - 내부 상태 변경: `binding` (BindableAction)
 
+- 내부 프로퍼티를 참조할 때는 `self` 키워드 사용 
+
 ---
 
 ## 2. 코드 구조 (Code Structure)
