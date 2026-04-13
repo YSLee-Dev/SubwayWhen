@@ -34,8 +34,8 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
             NavigationBarInSUI(
                 title: self.title,
                 isSubTitleShow: self.$isSubTitleShow,
-                backBtnTapped: self.backBtnTapped,
-                backBtnIcon: self.backBtnIcon
+                backBtnIcon: self.backBtnIcon,
+                backBtnTapped: self.backBtnTapped
             )
 
             OffsetScrollViewInSUI {

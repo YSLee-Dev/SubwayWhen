@@ -16,7 +16,7 @@ struct NavigationBarInSUI: View {
     private let backBtnIcon: String?
     @Binding private var isSubTitleShow: Bool
 
-    init(title: String, isSubTitleShow: Binding<Bool>, backBtnTapped: (() -> ())? = nil, backBtnIcon: String? = nil) {
+    init(title: String, isSubTitleShow: Binding<Bool>, backBtnIcon: String? = nil,  backBtnTapped: (() -> ())? = nil) {
         self.title = title
         self._isSubTitleShow = isSubTitleShow
         self.backBtnTapped = backBtnTapped
