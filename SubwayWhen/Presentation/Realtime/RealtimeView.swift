@@ -9,47 +9,64 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RealtimeView: View {
-
+    
     // MARK: - Properties
-
+    
     @Bindable var store: StoreOf<RealtimeFeature>
-
+    
     // MARK: - View
-
+    
     var body: some View {
-        VStack(spacing: 0) {
-            StationTitleViewInSUI(
-                title: self.store.subwayLine.useLine,
-                lineColor: self.store.subwayLine.rawValue,
-                size: 75,
-                isFill: true
-            )
-            .padding(.vertical, ViewStyle.padding.mainStyleViewTB)
-
-            if self.store.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                List(self.store.stationList, id: \.stationId) { station in
-                    let position = self.store.trainPositions.first { $0.statnId == station.stationId }
-                    RealtimeStationRowView(
-                        stationName: station.stationName,
-                        isSelected: station.stationName == self.store.stationName,
-                        position: position,
-                        subwayLine: self.store.subwayLine
-                    )
-                }
-                .listStyle(.plain)
-            }
-        }
-        .navigationTitle(self.store.subwayLine.useLine)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    self.store.send(.refreshBtnTapped)
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                        .foregroundStyle(Color(uiColor: .label))
+        
+        ScrollViewReader { proxy in
+            NavigationBarScrollViewInSUI(
+                title: self.store.subwayLine.useLine + " \(Strings.Realtime.realTime)",
+                isLargeTitleHidden: true,
+                backBtnTapped: {
+                    
+                },
+                backBtnIcon: "arrow.left"
+            ) {
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(Color(uiColor: .init(named: self.store.subwayLine.rawValue) ?? .black))
+                    .frame(height: 160)
+                    .overlay {
+                        VStack(spacing: 20) {
+                            ExpandedViewInSUI(alignment: .center) {
+                                StationTitleViewInSUI(
+                                    title: self.store.subwayLine.useLine,
+                                    lineColor: self.store.subwayLine.rawValue,
+                                    size: 75,
+                                    isFill: false
+                                )
+                            }
+                            
+                            UpDownExceptionViewInSUI(
+                                upDown: self.store.isUp ? Strings.Common.up : Strings.Common.down,
+                                exceptionLastStation: "") {
+                                    
+                                }
+                        }
+                        .padding(20)
+                    }
+                
+                if self.store.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    LazyVStack(spacing: 0) {
+                        ForEach(self.store.stationList, id: \.stationId) { station in
+                            let position = self.store.trainPositions.first { $0.statnId == station.stationId }
+                            RealtimeStationRowView(
+                                stationName: station.stationName,
+                                isSelected: station.stationName == self.store.stationName,
+                                position: position,
+                                subwayLine: self.store.subwayLine
+                            )
+                        }
+                        .frame(height: 50)
+                    }
+                    .padding(.top, 12.5)
                 }
             }
         }

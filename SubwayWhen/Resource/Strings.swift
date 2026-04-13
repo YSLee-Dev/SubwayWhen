@@ -13,6 +13,7 @@ struct Strings {
     struct Setting {}
     struct Main {}
     struct Realtime {}
+    struct Detail {}
 }
 
 extension Strings.Common {
@@ -235,4 +236,15 @@ extension Strings.Realtime {
     static let bundleErrorTitle = "오류"
     /// 역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요.
     static let bundleErrorMessage = "역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요."
+    
+    /// 실시간 현황
+    static let realTime = "실시간 현황"
+
+}
+
+extension Strings.Detail {
+    /// 제외 행 없음
+    static let noException = "제외 행 없음"
+    /// 행 제외
+    static let exceptionSuffix = "행 제외"
 }
