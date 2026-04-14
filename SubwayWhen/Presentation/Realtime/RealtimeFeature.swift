@@ -23,7 +23,7 @@ struct RealtimeFeature {
         let subwayLine: SubwayLineData
         let stationName: String
         let isUp: Bool
-        var exceptionLastStation: String = ""
+        var exceptionLastStation: String
         var stationList: [DetailStationId] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false

@@ -250,7 +250,7 @@ struct DetailFeature: Reducer {
             case .realtimeBtnTapped:
                 let subwayLine = SubwayLineData(rawValue: state.sendedLoadModel.lineNumber) ?? .not
                 let isUp = state.sendedLoadModel.upDown.contains("상행") || state.sendedLoadModel.upDown.contains("내선")
-                self.coordinatorDelegate?.pushRealtime(subwayLine: subwayLine, stationName: state.sendedLoadModel.stationName, isUp: isUp)
+                self.coordinatorDelegate?.pushRealtime(subwayLine: subwayLine, stationName: state.sendedLoadModel.stationName, isUp: isUp, exceptionLastStation: state.sendedLoadModel.exceptionLastStation)
                 return .none
                 
             case .viewDisappear:

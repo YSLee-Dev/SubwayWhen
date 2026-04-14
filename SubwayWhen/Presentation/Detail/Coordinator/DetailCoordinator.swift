@@ -83,8 +83,8 @@ extension DetailCoordinator : DetailVCDelegate{
         self.delegate?.reportBtnTap(reportLine: reportLine, stationName: stationName)
     }
 
-    func pushRealtime(subwayLine: SubwayLineData, stationName: String, isUp: Bool) {
-        let realtimeCoordinator = RealtimeCoordinator(navigation: self.navigation, subwayLine: subwayLine, stationName: stationName, isUp: isUp)
+    func pushRealtime(subwayLine: SubwayLineData, stationName: String, isUp: Bool, exceptionLastStation: String) {
+        let realtimeCoordinator = RealtimeCoordinator(navigation: self.navigation, subwayLine: subwayLine, stationName: stationName, isUp: isUp, exceptionLastStation: exceptionLastStation)
         realtimeCoordinator.start()
         self.childCoordinator.append(realtimeCoordinator)
     }
