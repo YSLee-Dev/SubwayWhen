@@ -44,7 +44,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         self.queryRecoomendList
     }
 
-    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition] {
         self.realtimePositionList
     }
 

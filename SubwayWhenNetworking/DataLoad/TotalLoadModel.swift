@@ -426,13 +426,20 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
 
-    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition] {
         return await withCheckedContinuation { continuation in
             self.loadModel.realtimePositionRequest(subwayLine: subwayLine)
                 .asObservable()
                 .map { data -> [RealtimeTrainPosition] in
                     guard case .success(let value) = data else { return [] }
-                    return value.realtimePositionList
+                    let actualIsUp = subwayLine == .nine ? !isUp : isUp
+                    let updnLineValue = actualIsUp ? "0" : "1"
+                    let hasException = !exceptionLastStation.isEmpty
+                    
+                    return value.realtimePositionList.filter {
+                        $0.updnLine == updnLineValue &&
+                        (!hasException || !exceptionLastStation.contains($0.statnTnm))
+                    }
                 }
                 .subscribe(onNext: {
                     continuation.resume(returning: $0)

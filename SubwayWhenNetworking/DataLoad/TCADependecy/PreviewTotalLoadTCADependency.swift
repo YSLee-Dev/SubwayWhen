@@ -61,7 +61,7 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         ]
     }
 
-    func realtimePositionLoad(subwayLine: SubwayLineData) async -> [RealtimeTrainPosition] {
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition] {
         switch subwayLine {
         case .two:
             return [
