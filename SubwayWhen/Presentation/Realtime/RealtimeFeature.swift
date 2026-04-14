@@ -23,6 +23,7 @@ struct RealtimeFeature {
         let subwayLine: SubwayLineData
         let stationName: String
         let isUp: Bool
+        var exceptionLastStation: String = ""
         var stationList: [DetailStationId] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
@@ -33,6 +34,8 @@ struct RealtimeFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case backBtnTapped
+        case exceptionBtnTapped
         case stationListLoaded([DetailStationId])
         case trainPositionLoaded([RealtimeTrainPosition])
         case refreshBtnTapped
@@ -75,6 +78,14 @@ struct RealtimeFeature {
             case .refreshBtnTapped:
                 state.isLoading = true
                 return self.trainPositionRequest(subwayLine: state.subwayLine)
+
+            case .backBtnTapped:
+                self.coordinatorDelegate?.pop()
+                return .none
+
+            case .exceptionBtnTapped:
+                self.coordinatorDelegate?.showExceptionStationSheet()
+                return .none
 
             case .bundleLoadFailed:
                 self.coordinatorDelegate?.showBundleErrorPopupAndDismiss()

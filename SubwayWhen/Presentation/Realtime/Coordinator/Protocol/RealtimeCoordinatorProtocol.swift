@@ -7,4 +7,7 @@
 
 protocol RealtimeCoordinatorProtocol: AnyObject {
     func showBundleErrorPopupAndDismiss()
+    func pop()
+    func showExceptionStationSheet()
+    func disappear(reportCoordinator : RealtimeCoordinator)
 }

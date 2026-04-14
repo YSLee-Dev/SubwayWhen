@@ -44,6 +44,10 @@ class RealtimeCoordinator: Coordinator {
 // MARK: - RealtimeCoordinatorProtocol
 
 extension RealtimeCoordinator: RealtimeCoordinatorProtocol {
+    func disappear(reportCoordinator: RealtimeCoordinator) {
+        
+    }
+    
     func showBundleErrorPopupAndDismiss() {
         let alert = UIAlertController(
             title: Strings.Realtime.bundleErrorTitle,
@@ -55,5 +59,12 @@ extension RealtimeCoordinator: RealtimeCoordinatorProtocol {
         })
         self.navigation.present(alert, animated: true)
     }
-}
 
+    func pop() {
+        self.navigation.popViewController(animated: true)
+    }
+
+    func showExceptionStationSheet() {
+
+    }
+}
