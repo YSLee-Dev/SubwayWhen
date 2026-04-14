@@ -240,6 +240,11 @@ extension Strings.Realtime {
     /// 실시간 현황
     static let realTime = "실시간 현황"
 
+    /// 재로딩
+    static let exceptionDialogOk = "재로딩"
+    /// 행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.
+    static let exceptionDialogMessageSuffix = "행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요."
+
 }
 
 extension Strings.Detail {

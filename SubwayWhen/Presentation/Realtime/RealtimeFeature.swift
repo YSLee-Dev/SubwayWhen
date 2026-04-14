@@ -27,6 +27,7 @@ struct RealtimeFeature {
         var stationList: [DetailStationId] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
+        @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
 
     // MARK: - Action
@@ -40,6 +41,12 @@ struct RealtimeFeature {
         case trainPositionLoaded([RealtimeTrainPosition])
         case refreshBtnTapped
         case bundleLoadFailed
+        case dialogAction(PresentationAction<DialogAction>)
+
+        enum DialogAction: Equatable {
+            case cancelBtnTapped
+            case okBtnTapped
+        }
     }
 
     // MARK: - Reducer
@@ -60,7 +67,7 @@ struct RealtimeFeature {
                         let list = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
                         await send(.stationListLoaded(list))
                     },
-                    self.trainPositionRequest(subwayLine: subwayLine)
+                    self.trainPositionRequest(state: state)
                 )
 
             case .stationListLoaded(let list):
@@ -77,14 +84,37 @@ struct RealtimeFeature {
 
             case .refreshBtnTapped:
                 state.isLoading = true
-                return self.trainPositionRequest(subwayLine: state.subwayLine)
+                return self.trainPositionRequest(state: state)
 
             case .backBtnTapped:
                 self.coordinatorDelegate?.pop()
                 return .none
 
             case .exceptionBtnTapped:
-                self.coordinatorDelegate?.showExceptionStationSheet()
+                if state.exceptionLastStation.isEmpty { return .none }
+                let msg = "\(state.exceptionLastStation)\(Strings.Realtime.exceptionDialogMessageSuffix)"
+                state.dialogState = ConfirmationDialogState(title: {
+                    TextState("")
+                }, actions: {
+                    ButtonState(action: .okBtnTapped) {
+                        TextState(Strings.Realtime.exceptionDialogOk)
+                    }
+                    ButtonState(role: .cancel, action: .cancelBtnTapped) {
+                        TextState(Strings.Common.cancel)
+                    }
+                }, message: {
+                    TextState(msg)
+                })
+                return .none
+
+            case .dialogAction(.presented(.okBtnTapped)):
+                state.dialogState = nil
+                state.exceptionLastStation = ""
+                state.isLoading = true
+                return self.trainPositionRequest(state: state)
+
+            case .dialogAction:
+                state.dialogState = nil
                 return .none
 
             case .bundleLoadFailed:
@@ -92,15 +122,23 @@ struct RealtimeFeature {
                 return .none
             }
         }
+        .ifLet(\.dialogState, action: \.dialogAction)
     }
 }
 
 // MARK: - Method
 
 private extension RealtimeFeature {
-    func trainPositionRequest(subwayLine: SubwayLineData) -> Effect<Action> {
-        .run { [totalLoad = self.totalLoad] send in
-            let positions = await totalLoad.realtimePositionLoad(subwayLine: subwayLine)
+    func trainPositionRequest(state: State) -> Effect<Action> {
+        let subwayLine = state.subwayLine
+        let isUp = state.isUp
+        let exceptionLastStation = state.exceptionLastStation
+        return .run { [totalLoad = self.totalLoad] send in
+            let positions = await totalLoad.realtimePositionLoad(
+                subwayLine: subwayLine,
+                isUp: isUp,
+                exceptionLastStation: exceptionLastStation
+            )
             await send(.trainPositionLoaded(positions))
         }
     }

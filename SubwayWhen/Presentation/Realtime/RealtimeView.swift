@@ -23,7 +23,7 @@ struct RealtimeView: View {
                 title: self.store.subwayLine.useLine + " \(Strings.Realtime.realTime)",
                 isLargeTitleHidden: true,
                 backBtnTapped: {
-                    
+                    self.store.send(.backBtnTapped)
                 },
                 backBtnIcon: "arrow.left"
             ) {
@@ -43,9 +43,10 @@ struct RealtimeView: View {
                             
                             UpDownExceptionViewInSUI(
                                 upDown: self.store.isUp ? Strings.Common.up : Strings.Common.down,
-                                exceptionLastStation: "") {
-                                    
-                                }
+                                exceptionLastStation: self.store.exceptionLastStation
+                            ) {
+                                self.store.send(.exceptionBtnTapped)
+                            }
                         }
                         .padding(20)
                     }
@@ -70,6 +71,7 @@ struct RealtimeView: View {
                 }
             }
         }
+        .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
         .onAppear {
             self.store.send(.onAppear)
         }
@@ -79,7 +81,7 @@ struct RealtimeView: View {
 #Preview {
     RealtimeView(
         store: .init(
-            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남", isUp: false),
+            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남", isUp: false, exceptionLastStation: ""),
             reducer: { RealtimeFeature() }
         )
     )
