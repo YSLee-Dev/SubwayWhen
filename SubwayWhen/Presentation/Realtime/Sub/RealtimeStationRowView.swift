@@ -8,57 +8,77 @@
 import SwiftUI
 
 struct RealtimeStationRowView: View {
-
+    
     // MARK: - Properties
-
+    
     let stationName: String
     let isSelected: Bool
     let position: RealtimeTrainPosition?
     let subwayLine: SubwayLineData
-
-    private let trackWidth: CGFloat = 28
-    private let lineWidth: CGFloat = 4
+    
+    private let trackWidth: CGFloat = 30
+    private let lineWidth: CGFloat = 4.5
     private let circleSize: CGFloat = 15
-
+    private let cellHeight: CGFloat = 60
+    
     private var trainIconStatus: RealtimeTrainPosition.TrainIconStatus? {
         self.position?.trainIconStatus
     }
-
+    
+    private var trainIconAlignment: Alignment {
+        switch self.trainIconStatus {
+        case .departing: return .top
+        case .arriving: return .center
+        case .passing: return .bottom
+        case nil: return .center
+        }
+    }
+    
     // MARK: - View
-
+    
     var body: some View {
         HStack(spacing: 0) {
-            Text(self.position?.trainDirectionInfo ?? "")
-                .font(.system(size: ViewStyle.FontSize.smallSize))
-                .foregroundStyle(Color.secondary)
-                .frame(width: 70, alignment: .trailing)
-                .padding(.vertical, ViewStyle.padding.mainStyleViewTB)
-
-            Spacer().frame(width: 8)
-
-            self.trackView
-
-            Spacer().frame(width: 8)
-
-            Text(self.stationName)
-                .font(
-                    self.isSelected
-                    ? .system(size: ViewStyle.FontSize.mediumSize, weight: .bold)
-                    : .system(size: ViewStyle.FontSize.mediumSize)
-                )
-                .foregroundStyle(self.isSelected ? Color.accentColor : Color.primary)
-                .padding(.vertical, ViewStyle.padding.mainStyleViewTB)
-
+            if (self.position?.trainDirectionInfo.isEmpty ?? true) {
+                Spacer()
+                    .frame(width: 75)
+            } else {
+                MainStyleViewInSUI {
+                    Text(self.position?.trainDirectionInfo ?? "")
+                        .font(.system(size: ViewStyle.FontSize.smallSize))
+                        .multilineTextAlignment(.trailing)
+                        .foregroundStyle(Color.secondary)
+                        .padding(10)
+                }
+                .frame(width: 75, alignment: .trailing)
+            }
+            
             Spacer()
+                .frame(width: 10)
+            
+            self.trackView
+            
+            ExpandedViewInSUI(alignment: .leading) {
+                Text(self.stationName)
+                    .font(
+                        self.isSelected
+                        ? .system(size: ViewStyle.FontSize.mediumSize, weight: .bold)
+                        : .system(size: ViewStyle.FontSize.smallSize)
+                    )
+                    .padding(.leading, 10)
+                    .foregroundStyle(self.isSelected ? Color.accentColor : Color.primary)
+            }
+            .frame(height: self.cellHeight)
+            .overlay {
+                VStack(spacing: 0) {
+                    Spacer()
+                    
+                    Rectangle()
+                        .fill(Color(UIColor.separator))
+                        .frame(height: 0.5)
+                }
+            }
         }
-        .listRowInsets(EdgeInsets())
-        .listRowSeparator(.hidden)
-        .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .fill(Color(UIColor.separator))
-                .frame(height: 0.5)
-        }
+        .frame(height: self.cellHeight)
     }
 }
 
@@ -83,15 +103,6 @@ private extension RealtimeStationRowView {
                 Text(FixInfo.saveSetting.detailVCTrainIcon)
                     .font(.system(size: ViewStyle.FontSize.largeSize))
             }
-        }
-    }
-
-    var trainIconAlignment: Alignment {
-        switch self.trainIconStatus {
-        case .departing: return .top
-        case .arriving:  return .center
-        case .passing:   return .bottom
-        case nil:        return .center
         }
     }
 }

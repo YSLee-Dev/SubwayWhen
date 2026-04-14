@@ -65,7 +65,6 @@ struct RealtimeView: View {
                                 subwayLine: self.store.subwayLine
                             )
                         }
-                        .frame(height: 50)
                     }
                     .padding(.top, 12.5)
                 }
