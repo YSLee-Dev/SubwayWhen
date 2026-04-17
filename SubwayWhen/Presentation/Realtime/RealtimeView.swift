@@ -64,9 +64,20 @@ struct RealtimeView: View {
                                 position: position,
                                 subwayLine: self.store.subwayLine
                             )
+                            .id(station.stationId)
                         }
                     }
                     .padding(.top, 12.5)
+                }
+            }
+            .onChange(of: self.store.shouldScrollToStation) { _, shouldScroll in
+                guard shouldScroll,
+                      let target = self.store.stationList.first(where: { $0.stationName == self.store.stationName })
+                else { return }
+                
+                withAnimation(.smooth) {
+                    proxy.scrollTo(target.stationId, anchor: .center)
+                    self.store.send(.scrollToStationCompleted)
                 }
             }
         }

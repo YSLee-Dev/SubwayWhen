@@ -27,6 +27,7 @@ struct RealtimeFeature {
         var stationList: [DetailStationId] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
+        var shouldScrollToStation: Bool = false
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
 
@@ -41,6 +42,8 @@ struct RealtimeFeature {
         case trainPositionLoaded([RealtimeTrainPosition])
         case refreshBtnTapped
         case bundleLoadFailed
+        case scrollToStationRequest
+        case scrollToStationCompleted
         case dialogAction(PresentationAction<DialogAction>)
 
         enum DialogAction: Equatable {
@@ -75,7 +78,10 @@ struct RealtimeFeature {
                     return .send(.bundleLoadFailed)
                 }
                 state.stationList = list
-                return .none
+                return .run { send in
+                    try? await Task.sleep(for: .milliseconds(400))
+                    await send(.scrollToStationRequest)
+                }
 
             case .trainPositionLoaded(let positions):
                 state.trainPositions = positions
@@ -115,6 +121,14 @@ struct RealtimeFeature {
 
             case .dialogAction:
                 state.dialogState = nil
+                return .none
+                
+            case .scrollToStationRequest:
+                state.shouldScrollToStation = true
+                return .none
+
+            case .scrollToStationCompleted:
+                state.shouldScrollToStation = false
                 return .none
 
             case .bundleLoadFailed:
