@@ -53,6 +53,7 @@ SubwayWhen/
 │   ├── Edit/
 │   ├── Setting/
 │   ├── Report/
+│   ├── Realtime/
 │   ├── Tutorial/
 │   ├── NoNetwork/
 │   └── Popup/

@@ -60,7 +60,7 @@ xcodebuild test -workspace SubwayWhen.xcworkspace -scheme SubwayWhen -destinatio
 
 ### TCA 패턴 (신규 화면)
 
-TCA로 마이그레이션된 화면: `SearchFeature`, `DetailFeature`, `ReportFeature`, `SettingFeature`, `CongestionModalFeature`
+TCA로 마이그레이션된 화면: `SearchFeature`, `DetailFeature`, `ReportFeature`, `SettingFeature`, `CongestionModalFeature`, `RealtimeFeature`
 
 - Feature는 `@Reducer struct` 하나에 `State`, `Action`, `body`(Reducer)를 정의
 - 비동기 작업은 `.run {}` 이펙트 사용, `.cancellable(id:)` / `.cancel(id:)`로 취소
