@@ -16,10 +16,9 @@ struct RealtimeStationRowView: View {
     let position: RealtimeTrainPosition?
     let subwayLine: SubwayLineData
     
-    private let trackWidth: CGFloat = 30
-    private let lineWidth: CGFloat = 4.5
     private let circleSize: CGFloat = 15
     private let cellHeight: CGFloat = 60
+    private let trainWidth: CGFloat = 85
     
     private var trainIconStatus: RealtimeTrainPosition.TrainIconStatus? {
         self.position?.trainIconStatus
@@ -40,16 +39,16 @@ struct RealtimeStationRowView: View {
         HStack(spacing: 0) {
             if (self.position?.trainDirectionInfo.isEmpty ?? true) {
                 Spacer()
-                    .frame(width: 75)
+                    .frame(width: self.trainWidth)
             } else {
                 MainStyleViewInSUI {
                     Text(self.position?.trainDirectionInfo ?? "")
                         .font(.system(size: ViewStyle.FontSize.smallSize))
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(Color.secondary)
-                        .padding(10)
+                        .padding(7.5)
                 }
-                .frame(width: 75, alignment: .trailing)
+                .frame(width: self.trainWidth, alignment: .trailing)
             }
             
             Spacer()
@@ -89,14 +88,14 @@ private extension RealtimeStationRowView {
         ZStack {
             Rectangle()
                 .fill(Color(self.subwayLine.rawValue))
-                .frame(width: self.lineWidth)
+                .frame(width: 4.5)
 
             Circle()
                 .stroke(Color(self.subwayLine.rawValue))
                 .fill(Color.white)
                 .frame(width: self.circleSize, height: self.circleSize)
         }
-        .frame(width: self.trackWidth)
+        .frame(width: 30)
         .frame(maxHeight: .infinity)
         .overlay(alignment: self.trainIconAlignment) {
             if self.trainIconStatus != nil {

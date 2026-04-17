@@ -40,7 +40,7 @@ struct RealtimeTrainPosition: Decodable, Equatable, Hashable {
         case "2": statusText = "출발"
         default:  statusText = "운행중"
         }
-        return "\(self.statnTnm)행\n\(statusText)"
+        return "\(self.statnTnm.replacingOccurrences(of: "종착", with: ""))행\n\(statusText)"
     }
 
     var trainIconStatus: TrainIconStatus {

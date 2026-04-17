@@ -20,7 +20,7 @@ struct RealtimeView: View {
         
         ScrollViewReader { proxy in
             NavigationBarScrollViewInSUI(
-                title: self.store.subwayLine.useLine + " \(Strings.Realtime.realTime)",
+                title: self.store.subwayLine.rawValue.filter {$0 != "0"} + " \(Strings.Realtime.realTime)",
                 isLargeTitleHidden: true,
                 backBtnTapped: {
                     self.store.send(.backBtnTapped)
