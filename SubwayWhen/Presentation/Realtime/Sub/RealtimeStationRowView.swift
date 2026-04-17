@@ -46,7 +46,7 @@ struct RealtimeStationRowView: View {
                         .font(.system(size: ViewStyle.FontSize.smallSize))
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(Color.secondary)
-                        .padding(7.5)
+                        .padding(10)
                 }
                 .frame(width: self.trainWidth, alignment: .trailing)
             }

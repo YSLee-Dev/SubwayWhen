@@ -5,6 +5,7 @@
 //  Created by 이윤수 on 4/9/26
 //
 
+import Foundation
 import ComposableArchitecture
 
 @Reducer
@@ -28,6 +29,7 @@ struct RealtimeFeature {
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
         var shouldScrollToStation: Bool = false
+        var lastRefreshedDate: Date? = nil
         @Presents var dialogState: ConfirmationDialogState<Action.DialogAction>?
     }
 
@@ -89,7 +91,12 @@ struct RealtimeFeature {
                 return .none
 
             case .refreshBtnTapped:
+                if let lastRefreshedDate = state.lastRefreshedDate,
+                   Date().timeIntervalSince(lastRefreshedDate) < 15 {
+                    return .none
+                }
                 state.isLoading = true
+                state.lastRefreshedDate = Date()
                 return self.trainPositionRequest(state: state)
 
             case .backBtnTapped:
