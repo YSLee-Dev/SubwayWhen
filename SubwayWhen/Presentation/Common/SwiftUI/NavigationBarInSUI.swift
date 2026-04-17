@@ -14,13 +14,24 @@ struct NavigationBarInSUI: View {
     private let title: String
     private let backBtnTapped: (() -> ())?
     private let backBtnIcon: String?
+    private let trailingBtnIcon: String?
+    private let trailingBtnTapped: (() -> ())?
     @Binding private var isSubTitleShow: Bool
 
-    init(title: String, isSubTitleShow: Binding<Bool>, backBtnIcon: String? = nil,  backBtnTapped: (() -> ())? = nil) {
+    init(
+        title: String,
+        isSubTitleShow: Binding<Bool>,
+        backBtnIcon: String? = nil,
+        backBtnTapped: (() -> ())? = nil,
+        trailingBtnIcon: String? = nil,
+        trailingBtnTapped: (() -> ())? = nil
+    ) {
         self.title = title
         self._isSubTitleShow = isSubTitleShow
         self.backBtnTapped = backBtnTapped
         self.backBtnIcon = backBtnIcon
+        self.trailingBtnIcon = trailingBtnIcon
+        self.trailingBtnTapped = trailingBtnTapped
     }
 
     // MARK: - View
@@ -44,6 +55,13 @@ struct NavigationBarInSUI: View {
                 .animation(.smooth(duration: 0.25), value: self.isSubTitleShow)
 
             Spacer()
+
+            if let trailingBtnIcon, let trailingBtnTapped {
+                Button(action: trailingBtnTapped) {
+                    Image(systemName: trailingBtnIcon)
+                        .foregroundColor(.init(uiColor: .label))
+                }
+            }
         }
         .frame(height: 45)
         .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)

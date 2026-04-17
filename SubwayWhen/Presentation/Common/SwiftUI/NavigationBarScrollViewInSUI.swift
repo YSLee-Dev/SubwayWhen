@@ -15,16 +15,28 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
     private let contentsView: () -> Contents
     private let backBtnTapped: (() -> ())?
     private let backBtnIcon: String?
+    private let trailingBtnIcon: String?
+    private let trailingBtnTapped: (() -> ())?
     private var isLargeTitleHidden: Bool = false
     @State private var isSubTitleShow: Bool = false
     @State private var isFirstValue: CGFloat? = nil
 
-    init(title: String, isLargeTitleHidden: Bool = false, backBtnTapped: (() -> ())? = nil, backBtnIcon: String? = nil, @ViewBuilder content: @escaping () -> Contents) {
+    init(
+        title: String,
+        isLargeTitleHidden: Bool = false,
+        backBtnTapped: (() -> ())? = nil,
+        backBtnIcon: String? = nil,
+        trailingBtnIcon: String? = nil,
+        trailingBtnTapped: (() -> ())? = nil,
+        @ViewBuilder content: @escaping () -> Contents
+    ) {
         self.contentsView = content
         self.title = title
         self.isLargeTitleHidden = isLargeTitleHidden
         self.backBtnTapped = backBtnTapped
         self.backBtnIcon = backBtnIcon
+        self.trailingBtnIcon = trailingBtnIcon
+        self.trailingBtnTapped = trailingBtnTapped
     }
 
     // MARK: - View
@@ -35,7 +47,9 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 title: self.title,
                 isSubTitleShow: self.$isSubTitleShow,
                 backBtnIcon: self.backBtnIcon,
-                backBtnTapped: self.backBtnTapped
+                backBtnTapped: self.backBtnTapped,
+                trailingBtnIcon: self.trailingBtnIcon,
+                trailingBtnTapped: self.trailingBtnTapped
             )
 
             OffsetScrollViewInSUI {
