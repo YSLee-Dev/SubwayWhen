@@ -18,6 +18,8 @@ class RealtimeCoordinator: Coordinator {
     private let stationName: String
     private let isUp: Bool
     private let exceptionLastStation: String
+    
+    weak var delegate : RealtimeCoordinatorDelegate?
 
     init(navigation: UINavigationController, subwayLine: SubwayLineData, stationName: String, isUp: Bool, exceptionLastStation: String) {
         self.navigation = navigation
@@ -50,9 +52,9 @@ class RealtimeCoordinator: Coordinator {
 
 // MARK: - RealtimeCoordinatorProtocol
 
-extension RealtimeCoordinator: RealtimeCoordinatorProtocol {
-    func disappear(reportCoordinator: RealtimeCoordinator) {
-
+extension RealtimeCoordinator: RealtimeVCDelegate {
+    func disappear() {
+        self.delegate?.disappear(realtimeCoordinator: self)
     }
 
     func showBundleErrorPopupAndDismiss() {
@@ -68,6 +70,6 @@ extension RealtimeCoordinator: RealtimeCoordinatorProtocol {
     }
 
     func pop() {
-        self.navigation.popViewController(animated: true)
+        self.delegate?.pop()
     }
 }

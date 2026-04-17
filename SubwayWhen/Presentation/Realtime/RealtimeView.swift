@@ -91,6 +91,9 @@ struct RealtimeView: View {
         .onAppear {
             self.store.send(.onAppear)
         }
+        .onDisappear {
+            self.store.send(.onDisappear)
+        }
     }
 }
 

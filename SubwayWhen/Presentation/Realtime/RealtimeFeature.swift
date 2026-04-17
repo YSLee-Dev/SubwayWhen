@@ -13,7 +13,7 @@ struct RealtimeFeature {
 
     // MARK: - Dependency
 
-    weak var coordinatorDelegate: RealtimeCoordinatorProtocol?
+    weak var coordinatorDelegate: RealtimeVCDelegate?
 
     @Dependency(\.totalLoad) private var totalLoad
 
@@ -38,6 +38,7 @@ struct RealtimeFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case onDisappear
         case backBtnTapped
         case exceptionBtnTapped
         case stationListLoaded([DetailStationId])
@@ -74,6 +75,10 @@ struct RealtimeFeature {
                     },
                     self.trainPositionRequest(state: state)
                 )
+                
+            case .onDisappear:
+                self.coordinatorDelegate?.disappear()
+                return .none
 
             case .stationListLoaded(let list):
                 if list.isEmpty {

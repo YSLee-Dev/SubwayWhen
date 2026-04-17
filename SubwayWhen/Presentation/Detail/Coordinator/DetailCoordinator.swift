@@ -86,6 +86,7 @@ extension DetailCoordinator : DetailVCDelegate{
     func pushRealtime(subwayLine: SubwayLineData, stationName: String, isUp: Bool, exceptionLastStation: String) {
         let realtimeCoordinator = RealtimeCoordinator(navigation: self.navigation, subwayLine: subwayLine, stationName: stationName, isUp: isUp, exceptionLastStation: exceptionLastStation)
         realtimeCoordinator.start()
+        realtimeCoordinator.delegate = self
         self.childCoordinator.append(realtimeCoordinator)
     }
 }
@@ -103,5 +104,11 @@ extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
         self.navigation.popViewController(animated: true)
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
         self.store?.send(.exceptionLastStationBtnTapped)
+    }
+}
+
+extension DetailCoordinator: RealtimeCoordinatorDelegate {
+    func disappear(realtimeCoordinator: RealtimeCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== realtimeCoordinator}
     }
 }
