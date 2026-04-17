@@ -8,6 +8,7 @@
 - @skills/create-feature/SKILL.md
 
 ## 현재 상태 파악
+- 신규:
 - 재사용:
 - 수정:
 - 삭제:
