@@ -25,7 +25,11 @@ struct RealtimeView: View {
                 backBtnTapped: {
                     self.store.send(.backBtnTapped)
                 },
-                backBtnIcon: "arrow.left"
+                backBtnIcon: "arrow.left",
+                trailingBtnIcon: "arrow.triangle.2.circlepath",
+                trailingBtnTapped: {
+                    self.store.send(.refreshBtnTapped)
+                }
             ) {
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundStyle(Color(uiColor: .init(named: self.store.subwayLine.rawValue) ?? .black))
@@ -51,24 +55,19 @@ struct RealtimeView: View {
                         .padding(20)
                     }
                 
-                if self.store.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    LazyVStack(spacing: 0) {
-                        ForEach(self.store.stationList, id: \.stationId) { station in
-                            let position = self.store.trainPositions.first { $0.statnId == station.stationId }
-                            RealtimeStationRowView(
-                                stationName: station.stationName,
-                                isSelected: station.stationName == self.store.stationName,
-                                position: position,
-                                subwayLine: self.store.subwayLine
-                            )
-                            .id(station.stationId)
-                        }
+                LazyVStack(spacing: 0) {
+                    ForEach(self.store.stationList, id: \.stationId) { station in
+                        let position = self.store.trainPositions.first { $0.statnId == station.stationId }
+                        RealtimeStationRowView(
+                            stationName: station.stationName,
+                            isSelected: station.stationName == self.store.stationName,
+                            position: position,
+                            subwayLine: self.store.subwayLine
+                        )
+                        .id(station.stationId)
                     }
-                    .padding(.top, 12.5)
                 }
+                .padding(.top, 12.5)
             }
             .onChange(of: self.store.shouldScrollToStation) { _, shouldScroll in
                 guard shouldScroll,
@@ -81,6 +80,13 @@ struct RealtimeView: View {
                 }
             }
         }
+        .overlay {
+            if self.store.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .animation(.smooth(duration: 0.3), value: self.store.trainPositions)
         .confirmationDialog(self.$store.scope(state: \.dialogState, action: \.dialogAction))
         .onAppear {
             self.store.send(.onAppear)

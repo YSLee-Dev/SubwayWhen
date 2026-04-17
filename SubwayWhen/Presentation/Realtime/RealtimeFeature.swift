@@ -147,6 +147,7 @@ private extension RealtimeFeature {
         let subwayLine = state.subwayLine
         let isUp = state.isUp
         let exceptionLastStation = state.exceptionLastStation
+        
         return .run { [totalLoad = self.totalLoad] send in
             let positions = await totalLoad.realtimePositionLoad(
                 subwayLine: subwayLine,
