@@ -25,7 +25,7 @@ struct RealtimeFeature {
         let stationName: String
         let isUp: Bool
         var exceptionLastStation: String
-        var stationList: [DetailStationId] = []
+        var stationSessions: [StationSession] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
         var shouldScrollToStation: Bool = false
@@ -41,7 +41,7 @@ struct RealtimeFeature {
         case onDisappear
         case backBtnTapped
         case exceptionBtnTapped
-        case stationListLoaded([DetailStationId])
+        case stationListLoaded([StationSession])
         case trainPositionLoaded([RealtimeTrainPosition])
         case refreshBtnTapped
         case bundleLoadFailed
@@ -70,8 +70,8 @@ struct RealtimeFeature {
                 let isUp = state.isUp
                 return .merge(
                     .run { [totalLoad = self.totalLoad] send in
-                        let list = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
-                        await send(.stationListLoaded(list))
+                        let sessions = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
+                        await send(.stationListLoaded(sessions))
                     },
                     self.trainPositionRequest(state: state)
                 )
@@ -80,11 +80,11 @@ struct RealtimeFeature {
                 self.coordinatorDelegate?.disappear()
                 return .none
 
-            case .stationListLoaded(let list):
-                if list.isEmpty {
+            case .stationListLoaded(let sessions):
+                if sessions.allSatisfy({ $0.stations.isEmpty }) {
                     return .send(.bundleLoadFailed)
                 }
-                state.stationList = list
+                state.stationSessions = sessions
                 return .run { send in
                     try? await Task.sleep(for: .milliseconds(400))
                     await send(.scrollToStationRequest)

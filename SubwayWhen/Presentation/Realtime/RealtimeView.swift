@@ -49,15 +49,25 @@ struct RealtimeView: View {
 
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                     Section {
-                        ForEach(self.store.stationList, id: \.stationId) { station in
-                            let position = self.store.trainPositions.first { $0.statnId == station.stationId }
-                            RealtimeStationRowView(
-                                stationName: station.stationName,
-                                isSelected: station.stationName == self.store.stationName,
-                                position: position,
-                                subwayLine: self.store.subwayLine
-                            )
-                            .id(station.stationId)
+                        ForEach(Array(self.store.stationSessions.enumerated()), id: \.offset) { _, session in
+                            if let name = session.name {
+                                Text(name)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
+                                    .padding(.vertical, 8)
+                            }
+                            ForEach(session.stations, id: \.stationId) { station in
+                                let position = self.store.trainPositions.first { $0.statnId == station.stationId }
+                                RealtimeStationRowView(
+                                    stationName: station.stationName,
+                                    isSelected: station.stationName == self.store.stationName,
+                                    position: position,
+                                    subwayLine: self.store.subwayLine
+                                )
+                                .id(station.stationId)
+                            }
                         }
                     } header: {
                         UpDownExceptionViewInSUI(
@@ -73,7 +83,7 @@ struct RealtimeView: View {
             }
             .onChange(of: self.store.shouldScrollToStation) { _, shouldScroll in
                 guard shouldScroll,
-                      let target = self.store.stationList.first(where: { $0.stationName == self.store.stationName })
+                      let target = self.store.stationSessions.flatMap({ $0.stations }).first(where: { $0.stationName == self.store.stationName })
                 else { return }
                 
                 withAnimation(.smooth) {
