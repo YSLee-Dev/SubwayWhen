@@ -27,6 +27,7 @@ struct DetailArrivalView: View {
     let backStationName: String
     var nowLoading: Bool
     var nowSeconds: Int?
+    let isDisposable: Bool
     let refreshBtnTapped: () -> ()
     var realtimeBtnTapped: (() -> ())?
     
@@ -128,11 +129,10 @@ struct DetailArrivalView: View {
             }
             .padding(.bottom, 10)
             .clipped()
-            .onTapGesture { self.realtimeBtnTapped?() }
             
             MainStyleViewInSUI {
                 VStack {
-                    HStack {
+                    HStack(spacing: 15) {
                         let title = self.nowLoading ? "📡 열차 정보를 가져오고 있어요." : (self.arrivalDataList.first?.subPrevious == nil ||  self.arrivalDataList.first!.subPrevious.isEmpty)  ?  "⚠️ 실시간 정보가 없어요." : self.arrivalDataList.first!.subPrevious
                         Text(title)
                             .font(.system(size: ViewStyle.FontSize.mediumSize, weight: .bold))
@@ -161,6 +161,15 @@ struct DetailArrivalView: View {
                         }
                         .rotationEffect(.init(degrees: self.refreshBtnTapAnimation ? 360 : 0))
                         .animation(.easeInOut(duration: self.refreshBtnTapAnimation ? 0.5 : 0), value: self.refreshBtnTapAnimation)
+                        
+                        if !self.isDisposable {
+                            Button {
+                                self.realtimeBtnTapped?()
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .foregroundColor(.init(uiColor: .label))
+                            }
+                        }
                     }
                     .padding(.bottom, 10)
                     
@@ -342,6 +351,7 @@ extension DetailArrivalView {
         ], stationInfo: .init(upDown: "상행", stationName: "340", lineNumber: "03호선", stationCode: "340", lineCode: "1003", exceptionLastStation: "", korailCode: ""),
         backStationName: "남부터미널",
         nowLoading: false,
+        isDisposable: false,
         refreshBtnTapped: {}
     )
 }
