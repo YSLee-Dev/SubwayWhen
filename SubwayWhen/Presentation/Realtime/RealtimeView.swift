@@ -78,8 +78,8 @@ struct RealtimeView: View {
                 
                 withAnimation(.smooth) {
                     proxy.scrollTo(target.stationId, anchor: .center)
-                    self.store.send(.scrollToStationCompleted)
                 }
+                self.store.send(.scrollToStationCompleted)
             }
         }
         .overlay {

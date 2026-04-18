@@ -46,6 +46,7 @@ struct RealtimeStationRowView: View {
                         .font(.system(size: ViewStyle.FontSize.smallSize))
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(Color.secondary)
+                        .minimumScaleFactor(0.5)
                         .padding(10)
                 }
                 .frame(width: self.trainWidth, alignment: .trailing)
@@ -101,6 +102,15 @@ private extension RealtimeStationRowView {
             if self.trainIconStatus != nil {
                 Text(FixInfo.saveSetting.detailVCTrainIcon)
                     .font(.system(size: ViewStyle.FontSize.largeSize))
+                    .overlay {
+                        if let position = self.position,
+                            position.isFast {
+                            Text("💨")
+                                .offset(x: 20, y: 0)
+                                .font(.system(size: ViewStyle.FontSize.largeSize))
+                                .rotationEffect(Angle(degrees: 90))
+                        }
+                    }
             }
         }
     }
