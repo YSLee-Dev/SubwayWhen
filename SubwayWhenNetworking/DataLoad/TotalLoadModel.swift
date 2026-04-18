@@ -418,11 +418,41 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId] {
-        self.stationIDList.filter {
-            $0.lineId == subwayLine.lineCode
-        }.sorted {
-            isUp ? $0.stationId < $1.stationId : $0.stationId > $1.stationId
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
+        let all = self.stationIDList.filter { $0.lineId == subwayLine.lineCode }
+
+        func sorted(_ stations: [DetailStationId]) -> [DetailStationId] {
+            stations.sorted { isUp ? $0.stationId < $1.stationId : $0.stationId > $1.stationId }
+        }
+
+        switch subwayLine {
+        case .one:
+            let common = sorted(all.filter { $0.stationId <= "1001000141" })
+            let gyeongIn = sorted(all.filter { $0.stationId > "1001000141" && $0.stationId.contains("000") })
+            let gyeongBu = sorted(all.filter { $0.stationId.contains("080") })
+            return [
+                StationSession(name: nil, stations: common),
+                StationSession(name: "경인선", stations: gyeongIn),
+                StationSession(name: "경부선", stations: gyeongBu)
+            ]
+        case .two:
+            let main = sorted(all.filter { $0.stationId <= "1002000243" })
+            let seongsu = sorted(all.filter { $0.stationId >= "1002002111" && $0.stationId <= "1002002114" })
+            let sinjeong = sorted(all.filter { $0.stationId >= "1002002341" })
+            return [
+                StationSession(name: nil, stations: main),
+                StationSession(name: "성수지선", stations: seongsu),
+                StationSession(name: "신정지선", stations: sinjeong)
+            ]
+        case .five:
+            let main = sorted(all.filter { $0.stationId.contains("000") })
+            let macheon = sorted(all.filter { $0.stationId.contains("080") })
+            return [
+                StationSession(name: nil, stations: main),
+                StationSession(name: "마천지선", stations: macheon)
+            ]
+        default:
+            return [StationSession(name: nil, stations: sorted(all))]
         }
     }
 
