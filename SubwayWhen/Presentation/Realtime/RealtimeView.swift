@@ -52,11 +52,10 @@ struct RealtimeView: View {
                         ForEach(Array(self.store.stationSessions.enumerated()), id: \.offset) { _, session in
                             if let name = session.name {
                                 Text(name)
-                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .bold))
-                                    .foregroundStyle(.secondary)
+                                    .font(.system(size: ViewStyle.FontSize.smallSize, weight: .semibold))
+                                    .foregroundColor(.gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
-                                    .padding(.vertical, 8)
+                                    .padding(.vertical, 15)
                             }
                             ForEach(session.stations, id: \.stationId) { station in
                                 let position = self.store.trainPositions.first { $0.statnId == station.stationId }
