@@ -53,6 +53,10 @@ class RealtimeCoordinator: Coordinator {
 // MARK: - RealtimeCoordinatorProtocol
 
 extension RealtimeCoordinator: RealtimeVCDelegate {
+    func exceptionRemove() {
+        self.delegate?.exceptionRemove()
+    }
+    
     func disappear() {
         self.delegate?.disappear(realtimeCoordinator: self)
     }

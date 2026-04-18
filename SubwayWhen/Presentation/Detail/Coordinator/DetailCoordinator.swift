@@ -108,6 +108,10 @@ extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
 }
 
 extension DetailCoordinator: RealtimeCoordinatorDelegate {
+    func exceptionRemove() {
+        self.store?.send(.exceptionLastStationRemove)
+    }
+    
     func disappear(realtimeCoordinator: RealtimeCoordinator) {
         self.childCoordinator = self.childCoordinator.filter{$0 !== realtimeCoordinator}
     }

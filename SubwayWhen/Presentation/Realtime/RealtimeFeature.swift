@@ -129,6 +129,7 @@ struct RealtimeFeature {
                 state.dialogState = nil
                 state.exceptionLastStation = ""
                 state.isLoading = true
+                self.coordinatorDelegate?.exceptionRemove()
                 return self.trainPositionRequest(state: state)
 
             case .dialogAction:

@@ -53,6 +53,7 @@ struct DetailFeature: Reducer {
         case liveActivityRequest
         case liveActivityValueChange(Bool)
         case dialogAction(PresentationAction<DialogAction>)
+        case exceptionLastStationRemove
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -223,17 +224,11 @@ struct DetailFeature: Reducer {
                 
             case .dialogAction(.presented(.okBtnTapped)):
                 state.dialogState = nil
-                state.sendedLoadModel.exceptionLastStation = ""
                 
                 Analytics.logEvent("DetailVC_ExceptionBtnTap", parameters: [
                     "Exception" : "BTNTAP"
                 ])
-                
-                return .merge(
-                    .send(.arrivalDataRequest),
-                    .send(.scheduleDataRequest),
-                    .cancel(id: TimerKey.refresh)
-                )
+                return .send(.exceptionLastStationRemove)
                 
             case .backBtnTapped:
                 self.coordinatorDelegate?.pop()
@@ -261,6 +256,15 @@ struct DetailFeature: Reducer {
                     .send(.liveActivityValueChange(false)),
                     .cancel(id: TimerKey.arrivalRequest),
                     .cancel(id: TimerKey.scheduleRequest),
+                    .cancel(id: TimerKey.refresh)
+                )
+                
+            case .exceptionLastStationRemove:
+                state.sendedLoadModel.exceptionLastStation = ""
+                
+                return .merge(
+                    .send(.arrivalDataRequest),
+                    .send(.scheduleDataRequest),
                     .cancel(id: TimerKey.refresh)
                 )
                 

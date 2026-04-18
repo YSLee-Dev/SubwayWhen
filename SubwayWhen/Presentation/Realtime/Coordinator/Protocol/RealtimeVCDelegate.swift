@@ -9,4 +9,5 @@ protocol RealtimeVCDelegate: AnyObject {
     func showBundleErrorPopupAndDismiss()
     func pop()
     func disappear()
+    func exceptionRemove()
 }

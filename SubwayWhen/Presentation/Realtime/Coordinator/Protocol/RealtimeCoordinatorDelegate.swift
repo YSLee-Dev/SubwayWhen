@@ -10,4 +10,5 @@ import Foundation
 protocol RealtimeCoordinatorDelegate: AnyObject {
     func pop()
     func disappear(realtimeCoordinator : RealtimeCoordinator)
+    func exceptionRemove()
 }
