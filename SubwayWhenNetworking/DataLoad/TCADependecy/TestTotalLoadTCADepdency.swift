@@ -16,7 +16,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     var searchStationName: [searchStationInfo] = []
     var queryRecoomendList: [SearchQueryRecommendData] = []
     var realtimePositionList: [RealtimeTrainPosition] = []
-    var stationIdListData: [DetailStationId] = []
+    var stationIdListData: [StationSession] = []
 
     init() {}
     
@@ -48,7 +48,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         self.realtimePositionList
     }
 
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId] {
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
         self.stationIdListData
     }
 }

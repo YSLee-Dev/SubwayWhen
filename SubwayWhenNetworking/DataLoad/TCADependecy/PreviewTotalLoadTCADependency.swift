@@ -73,16 +73,16 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         }
     }
 
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId] {
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
         switch subwayLine {
         case .two:
-            return [
+            return [StationSession(name: nil, stations: [
                 .init(lineId: "1002", stationId: "1002000214", stationName: "교대"),
                 .init(lineId: "1002", stationId: "1002000216", stationName: "강남"),
                 .init(lineId: "1002", stationId: "1002000218", stationName: "역삼"),
                 .init(lineId: "1002", stationId: "1002000220", stationName: "선릉"),
                 .init(lineId: "1002", stationId: "1002000222", stationName: "삼성"),
-            ]
+            ])]
         default:
             return []
         }

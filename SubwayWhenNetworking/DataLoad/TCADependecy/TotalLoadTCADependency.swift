@@ -67,7 +67,7 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         await self.totalModel.realtimePositionLoad(subwayLine: subwayLine, isUp: isUp, exceptionLastStation: exceptionLastStation)
     }
 
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [DetailStationId] {
+    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
         self.totalModel.stationIdList(subwayLine: subwayLine, isUp: isUp)
     }
 }
