@@ -21,6 +21,10 @@ extension Strings.Common {
     static let up = "상행"
     /// 하행
     static let down = "하행"
+    /// 내선
+    static let inner = "내선"
+    /// 외선
+    static let outer = "외선"
     /// 네
     static let yes = "네"
     /// 아니오
