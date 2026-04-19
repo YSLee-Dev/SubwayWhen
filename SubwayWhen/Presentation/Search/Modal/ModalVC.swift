@@ -246,13 +246,8 @@ extension Reactive where Base : ModalVC{
                 base.notServiceBtn.isHidden = false
                 
             }else{
-                if info.line.rawValue == "02호선"{
-                    base.upBtn.setTitle("내선", for: .normal)
-                    base.downBtn.setTitle("외선", for: .normal)
-                }else{
-                    base.upBtn.setTitle("상행", for: .normal)
-                    base.downBtn.setTitle("하행", for: .normal)
-                }
+                base.upBtn.setTitle(info.line.rawValue.upDownText(isUp: true), for: .normal)
+                base.downBtn.setTitle(info.line.rawValue.upDownText(isUp: false), for: .normal)
             }
         }
     }

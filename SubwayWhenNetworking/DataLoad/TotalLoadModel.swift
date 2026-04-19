@@ -244,10 +244,10 @@ class TotalLoadModel : TotalLoadProtocol {
         var inOut = ""
         
         // 9호선은 상하행이 반대
-        if scheduleSearch.line == "09호선"{
-            inOut = scheduleSearch.upDown.contains("상행") ? "2" : "1"
-        }else{
-            inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
+        if scheduleSearch.line == "09호선" {
+            inOut = scheduleSearch.upDown.isUpDirection ? "2" : "1"
+        } else{
+            inOut = scheduleSearch.upDown.isUpDirection ? "1" : "2"
         }
         
         let dayType = self.calculateDayType(holidayList: self.holidayList, date: requestDate)

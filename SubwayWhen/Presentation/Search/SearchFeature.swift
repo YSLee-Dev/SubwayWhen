@@ -189,11 +189,11 @@ struct SearchFeature: Reducer {
                 state.nowLiveDataLoading = [true, true]
                 return .merge([
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "내선" : "상행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line.upDownText(isUp: true), stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                     },
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "외선" : "하행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line.upDownText(isUp: false), stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                     }
                 ])
@@ -270,16 +270,16 @@ struct SearchFeature: Reducer {
                     TextState("")
                 }, actions: {
                     ButtonState(action: .upDownBtnTapped(line != .nine)) {
-                        TextState(line == .two ? "내선" : "상행")
+                        TextState(line.rawValue.upDownText(isUp: true))
                     }
                     ButtonState(action: .upDownBtnTapped(line == .nine)) {
-                        TextState(line == .two ? "외선" : "하행")
+                        TextState(line.rawValue.upDownText(isUp: false))
                     }
                     ButtonState(role: .cancel, action: .cancelBtnTapped) {
                         TextState("취소")
                     }
                 }, message: {
-                    TextState("\(line == .two ? "내/외선" : "상/하행") 정보를 확인해주세요.")
+                    TextState("\(line.rawValue.upDownText(isUp: true))/\(line.rawValue.upDownText(isUp: false)) 정보를 확인해주세요.")
                 })
                 return .none
                 

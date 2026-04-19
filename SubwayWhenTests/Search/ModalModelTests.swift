@@ -48,31 +48,4 @@ class ModalModelTests : XCTestCase{
         )
     }
     
-    func testUpdownFix(){
-        // GIVEN
-        let requestOne = self.model.updownFix(updown: false, line: "2호선")
-        let requestTwo = self.model.updownFix(updown: true, line: "2호선")
-        let requestThree = self.model.updownFix(updown: true, line: "3호선")
-        
-        // WHEN
-        let dummyOne = "외선"
-        let dummyTwo = "내선"
-        let dummyThree = "상행"
-        
-        // THEN
-        expect(requestOne).to(
-            equal(dummyOne),
-            description: "2호선에 updown이 false이면 외선이 나와야함"
-        )
-        
-        expect(requestTwo).to(
-            equal(dummyTwo),
-            description: "2호선에 updown이 true이면 내선이 나와야함"
-        )
-        
-        expect(requestThree).to(
-            equal(dummyThree),
-            description: "2호선이 아닌경우 updown이 true이면 상행이 나와야함"
-        )
-    }
 }

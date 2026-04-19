@@ -29,13 +29,4 @@ class ModalModel : ModalModelProtocol{
         return brand
     }
     
-    func updownFix(updown : Bool, line : String) -> String{
-        var updownLine = ""
-        if line ==  "2호선" {
-            updownLine = updown ? "내선" : "외선"
-        }else{
-            updownLine = updown ? "상행" : "하행"
-        }
-        return updownLine
-    }
 }

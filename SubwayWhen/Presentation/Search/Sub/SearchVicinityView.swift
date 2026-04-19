@@ -193,7 +193,7 @@ struct SearchVicinityView: View {
                                             Text(
                                                 upData?.code == ""
                                                 ? "-"
-                                                : "\(upData?.isFast  == "급행" ? "(급)" : "")\(upData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "내선" : "상행"))"
+                                                : "\(upData?.isFast  == "급행" ? "(급)" : "")\(upData?.lastStation ?? "-")행 (\(tappedData.line.upDownText(isUp: true)))"
                                             )
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                             Text((upData == nil || self.store.nowLiveDataLoading[0]) ? "🔄 로딩 중"  : upData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : upData!.nowStateMSG)
@@ -208,7 +208,7 @@ struct SearchVicinityView: View {
                                             Text(
                                                 downData?.code == ""
                                                 ? "-"
-                                                : "\(downData?.isFast  == "급행" ? "(급)" : "")\(downData?.lastStation ?? "-")행 (\(tappedData.line == "2호선" ? "외선" : "하행"))"
+                                                : "\(downData?.isFast  == "급행" ? "(급)" : "")\(downData?.lastStation ?? "-")행 (\(tappedData.line.upDownText(isUp: false)))"
                                             )
                                                 .font(.system(size: ViewStyle.FontSize.smallSize))
                                             Text((downData == nil || self.store.nowLiveDataLoading[1]) ?  "🔄 로딩 중"  : downData!.nowStateMSG.isEmpty ? "⚠️ 정보없음" : downData!.nowStateMSG)

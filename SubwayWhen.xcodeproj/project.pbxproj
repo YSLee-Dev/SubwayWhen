@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03D673C0FC8F4EA8B2BDBA82 /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
 		1F1F636205AB47F8BE16C96A /* RealtimeTrainPositionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C481CCE574134ACDE3CAB /* RealtimeTrainPositionResponse.swift */; };
 		25CF5AD13030439CB4B24F25 /* RealtimeTrainPositionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C481CCE574134ACDE3CAB /* RealtimeTrainPositionResponse.swift */; };
 		341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
@@ -18,6 +19,15 @@
 		3427D9032A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3427D9022A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift */; };
 		344D6A102ABD84AE00ECB57D /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344D6A0F2ABD84AE00ECB57D /* TutorialVC.swift */; };
 		344D6A122ABD8A0F00ECB57D /* TutorialCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344D6A112ABD8A0F00ECB57D /* TutorialCoordinator.swift */; };
+		3455377B2F94860300FAE580 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455377A2F94860300FAE580 /* String+.swift */; };
+		3455377C2F94861700FAE580 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455377A2F94860300FAE580 /* String+.swift */; };
+		3455377D2F94862B00FAE580 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
+		3455377E2F94864800FAE580 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455377A2F94860300FAE580 /* String+.swift */; };
+		3455377F2F94864800FAE580 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455377A2F94860300FAE580 /* String+.swift */; };
+		345537802F94864800FAE580 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455377A2F94860300FAE580 /* String+.swift */; };
+		345537812F94864E00FAE580 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
+		345537822F94864E00FAE580 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
+		345537832F94864E00FAE580 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7837E62E29D5AA004E6BFF /* Strings.swift */; };
 		3455B9BF2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455B9BD2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */; };
 		3455B9C02F403FBD00A85C92 /* CoreDataScheduleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3455B9BB2F403FBD00A85C92 /* CoreDataScheduleModel.xcdatamodeld */; };
 		3455B9C12F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455B9BC2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataClass.swift */; };
@@ -62,9 +72,6 @@
 		3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3499DEAD29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift */; };
 		349B515F29A452EC00A53879 /* DetailStationIdList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 349B515E29A452EC00A53879 /* DetailStationIdList.plist */; };
 		349B516129A4616700A53879 /* DetailStationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B516029A4616700A53879 /* DetailStationId.swift */; };
-		37420AA8C34C4874B7113395 /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
-		03D673C0FC8F4EA8B2BDBA82 /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
-		60876EFF259749EAB0257ACA /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
 		349B518129A4B73000A53879 /* ReportMSGData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518029A4B73000A53879 /* ReportMSGData.swift */; };
 		349B518329A4BEFD00A53879 /* ReportCheckModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */; };
 		349B518529A4BF6000A53879 /* ReportCheckModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */; };
@@ -215,6 +222,8 @@
 		34F5F0FA2962E6580010A21D /* TableVCCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F0F92962E6580010A21D /* TableVCCustom.swift */; };
 		34F5F0FD29641AC10010A21D /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F5F0FC29641AC10010A21D /* TitleView.swift */; };
 		36145F2E3BB475C817127066 /* Pods_SubwayWhenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E51D78E9A9DC418747471B /* Pods_SubwayWhenTests.framework */; };
+		37420AA8C34C4874B7113395 /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
+		60876EFF259749EAB0257ACA /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
 		6A14CB9631A84F7CA2DD611B /* RealtimeTrainPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */; };
 		841E280644754670B3841E44 /* RealtimeTrainPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */; };
 		85837DB0575EDEF09E408A9A /* Pods_SubwayWhen_SubwayWhenNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB664506867A641C1865733 /* Pods_SubwayWhen_SubwayWhenNetworking.framework */; };
@@ -597,6 +606,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSession.swift; sourceTree = "<group>"; };
 		0D96968310BE348CB1B76BDE /* Pods_SubwayWhen_SubwayWhenHomeWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SubwayWhen_SubwayWhenHomeWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTrainPosition.swift; sourceTree = "<group>"; };
 		1E1012FF697D93AD3B38BC84 /* Pods-SubwayWhen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.debug.xcconfig"; sourceTree = "<group>"; };
@@ -610,6 +620,7 @@
 		3427D9022A432041000AEEED /* SettingNotiSelectModalCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNotiSelectModalCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		344D6A0F2ABD84AE00ECB57D /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		344D6A112ABD8A0F00ECB57D /* TutorialCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCoordinator.swift; sourceTree = "<group>"; };
+		3455377A2F94860300FAE580 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		3455B9BC2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShinbundangLineScheduleModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3455B9BD2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShinbundangLineScheduleModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3455B9BE2F403FBD00A85C92 /* CoreDataScheduleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataScheduleModel.xcdatamodel; sourceTree = "<group>"; };
@@ -648,7 +659,6 @@
 		3499DEAD29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalModelTests.swift; sourceTree = "<group>"; };
 		349B515E29A452EC00A53879 /* DetailStationIdList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DetailStationIdList.plist; sourceTree = "<group>"; };
 		349B516029A4616700A53879 /* DetailStationId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStationId.swift; sourceTree = "<group>"; };
-		08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSession.swift; sourceTree = "<group>"; };
 		349B518029A4B73000A53879 /* ReportMSGData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMSGData.swift; sourceTree = "<group>"; };
 		349B518229A4BEFD00A53879 /* ReportCheckModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalVC.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		349B518429A4BF6000A53879 /* ReportCheckModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCheckModalViewModel.swift; sourceTree = "<group>"; };
@@ -2656,6 +2666,7 @@
 				FA9AA9B12BD639F300906A5B /* UIApplication+.swift */,
 				FF6B35F92E8A47B000814E32 /* UIDevice+.swift */,
 				FF9B79792EB9BBC5009393C7 /* UIView+.swift */,
+				3455377A2F94860300FAE580 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -3113,10 +3124,12 @@
 				FFC07F6A2D34D63D0001B1CD /* SearchQueryRecommendData.swift in Sources */,
 				FFA67B742D0C017D006EFAB7 /* SearchStaion.swift in Sources */,
 				349C00812A0A1B8D008A85BF /* SubwayWhenDetailWidgetLiveActivity.swift in Sources */,
+				345537822F94864E00FAE580 /* Strings.swift in Sources */,
 				349C00922A0A1BE8008A85BF /* SubwayWhenDetailWidgetManager.swift in Sources */,
 				FF0365412D011F6700EF325D /* SubwayLineData.swift in Sources */,
 				34B4A85D2F794E96008730BB /* DayType.swift in Sources */,
 				FF36A3842C80637400387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
+				3455377F2F94864800FAE580 /* String+.swift in Sources */,
 				FA4CB7FA2BB93103003C41F6 /* ViewStyle.swift in Sources */,
 				349C007F2A0A1B8D008A85BF /* SubwayWhenDetailWidgetBundle.swift in Sources */,
 			);
@@ -3148,10 +3161,12 @@
 				FF7197122ECC082000C3F3C1 /* DummyData.swift in Sources */,
 				3499DE9129D17B9C00A6E8C1 /* EditViewModelTests.swift in Sources */,
 				3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */,
+				345537812F94864E00FAE580 /* Strings.swift in Sources */,
 				FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */,
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
 				34BA0B2629BF246E0044E2C2 /* LoadModelTests.swift in Sources */,
+				3455377E2F94864800FAE580 /* String+.swift in Sources */,
 				FF71970D2ECBF20E00C3F3C1 /* MockCoreDataScheduleManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3432,6 +3447,7 @@
 				B6438D4E2B667CB10099BFEF /* MainModel.swift in Sources */,
 				34C6DB572936274400C4ED80 /* SceneDelegate.swift in Sources */,
 				349E2F3329BDA3CB00C54EE9 /* AppCoordinator.swift in Sources */,
+				3455377B2F94860300FAE580 /* String+.swift in Sources */,
 				3497DCAB29D3027000D2ABB9 /* SettingContentsModalModelProtocol.swift in Sources */,
 				FF7D85852EB9B95900B48134 /* MainTableHeaderView.swift in Sources */,
 				34F5F0FA2962E6580010A21D /* TableVCCustom.swift in Sources */,
@@ -3453,6 +3469,7 @@
 				FA4CB7942BB684B1003C41F6 /* ScheduleType.swift in Sources */,
 				FA4CB7952BB684B1003C41F6 /* SearchInfoBySubwayNameService.swift in Sources */,
 				FF36A3732C805FC900387A3D /* DetailArrivalDataRequestModel.swift in Sources */,
+				3455377D2F94862B00FAE580 /* Strings.swift in Sources */,
 				FF1D4AC42C9D3D4C00AFD709 /* TestTotalLoadTCADepdency.swift in Sources */,
 				FA4CB7972BB684B1003C41F6 /* LiveStationModel.swift in Sources */,
 				FA4CB7982BB684B1003C41F6 /* KorailScdule.swift in Sources */,
@@ -3464,6 +3481,7 @@
 				FF20D8782EBC5D6D00B280D9 /* SubwayNotice.swift in Sources */,
 				3455B9BF2F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataProperties.swift in Sources */,
 				3455B9C02F403FBD00A85C92 /* CoreDataScheduleModel.xcdatamodeld in Sources */,
+				3455377C2F94861700FAE580 /* String+.swift in Sources */,
 				3455B9C12F403FBD00A85C92 /* ShinbundangLineScheduleModel+CoreDataClass.swift in Sources */,
 				FA4CB79A2BB684B1003C41F6 /* URLSessionProtocol.swift in Sources */,
 				FA4CB79B2BB684B1003C41F6 /* LoadModelProtocol.swift in Sources */,
@@ -3556,8 +3574,10 @@
 				FA4CB7932BB6849D003C41F6 /* LoadModel.swift in Sources */,
 				FF1D4AB32C9D346F00AFD709 /* TotalLoadModelDependencyKey.swift in Sources */,
 				FF36A3862C80644C00387A3D /* TotalLoadProtocol.swift in Sources */,
+				345537802F94864800FAE580 /* String+.swift in Sources */,
 				FAD2F5F52BB566A800B95B52 /* SubwayWhenHomeWidget.swift in Sources */,
 				FF36A37C2C8062A900387A3D /* TotalLoadTCADependencyProtocol.swift in Sources */,
+				345537832F94864E00FAE580 /* Strings.swift in Sources */,
 				FAD2F5F72BB566A800B95B52 /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
