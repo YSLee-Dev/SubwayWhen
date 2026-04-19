@@ -590,11 +590,11 @@ class TotalLoadModel : TotalLoadProtocol {
         
         for x in decodingData{
             if x.stationId == backId{
-                backStation = x.stationName
+                backStation = x.stationName.removingSubName()
             }
             
             if x.stationId == nextId{
-                nextStation = x.stationName
+                nextStation = x.stationName.removingSubName()
             }
             
             if backStation != "" && nextStation != ""{
