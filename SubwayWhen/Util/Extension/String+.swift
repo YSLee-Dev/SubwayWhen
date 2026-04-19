@@ -21,4 +21,10 @@ extension String {
     var isUpDirection: Bool {
         self == Strings.Common.up || self == Strings.Common.inner
     }
+
+    /// 역명에서 괄호 이하 부역명을 제거한 문자열 반환
+    func removingSubName() -> String {
+        guard let endIndex = self.firstIndex(of: "(") else { return self }
+        return String(self[self.startIndex ..< endIndex])
+    }
 }
