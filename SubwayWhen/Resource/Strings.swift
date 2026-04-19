@@ -249,6 +249,8 @@ extension Strings.Realtime {
     /// 행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.
     static let exceptionDialogMessageSuffix = "행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요."
 
+    /// '시청'역부터 다시 확인하기
+    static let upToCityHallStation = "'시청'역" + "부터 다시 확인하기"
 }
 
 extension Strings.Detail {

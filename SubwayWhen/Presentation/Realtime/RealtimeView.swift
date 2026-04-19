@@ -13,6 +13,7 @@ struct RealtimeView: View {
     // MARK: - Properties
     
     @Bindable var store: StoreOf<RealtimeFeature>
+    private let topViewID = "TOPVIEW"
     
     // MARK: - View
     
@@ -45,6 +46,7 @@ struct RealtimeView: View {
                         .padding(20)
                     }
                     .padding(.bottom, 10)
+                    .id(self.topViewID)
 
                 LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                     Section {
@@ -70,6 +72,22 @@ struct RealtimeView: View {
                                     subwayLine: self.store.subwayLine
                                 )
                                 .id(station.stationId)
+                            }
+                            
+                            if self.store.subwayLine == .two && session.name == nil {
+                                MainStyleViewInSUI {
+                                    Button(action: {
+                                        withAnimation(.smooth) {
+                                            proxy.scrollTo(self.topViewID, anchor: .bottom)
+                                        }
+                                    }) {
+                                        Text(Strings.Realtime.upToCityHallStation)
+                                            .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: 40)
+                                    }
+                                }
+                                .padding(.vertical, 10)
                             }
                         }
                     } header: {
