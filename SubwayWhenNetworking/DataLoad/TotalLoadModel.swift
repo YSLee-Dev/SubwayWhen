@@ -419,7 +419,9 @@ class TotalLoadModel : TotalLoadProtocol {
     }
     
     func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
-        let all = self.stationIDList.filter { $0.lineId == subwayLine.lineCode }
+        let all = self.stationIDList
+            .filter { $0.lineId == subwayLine.lineCode }
+            .map { DetailStationId(lineId: $0.lineId, stationId: $0.stationId, stationName: $0.stationName.removingSubName()) }
 
         func sorted(_ stations: [DetailStationId]) -> [DetailStationId] {
             stations.sorted { $0.stationId < $1.stationId }
