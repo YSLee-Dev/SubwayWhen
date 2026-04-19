@@ -10,7 +10,7 @@ import Foundation
 protocol DetailVCDelegate: AnyObject {
     func scheduleTap(schduleResultData : ([ResultSchdule], DetailSendModel))
     func reportBtnTap(reportLine: SubwayLineData, stationName: String)
-    func pushRealtime(subwayLine: SubwayLineData, stationName: String, isUp: Bool, exceptionLastStation: String)
+    func pushRealtime(subwayLine: SubwayLineData, stationName: String, upDown: String, exceptionLastStation: String)
     func pop()
     func disappear()
 }

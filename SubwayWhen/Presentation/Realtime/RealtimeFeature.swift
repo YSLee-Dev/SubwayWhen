@@ -23,7 +23,7 @@ struct RealtimeFeature {
     struct State: Equatable {
         let subwayLine: SubwayLineData
         let stationName: String
-        let isUp: Bool
+        let upDown: String
         var exceptionLastStation: String
         var stationSessions: [StationSession] = []
         var trainPositions: [RealtimeTrainPosition] = []
@@ -157,13 +157,13 @@ struct RealtimeFeature {
 private extension RealtimeFeature {
     func trainPositionRequest(state: State) -> Effect<Action> {
         let subwayLine = state.subwayLine
-        let isUp = state.isUp
+        let upDown = state.upDown
         let exceptionLastStation = state.exceptionLastStation
         
         return .run { [totalLoad = self.totalLoad] send in
             let positions = await totalLoad.realtimePositionLoad(
                 subwayLine: subwayLine,
-                isUp: isUp,
+                isUp: upDown.isUpDirection,
                 exceptionLastStation: exceptionLastStation
             )
             await send(.trainPositionLoaded(positions))

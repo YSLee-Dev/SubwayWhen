@@ -16,16 +16,16 @@ class RealtimeCoordinator: Coordinator {
 
     private let subwayLine: SubwayLineData
     private let stationName: String
-    private let isUp: Bool
+    private let upDown: String
     private let exceptionLastStation: String
     
     weak var delegate : RealtimeCoordinatorDelegate?
 
-    init(navigation: UINavigationController, subwayLine: SubwayLineData, stationName: String, isUp: Bool, exceptionLastStation: String) {
+    init(navigation: UINavigationController, subwayLine: SubwayLineData, stationName: String, upDown: String, exceptionLastStation: String) {
         self.navigation = navigation
         self.subwayLine = subwayLine
         self.stationName = stationName
-        self.isUp = isUp
+        self.upDown = upDown
         self.exceptionLastStation = exceptionLastStation
     }
 
@@ -34,7 +34,7 @@ class RealtimeCoordinator: Coordinator {
             initialState: RealtimeFeature.State(
                 subwayLine: self.subwayLine,
                 stationName: self.stationName,
-                isUp: self.isUp,
+                upDown: self.upDown,
                 exceptionLastStation: exceptionLastStation
             ),
             reducer: {

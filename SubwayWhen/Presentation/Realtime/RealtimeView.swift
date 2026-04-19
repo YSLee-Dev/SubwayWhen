@@ -17,7 +17,6 @@ struct RealtimeView: View {
     // MARK: - View
     
     var body: some View {
-        
         ScrollViewReader { proxy in
             NavigationBarScrollViewInSUI(
                 title: self.store.subwayLine.rawValue.filter {$0 != "0"} + " \(Strings.Realtime.realTime)",
@@ -59,10 +58,14 @@ struct RealtimeView: View {
                             }
                             ForEach(session.stations, id: \.stationId) { station in
                                 let position = self.store.trainPositions.first { $0.statnId == station.stationId }
+                                let isUp = self.store.subwayLine == .two ?
+                                !self.store.upDown.isUpDirection :
+                                self.store.upDown.isUpDirection
+                                
                                 RealtimeStationRowView(
                                     stationName: station.stationName,
                                     isSelected: station.stationName == self.store.stationName,
-                                    isUp: self.store.isUp,
+                                    isUp: isUp,
                                     position: position,
                                     subwayLine: self.store.subwayLine
                                 )
@@ -71,7 +74,7 @@ struct RealtimeView: View {
                         }
                     } header: {
                         UpDownExceptionViewInSUI(
-                            upDown: self.store.isUp ? Strings.Common.up : Strings.Common.down,
+                            upDown: self.store.upDown,
                             exceptionLastStation: self.store.exceptionLastStation
                         ) {
                             self.store.send(.exceptionBtnTapped)
@@ -112,7 +115,7 @@ struct RealtimeView: View {
 #Preview {
     RealtimeView(
         store: .init(
-            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남", isUp: false, exceptionLastStation: ""),
+            initialState: RealtimeFeature.State(subwayLine: .two, stationName: "강남", upDown: "내선", exceptionLastStation: ""),
             reducer: { RealtimeFeature() }
         )
     )
