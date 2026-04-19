@@ -84,8 +84,14 @@ private extension MainViewModel {
 
 ### weak self 캡처
 
-- RxSwift 클로저, 비동기 콜백, TCA `.run {}` 내부에서 `self` 참조 시 `weak` 캡처
+- RxSwift 클로저, 비동기 콜백 (`class` / `actor` 타입) 내부에서 `self` 참조 시 `[weak self]` 캡처
 - `guard`으로 `self`를 안전하게 사용
+- **TCA `.run {}` 예외**: `@Reducer struct`는 값 타입이라 `[weak self]` 불필요. 대신 의존성을 값으로 캡처:
+  ```swift
+  .run { [totalLoad = self.totalLoad] send in
+      // ...
+  }
+  ```
 
 ### 타입 추론
 
@@ -202,3 +208,13 @@ override func viewDidLoad() {
 | `Coordinator` | `코디네이터 로직` |
 | `LiveActivity` | `LiveActivity 로직` |
 | `CoreData` | `CoreData 로직` |
+
+### Coordinator deinit 로깅
+
+모든 Coordinator는 `deinit`에서 메모리 해제를 로깅한다:
+
+```swift
+deinit {
+    AppLogger.coordinator.log(.debug, "XxxCoordinator deinit")
+}
+```

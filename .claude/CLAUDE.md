@@ -91,6 +91,7 @@ TCA로 마이그레이션된 화면: `SearchFeature`, `DetailFeature`, `ReportFe
 - `LoadModel` — `NetworkManager` 래퍼, 서울/코레일 API 호출 담당
 - `TotalLoadModel` — 다수의 `LoadModel` 호출을 조율, 앱 레벨 모델로 변환, Firebase/Database 및 로컬 번들 plist(`DetailStationIdList.plist`) 읽기도 담당
 - `CoreDataScheduleManager` — 신분당선 시간표를 CoreData에 캐시
+- `TotalLoadTCADependency` — RxSwift Observable을 `withCheckedContinuation`으로 async/await에 브릿지하여 TCA Effect에서 사용 가능하게 변환
 
 ---
 
