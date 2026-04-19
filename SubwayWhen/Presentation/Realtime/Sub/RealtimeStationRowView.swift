@@ -27,9 +27,9 @@ struct RealtimeStationRowView: View {
     
     private var trainIconAlignment: Alignment {
         switch self.trainIconStatus {
-        case .departing: return .top
+        case .departing: return self.isUp ?  .top : .bottom
         case .arriving: return .center
-        case .passing: return .bottom
+        case .passing: return self.isUp ? .bottom : .top
         case nil: return .center
         }
     }
@@ -73,7 +73,7 @@ struct RealtimeStationRowView: View {
                 if self.isSelected {
                     Image(systemName: self.isUp ? "chevron.up" : "chevron.down")
                         .resizable()
-                        .frame(width: 13, height: 9)
+                        .frame(width: 13, height: 8)
                         .foregroundStyle(.secondary)
                         .padding(.trailing, 10)
                 }
