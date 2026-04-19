@@ -418,11 +418,11 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
         let all = self.stationIDList.filter { $0.lineId == subwayLine.lineCode }
 
         func sorted(_ stations: [DetailStationId]) -> [DetailStationId] {
-            stations.sorted { isUp ? $0.stationId < $1.stationId : $0.stationId > $1.stationId }
+            stations.sorted { $0.stationId < $1.stationId }
         }
 
         switch subwayLine {

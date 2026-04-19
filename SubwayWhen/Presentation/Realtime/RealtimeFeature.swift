@@ -67,10 +67,9 @@ struct RealtimeFeature {
             case .onAppear:
                 state.isLoading = true
                 let subwayLine = state.subwayLine
-                let isUp = state.isUp
                 return .merge(
                     .run { [totalLoad = self.totalLoad] send in
-                        let sessions = totalLoad.stationIdList(subwayLine: subwayLine, isUp: isUp)
+                        let sessions = totalLoad.stationIdList(subwayLine: subwayLine)
                         await send(.stationListLoaded(sessions))
                     },
                     self.trainPositionRequest(state: state)

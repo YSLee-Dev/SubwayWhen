@@ -73,7 +73,7 @@ class PreviewTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         }
     }
 
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
         switch subwayLine {
         case .two:
             return [StationSession(name: nil, stations: [

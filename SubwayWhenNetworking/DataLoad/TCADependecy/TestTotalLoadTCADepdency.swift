@@ -48,7 +48,7 @@ class TestTotalLoadTCADependency: TotalLoadTCADependencyProtocol {
         self.realtimePositionList
     }
 
-    func stationIdList(subwayLine: SubwayLineData, isUp: Bool) -> [StationSession] {
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
         self.stationIdListData
     }
 }
