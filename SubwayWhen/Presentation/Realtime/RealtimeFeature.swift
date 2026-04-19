@@ -25,6 +25,7 @@ struct RealtimeFeature {
         let stationName: String
         let upDown: String
         var exceptionLastStation: String
+        let trainIcon: String = FixInfo.saveSetting.detailVCTrainIcon
         var stationSessions: [StationSession] = []
         var trainPositions: [RealtimeTrainPosition] = []
         var isLoading: Bool = false
@@ -86,7 +87,9 @@ struct RealtimeFeature {
                 state.stationSessions = sessions
                 return .run { send in
                     try? await Task.sleep(for: .milliseconds(400))
-                    await send(.scrollToStationRequest)
+                    if !Task.isCancelled {
+                        await send(.scrollToStationRequest)
+                    }
                 }
 
             case .trainPositionLoaded(let positions):

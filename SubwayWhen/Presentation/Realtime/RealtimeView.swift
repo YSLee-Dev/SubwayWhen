@@ -69,7 +69,8 @@ struct RealtimeView: View {
                                     isSelected: station.stationName == self.store.stationName,
                                     isUp: isUp,
                                     position: position,
-                                    subwayLine: self.store.subwayLine
+                                    subwayLine: self.store.subwayLine,
+                                    trainIcon: self.store.trainIcon
                                 )
                                 .id(station.stationId)
                             }
@@ -103,10 +104,8 @@ struct RealtimeView: View {
                 }
             }
             .onChange(of: self.store.shouldScrollToStation) { _, shouldScroll in
-                guard shouldScroll,
-                      let target = self.store.stationSessions.flatMap({ $0.stations }).first(where: { $0.stationName == self.store.stationName })
-                else { return }
-                
+                guard shouldScroll, let target = self.targetStation() else { return }
+
                 withAnimation(.smooth) {
                     proxy.scrollTo(target.stationId, anchor: .center)
                 }
@@ -127,6 +126,16 @@ struct RealtimeView: View {
         .onDisappear {
             self.store.send(.onDisappear)
         }
+    }
+}
+
+// MARK: - Method
+
+private extension RealtimeView {
+    func targetStation() -> DetailStationId? {
+        self.store.stationSessions
+            .flatMap { $0.stations }
+            .first { $0.stationName == self.store.stationName }
     }
 }
 

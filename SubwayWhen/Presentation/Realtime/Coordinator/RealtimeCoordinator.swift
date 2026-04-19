@@ -29,6 +29,10 @@ class RealtimeCoordinator: Coordinator {
         self.exceptionLastStation = exceptionLastStation
     }
 
+    deinit {
+        AppLogger.coordinator.log(.debug, "RealtimeCoordinator deinit")
+    }
+
     func start() {
         let store = StoreOf<RealtimeFeature>(
             initialState: RealtimeFeature.State(
