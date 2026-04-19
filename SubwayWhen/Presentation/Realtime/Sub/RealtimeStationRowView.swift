@@ -13,6 +13,7 @@ struct RealtimeStationRowView: View {
     
     let stationName: String
     let isSelected: Bool
+    let isUp: Bool
     let position: RealtimeTrainPosition?
     let subwayLine: SubwayLineData
     
@@ -57,7 +58,7 @@ struct RealtimeStationRowView: View {
             
             self.trackView
             
-            ExpandedViewInSUI(alignment: .leading) {
+            HStack(spacing: 0) {
                 Text(self.stationName)
                     .font(
                         self.isSelected
@@ -66,6 +67,16 @@ struct RealtimeStationRowView: View {
                     )
                     .padding(.leading, 10)
                     .foregroundStyle(self.isSelected ? Color.accentColor : Color.primary)
+                
+                Spacer()
+                
+                if self.isSelected {
+                    Image(systemName: self.isUp ? "chevron.up" : "chevron.down")
+                        .resizable()
+                        .frame(width: 13, height: 9)
+                        .foregroundStyle(.secondary)
+                        .padding(.trailing, 10)
+                }
             }
             .frame(height: self.cellHeight)
             .overlay {
@@ -118,10 +129,10 @@ private extension RealtimeStationRowView {
 
 #Preview {
     List {
-        RealtimeStationRowView(stationName: "강남", isSelected: true, position: RealtimeTrainPosition(subwayId: "1002", subwayNm: "2호선", statnId: "1002000220", statnNm: "강남", trainNo: "2001", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "1", directAt: "0", lstcarAt: "0"), subwayLine: .two)
-        RealtimeStationRowView(stationName: "역삼", isSelected: false, position: nil, subwayLine: .two)
-        RealtimeStationRowView(stationName: "선릉", isSelected: false, position: RealtimeTrainPosition(subwayId: "1002", subwayNm: "2호선", statnId: "1002000222", statnNm: "선릉", trainNo: "2002", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "2", directAt: "0", lstcarAt: "0"), subwayLine: .two)
-        RealtimeStationRowView(stationName: "삼성", isSelected: false, position: nil, subwayLine: .two)
+        RealtimeStationRowView(stationName: "강남", isSelected: true, isUp: true, position: RealtimeTrainPosition(subwayId: "1002", subwayNm: "2호선", statnId: "1002000220", statnNm: "강남", trainNo: "2001", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "1", directAt: "0", lstcarAt: "0"), subwayLine: .two)
+        RealtimeStationRowView(stationName: "역삼", isSelected: false, isUp: true, position: nil, subwayLine: .two)
+        RealtimeStationRowView(stationName: "선릉", isSelected: false, isUp: true, position: RealtimeTrainPosition(subwayId: "1002", subwayNm: "2호선", statnId: "1002000222", statnNm: "선릉", trainNo: "2002", lastRecptnDt: "", recptnDt: "", updnLine: "0", statnTid: "1002000236", statnTnm: "신사", trainSttus: "2", directAt: "0", lstcarAt: "0"), subwayLine: .two)
+        RealtimeStationRowView(stationName: "삼성", isSelected: false, isUp: true, position: nil, subwayLine: .two)
     }
     .listStyle(.plain)
 }

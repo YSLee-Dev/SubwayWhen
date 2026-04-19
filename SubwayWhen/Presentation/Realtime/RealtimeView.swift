@@ -62,6 +62,7 @@ struct RealtimeView: View {
                                 RealtimeStationRowView(
                                     stationName: station.stationName,
                                     isSelected: station.stationName == self.store.stationName,
+                                    isUp: self.store.isUp,
                                     position: position,
                                     subwayLine: self.store.subwayLine
                                 )
