@@ -74,7 +74,7 @@ class LoadModelTests : XCTestCase{
     
     func testSeoulStationScheduleLoad(){
         // GIVEN
-        let data = self.seoulScheduleLoadModel.seoulStationScheduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", korailCode: "", stationName: ""))
+        let data = self.seoulScheduleLoadModel.seoulStationScheduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "", korailCode: "", stationName: ""), dayType: .weekday)
         
         let filterData = data
             .asObservable()
@@ -112,7 +112,7 @@ class LoadModelTests : XCTestCase{
     
     func testKorailScheduleLoad(){
         // GIVEN
-        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "",  korailCode: "", stationName: ""))
+        let data = self.korailScheduleLoadModel.korailSchduleLoad(scheduleSearch: .init(stationCode: "", upDown: "", exceptionLastStation: "", line: "",  korailCode: "", stationName: ""), dayType: .weekday)
         
         let filterData = data
             .asObservable()
@@ -347,6 +347,70 @@ class LoadModelTests : XCTestCase{
         expect(requestEndDate).to(
             beNil(),
             description: "종료날짜는 nil이여야 함"
+        )
+    }
+
+    func testRealtimePositionRequest() {
+        // GIVEN
+        let realtimePositionModel: LoadModelProtocol = LoadModel(
+            networkManager: NetworkManager(session: MockURLSession((response: urlResponse!, data: realtimeTrainPositionData)))
+        )
+        let data = realtimePositionModel.realtimePositionRequest(subwayLine: .three)
+
+        let filterData = data
+            .asObservable()
+            .map { data -> RealtimeTrainPositionResponse? in
+                guard case .success(let value) = data else { return nil }
+                return value
+            }
+            .filterNil()
+
+        // WHEN
+        let blocking = filterData.toBlocking()
+        let arrayData = try! blocking.toArray()
+
+        let requestCount = arrayData.first?.realtimePositionList.count
+        let dummyCount = realtimeTrainPositionResponseDummy.realtimePositionList.count
+
+        let requestFirstTrainNo = arrayData.first?.realtimePositionList.first?.trainNo
+        let dummyFirstTrainNo = realtimeTrainPositionResponseDummy.realtimePositionList.first?.trainNo
+
+        // THEN
+        expect(requestCount).to(
+            equal(dummyCount),
+            description: "파싱된 열차 개수는 더미 데이터와 동일해야 함"
+        )
+        expect(requestFirstTrainNo).to(
+            equal(dummyFirstTrainNo),
+            description: "첫 번째 열차 번호는 더미 데이터와 동일해야 함"
+        )
+    }
+
+    func testRealtimePositionRequestError() {
+        // GIVEN: 열차 위치 키가 없는 JSON (arrivalErrorData) → 빈 배열 반환
+        let errorModel: LoadModelProtocol = LoadModel(
+            networkManager: NetworkManager(session: MockURLSession((response: urlResponse!, data: arrivalErrorData)))
+        )
+        let data = errorModel.realtimePositionRequest(subwayLine: .three)
+
+        let filterData = data
+            .asObservable()
+            .map { data -> RealtimeTrainPositionResponse? in
+                guard case .success(let value) = data else { return nil }
+                return value
+            }
+            .filterNil()
+
+        // WHEN
+        let blocking = filterData.toBlocking()
+        let arrayData = try! blocking.toArray()
+
+        let requestCount = arrayData.first?.realtimePositionList.count
+
+        // THEN
+        expect(requestCount).to(
+            equal(0),
+            description: "열차 위치 키가 없는 응답은 빈 배열을 반환해야 함"
         )
     }
 }
