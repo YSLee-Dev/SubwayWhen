@@ -2,6 +2,11 @@
 name: create-feature
 description: TCA Feature 보일러플레이트를 생성한다. 새로운 화면(Feature)을 추가할 때 사용한다.
 argument-hint: Feature이름
+allowed-tools:
+  - Read
+  - Write
+  - Bash(mkdir -p *)
+  - Bash(open *)
 ---
 
 # TCA Feature 생성
@@ -15,7 +20,8 @@ argument-hint: Feature이름
 1. 사용자에게 argument를 통해 이름을 받는다. (예: `Congestion`, `Search`)
 2. `Presentation/{Name}/` 폴더 아래에 아래 구조로 파일을 생성한다
 3. 각 파일은 `templates/` 안의 템플릿을 참고하여 `{Name}`을 실제 이름으로 치환해서 작성한다
-4. `SubwayWhen.xcodeproj/project.pbxproj`에 파일을 추가해야 함을 사용자에게 안내한다
+4. 각 `.swift` 파일을 생성한 즉시 `open <파일경로>` Bash 명령어로 파일을 열어준다
+5. `SubwayWhen.xcodeproj/project.pbxproj`에 파일을 추가해야 함을 사용자에게 안내한다
 
 ---
 

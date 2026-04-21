@@ -1,6 +1,8 @@
 ---
 name: commit
 description: 스테이징된 변경사항을 분석하여 커밋 메시지 초안을 생성한다. "커밋 메시지 작성", "커밋 해줘" 등의 요청 시 사용한다.
+allowed-tools:
+  - Bash(git commit *)
 ---
 
 # 커밋 메시지 생성
