@@ -36,7 +36,7 @@ struct RealtimeFeature {
 
     // MARK: - Action
 
-    enum Action: BindableAction {
+    enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case onAppear
         case onDisappear
