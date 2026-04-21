@@ -1,0 +1,34 @@
+{
+    "realtimePositionList": [
+        {
+            "subwayId": "1003",
+            "subwayNm": "3호선",
+            "statnId": "1003000340",
+            "statnNm": "교대",
+            "trainNo": "3000",
+            "lastRecptnDt": "20260420095000",
+            "recptnDt": "20260420095000",
+            "updnLine": "0",
+            "statnTid": "1003000319",
+            "statnTnm": "대화",
+            "trainSttus": "1",
+            "directAt": "0",
+            "lstcarAt": "0"
+        },
+        {
+            "subwayId": "1003",
+            "subwayNm": "3호선",
+            "statnId": "1003000340",
+            "statnNm": "교대",
+            "trainNo": "3001",
+            "lastRecptnDt": "20260420095000",
+            "recptnDt": "20260420095000",
+            "updnLine": "1",
+            "statnTid": "1003000351",
+            "statnTnm": "오금",
+            "trainSttus": "2",
+            "directAt": "0",
+            "lstcarAt": "0"
+        }
+    ]
+}

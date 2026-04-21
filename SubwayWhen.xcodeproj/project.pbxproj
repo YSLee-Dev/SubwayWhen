@@ -496,6 +496,9 @@
 		FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */; };
 		FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB2182D12991200DF562B /* TestLocationManager.swift */; };
 		FFFE85042F18B8F300A29742 /* TestCongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */; };
+		29EC0097167042B797E1DA0F /* RealtimeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */; };
+		8DEF72AC9A254140B632096F /* MockRealtimeVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */; };
+		9F57D621EB444C4C9A395401 /* RealtimeTrainPositionDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -972,6 +975,9 @@
 		FFFE84F12F17387100A29742 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCongestionManager.swift; sourceTree = "<group>"; };
 		FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalFeatureTests.swift; sourceTree = "<group>"; };
+		32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeFeatureTests.swift; sourceTree = "<group>"; };
+		C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealtimeVCDelegate.swift; sourceTree = "<group>"; };
+		2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RealtimeTrainPositionDummy.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1168,6 +1174,7 @@
 				34A3038329AF361B00948EDD /* StationArrivalRequestDummy.json */,
 				FF1D4A542C9BB89E00AFD709 /* ShinbundangSinsaStationScheduleDummy.json */,
 				FF71959E2ECADD6900C3F3C1 /* SubwayNoticeDummy.json */,
+				2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */,
 			);
 			path = DummyData;
 			sourceTree = "<group>";
@@ -1650,6 +1657,7 @@
 				349E2F7129BF101C00C54EE9 /* DataLoad */,
 				349D789329CC4F5100CA1B52 /* Detail */,
 				349E2F7029BF100900C54EE9 /* Dummy */,
+				AA001122334455667788AA01 /* Realtime */,
 			);
 			path = SubwayWhenTests;
 			sourceTree = "<group>";
@@ -2692,8 +2700,17 @@
 				FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */,
 				FF6CB2182D12991200DF562B /* TestLocationManager.swift */,
 				FF71970C2ECBF20E00C3F3C1 /* MockCoreDataScheduleManager.swift */,
+				C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		AA001122334455667788AA01 /* Realtime */ = {
+			isa = PBXGroup;
+			children = (
+				32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */,
+			);
+			path = Realtime;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2926,6 +2943,7 @@
 				3497DC7929D2907300D2ABB9 /* StationNameSearchDummy.json in Resources */,
 				FF7196522ECAE7CA00C3F3C1 /* SubwayNoticeDummyInfiniteDate.json in Resources */,
 				FF71959F2ECADD6900C3F3C1 /* SubwayNoticeDummy.json in Resources */,
+				9F57D621EB444C4C9A395401 /* RealtimeTrainPositionDummy.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3153,7 +3171,6 @@
 				FF7196542ECAF1D300C3F3C1 /* MockLoadModel.swift in Sources */,
 				FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */,
 				34AB13372ACFB04F008D04B0 /* TutorialViewModelTests.swift in Sources */,
-				34B4A85C2F794E96008730BB /* DayType.swift in Sources */,
 				34B3105029B0DAE500EA3A19 /* MockURLSession.swift in Sources */,
 				34D7F50829D062B300A0B3DE /* EditModelTests.swift in Sources */,
 				34A3038629AF362700948EDD /* DummyLoad.swift in Sources */,
@@ -3163,6 +3180,8 @@
 				3499DEAE29D1C07300A6E8C1 /* ReportCheckModalModelTests.swift in Sources */,
 				345537812F94864E00FAE580 /* Strings.swift in Sources */,
 				FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */,
+				29EC0097167042B797E1DA0F /* RealtimeFeatureTests.swift in Sources */,
+				8DEF72AC9A254140B632096F /* MockRealtimeVCDelegate.swift in Sources */,
 				34A221BB29C9B64C003F035D /* MainViewModelTests.swift in Sources */,
 				34A3038A29AF36FA00948EDD /* NetworkMangerTests.swift in Sources */,
 				34BA0B2629BF246E0044E2C2 /* LoadModelTests.swift in Sources */,
