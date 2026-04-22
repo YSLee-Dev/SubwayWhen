@@ -41,7 +41,11 @@ class AppCoordinator : Coordinator{
         // 공휴일 로드
         self.appDefaultManager?.holidayLoad()
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "AppCoordinator deinit")
+    }
+
     func start() {
         if (!FixInfo.saveSetting.tutorialSuccess) && FixInfo.saveStation.isEmpty {
             let navigation = UINavigationController()

@@ -24,7 +24,11 @@ class SettingNotiSelectCoordinator: Coordinator {
         self.group = group
         self.id = id
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SettingNotiSelectCoordinator deinit")
+    }
+
     func start() {
         let model = SettingNotiSelectModalModel()
         let viewModel = SettingNotiSelectModalViewModel(settingNotiSelectModalModel: model, group: self.group, id: id)

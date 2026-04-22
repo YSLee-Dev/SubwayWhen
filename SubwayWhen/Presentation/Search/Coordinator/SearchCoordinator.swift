@@ -19,7 +19,11 @@ class SearchCoordinator : Coordinator{
     init(){
         self.navigation = .init()
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SearchCoordinator deinit")
+    }
+
     func start() {
         self.store = StoreOf<SearchFeature>(initialState: .init(), reducer: {
             var feature = SearchFeature()

@@ -24,7 +24,11 @@ class DetailCoordinator: Coordinator {
         self.data = data
         self.isDisposable = isDisposable
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "DetailCoordinator deinit")
+    }
+
     func start() {
         guard let vc = self.createDetailVC() else {return}
         

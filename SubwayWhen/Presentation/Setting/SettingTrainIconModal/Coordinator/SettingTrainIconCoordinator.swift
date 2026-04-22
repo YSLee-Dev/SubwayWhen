@@ -18,7 +18,11 @@ class SettingTrainIconModalCoordinator: Coordinator {
     ) {
         self.navigation = navigation
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SettingTrainIconModalCoordinator deinit")
+    }
+
     func start() {
         let subViewModel = SettingTrainIconModalSubViewModel()
         let viewModel = SettingTrainIconModalViewModel(subViewModel: subViewModel)

@@ -18,7 +18,11 @@ class DetailResultScheduleCoordinator : Coordinator{
         self.navigation = navigation
         self.data = data
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "DetailResultScheduleCoordinator deinit")
+    }
+
     func start() {
         let viewModel = DetailResultScheduleViewModel()
         viewModel.scheduleData.accept(self.data.0)

@@ -22,7 +22,11 @@ class MainCoordinator : Coordinator{
         self.navigation = UINavigationController()
         self.viewModel = MainViewModel()
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "MainCoordinator deinit")
+    }
+
     func start() {
         self.viewModel.delegate = self
         
