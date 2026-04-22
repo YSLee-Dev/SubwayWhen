@@ -1,6 +1,8 @@
 ---
 name: test-style
 description: 테스트 컨벤션을 정의한 문서
+globs:
+  - "SubwayWhenTests/**/*.swift"
 ---
 
 ## 테스트 명령어
