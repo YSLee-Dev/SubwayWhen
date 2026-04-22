@@ -56,6 +56,12 @@ struct RealtimeFeature {
         }
     }
 
+    // MARK: - CancelID
+
+    enum CancelID: Equatable, CaseIterable {
+        case trainPosition
+    }
+
     // MARK: - Reducer
 
     var body: some Reducer<State, Action> {
@@ -78,7 +84,7 @@ struct RealtimeFeature {
                 
             case .onDisappear:
                 self.coordinatorDelegate?.disappear()
-                return .none
+                return .cancel(id: CancelID.trainPosition)
 
             case .stationListLoaded(let sessions):
                 if sessions.allSatisfy({ $0.stations.isEmpty }) {
@@ -171,5 +177,6 @@ private extension RealtimeFeature {
             )
             await send(.trainPositionLoaded(positions))
         }
+        .cancellable(id: CancelID.trainPosition)
     }
 }
