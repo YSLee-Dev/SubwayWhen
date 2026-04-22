@@ -82,9 +82,13 @@ final class DetailFeatureTests: XCTestCase {
         await testStore.send(.dialogAction(.presented(.okBtnTapped))) {
             // THEN
             $0.dialogState = nil
+        }
+
+        // THEN
+        await testStore.receive(.exceptionLastStationRemove) {
             $0.sendedLoadModel.exceptionLastStation = ""
         }
-        
+
         // THEN -> Arrival, schedule 순서
         await testStore.receive(.arrivalDataRequest)
         await testStore.receive(.scheduleDataRequest)
