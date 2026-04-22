@@ -20,7 +20,10 @@ class AppDefaultManager{
 extension AppDefaultManager{
     func appstoreUpdateAlert(){
         self.model.versionRequest{[weak self] version in
-            let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+            guard let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+                AppLogger.core.log(.error, "앱 버전 정보를 가져오지 못함")
+                return
+            }
             
             if nowVersion <= version{
                 let popup = PopupModal(modalHeight: 400, popupTitle: "업데이트 안내", subTitle: "새로운 버전으로 업데이트 후 앱을 이용해주세요!",iconName: "Report", isUpdate: true)

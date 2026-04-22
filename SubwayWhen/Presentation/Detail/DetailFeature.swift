@@ -197,8 +197,8 @@ struct DetailFeature: Reducer {
                 .cancellable(id: TimerKey.refresh)
                 
             case .timerDecrease:
-                if state.nowTimer == nil {return .none}
-                state.nowTimer! -= 1
+                guard let timer = state.nowTimer else { return .none }
+                state.nowTimer = timer - 1
                 return .none
                 
             case .exceptionLastStationBtnTapped:
