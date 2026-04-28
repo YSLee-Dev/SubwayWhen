@@ -49,6 +49,8 @@ xcodebuild test -workspace SubwayWhen.xcworkspace -scheme SubwayWhen -destinatio
 - **SubwayWhenHomeWidget** — WidgetKit 익스텐션
 - **SubwayWhenTests** — 테스트 타겟
 
+- `SubwayWhenNetworking`은 앱 타겟에서만 import, 역방향 참조 금지
+
 ### MVVM-C 패턴 (레거시 화면)
 
 - **VC** (UIViewController) — UI 렌더링만 담당, RxCocoa 바인딩으로 ViewModel 출력을 구독
@@ -100,5 +102,16 @@ TCA로 마이그레이션된 화면: `SearchFeature`, `DetailFeature`, `ReportFe
 - IMPORTANT 네트워크 요청은 `NetworkManager` 사용 (URLSession 직접 사용 금지)
 - IMPORTANT `RequestToken.plist`는 Commit을 포함한 git과 관련된 행동 금지
 - IMPORTANT 공통 컴포넌트(`Presentation/Common/`)·문자열(`Strings.swift`)·`ViewStyle` 상수는 새로 만들기 전에 기존 항목을 먼저 확인 후 재사용
+
+- 불확실한 정보는 추측하지 말고 반드시 질문하라.
+- 요청이 모호하면 작업 전에 질문으로 명확히 해라.
+
+- API, 라이브러리 버전, 메서드 시그니처는 절대 추측하지 마라.
+- 현재 태스크와 무관한 코드는 절대 수정하지 마라.
+- 우회책보다 근본 원인을 수정하라. 임시 방편은 쓰지 마라.
+- 기존 코드를 삭제하기 전에 왜 존재하는지 먼저 설명하라.
+
+- 에러 로그가 있으면 추론하지 말고 해당 데이터에서 직접 추적하라.
+- 작업을 멈출 때는 완료된 것, 막힌 것, 수정한 파일을 명시하라.
 
 ---
