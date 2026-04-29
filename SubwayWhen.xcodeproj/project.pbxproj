@@ -10,6 +10,7 @@
 		03D673C0FC8F4EA8B2BDBA82 /* StationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D7D7CFBB4EC594D6BB11 /* StationSession.swift */; };
 		1F1F636205AB47F8BE16C96A /* RealtimeTrainPositionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C481CCE574134ACDE3CAB /* RealtimeTrainPositionResponse.swift */; };
 		25CF5AD13030439CB4B24F25 /* RealtimeTrainPositionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C481CCE574134ACDE3CAB /* RealtimeTrainPositionResponse.swift */; };
+		29EC0097167042B797E1DA0F /* RealtimeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */; };
 		341200ED293745AE00C77050 /* SaveStationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341200EC293745AE00C77050 /* SaveStationGroup.swift */; };
 		341EEA6F2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341EEA6E2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift */; };
 		341EEA722ACD56E600E8F1EF /* TutorialVCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341EEA712ACD56E600E8F1EF /* TutorialVCAction.swift */; };
@@ -166,7 +167,6 @@
 		34B4A8592F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85A2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85B2F794DCC008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
-		34B4A85C2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85D2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B4A85E2F794E96008730BB /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B4A8582F794DCC008730BB /* DayType.swift */; };
 		34B6ADDE2A49906000D7A6DA /* SettingNotiSelectModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6ADDD2A49906000D7A6DA /* SettingNotiSelectModalModel.swift */; };
@@ -227,6 +227,8 @@
 		6A14CB9631A84F7CA2DD611B /* RealtimeTrainPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */; };
 		841E280644754670B3841E44 /* RealtimeTrainPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */; };
 		85837DB0575EDEF09E408A9A /* Pods_SubwayWhen_SubwayWhenNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB664506867A641C1865733 /* Pods_SubwayWhen_SubwayWhenNetworking.framework */; };
+		8DEF72AC9A254140B632096F /* MockRealtimeVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */; };
+		9F57D621EB444C4C9A395401 /* RealtimeTrainPositionDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */; };
 		ACA5F7147E60486F928B4ABB /* RealtimeTrainPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */; };
 		AF8337C317D674A1371F3622 /* Pods_SubwayWhen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A753133C0A12B19CAC4CC95 /* Pods_SubwayWhen.framework */; };
 		B61A6F882B6E0D710070F74C /* RequestToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61A6F872B6E0D710070F74C /* RequestToken.plist */; };
@@ -496,9 +498,6 @@
 		FFFE85022F18B7CF00A29742 /* CongestionModalFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */; };
 		FFFE85032F18B8EF00A29742 /* TestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB2182D12991200DF562B /* TestLocationManager.swift */; };
 		FFFE85042F18B8F300A29742 /* TestCongestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */; };
-		29EC0097167042B797E1DA0F /* RealtimeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */; };
-		8DEF72AC9A254140B632096F /* MockRealtimeVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */; };
-		9F57D621EB444C4C9A395401 /* RealtimeTrainPositionDummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -614,6 +613,8 @@
 		196899AC56DA4D0CA155ABBD /* RealtimeTrainPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTrainPosition.swift; sourceTree = "<group>"; };
 		1E1012FF697D93AD3B38BC84 /* Pods-SubwayWhen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3137CD6862D1CD5CD79EB9 /* Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RealtimeTrainPositionDummy.json; sourceTree = "<group>"; };
+		32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeFeatureTests.swift; sourceTree = "<group>"; };
 		341200EC293745AE00C77050 /* SaveStationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStationGroup.swift; sourceTree = "<group>"; };
 		341EEA6E2ACD4B0E00E8F1EF /* TutorialCollectionLastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCollectionLastCell.swift; sourceTree = "<group>"; };
 		341EEA712ACD56E600E8F1EF /* TutorialVCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVCAction.swift; sourceTree = "<group>"; };
@@ -860,6 +861,7 @@
 		B6F7811C2B6FBC6600FE8E7B /* Plus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Plus.json; sourceTree = "<group>"; };
 		B6F7811D2B6FBC6600FE8E7B /* Report.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Report.json; sourceTree = "<group>"; };
 		B6F7811F2B6FBC6600FE8E7B /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
+		C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealtimeVCDelegate.swift; sourceTree = "<group>"; };
 		CF3EF0248A077217661B55EE /* Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension/Pods-SubwayWhen-SubwayWhenHomeWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FA4CB7782BB651C0003C41F6 /* SaveStation+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SaveStation+.swift"; sourceTree = "<group>"; };
 		FA4CB7802BB68473003C41F6 /* SubwayWhenNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubwayWhenNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -975,9 +977,6 @@
 		FFFE84F12F17387100A29742 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		FFFE84FE2F18A8B700A29742 /* TestCongestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCongestionManager.swift; sourceTree = "<group>"; };
 		FFFE85012F18B7CF00A29742 /* CongestionModalFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionModalFeatureTests.swift; sourceTree = "<group>"; };
-		32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeFeatureTests.swift; sourceTree = "<group>"; };
-		C43B2D6A213A41E8AAF1E94D /* MockRealtimeVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealtimeVCDelegate.swift; sourceTree = "<group>"; };
-		2F658E2F554641768C15CA63 /* RealtimeTrainPositionDummy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RealtimeTrainPositionDummy.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2158,6 +2157,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AA001122334455667788AA01 /* Realtime */ = {
+			isa = PBXGroup;
+			children = (
+				32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */,
+			);
+			path = Realtime;
+			sourceTree = "<group>";
+		};
 		B64200D229D00C8300D64A3A /* Sub */ = {
 			isa = PBXGroup;
 			children = (
@@ -2705,14 +2712,6 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		AA001122334455667788AA01 /* Realtime */ = {
-			isa = PBXGroup;
-			children = (
-				32BB156E3D124977B5AAF719 /* RealtimeFeatureTests.swift */,
-			);
-			path = Realtime;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2756,8 +2755,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 34A3037629AF239300948EDD /* Build configuration list for PBXNativeTarget "SubwayWhenTests" */;
 			buildPhases = (
-				4830FDC7D83DFEC581374F05 /* [CP] Embed Pods Frameworks */,
 				695EDC8A7F4D372B2C1D8892 /* [CP] Check Pods Manifest.lock */,
+				4830FDC7D83DFEC581374F05 /* [CP] Embed Pods Frameworks */,
 				34A3036A29AF239300948EDD /* Sources */,
 				FF6CB2172D1111AA00DF562B /* Embed Frameworks */,
 				34A3036B29AF239300948EDD /* Frameworks */,
@@ -3029,13 +3028,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SubwayWhenTests/Pods-SubwayWhenTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SubwayWhenTests/Pods-SubwayWhenTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3094,13 +3089,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SubwayWhen/Pods-SubwayWhen-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
