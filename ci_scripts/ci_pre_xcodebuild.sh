@@ -7,9 +7,22 @@ REPO_PATH="${CI_PRIMARY_REPOSITORY_PATH:-/Volumes/workspace/repository}"
 echo "$GOOGLE_SERVICE_INFO_PLIST_MAIN" | base64 --decode > "$REPO_PATH/SubwayWhen/Application/GoogleService-Info.plist"
 echo "$GOOGLE_SERVICE_INFO_PLIST_MAIN" | base64 --decode > "$REPO_PATH/SubwayWhenHomeWidget/GoogleService-Info.plist"
 
-PLIST="$REPO_PATH/SubwayWhen/RequestToken.plist"
-/usr/libexec/PlistBuddy -c "Add :REALTIME_TOKEN string ${REALTIME_TOKEN}" "$PLIST"
-/usr/libexec/PlistBuddy -c "Add :LIVE_TOKEN string ${LIVE_TOKEN}" "$PLIST"
-/usr/libexec/PlistBuddy -c "Add :KORAIL_TOKEN string ${KORAIL_TOKEN}" "$PLIST"
-/usr/libexec/PlistBuddy -c "Add :SEOUL_TOKEN string ${SEOUL_TOKEN}" "$PLIST"
-/usr/libexec/PlistBuddy -c "Add :KAKAO_TOKEN string ${KAKAO_TOKEN}" "$PLIST"
+python3 << 'PYEOF'
+import plistlib, os
+
+repo_path = os.environ.get('CI_PRIMARY_REPOSITORY_PATH') or '/Volumes/workspace/repository'
+plist_path = repo_path + '/SubwayWhen/RequestToken.plist'
+
+data = {
+    'REALTIME_TOKEN': os.environ.get('REALTIME_TOKEN', ''),
+    'LIVE_TOKEN':     os.environ.get('LIVE_TOKEN', ''),
+    'KORAIL_TOKEN':   os.environ.get('KORAIL_TOKEN', ''),
+    'SEOUL_TOKEN':    os.environ.get('SEOUL_TOKEN', ''),
+    'KAKAO_TOKEN':    os.environ.get('KAKAO_TOKEN', ''),
+}
+
+with open(plist_path, 'wb') as f:
+    plistlib.dump(data, f, fmt=plistlib.FMT_XML)
+
+print('RequestToken.plist created at:', plist_path)
+PYEOF
