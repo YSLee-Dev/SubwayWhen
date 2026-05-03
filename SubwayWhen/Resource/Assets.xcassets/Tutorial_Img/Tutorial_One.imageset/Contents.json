@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "그림1.png",
+      "filename" : "Tutorial_One.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "그림1 3.png",
+      "filename" : "Tutorial_One_dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "그림1 1.png",
+      "filename" : "Tutorial_One 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "그림1 4.png",
+      "filename" : "Tutorial_One_dark 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "그림1 2.png",
+      "filename" : "Tutorial_One 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "그림1 5.png",
+      "filename" : "Tutorial_One_dark 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
