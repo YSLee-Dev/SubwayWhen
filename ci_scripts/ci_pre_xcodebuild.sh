@@ -2,6 +2,9 @@
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidation -bool YES
 defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 
+echo "$GOOGLE_SERVICE_INFO_PLIST_MAIN" | base64 --decode > "$CI_PRIMARY_REPOSITORY_PATH/SubwayWhen/Application/GoogleService-Info.plist"
+echo "$GOOGLE_SERVICE_INFO_PLIST_MAIN" | base64 --decode > "$CI_PRIMARY_REPOSITORY_PATH/SubwayWhenHomeWidget/GoogleService-Info.plist"
+
 cat > "$CI_PRIMARY_REPOSITORY_PATH/SubwayWhen/RequestToken.plist" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
