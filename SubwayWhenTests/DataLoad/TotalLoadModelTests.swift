@@ -185,8 +185,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -247,8 +248,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -357,10 +359,11 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testKorailScheduleLoad_isFirst_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false)
+
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -421,10 +424,11 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testKorailScheduleLoad_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false)
+
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -641,8 +645,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testWidgetSeoulScheduleLoad() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -756,9 +761,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testWidgetKorailScheduleLoad(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true)
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -914,9 +920,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testShinbundangScheduleLoad_isFirst_isNow() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(shinbundagSinsaStationScheduleDummyData)
         self.mockLoadModel.setShinbundangScheduleVersion(1.0)
-        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: .now)
+        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first!
         
@@ -988,9 +995,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testShinbundangScheduleLoad_isNow() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(shinbundagSinsaStationScheduleDummyData)
         self.mockLoadModel.setShinbundangScheduleVersion(1.0)
-        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: .now)
+        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first!
         

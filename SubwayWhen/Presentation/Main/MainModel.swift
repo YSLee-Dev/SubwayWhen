@@ -117,13 +117,13 @@ class MainModel : MainModelProtocol{
         )
     }
     
-    func scheduleLoad(_ data: ScheduleSearch) ->  Observable<[ResultSchdule]>{
+    func scheduleLoad(_ data: ScheduleSearch, requestDate: Date) ->  Observable<[ResultSchdule]>{
         if data.lineScheduleType == .Korail{
-            return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false)
+            return self.model.korailSchduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false, requestDate: requestDate)
         } else if data.lineScheduleType == .Seoul {
-            return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true, isWidget: false)
+            return self.model.seoulScheduleLoad(data, isFirst: true, isNow: true, isWidget: false, requestDate: requestDate)
         } else if data.lineScheduleType == .Shinbundang {
-            return self.model.shinbundangScheduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false)
+            return self.model.shinbundangScheduleLoad(scheduleSearch: data, isFirst: true, isNow: true, isWidget: false, requestDate: requestDate)
         } else {
             return .just([.init(startTime: Strings.Main.notAvailable, type: .Unowned, isFast: "", startStation: Strings.Main.notAvailable, lastStation: Strings.Main.notAvailable)])
         }
