@@ -8,9 +8,9 @@
 
 ### 📆 개발 기간
 
-`v1.6.3` 2025.07.17 ~ 2025.08.13 </br>
-`v1.7` 2025.09.16 ~ 2025.09.29 </br>
 `v1.8` 2025.11.04 ~ 2025.11.19 </br>
+`v1.9` 2026.01.02 ~ 2026.01.21 </br>
+`v2.0` 2026.03.22 ~ 2026.05.06 </br>
 
 <sub>ℹ️ [이전 버전 개발 기간 보기](https://carnelian-gateway-8a5.notion.site/465f44b6767546789c458d3ddfed0579)</sub>
 
@@ -43,7 +43,7 @@
 <br/>
 
 ## 🛠 사용된 라이브러리 / 프레임워크
-- UIKit, SwiftUI, WidgetKit, ActivityKit
+- UIKit, SwiftUI, WidgetKit, ActivityKit, Charts
 - RxSwift, RxCocoa, RxDataSources, RxOptional, RxAlamofire, TCA(ComposableArchitecture)
 - Alamofire, Then, SnapKit, lottie-ios, AcknowList, Firebase/Analytics, Firebase/Database
 - Nimble, RxBlocking, RxTest
