@@ -24,7 +24,11 @@ class SettingCoordinator : Coordinator {
     init(){
         self.navigation = .init()
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SettingCoordinator deinit")
+    }
+
     func start() {
         self.store = StoreOf<SettingFeature>(initialState: .init(), reducer: {
             var reducer = SettingFeature()

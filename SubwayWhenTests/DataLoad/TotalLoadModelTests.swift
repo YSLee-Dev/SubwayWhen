@@ -185,8 +185,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isFirst_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -247,8 +248,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testSeoulScheduleLoad_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -357,10 +359,11 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testKorailScheduleLoad_isFirst_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false)
+
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -421,10 +424,11 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testKorailScheduleLoad_isNow(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false)
+
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -641,8 +645,9 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testWidgetSeoulScheduleLoad() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(seoulScheduleDummyData)
-        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true)
+        let data = self.totalLoadModel.seoulScheduleLoad(scheduleGyodaeStation3Line, isFirst: false, isNow: true, isWidget: true, requestDate: noonDate)
         
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
@@ -756,9 +761,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testWidgetKorailScheduleLoad(){
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setKorailTrainNumber(korailTrainNumber)
         self.mockLoadModel.setSuccess(korailHeaderDummyData)
-        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true)
+        let data = self.totalLoadModel.korailSchduleLoad(scheduleSearch: scheduleK215K1Line,isFirst: false, isNow: true, isWidget: true, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray().first!
     
@@ -914,9 +920,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testShinbundangScheduleLoad_isFirst_isNow() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(shinbundagSinsaStationScheduleDummyData)
         self.mockLoadModel.setShinbundangScheduleVersion(1.0)
-        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: .now)
+        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: true, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first!
         
@@ -988,9 +995,10 @@ final class TotalLoadModelTests: XCTestCase {
     
     func testShinbundangScheduleLoad_isNow() {
         // GIVEN
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.mockLoadModel.setSuccess(shinbundagSinsaStationScheduleDummyData)
         self.mockLoadModel.setShinbundangScheduleVersion(1.0)
-        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: .now)
+        let data = self.totalLoadModel.shinbundangScheduleLoad(scheduleSearch: scheduleSinsaShinbundagLine, isFirst: false, isNow: true, isWidget: false, requestDate: noonDate)
         let blocking = data.toBlocking()
         let requestData = try! blocking.toArray().first!
         
@@ -1190,6 +1198,128 @@ final class TotalLoadModelTests: XCTestCase {
         )
     }
     
+    func testRealtimePositionLoad_상행() async {
+        // GIVEN
+        self.mockLoadModel.setSuccess(realtimeTrainPositionResponseDummy)
+
+        // WHEN
+        let result = await self.totalLoadModel.realtimePositionLoad(
+            subwayLine: .three,
+            isUp: true,
+            exceptionLastStation: ""
+        )
+
+        // THEN
+        expect(result.count).to(
+            equal(1),
+            description: "상행(updnLine=0) 열차만 필터링되어야 함"
+        )
+        expect(result.first?.updnLine).to(
+            equal("0"),
+            description: "상행 열차의 updnLine은 0이어야 함"
+        )
+        expect(result.first?.trainNo).to(
+            equal("3000"),
+            description: "상행 열차 번호는 더미 데이터와 동일해야 함"
+        )
+    }
+
+    func testRealtimePositionLoad_하행() async {
+        // GIVEN
+        self.mockLoadModel.setSuccess(realtimeTrainPositionResponseDummy)
+
+        // WHEN
+        let result = await self.totalLoadModel.realtimePositionLoad(
+            subwayLine: .three,
+            isUp: false,
+            exceptionLastStation: ""
+        )
+
+        // THEN
+        expect(result.count).to(
+            equal(1),
+            description: "하행(updnLine=1) 열차만 필터링되어야 함"
+        )
+        expect(result.first?.updnLine).to(
+            equal("1"),
+            description: "하행 열차의 updnLine은 1이어야 함"
+        )
+    }
+
+    func testRealtimePositionLoad_제외역() async {
+        // GIVEN
+        self.mockLoadModel.setSuccess(realtimeTrainPositionResponseDummy)
+
+        // WHEN
+        let result = await self.totalLoadModel.realtimePositionLoad(
+            subwayLine: .three,
+            isUp: true,
+            exceptionLastStation: "대화"
+        )
+
+        // THEN
+        expect(result.count).to(
+            equal(0),
+            description: "종착역이 제외 역과 일치하는 열차는 필터링되어야 함"
+        )
+    }
+
+    func testRealtimePositionLoadError() async {
+        // GIVEN
+        self.mockLoadModel.setFailure(URLError(.notConnectedToInternet))
+
+        // WHEN
+        let result = await self.totalLoadModel.realtimePositionLoad(
+            subwayLine: .three,
+            isUp: true,
+            exceptionLastStation: ""
+        )
+
+        // THEN
+        expect(result.count).to(
+            equal(0),
+            description: "네트워크 에러 시 빈 배열을 반환해야 함"
+        )
+    }
+
+    func testStationIdList_기본호선() {
+        // GIVEN: 3호선 (default case)
+        // WHEN
+        let result = self.totalLoadModel.stationIdList(subwayLine: .three)
+
+        // THEN
+        expect(result.count).to(
+            equal(1),
+            description: "3호선은 구간 분리 없이 세션 1개여야 함"
+        )
+        expect(result.first?.name).to(
+            beNil(),
+            description: "기본 구간의 이름은 nil이어야 함"
+        )
+    }
+
+    func testStationIdList_2호선_구간분리() {
+        // GIVEN: 2호선 (성수지선, 신정지선 분리)
+        // WHEN
+        let result = self.totalLoadModel.stationIdList(subwayLine: .two)
+
+        // THEN
+        expect(result.count).to(
+            equal(3),
+            description: "2호선은 본선/성수지선/신정지선 3개 세션이어야 함"
+        )
+
+        let sessionNames = result.compactMap { $0.name }
+        expect(sessionNames).to(
+            contain("성수지선"),
+            description: "2호선 세션에 성수지선이 포함되어야 함"
+        )
+        expect(sessionNames).to(
+            contain("신정지선"),
+            description: "2호선 세션에 신정지선이 포함되어야 함"
+        )
+    }
+
     func testImportantDataLoad_서울시데이터() {
         // GIVEN
         self.mockLoadModel.setImportantData(ImportantData(title: "", contents: ""))

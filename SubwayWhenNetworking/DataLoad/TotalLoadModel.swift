@@ -15,16 +15,18 @@ class TotalLoadModel : TotalLoadProtocol {
     private var loadModel : LoadModelProtocol
     private var coreDataManager: CoreDataScheduleManagerProtocol
     private let bag = DisposeBag()
-    private var stationIDList: [DetailStationId] {
-        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return  []}
-        guard let data = try? Data(contentsOf: fileUrl) else {return  []}
-        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return  []}
+    private lazy var stationIDList: [DetailStationId] = {
+        guard let fileUrl = Bundle.main.url(forResource: "DetailStationIdList", withExtension: "plist") else {return []}
+        guard let data = try? Data(contentsOf: fileUrl) else {return []}
+        guard let decodingData = try? PropertyListDecoder().decode([DetailStationId].self, from: data) else {return []}
         return decodingData
-    }
-    
+    }()
+    private let holidayList: [String]
+
     init(loadModel : LoadModelProtocol = LoadModel(), coreDataManager: CoreDataScheduleManagerProtocol = CoreDataScheduleManager.shared){
         self.loadModel = loadModel
         self.coreDataManager = coreDataManager
+        self.holidayList = UserDefaults(suiteName: "group.com.yslee.subwaywhen")?.stringArray(forKey: "holidayList") ?? []
     }
     
     // 지하철역 + live 지하철역 정보를 합쳐서 return
@@ -112,7 +114,7 @@ class TotalLoadModel : TotalLoadProtocol {
     // 코레일 시간표 계산
     func korailSchduleLoad(scheduleSearch : ScheduleSearch, isFirst : Bool, isNow : Bool, isWidget: Bool, requestDate: Date) ->  Observable<[ResultSchdule]>{
         guard let now = Int(self.timeFormatter(date: requestDate)) else {return .empty()}
-        let weekDay = Calendar.current.component(.weekday, from: Date())
+        let dayType = self.calculateDayType(holidayList: self.holidayList, date: requestDate)
         var retry = false
         
         let requestRry = BehaviorSubject<Void>(value: Void())
@@ -121,7 +123,7 @@ class TotalLoadModel : TotalLoadProtocol {
         let number = self.loadModel.korailTrainNumberLoad()
         let request = requestRry
             .flatMap{[weak self] _ in
-                self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo) ?? .never()
+                self?.loadModel.korailSchduleLoad(scheduleSearch: searchInfo, dayType: dayType) ?? .never()
             }
             .asObservable()
         
@@ -145,9 +147,9 @@ class TotalLoadModel : TotalLoadProtocol {
         
         let numberCheck = number.map{ data in
             data.filter{
-                if weekDay == 1 || weekDay == 7{
+                if dayType != .weekday {
                     return $0.week == "주말" ? true : false
-                }else{
+                } else {
                     return $0.week == "평일" ? true : false
                 }
             }
@@ -242,13 +244,14 @@ class TotalLoadModel : TotalLoadProtocol {
         var inOut = ""
         
         // 9호선은 상하행이 반대
-        if scheduleSearch.line == "09호선"{
-            inOut = scheduleSearch.upDown.contains("상행") ? "2" : "1"
-        }else{
-            inOut = scheduleSearch.upDown.contains("상행") || scheduleSearch.upDown.contains("내선") ? "1" : "2"
+        if scheduleSearch.line == "09호선" {
+            inOut = scheduleSearch.upDown.isUpDirection ? "2" : "1"
+        } else{
+            inOut = scheduleSearch.upDown.isUpDirection ? "1" : "2"
         }
         
-        let schedule = self.loadModel.seoulStationScheduleLoad(scheduleSearch: scheduleSearch)
+        let dayType = self.calculateDayType(holidayList: self.holidayList, date: requestDate)
+        let schedule = self.loadModel.seoulStationScheduleLoad(scheduleSearch: scheduleSearch, dayType: dayType)
             .map{ data -> [ScheduleStationArrival] in
                 // success 되지 않으면 > 오류 발생 시
                 guard case .success(let value) = data else {return []}
@@ -415,9 +418,70 @@ class TotalLoadModel : TotalLoadProtocol {
         }
     }
     
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
+        let all = self.stationIDList
+            .filter { $0.lineId == subwayLine.lineCode }
+            .map { DetailStationId(lineId: $0.lineId, stationId: $0.stationId, stationName: $0.stationName.removingSubName()) }
+
+        func sorted(_ stations: [DetailStationId]) -> [DetailStationId] {
+            stations.sorted { $0.stationId < $1.stationId }
+        }
+
+        switch subwayLine {
+        case .one:
+            let common = sorted(all.filter { $0.stationId <= "1001000141" })
+            let gyeongIn = sorted(all.filter { $0.stationId > "1001000141" && $0.stationId.contains("000") })
+            let gyeongBu = sorted(all.filter { $0.stationId.contains("080") })
+            return [
+                StationSession(name: nil, stations: common),
+                StationSession(name: "경인선", stations: gyeongIn),
+                StationSession(name: "경부선", stations: gyeongBu)
+            ]
+        case .two:
+            let main = sorted(all.filter { $0.stationId <= "1002000243" })
+            let seongsu = sorted(all.filter { $0.stationId >= "1002002111" && $0.stationId <= "1002002114" })
+            let sinjeong = sorted(all.filter { $0.stationId >= "1002002341" })
+            return [
+                StationSession(name: nil, stations: main),
+                StationSession(name: "성수지선", stations: seongsu),
+                StationSession(name: "신정지선", stations: sinjeong)
+            ]
+        case .five:
+            let main = sorted(all.filter { $0.stationId.contains("000") })
+            let macheon = sorted(all.filter { $0.stationId.contains("080") })
+            return [
+                StationSession(name: nil, stations: main),
+                StationSession(name: "마천지선", stations: macheon)
+            ]
+        default:
+            return [StationSession(name: nil, stations: sorted(all))]
+        }
+    }
+
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition] {
+        return await withCheckedContinuation { continuation in
+            self.loadModel.realtimePositionRequest(subwayLine: subwayLine)
+                .asObservable()
+                .map { data -> [RealtimeTrainPosition] in
+                    guard case .success(let value) = data else { return [] }
+                    let actualIsUp = subwayLine == .nine ? !isUp : isUp
+                    let updnLineValue = actualIsUp ? "0" : "1"
+                    let hasException = !exceptionLastStation.isEmpty
+                    
+                    return value.realtimePositionList.filter {
+                        $0.updnLine == updnLineValue &&
+                        (!hasException || !exceptionLastStation.contains($0.statnTnm))
+                    }
+                }
+                .subscribe(onNext: {
+                    continuation.resume(returning: $0)
+                })
+                .disposed(by: self.bag)
+        }
+    }
+    
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]> {
-        let requestWeek = Calendar.current.component(.weekday, from: requestDate)
-        let requestWeekString = (requestWeek == 1 || requestWeek == 7) ? "주말" : "평일"
+        let requestWeekString = self.calculateDayType(holidayList: self.holidayList, date: requestDate) == .weekday ? "평일" : "주말"
         guard let nowTime = Int(self.timeFormatter(date: requestDate, isSecondIncludes: false)) else {return .empty()}
         
         let shinbundangVersionObserverable = self.loadModel.shinbundangScheduleVersionRequest()
@@ -485,6 +549,15 @@ class TotalLoadModel : TotalLoadProtocol {
             }
     }
     
+    private func calculateDayType(holidayList: [String], date: Date) -> DayType {
+        let weekday = Calendar.current.component(.weekday, from: date)
+        if weekday == 1 { return .holiday }
+        if weekday == 7 { return .saturday }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        return holidayList.contains(formatter.string(from: date)) ? .holiday : .weekday
+    }
+
     private func timeFormatter(date : Date, isSecondIncludes: Bool = true) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = isSecondIncludes ?  "HHmmss" : "HHmm"
@@ -517,11 +590,11 @@ class TotalLoadModel : TotalLoadProtocol {
         
         for x in decodingData{
             if x.stationId == backId{
-                backStation = x.stationName
+                backStation = x.stationName.removingSubName()
             }
             
             if x.stationId == nextId{
-                nextStation = x.stationName
+                nextStation = x.stationName.removingSubName()
             }
             
             if backStation != "" && nextStation != ""{

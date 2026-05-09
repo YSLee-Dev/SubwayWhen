@@ -26,7 +26,11 @@ class CongestionModalCoordinator: Coordinator {
     ) {
         self.navigation = navigation
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "CongestionModalCoordinator deinit")
+    }
+
     // MARK: - Methods
     
     func start() {

@@ -21,7 +21,11 @@ class LocationModalCoordinator: Coordinator {
         self.navigation = navigation
         self.vicinityList = vicinityList
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "LocationModalCoordinator deinit")
+    }
+
     func start() {
         let viewModel = LocationModalViewModel(vicinityList: self.vicinityList)
         viewModel.delegate = self

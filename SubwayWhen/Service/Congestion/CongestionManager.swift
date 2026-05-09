@@ -21,9 +21,13 @@ final class CongestionManager: CongestionManagerProtocol {
         return decoded
     }
     
+    private let holidayList: [String]
+
     // MARK: - Singleton
-    
-    private init() {}
+
+    private init() {
+        self.holidayList = UserDefaults(suiteName: "group.com.yslee.subwaywhen")?.stringArray(forKey: "holidayList") ?? []
+    }
     static let shared: CongestionManagerProtocol = CongestionManager()
     
     // MARK: - Methods
@@ -46,17 +50,16 @@ final class CongestionManager: CongestionManagerProtocol {
     func getLevel(station: String, hour: Int) -> Int? {
         return self.getCongestion(station: station, hour: hour)?.level
     }
-    
+
     private func getDayData(_ station: String) -> [String: CongestionLevel]? {
         guard let stationData = self.congestionDataSet.stations[station]?.hourlyCongestion else {
             return nil
         }
         
-        var dayData: [String: CongestionLevel]
-        switch Calendar.current.component(.weekday, from: Date()) {
-        case 1: dayData = stationData.sunday
-        case 7: dayData = stationData.saturday
-        default: dayData = stationData.weekday
+        var dayData: [String: CongestionLevel] = switch self.dayType() {
+        case .holiday: stationData.sunday
+        case .saturday: stationData.saturday
+        case .weekday: stationData.weekday
         }
         
         if dayData.isEmpty {
@@ -69,5 +72,14 @@ final class CongestionManager: CongestionManagerProtocol {
             }
         }
         return dayData
+    }
+    
+    private func dayType(date: Date = Date()) -> DayType {
+        let weekday = Calendar.current.component(.weekday, from: date)
+        if weekday == 1 { return .holiday }
+        if weekday == 7 { return .saturday }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        return self.holidayList.contains(formatter.string(from: date)) ? .holiday : .weekday
     }
 }

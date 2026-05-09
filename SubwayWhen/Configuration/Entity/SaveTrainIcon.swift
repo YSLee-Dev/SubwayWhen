@@ -12,4 +12,8 @@ enum SaveTrainIcon: String, CaseIterable {
     case steamTrain = "🚂"
     case fastTrainA = "🚈"
     case fastTrainB = "🚅"
+    case tram = "🚋"
+    case carA = "🚗"
+    case carB = "🚙"
+    case carC = "🏎️"
 }

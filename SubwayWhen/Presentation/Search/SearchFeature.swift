@@ -183,33 +183,33 @@ struct SearchFeature: Reducer {
                 return .none
                 
             case .liveDataRequest:
-                if state.nowTappedStationIndex == nil {return .none}
-                let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
+                guard let index = state.nowTappedStationIndex else { return .none }
+                let tappedData = state.nowVicinityStationList[index]
                 guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
                 state.nowLiveDataLoading = [true, true]
                 return .merge([
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "내선" : "상행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line.upDownText(isUp: true), stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                     },
                     .run { send in
-                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line == "2호선" ? "외선" : "하행", stationName: tappedData.name, line: line, exceptionLastStation: ""))
+                        let data = await self.totalLoad.singleLiveAsyncData(requestModel: .init(upDown: tappedData.line.upDownText(isUp: false), stationName: tappedData.name, line: line, exceptionLastStation: ""))
                         await send(.liveDataResult(data))
                     }
                 ])
                 .cancellable(id: Key.liveDataRequest)
                 
             case .liveDataResult(let data):
-                if data.first == nil {return .none}
-                let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
-                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else {return .none}
-                
+                guard let firstData = data.first, let index = state.nowTappedStationIndex else { return .none }
+                let tappedData = state.nowVicinityStationList[index]
+                guard let line = SubwayLineData(rawValue: tappedData.lineColorName) else { return .none }
+
                 // 9호선은 상하행이 반대이기 때문에 아래와 같이 개발
-                if (line != .nine && data.first!.upDown == "상행") || (line == .nine && data.first!.upDown == "하행")  || data.first!.upDown == "내선" {
-                    state.nowUpLiveData = data.first!
+                if (line != .nine && firstData.upDown == "상행") || (line == .nine && firstData.upDown == "하행") || firstData.upDown == "내선" {
+                    state.nowUpLiveData = firstData
                     state.nowLiveDataLoading[0] = false
                 } else {
-                    state.nowDownLiveData = data.first!
+                    state.nowDownLiveData = firstData
                     state.nowLiveDataLoading[1] = false
                 }
                 return .none
@@ -270,16 +270,16 @@ struct SearchFeature: Reducer {
                     TextState("")
                 }, actions: {
                     ButtonState(action: .upDownBtnTapped(line != .nine)) {
-                        TextState(line == .two ? "내선" : "상행")
+                        TextState(line.rawValue.upDownText(isUp: true))
                     }
                     ButtonState(action: .upDownBtnTapped(line == .nine)) {
-                        TextState(line == .two ? "외선" : "하행")
+                        TextState(line.rawValue.upDownText(isUp: false))
                     }
                     ButtonState(role: .cancel, action: .cancelBtnTapped) {
                         TextState("취소")
                     }
                 }, message: {
-                    TextState("\(line == .two ? "내/외선" : "상/하행") 정보를 확인해주세요.")
+                    TextState("\(line.rawValue.upDownText(isUp: true))/\(line.rawValue.upDownText(isUp: false)) 정보를 확인해주세요.")
                 })
                 return .none
                 
@@ -416,11 +416,11 @@ struct SearchFeature: Reducer {
                 return .send(.stationSearchRequest)
                 
             case .reportBtnTapped:
-                guard let line = getTappedLineOrShowError(&state) else {
+                guard let line = getTappedLineOrShowError(&state),
+                      let index = state.nowTappedStationIndex else {
                     return .none
                 }
-                delegate?.reportPush(reportLine: line, stationName: state.nowVicinityStationList[state.nowTappedStationIndex!].name)
-                
+                delegate?.reportPush(reportLine: line, stationName: state.nowVicinityStationList[index].name)
                 return .none
                 
             default: return .none
@@ -443,7 +443,8 @@ private extension SearchFeature {
     }
     
     func getTappedLineOrShowError(_ state: inout State) -> SubwayLineData? {
-        let tappedData = state.nowVicinityStationList[state.nowTappedStationIndex!]
+        guard let index = state.nowTappedStationIndex else { return nil }
+        let tappedData = state.nowVicinityStationList[index]
         guard let line = SubwayLineData(rawValue: tappedData.lineColorName),
               (state.nowUpLiveData?.code != "" || state.nowDownLiveData?.code != "")
         else {

@@ -190,8 +190,11 @@ class SearchFeatureTests : XCTestCase {
             // THEN
             $0.nowSearchLoading = true
         }
-        
+
         // THEN
+        await testStore.receive(.stationSearchRequest) {
+            $0.nowStationSearchList = []
+        }
         await testStore.receive(.stationSearchResult(stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.sorted {$0.line.rawValue < $1.line.rawValue})) {
             $0.searchQuery = "교대"
             $0.nowStationSearchList = stationNameSearcDummyhData.SearchInfoBySubwayNameService.row.sorted {$0.line.rawValue < $1.line.rawValue}  // 검색결과 대입

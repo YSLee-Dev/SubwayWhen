@@ -71,7 +71,7 @@ private extension ModalViewModel {
         Observable
             .combineLatest(self.clickCellData, input.groupClick, input.exceptionLastStationText, input.upDownBtnClick) {[weak self] cellData, group, exception, updown -> Bool in
                 
-                let updownLine = self?.model.updownFix(updown: updown, line: cellData.line.useLine) ?? ""
+                let updownLine = cellData.line.useLine.upDownText(isUp: updown)
                 let brand = self?.model.useLineTokorailCode(cellData.line.useLine) ?? ""
                 
                 if FixInfo.saveSetting.searchOverlapAlert{
@@ -103,7 +103,7 @@ private extension ModalViewModel {
     func present(input: Input) {
         input.disposableBtnTap
             .withLatestFrom(self.clickCellData){[weak self] updown, data in
-                let updownFix = self?.model.updownFix(updown: updown, line: data.line.useLine) ?? ""
+                let updownFix = data.line.useLine.upDownText(isUp: updown)
                 let korail = self?.model.useLineTokorailCode(data.line.useLine) ?? ""
                 
                 return DetailSendModel(upDown: updownFix, stationName: data.stationName, lineNumber: data.line.rawValue, stationCode: data.stationCode, lineCode: data.line.lineCode, exceptionLastStation: "", korailCode: korail)

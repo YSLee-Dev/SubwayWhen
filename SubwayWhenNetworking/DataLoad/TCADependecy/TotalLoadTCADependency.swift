@@ -62,4 +62,12 @@ class TotalLoadTCADependency: TotalLoadTCADependencyProtocol {
     func searchQueryRecommendListLoad() async -> [SearchQueryRecommendData] {
         await self.totalModel.searchQueryRecommendListLoad()
     }
+
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition] {
+        await self.totalModel.realtimePositionLoad(subwayLine: subwayLine, isUp: isUp, exceptionLastStation: exceptionLastStation)
+    }
+
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession] {
+        self.totalModel.stationIdList(subwayLine: subwayLine)
+    }
 }

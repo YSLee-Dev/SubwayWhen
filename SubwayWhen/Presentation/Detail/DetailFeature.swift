@@ -42,6 +42,7 @@ struct DetailFeature: Reducer {
         case refreshBtnTapped
         case scheduleMoreBtnTapped
         case reportBtnTapped(SubwayLineData)
+        case realtimeBtnTapped
         case arrivalDataRequestSuccess([TotalRealtimeStationArrival])
         case scheduleDataRequestSuccess([ResultSchdule])
         case scheduleDataSort
@@ -52,6 +53,7 @@ struct DetailFeature: Reducer {
         case liveActivityRequest
         case liveActivityValueChange(Bool)
         case dialogAction(PresentationAction<DialogAction>)
+        case exceptionLastStationRemove
         
         enum DialogAction: Equatable {
             case cancelBtnTapped
@@ -195,8 +197,8 @@ struct DetailFeature: Reducer {
                 .cancellable(id: TimerKey.refresh)
                 
             case .timerDecrease:
-                if state.nowTimer == nil {return .none}
-                state.nowTimer! -= 1
+                guard let timer = state.nowTimer else { return .none }
+                state.nowTimer = timer - 1
                 return .none
                 
             case .exceptionLastStationBtnTapped:
@@ -222,17 +224,11 @@ struct DetailFeature: Reducer {
                 
             case .dialogAction(.presented(.okBtnTapped)):
                 state.dialogState = nil
-                state.sendedLoadModel.exceptionLastStation = ""
                 
                 Analytics.logEvent("DetailVC_ExceptionBtnTap", parameters: [
                     "Exception" : "BTNTAP"
                 ])
-                
-                return .merge(
-                    .send(.arrivalDataRequest),
-                    .send(.scheduleDataRequest),
-                    .cancel(id: TimerKey.refresh)
-                )
+                return .send(.exceptionLastStationRemove)
                 
             case .backBtnTapped:
                 self.coordinatorDelegate?.pop()
@@ -245,6 +241,12 @@ struct DetailFeature: Reducer {
             case .reportBtnTapped(let data):
                 self.coordinatorDelegate?.reportBtnTap(reportLine: data, stationName: state.sendedLoadModel.stationName)
                 return .none
+
+            case .realtimeBtnTapped:
+                let subwayLine = SubwayLineData(rawValue: state.sendedLoadModel.lineNumber) ?? .not
+                let isUp = state.sendedLoadModel.upDown.contains("상행") || state.sendedLoadModel.upDown.contains("내선")
+                self.coordinatorDelegate?.pushRealtime(subwayLine: subwayLine, stationName: state.sendedLoadModel.stationName, upDown: state.sendedLoadModel.upDown, exceptionLastStation: state.sendedLoadModel.exceptionLastStation)
+                return .none
                 
             case .viewDisappear:
                 self.coordinatorDelegate?.disappear()
@@ -254,6 +256,15 @@ struct DetailFeature: Reducer {
                     .send(.liveActivityValueChange(false)),
                     .cancel(id: TimerKey.arrivalRequest),
                     .cancel(id: TimerKey.scheduleRequest),
+                    .cancel(id: TimerKey.refresh)
+                )
+                
+            case .exceptionLastStationRemove:
+                state.sendedLoadModel.exceptionLastStation = ""
+                
+                return .merge(
+                    .send(.arrivalDataRequest),
+                    .send(.scheduleDataRequest),
                     .cancel(id: TimerKey.refresh)
                 )
                 

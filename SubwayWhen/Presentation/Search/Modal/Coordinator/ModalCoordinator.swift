@@ -25,7 +25,11 @@ class ModalCoordinator: Coordinator {
         self.data = data
         self.viewModel = viewModel
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "ModalCoordinator deinit")
+    }
+
     func start() {
         self.viewModel.delegate = self
         let modal = ModalVC(self.viewModel, modalHeight: 381)

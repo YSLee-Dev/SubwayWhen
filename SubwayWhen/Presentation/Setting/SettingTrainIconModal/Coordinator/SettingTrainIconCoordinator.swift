@@ -18,17 +18,21 @@ class SettingTrainIconModalCoordinator: Coordinator {
     ) {
         self.navigation = navigation
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SettingTrainIconModalCoordinator deinit")
+    }
+
     func start() {
         let subViewModel = SettingTrainIconModalSubViewModel()
         let viewModel = SettingTrainIconModalViewModel(subViewModel: subViewModel)
         viewModel.delegate = self
         
         let vc = SettingTrainIconModalVC(
-            modalHeight: 380,
-            btnTitle: "저장",
-            mainTitle: "열차 아이콘",
-            subTitle: "상세화면의 열차 아이콘을 변경하는 기능이에요.",
+            modalHeight: 440,
+            btnTitle: Strings.Common.save,
+            mainTitle: Strings.Setting.trainIcon,
+            subTitle: Strings.Setting.trainIconDescription,
             viewModel: viewModel,
             modalView: SettingTrainIconModalView(viewModel: subViewModel)
         )

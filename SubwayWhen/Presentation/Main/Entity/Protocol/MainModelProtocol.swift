@@ -16,8 +16,14 @@ protocol MainModelProtocol{
     func arrivalDataLoad(stations: [SaveStation]) -> Observable<(MainTableViewCellData, Int)>
     func createMainTableViewSection(_ data : [MainTableViewCellData]) -> [MainTableViewSection]
     func mainCellDataToScheduleData(_ item : MainTableViewCellData) -> ScheduleSearch?
-    func scheduleLoad(_ data : ScheduleSearch) ->  Observable<[ResultSchdule]>
+    func scheduleLoad(_ data : ScheduleSearch, requestDate: Date) ->  Observable<[ResultSchdule]>
     func scheduleDataToMainTableViewCell(data : ResultSchdule, nowData : MainTableViewCellData) -> MainTableViewCellData
     func headerImportantDataLoad() -> Observable<ImportantData>
     func emptyLiveData(stations: [SaveStation]) -> Observable<[MainTableViewCellData]>
+}
+
+extension MainModelProtocol {
+    func scheduleLoad(_ data: ScheduleSearch, requestDate: Date = .now) -> Observable<[ResultSchdule]> {
+        self.scheduleLoad(data, requestDate: requestDate)
+    }
 }

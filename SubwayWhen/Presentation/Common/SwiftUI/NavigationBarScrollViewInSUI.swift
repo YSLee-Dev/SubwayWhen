@@ -8,53 +8,57 @@
 import SwiftUI
 
 struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
+
+    // MARK: - Properties
+
     private let title: String
-    private let contentsView:  () -> Contents
+    private let contentsView: () -> Contents
     private let backBtnTapped: (() -> ())?
     private let backBtnIcon: String?
+    private let trailingBtnIcon: String?
+    private let trailingBtnTapped: (() -> ())?
     private var isLargeTitleHidden: Bool = false
     @State private var isSubTitleShow: Bool = false
     @State private var isFirstValue: CGFloat? = nil
-    
-    init(title: String, isLargeTitleHidden: Bool = false,  backBtnTapped: (() -> ())? = nil,  backBtnIcon: String? = nil, @ViewBuilder content: @escaping () -> Contents) {
+
+    init(
+        title: String,
+        isLargeTitleHidden: Bool = false,
+        backBtnTapped: (() -> ())? = nil,
+        backBtnIcon: String? = nil,
+        trailingBtnIcon: String? = nil,
+        trailingBtnTapped: (() -> ())? = nil,
+        @ViewBuilder content: @escaping () -> Contents
+    ) {
         self.contentsView = content
         self.title = title
         self.isLargeTitleHidden = isLargeTitleHidden
         self.backBtnTapped = backBtnTapped
         self.backBtnIcon = backBtnIcon
+        self.trailingBtnIcon = trailingBtnIcon
+        self.trailingBtnTapped = trailingBtnTapped
     }
-    
+
+    // MARK: - View
+
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                if backBtnTapped != nil {
-                    Button(action: {
-                        self.backBtnTapped!()
-                    }) {
-                        Image(systemName: "\(self.backBtnIcon ?? "")")
-                            .foregroundColor(.init(uiColor: .label))
-                    }
-                }
-                
-                Text(self.title)
-                    .font(.system(size: ViewStyle.FontSize.largeSize, weight: .bold))    
-                    .padding(.leading, 1)
-                    .opacity(self.isSubTitleShow ? 1 : 0)
-                    .offset(y: self.isSubTitleShow ? 0 : 7.5)
-                    .animation(.smooth(duration: 0.25), value: self.isSubTitleShow)
-                
-                Spacer()
-            }
-            .frame(height: 45)
-            .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
-            
+            NavigationBarInSUI(
+                title: self.title,
+                isSubTitleShow: self.$isSubTitleShow,
+                backBtnIcon: self.backBtnIcon,
+                backBtnTapped: self.backBtnTapped,
+                trailingBtnIcon: self.trailingBtnIcon,
+                trailingBtnTapped: self.trailingBtnTapped
+            )
+
             OffsetScrollViewInSUI {
                 VStack(spacing: 0) {
                     if !self.isLargeTitleHidden {
                         HStack {
                             Text(self.title)
                                 .font(.system(size: ViewStyle.FontSize.mainTitleSize, weight: .heavy))
-                            
+
                             Spacer()
                         }
                         .offset(y: -7.5)
@@ -64,10 +68,10 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
                 .padding(.horizontal, ViewStyle.padding.mainStyleViewLR)
             }
             .onPreferenceChange(ScrollOffsetKey.self) { value in
-                if isFirstValue == nil {
+                if self.isFirstValue == nil {
                     self.isFirstValue = value
                 } else {
-                    if (!self.isSubTitleShow && self.isFirstValue! - 25 >= value) ||  (self.isSubTitleShow && self.isFirstValue! - 25 < value)  {
+                    if (!self.isSubTitleShow && self.isFirstValue! - 25 >= value) || (self.isSubTitleShow && self.isFirstValue! - 25 < value) {
                         self.isSubTitleShow = !self.isSubTitleShow
                     }
                 }
@@ -78,6 +82,6 @@ struct NavigationBarScrollViewInSUI<Contents>: View where Contents: View {
 
 #Preview {
     NavigationBarScrollViewInSUI(title: "상세화면", backBtnTapped: {}) {
-            Text("123")
+        Text("123")
     }
 }

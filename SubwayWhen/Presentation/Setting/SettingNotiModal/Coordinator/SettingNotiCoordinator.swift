@@ -20,7 +20,11 @@ class SettingNotiCoordinator: Coordinator {
     ) {
         self.rootVC = rootVC
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "SettingNotiCoordinator deinit")
+    }
+
     func start() {
         let model = SettingNotiModalModel()
         let nonimanager = NotificationManager.shared

@@ -51,12 +51,12 @@ struct SettingTrainIconModalView: View {
                     .padding(.horizontal, 10)
                     
                     HStack(alignment: .center) {
-                        Text("도착역")
+                        Text(Strings.Setting.currentStation)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                         
                         Spacer()
                         
-                        Text("전역")
+                        Text(Strings.Setting.backStation)
                             .font(.system(size: ViewStyle.FontSize.smallSize, weight: .medium))
                     }
                     .padding(.horizontal, 10)
@@ -64,14 +64,18 @@ struct SettingTrainIconModalView: View {
                 .offset(x: 0, y: 5)
             }
             
-            HStack(alignment: .center, spacing: 20) {
-                ForEach(self.viewModel.trainIcon, id: \.self) { data in
-                    Button(action: {
-                        self.viewModel.tappedIcon = data
-                        
-                    }, label: {
-                        SettingTrainIconModalSubView(trainIcon: data.rawValue, isTapped: data == viewModel.tappedIcon)
-                    })
+            VStack(alignment: .center, spacing: 15) {
+                ForEach(self.viewModel.trainIcon.indices, id: \.self) { index in
+                    HStack(alignment: .center, spacing: 15) {
+                        ForEach(self.viewModel.trainIcon[index], id: \.self) { data in
+                            Button(action: {
+                                self.viewModel.tappedIcon = data
+                            }, label: {
+                                SettingTrainIconModalSubView(trainIcon: data.rawValue, isTapped: data == viewModel.tappedIcon)
+                                    .frame(maxWidth: .infinity)
+                            })
+                        }
+                    }
                 }
             }
         }

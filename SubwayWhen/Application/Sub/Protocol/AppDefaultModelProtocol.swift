@@ -12,4 +12,6 @@ protocol AppDefaultModelProtocol{
     func versionRequest(result: @escaping (_ version:String)->())
     func saveSettingLoad() -> Result<SaveSetting, URLError>
     func saveStationLoad() -> Result<[SaveStation], URLError>
+    func holidayDataLoad(result: @escaping (_ holidayData: HolidayData) -> ())
+    func savedHolidayDataLoad() -> HolidayData
 }

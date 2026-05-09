@@ -24,7 +24,11 @@ class DetailCoordinator: Coordinator {
         self.data = data
         self.isDisposable = isDisposable
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "DetailCoordinator deinit")
+    }
+
     func start() {
         guard let vc = self.createDetailVC() else {return}
         
@@ -82,6 +86,13 @@ extension DetailCoordinator : DetailVCDelegate{
         self.pop()
         self.delegate?.reportBtnTap(reportLine: reportLine, stationName: stationName)
     }
+
+    func pushRealtime(subwayLine: SubwayLineData, stationName: String, upDown: String, exceptionLastStation: String) {
+        let realtimeCoordinator = RealtimeCoordinator(navigation: self.navigation, subwayLine: subwayLine, stationName: stationName, upDown: upDown, exceptionLastStation: exceptionLastStation)
+        realtimeCoordinator.start()
+        realtimeCoordinator.delegate = self
+        self.childCoordinator.append(realtimeCoordinator)
+    }
 }
 
 extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
@@ -97,5 +108,15 @@ extension DetailCoordinator: DetailResultScheduleCoorinatorDelegate {
         self.navigation.popViewController(animated: true)
         self.childCoordinator = self.childCoordinator.filter{$0 !== detailResultScheduleCoordinator}
         self.store?.send(.exceptionLastStationBtnTapped)
+    }
+}
+
+extension DetailCoordinator: RealtimeCoordinatorDelegate {
+    func exceptionRemove() {
+        self.store?.send(.exceptionLastStationRemove)
+    }
+    
+    func disappear(realtimeCoordinator: RealtimeCoordinator) {
+        self.childCoordinator = self.childCoordinator.filter{$0 !== realtimeCoordinator}
     }
 }

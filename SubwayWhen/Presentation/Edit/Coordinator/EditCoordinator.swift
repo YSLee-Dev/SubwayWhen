@@ -18,7 +18,11 @@ class EditCoordinator: Coordinator {
         self.navigation = navigation
         self.editViewModel = EditViewModel()
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "EditCoordinator deinit")
+    }
+
     func start() {
         let editVC = EditVC(viewModel: self.editViewModel)
         editVC.hidesBottomBarWhenPushed = true

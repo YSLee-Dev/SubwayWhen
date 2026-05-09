@@ -22,6 +22,7 @@ let shinbundangSinsaStationData = dummyLoad.fileLoad("ShinbundangSinsaStationSch
 let subwayNoticeData = dummyLoad.fileLoad("SubwayNoticeDummy.json")
 let subwayNoticeInfiniteData = dummyLoad.fileLoad("SubwayNoticeDummyInfiniteDate.json")
 let korailTrainNumberData = dummyLoad.fileLoad("KorailTrainNumberDummy.json")
+let realtimeTrainPositionData = dummyLoad.fileLoad("RealtimeTrainPositionDummy.json")
 
 let arrivalDummyData = try! jsonDecoder.decode(LiveStationModel.self, from: arrivalData)
 let seoulScheduleDummyData = try! jsonDecoder.decode(ScheduleStationModel.self, from: seoulStationSchduleData)
@@ -78,12 +79,41 @@ let subwayNotice = SubwayNotice(title: "4호선 혜화역 하선 열차 무정�
 let subwayNoticeInfiniteDate = SubwayNotice(title: "4호선 혜화역 하선 열차 무정차 통과 종료", content: "4호선 혜화역 특정장애인단체 불법시위로 인한 하선 열차 무정차 통과는 09:30분부로 종료되어 열차 정상운행 중입니다. 11-12 09:13:09 11-17 09:33:01", occurredAt: "2099-11-17T09:33:01", lineNames: "4호선", createdDate: "20991117", isNonstop: "Y", direction: "하행", exceptionEndedAt: "2099-11-17T09:30:00")
 let importantData = ImportantData(title: "4호선 혜화역 하선 열차 무정차 통과 종료", contents: "4호선 혜화역 특정장애인단체 불법시위로 인한 하선 열차 무정차 통과는 09:30분부로 종료되어 열차 정상운행 중입니다. 11-12 09:13:09 11-17 09:33:01호선: 4호선무정차 통과: O상하행: 하행")
 let korailTrainNumber = try! jsonDecoder.decode(DummyKorailTrainValue.self, from: korailTrainNumberData).value
+let realtimeTrainPositionResponseDummy = try! jsonDecoder.decode(RealtimeTrainPositionResponse.self, from: realtimeTrainPositionData)
 
 let urlResponse = HTTPURLResponse(
     url: URL(string: url)!,
     statusCode: 200,
     httpVersion: nil,
     headerFields: nil
+)
+
+let realtimeTrainPositionUpDummy = RealtimeTrainPosition(
+    subwayId: "1003", subwayNm: "3호선", statnId: "1003000340",
+    statnNm: "교대", trainNo: "3000", lastRecptnDt: "20260420095000",
+    recptnDt: "20260420095000", updnLine: "0", statnTid: "1003000319",
+    statnTnm: "대화", trainSttus: "1", directAt: "0", lstcarAt: "0"
+)
+let realtimeTrainPositionDownDummy = RealtimeTrainPosition(
+    subwayId: "1003", subwayNm: "3호선", statnId: "1003000340",
+    statnNm: "교대", trainNo: "3001", lastRecptnDt: "20260420095000",
+    recptnDt: "20260420095000", updnLine: "1", statnTid: "1003000351",
+    statnTnm: "오금", trainSttus: "2", directAt: "0", lstcarAt: "0"
+)
+let realtimeTrainPositionFastDummy = RealtimeTrainPosition(
+    subwayId: "1003", subwayNm: "3호선", statnId: "1003000340",
+    statnNm: "교대", trainNo: "3002", lastRecptnDt: "20260420095000",
+    recptnDt: "20260420095000", updnLine: "0", statnTid: "1003000319",
+    statnTnm: "대화", trainSttus: "0", directAt: "1", lstcarAt: "0"
+)
+
+let stationSessionDummy = StationSession(
+    name: nil,
+    stations: [
+        DetailStationId(lineId: "1003", stationId: "1003000339", stationName: "남부터미널"),
+        DetailStationId(lineId: "1003", stationId: "1003000340", stationName: "교대"),
+        DetailStationId(lineId: "1003", stationId: "1003000341", stationName: "고속터미널")
+    ]
 )
 
 let congestionStations = ["강남", "시청"]

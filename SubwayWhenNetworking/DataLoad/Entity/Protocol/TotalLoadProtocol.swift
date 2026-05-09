@@ -21,6 +21,8 @@ protocol TotalLoadProtocol{
     func scheduleDataFetchAsyncData(_ scheduleData: Observable<[ResultSchdule]>) async -> [ResultSchdule]
     func shinbundangScheduleLoad(scheduleSearch: ScheduleSearch, isFirst: Bool, isNow: Bool, isWidget: Bool, requestDate: Date, isDisposable: Bool) -> Observable<[ResultSchdule]>
     func searchQueryRecommendListLoad() async -> [SearchQueryRecommendData]
+    func realtimePositionLoad(subwayLine: SubwayLineData, isUp: Bool, exceptionLastStation: String) async -> [RealtimeTrainPosition]
+    func stationIdList(subwayLine: SubwayLineData) -> [StationSession]
 }
 
 extension TotalLoadProtocol {

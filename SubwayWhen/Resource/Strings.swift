@@ -12,6 +12,8 @@ struct Strings {
     struct Report {}
     struct Setting {}
     struct Main {}
+    struct Realtime {}
+    struct Detail {}
 }
 
 extension Strings.Common {
@@ -19,6 +21,10 @@ extension Strings.Common {
     static let up = "상행"
     /// 하행
     static let down = "하행"
+    /// 내선
+    static let inner = "내선"
+    /// 외선
+    static let outer = "외선"
     /// 네
     static let yes = "네"
     /// 아니오
@@ -28,7 +34,7 @@ extension Strings.Common {
     /// 확인
     static let check = "확인"
     /// 저장하기
-    static let save = "저장하기"
+    static let save = "저장"
     /// 시
     static let hour = "시"
     /// 닫기
@@ -142,6 +148,13 @@ extension Strings.Setting {
     /// 열차 아이콘
     static let trainIcon = "열차 아이콘"
     
+    /// 상세화면의 열차 아이콘을 변경하는 기능이에요.
+    static let trainIconDescription = "상세화면의 열차 아이콘을 변경하는 기능이에요."
+    /// 현재역
+    static let currentStation = "현재역"
+    /// 전역
+    static let backStation = "전역"
+    
     /// 오픈 라이선스
     static let openLicense = "오픈 라이선스"
     /// 기타
@@ -220,4 +233,29 @@ extension Strings.Main {
     
     /// 선택된 지하철역의 예상 혼잡도를 확인할 수 있어요.
     static let congestionModalSubTitle = "선택된 지하철역의 예상 혼잡도를 확인할 수 있어요."
+}
+
+extension Strings.Realtime {
+    /// 오류
+    static let bundleErrorTitle = "오류"
+    /// 역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요.
+    static let bundleErrorMessage = "역 정보를 불러오지 못했어요.\n잠시 후 다시 시도해주세요."
+    
+    /// 실시간 현황
+    static let realTime = "실시간 현황"
+
+    /// 재로딩
+    static let exceptionDialogOk = "재로딩"
+    /// 행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요.
+    static let exceptionDialogMessageSuffix = "행을 포함해서 재로딩 하시겠어요?\n재로딩은 일회성으로, 저장하지 않아요."
+
+    /// '시청'역부터 다시 확인하기
+    static let upToCityHallStation = "'시청'역" + "부터 다시 확인하기"
+}
+
+extension Strings.Detail {
+    /// 제외 행 없음
+    static let noException = "제외 행 없음"
+    /// 행 제외
+    static let exceptionSuffix = "행 제외"
 }

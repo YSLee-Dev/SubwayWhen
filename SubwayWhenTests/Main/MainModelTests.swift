@@ -121,7 +121,8 @@ final class MainModelTests: XCTestCase {
     
     func testScheduleLoad(){
         // GIVEN
-        let data = self.scheduleModel.scheduleLoad(scheduleGyodaeStation3Line)
+        let noonDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
+        let data = self.scheduleModel.scheduleLoad(scheduleGyodaeStation3Line, requestDate: noonDate)
         let blocking = data.toBlocking()
         let arrayData = try! blocking.toArray()
         let arrayFirstData = arrayData.first

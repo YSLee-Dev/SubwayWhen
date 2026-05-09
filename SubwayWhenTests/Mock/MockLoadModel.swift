@@ -24,26 +24,26 @@ class MockLoadModel: LoadModelProtocol {
     
     // MARK: - Methods (Protocol)
     
-    func stationArrivalRequest(stationName: String) -> RxSwift.Single<Result<SubwayWhen.LiveStationModel, URLError>> {
+    func stationArrivalRequest(stationName: String) -> RxSwift.Single<Result<LiveStationModel, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
     
-    func seoulStationScheduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch) -> RxSwift.Single<Result<SubwayWhen.ScheduleStationModel, URLError>> {
+    func seoulStationScheduleLoad(scheduleSearch: ScheduleSearch, dayType: DayType) -> RxSwift.Single<Result<ScheduleStationModel, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
     
-    func korailTrainNumberLoad() -> RxSwift.Observable<[SubwayWhen.KorailTrainNumber]> {
+    func korailTrainNumberLoad() -> RxSwift.Observable<[KorailTrainNumber]> {
         return .just(self.korailTrainNumber)
     }
     
-    func korailSchduleLoad(scheduleSearch: SubwayWhen.ScheduleSearch) -> RxSwift.Single<Result<SubwayWhen.KorailHeader, URLError>> {
+    func korailSchduleLoad(scheduleSearch: ScheduleSearch, dayType: DayType) -> RxSwift.Single<Result<KorailHeader, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
     
-    func stationSearch(station: String) -> RxSwift.Single<Result<SubwayWhen.SearchStaion, URLError>> {
+    func stationSearch(station: String) -> RxSwift.Single<Result<SearchStaion, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
@@ -52,16 +52,16 @@ class MockLoadModel: LoadModelProtocol {
         return self.toObservable()
     }
     
-    func vicinityStationsLoad(x: Double, y: Double) -> RxSwift.Single<Result<SubwayWhen.VicinityStationsData, URLError>> {
+    func vicinityStationsLoad(x: Double, y: Double) -> RxSwift.Single<Result<VicinityStationsData, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }
     
-    func importantDataLoad() -> RxSwift.Observable<SubwayWhen.ImportantData> {
+    func importantDataLoad() -> RxSwift.Observable<ImportantData> {
         return .just(self.importantData)
     }
     
-    func shinbundangScheduleReqeust(scheduleSearch: SubwayWhen.ScheduleSearch) -> RxSwift.Observable<[SubwayWhen.ShinbundangScheduleModel]> {
+    func shinbundangScheduleReqeust(scheduleSearch: ScheduleSearch) -> RxSwift.Observable<[ShinbundangScheduleModel]> {
         self.shinbundangScheduleRequestCount += 1
         return self.toObservable()
     }
@@ -70,11 +70,16 @@ class MockLoadModel: LoadModelProtocol {
         return .just(self.shinbundangScheduleVersion)
     }
     
-    func searchQueryRecommendListRequest() -> RxSwift.Observable<[SubwayWhen.SearchQueryRecommendData]> {
+    func searchQueryRecommendListRequest() -> RxSwift.Observable<[SearchQueryRecommendData]> {
         return self.toObservable()
     }
     
-    func subwayNoticeRequest() -> RxSwift.Single<Result<SubwayWhen.SubwayNoticeResponse, URLError>> {
+    func subwayNoticeRequest() -> RxSwift.Single<Result<SubwayNoticeResponse, URLError>> {
+        return self.toObservableResult()
+            .asSingle()
+    }
+
+    func realtimePositionRequest(subwayLine: SubwayLineData) -> RxSwift.Single<Result<RealtimeTrainPositionResponse, URLError>> {
         return self.toObservableResult()
             .asSingle()
     }

@@ -20,7 +20,10 @@ class AppDefaultManager{
 extension AppDefaultManager{
     func appstoreUpdateAlert(){
         self.model.versionRequest{[weak self] version in
-            let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+            guard let nowVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+                AppLogger.core.log(.error, "앱 버전 정보를 가져오지 못함")
+                return
+            }
             
             if nowVersion <= version{
                 let popup = PopupModal(modalHeight: 400, popupTitle: "업데이트 안내", subTitle: "새로운 버전으로 업데이트 후 앱을 이용해주세요!",iconName: "Report", isUpdate: true)
@@ -85,6 +88,16 @@ extension AppDefaultManager{
             AppLogger.core.log(.debug, "지하철 역 로딩 완료")
         case .failure(let error):
             AppLogger.core.log(.error, "지하철 역을 가져오지 못함, 오류: \(error)")
+        }
+    }
+    
+    func holidayLoad() {
+        let cachedData = self.model.savedHolidayDataLoad()
+
+        self.model.holidayDataLoad { remoteData in
+            guard remoteData.version > cachedData.version else { return }
+            UserDefaults.shared.set(remoteData.list, forKey: "holidayList")
+            UserDefaults.shared.set(remoteData.version, forKey: "holidayVersion")
         }
     }
 }

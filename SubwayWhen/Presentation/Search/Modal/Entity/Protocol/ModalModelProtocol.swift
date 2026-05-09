@@ -9,5 +9,4 @@ import Foundation
 
 protocol ModalModelProtocol{
     func useLineTokorailCode(_ useLine : String) -> String
-    func updownFix(updown : Bool, line : String) -> String
 }

@@ -22,7 +22,11 @@ class ReportCoordinator : Coordinator{
         self.seletedLine = initValue?.0
         self.stationName = initValue?.1
     }
-    
+
+    deinit {
+        AppLogger.coordinator.log(.debug, "ReportCoordinator deinit")
+    }
+
     func start() {
         let reportView = ReportView(store: .init(initialState: .init(selectedLine: self.seletedLine, stationName: self.stationName), reducer: {
             var reducer = ReportFeature()

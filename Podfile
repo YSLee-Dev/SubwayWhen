@@ -67,6 +67,14 @@ installer.pods_project.targets.each do |target|
       end
     end
   end
+
+  installer.pods_project.targets.each do |target|
+    if target.name == 'AcknowList'
+      target.build_configurations.each do |config|
+        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
+      end
+    end
+  end
 end
 
 
